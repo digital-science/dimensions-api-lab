@@ -4,3 +4,7 @@ The Dimensions Analytics API enables users to perform complex searches in the Di
 
 This GitHub repository contains Jupyter Notebooks and other code examples useful for getting started. 
 
+## Tips
+
+* Open an interactive version of these notebooks using [pybinder](https://mybinder.org/v2/gh/digital-science/dimensions-api/master)
+
