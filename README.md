@@ -1,4 +1,4 @@
-# Dimensions API Lab
+# Getting Started
 
 This GitHub repository contains sample Python code and **Jupyter notebooks** useful for getting started with the Dimensions Analytics API.
 
