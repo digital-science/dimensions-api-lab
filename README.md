@@ -39,7 +39,7 @@ You can also run these examples online in your browser, thanks to Binder and Gig
 
 Gigantum is an open-source platform for developing, executing, and sharing analysis and computations using JupyterLab. Gigantum provides a full-featured environment where you  You can easily install packages with apt, pip and conda, as well as add Docker snippets for more customized packages.  
 
-* download the zipped [dimensions-api-examples](https://www.dropbox.com/s/v9b0qyaznwdrtz9/gigantum-dimensions-lab-examples-image.zip?dl=0) image 
+* download the zipped [dimensions-api-examples](http://static.michelepasin.org/gigantum/gigantum-dimensions-lab-examples-image.zip) image 
 * go to https://try.gigantum.com/, click on `login`, then `sign up` in order to create an account 
 * once you are logged in and in the main 'projects' page, click on 'import existing'
 * drag the zipped image to the project import window
