@@ -2,13 +2,9 @@
 
 ### Goal
 
-We want to measure the distribution of publications per EU cities, in a given year (eg 2018).
-
-This will allow us to create a nice-looking map, where cities producing more research can be identified visually.
-
-The same approach could be used for other geographical areas and time-spans.
+We want to obtain info about all patents citing publications from a given University, in this cases, Kent State University (KSU).
 
 
 ### Output
 
-See the cities_bar.html file for a visualisation of the results. 
+See the `/data` folder for CSV outputs, and `/export` folder for an HTML version of the notebook. 
