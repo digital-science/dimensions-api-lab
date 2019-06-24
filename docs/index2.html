@@ -35,11 +35,13 @@
   <body>
     <div class="container-lg px-3 my-5 markdown-body">
       <h1>
-        <a href="./">Dimensions API lab sample notebooks</a>
+        <a href="./">Dimensions API lab</a>
         <form id="search_form" autocomplete="off">
           <input id="search_input">
         </form>
       </h1>
+        <p>A collection of jupyter notebooks using the Dimensions API for scholarly data analysis</p>
+            
       <ul id="list">
       </ul>
     </div>
@@ -81,8 +83,9 @@
       const updateList = (data, filter = '') => {
         let htmlString = '';
         for (let file of data.filter(filterFiles(filter)).sort(sortFiles(filter))) {
-          const fileName = file.path;
-          const fileDisplayName = fileName.split('-').join(' ');
+          const fileName = file.path.replace('docs/', '');
+          // const fileDisplayName = fileName.split('-').join(' ');
+          const fileDisplayName = file.path.replace('docs/exports/', '');  
           htmlString += `<li><a href="${fileName}">${fileDisplayName}</a></li>`;
         }
         document.getElementById('list').innerHTML = htmlString;
