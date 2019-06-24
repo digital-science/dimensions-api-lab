@@ -1,8 +1,8 @@
-# Publications volume per city 
+# Patents linked to KSU
 
 ### Goal
 
-We want to obtain info about all patents citing publications from a given University, in this cases, Kent State University (KSU).
+We want to obtain info about all patents citing publications from a given university, in this case, [Kent State University (KSU)](https://grid.ac/institutes/grid.258518.3).
 
 
 ### Output
