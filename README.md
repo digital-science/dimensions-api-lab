@@ -32,7 +32,7 @@ You can also run these examples online in your browser, thanks to Binder and Gig
 
 [mybinder.org](https://ovh.mybinder.org/) is a free service that transforms a github repository into a JupyterHub server hosting the repository's contents. Click on the link below for launching it with the Dimensions API Lab repository.
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/digital-science/dimensions-api/master)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/digital-science/dimensions-api-lab/master)
 
 
 ### Using Gigantum 
@@ -48,7 +48,7 @@ Gigantum is an open-source platform for developing, executing, and sharing analy
 
 ## Comments, bug reports
 
-This project lives on [Github](https://github.com/digital-science/dimensions-api). You can file [issues]([issues](https://github.com/digital-science/dimensions-api/issues/new)) or ask questions there. Suggestions, pull requests and improvements welcome!
+This project lives on [Github](https://github.com/digital-science/dimensions-api-lab). You can file [issues]([issues](https://github.com/digital-science/dimensions-api-lab/issues/new)) or ask questions there. Suggestions, pull requests and improvements welcome!
 
 ## See also
 
