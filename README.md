@@ -2,9 +2,9 @@
 
 This GitHub repository contains sample Python code and **Jupyter notebooks** useful for getting started with the Dimensions Analytics API.
 
-The Dimensions Analytics API enables users to perform complex searches in the [Dimensions](https://www.dimensions.ai/) database. For more information about the API language, see the [official documentation](https://docs.dimensions.ai/dsl). 
+> Update: read-only versions of the Jupyter notebooks in this repository are periodically exported as HTML and made available on the website https://digital-science.github.io/dimensions-api-lab/ 
 
-> Update: view-only versions of the Jupyter notebooks in this repository are periodically exported as HTML and made available on the website https://digital-science.github.io/dimensions-api-lab/ 
+The Dimensions Analytics API enables users to perform complex searches in the [Dimensions](https://www.dimensions.ai/) database. For more information about the API language, see the [official documentation](https://docs.dimensions.ai/dsl). 
 
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
