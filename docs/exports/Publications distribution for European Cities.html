@@ -13116,9 +13116,10 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Publications-volume-per-city-(in-the-EU,-for-a-given-year)">Publications volume per city (in the EU, for a given year)<a class="anchor-link" href="#Publications-volume-per-city-(in-the-EU,-for-a-given-year)">&#182;</a></h1><p>Goal: we want to measure the distribution of publications per EU cities, in 2018.</p>
-<p>This will allow us to create a nice-looking map where cities producing more research can be identified visually.</p>
-<p>The same approach could be used for other geographical areas and time-spans.</p>
+<h1 id="Comparing-the-publications-volume-of-cities-in-Europe">Comparing the publications volume of cities in Europe<a class="anchor-link" href="#Comparing-the-publications-volume-of-cities-in-Europe">&#182;</a></h1><p>This notebook shows how to use the <a href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> to measure the distribution of overall number of publications per European cities. For the purpose of this exercise, we will look at a specific year i.e. 2018.</p>
+<p>This data will allow us to create a nice-looking map where cities producing more research can be identified visually.</p>
+<blockquote><p><strong>Customize this notebook:</strong> simply change the geographical area and time-span to adapt this analysis to your needs!</p>
+</blockquote>
 
 </div>
 </div>
@@ -13126,8 +13127,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Prerequisites">Prerequisites<a class="anchor-link" href="#Prerequisites">&#182;</a></h4><p>This notebook assumes you have installed the <a href="https://pypi.org/project/dimcli/"><code>dimcli</code></a> library and are familiar with the <a href="https://github.com/digital-science/dimensions-api-examples/tree/master/1%20Getting%20Started">Getting Started</a> tutorials.</p>
-
+<h4 id="Prerequisites">Prerequisites<a class="anchor-link" href="#Prerequisites">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -13136,9 +13136,16 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">dimcli</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># data analysis libraries </span>
+<span class="kn">import</span> <span class="nn">time</span> 
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> 
+<span class="kn">import</span> <span class="nn">requests</span>  
+<span class="kn">import</span> <span class="nn">json</span> 
+<span class="c1"># Dimensions API query helper</span>
+<span class="kn">import</span> <span class="nn">dimcli</span>
 <span class="o">%</span><span class="k">dsl_login</span>
 <span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
+<span class="c1"># </span>
 </pre></div>
 
     </div>
@@ -13160,30 +13167,6 @@ div#notebook {
 </div>
 </div>
 
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's also load a few other libraries which will be useful later on..</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">time</span> <span class="c1"># for pacing the API queries</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> <span class="c1"># for analysing the data</span>
-<span class="kn">import</span> <span class="nn">requests</span> <span class="c1"># for querying geonames </span>
-<span class="kn">import</span> <span class="nn">json</span> <span class="c1"># for parsing geonames data</span>
-</pre></div>
-
-    </div>
 </div>
 </div>
 
@@ -14669,6 +14652,28 @@ DONE: data saved
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h1 id="Want-to-learn-more?">Want to learn more?<a class="anchor-link" href="#Want-to-learn-more?">&#182;</a></h1><p>Check out the <a href="https://digital-science.github.io/dimensions-api-lab/">Dimensions API Lab</a> website, which contains many tutorials and reusable Jupyter notebooks for scholarly data analytics.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
 </div>
     </div>
   </div>
