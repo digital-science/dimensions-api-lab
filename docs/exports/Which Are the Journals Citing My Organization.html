@@ -13116,7 +13116,8 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Which-Are-the-Journals-Citing-My-Organization?">Which Are the Journals Citing My Organization?<a class="anchor-link" href="#Which-Are-the-Journals-Citing-My-Organization?">&#182;</a></h1><p>This notebook shows how it's possible to start from an organization GRID identifier and to find out which are the top journals citing publications originating from this GRID.</p>
+<h1 id="What-Journals-Have-Been-Citing-My-Organization?">What Journals Have Been Citing My Organization?<a class="anchor-link" href="#What-Journals-Have-Been-Citing-My-Organization?">&#182;</a></h1><p>This notebook shows how to use the <a href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> to discover what academic journals are most frequenlty citing publications from a selected research organization.</p>
+<p>We start from a <a href="https://grid.ac/">GRID</a> identifier (representing a research organization in Dimensions) and then select all publications citing research where at least one author is/as affiliated to that GRID ID. We then group this publications by source (journal) and sort them by frequency.</p>
 <p>For the purpose of this exercise, we will look at <strong>University of Bologna</strong> in Italy: <a href="https://grid.ac/institutes/grid.6292.f">grid.6292.f</a> and publications from 2018.</p>
 
 </div>
@@ -13139,7 +13140,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<blockquote><p>Tip: simply change the GRID ID to try out this example for your institution. You can also add more contraints to the <code>publications</code> query below (e.g. filtering by subject area) to segment these results.</p>
+<blockquote><p><strong>Customize this notebook:</strong> simply change the GRID ID to try out this example for your institution. You can also add more contraints to the <code>publications</code> query below e.g. filtering by subject area in order to obtain a different segmentation of these results.</p>
 </blockquote>
 
 </div>
@@ -13336,7 +13337,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="3.-Analyzing-Journals-Information">3. Analyzing Journals Information<a class="anchor-link" href="#3.-Analyzing-Journals-Information">&#182;</a></h2><p>Next up, we take all of this data and put it into a pandas dataframe.</p>
+<h2 id="3.-Grouping-References-by-Journals">3. Grouping References by Journals<a class="anchor-link" href="#3.-Grouping-References-by-Journals">&#182;</a></h2><p>We are going to analyze the referencing publications, in particular by grouping them by source journal, after loading the JSON data into a pandas Dataframe.</p>
 <blockquote><p><a href="https://pandas.pydata.org/pandas-docs/stable/">pandas</a> is a popular software library written for the Python programming language for data manipulation and analysis</p>
 </blockquote>
 
@@ -13454,8 +13455,7 @@ div#notebook {
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Dataframes provide many ways to analyze the data further.</p>
-<p>E.g. how many <strong>unique journals</strong> do we have?</p>
-
+<h3 id="How-many-unique-journals-do-we-have?">How many unique journals do we have?<a class="anchor-link" href="#How-many-unique-journals-do-we-have?">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -13499,7 +13499,7 @@ Name: journal.id, dtype: object</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>What are the <strong>journals with more than 100 citations</strong>?</p>
+<h3 id="What-are-the-most-frequent-journals?">What are the most frequent journals?<a class="anchor-link" href="#What-are-the-most-frequent-journals?">&#182;</a></h3><p>We set a threshold of &gt;100 citations to identify journals that are most relevant, and sort them by tot number of publications citing research from our chosen GRID ID.</p>
 
 </div>
 </div>
