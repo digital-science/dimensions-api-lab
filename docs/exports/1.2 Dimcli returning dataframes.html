@@ -13126,7 +13126,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span>
@@ -13168,11 +13168,11 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># we&#39;ll reuse this query later on </span>
-<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search publications for &quot;graphene&quot; where year=[2013:2019] return publications sort by times_cited limit 100&quot;&quot;&quot;</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search publications for &quot;graphene&quot; where year=[2013:2019] return publications sort by times_cited limit 1000&quot;&quot;&quot;</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">dslquery</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
 </pre></div>
 
@@ -13190,7 +13190,7 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Returned Publications: 100 (total = 361718)
+<pre>Returned Publications: 1000 (total = 365474)
 </pre>
 </div>
 </div>
@@ -13201,11 +13201,11 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
-<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13218,143 +13218,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[13]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>author_affiliations</th>
-      <th>id</th>
-      <th>issue</th>
-      <th>journal</th>
-      <th>pages</th>
-      <th>title</th>
-      <th>type</th>
-      <th>volume</th>
-      <th>year</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>[[{'first_name': 'Manish', 'last_name': 'Chhow...</td>
-      <td>pub.1050119463</td>
-      <td>4</td>
-      <td>{'id': 'jour.1041224', 'title': 'Nature Chemis...</td>
-      <td>263</td>
-      <td>The chemistry of two-dimensional layered trans...</td>
-      <td>article</td>
-      <td>5</td>
-      <td>2013</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>[[{'first_name': 'A. K.', 'last_name': 'Geim',...</td>
-      <td>pub.1024857999</td>
-      <td>7459</td>
-      <td>{'id': 'jour.1018957', 'title': 'Nature'}</td>
-      <td>419</td>
-      <td>Van der Waals heterostructures</td>
-      <td>article</td>
-      <td>499</td>
-      <td>2013</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>[[{'first_name': 'Huanping', 'last_name': 'Zho...</td>
-      <td>pub.1004394295</td>
-      <td>6196</td>
-      <td>{'id': 'jour.1346339', 'title': 'Science'}</td>
-      <td>542-546</td>
-      <td>Interface engineering of highly efficient pero...</td>
-      <td>article</td>
-      <td>345</td>
-      <td>2014</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>[[{'first_name': 'Likai', 'last_name': 'Li', '...</td>
-      <td>pub.1032956475</td>
-      <td>5</td>
-      <td>{'id': 'jour.1037429', 'title': 'Nature Nanote...</td>
-      <td>372-377</td>
-      <td>Black phosphorus field-effect transistors</td>
-      <td>article</td>
-      <td>9</td>
-      <td>2014</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>[[{'first_name': 'C.', 'last_name': 'Patrignan...</td>
-      <td>pub.1059158429</td>
-      <td>10</td>
-      <td>{'id': 'jour.1327822', 'title': 'Chinese Physi...</td>
-      <td>100001</td>
-      <td>Review of Particle Physics</td>
-      <td>article</td>
-      <td>40</td>
-      <td>2016</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># of course we can do all of that in one line too</span>
-<span class="n">dslquery</span><span class="p">(</span><span class="n">query</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Returned Publications: 100 (total = 361718)
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[14]:</div>
+    <div class="prompt output_prompt">Out[4]:</div>
 
 
 
@@ -13530,10 +13394,207 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># the &#39;describe&#39; method returns basic statistic for all columns of a dataframe</span>
+<span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[11]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>author_affiliations</th>
+      <th>id</th>
+      <th>issue</th>
+      <th>journal</th>
+      <th>pages</th>
+      <th>title</th>
+      <th>type</th>
+      <th>volume</th>
+      <th>year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>998</td>
+      <td>1000</td>
+      <td>934</td>
+      <td>997</td>
+      <td>996</td>
+      <td>1000</td>
+      <td>1000</td>
+      <td>997</td>
+      <td>1000.000000</td>
+    </tr>
+    <tr>
+      <th>unique</th>
+      <td>997</td>
+      <td>1000</td>
+      <td>135</td>
+      <td>143</td>
+      <td>987</td>
+      <td>1000</td>
+      <td>4</td>
+      <td>166</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>top</th>
+      <td>[[{'first_name': 'Jingjing', 'last_name': 'Dua...</td>
+      <td>pub.1042950947</td>
+      <td>1</td>
+      <td>{'id': 'jour.1015766', 'title': 'Chemical Soci...</td>
+      <td>23-36</td>
+      <td>Large, non-saturating magnetoresistance in WTe2</td>
+      <td>article</td>
+      <td>7</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>freq</th>
+      <td>2</td>
+      <td>1</td>
+      <td>174</td>
+      <td>106</td>
+      <td>2</td>
+      <td>1</td>
+      <td>997</td>
+      <td>67</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2014.114000</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.103731</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2013.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2013.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2014.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2015.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2018.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># eg distribution of publication years</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># the &#39;value_counts&#39; method returns the distribution of a specific field eg publication [years]</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 
@@ -13553,12 +13614,12 @@ div#notebook {
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>2013    45
-2014    29
-2015    18
-2016     4
-2017     3
-2018     1
+<pre>2013    362
+2014    316
+2015    206
+2016     82
+2017     30
+2018      4
 Name: year, dtype: int64</pre>
 </div>
 
@@ -13573,7 +13634,7 @@ Name: year, dtype: int64</pre>
 <div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># eg distribution of publication type</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># eg distribution of publication [type]</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 
@@ -13593,8 +13654,10 @@ Name: year, dtype: int64</pre>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>article    99
-book        1
+<pre>article      997
+monograph      1
+book           1
+chapter        1
 Name: type, dtype: int64</pre>
 </div>
 
@@ -13604,23 +13667,19 @@ Name: type, dtype: int64</pre>
 </div>
 
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-    </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="2.-Helper-Methods-for-'Publications'-queries">2. Helper Methods for 'Publications' queries<a class="anchor-link" href="#2.-Helper-Methods-for-'Publications'-queries">&#182;</a></h2>
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="2.-Extracting-authors:-as_dataframe_authors">2. Extracting authors: <code>as_dataframe_authors</code><a class="anchor-link" href="#2.-Extracting-authors:-as_dataframe_authors">&#182;</a></h2><p>Publications authors are usually returned by the Dimensions API inside a nested JSON object in the <code>authors_affiliations</code> sub-key.</p>
+<h2 id="Publications-authors:-as_dataframe_authors">Publications authors: <code>as_dataframe_authors</code><a class="anchor-link" href="#Publications-authors:-as_dataframe_authors">&#182;</a></h2><p>Publications authors are usually returned by the Dimensions API inside a nested JSON object in the <code>authors_affiliations</code> sub-key.</p>
+<blockquote><p>Note: the order of authors in the JSON is consistent with the ordering of authors in the original publication</p>
+</blockquote>
 <p>This methods allows to quickly extract that data and return a dataframe with <strong>one row per author</strong>.</p>
 
 </div>
@@ -13628,7 +13687,7 @@ Name: type, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">authors</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">as_dataframe_authors</span><span class="p">()</span>
@@ -13645,7 +13704,7 @@ Name: type, dtype: int64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[22]:</div>
+    <div class="prompt output_prompt">Out[16]:</div>
 
 
 
@@ -13749,7 +13808,7 @@ Name: type, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">authors</span><span class="p">[</span><span class="s1">&#39;current_organization_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[:</span><span class="mi">10</span><span class="p">]</span>
@@ -13765,22 +13824,22 @@ Name: type, dtype: int64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[25]:</div>
+    <div class="prompt output_prompt">Out[17]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>grid.5379.8      34
-                 29
-grid.8217.c      25
-grid.5333.6      21
-grid.59025.3b    19
-grid.168010.e    14
-grid.4280.e      13
-grid.21729.3f    13
-grid.263761.7    12
-grid.430387.b    11
+<pre>                 173
+grid.59025.3b    153
+grid.168010.e    150
+grid.12527.33     93
+grid.5379.8       86
+grid.59053.3a     86
+grid.5333.6       78
+grid.116068.8     71
+grid.19006.3e     71
+grid.13402.34     68
 Name: current_organization_id, dtype: int64</pre>
 </div>
 
@@ -13793,7 +13852,7 @@ Name: current_organization_id, dtype: int64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<blockquote><p>Explanation: the most frequent value turns to be grid.5379.8 ie <a href="https://grid.ac/institutes/grid.5379.8">university of Manchester</a>. The second result is empty, meaning that for those authors Dimensions has no info about <code>current_organization_id</code>.</p>
+<blockquote><p>Explanation: the most frequent value turns to be grid.59025.3b ie <a href="https://www.grid.ac/institutes/grid.59025.3b">Nanyang Technological University in Singapore</a>. The second result is empty, meaning that for those authors Dimensions has no info about <code>current_organization_id</code>.</p>
 </blockquote>
 
 </div>
@@ -13802,7 +13861,7 @@ Name: current_organization_id, dtype: int64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="3.-Extracting-affiliations:-as_dataframe_authors_affiliations">3. Extracting affiliations: <code>as_dataframe_authors_affiliations</code><a class="anchor-link" href="#3.-Extracting-affiliations:-as_dataframe_authors_affiliations">&#182;</a></h2><p>As you can see from the results of the previous section, the <code>affiliations</code> of each author is yet another nested JSON object.</p>
+<h2 id="Publications-affiliations:-as_dataframe_authors_affiliations">Publications affiliations: <code>as_dataframe_authors_affiliations</code><a class="anchor-link" href="#Publications-affiliations:-as_dataframe_authors_affiliations">&#182;</a></h2><p>As you can see from the results of the previous section, the <code>affiliations</code> of each author is yet another nested JSON object.</p>
 <p>The <code>as_dataframe_authors_affiliations</code> method allows to quickly extract that affiliations data and return a dataframe with <strong>one row per affiliation</strong>.</p>
 <p>This can be useful e.g. if one wants to count research organizations at <em>the time of writing</em> (as opposed to <code>current_organization_id</code>, which is the <em>most recent organization</em> of a researcher).</p>
 
@@ -13811,7 +13870,7 @@ Name: current_organization_id, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">affiliations</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">as_dataframe_authors_affiliations</span><span class="p">()</span>
@@ -13828,7 +13887,7 @@ Name: current_organization_id, dtype: int64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[26]:</div>
+    <div class="prompt output_prompt">Out[12]:</div>
 
 
 
@@ -13952,6 +14011,238 @@ Name: current_organization_id, dtype: int64</pre>
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">affiliations</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[13]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>aff_city</th>
+      <th>aff_city_id</th>
+      <th>aff_country</th>
+      <th>aff_country_code</th>
+      <th>aff_id</th>
+      <th>aff_name</th>
+      <th>aff_state</th>
+      <th>aff_state_code</th>
+      <th>pub_id</th>
+      <th>researcher_id</th>
+      <th>first_name</th>
+      <th>last_name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>6413</td>
+      <td>6.407000e+03</td>
+      <td>6413</td>
+      <td>6413</td>
+      <td>6413</td>
+      <td>7187</td>
+      <td>2202</td>
+      <td>2202</td>
+      <td>7187</td>
+      <td>7187</td>
+      <td>7187</td>
+      <td>7187</td>
+    </tr>
+    <tr>
+      <th>unique</th>
+      <td>428</td>
+      <td>NaN</td>
+      <td>50</td>
+      <td>50</td>
+      <td>718</td>
+      <td>998</td>
+      <td>51</td>
+      <td>51</td>
+      <td>985</td>
+      <td>4298</td>
+      <td>3450</td>
+      <td>1985</td>
+    </tr>
+    <tr>
+      <th>top</th>
+      <td>Beijing</td>
+      <td>NaN</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>grid.59025.3b</td>
+      <td>Nanyang Technological University</td>
+      <td>California</td>
+      <td>US-CA</td>
+      <td>pub.1019661721</td>
+      <td></td>
+      <td>Yi</td>
+      <td>Wang</td>
+    </tr>
+    <tr>
+      <th>freq</th>
+      <td>631</td>
+      <td>NaN</td>
+      <td>1949</td>
+      <td>1949</td>
+      <td>229</td>
+      <td>229</td>
+      <td>548</td>
+      <td>548</td>
+      <td>105</td>
+      <td>140</td>
+      <td>63</td>
+      <td>300</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>NaN</td>
+      <td>3.039684e+06</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>NaN</td>
+      <td>1.553733e+06</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>NaN</td>
+      <td>6.609300e+04</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>NaN</td>
+      <td>1.816670e+06</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>NaN</td>
+      <td>2.174003e+06</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>NaN</td>
+      <td>4.722625e+06</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>NaN</td>
+      <td>8.469294e+06</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13962,7 +14253,7 @@ Name: current_organization_id, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">affiliations</span><span class="p">[</span><span class="s1">&#39;aff_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[:</span><span class="mi">10</span><span class="p">]</span>
@@ -13978,22 +14269,22 @@ Name: current_organization_id, dtype: int64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[28]:</div>
+    <div class="prompt output_prompt">Out[14]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>grid.5335.0      43
-grid.5379.8      41
-grid.8217.c      35
-grid.59025.3b    26
-grid.21729.3f    24
-grid.168010.e    23
-grid.5333.6      22
-grid.9227.e      18
-grid.21940.3e    17
-grid.4280.e      15
+<pre>grid.59025.3b    229
+grid.168010.e    202
+grid.12527.33    111
+grid.21729.3f    106
+grid.19006.3e     98
+grid.5379.8       90
+grid.9227.e       84
+grid.116068.8     83
+grid.59053.3a     82
+grid.5333.6       82
 Name: aff_id, dtype: int64</pre>
 </div>
 
@@ -14006,7 +14297,7 @@ Name: aff_id, dtype: int64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<blockquote><p>Explanation: the most frequent value this time turns to be grid.5335.0 ie <a href="https://grid.ac/institutes/grid.5335.0">University of Cambridge</a>. This means that several authors <strong>have moved</strong> university since they published these articles.</p>
+<blockquote><p>Explanation: the most frequent value is still <a href="https://www.grid.ac/institutes/grid.59025.3b">grid.59025.3b</a>, meaning that most authors' current organization is the same organization of when they published these articles.</p>
 </blockquote>
 
 </div>
@@ -14022,7 +14313,7 @@ Name: aff_id, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">affiliations</span><span class="p">[</span><span class="s1">&#39;aff_country&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[:</span><span class="mi">10</span><span class="p">]</span>
@@ -14038,22 +14329,22 @@ Name: aff_id, dtype: int64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[29]:</div>
+    <div class="prompt output_prompt">Out[18]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>United States     235
-China             129
-United Kingdom    106
-Singapore          42
-Italy              38
-Ireland            35
-Switzerland        31
-Germany            30
-Japan              20
-Australia          15
+<pre>United States     1949
+China             1914
+Singapore          328
+South Korea        313
+United Kingdom     261
+Germany            201
+Japan              168
+Australia          157
+Switzerland        122
+Spain              101
 Name: aff_country, dtype: int64</pre>
 </div>
 
@@ -14066,7 +14357,7 @@ Name: aff_country, dtype: int64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<blockquote><p>Explanation: the vast majority of authors in this dataset are from the United States, followed by China.</p>
+<blockquote><p>Explanation: the vast majority of authors in this dataset are from the United States, closely followed by China.</p>
 </blockquote>
 
 </div>
