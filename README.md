@@ -2,8 +2,6 @@
 
 This GitHub repository contains code samples and reusable **Jupyter notebooks** for scholarly data analytics using the [Dimensions API](https://www.dimensions.ai/dimensions-apis/).
 
-The Dimensions Analytics API enables users to perform complex searches in the [Dimensions](https://www.dimensions.ai/) database. For more information about the API language, see also the [official documentation](https://docs.dimensions.ai/dsl). 
-
 A companion website including HTML versions of these tutorials is also available: https://digital-science.github.io/dimensions-api-lab/ 
 
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
@@ -14,6 +12,8 @@ A companion website including HTML versions of these tutorials is also available
 Digital Science's Dimensions is a dynamic, easy to use, linked-research data platform that re-imagines the way research can be discovered, accessed and analyzed.  Within Dimensions, users can explore the connections between grants, publications, clinical trials, patents and policy documents.
 
 For more information, see https://www.dimensions.ai/ 
+
+For a detailed breakdown of the Dimensions API language, see the [API documentation](https://docs.dimensions.ai/dsl)
 
 
 ### What are Jupyter Notebooks?

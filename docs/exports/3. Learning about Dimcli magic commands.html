@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>2. Understanding query results</title>
+<title>3. Learning about Dimcli magic commands</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13116,22 +13116,14 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Understanding-query-results">Understanding query results<a class="anchor-link" href="#Understanding-query-results">&#182;</a></h1><p>The purpose of this notebook is to show how to make sense and manipulate the data coming back from the DSL.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Prerequisites">Prerequisites<a class="anchor-link" href="#Prerequisites">&#182;</a></h4><p>This notebook assumes you have installed the <a href="https://pypi.org/project/dimcli/"><code>dimcli</code></a> library and are familiar with the <em>Getting Started</em> tutorial.</p>
+<h1 id="Dimcli:-magic-commands">Dimcli: magic commands<a class="anchor-link" href="#Dimcli:-magic-commands">&#182;</a></h1><p>DimCli includes a few <a href="https://ipython.readthedocs.io/en/stable/interactive/magics.html">Python magic commands</a> which make it much easier to interrogate the API.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">dimcli</span>
@@ -13142,23 +13134,1521 @@ div#notebook {
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>DimCli v0.5.3 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (method: dsl.ini file)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="What-the-query-statistics-refer-to">What the query statistics refer to<a class="anchor-link" href="#What-the-query-statistics-refer-to">&#182;</a></h4><p>When performing a DSL search, a <code>_stats</code> object is return which contains some useful info eg the total number of records available for a search.</p>
-<p>It is important to note though that the total number <em>always refers to the main source</em> one is searching for, not necessarily the results being returned.</p>
-<p>So, both the queries below have <code>publications</code> as the main source, while only the first one also has <code>publications</code> in the return data. The second one instead returns <code>researchers</code>.</p>
+<h2 id="1.Retrieving-documentation-with-%dsl_docs">1.Retrieving documentation with <code>%dsl_docs</code><a class="anchor-link" href="#1.Retrieving-documentation-with-%dsl_docs">&#182;</a></h2><p>The <code>dsl_docs</code> magic prints out detailed information about the fields and entities you can query for using the Dimensions API (as per the <a href="https://docs.dimensions.ai/dsl/data.html">official documentation</a>).</p>
+<p>NOTE: this information is retrieved dynamically using the <code>describe</code> DSL command, then displayed in the notebook using pandas.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If you pass a source name like <code>grants</code>, what you get back is a nice table showing all fields available for that source.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">dsl_docs</span> grants
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[7]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sources</th>
+      <th>field</th>
+      <th>type</th>
+      <th>description</th>
+      <th>is_filter</th>
+      <th>is_entity</th>
+      <th>is_facet</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>grants</td>
+      <td>FOR</td>
+      <td>categories</td>
+      <td>ANZSRC Fields of Research classification</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>grants</td>
+      <td>FOR_first</td>
+      <td>categories</td>
+      <td>Division level FOR</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>grants</td>
+      <td>HRCS_HC</td>
+      <td>categories</td>
+      <td>HRCS - Health Categories</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>grants</td>
+      <td>HRCS_RAC</td>
+      <td>categories</td>
+      <td>HRCS – Research Activity Codes</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>grants</td>
+      <td>RCDC</td>
+      <td>categories</td>
+      <td>Research, Condition, and Disease Categorization</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>grants</td>
+      <td>abstract</td>
+      <td>text</td>
+      <td>None</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>grants</td>
+      <td>active_year</td>
+      <td>integer</td>
+      <td>None</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>grants</td>
+      <td>date_inserted</td>
+      <td>timestamp</td>
+      <td>Date when publication was inserted into Dimens...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>grants</td>
+      <td>end_date</td>
+      <td>timestamp</td>
+      <td>None</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>grants</td>
+      <td>funder_countries</td>
+      <td>countries</td>
+      <td>GeoNames code and name</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>grants</td>
+      <td>funders</td>
+      <td>orgs</td>
+      <td>None</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>grants</td>
+      <td>funding_aud</td>
+      <td>financial</td>
+      <td>Funding amount awarded in AUD</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>grants</td>
+      <td>funding_cad</td>
+      <td>financial</td>
+      <td>Funding amount awarded in CAD</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>grants</td>
+      <td>funding_chf</td>
+      <td>financial</td>
+      <td>Funding amount awarded in CHF</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>grants</td>
+      <td>funding_currency</td>
+      <td>label</td>
+      <td>Original funding currency</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>grants</td>
+      <td>funding_eur</td>
+      <td>financial</td>
+      <td>Funding amount awarded in EUR</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>grants</td>
+      <td>funding_gbp</td>
+      <td>financial</td>
+      <td>Funding amount awarded in GBP</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>grants</td>
+      <td>funding_jpy</td>
+      <td>financial</td>
+      <td>Funding amount awarded in JPY</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>grants</td>
+      <td>funding_nzd</td>
+      <td>financial</td>
+      <td>Funding amount awarded in NZD</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>grants</td>
+      <td>funding_org_acronym</td>
+      <td>label</td>
+      <td>Acronym for funding organisation</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>grants</td>
+      <td>funding_org_city</td>
+      <td>label</td>
+      <td>City name for funding organisation</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>grants</td>
+      <td>funding_org_name</td>
+      <td>label</td>
+      <td>None</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>grants</td>
+      <td>funding_usd</td>
+      <td>financial</td>
+      <td>Funding amount awarded in USD</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>grants</td>
+      <td>id</td>
+      <td>identifier</td>
+      <td>Dimensions grant id</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>grants</td>
+      <td>language</td>
+      <td>label</td>
+      <td>ISO 639-1 language codes</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>grants</td>
+      <td>linkout</td>
+      <td>text</td>
+      <td>URL linked to grant</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>grants</td>
+      <td>original_title</td>
+      <td>text</td>
+      <td>None</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>grants</td>
+      <td>project_num</td>
+      <td>identifier</td>
+      <td>None</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>grants</td>
+      <td>research_org_cities</td>
+      <td>cities</td>
+      <td>GeoNames id and name</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>grants</td>
+      <td>research_org_countries</td>
+      <td>countries</td>
+      <td>GeoNames code and name</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>grants</td>
+      <td>research_org_name</td>
+      <td>label</td>
+      <td>Name for research organisation</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>grants</td>
+      <td>research_org_state_codes</td>
+      <td>states</td>
+      <td>ISO‌-3166-2 code and name</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>grants</td>
+      <td>research_orgs</td>
+      <td>orgs</td>
+      <td>None</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>grants</td>
+      <td>researcher_details</td>
+      <td>json</td>
+      <td>Additional details about researchers including...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>grants</td>
+      <td>researchers</td>
+      <td>researchers</td>
+      <td>None</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>grants</td>
+      <td>resulting_publication_ids</td>
+      <td>identifier</td>
+      <td>Resulting Publication IDs. Deprecated, use `pu...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>grants</td>
+      <td>start_date</td>
+      <td>timestamp</td>
+      <td>None</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>grants</td>
+      <td>start_year</td>
+      <td>integer</td>
+      <td>None</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>grants</td>
+      <td>title</td>
+      <td>text</td>
+      <td>None</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>grants</td>
+      <td>title_language</td>
+      <td>label</td>
+      <td>ISO 639-1 language code used in title</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Same for objects of type 'Entity' eg <code>countries</code></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">dsl_docs</span> countries
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[10]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>entities</th>
+      <th>field</th>
+      <th>type</th>
+      <th>description</th>
+      <th>is_filter</th>
+      <th>is_entity</th>
+      <th>is_facet</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>countries</td>
+      <td>id</td>
+      <td>string</td>
+      <td>Dimensions city id</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>countries</td>
+      <td>name</td>
+      <td>string</td>
+      <td>None</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>But don't worry if you don't get it right: if you pass a wrong object name, the full list of available sources and entities is printed.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">dsl_docs</span> unknown
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Sorry can&#39;t recognize this object. Use one of the following: Sources=[publications - grants - patents - clinical_trials - policy_documents - researchers] Entities=[categories - cities - countries - journals - org_groups - orgs - states - open_access] 
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Finally, if no object is requested explicitally, the documentation for all the sources gets returned.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">dsl_docs</span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[11]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sources</th>
+      <th>field</th>
+      <th>type</th>
+      <th>description</th>
+      <th>is_filter</th>
+      <th>is_entity</th>
+      <th>is_facet</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>publications</td>
+      <td>FOR</td>
+      <td>categories</td>
+      <td>ANZSRC Fields of Research classification</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>publications</td>
+      <td>FOR_first</td>
+      <td>categories</td>
+      <td>Division level FOR</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>publications</td>
+      <td>HRCS_HC</td>
+      <td>categories</td>
+      <td>HRCS - Health Categories</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>publications</td>
+      <td>HRCS_RAC</td>
+      <td>categories</td>
+      <td>HRCS – Research Activity Codes</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>publications</td>
+      <td>RCDC</td>
+      <td>categories</td>
+      <td>Research, Condition, and Disease Categorization</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>publications</td>
+      <td>altmetric</td>
+      <td>float</td>
+      <td>Altmetric attention score. Does not support em...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>publications</td>
+      <td>altmetric_id</td>
+      <td>integer</td>
+      <td>AltMetric Publication ID</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>publications</td>
+      <td>author_affiliations</td>
+      <td>json</td>
+      <td>List of JSON lists of researchers' first and l...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>publications</td>
+      <td>book_doi</td>
+      <td>identifier</td>
+      <td>None</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>publications</td>
+      <td>book_series_title</td>
+      <td>text</td>
+      <td>None</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>publications</td>
+      <td>book_title</td>
+      <td>text</td>
+      <td>None</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>publications</td>
+      <td>date</td>
+      <td>date</td>
+      <td>None</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>publications</td>
+      <td>date_inserted</td>
+      <td>timestamp</td>
+      <td>Date when publication was inserted into Dimens...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>publications</td>
+      <td>doi</td>
+      <td>identifier</td>
+      <td>Digital object identifier</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>publications</td>
+      <td>field_citation_ratio</td>
+      <td>float</td>
+      <td>Relative citation performance of article when ...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>publications</td>
+      <td>funder_countries</td>
+      <td>countries</td>
+      <td>None</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>publications</td>
+      <td>funders</td>
+      <td>orgs</td>
+      <td>None</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>publications</td>
+      <td>id</td>
+      <td>identifier</td>
+      <td>Dimensions publication id</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>publications</td>
+      <td>issn</td>
+      <td>string</td>
+      <td>International Standard Serial Number</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>publications</td>
+      <td>issue</td>
+      <td>string</td>
+      <td>None</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>publications</td>
+      <td>journal</td>
+      <td>journals</td>
+      <td>None</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>publications</td>
+      <td>journal_lists</td>
+      <td>string</td>
+      <td>Independent grouping of journals outside of Di...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>publications</td>
+      <td>linkout</td>
+      <td>text</td>
+      <td>URL address</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>publications</td>
+      <td>mesh_terms</td>
+      <td>label</td>
+      <td>Medical Subject Heading terms as used in PubMed.</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>publications</td>
+      <td>open_access</td>
+      <td>string</td>
+      <td>Open Access status for publication. Deprecated...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>publications</td>
+      <td>open_access_categories</td>
+      <td>open_access</td>
+      <td>Open Access category for publication. Filterin...</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>publications</td>
+      <td>pages</td>
+      <td>string</td>
+      <td>None</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>publications</td>
+      <td>pmcid</td>
+      <td>identifier</td>
+      <td>PubMed Central ID</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>publications</td>
+      <td>pmid</td>
+      <td>identifier</td>
+      <td>PubMed ID</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>publications</td>
+      <td>proceedings_title</td>
+      <td>text</td>
+      <td>Title of a conference corresponding to documen...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>155</th>
+      <td>policy_documents</td>
+      <td>HRCS_HC</td>
+      <td>categories</td>
+      <td>HRCS - Health Categories</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>156</th>
+      <td>policy_documents</td>
+      <td>HRCS_RAC</td>
+      <td>categories</td>
+      <td>HRCS – Research Activity Codes</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>157</th>
+      <td>policy_documents</td>
+      <td>RCDC</td>
+      <td>categories</td>
+      <td>Research, Condition, and Disease Categorization</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>158</th>
+      <td>policy_documents</td>
+      <td>broad_research_areas</td>
+      <td>categories</td>
+      <td>None</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>159</th>
+      <td>policy_documents</td>
+      <td>city</td>
+      <td>cities</td>
+      <td>None</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>160</th>
+      <td>policy_documents</td>
+      <td>country</td>
+      <td>countries</td>
+      <td>None</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>161</th>
+      <td>policy_documents</td>
+      <td>date_inserted</td>
+      <td>date</td>
+      <td>Date when policy document was inserted into Di...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>162</th>
+      <td>policy_documents</td>
+      <td>grid_id</td>
+      <td>string</td>
+      <td>None</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>163</th>
+      <td>policy_documents</td>
+      <td>health_research_areas</td>
+      <td>categories</td>
+      <td>None</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>164</th>
+      <td>policy_documents</td>
+      <td>id</td>
+      <td>identifier</td>
+      <td>Dimensions policy document id</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>165</th>
+      <td>policy_documents</td>
+      <td>linkout</td>
+      <td>text</td>
+      <td>None</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>166</th>
+      <td>policy_documents</td>
+      <td>publication_ids</td>
+      <td>identifier</td>
+      <td>Referenced Publication IDs</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>167</th>
+      <td>policy_documents</td>
+      <td>source_name</td>
+      <td>string</td>
+      <td>None</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>168</th>
+      <td>policy_documents</td>
+      <td>state</td>
+      <td>states</td>
+      <td>None</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>169</th>
+      <td>policy_documents</td>
+      <td>title</td>
+      <td>string</td>
+      <td>None</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>170</th>
+      <td>policy_documents</td>
+      <td>year</td>
+      <td>integer</td>
+      <td>Policy posted on year</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>171</th>
+      <td>researchers</td>
+      <td>current_research_org</td>
+      <td>orgs</td>
+      <td>The most recent research organization linked t...</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>172</th>
+      <td>researchers</td>
+      <td>first_grant_year</td>
+      <td>integer</td>
+      <td>None</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>173</th>
+      <td>researchers</td>
+      <td>first_name</td>
+      <td>string</td>
+      <td>First Name</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>174</th>
+      <td>researchers</td>
+      <td>first_publication_year</td>
+      <td>integer</td>
+      <td>None</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>175</th>
+      <td>researchers</td>
+      <td>id</td>
+      <td>identifier</td>
+      <td>Dimensions researcher id</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>176</th>
+      <td>researchers</td>
+      <td>last_grant_year</td>
+      <td>integer</td>
+      <td>None</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>177</th>
+      <td>researchers</td>
+      <td>last_name</td>
+      <td>string</td>
+      <td>Last Name</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>178</th>
+      <td>researchers</td>
+      <td>last_publication_year</td>
+      <td>integer</td>
+      <td>None</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>179</th>
+      <td>researchers</td>
+      <td>obsolete</td>
+      <td>integer</td>
+      <td>Indicates researcher ID status. 0 means that t...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>180</th>
+      <td>researchers</td>
+      <td>orcid_id</td>
+      <td>text</td>
+      <td>`ORCID &lt;https://orcid.org/&gt;`_ ID</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>181</th>
+      <td>researchers</td>
+      <td>redirect</td>
+      <td>identifier</td>
+      <td>Indicates status of obsolete researcher ID. Em...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>182</th>
+      <td>researchers</td>
+      <td>research_orgs</td>
+      <td>orgs</td>
+      <td>All research organizations linked to the resea...</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>183</th>
+      <td>researchers</td>
+      <td>total_grants</td>
+      <td>integer</td>
+      <td>Total grants count</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>184</th>
+      <td>researchers</td>
+      <td>total_publications</td>
+      <td>integer</td>
+      <td>Total publications count</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+<p>185 rows × 7 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="2.Querying-with-%%dsl_query">2.Querying with <code>%%dsl_query</code><a class="anchor-link" href="#2.Querying-with-%%dsl_query">&#182;</a></h2><p>This command allows to simply pass an API query after typing <code>%%dsl_query</code> keyword. NOTE: the query should go in a new line.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">dsl_query</span> 
+search publications where journal.title=&quot;Nature&quot; return publications
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Returned Publications: 20 (total = 664568)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[3]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;dimcli.Result object #4640767632. Dict keys: &#39;_stats&#39;, &#39;publications&#39;&gt;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Or you can also split the query into multiple lines:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">dsl_query</span>
+search publications
+where year in [2013:2018] and research_orgs=&quot;grid.258806.1&quot;
+return publications[title]
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Returned Publications: 20 (total = 3764)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[4]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;dimcli.Result object #4640409168. Dict keys: &#39;_stats&#39;, &#39;publications&#39;&gt;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Note</strong> by default the results of a query are saved to a variable called <code>dsl_last_results</code>:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">dsl_last_results</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[5]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>dimcli.core.api.Result</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>A DimCli <code>Result</code> object is just a wrapper around the raw JSON data. (Use the <code>.json</code> method to get the raw data)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">dsl_last_results</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[7]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>20</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="3.Querying-with-%%dsl_query_loop">3.Querying with <code>%%dsl_query_loop</code><a class="anchor-link" href="#3.Querying-with-%%dsl_query_loop">&#182;</a></h2><p>This magic command automatically loops over all the pages of a result set until all possible results of a query have been returned.</p>
+<blockquote><p>NOTE: the Dimensions API returns a maximum of 1000 records per request. So if your query returns &gt;1000 records the only way to pull all of them out is to iterate through the results using the <code>limit</code> and <code>skip</code> operators (see the <a href="https://docs.dimensions.ai/dsl/language.html#limit-and-skip">docs</a>). So <code>%%dsl_query_loop</code> encapsulates this process within a single command.</p>
+</blockquote>
+<p>It is important to remember that loop queries must be used with caution as they can result in a large number of API calls!</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">dsl_query_loop</span>
 search publications
 where year in [2013:2018] and research_orgs=&quot;grid.258806.1&quot;
 return publications
@@ -13168,53 +14658,37 @@ return publications
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">dsl_query</span>
-search publications
-where year in [2013:2018] and research_orgs=&quot;grid.258806.1&quot;
-return researchers
-</pre></div>
+<div class="output_wrapper">
+<div class="output">
 
-    </div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>1000 / 3764
+2000 / 3764
+3000 / 3764
+3764 / 3764
+</pre>
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<blockquote><p>note: the total number of publications in the queries above don't match because they are an <em>approximation</em> of the real number of records available. This is due to the fact that in order to obtain adequate performance, the Dimensions database subdivides the data into multiple copies (or <em>shards</em>) which are not always perfectly synced. Hence the difference.</p>
-</blockquote>
+<div class="output_area">
 
+    <div class="prompt output_prompt">Out[8]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;dimcli.Result object #4646181328. Dict keys: &#39;_stats&#39;, &#39;publications&#39;&gt;</pre>
 </div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Facets-VS-Sources">Facets VS Sources<a class="anchor-link" href="#Facets-VS-Sources">&#182;</a></h4><p>The previous query is using the <code>researchers</code> facet of the <code>publications</code> source.</p>
-<p>In general queries can return up to 1000 records. For example this throws an exception:</p>
 
 </div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">dsl_query</span>
-search publications
-where year in [2013:2018] and research_orgs=&quot;grid.258806.1&quot;
-return researchers limit 2000
-</pre></div>
 
-    </div>
 </div>
 </div>
 
@@ -13222,23 +14696,40 @@ return researchers limit 2000
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now, with facets there is no way to pull out more than 1000 records with one single query. Instead if you are returning sources we can use the <code>skip</code> keyword to paginate through the results. E.g. if we return <code>publications</code> we can do this:</p>
+<p>Like before, the results of a <code>loop</code> query are stored into the <code>dsl_last_results</code> variable.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">dsl_query</span>
-search publications
-where year in [2013:2018] and research_orgs=&quot;grid.258806.1&quot;
-return publications limit 1000 skip 1000
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dsl_last_results</span><span class="o">.</span><span class="n">stats</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[9]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{&#39;total_count&#39;: 3764}</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 

@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>1.1 Dimcli magic commands</title>
+<title>Researchers Search - tips</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13116,17 +13116,130 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Dimcli:-magic-commands">Dimcli: magic commands<a class="anchor-link" href="#Dimcli:-magic-commands">&#182;</a></h1><p>DimCli includes a few <a href="https://ipython.readthedocs.io/en/stable/interactive/magics.html">Python magic commands</a> which make it much easier to interrogate the API.</p>
+<h1 id="Goal:-extracting-all-researchers-affiliated-to-a-certain-university,-who-published-in-a-specific-time-frame">Goal: extracting all researchers affiliated to a certain university, who published in a specific time-frame<a class="anchor-link" href="#Goal:-extracting-all-researchers-affiliated-to-a-certain-university,-who-published-in-a-specific-time-frame">&#182;</a></h1><p>The purpose of this notebook is to show how to extract this data using the Dimensions API.</p>
+<p>Specifically, we will look at a concrete use case. We want to find out about all reseachers known to Dimensions, who:</p>
+<ul>
+<li>have an affiliation to <strong>Kyushu Institute of Technology</strong> (<a href="https://grid.ac/institutes/grid.258806.1">grid.258806.1</a>)</li>
+<li>have published in the time frame <strong>2013-2018</strong></li>
+</ul>
+<p>NOTE: something to clarify right away is whether we want affiliations <em>at the time of speaking</em>, <strong>or</strong> <em>at the time of publishing</em>. For the sake of this exercise, we will get both.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[101]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">dimcli</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># constants</span>
+<span class="n">GRIDID</span> <span class="o">=</span> <span class="s2">&quot;grid.258806.1&quot;</span>
+<span class="n">YEARS</span> <span class="o">=</span> <span class="s2">&quot;[2013:2018]&quot;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Methodology">Methodology<a class="anchor-link" href="#Methodology">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>There are 2 ways to tackle this problem.</p>
+<h4 id="Approach-1.-Starting-from-the-publications-database:">Approach 1. Starting from the <em>publications</em> database:<a class="anchor-link" href="#Approach-1.-Starting-from-the-publications-database:">&#182;</a></h4><ol>
+<li>Filter publications for year range [2013-2018] and research_orgs="grid.258806.1"<ul>
+<li>i.e. <code>search publications where year in [2013:2018] and research_orgs="grid.258806.1" return publications</code></li>
+</ul>
+</li>
+<li>Loop over publications' authors and extract relevant reasearchers<ul>
+<li>if <code>['current_organization_id'] == "grid.258806.1"</code><ul>
+<li>=&gt; <strong>that gives us the affiliations at the time of speaking</strong></li>
+</ul>
+</li>
+<li>or if <code>['affiliation']['id'] == "grid.258806.1"</code> <ul>
+<li>=&gt; <strong>that gives us the affiliations at the time of publishing</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="Approach-2.-Starting-from-the-researchers-database:">Approach 2. Starting from the <em>researchers</em> database:<a class="anchor-link" href="#Approach-2.-Starting-from-the-researchers-database:">&#182;</a></h4><ol>
+<li>Filter researchers with research_orgs="grid.258806.1" (note: this gives us affiliated researches <em>at any point in time</em>)<ul>
+<li><code>search researchers where research_orgs="grid.258806.1" return researchers</code></li>
+</ul>
+</li>
+<li>Search for publications linked to these researchers and linked to "grid.258806.1", which have been published in the time frame <code>[2013-2018]</code><ul>
+<li><code>search publications where researchers.id in {LIST OF IDS} and year in [2013:2018] and research_orgs="grid.258806.1" return publications</code></li>
+<li>NOTE: this a variation of query 1.1 above: we have just added the researchers IDs filter (thus reducing the search space)</li>
+</ul>
+</li>
+<li>Extract relevant researchers from publications, using the same exact steps as in 1.2 above</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Results">Results<a class="anchor-link" href="#Results">&#182;</a></h2><p>As explained in the analysis section, both approaches return the same number of results (with some minor variations). Note: the three figures respectively are the a) researchers affiliated to the organization currently b) at the time of writing and c) and any time.</p>
+<table>
+<thead><tr>
+<th>Method</th>
+<th>Main Query</th>
+<th>Researchers Found</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td><code>search publications where year in [2013:2018] and research_orgs="grid.258806.1" return publications</code></td>
+<td>1308 / 1587 / 1588</td>
+</tr>
+<tr>
+<td>B</td>
+<td><code>search researchers where research_orgs="grid.258806.1" return researchers</code> --- then --- <code>search publications where researchers.id in {IDS} and year in [2013:2018] and research_orgs={GRIDID} return publications limit 1000</code></td>
+<td>1309 / 1584 / 1585</td>
+</tr>
+</tbody>
+</table>
+<h4 id="Why-the-different-numbers?">Why the different numbers?<a class="anchor-link" href="#Why-the-different-numbers?">&#182;</a></h4><ul>
+<li>The 'researchers' database collects information from both publications and grants data. Hence since some of the results may come from grants, the total number of researchers can be different from publications data.</li>
+<li>The 'researchers' database is generated by periodically extracting and disambiguating data from the the publications information and other sources. So sometime it can be less up to date compared to the other databases.  </li>
+</ul>
+<h4 id="So-which-one-is-better?">So which one is better?<a class="anchor-link" href="#So-which-one-is-better?">&#182;</a></h4><p>In this case, approach 1 is quicker to implement. However approach 2 could be better in some cases, e.g. if the first publicatons query would return a very large number of results. So it's good to keep them both in mind and judge case by case.</p>
+<hr>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Analysis">Analysis<a class="anchor-link" href="#Analysis">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[102]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">json</span> 
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pandas.io.json</span> <span class="k">import</span> <span class="n">json_normalize</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="k">import</span> <span class="n">tnrange</span><span class="p">,</span> <span class="n">tqdm_notebook</span> <span class="k">as</span> <span class="n">bar</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">sleep</span>
+<span class="kn">import</span> <span class="nn">dimcli</span> 
+<span class="kn">from</span> <span class="nn">dimcli.shortcuts</span> <span class="k">import</span> <span class="n">dslquery</span><span class="p">,</span> <span class="n">dslqueryall</span>
 <span class="o">%</span><span class="k">dsl_login</span>
 </pre></div>
 
@@ -13144,7 +13257,7 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>DimCli v0.5.3 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (method: dsl.ini file)
+<pre>DimCli v0.4.12 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (method: dsl.ini file)
 </pre>
 </div>
 </div>
@@ -13156,8 +13269,13 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="1.Retrieving-documentation-with-%dsl_docs">1.Retrieving documentation with <code>%dsl_docs</code><a class="anchor-link" href="#1.Retrieving-documentation-with-%dsl_docs">&#182;</a></h2><p>The <code>dsl_docs</code> magic prints out detailed information about the fields and entities you can query for using the Dimensions API (as per the <a href="https://docs.dimensions.ai/dsl/data.html">official documentation</a>).</p>
-<p>NOTE: this information is retrieved dynamically using the <code>describe</code> DSL command, then displayed in the notebook using pandas.</p>
+<hr>
+<h1 id="Method-1:-Search-from-publications">Method 1: Search from publications<a class="anchor-link" href="#Method-1:-Search-from-publications">&#182;</a></h1><p>The basic idea of this approach is to get all the relevant publications based on our search criteria.</p>
+<ol>
+<li>Extract all publications based on the criteria above</li>
+<li>From each publication, extract all researchers where either the <code>current_organization_id</code> or one of the <code>affiliations/id</code> are matching the GRIDID</li>
+<li>Remove duplicate researchers </li>
+</ol>
 
 </div>
 </div>
@@ -13165,17 +13283,39 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>If you pass a source name like <code>grants</code>, what you get back is a nice table showing all fields available for that source.</p>
+<p>By looking at one single record we can see how the data is organized: authors are stored in a nested list/dictionary with the key <code>author_affiliations</code>. For example, in order to extract for example the second author of the tenth publication we could do the following: <code>res.publications[10]['author_affiliations'][0][1]</code>:</p>
+
+<pre><code>{'first_name': 'Noboru',
+ 'last_name': 'Sebe',
+ 'orcid': '',
+ 'current_organization_id': 'grid.258806.1',
+ 'researcher_id': 'ur.010647607673.28',
+ 'affiliations': [{'id': 'grid.258806.1',
+   'name': 'Kyushu Institute of Technology',
+   'city': 'Kitakyushu',
+   'city_id': 1859307,
+   'country': 'Japan',
+   'country_code': 'JP',
+   'state': None,
+   'state_code': None}]}</code></pre>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>First off, we can to get all publications based on our search criteria by using a <code>loop</code> query.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[103]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">dsl_docs</span> grants
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m1_pubs_api_data</span> <span class="o">=</span> <span class="n">dslqueryall</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;&quot;&quot;search publications where year in </span><span class="si">{YEARS}</span><span class="s2"> and research_orgs=&quot;</span><span class="si">{GRIDID}</span><span class="s2">&quot; return publications&quot;&quot;&quot;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13188,7 +13328,57 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[7]:</div>
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>1000 / 4070
+2000 / 4070
+3000 / 4070
+4000 / 4070
+4070 / 4070
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="How-many-relevant-researchers-are-there-(with-affiliation-at-the-time-of-speaking)?">How many relevant researchers are there (with affiliation at the time of speaking)?<a class="anchor-link" href="#How-many-relevant-researchers-are-there-(with-affiliation-at-the-time-of-speaking)?">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[104]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># simplify dict structure nesting PS careful about running this twice!</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">m1_pubs_api_data</span><span class="o">.</span><span class="n">publications</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s1">&#39;author_affiliations&#39;</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
+        <span class="n">x</span><span class="p">[</span><span class="s1">&#39;author_affiliations&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;author_affiliations&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">x</span><span class="p">[</span><span class="s1">&#39;author_affiliations&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">m1_authors</span> <span class="o">=</span> <span class="n">json_normalize</span><span class="p">(</span><span class="n">m1_pubs_api_data</span><span class="o">.</span><span class="n">publications</span><span class="p">,</span> <span class="n">record_path</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;author_affiliations&#39;</span><span class="p">],</span> <span class="n">meta</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="n">m1_authors</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[104]:</div>
 
 
 
@@ -13211,415 +13401,65 @@ div#notebook {
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>sources</th>
-      <th>field</th>
-      <th>type</th>
-      <th>description</th>
-      <th>is_filter</th>
-      <th>is_entity</th>
-      <th>is_facet</th>
+      <th>affiliations</th>
+      <th>current_organization_id</th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>orcid</th>
+      <th>researcher_id</th>
+      <th>id</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>grants</td>
-      <td>FOR</td>
-      <td>categories</td>
-      <td>ANZSRC Fields of Research classification</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>Siewteng</td>
+      <td>Sim</td>
+      <td></td>
+      <td></td>
+      <td>pub.1110885950</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>grants</td>
-      <td>FOR_first</td>
-      <td>categories</td>
-      <td>Division level FOR</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>grid.258806.1</td>
+      <td>Yoshito</td>
+      <td>Andou</td>
+      <td></td>
+      <td>ur.01116323260.31</td>
+      <td>pub.1110885950</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>grants</td>
-      <td>HRCS_HC</td>
-      <td>categories</td>
-      <td>HRCS - Health Categories</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
+      <td>[{'id': 'grid.11142.37', 'name': 'Universiti P...</td>
+      <td>grid.11142.37</td>
+      <td>Hamra A. A.</td>
+      <td>Bashid</td>
+      <td></td>
+      <td>ur.016617033322.44</td>
+      <td>pub.1110885950</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>grants</td>
-      <td>HRCS_RAC</td>
-      <td>categories</td>
-      <td>HRCS – Research Activity Codes</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
+      <td>[{'id': 'grid.11142.37', 'name': 'Universiti P...</td>
+      <td>grid.11142.37</td>
+      <td>Hongngee</td>
+      <td>Lim</td>
+      <td>['0000-0003-2436-8953']</td>
+      <td>ur.010703155721.11</td>
+      <td>pub.1110885950</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>grants</td>
-      <td>RCDC</td>
-      <td>categories</td>
-      <td>Research, Condition, and Disease Categorization</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>grants</td>
-      <td>abstract</td>
-      <td>text</td>
-      <td>None</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>grants</td>
-      <td>active_year</td>
-      <td>integer</td>
-      <td>None</td>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>grants</td>
-      <td>date_inserted</td>
-      <td>timestamp</td>
-      <td>Date when publication was inserted into Dimens...</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>grants</td>
-      <td>end_date</td>
-      <td>timestamp</td>
-      <td>None</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>grants</td>
-      <td>funder_countries</td>
-      <td>countries</td>
-      <td>GeoNames code and name</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>grants</td>
-      <td>funders</td>
-      <td>orgs</td>
-      <td>None</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>grants</td>
-      <td>funding_aud</td>
-      <td>financial</td>
-      <td>Funding amount awarded in AUD</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>grants</td>
-      <td>funding_cad</td>
-      <td>financial</td>
-      <td>Funding amount awarded in CAD</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>grants</td>
-      <td>funding_chf</td>
-      <td>financial</td>
-      <td>Funding amount awarded in CHF</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>grants</td>
-      <td>funding_currency</td>
-      <td>label</td>
-      <td>Original funding currency</td>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>grants</td>
-      <td>funding_eur</td>
-      <td>financial</td>
-      <td>Funding amount awarded in EUR</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>grants</td>
-      <td>funding_gbp</td>
-      <td>financial</td>
-      <td>Funding amount awarded in GBP</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>grants</td>
-      <td>funding_jpy</td>
-      <td>financial</td>
-      <td>Funding amount awarded in JPY</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>grants</td>
-      <td>funding_nzd</td>
-      <td>financial</td>
-      <td>Funding amount awarded in NZD</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>grants</td>
-      <td>funding_org_acronym</td>
-      <td>label</td>
-      <td>Acronym for funding organisation</td>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>grants</td>
-      <td>funding_org_city</td>
-      <td>label</td>
-      <td>City name for funding organisation</td>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>grants</td>
-      <td>funding_org_name</td>
-      <td>label</td>
-      <td>None</td>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>grants</td>
-      <td>funding_usd</td>
-      <td>financial</td>
-      <td>Funding amount awarded in USD</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>grants</td>
-      <td>id</td>
-      <td>identifier</td>
-      <td>Dimensions grant id</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>grants</td>
-      <td>language</td>
-      <td>label</td>
-      <td>ISO 639-1 language codes</td>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>grants</td>
-      <td>linkout</td>
-      <td>text</td>
-      <td>URL linked to grant</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>26</th>
-      <td>grants</td>
-      <td>original_title</td>
-      <td>text</td>
-      <td>None</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>27</th>
-      <td>grants</td>
-      <td>project_num</td>
-      <td>identifier</td>
-      <td>None</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>28</th>
-      <td>grants</td>
-      <td>research_org_cities</td>
-      <td>cities</td>
-      <td>GeoNames id and name</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>29</th>
-      <td>grants</td>
-      <td>research_org_countries</td>
-      <td>countries</td>
-      <td>GeoNames code and name</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>30</th>
-      <td>grants</td>
-      <td>research_org_name</td>
-      <td>label</td>
-      <td>Name for research organisation</td>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>31</th>
-      <td>grants</td>
-      <td>research_org_state_codes</td>
-      <td>states</td>
-      <td>ISO‌-3166-2 code and name</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>32</th>
-      <td>grants</td>
-      <td>research_orgs</td>
-      <td>orgs</td>
-      <td>None</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>33</th>
-      <td>grants</td>
-      <td>researcher_details</td>
-      <td>json</td>
-      <td>Additional details about researchers including...</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>34</th>
-      <td>grants</td>
-      <td>researchers</td>
-      <td>researchers</td>
-      <td>None</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>35</th>
-      <td>grants</td>
-      <td>resulting_publication_ids</td>
-      <td>identifier</td>
-      <td>Resulting Publication IDs. Deprecated, use `pu...</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>36</th>
-      <td>grants</td>
-      <td>start_date</td>
-      <td>timestamp</td>
-      <td>None</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>37</th>
-      <td>grants</td>
-      <td>start_year</td>
-      <td>integer</td>
-      <td>None</td>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>38</th>
-      <td>grants</td>
-      <td>title</td>
-      <td>text</td>
-      <td>None</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>39</th>
-      <td>grants</td>
-      <td>title_language</td>
-      <td>label</td>
-      <td>ISO 639-1 language code used in title</td>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
+      <td>[{'id': 'grid.1025.6', 'name': 'Murdoch Univer...</td>
+      <td>grid.1025.6</td>
+      <td>Mohammednoor</td>
+      <td>Altarawneh</td>
+      <td></td>
+      <td>ur.01137010426.42</td>
+      <td>pub.1110885950</td>
     </tr>
   </tbody>
 </table>
@@ -13632,20 +13472,12 @@ div#notebook {
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Same for objects of type 'Entity' eg <code>countries</code></p>
-
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[105]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">dsl_docs</span> countries
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m1_authors</span><span class="p">[</span><span class="n">m1_authors</span><span class="p">[</span><span class="s1">&#39;current_organization_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">GRIDID</span><span class="p">]</span><span class="o">.</span><span class="n">researcher_id</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -13658,7 +13490,57 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[10]:</div>
+    <div class="prompt output_prompt">Out[105]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>1308</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="How-many-relevant-researchers-are-there-(with-affiliation-at-the-time-of-writing)?">How many relevant researchers are there (with affiliation at the time of writing)?<a class="anchor-link" href="#How-many-relevant-researchers-are-there-(with-affiliation-at-the-time-of-writing)?">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now let's look into the historical affiliations data too.. for that we need to break down the an inner list of dict object. We can simply reuse <code>json_normalize</code> for that, by running it again on a JSON version of the authors dataframe.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[106]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m1_affiliations</span> <span class="o">=</span> <span class="n">json_normalize</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">m1_authors</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s1">&#39;records&#39;</span><span class="p">)),</span> <span class="n">record_path</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;affiliations&#39;</span><span class="p">],</span> 
+               <span class="n">meta</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;researcher_id&#39;</span><span class="p">,</span> <span class="s1">&#39;first_name&#39;</span><span class="p">,</span> <span class="s1">&#39;last_name&#39;</span><span class="p">],</span> <span class="n">record_prefix</span><span class="o">=</span><span class="s1">&#39;aff_&#39;</span><span class="p">)</span>
+<span class="n">m1_affiliations</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[106]:</div>
 
 
 
@@ -13681,758 +13563,98 @@ div#notebook {
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>entities</th>
-      <th>field</th>
-      <th>type</th>
-      <th>description</th>
-      <th>is_filter</th>
-      <th>is_entity</th>
-      <th>is_facet</th>
+      <th>aff_city</th>
+      <th>aff_city_id</th>
+      <th>aff_country</th>
+      <th>aff_country_code</th>
+      <th>aff_id</th>
+      <th>aff_name</th>
+      <th>aff_state</th>
+      <th>aff_state_code</th>
+      <th>id</th>
+      <th>researcher_id</th>
+      <th>first_name</th>
+      <th>last_name</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>countries</td>
-      <td>id</td>
-      <td>string</td>
-      <td>Dimensions city id</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>countries</td>
-      <td>name</td>
-      <td>string</td>
+      <td>Kitakyushu</td>
+      <td>1859307.0</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
       <td>None</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>But don't worry if you don't get it right: if you pass a wrong object name, the full list of available sources and entities is printed.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">dsl_docs</span> unknown
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Sorry can&#39;t recognize this object. Use one of the following: Sources=[publications - grants - patents - clinical_trials - policy_documents - researchers] Entities=[categories - cities - countries - journals - org_groups - orgs - states - open_access] 
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Finally, if no object is requested explicitally, the documentation for all the sources gets returned.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">dsl_docs</span> 
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[11]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>sources</th>
-      <th>field</th>
-      <th>type</th>
-      <th>description</th>
-      <th>is_filter</th>
-      <th>is_entity</th>
-      <th>is_facet</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>publications</td>
-      <td>FOR</td>
-      <td>categories</td>
-      <td>ANZSRC Fields of Research classification</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
+      <td>None</td>
+      <td>pub.1110885950</td>
+      <td></td>
+      <td>Siewteng</td>
+      <td>Sim</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>publications</td>
-      <td>FOR_first</td>
-      <td>categories</td>
-      <td>Division level FOR</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
+      <td>Kitakyushu</td>
+      <td>1859307.0</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>None</td>
+      <td>None</td>
+      <td>pub.1110885950</td>
+      <td>ur.01116323260.31</td>
+      <td>Yoshito</td>
+      <td>Andou</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>publications</td>
-      <td>HRCS_HC</td>
-      <td>categories</td>
-      <td>HRCS - Health Categories</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
+      <td>Seri Kembangan</td>
+      <td>NaN</td>
+      <td>Malaysia</td>
+      <td>MY</td>
+      <td>grid.11142.37</td>
+      <td>Universiti Putra Malaysia</td>
+      <td>None</td>
+      <td>None</td>
+      <td>pub.1110885950</td>
+      <td>ur.016617033322.44</td>
+      <td>Hamra A. A.</td>
+      <td>Bashid</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>publications</td>
-      <td>HRCS_RAC</td>
-      <td>categories</td>
-      <td>HRCS – Research Activity Codes</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
+      <td>Seri Kembangan</td>
+      <td>NaN</td>
+      <td>Malaysia</td>
+      <td>MY</td>
+      <td>grid.11142.37</td>
+      <td>Universiti Putra Malaysia</td>
+      <td>None</td>
+      <td>None</td>
+      <td>pub.1110885950</td>
+      <td>ur.010703155721.11</td>
+      <td>Hongngee</td>
+      <td>Lim</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>publications</td>
-      <td>RCDC</td>
-      <td>categories</td>
-      <td>Research, Condition, and Disease Categorization</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>publications</td>
-      <td>altmetric</td>
-      <td>float</td>
-      <td>Altmetric attention score. Does not support em...</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>publications</td>
-      <td>altmetric_id</td>
-      <td>integer</td>
-      <td>AltMetric Publication ID</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>publications</td>
-      <td>author_affiliations</td>
-      <td>json</td>
-      <td>List of JSON lists of researchers' first and l...</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>publications</td>
-      <td>book_doi</td>
-      <td>identifier</td>
-      <td>None</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>publications</td>
-      <td>book_series_title</td>
-      <td>text</td>
-      <td>None</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>publications</td>
-      <td>book_title</td>
-      <td>text</td>
-      <td>None</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>publications</td>
-      <td>date</td>
-      <td>date</td>
-      <td>None</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>publications</td>
-      <td>date_inserted</td>
-      <td>timestamp</td>
-      <td>Date when publication was inserted into Dimens...</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>publications</td>
-      <td>doi</td>
-      <td>identifier</td>
-      <td>Digital object identifier</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>publications</td>
-      <td>field_citation_ratio</td>
-      <td>float</td>
-      <td>Relative citation performance of article when ...</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>publications</td>
-      <td>funder_countries</td>
-      <td>countries</td>
-      <td>None</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>publications</td>
-      <td>funders</td>
-      <td>orgs</td>
-      <td>None</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>publications</td>
-      <td>id</td>
-      <td>identifier</td>
-      <td>Dimensions publication id</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>publications</td>
-      <td>issn</td>
-      <td>string</td>
-      <td>International Standard Serial Number</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>publications</td>
-      <td>issue</td>
-      <td>string</td>
-      <td>None</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>publications</td>
-      <td>journal</td>
-      <td>journals</td>
-      <td>None</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>publications</td>
-      <td>journal_lists</td>
-      <td>string</td>
-      <td>Independent grouping of journals outside of Di...</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>publications</td>
-      <td>linkout</td>
-      <td>text</td>
-      <td>URL address</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>publications</td>
-      <td>mesh_terms</td>
-      <td>label</td>
-      <td>Medical Subject Heading terms as used in PubMed.</td>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>publications</td>
-      <td>open_access</td>
-      <td>string</td>
-      <td>Open Access status for publication. Deprecated...</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>publications</td>
-      <td>open_access_categories</td>
-      <td>open_access</td>
-      <td>Open Access category for publication. Filterin...</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>26</th>
-      <td>publications</td>
-      <td>pages</td>
-      <td>string</td>
-      <td>None</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>27</th>
-      <td>publications</td>
-      <td>pmcid</td>
-      <td>identifier</td>
-      <td>PubMed Central ID</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>28</th>
-      <td>publications</td>
-      <td>pmid</td>
-      <td>identifier</td>
-      <td>PubMed ID</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>29</th>
-      <td>publications</td>
-      <td>proceedings_title</td>
-      <td>text</td>
-      <td>Title of a conference corresponding to documen...</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>155</th>
-      <td>policy_documents</td>
-      <td>HRCS_HC</td>
-      <td>categories</td>
-      <td>HRCS - Health Categories</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>156</th>
-      <td>policy_documents</td>
-      <td>HRCS_RAC</td>
-      <td>categories</td>
-      <td>HRCS – Research Activity Codes</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>157</th>
-      <td>policy_documents</td>
-      <td>RCDC</td>
-      <td>categories</td>
-      <td>Research, Condition, and Disease Categorization</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>158</th>
-      <td>policy_documents</td>
-      <td>broad_research_areas</td>
-      <td>categories</td>
-      <td>None</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>159</th>
-      <td>policy_documents</td>
-      <td>city</td>
-      <td>cities</td>
-      <td>None</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>160</th>
-      <td>policy_documents</td>
-      <td>country</td>
-      <td>countries</td>
-      <td>None</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>161</th>
-      <td>policy_documents</td>
-      <td>date_inserted</td>
-      <td>date</td>
-      <td>Date when policy document was inserted into Di...</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>162</th>
-      <td>policy_documents</td>
-      <td>grid_id</td>
-      <td>string</td>
-      <td>None</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>163</th>
-      <td>policy_documents</td>
-      <td>health_research_areas</td>
-      <td>categories</td>
-      <td>None</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>164</th>
-      <td>policy_documents</td>
-      <td>id</td>
-      <td>identifier</td>
-      <td>Dimensions policy document id</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>165</th>
-      <td>policy_documents</td>
-      <td>linkout</td>
-      <td>text</td>
-      <td>None</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>166</th>
-      <td>policy_documents</td>
-      <td>publication_ids</td>
-      <td>identifier</td>
-      <td>Referenced Publication IDs</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>167</th>
-      <td>policy_documents</td>
-      <td>source_name</td>
-      <td>string</td>
-      <td>None</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>168</th>
-      <td>policy_documents</td>
-      <td>state</td>
-      <td>states</td>
-      <td>None</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>169</th>
-      <td>policy_documents</td>
-      <td>title</td>
-      <td>string</td>
-      <td>None</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>170</th>
-      <td>policy_documents</td>
-      <td>year</td>
-      <td>integer</td>
-      <td>Policy posted on year</td>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>171</th>
-      <td>researchers</td>
-      <td>current_research_org</td>
-      <td>orgs</td>
-      <td>The most recent research organization linked t...</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>172</th>
-      <td>researchers</td>
-      <td>first_grant_year</td>
-      <td>integer</td>
-      <td>None</td>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>173</th>
-      <td>researchers</td>
-      <td>first_name</td>
-      <td>string</td>
-      <td>First Name</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>174</th>
-      <td>researchers</td>
-      <td>first_publication_year</td>
-      <td>integer</td>
-      <td>None</td>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>175</th>
-      <td>researchers</td>
-      <td>id</td>
-      <td>identifier</td>
-      <td>Dimensions researcher id</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>176</th>
-      <td>researchers</td>
-      <td>last_grant_year</td>
-      <td>integer</td>
-      <td>None</td>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>177</th>
-      <td>researchers</td>
-      <td>last_name</td>
-      <td>string</td>
-      <td>Last Name</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>178</th>
-      <td>researchers</td>
-      <td>last_publication_year</td>
-      <td>integer</td>
-      <td>None</td>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>179</th>
-      <td>researchers</td>
-      <td>obsolete</td>
-      <td>integer</td>
-      <td>Indicates researcher ID status. 0 means that t...</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>180</th>
-      <td>researchers</td>
-      <td>orcid_id</td>
-      <td>text</td>
-      <td>`ORCID &lt;https://orcid.org/&gt;`_ ID</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>181</th>
-      <td>researchers</td>
-      <td>redirect</td>
-      <td>identifier</td>
-      <td>Indicates status of obsolete researcher ID. Em...</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>182</th>
-      <td>researchers</td>
-      <td>research_orgs</td>
-      <td>orgs</td>
-      <td>All research organizations linked to the resea...</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>183</th>
-      <td>researchers</td>
-      <td>total_grants</td>
-      <td>integer</td>
-      <td>Total grants count</td>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>184</th>
-      <td>researchers</td>
-      <td>total_publications</td>
-      <td>integer</td>
-      <td>Total publications count</td>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
+      <td>Perth</td>
+      <td>2063523.0</td>
+      <td>Australia</td>
+      <td>AU</td>
+      <td>grid.1025.6</td>
+      <td>Murdoch University</td>
+      <td>Western Australia</td>
+      <td>AU-WA</td>
+      <td>pub.1110885950</td>
+      <td>ur.01137010426.42</td>
+      <td>Mohammednoor</td>
+      <td>Altarawneh</td>
     </tr>
   </tbody>
 </table>
-<p>185 rows × 7 columns</p>
 </div>
 </div>
 
@@ -14445,18 +13667,71 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="2.Querying-with-%%dsl_query">2.Querying with <code>%%dsl_query</code><a class="anchor-link" href="#2.Querying-with-%%dsl_query">&#182;</a></h2><p>This command allows to simply pass an API query after typing <code>%%dsl_query</code> keyword. NOTE: the query should go in a new line.</p>
+<p>How many unique researchers are there (this time based on the affiliation data)?</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[107]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">dsl_query</span> 
-search publications where journal.title=&quot;Nature&quot; return publications
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m1_affiliations</span><span class="p">[</span><span class="n">m1_affiliations</span><span class="p">[</span><span class="s1">&#39;aff_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">GRIDID</span><span class="p">]</span><span class="o">.</span><span class="n">researcher_id</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[107]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>1587</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="How-many-relevant-researchers,-in-total?">How many relevant researchers, in total?<a class="anchor-link" href="#How-many-relevant-researchers,-in-total?">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>How many unique researchers are there, by combining both <code>affiliation</code> and <code>current_organization</code> data?</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[108]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m1_researchers</span> <span class="o">=</span> <span class="n">m1_affiliations</span><span class="p">[</span><span class="n">m1_affiliations</span><span class="p">[</span><span class="s1">&#39;aff_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">GRIDID</span><span class="p">]</span><span class="o">.</span><span class="n">researcher_id</span>
+<span class="n">m1_researchers</span> <span class="o">=</span> <span class="n">m1_researchers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m1_authors</span><span class="p">[</span><span class="n">m1_authors</span><span class="p">[</span><span class="s1">&#39;current_organization_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">GRIDID</span><span class="p">]</span><span class="o">.</span><span class="n">researcher_id</span><span class="p">)</span>
+<span class="c1"># Drop empty values and duplicates</span>
+<span class="n">m1_researchers</span> <span class="o">=</span> <span class="n">m1_researchers</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+<span class="n">m1_researchers</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Results&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;{m1_researchers.count()} researchers linked to </span><span class="si">{GRIDID}</span><span class="s2"> in total&quot;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14473,24 +13748,28 @@ search publications where journal.title=&quot;Nature&quot; return publications
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Returned Publications: 20 (total = 664568)
+<pre>Results
+1588 researchers linked to grid.258806.1 in total
 </pre>
 </div>
 </div>
 
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[3]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&lt;dimcli.Result object #4640767632. Dict keys: &#39;_stats&#39;, &#39;publications&#39;&gt;</pre>
+</div>
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[109]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># finally, save the data locally</span>
+<span class="n">m1_authors</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;data/method1_researchers_current_affiliation.csv&quot;</span><span class="p">)</span>
+<span class="n">m1_affiliations</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;data/method1_researchers_historical_affiliation.csv&quot;</span><span class="p">)</span>
+<span class="n">m1_researchers</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;data/method1_researchers_combined.csv&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
 
+    </div>
 </div>
 </div>
 
@@ -14498,20 +13777,25 @@ search publications where journal.title=&quot;Nature&quot; return publications
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Or you can also split the query into multiple lines:</p>
+<hr>
+<h1 id="Method-2:-Search-from-researchers">Method 2: Search from researchers<a class="anchor-link" href="#Method-2:-Search-from-researchers">&#182;</a></h1><p>With this approach, we start our search from the 'researchers' database (instead of the 'publications' database).</p>
+<ol>
+<li>First, we extract all researchers affiliated to "grid.258806.1". </li>
+<li>Second, we get the publications from these researchers, filtering on the selecter year-range and organization </li>
+<li>Third, we pull out all relevant researchers from the publications list</li>
+</ol>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[110]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">dsl_query</span>
-search publications
-where year in [2013:2018] and research_orgs=&quot;grid.258806.1&quot;
-return publications[title]
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m2_researchers_api_data</span> <span class="o">=</span> <span class="n">dslqueryall</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;&quot;&quot;search researchers where research_orgs=&quot;</span><span class="si">{GRIDID}</span><span class="s2">&quot; return researchers[all]&quot;&quot;&quot;</span><span class="p">)</span>
+<span class="n">m2_researchers_for_grid</span> <span class="o">=</span> <span class="n">m2_researchers_api_data</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
+<span class="n">m2_researchers_for_grid</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -14528,20 +13812,147 @@ return publications[title]
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Returned Publications: 20 (total = 3764)
+<pre>1000 / 6752
+2000 / 6752
+3000 / 6752
+4000 / 6752
+5000 / 6752
+6000 / 6752
+6752 / 6752
 </pre>
 </div>
 </div>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[4]:</div>
+    <div class="prompt output_prompt">Out[110]:</div>
 
 
 
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-<div class="output_text output_subarea output_execute_result">
-<pre>&lt;dimcli.Result object #4640409168. Dict keys: &#39;_stats&#39;, &#39;publications&#39;&gt;</pre>
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>current_research_org</th>
+      <th>first_grant_year</th>
+      <th>first_name</th>
+      <th>first_publication_year</th>
+      <th>id</th>
+      <th>last_grant_year</th>
+      <th>last_name</th>
+      <th>last_publication_year</th>
+      <th>obsolete</th>
+      <th>orcid_id</th>
+      <th>redirect</th>
+      <th>research_orgs</th>
+      <th>total_grants</th>
+      <th>total_publications</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>{'id': 'grid.258806.1', 'acronym': 'KIT', 'nam...</td>
+      <td>1997.0</td>
+      <td>Tetsuji</td>
+      <td>1992.0</td>
+      <td>ur.013506011335.42</td>
+      <td>2018.0</td>
+      <td>Moriguchi</td>
+      <td>2018.0</td>
+      <td>0</td>
+      <td>[0000-0002-2362-0590]</td>
+      <td>NaN</td>
+      <td>[{'id': 'grid.258806.1', 'acronym': 'KIT', 'na...</td>
+      <td>10</td>
+      <td>99</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Ivan</td>
+      <td>1991.0</td>
+      <td>ur.01306536423.46</td>
+      <td>NaN</td>
+      <td>Godler</td>
+      <td>2017.0</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>[ur.012100442163.84]</td>
+      <td>[{'id': 'grid.412586.c', 'name': 'The Universi...</td>
+      <td>0</td>
+      <td>50</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Ivan</td>
+      <td>1991.0</td>
+      <td>ur.012424620305.51</td>
+      <td>NaN</td>
+      <td>Godler</td>
+      <td>2017.0</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>[ur.012100442163.84]</td>
+      <td>[{'id': 'grid.412586.c', 'name': 'The Universi...</td>
+      <td>0</td>
+      <td>50</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Ivan</td>
+      <td>1991.0</td>
+      <td>ur.010716033531.51</td>
+      <td>NaN</td>
+      <td>Godler</td>
+      <td>2017.0</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>[ur.012100442163.84]</td>
+      <td>[{'id': 'grid.412586.c', 'name': 'The Universi...</td>
+      <td>0</td>
+      <td>50</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>{'id': 'grid.258806.1', 'acronym': 'KIT', 'nam...</td>
+      <td>NaN</td>
+      <td>Daisuke</td>
+      <td>2005.0</td>
+      <td>ur.015547663323.73</td>
+      <td>NaN</td>
+      <td>Makino</td>
+      <td>2006.0</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>[{'id': 'grid.258806.1', 'acronym': 'KIT', 'na...</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 </div>
 
 </div>
@@ -14553,105 +13964,47 @@ return publications[title]
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Note</strong> by default the results of a query are saved to a variable called <code>dsl_last_results</code>:</p>
+<p>Now we need to select only the researchers who have published in the time frame [2013:2018]. So for each researcher ID we must extract the full publication history in order to verify their relevance.</p>
+<p>The most efficient way to do this is to use a query that <strong>extracts the publication history for several researchers at the same time</strong> (so to avoid overruning our API quota), then, as a second step, producing a clean list of relevant researchers from it.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[111]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">dsl_last_results</span><span class="p">)</span>
-</pre></div>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m2_pubs_for_researchers</span> <span class="o">=</span> <span class="p">[]</span>
 
-    </div>
-</div>
-</div>
+<span class="k">def</span> <span class="nf">get_pubs_from_ids</span><span class="p">(</span><span class="n">ids_list</span><span class="p">):</span>
+    <span class="n">IDS</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">ids_list</span><span class="p">)</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;search publications </span>
+<span class="s2">                where researchers.id in </span><span class="si">{IDS}</span><span class="s2"></span>
+<span class="s2">                and year in </span><span class="si">{YEARS}</span><span class="s2"></span>
+<span class="s2">                and research_orgs=&quot;</span><span class="si">{GRIDID}</span><span class="s2">&quot;</span>
+<span class="s2">            return publications limit 1000&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">dslquery</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
 
-<div class="output_wrapper">
-<div class="output">
+<span class="n">CHUNKS_SIZE</span> <span class="o">=</span> <span class="mi">300</span> <span class="c1"># to ensure we never hit the 1000 limit</span>
 
+<span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">m2_researchers_api_data</span><span class="o">.</span><span class="n">chunks</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">CHUNKS_SIZE</span><span class="p">):</span>
+    <span class="n">ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">chunk</span><span class="p">]</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">get_pubs_from_ids</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span>
+    <span class="n">m2_pubs_for_researchers</span> <span class="o">+=</span> <span class="n">temp</span><span class="o">.</span><span class="n">publications</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="s1">&#39;stats&#39;</span><span class="p">])</span> <span class="c1"># visual check </span>
 
-<div class="output_area">
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;---</span><span class="se">\n</span><span class="s2">Found&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">m2_pubs_for_researchers</span><span class="p">),</span> <span class="s2">&quot;publications for the given criteria (including duplicates)&quot;</span><span class="p">)</span>
 
-    <div class="prompt output_prompt">Out[5]:</div>
+<span class="n">idx</span><span class="p">,</span> <span class="n">m2_pubs_for_researchers_unique</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">m2_pubs_for_researchers</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">idx</span><span class="p">:</span>
+        <span class="n">idx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+        <span class="n">m2_pubs_for_researchers_unique</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
+        <span class="nb">len</span><span class="p">(</span><span class="n">m2_pubs_for_researchers_unique</span><span class="p">)</span>
 
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>dimcli.core.api.Result</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>A DimCli <code>Result</code> object is just a wrapper around the raw JSON data. (Use the <code>.json</code> method to get the raw data)</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">dsl_last_results</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[7]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>20</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="3.Querying-with-%%dsl_query_loop">3.Querying with <code>%%dsl_query_loop</code><a class="anchor-link" href="#3.Querying-with-%%dsl_query_loop">&#182;</a></h2><p>This magic command automatically loops over all the pages of a result set until all possible results of a query have been returned.</p>
-<blockquote><p>NOTE: the Dimensions API returns a maximum of 1000 records per request. So if your query returns &gt;1000 records the only way to pull all of them out is to iterate through the results using the <code>limit</code> and <code>skip</code> operators (see the <a href="https://docs.dimensions.ai/dsl/language.html#limit-and-skip">docs</a>). So <code>%%dsl_query_loop</code> encapsulates this process within a single command.</p>
-</blockquote>
-<p>It is important to remember that loop queries must be used with caution as they can result in a large number of API calls!</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">dsl_query_loop</span>
-search publications
-where year in [2013:2018] and research_orgs=&quot;grid.258806.1&quot;
-return publications
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Final result:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">m2_pubs_for_researchers_unique</span><span class="p">),</span> <span class="s2">&quot;unique publications&quot;</span><span class="p">)</span>        
 </pre></div>
 
     </div>
@@ -14668,25 +14021,34 @@ return publications
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>1000 / 3764
-2000 / 3764
-3000 / 3764
-3764 / 3764
+<pre>{&#39;total_count&#39;: 318, &#39;limit&#39;: 1000, &#39;offset&#39;: 0}
+{&#39;total_count&#39;: 396, &#39;limit&#39;: 1000, &#39;offset&#39;: 0}
+{&#39;total_count&#39;: 388, &#39;limit&#39;: 1000, &#39;offset&#39;: 0}
+{&#39;total_count&#39;: 601, &#39;limit&#39;: 1000, &#39;offset&#39;: 0}
+{&#39;total_count&#39;: 269, &#39;limit&#39;: 1000, &#39;offset&#39;: 0}
+{&#39;total_count&#39;: 404, &#39;limit&#39;: 1000, &#39;offset&#39;: 0}
+{&#39;total_count&#39;: 310, &#39;limit&#39;: 1000, &#39;offset&#39;: 0}
+{&#39;total_count&#39;: 503, &#39;limit&#39;: 1000, &#39;offset&#39;: 0}
+{&#39;total_count&#39;: 268, &#39;limit&#39;: 1000, &#39;offset&#39;: 0}
+{&#39;total_count&#39;: 308, &#39;limit&#39;: 1000, &#39;offset&#39;: 0}
+{&#39;total_count&#39;: 414, &#39;limit&#39;: 1000, &#39;offset&#39;: 0}
+{&#39;total_count&#39;: 659, &#39;limit&#39;: 1000, &#39;offset&#39;: 0}
+{&#39;total_count&#39;: 390, &#39;limit&#39;: 1000, &#39;offset&#39;: 0}
+{&#39;total_count&#39;: 451, &#39;limit&#39;: 1000, &#39;offset&#39;: 0}
+{&#39;total_count&#39;: 298, &#39;limit&#39;: 1000, &#39;offset&#39;: 0}
+{&#39;total_count&#39;: 494, &#39;limit&#39;: 1000, &#39;offset&#39;: 0}
+{&#39;total_count&#39;: 334, &#39;limit&#39;: 1000, &#39;offset&#39;: 0}
+{&#39;total_count&#39;: 395, &#39;limit&#39;: 1000, &#39;offset&#39;: 0}
+{&#39;total_count&#39;: 321, &#39;limit&#39;: 1000, &#39;offset&#39;: 0}
+{&#39;total_count&#39;: 479, &#39;limit&#39;: 1000, &#39;offset&#39;: 0}
+{&#39;total_count&#39;: 402, &#39;limit&#39;: 1000, &#39;offset&#39;: 0}
+{&#39;total_count&#39;: 269, &#39;limit&#39;: 1000, &#39;offset&#39;: 0}
+{&#39;total_count&#39;: 121, &#39;limit&#39;: 1000, &#39;offset&#39;: 0}
+---
+Found 8792 publications for the given criteria (including duplicates)
+Final result: 3809 unique publications
 </pre>
 </div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[8]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&lt;dimcli.Result object #4646181328. Dict keys: &#39;_stats&#39;, &#39;publications&#39;&gt;</pre>
-</div>
-
 </div>
 
 </div>
@@ -14696,17 +14058,24 @@ return publications
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Like before, the results of a <code>loop</code> query are stored into the <code>dsl_last_results</code> variable.</p>
-
+<h4 id="How-many-relevant-researchers-are-there-(with-affiliation-at-the-time-of-speaking)?">How many relevant researchers are there (with affiliation at the time of speaking)?<a class="anchor-link" href="#How-many-relevant-researchers-are-there-(with-affiliation-at-the-time-of-speaking)?">&#182;</a></h4>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[112]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dsl_last_results</span><span class="o">.</span><span class="n">stats</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># simplify dict structure like above /  PS careful about running this twice!</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">m2_pubs_for_researchers</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s1">&#39;author_affiliations&#39;</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
+        <span class="n">x</span><span class="p">[</span><span class="s1">&#39;author_affiliations&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;author_affiliations&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">x</span><span class="p">[</span><span class="s1">&#39;author_affiliations&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">m2_pubs_authors</span> <span class="o">=</span> <span class="n">json_normalize</span><span class="p">(</span><span class="n">m2_pubs_for_researchers_unique</span><span class="p">,</span> <span class="n">record_path</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;author_affiliations&#39;</span><span class="p">],</span> <span class="n">meta</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="n">m2_pubs_authors</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -14719,17 +14088,390 @@ return publications
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[9]:</div>
+    <div class="prompt output_prompt">Out[112]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>affiliations</th>
+      <th>current_organization_id</th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>orcid</th>
+      <th>researcher_id</th>
+      <th>id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>[{'id': 'grid.8536.8', 'name': 'Federal Univer...</td>
+      <td></td>
+      <td>C. C.</td>
+      <td>Soares</td>
+      <td></td>
+      <td></td>
+      <td>pub.1103719897</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>[{'id': 'grid.8536.8', 'name': 'Federal Univer...</td>
+      <td>grid.8536.8</td>
+      <td>M.</td>
+      <td>ElMassalami</td>
+      <td>['0000-0003-3543-1946']</td>
+      <td>ur.01175272515.05</td>
+      <td>pub.1103719897</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>[{'id': 'grid.21941.3f', 'name': 'National Ins...</td>
+      <td>grid.21941.3f</td>
+      <td>Y.</td>
+      <td>Yanagisawa</td>
+      <td></td>
+      <td>ur.013116001105.24</td>
+      <td>pub.1103719897</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>[{'id': 'grid.21941.3f', 'name': 'National Ins...</td>
+      <td>grid.258806.1</td>
+      <td>M.</td>
+      <td>Tanaka</td>
+      <td>['0000-0002-4323-5999']</td>
+      <td>ur.014310336431.75</td>
+      <td>pub.1103719897</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>[{'id': 'grid.21941.3f', 'name': 'National Ins...</td>
+      <td>grid.21941.3f</td>
+      <td>H.</td>
+      <td>Takeya</td>
+      <td></td>
+      <td>ur.010212206615.18</td>
+      <td>pub.1103719897</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[113]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m2_pubs_authors</span><span class="p">[</span><span class="n">m2_pubs_authors</span><span class="p">[</span><span class="s1">&#39;current_organization_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">GRIDID</span><span class="p">]</span><span class="o">.</span><span class="n">researcher_id</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[113]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>{&#39;total_count&#39;: 3764}</pre>
+<pre>1309</pre>
 </div>
 
 </div>
 
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="How-many-relevant-researchers-are-there-(with-affiliation-at-the-time-of-writing)?">How many relevant researchers are there (with affiliation at the time of writing)?<a class="anchor-link" href="#How-many-relevant-researchers-are-there-(with-affiliation-at-the-time-of-writing)?">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[114]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m2_affiliations</span> <span class="o">=</span> <span class="n">json_normalize</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">m2_pubs_authors</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s1">&#39;records&#39;</span><span class="p">)),</span> <span class="n">record_path</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;affiliations&#39;</span><span class="p">],</span> 
+               <span class="n">meta</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;researcher_id&#39;</span><span class="p">,</span> <span class="s1">&#39;first_name&#39;</span><span class="p">,</span> <span class="s1">&#39;last_name&#39;</span><span class="p">],</span> <span class="n">record_prefix</span><span class="o">=</span><span class="s1">&#39;aff_&#39;</span><span class="p">)</span>
+<span class="n">m2_affiliations</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[114]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>aff_city</th>
+      <th>aff_city_id</th>
+      <th>aff_country</th>
+      <th>aff_country_code</th>
+      <th>aff_id</th>
+      <th>aff_name</th>
+      <th>aff_state</th>
+      <th>aff_state_code</th>
+      <th>id</th>
+      <th>researcher_id</th>
+      <th>first_name</th>
+      <th>last_name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Rio de Janeiro</td>
+      <td>3451190.0</td>
+      <td>Brazil</td>
+      <td>BR</td>
+      <td>grid.8536.8</td>
+      <td>Federal University of Rio de Janeiro</td>
+      <td>None</td>
+      <td>None</td>
+      <td>pub.1103719897</td>
+      <td></td>
+      <td>C. C.</td>
+      <td>Soares</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Rio de Janeiro</td>
+      <td>3451190.0</td>
+      <td>Brazil</td>
+      <td>BR</td>
+      <td>grid.8536.8</td>
+      <td>Federal University of Rio de Janeiro</td>
+      <td>None</td>
+      <td>None</td>
+      <td>pub.1103719897</td>
+      <td>ur.01175272515.05</td>
+      <td>M.</td>
+      <td>ElMassalami</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Tsukuba</td>
+      <td>2110683.0</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.21941.3f</td>
+      <td>National Institute for Materials Science</td>
+      <td>None</td>
+      <td>None</td>
+      <td>pub.1103719897</td>
+      <td>ur.013116001105.24</td>
+      <td>Y.</td>
+      <td>Yanagisawa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Tsukuba</td>
+      <td>2110683.0</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.21941.3f</td>
+      <td>National Institute for Materials Science</td>
+      <td>None</td>
+      <td>None</td>
+      <td>pub.1103719897</td>
+      <td>ur.014310336431.75</td>
+      <td>M.</td>
+      <td>Tanaka</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Kitakyushu</td>
+      <td>1859307.0</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>None</td>
+      <td>None</td>
+      <td>pub.1103719897</td>
+      <td>ur.014310336431.75</td>
+      <td>M.</td>
+      <td>Tanaka</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>How many unique researchers are there (this time based on the affiliation data)?</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[115]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m2_affiliations</span><span class="p">[</span><span class="n">m2_affiliations</span><span class="p">[</span><span class="s1">&#39;aff_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">GRIDID</span><span class="p">]</span><span class="o">.</span><span class="n">researcher_id</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[115]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>1584</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="How-many-relevant-researchers,-in-total?">How many relevant researchers, in total?<a class="anchor-link" href="#How-many-relevant-researchers,-in-total?">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>How many unique researchers are there, by combining both <code>affiliation</code> and <code>current_organization</code> data?</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[116]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m2_researchers</span> <span class="o">=</span> <span class="n">m2_affiliations</span><span class="p">[</span><span class="n">m2_affiliations</span><span class="p">[</span><span class="s1">&#39;aff_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">GRIDID</span><span class="p">]</span><span class="o">.</span><span class="n">researcher_id</span>
+<span class="n">m2_researchers</span> <span class="o">=</span> <span class="n">m2_researchers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m2_pubs_authors</span><span class="p">[</span><span class="n">m2_pubs_authors</span><span class="p">[</span><span class="s1">&#39;current_organization_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">GRIDID</span><span class="p">]</span><span class="o">.</span><span class="n">researcher_id</span><span class="p">)</span>
+<span class="c1"># Drop empty values and duplicates</span>
+<span class="n">m2_researchers</span> <span class="o">=</span> <span class="n">m2_researchers</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+<span class="n">m2_researchers</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Results&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;{m2_researchers.count()} researchers linked to </span><span class="si">{GRIDID}</span><span class="s2"> in total&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Results
+1585 researchers linked to grid.258806.1 in total
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[117]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># finally, save the data locally</span>
+<span class="n">m2_pubs_authors</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;data/method2_researchers_current_affiliation.csv&quot;</span><span class="p">)</span>
+<span class="n">m2_affiliations</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;data/method2_researchers_historical_affiliation.csv&quot;</span><span class="p">)</span>
+<span class="n">m2_researchers</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;data/method2_researchers_combined.csv&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+    </div>
 </div>
 </div>
 
