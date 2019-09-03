@@ -38,17 +38,6 @@ You can also run these examples online in your browser, thanks to Binder and Gig
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/digital-science/dimensions-api-lab/master)
 
 
-### Using Gigantum 
-
-Gigantum is an open-source platform for developing, executing, and sharing analysis and computations using JupyterLab. Gigantum provides a full-featured environment where you  You can easily install packages with apt, pip and conda, as well as add Docker snippets for more customized packages.  
-
-* download the zipped [dimensions-api-examples](http://static.michelepasin.org/gigantum/gigantum-dimensions-lab-examples-image.zip) image 
-* go to https://try.gigantum.com/, click on `login`, then `sign up` in order to create an account 
-* once you are logged in and in the main 'projects' page, click on 'import existing'
-* drag the zipped image to the project import window
-* load the project and click on `launch: jupyterlab`
-
-
 ## Comments, bug reports
 
 This project lives on [Github](https://github.com/digital-science/dimensions-api-lab). You can file [issues]([issues](https://github.com/digital-science/dimensions-api-lab/issues/new)) or ask questions there. Suggestions, pull requests and improvements welcome!
