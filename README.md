@@ -28,12 +28,14 @@ For more information, see https://jupyter.org/
 
 If you are already familiar with Python and Jupyter, then you probably know what to do already. Download this repository and run it locally. Feel free to modify and adapt these examples so to match your project needs. 
 
-You can also run these examples online in your browser, thanks to Binder and Gigantum. 
+You can also run these examples online in your browser, thanks to Binder. 
 
 
 ### Using Binder 
 
-[mybinder.org](https://ovh.mybinder.org/) is a free service that transforms a github repository into a JupyterHub server hosting the repository's contents. Click on the link below for launching it with the Dimensions API Lab repository.
+[mybinder.org](https://ovh.mybinder.org/) is a free service that transforms a github repository into a Jupyter server hosting the repository's contents. 
+
+With Binder, you can run most of the Jupyter notebooks directly from your web browser without installing anything. Just click on the launch binder button below. A temporary Jupyter Notebook server with all dependencies will be automatically launched in the cloud. It is not persistent: all your changes will be lost after some time.
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/digital-science/dimensions-api-lab/master)
 
