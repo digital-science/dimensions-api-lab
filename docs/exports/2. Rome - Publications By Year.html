@@ -13208,7 +13208,8 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dslquery</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;&quot;&quot;search publications where research_orgs.id=&quot;</span><span class="si">{GRIDID}</span><span class="s2">&quot; return publications&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">stats</span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dslquery</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;&quot;&quot;search publications where </span>
+<span class="s2">research_orgs.id=&quot;</span><span class="si">{GRIDID}</span><span class="s2">&quot; return publications&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">stats</span> 
 </pre></div>
 
     </div>
@@ -13252,7 +13253,8 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">dslquery</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;&quot;&quot;search publications where research_orgs.id=&quot;</span><span class="si">{GRIDID}</span><span class="s2">&quot; return year limit 100&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">dslquery</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;&quot;&quot;search publications where </span>
+<span class="s2">research_orgs.id=&quot;</span><span class="si">{GRIDID}</span><span class="s2">&quot; return year limit 100&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span> 
 <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;year&quot;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="c1"># create a bar chart with the data</span>
 <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;year&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;count&quot;</span><span class="p">)</span>
@@ -13641,7 +13643,8 @@ if (outputEl) {{
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dslquery</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;&quot;&quot;search publications where research_orgs.id=&quot;</span><span class="si">{GRIDID}</span><span class="s2">&quot; and year=1928 return publications&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe_authors</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dslquery</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;&quot;&quot;search publications where research_orgs.id=&quot;</span><span class="si">{GRIDID}</span><span class="s2">&quot; </span>
+<span class="s2">and year=1928 return publications&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe_authors</span><span class="p">()</span>
 </pre></div>
 
     </div>

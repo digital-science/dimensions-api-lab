@@ -13123,7 +13123,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[75]:</div>
+<div class="prompt input_prompt">In&nbsp;[86]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">dimcli</span>
@@ -13186,7 +13186,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[87]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">GRIDID</span> <span class="o">=</span> <span class="s2">&quot;grid.7841.a&quot;</span>
@@ -13250,7 +13250,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[88]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">dslquery</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;&quot;&quot;search patents where assignees.id=&quot;</span><span class="si">{GRIDID}</span><span class="s2">&quot; return patents limit 1000&quot;&quot;&quot;</span><span class="p">)</span>
@@ -13271,9 +13271,869 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Returned Patents: 558 (total = 558)
+<pre>Login token expired. Logging in again.
+Returned Patents: 558 (total = 558)
 </pre>
 </div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[89]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[89]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>assignee_names</th>
+      <th>assignees</th>
+      <th>filing_status</th>
+      <th>granted_year</th>
+      <th>id</th>
+      <th>inventor_names</th>
+      <th>publication_date</th>
+      <th>times_cited</th>
+      <th>title</th>
+      <th>year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>[PROVINCIA ITALIANA DELLA CONGREGAZIONE DEI FI...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>CA-2659681-A1</td>
+      <td>[D'ATRI, STEFANIA, FAILLA, CRISTINA MARIA, LAC...</td>
+      <td>2008-02-07</td>
+      <td>NaN</td>
+      <td>PEPTIDE DERIVED FROM VASCULAR ENDOTHELIAL GROW...</td>
+      <td>2007</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>[Universita degli Studi di Roma La Sapienza, U...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Grant</td>
+      <td>2012.0</td>
+      <td>EP-2212421-B1</td>
+      <td>[BOZZONI, IRENE, FATICA, ALESSANDRO, ROSA, ALE...</td>
+      <td>2012-08-08</td>
+      <td>NaN</td>
+      <td>MIRNA, SIRNA AND USE THEREOF IN THERAPY</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>[Universita degli Studi di Roma La Sapienza, U...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Grant</td>
+      <td>2006.0</td>
+      <td>DE-60028007-D1</td>
+      <td>[MACINO G, COGONI C]</td>
+      <td>2006-06-22</td>
+      <td>NaN</td>
+      <td>The isolation and characterization of a switch...</td>
+      <td>2000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>[Universita degli Studi di Roma La Sapienza, U...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Grant</td>
+      <td>2006.0</td>
+      <td>DE-60215843-D1</td>
+      <td>[DE VINCENTIIS MARCO, GALLO ANDREA, MANCIOCCO ...</td>
+      <td>2006-12-14</td>
+      <td>NaN</td>
+      <td>Artificial larynx</td>
+      <td>2002</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>[Universita degli Studi di Roma La Sapienza, U...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Grant</td>
+      <td>2004.0</td>
+      <td>AU-777037-B2</td>
+      <td>[COGONI, CARLO, MACINO, GIUSEPPE]</td>
+      <td>2004-09-30</td>
+      <td>NaN</td>
+      <td>Isolation and characterization of a N. crassa ...</td>
+      <td>1999</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>[UNIV DEGLI STUDI DI ROMA LA SAPIENZA]</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>WO-2019111142-A1</td>
+      <td>[VIOLI, FRANCESCO, CARNEVALE, ROBERTO, NOCELLA...</td>
+      <td>2019-06-13</td>
+      <td>NaN</td>
+      <td>OLEUROPEIN FOR USE IN REDUCING POST-PRANDIAL G...</td>
+      <td>2018</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>[UNIV NORTH CAROLINA CHAPEL HILL, SAPIENZA UNI...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>WO-2018187439-A1</td>
+      <td>[REID, LOLA M., DOMENICO, Alvaro, CARDINALE, V...</td>
+      <td>2018-10-11</td>
+      <td>NaN</td>
+      <td>CRYOPRESERVATION METHOD</td>
+      <td>2018</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>[Universita degli Studi di Siena, Universita d...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>EP-2195289-A2</td>
+      <td>[BIAVA, MARIANGELA, BOTTA, MAURIZIO, DE LOGU, ...</td>
+      <td>2010-06-16</td>
+      <td>NaN</td>
+      <td>PYRROLE COMPOUNDS AS INHIBITORS OF MYCOBACTERI...</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>[Universita degli Studi di Roma La Sapienza, M...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Grant</td>
+      <td>2017.0</td>
+      <td>US-9750770-B2</td>
+      <td>[Lola M. Reid, Yunfang Wang, David A. GERBER, ...</td>
+      <td>2017-09-05</td>
+      <td>NaN</td>
+      <td>Method of treating pancreatic and liver condit...</td>
+      <td>2015</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>[Universita degli Studi di Roma Tor Vergata, U...</td>
+      <td>[{'id': 'grid.6530.0', 'name': 'University of ...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>EP-2013217-A1</td>
+      <td>[MACCARRONE, MAURO, ODDI, SERGIO, FEZZA, FILOM...</td>
+      <td>2009-01-14</td>
+      <td>NaN</td>
+      <td>DESIGN AND SYNTHESIS OF BIOTINYLATED PROBES FO...</td>
+      <td>2006</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>[Universita'Degli Studi di Roma “La Sapienza”,...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Grant</td>
+      <td>2008.0</td>
+      <td>US-7459298-B2</td>
+      <td>[Irene Bozzoni, Elisa Caffarelli, Pietro Laneve]</td>
+      <td>2008-12-02</td>
+      <td>NaN</td>
+      <td>Purification, cloning and biochemical characte...</td>
+      <td>2005</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>[Universita Degli Studi di Padova, Universita ...</td>
+      <td>[{'id': 'grid.5608.b', 'acronym': 'UNIPD', 'na...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>US-20090036382-A1</td>
+      <td>[Giorgio Bressan, Paolo Bonaldo, Stefano Picco...</td>
+      <td>2009-02-05</td>
+      <td>4.0</td>
+      <td>TGF-Beta Modulators and Use Thereof</td>
+      <td>2007</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>[Universita degli Studi di Roma La Sapienza, U...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>EP-2323751-A2</td>
+      <td>[GIAVARINI, CARLO, MACCIONI, FILIPPO]</td>
+      <td>2011-05-25</td>
+      <td>NaN</td>
+      <td>PROCESS FOR THE PURIFICATION-SWEETENING OF NAT...</td>
+      <td>2009</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>[IST FISIOTERAP OSPITALROMA, Istituti Fisioter...</td>
+      <td>[{'id': 'grid.417520.5', 'acronym': 'IFO', 'na...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>EP-2529195-A1</td>
+      <td>[SODDU, SILVIA, CUNDARI, ENRICO, CHESSA, LUCIA...</td>
+      <td>2012-12-05</td>
+      <td>NaN</td>
+      <td>METHOD FOR IN VITRO DETECTION OF ATAXIA TELANG...</td>
+      <td>2011</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>[Fondazione Istituto Europeo Di Oncologia E Ce...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>CA-2797011-A1</td>
+      <td>[MINUCCI, SAVERIO, MAI, ANTONELLO, MATTEVI, AN...</td>
+      <td>2011-10-27</td>
+      <td>NaN</td>
+      <td>TRANYLCYPROMINE DERIVATIVES AS INHIBITORS OF H...</td>
+      <td>2011</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>[Veolia Water Solutions and Technologies Suppo...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>EP-3186201-A1</td>
+      <td>[WERKER, ALAN GIDEON, BENGTSSON, SIMON OLOF HA...</td>
+      <td>2017-07-05</td>
+      <td>NaN</td>
+      <td>PROCESS FOR ENHANCING POLYHYDROXYALKANOATE ACC...</td>
+      <td>2015</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>[UNIVERSITA' DEGLI STUDI DI ROMA 'LA SAPIENZA']</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>WO-2016181271-A1</td>
+      <td>[AL MANSOUR, Monir]</td>
+      <td>2016-11-17</td>
+      <td>NaN</td>
+      <td>MECHANICAL GUN-TYPE CIRCUMCISION DEVICE WITH G...</td>
+      <td>2016</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>[Universita degli Studi di Roma La Sapienza, U...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>EP-2438172-A1</td>
+      <td>[CERVONE, FELICE, DE LORENZO, GIULIA, BRUTUS, ...</td>
+      <td>2012-04-11</td>
+      <td>NaN</td>
+      <td>CONSTRUCTS EXPRESSING CHIMERIC RECEPTORS AND U...</td>
+      <td>2010</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>[Universita degli Studi di Roma La Sapienza, U...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>EP-2106546-A1</td>
+      <td>[CAPUTO DOMENICO, DE CESARE GIAMPIERO, MANETTI...</td>
+      <td>2009-10-07</td>
+      <td>NaN</td>
+      <td>CHEMICAL AND/OR BIOMOLECULAR ANALYSIS INTEGRAT...</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>[Universita degli Studi di Roma La Sapienza, U...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>CA-2534378-A1</td>
+      <td>[GIACOMELLO, ALESSANDRO, MESSINA, ELISA, BATTA...</td>
+      <td>2005-02-10</td>
+      <td>NaN</td>
+      <td>METHOD FOR THE ISOLATION AND EXPANSION OF CARD...</td>
+      <td>2004</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>[Degli Studi Di Roma La Sapienza, University o...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>EP-3310863-A1</td>
+      <td>[SARTO, MARIA SABRINA, TAMBURRANO, ALESSIO, PR...</td>
+      <td>2018-04-25</td>
+      <td>NaN</td>
+      <td>WATER-BASED PIEZORESISTIVE CONDUCTIVE POLYMERI...</td>
+      <td>2016</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>[Universita degli Studi di Roma La Sapienza, U...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Grant</td>
+      <td>2005.0</td>
+      <td>DE-69923077-T2</td>
+      <td>[CHIANESE, ANGELO]</td>
+      <td>2005-12-08</td>
+      <td>NaN</td>
+      <td>A process for the purification of solid chemic...</td>
+      <td>1999</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>[Universita degli Studi di Roma La Sapienza, U...</td>
+      <td>[{'id': 'grid.10698.36', 'acronym': 'UNC', 'na...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>US-20180295834-A1</td>
+      <td>[Lola M. Reid, Alvaro Domenico, Vincenzo Cardi...</td>
+      <td>2018-10-18</td>
+      <td>NaN</td>
+      <td>CRYOPRESERVATION METHOD</td>
+      <td>2018</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>[Universita degli Studi di Roma Tor Vergata, U...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>EP-1807713-A2</td>
+      <td>[BARTOLINI, SIMONE, GALATI, GASPARE]</td>
+      <td>2007-07-18</td>
+      <td>1.0</td>
+      <td>HIGH-CAPACITY LOCATION AND IDENTIFICATION SYST...</td>
+      <td>2005</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>[Istituto Superiore di Sanita, Universita degl...</td>
+      <td>[{'id': 'grid.416651.1', 'acronym': 'ISS', 'na...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>AU-5777696-A</td>
+      <td>[BROMURO, CARLA, CASSONE, ANTONIO, CRISANTI, A...</td>
+      <td>1996-11-29</td>
+      <td>NaN</td>
+      <td>Candida heat shock protein, cdna and uses thereof</td>
+      <td>1996</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>[Universita degli Studi di Roma La Sapienza, U...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Grant</td>
+      <td>1998.0</td>
+      <td>EP-0682375-B1</td>
+      <td>[DE CESARE, GIAMPIERO, IRRERA, FERNANDA, PALMA...</td>
+      <td>1998-07-22</td>
+      <td>NaN</td>
+      <td>Voltage-controlled variable spectrum photodete...</td>
+      <td>1995</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>[UNIV NORTH CAROLINA CHAPEL HILL, SAPIENZA UNI...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>NZ-709124-A</td>
+      <td>[CUI CAI-BIN, ALVARO DOMENICO, CARDINALE VINCE...</td>
+      <td>2017-06-30</td>
+      <td>NaN</td>
+      <td>Multipotent stem cells from the extrahepatic b...</td>
+      <td>2010</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>[KAY SYSTEMS ITALIA Srl, Universita degli Stud...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Grant</td>
+      <td>2016.0</td>
+      <td>US-9362013-B2</td>
+      <td>[Roberto Pani]</td>
+      <td>2016-06-07</td>
+      <td>NaN</td>
+      <td>Tilting collimator, in particular for single-p...</td>
+      <td>2013</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>[Universita degli Studi di Roma La Sapienza, U...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Grant</td>
+      <td>2016.0</td>
+      <td>CA-2793046-C</td>
+      <td>[GIACOMELLO, ALESSANDRO, MESSINA, ELISA, BATTA...</td>
+      <td>2016-02-16</td>
+      <td>NaN</td>
+      <td>METHOD FOR THE ISOLATION AND EXPANSION OF CARD...</td>
+      <td>2004</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>[Universita degli Studi di Roma La Sapienza, U...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>US-20160060718-A1</td>
+      <td>[Giovanni Ristori, Rosella MECHELLI, Marco Sal...</td>
+      <td>2016-03-03</td>
+      <td>NaN</td>
+      <td>EPSTEIN BARR VIRUS GENOTIPIC VARIANTS AND USES...</td>
+      <td>2014</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>528</th>
+      <td>[Universita degli Studi di Roma La Sapienza, U...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Grant</td>
+      <td>2001.0</td>
+      <td>EP-0784094-B1</td>
+      <td>[Bozzoni, I., Univ. Degli Studi di Roma La Sap...</td>
+      <td>2001-06-13</td>
+      <td>1.0</td>
+      <td>Ribozyme -snRNA chimeric molecules having a ca...</td>
+      <td>1996</td>
+    </tr>
+    <tr>
+      <th>529</th>
+      <td>[Universita degli Studi di Roma La Sapienza, U...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>EP-0714543-A1</td>
+      <td>[MALTESE, Paolo Univ. degli Studi di Roma]</td>
+      <td>1996-06-05</td>
+      <td>NaN</td>
+      <td>A CONTROL METHOD FOR A FERROELECTRIC LIQUID CR...</td>
+      <td>1994</td>
+    </tr>
+    <tr>
+      <th>530</th>
+      <td>[Universita degli Studi di Roma La Sapienza, U...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>EP-1135502-A1</td>
+      <td>[COGONI, CARLO, MACINO, GIUSEPPE]</td>
+      <td>2001-09-26</td>
+      <td>NaN</td>
+      <td>ISOLATION AND CHARACTERIZATION OF A $i(N. CRAS...</td>
+      <td>1999</td>
+    </tr>
+    <tr>
+      <th>531</th>
+      <td>[Universita degli Studi di Roma La Sapienza, U...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>US-20180245655-A1</td>
+      <td>[Walter LACARBONARA, Biagio CARBONI]</td>
+      <td>2018-08-30</td>
+      <td>NaN</td>
+      <td>MULTI-PERFORMANCE HYSTERETIC RHEOLOGICAL DEVICE</td>
+      <td>2016</td>
+    </tr>
+    <tr>
+      <th>532</th>
+      <td>[Universita degli Studi di Roma La Sapienza, U...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Grant</td>
+      <td>2006.0</td>
+      <td>EP-1443876-B1</td>
+      <td>[DE VINCENTIIS, MARCO, GALLO, ANDREA, MANCIOCC...</td>
+      <td>2006-11-02</td>
+      <td>NaN</td>
+      <td>ARTIFICIAL LARYNX</td>
+      <td>2002</td>
+    </tr>
+    <tr>
+      <th>533</th>
+      <td>[Consiglio Nazionale Delle Richerche, Universi...</td>
+      <td>[{'id': 'grid.5326.2', 'acronym': 'CNR', 'name...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>EP-2987011-A1</td>
+      <td>[OSELLAME, ROBERTO, CRESPI, ANDREA, CORRIELLI,...</td>
+      <td>2016-02-24</td>
+      <td>NaN</td>
+      <td>METHOD FOR REALIZING AN OPTICAL WAVEGUIDE IN A...</td>
+      <td>2014</td>
+    </tr>
+    <tr>
+      <th>534</th>
+      <td>[UNIVERSITA' DEGLI STUDI DI ROMA LA SAPIENZA, ...</td>
+      <td>[{'id': 'grid.9027.c', 'name': 'University of ...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>WO-2017125388-A1</td>
+      <td>[BRACCIALE, Maria Paola, BROGGI, Alessandra, C...</td>
+      <td>2017-07-27</td>
+      <td>NaN</td>
+      <td>COATING COMPOSITION WITH ANTIMICROBIAL AND ANT...</td>
+      <td>2017</td>
+    </tr>
+    <tr>
+      <th>535</th>
+      <td>[Scherrer Paul Institut, Sapienza University O...</td>
+      <td>[{'id': 'grid.5991.4', 'acronym': 'PSI', 'name...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>EP-3512641-A1</td>
+      <td>[GIORGIANNI, Flavio, HAURI, Christoph Peter, L...</td>
+      <td>2019-07-24</td>
+      <td>NaN</td>
+      <td>TRANSDUCER FOR ELECTROMAGNETIC AND THERMO-ACOU...</td>
+      <td>2017</td>
+    </tr>
+    <tr>
+      <th>536</th>
+      <td>[Centre National de la Recherche Scientifique ...</td>
+      <td>[{'id': 'grid.4444.0', 'acronym': 'CNRS', 'nam...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>EP-0241435-A3</td>
+      <td>[CLAUDIO, FALCONE, HIROSHI, FUKUHARA, LAURA, F...</td>
+      <td>1988-09-14</td>
+      <td>NaN</td>
+      <td>VECTORS FOR THE CLONING AND EXPRESSION OF HETE...</td>
+      <td>1987</td>
+    </tr>
+    <tr>
+      <th>537</th>
+      <td>[Universita degli Studi di Roma La Sapienza, U...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Grant</td>
+      <td>2004.0</td>
+      <td>DE-69820089-D1</td>
+      <td>[ERCOLANI CLAUDIO, STUZHIN PAVEL, DONZELLO PIA...</td>
+      <td>2004-01-08</td>
+      <td>NaN</td>
+      <td>porphyrazine similar compounds, their metal de...</td>
+      <td>1998</td>
+    </tr>
+    <tr>
+      <th>538</th>
+      <td>[Universita degli Studi di Roma La Sapienza, U...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>AU-5385899-A</td>
+      <td>[CHIANESE, ANGELO]</td>
+      <td>2000-02-21</td>
+      <td>NaN</td>
+      <td>Process for purifying solid chemical products ...</td>
+      <td>1999</td>
+    </tr>
+    <tr>
+      <th>539</th>
+      <td>[UNIV NORTH CAROLINA, SAPIENZA UNI DI ROMA]</td>
+      <td>[{'id': 'grid.410711.2', 'name': 'University o...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>NZ-600068-A</td>
+      <td>[REID LOLA M, WANG YUNFANG, CARDINALE VINCENZO...</td>
+      <td>2014-05-30</td>
+      <td>NaN</td>
+      <td>Multipotent stem cells from the extrahepatic b...</td>
+      <td>2010</td>
+    </tr>
+    <tr>
+      <th>540</th>
+      <td>[Northeastern University China, Sapienza Unive...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>US-20180256905-A1</td>
+      <td>[Pietro FRANCIA, Tommaso MELODIA, Matteo Rinaldi]</td>
+      <td>2018-09-13</td>
+      <td>NaN</td>
+      <td>Multi-Site Ultrasonic Wireless Pacemaker-Defib...</td>
+      <td>2018</td>
+    </tr>
+    <tr>
+      <th>541</th>
+      <td>[UNIVERSITA' DELGI STUDI DI ROMA "LA SAPIENZA"...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>US-20150359499-A1</td>
+      <td>[Riccardo FACCINI, Radio BELLINI, Francesco CO...</td>
+      <td>2015-12-17</td>
+      <td>NaN</td>
+      <td>INTRAOPERATIVE DETECTION OF TUMOR RESIDUES USI...</td>
+      <td>2014</td>
+    </tr>
+    <tr>
+      <th>542</th>
+      <td>[Centre National de la Recherche Scientifique ...</td>
+      <td>[{'id': 'grid.4444.0', 'acronym': 'CNRS', 'nam...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>FR-2935382-A1</td>
+      <td>[BUKOWSKA MARIA, SZCZECINSKI PRZEMYSLAW, WIECZ...</td>
+      <td>2010-03-05</td>
+      <td>2.0</td>
+      <td>The salt of anion pentacylique and its use as ...</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <th>543</th>
+      <td>[IEG TECHNOLOGIE GMBH, SERSYS AMBIENTE S.R.L.,...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Grant</td>
+      <td>2019.0</td>
+      <td>EP-3134349-B1</td>
+      <td>[PETRANGELI PAPINI, MARCO, MAJONE, MAURO, BARI...</td>
+      <td>2019-08-14</td>
+      <td>NaN</td>
+      <td>PROCESS FOR THE CLEAN-UP OF WATERS CONTAMINATE...</td>
+      <td>2015</td>
+    </tr>
+    <tr>
+      <th>544</th>
+      <td>[Centre National de la Recherche Scientifique ...</td>
+      <td>[{'id': 'grid.4444.0', 'acronym': 'CNRS', 'nam...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>EP-2928003-A1</td>
+      <td>[BUKOWSKA, MARIA, SZCZECINSKI, PRZEMYSLAW, WIE...</td>
+      <td>2015-10-07</td>
+      <td>NaN</td>
+      <td>PENTACYCLIC ANION SALT AND USE THEREOF AS ELEC...</td>
+      <td>2009</td>
+    </tr>
+    <tr>
+      <th>545</th>
+      <td>[UNIVERSITÀ DEGLI STUDI DI ROMA LA SAPIENZA]</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>WO-2017046410-A1</td>
+      <td>[LENZI, ANDREA, MIGLIACCIO, Silvia]</td>
+      <td>2017-03-23</td>
+      <td>NaN</td>
+      <td>IN VITRO METHOD AND KIT TO DIAGNOSE SKELETAL D...</td>
+      <td>2016</td>
+    </tr>
+    <tr>
+      <th>546</th>
+      <td>[Universita degli Studi di Roma La Sapienza, U...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>EP-0682375-A1</td>
+      <td>[DE CESARE, GIAMPIERO, IRRERA, FERNANDA, PALMA...</td>
+      <td>1995-11-15</td>
+      <td>14.0</td>
+      <td>Voltage-controlled variable spectrum photodete...</td>
+      <td>1995</td>
+    </tr>
+    <tr>
+      <th>547</th>
+      <td>[UNIVERSITA' DEGLI STUDI DI ROMA LA SAPIENZA]</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>WO-2017064660-A1</td>
+      <td>[PETRIOLI, Chiara, LO PRESTI, FRANCESCO, DI VA...</td>
+      <td>2017-04-20</td>
+      <td>2.0</td>
+      <td>METHOD AND DEVICE FOR DYNAMICAL PROTOCOL SELEC...</td>
+      <td>2016</td>
+    </tr>
+    <tr>
+      <th>548</th>
+      <td>[Universita degli Studi di Roma La Sapienza, U...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Grant</td>
+      <td>2002.0</td>
+      <td>US-6388650-B1</td>
+      <td>[Paolo Maltese]</td>
+      <td>2002-05-14</td>
+      <td>4.0</td>
+      <td>Low voltage control method for a ferroelectric...</td>
+      <td>1999</td>
+    </tr>
+    <tr>
+      <th>549</th>
+      <td>[UNIVERSITA'DEGLI STUDI DI ROMA TOR VERGATA", ...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Grant</td>
+      <td>2004.0</td>
+      <td>US-6819282-B1</td>
+      <td>[Gaspare Galati, Mauro Leonardi]</td>
+      <td>2004-11-16</td>
+      <td>27.0</td>
+      <td>Super-resolution processor/receiver to discrim...</td>
+      <td>2004</td>
+    </tr>
+    <tr>
+      <th>550</th>
+      <td>[Universita degli Studi di Roma La Sapienza, U...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Grant</td>
+      <td>1997.0</td>
+      <td>US-5682037-A</td>
+      <td>[Giampiero de Cesare, Fernanda Irrera, Fabrizi...</td>
+      <td>1997-10-28</td>
+      <td>20.0</td>
+      <td>Thin film detector of ultraviolet radiation, w...</td>
+      <td>1996</td>
+    </tr>
+    <tr>
+      <th>551</th>
+      <td>[Universita degli Studi di Roma La Sapienza, U...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Grant</td>
+      <td>2004.0</td>
+      <td>US-6810594-B2</td>
+      <td>[Cesare Lucarini, Mario Catamo]</td>
+      <td>2004-11-02</td>
+      <td>9.0</td>
+      <td>Astronomical, particularly solar and/or lunar,...</td>
+      <td>2003</td>
+    </tr>
+    <tr>
+      <th>552</th>
+      <td>[Univeristà Degli Studi Di Roma “TOR VERGATA”,...</td>
+      <td>[{'id': 'grid.6530.0', 'name': 'University of ...</td>
+      <td>Grant</td>
+      <td>2009.0</td>
+      <td>US-7570195-B2</td>
+      <td>[Simone Bartolini, Gaspare Galati]</td>
+      <td>2009-08-04</td>
+      <td>14.0</td>
+      <td>High-capacity location and identification syst...</td>
+      <td>2005</td>
+    </tr>
+    <tr>
+      <th>553</th>
+      <td>[Universita degli Studi di Roma La Sapienza, B...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Grant</td>
+      <td>2012.0</td>
+      <td>US-8191204-B2</td>
+      <td>[Nicola Plo Belfiore, Massimiliano Scaccia, Fr...</td>
+      <td>2012-06-05</td>
+      <td>3.0</td>
+      <td>Selective compliance hinge</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <th>554</th>
+      <td>[UNIVERSITA  DEGLI STUDI DI ROMA "LA SAPIENZA"...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>DE-3509421-A1</td>
+      <td>[VITALI GIANFRANCO PROF]</td>
+      <td>1985-09-26</td>
+      <td>8.0</td>
+      <td>Improved device for homogenising and diffusing...</td>
+      <td>1985</td>
+    </tr>
+    <tr>
+      <th>555</th>
+      <td>[Universidade Federal do Rio de Janeiro, ICFO ...</td>
+      <td>[{'id': 'grid.5853.b', 'acronym': 'ICFO', 'nam...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>EP-2811258-A1</td>
+      <td>[D'AMBROSIO, VINCENZO, Spagnolo, Nicolò, DEL R...</td>
+      <td>2014-12-10</td>
+      <td>1.0</td>
+      <td>Ultra-sensitive photonic tiltmeter utilizing t...</td>
+      <td>2014</td>
+    </tr>
+    <tr>
+      <th>556</th>
+      <td>[Universita degli Studi di Roma La Sapienza, G...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>US-20120093879-A1</td>
+      <td>[Alessandro Giacomello, Elisa Messina, Massimo...</td>
+      <td>2012-04-19</td>
+      <td>2.0</td>
+      <td>CARDIAC STEM CELLS AND USES OF SAME IN CARDIAC...</td>
+      <td>2011</td>
+    </tr>
+    <tr>
+      <th>557</th>
+      <td>[Universita degli Studi di Roma La Sapienza, U...</td>
+      <td>[{'id': 'grid.7841.a', 'name': 'Sapienza Unive...</td>
+      <td>Application</td>
+      <td>NaN</td>
+      <td>EP-1400569-A2</td>
+      <td>[BECCARI, MARIO, DIONISI, DAVIDE, MAJONE, MAUR...</td>
+      <td>2004-03-24</td>
+      <td>8.0</td>
+      <td>Process to obtain biodegradable polymers from ...</td>
+      <td>2003</td>
+    </tr>
+  </tbody>
+</table>
+<p>558 rows × 10 columns</p>
+</div>
+</div>
+
 </div>
 
 </div>
