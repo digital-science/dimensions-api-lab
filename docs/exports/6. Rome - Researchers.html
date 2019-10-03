@@ -13126,13 +13126,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">dimcli</span>
-<span class="kn">from</span> <span class="nn">dimcli.shortcuts</span> <span class="k">import</span> <span class="n">dslquery</span><span class="p">,</span> <span class="n">dslqueryall</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">pandas.io.json</span> <span class="k">import</span> <span class="n">json_normalize</span>
-<span class="kn">import</span> <span class="nn">plotly_express</span> <span class="k">as</span> <span class="nn">px</span>
-<span class="kn">from</span> <span class="nn">plotly.offline</span> <span class="k">import</span> <span class="n">init_notebook_mode</span> <span class="c1"># needed for exports </span>
-<span class="n">init_notebook_mode</span><span class="p">(</span><span class="n">connected</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>pip install dimcli plotly_express  -U
 </pre></div>
 
     </div>
@@ -13148,28 +13142,127 @@ div#notebook {
     <div class="prompt"></div>
 
 
-
-<div class="output_html rendered_html output_subarea ">
-        <script type="text/javascript">
-        window.PlotlyConfig = {MathJaxConfig: 'local'};
-        if (window.MathJax) {MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
-        if (typeof require !== 'undefined') {
-        require.undef("plotly");
-        requirejs.config({
-            paths: {
-                'plotly': ['https://cdn.plot.ly/plotly-latest.min']
-            }
-        });
-        require(['plotly'], function(Plotly) {
-            window._Plotly = Plotly;
-        });
-        }
-        </script>
-        
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Collecting dimcli
+  Downloading https://files.pythonhosted.org/packages/df/78/f60cdc7ef891c81708a0e8861648a674d26e19161682d96f4eee4bd7c84d/dimcli-0.5.7-py2.py3-none-any.whl (114kB)
+     |████████████████████████████████| 122kB 9.0MB/s 
+Collecting plotly_express
+  Downloading https://files.pythonhosted.org/packages/d4/d6/8a2906f51e073a4be80cab35cfa10e7a34853e60f3ed5304ac470852a08d/plotly_express-0.4.1-py2.py3-none-any.whl
+Collecting json2html (from dimcli)
+  Downloading https://files.pythonhosted.org/packages/01/d5/40b617ee19d2d79f606ed37f8a81e51158f126d2af67270c68f2b47ae0d5/json2html-1.3.0.tar.gz
+Requirement already satisfied, skipping upgrade: prompt-toolkit in /usr/local/lib/python3.6/dist-packages (from dimcli) (1.0.16)
+Requirement already satisfied, skipping upgrade: ipython in /usr/local/lib/python3.6/dist-packages (from dimcli) (5.5.0)
+Requirement already satisfied, skipping upgrade: requests in /usr/local/lib/python3.6/dist-packages (from dimcli) (2.21.0)
+Requirement already satisfied, skipping upgrade: click in /usr/local/lib/python3.6/dist-packages (from dimcli) (7.0)
+Requirement already satisfied, skipping upgrade: pygments in /usr/local/lib/python3.6/dist-packages (from dimcli) (2.1.3)
+Requirement already satisfied, skipping upgrade: pandas in /usr/local/lib/python3.6/dist-packages (from dimcli) (0.24.2)
+Requirement already satisfied, skipping upgrade: numpy&gt;=1.11 in /usr/local/lib/python3.6/dist-packages (from plotly_express) (1.16.5)
+Requirement already satisfied, skipping upgrade: statsmodels&gt;=0.9.0 in /usr/local/lib/python3.6/dist-packages (from plotly_express) (0.10.1)
+Requirement already satisfied, skipping upgrade: patsy&gt;=0.5 in /usr/local/lib/python3.6/dist-packages (from plotly_express) (0.5.1)
+Requirement already satisfied, skipping upgrade: plotly&gt;=4.1.0 in /usr/local/lib/python3.6/dist-packages (from plotly_express) (4.1.1)
+Requirement already satisfied, skipping upgrade: scipy&gt;=0.18 in /usr/local/lib/python3.6/dist-packages (from plotly_express) (1.3.1)
+Requirement already satisfied, skipping upgrade: wcwidth in /usr/local/lib/python3.6/dist-packages (from prompt-toolkit-&gt;dimcli) (0.1.7)
+Requirement already satisfied, skipping upgrade: six&gt;=1.9.0 in /usr/local/lib/python3.6/dist-packages (from prompt-toolkit-&gt;dimcli) (1.12.0)
+Requirement already satisfied, skipping upgrade: traitlets&gt;=4.2 in /usr/local/lib/python3.6/dist-packages (from ipython-&gt;dimcli) (4.3.2)
+Requirement already satisfied, skipping upgrade: decorator in /usr/local/lib/python3.6/dist-packages (from ipython-&gt;dimcli) (4.4.0)
+Requirement already satisfied, skipping upgrade: simplegeneric&gt;0.8 in /usr/local/lib/python3.6/dist-packages (from ipython-&gt;dimcli) (0.8.1)
+Requirement already satisfied, skipping upgrade: pickleshare in /usr/local/lib/python3.6/dist-packages (from ipython-&gt;dimcli) (0.7.5)
+Requirement already satisfied, skipping upgrade: pexpect; sys_platform != &#34;win32&#34; in /usr/local/lib/python3.6/dist-packages (from ipython-&gt;dimcli) (4.7.0)
+Requirement already satisfied, skipping upgrade: setuptools&gt;=18.5 in /usr/local/lib/python3.6/dist-packages (from ipython-&gt;dimcli) (41.2.0)
+Requirement already satisfied, skipping upgrade: certifi&gt;=2017.4.17 in /usr/local/lib/python3.6/dist-packages (from requests-&gt;dimcli) (2019.9.11)
+Requirement already satisfied, skipping upgrade: chardet&lt;3.1.0,&gt;=3.0.2 in /usr/local/lib/python3.6/dist-packages (from requests-&gt;dimcli) (3.0.4)
+Requirement already satisfied, skipping upgrade: urllib3&lt;1.25,&gt;=1.21.1 in /usr/local/lib/python3.6/dist-packages (from requests-&gt;dimcli) (1.24.3)
+Requirement already satisfied, skipping upgrade: idna&lt;2.9,&gt;=2.5 in /usr/local/lib/python3.6/dist-packages (from requests-&gt;dimcli) (2.8)
+Requirement already satisfied, skipping upgrade: pytz&gt;=2011k in /usr/local/lib/python3.6/dist-packages (from pandas-&gt;dimcli) (2018.9)
+Requirement already satisfied, skipping upgrade: python-dateutil&gt;=2.5.0 in /usr/local/lib/python3.6/dist-packages (from pandas-&gt;dimcli) (2.5.3)
+Requirement already satisfied, skipping upgrade: retrying&gt;=1.3.3 in /usr/local/lib/python3.6/dist-packages (from plotly&gt;=4.1.0-&gt;plotly_express) (1.3.3)
+Requirement already satisfied, skipping upgrade: ipython-genutils in /usr/local/lib/python3.6/dist-packages (from traitlets&gt;=4.2-&gt;ipython-&gt;dimcli) (0.2.0)
+Requirement already satisfied, skipping upgrade: ptyprocess&gt;=0.5 in /usr/local/lib/python3.6/dist-packages (from pexpect; sys_platform != &#34;win32&#34;-&gt;ipython-&gt;dimcli) (0.6.0)
+Building wheels for collected packages: json2html
+  Building wheel for json2html (setup.py) ... done
+  Created wheel for json2html: filename=json2html-1.3.0-cp36-none-any.whl size=7594 sha256=f2b4a932af74686279b361e8caff05609b50c1adf9ac50f21d2c2847eb5b5366
+  Stored in directory: /root/.cache/pip/wheels/58/36/ad/386be30507bcb8f0c9830004bd776132eba63c1b945ed79255
+Successfully built json2html
+Installing collected packages: json2html, dimcli, plotly-express
+Successfully installed dimcli-0.5.7 json2html-1.3.0 plotly-express-0.4.1
+</pre>
+</div>
 </div>
 
 </div>
+</div>
 
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># common libraries</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pandas.io.json</span> <span class="k">import</span> <span class="n">json_normalize</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="k">import</span> <span class="n">tqdm_notebook</span> <span class="k">as</span> <span class="n">tqdm</span>
+<span class="kn">import</span> <span class="nn">plotly_express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">from</span> <span class="nn">getpass</span> <span class="k">import</span> <span class="n">getpass</span>
+<span class="c1"># FINALLY..</span>
+<span class="kn">import</span> <span class="nn">dimcli</span>
+<span class="kn">from</span> <span class="nn">dimcli.shortcuts</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="c1">##</span>
+<span class="c1"># LOG IN </span>
+<span class="c1">##</span>
+
+<span class="n">user</span> <span class="o">=</span> <span class="s2">&quot;m.pasin@digital-science.com&quot;</span>  <span class="c1">#@param {type: &quot;string&quot;}</span>
+<span class="n">password</span> <span class="o">=</span> <span class="n">getpass</span><span class="p">(</span><span class="s1">&#39;Enter password here&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;=&gt; username is&#39;</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;=&gt; password is&#39;</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">password</span><span class="p">))</span>
+<span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+
+<span class="c1">##</span>
+<span class="c1"># OBJECTS </span>
+<span class="c1">##</span>
+<span class="o">%</span><span class="k">load_ext</span> google.colab.data_table
+<span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Enter password here··········
+=&gt; username is m.pasin@digital-science.com
+=&gt; password is **************
+DimCli v0.5.7 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (method: manual login)
+The google.colab.data_table extension is already loaded. To reload it, use:
+  %reload_ext google.colab.data_table
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> google.colab.data_table
+</pre></div>
+
+    </div>
 </div>
 </div>
 
@@ -13185,7 +13278,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">GRIDID</span> <span class="o">=</span> <span class="s2">&quot;grid.7841.a&quot;</span>
@@ -13205,7 +13298,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">dslquery</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;&quot;&quot;search researchers where </span>
@@ -13230,14 +13323,14 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Returned Researchers: 100 (total = 19597)
+<pre>Returned Researchers: 100 (total = 19940)
 </pre>
 </div>
 </div>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[3]:</div>
+    <div class="prompt output_prompt">Out[7]:</div>
 
 
 
@@ -13276,8 +13369,8 @@ div#notebook {
       <td>ur.013334067161.01</td>
       <td>Rahatlou</td>
       <td>[0000-0001-9794-3360]</td>
-      <td>[{'id': 'grid.420929.4', 'acronym': 'LIP', 'na...</td>
-      <td>1103</td>
+      <td>[{'id': 'grid.470218.8', 'name': 'INFN Sezione...</td>
+      <td>1102</td>
       <td>Shahram Rahatlou</td>
     </tr>
     <tr>
@@ -13286,7 +13379,7 @@ div#notebook {
       <td>ur.016577466761.29</td>
       <td>Longo</td>
       <td>[0000-0001-6238-6787]</td>
-      <td>[{'id': 'grid.420929.4', 'acronym': 'LIP', 'na...</td>
+      <td>[{'id': 'grid.470218.8', 'name': 'INFN Sezione...</td>
       <td>1024</td>
       <td>Egidio Longo</td>
     </tr>
@@ -13296,8 +13389,8 @@ div#notebook {
       <td>ur.01004616634.01</td>
       <td>Lotti</td>
       <td>NaN</td>
-      <td>[{'id': 'grid.8404.8', 'name': 'University of ...</td>
-      <td>869</td>
+      <td>[{'id': 'grid.5216.0', 'name': 'National and K...</td>
+      <td>891</td>
       <td>Torello Maria Lotti</td>
     </tr>
     <tr>
@@ -13307,7 +13400,7 @@ div#notebook {
       <td>Margaroli</td>
       <td>[0000-0002-3869-0153]</td>
       <td>[{'id': 'grid.470218.8', 'name': 'INFN Sezione...</td>
-      <td>856</td>
+      <td>857</td>
       <td>Fabrizio Margaroli</td>
     </tr>
     <tr>
@@ -13316,8 +13409,8 @@ div#notebook {
       <td>ur.0603163377.07</td>
       <td>Volpe</td>
       <td>[0000-0002-9642-8380]</td>
-      <td>[{'id': 'grid.7400.3', 'acronym': 'UZH', 'name...</td>
-      <td>853</td>
+      <td>[{'id': 'grid.8404.8', 'name': 'University of ...</td>
+      <td>848</td>
       <td>Massimo Volpe</td>
     </tr>
     <tr>
@@ -13326,8 +13419,8 @@ div#notebook {
       <td>ur.011001734565.36</td>
       <td>Giagu</td>
       <td>[0000-0001-9192-3537]</td>
-      <td>[{'id': 'grid.6045.7', 'acronym': 'INFN', 'nam...</td>
-      <td>774</td>
+      <td>[{'id': 'grid.10328.38', 'name': 'University o...</td>
+      <td>777</td>
       <td>Stefano Giagu</td>
     </tr>
     <tr>
@@ -13337,7 +13430,7 @@ div#notebook {
       <td>Valesini</td>
       <td>NaN</td>
       <td>[{'id': 'grid.420089.7', 'acronym': 'NICHD', '...</td>
-      <td>714</td>
+      <td>762</td>
       <td>Guido Valesini</td>
     </tr>
     <tr>
@@ -13346,8 +13439,8 @@ div#notebook {
       <td>ur.0744774354.40</td>
       <td>Faccini</td>
       <td>[0000-0003-2613-5141]</td>
-      <td>[{'id': 'grid.470206.7', 'name': 'INFN Sezione...</td>
-      <td>710</td>
+      <td>[{'id': 'grid.470218.8', 'name': 'INFN Sezione...</td>
+      <td>714</td>
       <td>Riccardo Faccini</td>
     </tr>
     <tr>
@@ -13356,19 +13449,19 @@ div#notebook {
       <td>ur.01351106567.44</td>
       <td>Brunori</td>
       <td>[0000-0002-7795-1635]</td>
-      <td>[{'id': 'grid.431860.8', 'name': 'AT&amp;T (United...</td>
-      <td>686</td>
+      <td>[{'id': 'grid.9027.c', 'name': 'University of ...</td>
+      <td>691</td>
       <td>Maurizio Brunori</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>Massimino</td>
-      <td>ur.0750640573.00</td>
-      <td>D'Armiento</td>
-      <td>NaN</td>
-      <td>[{'id': 'grid.158820.6', 'name': 'University o...</td>
-      <td>675</td>
-      <td>Massimino D'Armiento</td>
+      <td>Salvatore</td>
+      <td>ur.01140361036.11</td>
+      <td>Cucchiara</td>
+      <td>[0000-0002-2939-9698]</td>
+      <td>[{'id': 'grid.8404.8', 'name': 'University of ...</td>
+      <td>684</td>
+      <td>Salvatore Cucchiara</td>
     </tr>
   </tbody>
 </table>
@@ -13383,7 +13476,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;full_name&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;total_publications&quot;</span><span class="p">,</span> <span class="n">hover_name</span><span class="o">=</span><span class="s2">&quot;full_name&quot;</span><span class="p">,</span> 
@@ -13498,7 +13591,7 @@ if (outputEl) {{
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">dslquery</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;&quot;&quot;search researchers where research_orgs=&quot;</span><span class="si">{GRIDID}</span><span class="s2">&quot; </span>
@@ -13529,7 +13622,7 @@ if (outputEl) {{
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[5]:</div>
+    <div class="prompt output_prompt">Out[0]:</div>
 
 
 
@@ -13675,7 +13768,7 @@ if (outputEl) {{
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;full_name&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;total_publications&quot;</span><span class="p">,</span> <span class="n">hover_name</span><span class="o">=</span><span class="s2">&quot;full_name&quot;</span><span class="p">,</span> 
@@ -13767,7 +13860,7 @@ if (outputEl) {{
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">dslquery</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;&quot;&quot;search researchers where research_orgs=&quot;</span><span class="si">{GRIDID}</span><span class="s2">&quot; and obsolete=0 </span>
@@ -13809,7 +13902,7 @@ if (outputEl) {{
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[:</span><span class="mi">100</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;full_name&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;total_publications&quot;</span><span class="p">,</span> <span class="n">hover_name</span><span class="o">=</span><span class="s2">&quot;full_name&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;current_research_org.name&quot;</span><span class="p">,</span>
@@ -13902,7 +13995,7 @@ if (outputEl) {{
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">dslquery</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;&quot;&quot;search researchers where research_orgs=&quot;</span><span class="si">{GRIDID}</span><span class="s2">&quot; and obsolete=0 and current_research_org is not empty</span>
@@ -13946,7 +14039,7 @@ if (outputEl) {{
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_minus_rome</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;current_research_org.id&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">GRIDID</span><span class="p">]</span>
@@ -13967,7 +14060,7 @@ if (outputEl) {{
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">df_minus_rome</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;org_name&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;org_country&quot;</span><span class="p">,</span>
@@ -14050,7 +14143,7 @@ if (outputEl) {{
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_minus_rome</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;org_name&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;total_publications&quot;</span><span class="p">,</span>  <span class="n">hover_name</span><span class="o">=</span><span class="s2">&quot;full_name&quot;</span><span class="p">,</span> 
