@@ -1,0 +1,105 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 500px;
+            height: 500px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"id": "pub.1101318936", "label": "pub.1101318936", "shape": "dot"}, {"id": "pub.1002394460", "label": "pub.1002394460", "shape": "dot"}, {"id": "pub.1104531912", "label": "pub.1104531912", "shape": "dot"}, {"id": "pub.1109815383", "label": "pub.1109815383", "shape": "dot"}, {"id": "pub.1053279155", "label": "pub.1053279155", "shape": "dot"}, {"id": "pub.1016243129", "label": "pub.1016243129", "shape": "dot"}, {"id": "pub.1053157726", "label": "pub.1053157726", "shape": "dot"}, {"id": "pub.1113063906", "label": "pub.1113063906", "shape": "dot"}, {"id": "pub.1103275659", "label": "pub.1103275659", "shape": "dot"}, {"id": "pub.1026187633", "label": "pub.1026187633", "shape": "dot"}, {"id": "pub.1012651711", "label": "pub.1012651711", "shape": "dot"}, {"id": "pub.1121687821", "label": "pub.1121687821", "shape": "dot"}, {"id": "pub.1113902569", "label": "pub.1113902569", "shape": "dot"}, {"id": "pub.1046653745", "label": "pub.1046653745", "shape": "dot"}, {"id": "pub.1012381129", "label": "pub.1012381129", "shape": "dot"}, {"id": "pub.1005502446", "label": "pub.1005502446", "shape": "dot"}, {"id": "pub.1008922470", "label": "pub.1008922470", "shape": "dot"}, {"id": "pub.1121692873", "label": "pub.1121692873", "shape": "dot"}, {"id": "pub.1089701016", "label": "pub.1089701016", "shape": "dot"}, {"id": "pub.1107354292", "label": "pub.1107354292", "shape": "dot"}, {"id": "pub.1113065837", "label": "pub.1113065837", "shape": "dot"}, {"id": "pub.1109914120", "label": "pub.1109914120", "shape": "dot"}, {"id": "pub.1113878770", "label": "pub.1113878770", "shape": "dot"}, {"id": "pub.1011868512", "label": "pub.1011868512", "shape": "dot"}, {"id": "pub.1001626874", "label": "pub.1001626874", "shape": "dot"}, {"id": "pub.1099624152", "label": "pub.1099624152", "shape": "dot"}]);
+        edges = new vis.DataSet([{"from": "pub.1053279155", "to": "pub.1103275659"}, {"from": "pub.1053279155", "to": "pub.1012651711"}, {"from": "pub.1053279155", "to": "pub.1005502446"}, {"from": "pub.1053279155", "to": "pub.1008922470"}, {"from": "pub.1053279155", "to": "pub.1053157726"}, {"from": "pub.1103275659", "to": "pub.1113878770"}, {"from": "pub.1103275659", "to": "pub.1109815383"}, {"from": "pub.1103275659", "to": "pub.1107354292"}, {"from": "pub.1107354292", "to": "pub.1113878770"}, {"from": "pub.1107354292", "to": "pub.1113902569"}, {"from": "pub.1107354292", "to": "pub.1113065837"}, {"from": "pub.1053157726", "to": "pub.1109914120"}, {"from": "pub.1053157726", "to": "pub.1113063906"}, {"from": "pub.1053157726", "to": "pub.1099624152"}, {"from": "pub.1053157726", "to": "pub.1104531912"}, {"from": "pub.1053157726", "to": "pub.1011868512"}, {"from": "pub.1053157726", "to": "pub.1001626874"}, {"from": "pub.1113878770", "to": "pub.1121687821"}, {"from": "pub.1113878770", "to": "pub.1121692873"}, {"from": "pub.1012651711", "to": "pub.1101318936"}, {"from": "pub.1008922470", "to": "pub.1089701016"}, {"from": "pub.1008922470", "to": "pub.1026187633"}, {"from": "pub.1008922470", "to": "pub.1002394460"}, {"from": "pub.1008922470", "to": "pub.1012381129"}, {"from": "pub.1008922470", "to": "pub.1046653745"}, {"from": "pub.1008922470", "to": "pub.1016243129"}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
