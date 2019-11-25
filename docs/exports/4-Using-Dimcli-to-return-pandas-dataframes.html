@@ -13017,45 +13017,6 @@ ul.typeahead-list  > li > a.pull-right {
 .highlight .vm { color: #19177C } /* Name.Variable.Magic */
 .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
     </style>
-<style type="text/css">
-    
-/* Temporary definitions which will become obsolete with Notebook release 5.0 */
-.ansi-black-fg { color: #3E424D; }
-.ansi-black-bg { background-color: #3E424D; }
-.ansi-black-intense-fg { color: #282C36; }
-.ansi-black-intense-bg { background-color: #282C36; }
-.ansi-red-fg { color: #E75C58; }
-.ansi-red-bg { background-color: #E75C58; }
-.ansi-red-intense-fg { color: #B22B31; }
-.ansi-red-intense-bg { background-color: #B22B31; }
-.ansi-green-fg { color: #00A250; }
-.ansi-green-bg { background-color: #00A250; }
-.ansi-green-intense-fg { color: #007427; }
-.ansi-green-intense-bg { background-color: #007427; }
-.ansi-yellow-fg { color: #DDB62B; }
-.ansi-yellow-bg { background-color: #DDB62B; }
-.ansi-yellow-intense-fg { color: #B27D12; }
-.ansi-yellow-intense-bg { background-color: #B27D12; }
-.ansi-blue-fg { color: #208FFB; }
-.ansi-blue-bg { background-color: #208FFB; }
-.ansi-blue-intense-fg { color: #0065CA; }
-.ansi-blue-intense-bg { background-color: #0065CA; }
-.ansi-magenta-fg { color: #D160C4; }
-.ansi-magenta-bg { background-color: #D160C4; }
-.ansi-magenta-intense-fg { color: #A03196; }
-.ansi-magenta-intense-bg { background-color: #A03196; }
-.ansi-cyan-fg { color: #60C6C8; }
-.ansi-cyan-bg { background-color: #60C6C8; }
-.ansi-cyan-intense-fg { color: #258F8F; }
-.ansi-cyan-intense-bg { background-color: #258F8F; }
-.ansi-white-fg { color: #C5C1B4; }
-.ansi-white-bg { background-color: #C5C1B4; }
-.ansi-white-intense-fg { color: #A1A6B2; }
-.ansi-white-intense-bg { background-color: #A1A6B2; }
-
-.ansi-bold { font-weight: bold; }
-
-    </style>
 
 
 <style type="text/css">
@@ -13089,7 +13050,7 @@ div#notebook {
 
 <!-- Loading mathjax macro -->
 <!-- Load mathjax -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_HTML"></script>
     <!-- MathJax configuration -->
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -13134,13 +13095,14 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>pip install dimcli -U --quiet
+<span class="kn">import</span> <span class="nn">pandas</span>
 <span class="kn">import</span> <span class="nn">dimcli</span>
-<span class="kn">from</span> <span class="nn">dimcli.shortcuts</span> <span class="k">import</span> <span class="n">dslquery</span>
-<span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">()</span>
+<span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;dimensions-username@me.com&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;my-secret-password&quot;</span><span class="p">)</span>
+<span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -13157,7 +13119,8 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>DimCli v0.5.4 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (method: dsl.ini file)
+<pre>     |████████████████████████████████| 122kB 2.7MB/s 
+DimCli v0.6.1 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (method: manual login)
 </pre>
 </div>
 </div>
@@ -13176,12 +13139,14 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># we&#39;ll reuse this query later on </span>
-<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search publications for &quot;graphene&quot; where year=[2013:2019] return publications sort by times_cited limit 1000&quot;&quot;&quot;</span>
-<span class="n">res</span> <span class="o">=</span> <span class="n">dslquery</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search publications for &quot;graphene&quot; </span>
+<span class="s2">            where year in [2013:2019] </span>
+<span class="s2">            return publications sort by times_cited limit 1000&quot;&quot;&quot;</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13198,7 +13163,7 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Returned Publications: 1000 (total = 365807)
+<pre>Returned Publications: 1000 (total = 401814)
 </pre>
 </div>
 </div>
@@ -13209,7 +13174,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
@@ -13226,7 +13191,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[10]:</div>
+    <div class="prompt output_prompt">Out[15]:</div>
 
 
 
@@ -13249,148 +13214,148 @@ div#notebook {
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>pages</th>
       <th>author_affiliations</th>
-      <th>id</th>
+      <th>year</th>
       <th>issue</th>
+      <th>volume</th>
+      <th>id</th>
+      <th>type</th>
+      <th>title</th>
       <th>journal.id</th>
       <th>journal.title</th>
-      <th>pages</th>
-      <th>title</th>
-      <th>type</th>
-      <th>volume</th>
-      <th>year</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
+      <td>263-275</td>
       <td>[[{'first_name': 'Manish', 'last_name': 'Chhow...</td>
-      <td>pub.1050119463</td>
+      <td>2013</td>
       <td>4</td>
+      <td>5</td>
+      <td>pub.1050119463</td>
+      <td>article</td>
+      <td>The chemistry of two-dimensional layered trans...</td>
       <td>jour.1041224</td>
       <td>Nature Chemistry</td>
-      <td>263</td>
-      <td>The chemistry of two-dimensional layered trans...</td>
-      <td>article</td>
-      <td>5</td>
-      <td>2013</td>
     </tr>
     <tr>
       <th>1</th>
+      <td>419-425</td>
       <td>[[{'first_name': 'A. K.', 'last_name': 'Geim',...</td>
-      <td>pub.1024857999</td>
+      <td>2013</td>
       <td>7459</td>
+      <td>499</td>
+      <td>pub.1024857999</td>
+      <td>article</td>
+      <td>Van der Waals heterostructures</td>
       <td>jour.1018957</td>
       <td>Nature</td>
-      <td>419</td>
-      <td>Van der Waals heterostructures</td>
-      <td>article</td>
-      <td>499</td>
-      <td>2013</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>[[{'first_name': 'Huanping', 'last_name': 'Zho...</td>
-      <td>pub.1004394295</td>
-      <td>6196</td>
-      <td>jour.1346339</td>
-      <td>Science</td>
-      <td>542-546</td>
-      <td>Interface engineering of highly efficient pero...</td>
-      <td>article</td>
-      <td>345</td>
-      <td>2014</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2013</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>pub.1031762191</td>
+      <td>book</td>
+      <td>Nanoenergy, Nanotechnology Applied for Energy ...</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>[[{'first_name': 'Likai', 'last_name': 'Li', '...</td>
-      <td>pub.1032956475</td>
-      <td>5</td>
-      <td>jour.1037429</td>
-      <td>Nature Nanotechnology</td>
-      <td>372-377</td>
-      <td>Black phosphorus field-effect transistors</td>
+      <td>100001</td>
+      <td>[[{'first_name': 'C.', 'last_name': 'Patrignan...</td>
+      <td>2016</td>
+      <td>10</td>
+      <td>40</td>
+      <td>pub.1059158429</td>
       <td>article</td>
-      <td>9</td>
-      <td>2014</td>
+      <td>Review of Particle Physics</td>
+      <td>jour.1327822</td>
+      <td>Chinese Physics C</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>[[{'first_name': 'C.', 'last_name': 'Patrignan...</td>
-      <td>pub.1059158429</td>
-      <td>10</td>
-      <td>jour.1327822</td>
-      <td>Chinese Physics C</td>
-      <td>100001</td>
-      <td>Review of Particle Physics</td>
+      <td>1167-76</td>
+      <td>[[{'first_name': 'John B.', 'last_name': 'Good...</td>
+      <td>2013</td>
+      <td>4</td>
+      <td>135</td>
+      <td>pub.1019126274</td>
       <td>article</td>
-      <td>40</td>
-      <td>2016</td>
+      <td>The Li-ion rechargeable battery: a perspective.</td>
+      <td>jour.1081898</td>
+      <td>Journal of the American Chemical Society</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>[[{'first_name': 'John B.', 'last_name': 'Good...</td>
-      <td>pub.1019126274</td>
-      <td>4</td>
-      <td>jour.1081898</td>
-      <td>Journal of the American Chemical Society</td>
-      <td>1167-76</td>
-      <td>The Li-ion rechargeable battery: a perspective.</td>
-      <td>article</td>
-      <td>135</td>
+      <td>235-246</td>
+      <td>[[{'first_name': 'Andrea C.', 'last_name': 'Fe...</td>
       <td>2013</td>
+      <td>4</td>
+      <td>8</td>
+      <td>pub.1015305822</td>
+      <td>article</td>
+      <td>Raman spectroscopy as a versatile tool for stu...</td>
+      <td>jour.1037429</td>
+      <td>Nature Nanotechnology</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>[[{'first_name': 'Michael F. L.', 'last_name':...</td>
-      <td>pub.1007405937</td>
-      <td>6119</td>
-      <td>jour.1346339</td>
-      <td>Science</td>
-      <td>535-539</td>
-      <td>Carbon Nanotubes: Present and Future Commercia...</td>
+      <td>4033-41</td>
+      <td>[[{'first_name': 'Han', 'last_name': 'Liu', 'c...</td>
+      <td>2014</td>
+      <td>4</td>
+      <td>8</td>
+      <td>pub.1009826879</td>
       <td>article</td>
-      <td>339</td>
-      <td>2013</td>
+      <td>Phosphorene: an unexplored 2D semiconductor wi...</td>
+      <td>jour.1038917</td>
+      <td>ACS Nano</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>[[{'first_name': 'Andrea C.', 'last_name': 'Fe...</td>
-      <td>pub.1015305822</td>
-      <td>4</td>
-      <td>jour.1037429</td>
-      <td>Nature Nanotechnology</td>
-      <td>235</td>
-      <td>Raman spectroscopy as a versatile tool for stu...</td>
-      <td>article</td>
-      <td>8</td>
+      <td>2898-926</td>
+      <td>[[{'first_name': 'Sheneve Z.', 'last_name': 'B...</td>
       <td>2013</td>
+      <td>4</td>
+      <td>7</td>
+      <td>pub.1038090434</td>
+      <td>article</td>
+      <td>Progress, challenges, and opportunities in two...</td>
+      <td>jour.1038917</td>
+      <td>ACS Nano</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>[[{'first_name': 'Han', 'last_name': 'Liu', 'o...</td>
-      <td>pub.1009826879</td>
-      <td>4</td>
-      <td>jour.1038917</td>
-      <td>ACS Nano</td>
-      <td>4033-41</td>
-      <td>Phosphorene: an unexplored 2D semiconductor wi...</td>
+      <td>3766-98</td>
+      <td>[[{'first_name': 'Mingsheng', 'last_name': 'Xu...</td>
+      <td>2013</td>
+      <td>5</td>
+      <td>113</td>
+      <td>pub.1022830330</td>
       <td>article</td>
-      <td>8</td>
-      <td>2014</td>
+      <td>Graphene-like two-dimensional materials.</td>
+      <td>jour.1077147</td>
+      <td>Chemical Reviews</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>[[{'first_name': 'Martin A.', 'last_name': 'Gr...</td>
-      <td>pub.1045181228</td>
+      <td>497-501</td>
+      <td>[[{'first_name': 'Oriol', 'last_name': 'Lopez-...</td>
+      <td>2013</td>
       <td>7</td>
-      <td>jour.1037430</td>
-      <td>Nature Photonics</td>
-      <td>506-514</td>
-      <td>The emergence of perovskite solar cells</td>
-      <td>article</td>
       <td>8</td>
-      <td>2014</td>
+      <td>pub.1023181230</td>
+      <td>article</td>
+      <td>Ultrasensitive photodetectors based on monolay...</td>
+      <td>jour.1037429</td>
+      <td>Nature Nanotechnology</td>
     </tr>
   </tbody>
 </table>
@@ -13413,883 +13378,11 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># the &#39;describe&#39; method returns basic statistic for all columns of a dataframe</span>
-<span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[11]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>author_affiliations</th>
-      <th>id</th>
-      <th>issue</th>
-      <th>journal.id</th>
-      <th>journal.title</th>
-      <th>pages</th>
-      <th>title</th>
-      <th>type</th>
-      <th>volume</th>
-      <th>year</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>count</th>
-      <td>998</td>
-      <td>1000</td>
-      <td>934</td>
-      <td>997</td>
-      <td>997</td>
-      <td>996</td>
-      <td>1000</td>
-      <td>1000</td>
-      <td>997</td>
-      <td>1000.000000</td>
-    </tr>
-    <tr>
-      <th>unique</th>
-      <td>997</td>
-      <td>1000</td>
-      <td>135</td>
-      <td>143</td>
-      <td>143</td>
-      <td>987</td>
-      <td>1000</td>
-      <td>4</td>
-      <td>166</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>top</th>
-      <td>[[{'first_name': 'Jingjing', 'last_name': 'Dua...</td>
-      <td>pub.1045356440</td>
-      <td>1</td>
-      <td>jour.1015766</td>
-      <td>Chemical Society Reviews</td>
-      <td>421-425</td>
-      <td>Layered SnS2‐Reduced Graphene Oxide Composite ...</td>
-      <td>article</td>
-      <td>7</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>freq</th>
-      <td>2</td>
-      <td>1</td>
-      <td>174</td>
-      <td>106</td>
-      <td>106</td>
-      <td>2</td>
-      <td>1</td>
-      <td>997</td>
-      <td>67</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>mean</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>2014.114000</td>
-    </tr>
-    <tr>
-      <th>std</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>1.103731</td>
-    </tr>
-    <tr>
-      <th>min</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>2013.000000</td>
-    </tr>
-    <tr>
-      <th>25%</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>2013.000000</td>
-    </tr>
-    <tr>
-      <th>50%</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>2014.000000</td>
-    </tr>
-    <tr>
-      <th>75%</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>2015.000000</td>
-    </tr>
-    <tr>
-      <th>max</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>2018.000000</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># the &#39;value_counts&#39; method returns the distribution of a specific field eg publication [years]</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[12]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>2013    362
-2014    316
-2015    206
-2016     82
-2017     30
-2018      4
-Name: year, dtype: int64</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># eg distribution of publication [type]</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[13]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>article      997
-monograph      1
-book           1
-chapter        1
-Name: type, dtype: int64</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="2.-Helper-Methods-for-'Publications'-queries">2. Helper Methods for 'Publications' queries<a class="anchor-link" href="#2.-Helper-Methods-for-'Publications'-queries">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Publications-authors:-as_dataframe_authors">Publications authors: <code>as_dataframe_authors</code><a class="anchor-link" href="#Publications-authors:-as_dataframe_authors">&#182;</a></h2><p>Publications authors are usually returned by the Dimensions API inside a nested JSON object in the <code>authors_affiliations</code> sub-key.</p>
-<blockquote><p>Note: the order of authors in the JSON is consistent with the ordering of authors in the original publication</p>
-</blockquote>
-<p>This methods allows to quickly extract that data and return a dataframe with <strong>one row per author</strong>.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">authors</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">as_dataframe_authors</span><span class="p">()</span>
-<span class="n">authors</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[14]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>affiliations</th>
-      <th>current_organization_id</th>
-      <th>first_name</th>
-      <th>last_name</th>
-      <th>orcid</th>
-      <th>researcher_id</th>
-      <th>pub_id</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>[{'id': 'grid.430387.b', 'name': 'Rutgers, The...</td>
-      <td>grid.430387.b</td>
-      <td>Manish</td>
-      <td>Chhowalla</td>
-      <td></td>
-      <td>ur.0633062306.03</td>
-      <td>pub.1050119463</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>[{'id': 'grid.42687.3f', 'name': 'Ulsan Nation...</td>
-      <td>grid.42687.3f</td>
-      <td>Hyeon Suk</td>
-      <td>Shin</td>
-      <td></td>
-      <td>ur.07617630407.83</td>
-      <td>pub.1050119463</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>[{'id': 'grid.4280.e', 'name': 'National Unive...</td>
-      <td>grid.4280.e</td>
-      <td>Goki</td>
-      <td>Eda</td>
-      <td></td>
-      <td>ur.01150450507.27</td>
-      <td>pub.1050119463</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>[{'id': 'grid.482254.d', 'name': 'Institute of...</td>
-      <td>grid.45672.32</td>
-      <td>Lain-Jong</td>
-      <td>Li</td>
-      <td>['0000-0002-4059-7783']</td>
-      <td>ur.01313340113.13</td>
-      <td>pub.1050119463</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>[{'id': 'grid.4280.e', 'name': 'National Unive...</td>
-      <td>grid.4280.e</td>
-      <td>Kian Ping</td>
-      <td>Loh</td>
-      <td>['0000-0002-1491-743X']</td>
-      <td>ur.0752174033.73</td>
-      <td>pub.1050119463</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Using the authors dataframe, we can easily get the top ten values for <code>current_organization_id</code>.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">authors</span><span class="p">[</span><span class="s1">&#39;current_organization_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[:</span><span class="mi">10</span><span class="p">]</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[15]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>                 173
-grid.59025.3b    153
-grid.168010.e    150
-grid.12527.33     93
-grid.5379.8       86
-grid.59053.3a     86
-grid.5333.6       78
-grid.116068.8     71
-grid.19006.3e     71
-grid.13402.34     68
-Name: current_organization_id, dtype: int64</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<blockquote><p>Explanation: the most frequent value turns to be grid.59025.3b ie <a href="https://www.grid.ac/institutes/grid.59025.3b">Nanyang Technological University in Singapore</a>. The second result is empty, meaning that for those authors Dimensions has no info about <code>current_organization_id</code>.</p>
-</blockquote>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Publications-affiliations:-as_dataframe_authors_affiliations">Publications affiliations: <code>as_dataframe_authors_affiliations</code><a class="anchor-link" href="#Publications-affiliations:-as_dataframe_authors_affiliations">&#182;</a></h2><p>As you can see from the results of the previous section, the <code>affiliations</code> of each author is yet another nested JSON object.</p>
-<blockquote><p>Note: the order of affiliations in the JSON is consistent with the affiliations order in the original publication</p>
-</blockquote>
-<p>The <code>as_dataframe_authors_affiliations</code> method allows to quickly extract that affiliations data and return a dataframe with <strong>one row per affiliation</strong>.</p>
-<p>This can be useful e.g. if one wants to count research organizations at <em>the time of writing</em> (as opposed to <code>current_organization_id</code>, which is the <em>most recent organization</em> of a researcher).</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">affiliations</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">as_dataframe_authors_affiliations</span><span class="p">()</span>
-<span class="n">affiliations</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[16]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>aff_city</th>
-      <th>aff_city_id</th>
-      <th>aff_country</th>
-      <th>aff_country_code</th>
-      <th>aff_id</th>
-      <th>aff_name</th>
-      <th>aff_state</th>
-      <th>aff_state_code</th>
-      <th>pub_id</th>
-      <th>researcher_id</th>
-      <th>first_name</th>
-      <th>last_name</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>New Brunswick</td>
-      <td>5101717.0</td>
-      <td>United States</td>
-      <td>US</td>
-      <td>grid.430387.b</td>
-      <td>Rutgers, The State University of New Jersey</td>
-      <td>New Jersey</td>
-      <td>US-NJ</td>
-      <td>pub.1050119463</td>
-      <td>ur.0633062306.03</td>
-      <td>Manish</td>
-      <td>Chhowalla</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Ulsan</td>
-      <td>1833747.0</td>
-      <td>South Korea</td>
-      <td>KR</td>
-      <td>grid.42687.3f</td>
-      <td>Ulsan National Institute of Science and Techno...</td>
-      <td>None</td>
-      <td>None</td>
-      <td>pub.1050119463</td>
-      <td>ur.07617630407.83</td>
-      <td>Hyeon Suk</td>
-      <td>Shin</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Singapore</td>
-      <td>1880252.0</td>
-      <td>Singapore</td>
-      <td>SG</td>
-      <td>grid.4280.e</td>
-      <td>National University of Singapore</td>
-      <td>None</td>
-      <td>None</td>
-      <td>pub.1050119463</td>
-      <td>ur.01150450507.27</td>
-      <td>Goki</td>
-      <td>Eda</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Taipei</td>
-      <td>1668341.0</td>
-      <td>Taiwan</td>
-      <td>TW</td>
-      <td>grid.482254.d</td>
-      <td>Institute of Atomic and Molecular Sciences, Ac...</td>
-      <td>None</td>
-      <td>None</td>
-      <td>pub.1050119463</td>
-      <td>ur.01313340113.13</td>
-      <td>Lain-Jong</td>
-      <td>Li</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Singapore</td>
-      <td>1880252.0</td>
-      <td>Singapore</td>
-      <td>SG</td>
-      <td>grid.4280.e</td>
-      <td>National University of Singapore</td>
-      <td>None</td>
-      <td>None</td>
-      <td>pub.1050119463</td>
-      <td>ur.0752174033.73</td>
-      <td>Kian Ping</td>
-      <td>Loh</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">affiliations</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[17]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>aff_city</th>
-      <th>aff_city_id</th>
-      <th>aff_country</th>
-      <th>aff_country_code</th>
-      <th>aff_id</th>
-      <th>aff_name</th>
-      <th>aff_state</th>
-      <th>aff_state_code</th>
-      <th>pub_id</th>
-      <th>researcher_id</th>
-      <th>first_name</th>
-      <th>last_name</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>count</th>
-      <td>6413</td>
-      <td>6.407000e+03</td>
-      <td>6413</td>
-      <td>6413</td>
-      <td>6413</td>
-      <td>7187</td>
-      <td>2202</td>
-      <td>2202</td>
-      <td>7187</td>
-      <td>7187</td>
-      <td>7187</td>
-      <td>7187</td>
-    </tr>
-    <tr>
-      <th>unique</th>
-      <td>428</td>
-      <td>NaN</td>
-      <td>50</td>
-      <td>50</td>
-      <td>718</td>
-      <td>998</td>
-      <td>51</td>
-      <td>51</td>
-      <td>985</td>
-      <td>4298</td>
-      <td>3450</td>
-      <td>1985</td>
-    </tr>
-    <tr>
-      <th>top</th>
-      <td>Beijing</td>
-      <td>NaN</td>
-      <td>United States</td>
-      <td>US</td>
-      <td>grid.59025.3b</td>
-      <td>Nanyang Technological University</td>
-      <td>California</td>
-      <td>US-CA</td>
-      <td>pub.1019661721</td>
-      <td></td>
-      <td>Yi</td>
-      <td>Wang</td>
-    </tr>
-    <tr>
-      <th>freq</th>
-      <td>631</td>
-      <td>NaN</td>
-      <td>1949</td>
-      <td>1949</td>
-      <td>229</td>
-      <td>229</td>
-      <td>548</td>
-      <td>548</td>
-      <td>105</td>
-      <td>140</td>
-      <td>63</td>
-      <td>300</td>
-    </tr>
-    <tr>
-      <th>mean</th>
-      <td>NaN</td>
-      <td>3.039684e+06</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>std</th>
-      <td>NaN</td>
-      <td>1.553733e+06</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>min</th>
-      <td>NaN</td>
-      <td>6.609300e+04</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>25%</th>
-      <td>NaN</td>
-      <td>1.816670e+06</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>50%</th>
-      <td>NaN</td>
-      <td>2.174003e+06</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>75%</th>
-      <td>NaN</td>
-      <td>4.722625e+06</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>max</th>
-      <td>NaN</td>
-      <td>8.469294e+06</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's get the top ten values for <code>aff_id</code>.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
 <div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">affiliations</span><span class="p">[</span><span class="s1">&#39;aff_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[:</span><span class="mi">10</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># the table shape</span>
+<span class="n">df</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 
     </div>
@@ -14308,17 +13401,7 @@ Name: current_organization_id, dtype: int64</pre>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>grid.59025.3b    229
-grid.168010.e    202
-grid.12527.33    111
-grid.21729.3f    106
-grid.19006.3e     98
-grid.5379.8       90
-grid.9227.e       84
-grid.116068.8     83
-grid.5333.6       82
-grid.59053.3a     82
-Name: aff_id, dtype: int64</pre>
+<pre>(1000, 10)</pre>
 </div>
 
 </div>
@@ -14326,30 +13409,14 @@ Name: aff_id, dtype: int64</pre>
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<blockquote><p>Explanation: the most frequent value is still <a href="https://www.grid.ac/institutes/grid.59025.3b">grid.59025.3b</a>, meaning that most authors' current organization is the same organization of when they published these articles.</p>
-</blockquote>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Another example: we can now easily analyze the data by country too.</p>
-
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">affiliations</span><span class="p">[</span><span class="s1">&#39;aff_country&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[:</span><span class="mi">10</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># the &#39;value_counts&#39; method returns the distribution of a specific field eg publication [years]</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -14368,17 +13435,13 @@ Name: aff_id, dtype: int64</pre>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>United States     1949
-China             1914
-Singapore          328
-South Korea        313
-United Kingdom     261
-Germany            201
-Japan              168
-Australia          157
-Switzerland        122
-Taiwan             101
-Name: aff_country, dtype: int64</pre>
+<pre>2013    361
+2014    296
+2015    201
+2016     91
+2017     44
+2018      7
+Name: year, dtype: int64</pre>
 </div>
 
 </div>
@@ -14386,40 +13449,14 @@ Name: aff_country, dtype: int64</pre>
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<blockquote><p>Explanation: the vast majority of authors in this dataset are from the United States, closely followed by China.</p>
-</blockquote>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="2.-Helper-Methods-for-'Grants'-queries">2. Helper Methods for 'Grants' queries<a class="anchor-link" href="#2.-Helper-Methods-for-'Grants'-queries">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Grants-funders:-as_dataframe_funders">Grants funders: <code>as_dataframe_funders</code><a class="anchor-link" href="#Grants-funders:-as_dataframe_funders">&#182;</a></h2><p>Grant funders authors are usually returned by the Dimensions API inside a nested JSON object in the <code>funders</code> sub-key.</p>
-<p>This methods allows to quickly extract that data and return a dataframe with <strong>one row per funder</strong>.</p>
-
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># get a sample list of grants</span>
-<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search grants for &quot;malaria&quot; return grants limit 1000&quot;&quot;&quot;</span>
-<span class="n">res</span> <span class="o">=</span> <span class="n">dslquery</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># eg distribution of publication [type]</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -14432,25 +13469,51 @@ Name: aff_country, dtype: int64</pre>
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+    <div class="prompt output_prompt">Out[20]:</div>
 
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Returned Grants: 1000 (total = 9280)
-</pre>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>article      995
+book           2
+monograph      2
+chapter        1
+Name: type, dtype: int64</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
 </div>
-</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="2.-Helper-Methods-for-'Publications'-queries">2. Helper Methods for 'Publications' queries<a class="anchor-link" href="#2.-Helper-Methods-for-'Publications'-queries">&#182;</a></h2><p>What follows are specialized versions of the <code>as_dataframe</code> method for results sets composed of publication records.</p>
 
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Extracting-authors:-as_dataframe_authors">Extracting authors: <code>as_dataframe_authors</code><a class="anchor-link" href="#Extracting-authors:-as_dataframe_authors">&#182;</a></h3><p>Publications authors are usually returned by the Dimensions API inside a nested JSON object in the <code>authors_affiliations</code> sub-key.</p>
+<blockquote><p>Note: the order of authors in the JSON is consistent with the ordering of authors in the original publication</p>
+</blockquote>
+<p>This methods allows to quickly extract that data and return a dataframe with <strong>one row per author</strong>.</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">res</span><span class="o">.</span><span class="n">as_dataframe_funders</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">authors</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">as_dataframe_authors</span><span class="p">()</span>
+<span class="n">authors</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -14486,126 +13549,71 @@ Name: aff_country, dtype: int64</pre>
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>acronym</th>
-      <th>country_name</th>
-      <th>id</th>
-      <th>name</th>
-      <th>grant_id</th>
-      <th>grant_title</th>
-      <th>grant_start_date</th>
-      <th>grant_end_date</th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>corresponding</th>
+      <th>orcid</th>
+      <th>current_organization_id</th>
+      <th>researcher_id</th>
+      <th>affiliations</th>
+      <th>pub_id</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>WT</td>
-      <td>United Kingdom</td>
-      <td>grid.52788.30</td>
-      <td>Wellcome Trust</td>
-      <td>grant.8103743</td>
-      <td>The Chemical Empire: A New History of Syntheti...</td>
-      <td>2019-10-01</td>
-      <td>2023-09-30</td>
+      <td>Manish</td>
+      <td>Chhowalla</td>
+      <td>True</td>
+      <td></td>
+      <td>grid.430387.b</td>
+      <td>ur.0633062306.03</td>
+      <td>[{'id': 'grid.430387.b', 'name': 'Rutgers, The...</td>
+      <td>pub.1050119463</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>CIHR</td>
-      <td>Canada</td>
-      <td>grid.248883.d</td>
-      <td>Canadian Institutes of Health Research</td>
-      <td>grant.8527034</td>
-      <td>Mechanisms of Leishmania dissemination and tra...</td>
-      <td>2019-10-01</td>
-      <td>2024-09-30</td>
+      <td>Hyeon Suk</td>
+      <td>Shin</td>
+      <td></td>
+      <td></td>
+      <td>grid.42687.3f</td>
+      <td>ur.07617630407.83</td>
+      <td>[{'id': 'grid.42687.3f', 'name': 'Ulsan Nation...</td>
+      <td>pub.1050119463</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>NSF SBE</td>
-      <td>United States</td>
-      <td>grid.457916.8</td>
-      <td>Directorate for Social, Behavioral &amp; Economic ...</td>
-      <td>grant.7923573</td>
-      <td>CAREER: A Case Study of Malaria Elimination Ef...</td>
-      <td>2019-09-01</td>
-      <td>2024-08-31</td>
+      <td>Goki</td>
+      <td>Eda</td>
+      <td></td>
+      <td></td>
+      <td>grid.4280.e</td>
+      <td>ur.01150450507.27</td>
+      <td>[{'id': 'grid.4280.e', 'name': 'National Unive...</td>
+      <td>pub.1050119463</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>WT</td>
-      <td>United Kingdom</td>
-      <td>grid.52788.30</td>
-      <td>Wellcome Trust</td>
-      <td>grant.8103357</td>
-      <td>Quantifying the influence of wind on mosquito ...</td>
-      <td>2019-09-01</td>
-      <td>2020-08-31</td>
+      <td>Lain-Jong</td>
+      <td>Li</td>
+      <td></td>
+      <td>['0000-0002-4059-7783']</td>
+      <td>grid.45672.32</td>
+      <td>ur.01313340113.13</td>
+      <td>[{'id': 'grid.28665.3f', 'name': 'Academia Sin...</td>
+      <td>pub.1050119463</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>CIHR</td>
-      <td>Canada</td>
-      <td>grid.248883.d</td>
-      <td>Canadian Institutes of Health Research</td>
-      <td>grant.8482815</td>
-      <td>Investigating the Host-Pathogen Interactions o...</td>
-      <td>2019-09-01</td>
-      <td>2020-08-31</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>CIHR</td>
-      <td>Canada</td>
-      <td>grid.248883.d</td>
-      <td>Canadian Institutes of Health Research</td>
-      <td>grant.8527284</td>
-      <td>Investigation of antibody-mediated immune mech...</td>
-      <td>2019-09-01</td>
-      <td>2020-08-31</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>NSF MPS</td>
-      <td>United States</td>
-      <td>grid.457875.c</td>
-      <td>Directorate for Mathematical &amp; Physical Sciences</td>
-      <td>grant.8522823</td>
-      <td>Membrane and Monolith Enzyme Reactors for Prot...</td>
-      <td>2019-08-01</td>
-      <td>2022-07-31</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>BBSRC</td>
-      <td>United Kingdom</td>
-      <td>grid.418100.c</td>
-      <td>Biotechnology and Biological Sciences Research...</td>
-      <td>grant.8483462</td>
-      <td>Defining mechani1sms of CD8+ T-cell mediated i...</td>
-      <td>2019-07-31</td>
-      <td>2022-07-30</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>AMS</td>
-      <td>United Kingdom</td>
-      <td>grid.420331.7</td>
-      <td>Academy of Medical Sciences</td>
-      <td>grant.7921305</td>
-      <td>Analysis of innate immune responses following ...</td>
-      <td>2019-07-15</td>
-      <td>2021-07-14</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>MSFHR</td>
-      <td>Canada</td>
-      <td>grid.453291.8</td>
-      <td>Michael Smith Foundation for Health Research</td>
-      <td>grant.7823904</td>
-      <td>Phosphoinositide kinases: molecular determinan...</td>
-      <td>2019-07-01</td>
-      <td>2024-06-30</td>
+      <td>Kian Ping</td>
+      <td>Loh</td>
+      <td></td>
+      <td>['0000-0002-1491-743X']</td>
+      <td>grid.4280.e</td>
+      <td>ur.0752174033.73</td>
+      <td>[{'id': 'grid.4280.e', 'name': 'National Unive...</td>
+      <td>pub.1050119463</td>
     </tr>
   </tbody>
 </table>
@@ -14621,10 +13629,7 @@ Name: aff_country, dtype: int64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Grants-investigators:-as_dataframe_investigators">Grants investigators: <code>as_dataframe_investigators</code><a class="anchor-link" href="#Grants-investigators:-as_dataframe_investigators">&#182;</a></h2><p>Grant investigators are usually returned by the Dimensions API inside a nested JSON object in the <code>investigator_details</code> sub-key.</p>
-<p>This methods allows to quickly extract that data and return a dataframe with <strong>one row per investigator</strong>.</p>
-<blockquote><p>NOTE: <code>investigator_details</code> are not returned by default in a grants query hence one must specify this in the query results</p>
-</blockquote>
+<p>Using the authors dataframe, we can easily get the top ten values for <code>current_organization_id</code>.</p>
 
 </div>
 </div>
@@ -14634,9 +13639,7 @@ Name: aff_country, dtype: int64</pre>
 <div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># get a sample list of grants</span>
-<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search grants for &quot;malaria&quot; return grants[basics+investigator_details] limit 1000&quot;&quot;&quot;</span>
-<span class="n">res</span> <span class="o">=</span> <span class="n">dslquery</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">authors</span><span class="p">[</span><span class="s1">&#39;current_organization_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[:</span><span class="mi">10</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -14649,25 +13652,59 @@ Name: aff_country, dtype: int64</pre>
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+    <div class="prompt output_prompt">Out[22]:</div>
 
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Returned Grants: 1000 (total = 9280)
-</pre>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>                 188
+grid.59025.3b    145
+grid.12527.33    114
+grid.5379.8      104
+grid.19006.3e     78
+grid.59053.3a     77
+grid.168010.e     76
+grid.13402.34     72
+grid.21940.3e     69
+grid.4280.e       64
+Name: current_organization_id, dtype: int64</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
 </div>
-</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p>Explanation: the most frequent value turns to be grid.59025.3b ie <a href="https://www.grid.ac/institutes/grid.59025.3b">Nanyang Technological University in Singapore</a>. The first result is empty, meaning that for those authors Dimensions has no info about <code>current_organization_id</code>.</p>
+</blockquote>
 
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Extracting-Affiliations:-as_dataframe_authors_affiliations">Extracting Affiliations: <code>as_dataframe_authors_affiliations</code><a class="anchor-link" href="#Extracting-Affiliations:-as_dataframe_authors_affiliations">&#182;</a></h3><p>As you can see from the results of the previous section, the <code>affiliations</code> of each author is yet another nested JSON object.</p>
+<blockquote><p>Note: the order of affiliations in the JSON is consistent with the affiliations order in the original publication</p>
+</blockquote>
+<p>The <code>as_dataframe_authors_affiliations</code> method allows to quickly extract that affiliations data and return a dataframe with <strong>one row per affiliation</strong>.</p>
+<p>This can be useful e.g. if one wants to count research organizations at <em>the time of writing</em> (as opposed to <code>current_organization_id</code>, which is the <em>most recent organization</em> of a researcher).</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">res</span><span class="o">.</span><span class="n">as_dataframe_investigators</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">affiliations</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">as_dataframe_authors_affiliations</span><span class="p">()</span>
+<span class="n">affiliations</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -14703,12 +13740,448 @@ Name: aff_country, dtype: int64</pre>
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>affiliations</th>
+      <th>aff_id</th>
+      <th>aff_name</th>
+      <th>aff_city</th>
+      <th>aff_city_id</th>
+      <th>aff_country</th>
+      <th>aff_country_code</th>
+      <th>aff_state</th>
+      <th>aff_state_code</th>
+      <th>pub_id</th>
+      <th>researcher_id</th>
       <th>first_name</th>
-      <th>id</th>
       <th>last_name</th>
-      <th>middle_name</th>
-      <th>role</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>grid.430387.b</td>
+      <td>Rutgers, The State University of New Jersey</td>
+      <td>New Brunswick</td>
+      <td>5.10172e+06</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>New Jersey</td>
+      <td>US-NJ</td>
+      <td>pub.1050119463</td>
+      <td>ur.0633062306.03</td>
+      <td>Manish</td>
+      <td>Chhowalla</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>grid.42687.3f</td>
+      <td>Ulsan National Institute of Science and Techno...</td>
+      <td>Ulsan</td>
+      <td>1.83375e+06</td>
+      <td>South Korea</td>
+      <td>KR</td>
+      <td></td>
+      <td></td>
+      <td>pub.1050119463</td>
+      <td>ur.07617630407.83</td>
+      <td>Hyeon Suk</td>
+      <td>Shin</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>grid.4280.e</td>
+      <td>National University of Singapore</td>
+      <td>Singapore</td>
+      <td>1.88025e+06</td>
+      <td>Singapore</td>
+      <td>SG</td>
+      <td></td>
+      <td></td>
+      <td>pub.1050119463</td>
+      <td>ur.01150450507.27</td>
+      <td>Goki</td>
+      <td>Eda</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>grid.28665.3f</td>
+      <td>Academia Sinica</td>
+      <td>Taipei</td>
+      <td>1.66834e+06</td>
+      <td>Taiwan</td>
+      <td>TW</td>
+      <td></td>
+      <td></td>
+      <td>pub.1050119463</td>
+      <td>ur.01313340113.13</td>
+      <td>Lain-Jong</td>
+      <td>Li</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>grid.4280.e</td>
+      <td>National University of Singapore</td>
+      <td>Singapore</td>
+      <td>1.88025e+06</td>
+      <td>Singapore</td>
+      <td>SG</td>
+      <td></td>
+      <td></td>
+      <td>pub.1050119463</td>
+      <td>ur.0752174033.73</td>
+      <td>Kian Ping</td>
+      <td>Loh</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">affiliations</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[24]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>aff_id</th>
+      <th>aff_name</th>
+      <th>aff_city</th>
+      <th>aff_city_id</th>
+      <th>aff_country</th>
+      <th>aff_country_code</th>
+      <th>aff_state</th>
+      <th>aff_state_code</th>
+      <th>pub_id</th>
+      <th>researcher_id</th>
+      <th>first_name</th>
+      <th>last_name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>6989</td>
+      <td>6989</td>
+      <td>6989</td>
+      <td>6989</td>
+      <td>6989</td>
+      <td>6989</td>
+      <td>6989</td>
+      <td>6989</td>
+      <td>6989</td>
+      <td>6989</td>
+      <td>6989</td>
+      <td>6989</td>
+    </tr>
+    <tr>
+      <th>unique</th>
+      <td>751</td>
+      <td>1064</td>
+      <td>459</td>
+      <td>462</td>
+      <td>53</td>
+      <td>53</td>
+      <td>56</td>
+      <td>56</td>
+      <td>984</td>
+      <td>4163</td>
+      <td>3426</td>
+      <td>1901</td>
+    </tr>
+    <tr>
+      <th>top</th>
+      <td></td>
+      <td>Nanyang Technological University</td>
+      <td></td>
+      <td></td>
+      <td>China</td>
+      <td>CN</td>
+      <td></td>
+      <td></td>
+      <td>pub.1019661721</td>
+      <td></td>
+      <td>Wei</td>
+      <td>Zhang</td>
+    </tr>
+    <tr>
+      <th>freq</th>
+      <td>917</td>
+      <td>221</td>
+      <td>917</td>
+      <td>922</td>
+      <td>1952</td>
+      <td>1952</td>
+      <td>5120</td>
+      <td>5120</td>
+      <td>105</td>
+      <td>158</td>
+      <td>62</td>
+      <td>291</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's get the top ten values for <code>aff_id</code>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">affiliations</span><span class="p">[</span><span class="s1">&#39;aff_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[25]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>                 917
+grid.59025.3b    221
+grid.12527.33    132
+grid.5379.8      114
+grid.19006.3e    100
+grid.168010.e     99
+grid.21940.3e     96
+grid.21729.3f     86
+grid.59053.3a     82
+grid.116068.8     79
+Name: aff_id, dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p>Explanation: the most frequent value is still <a href="https://www.grid.ac/institutes/grid.59025.3b">grid.59025.3b</a>, meaning that most authors' current organization is the same organization of when they published these articles.</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Another example: we can now easily analyze the data by country too.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">affiliations</span><span class="p">[</span><span class="s1">&#39;aff_country&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[26]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>China             1952
+United States     1560
+                   917
+South Korea        346
+Singapore          328
+United Kingdom     310
+Australia          171
+Japan              154
+Canada             138
+Germany            137
+Name: aff_country, dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p>Explanation: the vast majority of authors in this dataset are from China, closely followed by the USA.</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="2.-Helper-Methods-for-'Grants'-queries">2. Helper Methods for 'Grants' queries<a class="anchor-link" href="#2.-Helper-Methods-for-'Grants'-queries">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Extracting-Funders:-as_dataframe_funders">Extracting Funders: <code>as_dataframe_funders</code><a class="anchor-link" href="#Extracting-Funders:-as_dataframe_funders">&#182;</a></h3><p>Grant funders authors are usually returned by the Dimensions API inside a nested JSON object in the <code>funders</code> sub-key.</p>
+<p>This methods allows to quickly extract that data and return a dataframe with <strong>one row per funder</strong>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># get a sample list of grants</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search grants for &quot;malaria&quot; return grants limit 1000&quot;&quot;&quot;</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Returned Grants: 1000 (total = 9225)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">res</span><span class="o">.</span><span class="n">as_dataframe_funders</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[28]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>acronym</th>
+      <th>name</th>
+      <th>country_name</th>
       <th>grant_id</th>
       <th>grant_title</th>
       <th>grant_start_date</th>
@@ -14718,133 +14191,354 @@ Name: aff_country, dtype: int64</pre>
   <tbody>
     <tr>
       <th>0</th>
-      <td>[{'city': 'York', 'state_code': None, 'country...</td>
-      <td>Sabine</td>
-      <td>ur.07547552115.05</td>
-      <td>Clarke</td>
-      <td>Marie</td>
-      <td>PI</td>
-      <td>grant.8103743</td>
-      <td>The Chemical Empire: A New History of Syntheti...</td>
-      <td>2019-10-01</td>
-      <td>2023-09-30</td>
+      <td>grid.421091.f</td>
+      <td>EPSRC</td>
+      <td>Engineering and Physical Sciences Research Cou...</td>
+      <td>United Kingdom</td>
+      <td>grant.8558055</td>
+      <td>UK-Africa Postgraduate Advanced Study Institut...</td>
+      <td>2020-03-31</td>
+      <td>2021-03-30</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>NaN</td>
-      <td>Nathan</td>
-      <td>None</td>
-      <td>Peters</td>
-      <td></td>
-      <td>PI</td>
+      <td>grid.270680.b</td>
+      <td>EC</td>
+      <td>European Commission</td>
+      <td>Belgium</td>
+      <td>grant.8585457</td>
+      <td>Estimating the Prevalence of AntiMicrobial Res...</td>
+      <td>2020-01-01</td>
+      <td>2021-12-31</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>grid.270680.b</td>
+      <td>EC</td>
+      <td>European Commission</td>
+      <td>Belgium</td>
+      <td>grant.8586121</td>
+      <td>Earth observation service for preventive contr...</td>
+      <td>2019-11-01</td>
+      <td>2022-10-31</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>grid.270680.b</td>
+      <td>EC</td>
+      <td>European Commission</td>
+      <td>Belgium</td>
+      <td>grant.8585082</td>
+      <td>Understanding the roles of pathogen infection ...</td>
+      <td>2019-10-01</td>
+      <td>2021-09-30</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>grid.457875.c</td>
+      <td>NSF MPS</td>
+      <td>Directorate for Mathematical &amp; Physical Sciences</td>
+      <td>United States</td>
+      <td>grant.8566624</td>
+      <td>Collaborative Research: Principal Component An...</td>
+      <td>2019-10-01</td>
+      <td>2022-09-30</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>grid.452896.4</td>
+      <td>ERC</td>
+      <td>European Research Council</td>
+      <td>Belgium</td>
+      <td>grant.8587147</td>
+      <td>Ultrasensitive detection of transmissible malaria</td>
+      <td>2019-10-01</td>
+      <td>2021-03-31</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>grid.425888.b</td>
+      <td>SNF</td>
+      <td>Swiss National Science Foundation</td>
+      <td>Switzerland</td>
+      <td>grant.8599112</td>
+      <td>Gauging Global Governance: The Effectiveness o...</td>
+      <td>2019-10-01</td>
+      <td>2022-09-30</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>grid.52788.30</td>
+      <td>WT</td>
+      <td>Wellcome Trust</td>
+      <td>United Kingdom</td>
+      <td>grant.8103743</td>
+      <td>The Chemical Empire: A New History of Syntheti...</td>
+      <td>2019-10-01</td>
+      <td>2023-10-01</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>grid.248883.d</td>
+      <td>CIHR</td>
+      <td>Canadian Institutes of Health Research</td>
+      <td>Canada</td>
       <td>grant.8527034</td>
       <td>Mechanisms of Leishmania dissemination and tra...</td>
       <td>2019-10-01</td>
       <td>2024-09-30</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>[{'state_code': 'US-OR', 'id': 'grid.170202.6'...</td>
-      <td>Melissa</td>
-      <td>ur.011503504405.93</td>
-      <td>Graboyes</td>
-      <td>None</td>
+      <th>9</th>
+      <td>grid.52788.30</td>
+      <td>WT</td>
+      <td>Wellcome Trust</td>
+      <td>United Kingdom</td>
+      <td>grant.8558648</td>
+      <td>Molecular mechanisms of carbohydrate uptake in...</td>
+      <td>2019-10-01</td>
+      <td>2022-09-30</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Extracting-investigators:-as_dataframe_investigators">Extracting investigators: <code>as_dataframe_investigators</code><a class="anchor-link" href="#Extracting-investigators:-as_dataframe_investigators">&#182;</a></h3><p>Grant investigators are usually returned by the Dimensions API inside a nested JSON object in the <code>investigator_details</code> sub-key.</p>
+<p>This methods allows to quickly extract that data and return a dataframe with <strong>one row per investigator</strong>.</p>
+<blockquote><p>NOTE: <code>investigator_details</code> are not returned by default in a grants query hence one must specify this in the query results</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># get a sample list of grants</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search grants for &quot;malaria&quot; return grants[basics+investigator_details] limit 1000&quot;&quot;&quot;</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">dslquery</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Returned Grants: 1000 (total = 9225)
+WARNINGS [1]
+Field &#39;project_num&#39; is deprecated in favor of grant_number. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">res</span><span class="o">.</span><span class="n">as_dataframe_investigators</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[30]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>middle_name</th>
+      <th>affiliations</th>
+      <th>role</th>
+      <th>last_name</th>
+      <th>id</th>
+      <th>first_name</th>
+      <th>grant_id</th>
+      <th>grant_title</th>
+      <th>grant_start_date</th>
+      <th>grant_end_date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td></td>
+      <td>[{'state_code': None, 'country': 'United Kingd...</td>
       <td>PI</td>
-      <td>grant.7923573</td>
-      <td>CAREER: A Case Study of Malaria Elimination Ef...</td>
-      <td>2019-09-01</td>
-      <td>2024-08-31</td>
+      <td>Madzvamuse</td>
+      <td>None</td>
+      <td>Anotida</td>
+      <td>grant.8558055</td>
+      <td>UK-Africa Postgraduate Advanced Study Institut...</td>
+      <td>2020-03-31</td>
+      <td>2021-03-30</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td></td>
+      <td>NaN</td>
+      <td>Co-PI</td>
+      <td>Muchatibaya</td>
+      <td>None</td>
+      <td>Gift</td>
+      <td>grant.8558055</td>
+      <td>UK-Africa Postgraduate Advanced Study Institut...</td>
+      <td>2020-03-31</td>
+      <td>2021-03-30</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td></td>
+      <td>[{'state_code': None, 'country': 'South Africa...</td>
+      <td>Co-PI</td>
+      <td>Nyabadza</td>
+      <td>None</td>
+      <td>Farai</td>
+      <td>grant.8558055</td>
+      <td>UK-Africa Postgraduate Advanced Study Institut...</td>
+      <td>2020-03-31</td>
+      <td>2021-03-30</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>[{'city': 'Liverpool', 'state_code': None, 'co...</td>
-      <td>Christopher</td>
-      <td>ur.010302660415.98</td>
-      <td>Jones</td>
-      <td>Mark</td>
-      <td>PI</td>
-      <td>grant.8103357</td>
-      <td>Quantifying the influence of wind on mosquito ...</td>
-      <td>2019-09-01</td>
-      <td>2020-08-31</td>
+      <td></td>
+      <td>NaN</td>
+      <td>Co-PI</td>
+      <td>Mukandavire</td>
+      <td>None</td>
+      <td>Zindoga</td>
+      <td>grant.8558055</td>
+      <td>UK-Africa Postgraduate Advanced Study Institut...</td>
+      <td>2020-03-31</td>
+      <td>2021-03-30</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>NaN</td>
-      <td>Nicola</td>
-      <td>None</td>
-      <td>Case</td>
       <td></td>
-      <td>PI</td>
-      <td>grant.8482815</td>
-      <td>Investigating the Host-Pathogen Interactions o...</td>
-      <td>2019-09-01</td>
-      <td>2020-08-31</td>
+      <td>NaN</td>
+      <td>Co-PI</td>
+      <td>Panovska-Griffiths</td>
+      <td>None</td>
+      <td>Jasmina</td>
+      <td>grant.8558055</td>
+      <td>UK-Africa Postgraduate Advanced Study Institut...</td>
+      <td>2020-03-31</td>
+      <td>2021-03-30</td>
     </tr>
     <tr>
       <th>5</th>
+      <td></td>
       <td>NaN</td>
-      <td>Madeleine</td>
+      <td>Co-PI</td>
+      <td>Lungu</td>
       <td>None</td>
-      <td>Wiebe</td>
-      <td>Claire</td>
-      <td>PI</td>
-      <td>grant.8527284</td>
-      <td>Investigation of antibody-mediated immune mech...</td>
-      <td>2019-09-01</td>
-      <td>2020-08-31</td>
+      <td>Edward</td>
+      <td>grant.8558055</td>
+      <td>UK-Africa Postgraduate Advanced Study Institut...</td>
+      <td>2020-03-31</td>
+      <td>2021-03-30</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>[{'state_code': 'US-IN', 'id': 'grid.131063.6'...</td>
-      <td>Merlin</td>
+      <td></td>
+      <td>NaN</td>
+      <td>Co-PI</td>
+      <td>Njagarah</td>
       <td>None</td>
-      <td>Bruening</td>
-      <td>None</td>
-      <td>PI</td>
-      <td>grant.8522823</td>
-      <td>Membrane and Monolith Enzyme Reactors for Prot...</td>
-      <td>2019-08-01</td>
-      <td>2022-07-31</td>
+      <td>Hatson John Boscoh</td>
+      <td>grant.8558055</td>
+      <td>UK-Africa Postgraduate Advanced Study Institut...</td>
+      <td>2020-03-31</td>
+      <td>2021-03-30</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>[{'city': None, 'state_code': None, 'name': 'U...</td>
-      <td>Tim</td>
-      <td>None</td>
-      <td>Connelley</td>
       <td></td>
-      <td>PI</td>
-      <td>grant.8483462</td>
-      <td>Defining mechani1sms of CD8+ T-cell mediated i...</td>
-      <td>2019-07-31</td>
-      <td>2022-07-30</td>
+      <td>[{'state_code': None, 'country': 'United Kingd...</td>
+      <td>Co-PI</td>
+      <td>Campillo Funollet</td>
+      <td>None</td>
+      <td>Eduard</td>
+      <td>grant.8558055</td>
+      <td>UK-Africa Postgraduate Advanced Study Institut...</td>
+      <td>2020-03-31</td>
+      <td>2021-03-30</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>[{'city': None, 'state_code': None, 'name': 'U...</td>
-      <td>Musa</td>
-      <td>None</td>
-      <td>Hassan</td>
-      <td>Abdul</td>
+      <td></td>
+      <td>NaN</td>
       <td>Co-PI</td>
-      <td>grant.8483462</td>
-      <td>Defining mechani1sms of CD8+ T-cell mediated i...</td>
-      <td>2019-07-31</td>
-      <td>2022-07-30</td>
+      <td>White</td>
+      <td>None</td>
+      <td>K</td>
+      <td>grant.8558055</td>
+      <td>UK-Africa Postgraduate Advanced Study Institut...</td>
+      <td>2020-03-31</td>
+      <td>2021-03-30</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>[{'state': None, 'state_code': None, 'city': N...</td>
-      <td>Ruth</td>
-      <td>ur.010655625375.45</td>
-      <td>Payne</td>
-      <td></td>
-      <td>PI</td>
-      <td>grant.7921305</td>
-      <td>Analysis of innate immune responses following ...</td>
-      <td>2019-07-15</td>
-      <td>2021-07-14</td>
+      <td>Zoltan</td>
+      <td>[{'state_code': None, 'country': 'United Kingd...</td>
+      <td>Co-PI</td>
+      <td>Kiss</td>
+      <td>None</td>
+      <td>Istvan</td>
+      <td>grant.8558055</td>
+      <td>UK-Africa Postgraduate Advanced Study Institut...</td>
+      <td>2020-03-31</td>
+      <td>2021-03-30</td>
     </tr>
   </tbody>
 </table>
@@ -14870,10 +14564,23 @@ Name: aff_country, dtype: int64</pre>
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <hr>
-<h1 id="Want-to-learn-more?">Want to learn more?<a class="anchor-link" href="#Want-to-learn-more?">&#182;</a></h1><p>Check out the <a href="https://digital-science.github.io/dimensions-api-lab/">Dimensions API Lab</a> website, which contains many tutorials and reusable Jupyter notebooks for scholarly data analytics.</p>
+<h2 id="Want-to-learn-more?">Want to learn more?<a class="anchor-link" href="#Want-to-learn-more?">&#182;</a></h2><p>Check out the <a href="https://digital-science.github.io/dimensions-api-lab/">Dimensions API Lab</a> website, which contains many tutorials and reusable Jupyter notebooks for scholarly data analytics.</p>
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
 </div>
     </div>
   </div>
