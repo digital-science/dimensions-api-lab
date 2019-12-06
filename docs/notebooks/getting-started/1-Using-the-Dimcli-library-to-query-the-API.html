@@ -1,0 +1,627 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Installing the Dimcli Python library &#8212; Dimensions API Lab - Reusable Code Solutions</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Understanding query results" href="2-Understanding-query-results.html" />
+    <link rel="prev" title="Verifying Your API Connection" href="0-Verifying-your-connection.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="2-Understanding-query-results.html" title="Understanding query results"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="0-Verifying-your-connection.html" title="Verifying Your API Connection"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Dimensions API Lab - Reusable Code Solutions</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 5ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can open an interactive version of this notebook in <a class="reference external" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/notebooks/getting-started/1-Using-the-Dimcli-library-to-query-the-API.ipynb">Google Colab</a>, or download its source from <a class="reference external" href="https://digital-science.github.io/dimensions-api-lab/blob/master/notebooks/getting-started/1-Using-the-Dimcli-library-to-query-the-API.ipynb">Github</a>.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="Installing-the-Dimcli-Python-library">
+<h1>Installing the Dimcli Python library<a class="headerlink" href="#Installing-the-Dimcli-Python-library" title="Permalink to this headline">¶</a></h1>
+<p>The purpose of this notebook is to show how to use DimCli. <a class="reference external" href="https://github.com/lambdamusic/dimcli">DimCLI</a> is an open source python library which contains various commands that make it easier to interact with the Dimensions API from Python notebooks.</p>
+<blockquote>
+<div><p>This guide assumes that you already have a Python 3 working environment and <a class="reference external" href="https://pypi.org/project/pip/">pip</a> - the python package manager - installed. For more background, see this <a class="reference external" href="https://realpython.com/installing-python/">link</a>.</p>
+</div></blockquote>
+<div class="section" id="Installation">
+<h2>Installation<a class="headerlink" href="#Installation" title="Permalink to this headline">¶</a></h2>
+<p>You can install DimCli as follows from a Jupyter notebook:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span>pip install dimcli -U
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Collecting dimcli
+  Downloading https://files.pythonhosted.org/packages/71/6c/af7eb3124f8d30e8ec4835d3e52cc0d42e40263dd7455b8095a89f44a266/dimcli-0.6.1-py2.py3-none-any.whl (115kB)
+     |████████████████████████████████| 122kB 2.8MB/s eta 0:00:01
+Requirement already satisfied, skipping upgrade: ipython in /usr/local/lib/python3.6/dist-packages (from dimcli) (5.5.0)
+Requirement already satisfied, skipping upgrade: pandas in /usr/local/lib/python3.6/dist-packages (from dimcli) (0.25.3)
+Requirement already satisfied, skipping upgrade: click in /usr/local/lib/python3.6/dist-packages (from dimcli) (7.0)
+Requirement already satisfied, skipping upgrade: pygments in /usr/local/lib/python3.6/dist-packages (from dimcli) (2.1.3)
+Requirement already satisfied, skipping upgrade: packaging in /usr/local/lib/python3.6/dist-packages (from dimcli) (19.2)
+Requirement already satisfied, skipping upgrade: prompt-toolkit in /usr/local/lib/python3.6/dist-packages (from dimcli) (1.0.18)
+Requirement already satisfied, skipping upgrade: requests in /usr/local/lib/python3.6/dist-packages (from dimcli) (2.21.0)
+Requirement already satisfied, skipping upgrade: traitlets&gt;=4.2 in /usr/local/lib/python3.6/dist-packages (from ipython-&gt;dimcli) (4.3.3)
+Requirement already satisfied, skipping upgrade: decorator in /usr/local/lib/python3.6/dist-packages (from ipython-&gt;dimcli) (4.4.1)
+Requirement already satisfied, skipping upgrade: setuptools&gt;=18.5 in /usr/local/lib/python3.6/dist-packages (from ipython-&gt;dimcli) (41.6.0)
+Requirement already satisfied, skipping upgrade: simplegeneric&gt;0.8 in /usr/local/lib/python3.6/dist-packages (from ipython-&gt;dimcli) (0.8.1)
+Requirement already satisfied, skipping upgrade: pickleshare in /usr/local/lib/python3.6/dist-packages (from ipython-&gt;dimcli) (0.7.5)
+Requirement already satisfied, skipping upgrade: pexpect; sys_platform != &#34;win32&#34; in /usr/local/lib/python3.6/dist-packages (from ipython-&gt;dimcli) (4.7.0)
+Requirement already satisfied, skipping upgrade: python-dateutil&gt;=2.6.1 in /usr/local/lib/python3.6/dist-packages (from pandas-&gt;dimcli) (2.6.1)
+Requirement already satisfied, skipping upgrade: numpy&gt;=1.13.3 in /usr/local/lib/python3.6/dist-packages (from pandas-&gt;dimcli) (1.17.4)
+Requirement already satisfied, skipping upgrade: pytz&gt;=2017.2 in /usr/local/lib/python3.6/dist-packages (from pandas-&gt;dimcli) (2018.9)
+Requirement already satisfied, skipping upgrade: pyparsing&gt;=2.0.2 in /usr/local/lib/python3.6/dist-packages (from packaging-&gt;dimcli) (2.4.5)
+Requirement already satisfied, skipping upgrade: six in /usr/local/lib/python3.6/dist-packages (from packaging-&gt;dimcli) (1.12.0)
+Requirement already satisfied, skipping upgrade: wcwidth in /usr/local/lib/python3.6/dist-packages (from prompt-toolkit-&gt;dimcli) (0.1.7)
+Requirement already satisfied, skipping upgrade: idna&lt;2.9,&gt;=2.5 in /usr/local/lib/python3.6/dist-packages (from requests-&gt;dimcli) (2.8)
+Requirement already satisfied, skipping upgrade: chardet&lt;3.1.0,&gt;=3.0.2 in /usr/local/lib/python3.6/dist-packages (from requests-&gt;dimcli) (3.0.4)
+Requirement already satisfied, skipping upgrade: certifi&gt;=2017.4.17 in /usr/local/lib/python3.6/dist-packages (from requests-&gt;dimcli) (2019.9.11)
+Requirement already satisfied, skipping upgrade: urllib3&lt;1.25,&gt;=1.21.1 in /usr/local/lib/python3.6/dist-packages (from requests-&gt;dimcli) (1.24.3)
+Requirement already satisfied, skipping upgrade: ipython-genutils in /usr/local/lib/python3.6/dist-packages (from traitlets&gt;=4.2-&gt;ipython-&gt;dimcli) (0.2.0)
+Requirement already satisfied, skipping upgrade: ptyprocess&gt;=0.5 in /usr/local/lib/python3.6/dist-packages (from pexpect; sys_platform != &#34;win32&#34;-&gt;ipython-&gt;dimcli) (0.6.0)
+Installing collected packages: dimcli
+Successfully installed dimcli-0.6.1
+</pre></div></div>
+</div>
+<p>Then each time you want to use it within a notebook you can load it like this:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">dimcli</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Authentication">
+<h2>Authentication<a class="headerlink" href="#Authentication" title="Permalink to this headline">¶</a></h2>
+<p>There are <a class="reference external" href="https://github.com/lambdamusic/dimcli#the-credentials-file">different ways</a> to authenticate with the Dimensions API using DimCli. The easiest is passing your credentials explicilty like this:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;dimensions-username@me.com&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;my-secret-password&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+DimCli v0.6.1 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (method: manual login)
+</pre></div></div>
+</div>
+<p>This method could be handy if you quickly want to login and cannot save a credentials file. However, this method is not ideal if you want to protect your credentials, especially within a shared environment.</p>
+<div class="section" id="More-secure-method:-storing-a-private-credentials-file">
+<h3>More secure method: storing a private credentials file<a class="headerlink" href="#More-secure-method:-storing-a-private-credentials-file" title="Permalink to this headline">¶</a></h3>
+<p>DimCli allows you to store your access credentials (e.g. email and password) in a file on your computer, so that you don’t have to type it in each time.</p>
+<blockquote>
+<div><p>Tip: if you have access to a terminal prompt, you can set up the credentials file also by typing <code class="docutils literal notranslate"><span class="pre">dimcli</span> <span class="pre">--init</span></code> (see also <a class="reference external" href="https://github.com/digital-science/dimcli#creating-a-credentials-file-using-the-helper-script-recommended">the docs</a>).</p>
+</div></blockquote>
+<p>Your API credentials need to be stored in a file called <code class="docutils literal notranslate"><span class="pre">dsl.ini</span></code> in the current working directory (eg where your notebooks are located). The file contents should follow <strong>exactly</strong> this structure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">instance</span><span class="o">.</span><span class="n">live</span><span class="p">]</span>
+<span class="n">url</span><span class="o">=</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">app</span><span class="o">.</span><span class="n">dimensions</span><span class="o">.</span><span class="n">ai</span>
+<span class="n">login</span><span class="o">=</span><span class="n">user</span><span class="nd">@mail</span><span class="o">.</span><span class="n">com</span>
+<span class="n">password</span><span class="o">=</span><span class="n">yourpasswordhere</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Make sure you don’t change the <code class="docutils literal notranslate"><span class="pre">instance.live</span></code> directive (unless you know what you’re doing)</p></li>
+<li><p>Of course you want to update the login and password fields as needed!</p></li>
+</ul>
+<p>If the file and credentials are entered correctly, then all you have to do is:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+DimCli v0.4.7 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (method: dsl.ini file)
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Querying">
+<h2>Querying<a class="headerlink" href="#Querying" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Simple-Querying">
+<h3>Simple Querying<a class="headerlink" href="#Simple-Querying" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;search publications for &quot;black holes&quot; return publications&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<blockquote>
+<div><div class="highlight"><pre>
+Returned Publications: 20 (total = 1406075)
+</pre></div></div></blockquote>
+<p>PS you can turn off the <em>Returned publications…</em> feedback message by passing <code class="docutils literal notranslate"><span class="pre">verbose=False</span></code> to the query.</p>
+</div>
+</div>
+<p>The raw json data is accessible via the <code class="docutils literal notranslate"><span class="pre">json</span></code> property of the resulting object.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>dict_keys([&#39;_stats&#39;, &#39;publications&#39;])
+</pre></div>
+</div>
+</div>
+<p>The main JSON keys of the data returned are accessible as properties</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">publications</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>20
+</pre></div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">count_batch</span></code> and <code class="docutils literal notranslate"><span class="pre">count_total</span></code> methods provide quick shortcuts to find out how many records are available:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;We got&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">count_batch</span><span class="p">,</span> <span class="s2">&quot;results out of&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">count_total</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+We got 20 results out of 1406075
+</pre></div></div>
+</div>
+<p>If the query returns an error, the <code class="docutils literal notranslate"><span class="pre">errors</span></code> and <code class="docutils literal notranslate"><span class="pre">errors_string</span></code> methods can be handy too:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># ps errors are printed out by default</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;search publications for &quot;black holes&quot; return spaceships&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Returned Errors: 1
+Semantic Error
+Semantic errors found:
+        Facet &#39;spaceships&#39; is not present in source &#39;publications&#39;. Available facets are: FOR,FOR_first,HRCS_HC,HRCS_RAC,RCDC,category_bra,category_for,category_hra,category_hrcs_hc,category_hrcs_rac,category_rcdc,funder_countries,funders,journal,mesh_terms,open_access_categories,publisher,research_org_cities,research_org_countries,research_org_state_codes,research_orgs,researchers,type,year
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">errors_string</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Semantic ErrorSemantic errors found:
+        Facet &#39;spaceships&#39; is not present in source &#39;publications&#39;. Available facets are: FOR,FOR_first,HRCS_HC,HRCS_RAC,RCDC,category_bra,category_for,category_hra,category_hrcs_hc,category_hrcs_rac,category_rcdc,funder_countries,funders,journal,mesh_terms,open_access_categories,publisher,research_org_cities,research_org_countries,research_org_state_codes,research_orgs,researchers,type,year
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Iterative-querying">
+<h3>Iterative querying<a class="headerlink" href="#Iterative-querying" title="Permalink to this headline">¶</a></h3>
+<p>Dimcli includes a utility for looping over a query that produces more than 1000 results (the max number of records a single query can return).</p>
+<p>A loop query is generated in the background using the <a class="reference external" href="https://docs.dimensions.ai/dsl/language.html#paginating-results">limit/skip syntax</a> in order to extract all possible results.</p>
+<p>A few things to note:</p>
+<ul class="simple">
+<li><p>Each query happens after <strong>one second</strong>, so to comply with the 30 queries per minute API limit.</p></li>
+<li><p>The results are collated into a single <code class="docutils literal notranslate"><span class="pre">dimcli.Result</span></code> object (same as with normal querying) that can be accessed via the methods illustrated above.</p></li>
+<li><p>You can use <code class="docutils literal notranslate"><span class="pre">verbose=False</span></code> to off the notifications.</p></li>
+<li><p>You can pass <code class="docutils literal notranslate"><span class="pre">limit</span> <span class="pre">=</span> <span class="pre">500</span></code> (or any other number &lt;=1000) to specify how many records to extract per iteration - which by default is 1000 (the max amount).</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query_iterative</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;search publications for &quot;black holes&quot; where year=1990 and times_cited &gt; 10 return publications&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1000 / 3077
+2000 / 3077
+3000 / 3077
+3077 / 3077
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">publications</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>3077
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="What’s-next">
+<h2>What’s next<a class="headerlink" href="#What’s-next" title="Permalink to this headline">¶</a></h2>
+<p>DimCli contains a few <a class="reference external" href="https://ipython.readthedocs.io/en/stable/interactive/magics.html">magic commands</a> which make it much easier to interrogate the API. See the the other notebooks in this collection for more information.</p>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<hr class="docutils" />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can open an interactive version of this notebook in <a class="reference external" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/notebooks/getting-started/1-Using-the-Dimcli-library-to-query-the-API.ipynb">Google Colab</a>, or download its source from <a class="reference external" href="https://digital-science.github.io/dimensions-api-lab/blob/master/notebooks/getting-started/1-Using-the-Dimcli-library-to-query-the-API.ipynb">Github</a>.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Installing the Dimcli Python library</a><ul>
+<li><a class="reference internal" href="#Installation">Installation</a></li>
+<li><a class="reference internal" href="#Authentication">Authentication</a><ul>
+<li><a class="reference internal" href="#More-secure-method:-storing-a-private-credentials-file">More secure method: storing a private credentials file</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#Querying">Querying</a><ul>
+<li><a class="reference internal" href="#Simple-Querying">Simple Querying</a></li>
+<li><a class="reference internal" href="#Iterative-querying">Iterative querying</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#What’s-next">What’s next</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="0-Verifying-your-connection.html"
+                        title="previous chapter">Verifying Your API Connection</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="2-Understanding-query-results.html"
+                        title="next chapter">Understanding query results</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/notebooks/getting-started/1-Using-the-Dimcli-library-to-query-the-API.ipynb.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="2-Understanding-query-results.html" title="Understanding query results"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="0-Verifying-your-connection.html" title="Verifying Your API Connection"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Dimensions API Lab - Reusable Code Solutions</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dimensions API Team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1436 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Working with Pandas dataframes &#8212; Dimensions API Lab - Reusable Code Solutions</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Goal: extracting all researchers affiliated to a certain university, who published in a specific time-frame" href="../researchers/Researchers-Search-tips.html" />
+    <link rel="prev" title="Magic commands: quick queries and more" href="3-Learning-about-Dimcli-magic-commands.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../researchers/Researchers-Search-tips.html" title="Goal: extracting all researchers affiliated to a certain university, who published in a specific time-frame"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="3-Learning-about-Dimcli-magic-commands.html" title="Magic commands: quick queries and more"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Dimensions API Lab - Reusable Code Solutions</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 5ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can open an interactive version of this notebook in <a class="reference external" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/notebooks/getting-started/4-Using-Dimcli-to-return-pandas-dataframes.ipynb">Google Colab</a>, or download its source from <a class="reference external" href="https://digital-science.github.io/dimensions-api-lab/blob/master/notebooks/getting-started/4-Using-Dimcli-to-return-pandas-dataframes.ipynb">Github</a>.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="Working-with-Pandas-dataframes">
+<h1>Working with Pandas dataframes<a class="headerlink" href="#Working-with-Pandas-dataframes" title="Permalink to this headline">¶</a></h1>
+<p>DimCli includes a few utilities that make it easier to transform Dimensions JSON data into Pandas <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/getting_started/dsintro.html#dataframe">dataframe objects</a>.</p>
+<p>Dataframes are then easy to sort, analyse, export as CSV and use within visualisation softwares.</p>
+<blockquote>
+<div><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/">pandas</a> is a popular software library written for the Python programming language for data manipulation and analysis.</p>
+</div></blockquote>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span>pip install dimcli -U --quiet
+<span class="kn">import</span> <span class="nn">pandas</span>
+<span class="kn">import</span> <span class="nn">dimcli</span>
+<span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;dimensions-username@me.com&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;my-secret-password&quot;</span><span class="p">)</span>
+<span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+     |████████████████████████████████| 122kB 2.7MB/s eta 0:00:01
+DimCli v0.6.1 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (method: manual login)
+</pre></div></div>
+</div>
+<div class="section" id="1.-Getting-started:-the-as_dataframe-method">
+<h2>1. Getting started: the <code class="docutils literal notranslate"><span class="pre">as_dataframe</span></code> method<a class="headerlink" href="#1.-Getting-started:-the-as_dataframe-method" title="Permalink to this headline">¶</a></h2>
+<p>This utility method allows to quickly turn any query results into a dataframe.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># we&#39;ll reuse this query later on</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search publications for &quot;graphene&quot;</span>
+<span class="s2">            where year in [2013:2019]</span>
+<span class="s2">            return publications sort by times_cited limit 1000&quot;&quot;&quot;</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Returned Publications: 1000 (total = 401814)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">df</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pages</th>
+      <th>author_affiliations</th>
+      <th>year</th>
+      <th>issue</th>
+      <th>volume</th>
+      <th>id</th>
+      <th>type</th>
+      <th>title</th>
+      <th>journal.id</th>
+      <th>journal.title</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>263-275</td>
+      <td>[[{'first_name': 'Manish', 'last_name': 'Chhow...</td>
+      <td>2013</td>
+      <td>4</td>
+      <td>5</td>
+      <td>pub.1050119463</td>
+      <td>article</td>
+      <td>The chemistry of two-dimensional layered trans...</td>
+      <td>jour.1041224</td>
+      <td>Nature Chemistry</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>419-425</td>
+      <td>[[{'first_name': 'A. K.', 'last_name': 'Geim',...</td>
+      <td>2013</td>
+      <td>7459</td>
+      <td>499</td>
+      <td>pub.1024857999</td>
+      <td>article</td>
+      <td>Van der Waals heterostructures</td>
+      <td>jour.1018957</td>
+      <td>Nature</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2013</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>pub.1031762191</td>
+      <td>book</td>
+      <td>Nanoenergy, Nanotechnology Applied for Energy ...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>100001</td>
+      <td>[[{'first_name': 'C.', 'last_name': 'Patrignan...</td>
+      <td>2016</td>
+      <td>10</td>
+      <td>40</td>
+      <td>pub.1059158429</td>
+      <td>article</td>
+      <td>Review of Particle Physics</td>
+      <td>jour.1327822</td>
+      <td>Chinese Physics C</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1167-76</td>
+      <td>[[{'first_name': 'John B.', 'last_name': 'Good...</td>
+      <td>2013</td>
+      <td>4</td>
+      <td>135</td>
+      <td>pub.1019126274</td>
+      <td>article</td>
+      <td>The Li-ion rechargeable battery: a perspective.</td>
+      <td>jour.1081898</td>
+      <td>Journal of the American Chemical Society</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>235-246</td>
+      <td>[[{'first_name': 'Andrea C.', 'last_name': 'Fe...</td>
+      <td>2013</td>
+      <td>4</td>
+      <td>8</td>
+      <td>pub.1015305822</td>
+      <td>article</td>
+      <td>Raman spectroscopy as a versatile tool for stu...</td>
+      <td>jour.1037429</td>
+      <td>Nature Nanotechnology</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>4033-41</td>
+      <td>[[{'first_name': 'Han', 'last_name': 'Liu', 'c...</td>
+      <td>2014</td>
+      <td>4</td>
+      <td>8</td>
+      <td>pub.1009826879</td>
+      <td>article</td>
+      <td>Phosphorene: an unexplored 2D semiconductor wi...</td>
+      <td>jour.1038917</td>
+      <td>ACS Nano</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2898-926</td>
+      <td>[[{'first_name': 'Sheneve Z.', 'last_name': 'B...</td>
+      <td>2013</td>
+      <td>4</td>
+      <td>7</td>
+      <td>pub.1038090434</td>
+      <td>article</td>
+      <td>Progress, challenges, and opportunities in two...</td>
+      <td>jour.1038917</td>
+      <td>ACS Nano</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>3766-98</td>
+      <td>[[{'first_name': 'Mingsheng', 'last_name': 'Xu...</td>
+      <td>2013</td>
+      <td>5</td>
+      <td>113</td>
+      <td>pub.1022830330</td>
+      <td>article</td>
+      <td>Graphene-like two-dimensional materials.</td>
+      <td>jour.1077147</td>
+      <td>Chemical Reviews</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>497-501</td>
+      <td>[[{'first_name': 'Oriol', 'last_name': 'Lopez-...</td>
+      <td>2013</td>
+      <td>7</td>
+      <td>8</td>
+      <td>pub.1023181230</td>
+      <td>article</td>
+      <td>Ultrasensitive photodetectors based on monolay...</td>
+      <td>jour.1037429</td>
+      <td>Nature Nanotechnology</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Pandas dataframes offer a myriad of utilities for inspecting data. Check out the <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/getting_started/10min.html">official docs</a> or google a <a class="reference external" href="https://www.google.com/search?q=pandas+tutorial">pandas tutorial</a> to lean more about it.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># the table shape</span>
+<span class="n">df</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>(1000, 10)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># the &#39;value_counts&#39; method returns the distribution of a specific field eg publication [years]</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>2013    361
+2014    296
+2015    201
+2016     91
+2017     44
+2018      7
+Name: year, dtype: int64
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># eg distribution of publication [type]</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>article      995
+book           2
+monograph      2
+chapter        1
+Name: type, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="2.-Helper-Methods-for-‘Publications’-queries">
+<h2>2. Helper Methods for ‘Publications’ queries<a class="headerlink" href="#2.-Helper-Methods-for-‘Publications’-queries" title="Permalink to this headline">¶</a></h2>
+<p>What follows are specialized versions of the <code class="docutils literal notranslate"><span class="pre">as_dataframe</span></code> method for results sets composed of publication records.</p>
+<div class="section" id="Extracting-authors:-as_dataframe_authors">
+<h3>Extracting authors: <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors</span></code><a class="headerlink" href="#Extracting-authors:-as_dataframe_authors" title="Permalink to this headline">¶</a></h3>
+<p>Publications authors are usually returned by the Dimensions API inside a nested JSON object in the <code class="docutils literal notranslate"><span class="pre">authors_affiliations</span></code> sub-key.</p>
+<blockquote>
+<div><p>Note: the order of authors in the JSON is consistent with the ordering of authors in the original publication</p>
+</div></blockquote>
+<p>This methods allows to quickly extract that data and return a dataframe with <strong>one row per author</strong>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">authors</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">as_dataframe_authors</span><span class="p">()</span>
+<span class="n">authors</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>corresponding</th>
+      <th>orcid</th>
+      <th>current_organization_id</th>
+      <th>researcher_id</th>
+      <th>affiliations</th>
+      <th>pub_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Manish</td>
+      <td>Chhowalla</td>
+      <td>True</td>
+      <td></td>
+      <td>grid.430387.b</td>
+      <td>ur.0633062306.03</td>
+      <td>[{'id': 'grid.430387.b', 'name': 'Rutgers, The...</td>
+      <td>pub.1050119463</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Hyeon Suk</td>
+      <td>Shin</td>
+      <td></td>
+      <td></td>
+      <td>grid.42687.3f</td>
+      <td>ur.07617630407.83</td>
+      <td>[{'id': 'grid.42687.3f', 'name': 'Ulsan Nation...</td>
+      <td>pub.1050119463</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Goki</td>
+      <td>Eda</td>
+      <td></td>
+      <td></td>
+      <td>grid.4280.e</td>
+      <td>ur.01150450507.27</td>
+      <td>[{'id': 'grid.4280.e', 'name': 'National Unive...</td>
+      <td>pub.1050119463</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Lain-Jong</td>
+      <td>Li</td>
+      <td></td>
+      <td>['0000-0002-4059-7783']</td>
+      <td>grid.45672.32</td>
+      <td>ur.01313340113.13</td>
+      <td>[{'id': 'grid.28665.3f', 'name': 'Academia Sin...</td>
+      <td>pub.1050119463</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Kian Ping</td>
+      <td>Loh</td>
+      <td></td>
+      <td>['0000-0002-1491-743X']</td>
+      <td>grid.4280.e</td>
+      <td>ur.0752174033.73</td>
+      <td>[{'id': 'grid.4280.e', 'name': 'National Unive...</td>
+      <td>pub.1050119463</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Using the authors dataframe, we can easily get the top ten values for <code class="docutils literal notranslate"><span class="pre">current_organization_id</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">authors</span><span class="p">[</span><span class="s1">&#39;current_organization_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Extracting-Affiliations:-as_dataframe_authors_affiliations">
+<h3>Extracting Affiliations: <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors_affiliations</span></code><a class="headerlink" href="#Extracting-Affiliations:-as_dataframe_authors_affiliations" title="Permalink to this headline">¶</a></h3>
+<p>As you can see from the results of the previous section, the <code class="docutils literal notranslate"><span class="pre">affiliations</span></code> of each author is yet another nested JSON object.</p>
+<blockquote>
+<div><p>Note: the order of affiliations in the JSON is consistent with the affiliations order in the original publication</p>
+</div></blockquote>
+<p>The <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors_affiliations</span></code> method allows to quickly extract that affiliations data and return a dataframe with <strong>one row per affiliation</strong>.</p>
+<p>This can be useful e.g. if one wants to count research organizations at <em>the time of writing</em> (as opposed to <code class="docutils literal notranslate"><span class="pre">current_organization_id</span></code>, which is the <em>most recent organization</em> of a researcher).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">affiliations</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">as_dataframe_authors_affiliations</span><span class="p">()</span>
+<span class="n">affiliations</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>aff_id</th>
+      <th>aff_name</th>
+      <th>aff_city</th>
+      <th>aff_city_id</th>
+      <th>aff_country</th>
+      <th>aff_country_code</th>
+      <th>aff_state</th>
+      <th>aff_state_code</th>
+      <th>pub_id</th>
+      <th>researcher_id</th>
+      <th>first_name</th>
+      <th>last_name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>grid.430387.b</td>
+      <td>Rutgers, The State University of New Jersey</td>
+      <td>New Brunswick</td>
+      <td>5.10172e+06</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>New Jersey</td>
+      <td>US-NJ</td>
+      <td>pub.1050119463</td>
+      <td>ur.0633062306.03</td>
+      <td>Manish</td>
+      <td>Chhowalla</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>grid.42687.3f</td>
+      <td>Ulsan National Institute of Science and Techno...</td>
+      <td>Ulsan</td>
+      <td>1.83375e+06</td>
+      <td>South Korea</td>
+      <td>KR</td>
+      <td></td>
+      <td></td>
+      <td>pub.1050119463</td>
+      <td>ur.07617630407.83</td>
+      <td>Hyeon Suk</td>
+      <td>Shin</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>grid.4280.e</td>
+      <td>National University of Singapore</td>
+      <td>Singapore</td>
+      <td>1.88025e+06</td>
+      <td>Singapore</td>
+      <td>SG</td>
+      <td></td>
+      <td></td>
+      <td>pub.1050119463</td>
+      <td>ur.01150450507.27</td>
+      <td>Goki</td>
+      <td>Eda</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>grid.28665.3f</td>
+      <td>Academia Sinica</td>
+      <td>Taipei</td>
+      <td>1.66834e+06</td>
+      <td>Taiwan</td>
+      <td>TW</td>
+      <td></td>
+      <td></td>
+      <td>pub.1050119463</td>
+      <td>ur.01313340113.13</td>
+      <td>Lain-Jong</td>
+      <td>Li</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>grid.4280.e</td>
+      <td>National University of Singapore</td>
+      <td>Singapore</td>
+      <td>1.88025e+06</td>
+      <td>Singapore</td>
+      <td>SG</td>
+      <td></td>
+      <td></td>
+      <td>pub.1050119463</td>
+      <td>ur.0752174033.73</td>
+      <td>Kian Ping</td>
+      <td>Loh</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">affiliations</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>aff_id</th>
+      <th>aff_name</th>
+      <th>aff_city</th>
+      <th>aff_city_id</th>
+      <th>aff_country</th>
+      <th>aff_country_code</th>
+      <th>aff_state</th>
+      <th>aff_state_code</th>
+      <th>pub_id</th>
+      <th>researcher_id</th>
+      <th>first_name</th>
+      <th>last_name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>6989</td>
+      <td>6989</td>
+      <td>6989</td>
+      <td>6989</td>
+      <td>6989</td>
+      <td>6989</td>
+      <td>6989</td>
+      <td>6989</td>
+      <td>6989</td>
+      <td>6989</td>
+      <td>6989</td>
+      <td>6989</td>
+    </tr>
+    <tr>
+      <th>unique</th>
+      <td>751</td>
+      <td>1064</td>
+      <td>459</td>
+      <td>462</td>
+      <td>53</td>
+      <td>53</td>
+      <td>56</td>
+      <td>56</td>
+      <td>984</td>
+      <td>4163</td>
+      <td>3426</td>
+      <td>1901</td>
+    </tr>
+    <tr>
+      <th>top</th>
+      <td></td>
+      <td>Nanyang Technological University</td>
+      <td></td>
+      <td></td>
+      <td>China</td>
+      <td>CN</td>
+      <td></td>
+      <td></td>
+      <td>pub.1019661721</td>
+      <td></td>
+      <td>Wei</td>
+      <td>Zhang</td>
+    </tr>
+    <tr>
+      <th>freq</th>
+      <td>917</td>
+      <td>221</td>
+      <td>917</td>
+      <td>922</td>
+      <td>1952</td>
+      <td>1952</td>
+      <td>5120</td>
+      <td>5120</td>
+      <td>105</td>
+      <td>158</td>
+      <td>62</td>
+      <td>291</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Let’s get the top ten values for <code class="docutils literal notranslate"><span class="pre">aff_id</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">affiliations</span><span class="p">[</span><span class="s1">&#39;aff_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p>Another example: we can now easily analyze the data by country too.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">affiliations</span><span class="p">[</span><span class="s1">&#39;aff_country&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="2.-Helper-Methods-for-‘Grants’-queries">
+<h2>2. Helper Methods for ‘Grants’ queries<a class="headerlink" href="#2.-Helper-Methods-for-‘Grants’-queries" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Extracting-Funders:-as_dataframe_funders">
+<h3>Extracting Funders: <code class="docutils literal notranslate"><span class="pre">as_dataframe_funders</span></code><a class="headerlink" href="#Extracting-Funders:-as_dataframe_funders" title="Permalink to this headline">¶</a></h3>
+<p>Grant funders authors are usually returned by the Dimensions API inside a nested JSON object in the <code class="docutils literal notranslate"><span class="pre">funders</span></code> sub-key.</p>
+<p>This methods allows to quickly extract that data and return a dataframe with <strong>one row per funder</strong>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># get a sample list of grants</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search grants for &quot;malaria&quot; return grants limit 1000&quot;&quot;&quot;</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Returned Grants: 1000 (total = 9225)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">res</span><span class="o">.</span><span class="n">as_dataframe_funders</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>acronym</th>
+      <th>name</th>
+      <th>country_name</th>
+      <th>grant_id</th>
+      <th>grant_title</th>
+      <th>grant_start_date</th>
+      <th>grant_end_date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>grid.421091.f</td>
+      <td>EPSRC</td>
+      <td>Engineering and Physical Sciences Research Cou...</td>
+      <td>United Kingdom</td>
+      <td>grant.8558055</td>
+      <td>UK-Africa Postgraduate Advanced Study Institut...</td>
+      <td>2020-03-31</td>
+      <td>2021-03-30</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>grid.270680.b</td>
+      <td>EC</td>
+      <td>European Commission</td>
+      <td>Belgium</td>
+      <td>grant.8585457</td>
+      <td>Estimating the Prevalence of AntiMicrobial Res...</td>
+      <td>2020-01-01</td>
+      <td>2021-12-31</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>grid.270680.b</td>
+      <td>EC</td>
+      <td>European Commission</td>
+      <td>Belgium</td>
+      <td>grant.8586121</td>
+      <td>Earth observation service for preventive contr...</td>
+      <td>2019-11-01</td>
+      <td>2022-10-31</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>grid.270680.b</td>
+      <td>EC</td>
+      <td>European Commission</td>
+      <td>Belgium</td>
+      <td>grant.8585082</td>
+      <td>Understanding the roles of pathogen infection ...</td>
+      <td>2019-10-01</td>
+      <td>2021-09-30</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>grid.457875.c</td>
+      <td>NSF MPS</td>
+      <td>Directorate for Mathematical &amp; Physical Sciences</td>
+      <td>United States</td>
+      <td>grant.8566624</td>
+      <td>Collaborative Research: Principal Component An...</td>
+      <td>2019-10-01</td>
+      <td>2022-09-30</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>grid.452896.4</td>
+      <td>ERC</td>
+      <td>European Research Council</td>
+      <td>Belgium</td>
+      <td>grant.8587147</td>
+      <td>Ultrasensitive detection of transmissible malaria</td>
+      <td>2019-10-01</td>
+      <td>2021-03-31</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>grid.425888.b</td>
+      <td>SNF</td>
+      <td>Swiss National Science Foundation</td>
+      <td>Switzerland</td>
+      <td>grant.8599112</td>
+      <td>Gauging Global Governance: The Effectiveness o...</td>
+      <td>2019-10-01</td>
+      <td>2022-09-30</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>grid.52788.30</td>
+      <td>WT</td>
+      <td>Wellcome Trust</td>
+      <td>United Kingdom</td>
+      <td>grant.8103743</td>
+      <td>The Chemical Empire: A New History of Syntheti...</td>
+      <td>2019-10-01</td>
+      <td>2023-10-01</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>grid.248883.d</td>
+      <td>CIHR</td>
+      <td>Canadian Institutes of Health Research</td>
+      <td>Canada</td>
+      <td>grant.8527034</td>
+      <td>Mechanisms of Leishmania dissemination and tra...</td>
+      <td>2019-10-01</td>
+      <td>2024-09-30</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>grid.52788.30</td>
+      <td>WT</td>
+      <td>Wellcome Trust</td>
+      <td>United Kingdom</td>
+      <td>grant.8558648</td>
+      <td>Molecular mechanisms of carbohydrate uptake in...</td>
+      <td>2019-10-01</td>
+      <td>2022-09-30</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Extracting-investigators:-as_dataframe_investigators">
+<h3>Extracting investigators: <code class="docutils literal notranslate"><span class="pre">as_dataframe_investigators</span></code><a class="headerlink" href="#Extracting-investigators:-as_dataframe_investigators" title="Permalink to this headline">¶</a></h3>
+<p>Grant investigators are usually returned by the Dimensions API inside a nested JSON object in the <code class="docutils literal notranslate"><span class="pre">investigator_details</span></code> sub-key.</p>
+<p>This methods allows to quickly extract that data and return a dataframe with <strong>one row per investigator</strong>.</p>
+<blockquote>
+<div><p>NOTE: <code class="docutils literal notranslate"><span class="pre">investigator_details</span></code> are not returned by default in a grants query hence one must specify this in the query results</p>
+</div></blockquote>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># get a sample list of grants</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search grants for &quot;malaria&quot; return grants[basics+investigator_details] limit 1000&quot;&quot;&quot;</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">dslquery</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Returned Grants: 1000 (total = 9225)
+WARNINGS [1]
+Field &#39;project_num&#39; is deprecated in favor of grant_number. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">res</span><span class="o">.</span><span class="n">as_dataframe_investigators</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>middle_name</th>
+      <th>affiliations</th>
+      <th>role</th>
+      <th>last_name</th>
+      <th>id</th>
+      <th>first_name</th>
+      <th>grant_id</th>
+      <th>grant_title</th>
+      <th>grant_start_date</th>
+      <th>grant_end_date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td></td>
+      <td>[{'state_code': None, 'country': 'United Kingd...</td>
+      <td>PI</td>
+      <td>Madzvamuse</td>
+      <td>None</td>
+      <td>Anotida</td>
+      <td>grant.8558055</td>
+      <td>UK-Africa Postgraduate Advanced Study Institut...</td>
+      <td>2020-03-31</td>
+      <td>2021-03-30</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td></td>
+      <td>NaN</td>
+      <td>Co-PI</td>
+      <td>Muchatibaya</td>
+      <td>None</td>
+      <td>Gift</td>
+      <td>grant.8558055</td>
+      <td>UK-Africa Postgraduate Advanced Study Institut...</td>
+      <td>2020-03-31</td>
+      <td>2021-03-30</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td></td>
+      <td>[{'state_code': None, 'country': 'South Africa...</td>
+      <td>Co-PI</td>
+      <td>Nyabadza</td>
+      <td>None</td>
+      <td>Farai</td>
+      <td>grant.8558055</td>
+      <td>UK-Africa Postgraduate Advanced Study Institut...</td>
+      <td>2020-03-31</td>
+      <td>2021-03-30</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td></td>
+      <td>NaN</td>
+      <td>Co-PI</td>
+      <td>Mukandavire</td>
+      <td>None</td>
+      <td>Zindoga</td>
+      <td>grant.8558055</td>
+      <td>UK-Africa Postgraduate Advanced Study Institut...</td>
+      <td>2020-03-31</td>
+      <td>2021-03-30</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td></td>
+      <td>NaN</td>
+      <td>Co-PI</td>
+      <td>Panovska-Griffiths</td>
+      <td>None</td>
+      <td>Jasmina</td>
+      <td>grant.8558055</td>
+      <td>UK-Africa Postgraduate Advanced Study Institut...</td>
+      <td>2020-03-31</td>
+      <td>2021-03-30</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td></td>
+      <td>NaN</td>
+      <td>Co-PI</td>
+      <td>Lungu</td>
+      <td>None</td>
+      <td>Edward</td>
+      <td>grant.8558055</td>
+      <td>UK-Africa Postgraduate Advanced Study Institut...</td>
+      <td>2020-03-31</td>
+      <td>2021-03-30</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td></td>
+      <td>NaN</td>
+      <td>Co-PI</td>
+      <td>Njagarah</td>
+      <td>None</td>
+      <td>Hatson John Boscoh</td>
+      <td>grant.8558055</td>
+      <td>UK-Africa Postgraduate Advanced Study Institut...</td>
+      <td>2020-03-31</td>
+      <td>2021-03-30</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td></td>
+      <td>[{'state_code': None, 'country': 'United Kingd...</td>
+      <td>Co-PI</td>
+      <td>Campillo Funollet</td>
+      <td>None</td>
+      <td>Eduard</td>
+      <td>grant.8558055</td>
+      <td>UK-Africa Postgraduate Advanced Study Institut...</td>
+      <td>2020-03-31</td>
+      <td>2021-03-30</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td></td>
+      <td>NaN</td>
+      <td>Co-PI</td>
+      <td>White</td>
+      <td>None</td>
+      <td>K</td>
+      <td>grant.8558055</td>
+      <td>UK-Africa Postgraduate Advanced Study Institut...</td>
+      <td>2020-03-31</td>
+      <td>2021-03-30</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Zoltan</td>
+      <td>[{'state_code': None, 'country': 'United Kingd...</td>
+      <td>Co-PI</td>
+      <td>Kiss</td>
+      <td>None</td>
+      <td>Istvan</td>
+      <td>grant.8558055</td>
+      <td>UK-Africa Postgraduate Advanced Study Institut...</td>
+      <td>2020-03-31</td>
+      <td>2021-03-30</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Conclusions">
+<h2>Conclusions<a class="headerlink" href="#Conclusions" title="Permalink to this headline">¶</a></h2>
+<p>Moving Dimensions API results to pandas dataframes <strong>makes it easier</strong> to <strong>analyze the data</strong> and <strong>answer research questions</strong>.</p>
+<p>Note: the examples above only scratch the surface of what can be done with pandas!</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="Want-to-learn-more?">
+<h2>Want to learn more?<a class="headerlink" href="#Want-to-learn-more?" title="Permalink to this headline">¶</a></h2>
+<p>Check out the <a class="reference external" href="https://digital-science.github.io/dimensions-api-lab/">Dimensions API Lab</a> website, which contains many tutorials and reusable Jupyter notebooks for scholarly data analytics.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<hr class="docutils" />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can open an interactive version of this notebook in <a class="reference external" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/notebooks/getting-started/4-Using-Dimcli-to-return-pandas-dataframes.ipynb">Google Colab</a>, or download its source from <a class="reference external" href="https://digital-science.github.io/dimensions-api-lab/blob/master/notebooks/getting-started/4-Using-Dimcli-to-return-pandas-dataframes.ipynb">Github</a>.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Working with Pandas dataframes</a><ul>
+<li><a class="reference internal" href="#1.-Getting-started:-the-as_dataframe-method">1. Getting started: the <code class="docutils literal notranslate"><span class="pre">as_dataframe</span></code> method</a></li>
+<li><a class="reference internal" href="#2.-Helper-Methods-for-‘Publications’-queries">2. Helper Methods for ‘Publications’ queries</a><ul>
+<li><a class="reference internal" href="#Extracting-authors:-as_dataframe_authors">Extracting authors: <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors</span></code></a></li>
+<li><a class="reference internal" href="#Extracting-Affiliations:-as_dataframe_authors_affiliations">Extracting Affiliations: <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors_affiliations</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#2.-Helper-Methods-for-‘Grants’-queries">2. Helper Methods for ‘Grants’ queries</a><ul>
+<li><a class="reference internal" href="#Extracting-Funders:-as_dataframe_funders">Extracting Funders: <code class="docutils literal notranslate"><span class="pre">as_dataframe_funders</span></code></a></li>
+<li><a class="reference internal" href="#Extracting-investigators:-as_dataframe_investigators">Extracting investigators: <code class="docutils literal notranslate"><span class="pre">as_dataframe_investigators</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#Conclusions">Conclusions</a></li>
+<li><a class="reference internal" href="#Want-to-learn-more?">Want to learn more?</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="3-Learning-about-Dimcli-magic-commands.html"
+                        title="previous chapter">Magic commands: quick queries and more</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../researchers/Researchers-Search-tips.html"
+                        title="next chapter">Goal: extracting all researchers affiliated to a certain university, who published in a specific time-frame</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/notebooks/getting-started/4-Using-Dimcli-to-return-pandas-dataframes.ipynb.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../researchers/Researchers-Search-tips.html" title="Goal: extracting all researchers affiliated to a certain university, who published in a specific time-frame"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="3-Learning-about-Dimcli-magic-commands.html" title="Magic commands: quick queries and more"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Dimensions API Lab - Reusable Code Solutions</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dimensions API Team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

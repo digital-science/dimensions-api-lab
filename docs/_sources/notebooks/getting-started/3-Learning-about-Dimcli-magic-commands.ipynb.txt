@@ -1,0 +1,4224 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "sTfAFN_lMH43"
+   },
+   "source": [
+    "<a href=\"https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/1-getting-started/3-Learning-about-Dimcli-magic-commands.ipynb\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open Dimensions API Lab In Google Colab\"/></a>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "6g6oQUGFMH45"
+   },
+   "source": [
+    "# Magic commands: quick queries and more\n",
+    "\n",
+    "DimCli includes a few [Python magic commands](https://ipython.readthedocs.io/en/stable/interactive/magics.html) which make it much easier to interrogate the API."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 51
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 5670,
+     "status": "ok",
+     "timestamp": 1574679219160,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "rMhfnGByMH45",
+    "outputId": "c9826513-1c4f-4937-b1e8-f896b565e589"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "\u001b[K     |████████████████████████████████| 122kB 4.9MB/s eta 0:00:01\n",
+      "\u001b[?25hDimCli v0.6.1 - Succesfully connected to <https://app.dimensions.ai> (method: manual login)\n"
+     ]
+    }
+   ],
+   "source": [
+    "!pip install dimcli -U --quiet\n",
+    "import dimcli\n",
+    "dimcli.login(username=\"dimensions-username@me.com\", password=\"my-secret-password\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "WJjjH5OhMYOy"
+   },
+   "source": [
+    "Magic commands are essentially shortcuts that allow to launch queries without having to create an object using the syntax `dsl = dimcli.Dsl()`. \n",
+    "\n",
+    "They can be useful when testing things out e.g. while trying out a new query, or checking what data is available in Dimensions on a certain topic. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "7jTpb7lbMH5J"
+   },
+   "source": [
+    "## 1. Querying with `%dsl` or `%%dsl` \n",
+    "\n",
+    "This command allows to simply pass an API query after typing `%dsl`. \n",
+    "\n",
+    "**Single-line version** "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 51
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 1111,
+     "status": "ok",
+     "timestamp": 1574679526526,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "A_fjxss0MH5K",
+    "outputId": "26d947c7-c660-45e3-8b94-c379e04ec2a1"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Returned Publications: 20 (total = 901)\n"
+     ]
+    },
+    {
+     "data": {
+      "application/json": {
+       "_stats": {
+        "total_count": 901
+       },
+       "publications": [
+        {
+         "author_affiliations": [
+          [
+           {
+            "affiliations": [
+             {
+              "city": "Oakland",
+              "city_id": 5378538,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.30389.31",
+              "name": "University of California System",
+              "state": "California",
+              "state_code": "US-CA"
+             }
+            ],
+            "corresponding": true,
+            "current_organization_id": "",
+            "first_name": "Matto",
+            "last_name": "Mildenberger",
+            "orcid": "",
+            "researcher_id": ""
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Logan",
+              "city_id": 5777544,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.53857.3c",
+              "name": "Utah State University",
+              "state": "Utah",
+              "state_code": "US-UT"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "",
+            "first_name": "Peter D.",
+            "last_name": "Howe",
+            "orcid": "",
+            "researcher_id": ""
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Oakland",
+              "city_id": 5378538,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.30389.31",
+              "name": "University of California System",
+              "state": "California",
+              "state_code": "US-CA"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "",
+            "first_name": "Chris",
+            "last_name": "Miljanich",
+            "orcid": "",
+            "researcher_id": ""
+           }
+          ]
+         ],
+         "id": "pub.1122668638",
+         "journal": {
+          "id": "jour.1136447",
+          "title": "Nature Energy"
+         },
+         "pages": "1-7",
+         "title": "Households with solar installations are ideologically diverse and more politically active than their neighbours",
+         "type": "article",
+         "year": 2019
+        },
+        {
+         "author_affiliations": [
+          [
+           {
+            "affiliations": [
+             {
+              "city": "New Haven",
+              "city_id": 4839366,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.47100.32",
+              "name": "Yale University",
+              "state": "Connecticut",
+              "state_code": "US-CT"
+             },
+             {
+              "city": "Laxenburg",
+              "city_id": 2772810,
+              "country": "Austria",
+              "country_code": "AT",
+              "id": "grid.75276.31",
+              "name": "International Institute for Applied Systems Analysis",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": true,
+            "current_organization_id": "",
+            "first_name": "Narasimha D.",
+            "last_name": "Rao",
+            "orcid": "",
+            "researcher_id": ""
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Laxenburg",
+              "city_id": 2772810,
+              "country": "Austria",
+              "country_code": "AT",
+              "id": "grid.75276.31",
+              "name": "International Institute for Applied Systems Analysis",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "",
+            "first_name": "Jihoon",
+            "last_name": "Min",
+            "orcid": "",
+            "researcher_id": ""
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Laxenburg",
+              "city_id": 2772810,
+              "country": "Austria",
+              "country_code": "AT",
+              "id": "grid.75276.31",
+              "name": "International Institute for Applied Systems Analysis",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "",
+            "first_name": "Alessio",
+            "last_name": "Mastrucci",
+            "orcid": "",
+            "researcher_id": ""
+           }
+          ]
+         ],
+         "id": "pub.1122668740",
+         "journal": {
+          "id": "jour.1136447",
+          "title": "Nature Energy"
+         },
+         "pages": "1-8",
+         "title": "Energy requirements for decent living in India, Brazil and South Africa",
+         "type": "article",
+         "year": 2019
+        },
+        {
+         "author_affiliations": [
+          [
+           {
+            "affiliations": [
+             {
+              "name": "Joint Global Change Research Institute, Pacific Northwest National Laboratory, College Park, MD, USA"
+             }
+            ],
+            "corresponding": true,
+            "current_organization_id": "",
+            "first_name": "Gokul",
+            "last_name": "Iyer",
+            "orcid": "",
+            "researcher_id": ""
+           }
+          ]
+         ],
+         "id": "pub.1122666227",
+         "journal": {
+          "id": "jour.1136447",
+          "title": "Nature Energy"
+         },
+         "pages": "1-2",
+         "title": "A decent life",
+         "type": "article",
+         "year": 2019
+        },
+        {
+         "author_affiliations": [
+          [
+           {
+            "affiliations": [
+             {
+              "city": "Mount Pleasant",
+              "city_id": 5002714,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.253856.f",
+              "name": "Central Michigan University",
+              "state": "Michigan",
+              "state_code": "US-MI"
+             }
+            ],
+            "corresponding": true,
+            "current_organization_id": "",
+            "first_name": "Marcello",
+            "last_name": "Graziano",
+            "orcid": "",
+            "researcher_id": ""
+           }
+          ]
+         ],
+         "id": "pub.1122667833",
+         "journal": {
+          "id": "jour.1136447",
+          "title": "Nature Energy"
+         },
+         "pages": "1-2",
+         "title": "Participation is the fuel",
+         "type": "article",
+         "year": 2019
+        },
+        {
+         "author_affiliations": [
+          [
+           {
+            "affiliations": [
+             {
+              "city": "Jeddah",
+              "city_id": 105343,
+              "country": "Saudi Arabia",
+              "country_code": "SA",
+              "id": "grid.45672.32",
+              "name": "King Abdullah University of Science and Technology",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "",
+            "first_name": "Thomas G.",
+            "last_name": "Allen",
+            "orcid": "",
+            "researcher_id": ""
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Melbourne",
+              "city_id": 2158177,
+              "country": "Australia",
+              "country_code": "AU",
+              "id": "grid.1008.9",
+              "name": "University of Melbourne",
+              "state": "Victoria",
+              "state_code": "AU-VIC"
+             },
+             {
+              "city": "Berkeley",
+              "city_id": 5327684,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.47840.3f",
+              "name": "University of California, Berkeley",
+              "state": "California",
+              "state_code": "US-CA"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "",
+            "first_name": "James",
+            "last_name": "Bullock",
+            "orcid": "",
+            "researcher_id": ""
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Jeddah",
+              "city_id": 105343,
+              "country": "Saudi Arabia",
+              "country_code": "SA",
+              "id": "grid.45672.32",
+              "name": "King Abdullah University of Science and Technology",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "",
+            "first_name": "Xinbo",
+            "last_name": "Yang",
+            "orcid": "",
+            "researcher_id": ""
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Berkeley",
+              "city_id": 5327684,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.47840.3f",
+              "name": "University of California, Berkeley",
+              "state": "California",
+              "state_code": "US-CA"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.47840.3f",
+            "first_name": "Ali",
+            "last_name": "Javey",
+            "orcid": "",
+            "researcher_id": "ur.0664075604.09"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Jeddah",
+              "city_id": 105343,
+              "country": "Saudi Arabia",
+              "country_code": "SA",
+              "id": "grid.45672.32",
+              "name": "King Abdullah University of Science and Technology",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": true,
+            "current_organization_id": "grid.45672.32",
+            "first_name": "Stefaan",
+            "last_name": "De Wolf",
+            "orcid": "",
+            "researcher_id": "ur.01226541174.26"
+           }
+          ]
+         ],
+         "id": "pub.1121009525",
+         "issue": "11",
+         "journal": {
+          "id": "jour.1136447",
+          "title": "Nature Energy"
+         },
+         "pages": "914-928",
+         "title": "Passivating contacts for crystalline silicon solar cells",
+         "type": "article",
+         "volume": "4",
+         "year": 2019
+        },
+        {
+         "author_affiliations": [
+          [
+           {
+            "affiliations": [
+             {
+              "city": "Paris",
+              "city_id": 2988507,
+              "country": "France",
+              "country_code": "FR",
+              "id": "grid.410533.0",
+              "name": "Collège de France",
+              "state": null,
+              "state_code": null
+             },
+             {
+              "city": "Paris",
+              "city_id": 2988507,
+              "country": "France",
+              "country_code": "FR",
+              "id": "grid.462844.8",
+              "name": "Sorbonne University",
+              "state": null,
+              "state_code": null
+             },
+             {
+              "city": "Amiens",
+              "city_id": 3037854,
+              "country": "France",
+              "country_code": "FR",
+              "id": "grid.494528.6",
+              "name": "Research Network on Electrochemical Energy Storage",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.494528.6",
+            "first_name": "Sujoy",
+            "last_name": "Saha",
+            "orcid": "['0000-0001-7951-4845']",
+            "researcher_id": "ur.013654064464.94"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Paris",
+              "city_id": 2988507,
+              "country": "France",
+              "country_code": "FR",
+              "id": "grid.410533.0",
+              "name": "Collège de France",
+              "state": null,
+              "state_code": null
+             },
+             {
+              "city": "Paris",
+              "city_id": 2988507,
+              "country": "France",
+              "country_code": "FR",
+              "id": "grid.462844.8",
+              "name": "Sorbonne University",
+              "state": null,
+              "state_code": null
+             },
+             {
+              "city": "Amiens",
+              "city_id": 3037854,
+              "country": "France",
+              "country_code": "FR",
+              "id": "grid.494528.6",
+              "name": "Research Network on Electrochemical Energy Storage",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.462844.8",
+            "first_name": "Gaurav",
+            "last_name": "Assat",
+            "orcid": "['0000-0002-2176-155X']",
+            "researcher_id": "ur.0627640225.14"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Amiens",
+              "city_id": 3037854,
+              "country": "France",
+              "country_code": "FR",
+              "id": "grid.494528.6",
+              "name": "Research Network on Electrochemical Energy Storage",
+              "state": null,
+              "state_code": null
+             },
+             {
+              "city": "Montpellier",
+              "city_id": 2992166,
+              "country": "France",
+              "country_code": "FR",
+              "id": "grid.462034.7",
+              "name": "Institut Charles Gerhardt",
+              "state": null,
+              "state_code": null
+             },
+             {
+              "city": "Amiens",
+              "city_id": 3037854,
+              "country": "France",
+              "country_code": "FR",
+              "id": "grid.499244.6",
+              "name": "Alistore",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.462034.7",
+            "first_name": "Moulay Tahar",
+            "last_name": "Sougrati",
+            "orcid": "['0000-0003-3740-2807']",
+            "researcher_id": "ur.01052655144.35"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Amiens",
+              "city_id": 3037854,
+              "country": "France",
+              "country_code": "FR",
+              "id": "grid.494528.6",
+              "name": "Research Network on Electrochemical Energy Storage",
+              "state": null,
+              "state_code": null
+             },
+             {
+              "city": "Pau",
+              "city_id": 2988358,
+              "country": "France",
+              "country_code": "FR",
+              "id": "grid.5571.6",
+              "name": "University of Pau and Pays de l'Adour",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.494528.6",
+            "first_name": "Dominique",
+            "last_name": "Foix",
+            "orcid": "",
+            "researcher_id": "ur.0704305365.14"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Chicago",
+              "city_id": 4887398,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.185648.6",
+              "name": "University of Illinois at Chicago",
+              "state": "Illinois",
+              "state_code": "US-IL"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.185648.6",
+            "first_name": "Haifeng",
+            "last_name": "Li",
+            "orcid": "",
+            "researcher_id": "ur.014720073026.40"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Paris",
+              "city_id": 2988507,
+              "country": "France",
+              "country_code": "FR",
+              "id": "grid.410533.0",
+              "name": "Collège de France",
+              "state": null,
+              "state_code": null
+             },
+             {
+              "city": "Paris",
+              "city_id": 2988507,
+              "country": "France",
+              "country_code": "FR",
+              "id": "grid.462844.8",
+              "name": "Sorbonne University",
+              "state": null,
+              "state_code": null
+             },
+             {
+              "city": "Amiens",
+              "city_id": 3037854,
+              "country": "France",
+              "country_code": "FR",
+              "id": "grid.494528.6",
+              "name": "Research Network on Electrochemical Energy Storage",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.410533.0",
+            "first_name": "Jean",
+            "last_name": "Vergnet",
+            "orcid": "['0000-0003-2131-5960']",
+            "researcher_id": "ur.013507245330.90"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Paris",
+              "city_id": 2988507,
+              "country": "France",
+              "country_code": "FR",
+              "id": "grid.410533.0",
+              "name": "Collège de France",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "",
+            "first_name": "Soma",
+            "last_name": "Turi",
+            "orcid": "",
+            "researcher_id": ""
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Berkeley",
+              "city_id": 5327684,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.184769.5",
+              "name": "Lawrence Berkeley National Laboratory",
+              "state": "California",
+              "state_code": "US-CA"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "",
+            "first_name": "Yang",
+            "last_name": "Ha",
+            "orcid": "",
+            "researcher_id": ""
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Berkeley",
+              "city_id": 5327684,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.184769.5",
+              "name": "Lawrence Berkeley National Laboratory",
+              "state": "California",
+              "state_code": "US-CA"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.184769.5",
+            "first_name": "Wanli",
+            "last_name": "Yang",
+            "orcid": "['0000-0003-0666-8063']",
+            "researcher_id": "ur.01260151150.13"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Chicago",
+              "city_id": 4887398,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.185648.6",
+              "name": "University of Illinois at Chicago",
+              "state": "Illinois",
+              "state_code": "US-IL"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.185648.6",
+            "first_name": "Jordi",
+            "last_name": "Cabana",
+            "orcid": "['0000-0002-2353-5986']",
+            "researcher_id": "ur.01206227110.97"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Paris",
+              "city_id": 2988507,
+              "country": "France",
+              "country_code": "FR",
+              "id": "grid.410533.0",
+              "name": "Collège de France",
+              "state": null,
+              "state_code": null
+             },
+             {
+              "city": "Paris",
+              "city_id": 2988507,
+              "country": "France",
+              "country_code": "FR",
+              "id": "grid.462844.8",
+              "name": "Sorbonne University",
+              "state": null,
+              "state_code": null
+             },
+             {
+              "city": "Amiens",
+              "city_id": 3037854,
+              "country": "France",
+              "country_code": "FR",
+              "id": "grid.494528.6",
+              "name": "Research Network on Electrochemical Energy Storage",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.462844.8",
+            "first_name": "Gwenaëlle",
+            "last_name": "Rousse",
+            "orcid": "['0000-0001-8877-0015']",
+            "researcher_id": "ur.0707044675.37"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Skolkovo",
+              "city_id": 492396,
+              "country": "Russia",
+              "country_code": "RU",
+              "id": "grid.454320.4",
+              "name": "Skolkovo Institute of Science and Technology",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.454320.4",
+            "first_name": "Artem M.",
+            "last_name": "Abakumov",
+            "orcid": "",
+            "researcher_id": "ur.01246706707.42"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Paris",
+              "city_id": 2988507,
+              "country": "France",
+              "country_code": "FR",
+              "id": "grid.410533.0",
+              "name": "Collège de France",
+              "state": null,
+              "state_code": null
+             },
+             {
+              "city": "Paris",
+              "city_id": 2988507,
+              "country": "France",
+              "country_code": "FR",
+              "id": "grid.462844.8",
+              "name": "Sorbonne University",
+              "state": null,
+              "state_code": null
+             },
+             {
+              "city": "Amiens",
+              "city_id": 3037854,
+              "country": "France",
+              "country_code": "FR",
+              "id": "grid.494528.6",
+              "name": "Research Network on Electrochemical Energy Storage",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": true,
+            "current_organization_id": "grid.410533.0",
+            "first_name": "Jean-Marie",
+            "last_name": "Tarascon",
+            "orcid": "",
+            "researcher_id": "ur.01364322774.51"
+           }
+          ]
+         ],
+         "id": "pub.1122558306",
+         "issue": "11",
+         "journal": {
+          "id": "jour.1136447",
+          "title": "Nature Energy"
+         },
+         "pages": "977-987",
+         "title": "Exploring the bottlenecks of anionic redox in Li-rich layered sulfides",
+         "type": "article",
+         "volume": "4",
+         "year": 2019
+        },
+        {
+         "author_affiliations": [
+          [
+           {
+            "affiliations": [
+             {
+              "city": "Evanston",
+              "city_id": 4891382,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.16753.36",
+              "name": "Northwestern University",
+              "state": "Illinois",
+              "state_code": "US-IL"
+             },
+             {
+              "city": "Washington D.C.",
+              "city_id": 4140963,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.431371.3",
+              "name": "Federal Energy Regulatory Commission",
+              "state": "District of Columbia",
+              "state_code": "US-DC"
+             }
+            ],
+            "corresponding": true,
+            "current_organization_id": "grid.431371.3",
+            "first_name": "Jacob",
+            "last_name": "Mays",
+            "orcid": "",
+            "researcher_id": "ur.012436726213.65"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Evanston",
+              "city_id": 4891382,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.16753.36",
+              "name": "Northwestern University",
+              "state": "Illinois",
+              "state_code": "US-IL"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.16753.36",
+            "first_name": "David P.",
+            "last_name": "Morton",
+            "orcid": "",
+            "researcher_id": "ur.014627247613.49"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Washington D.C.",
+              "city_id": 4140963,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.431371.3",
+              "name": "Federal Energy Regulatory Commission",
+              "state": "District of Columbia",
+              "state_code": "US-DC"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.431371.3",
+            "first_name": "Richard P.",
+            "last_name": "O’Neill",
+            "orcid": "",
+            "researcher_id": "ur.011031054741.85"
+           }
+          ]
+         ],
+         "id": "pub.1122142906",
+         "issue": "11",
+         "journal": {
+          "id": "jour.1136447",
+          "title": "Nature Energy"
+         },
+         "pages": "948-956",
+         "title": "Asymmetric risk and fuel neutrality in electricity capacity markets",
+         "type": "article",
+         "volume": "4",
+         "year": 2019
+        },
+        {
+         "author_affiliations": [
+          [
+           {
+            "affiliations": [
+             {
+              "name": "Nature Energy"
+             }
+            ],
+            "corresponding": true,
+            "current_organization_id": "",
+            "first_name": "Fouad",
+            "last_name": "Khan",
+            "orcid": "",
+            "researcher_id": "ur.07754705420.12"
+           }
+          ]
+         ],
+         "id": "pub.1122548330",
+         "issue": "11",
+         "journal": {
+          "id": "jour.1136447",
+          "title": "Nature Energy"
+         },
+         "pages": "901-901",
+         "title": "Risky business",
+         "type": "article",
+         "volume": "4",
+         "year": 2019
+        },
+        {
+         "author_affiliations": [
+          [
+           {
+            "affiliations": [
+             {
+              "city": "Québec",
+              "city_id": 6325494,
+              "country": "Canada",
+              "country_code": "CA",
+              "id": "grid.418084.1",
+              "name": "Institut National de la Recherche Scientifique",
+              "state": "Quebec",
+              "state_code": "CA-QC"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.418084.1",
+            "first_name": "Daniele",
+            "last_name": "Benetti",
+            "orcid": "['0000-0001-6665-3686']",
+            "researcher_id": "ur.012046636241.23"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Québec",
+              "city_id": 6325494,
+              "country": "Canada",
+              "country_code": "CA",
+              "id": "grid.418084.1",
+              "name": "Institut National de la Recherche Scientifique",
+              "state": "Quebec",
+              "state_code": "CA-QC"
+             }
+            ],
+            "corresponding": true,
+            "current_organization_id": "grid.418084.1",
+            "first_name": "Federico",
+            "last_name": "Rosei",
+            "orcid": "['0000-0001-8479-6955']",
+            "researcher_id": "ur.01177640466.45"
+           }
+          ]
+         ],
+         "id": "pub.1122548435",
+         "issue": "11",
+         "journal": {
+          "id": "jour.1136447",
+          "title": "Nature Energy"
+         },
+         "pages": "910-911",
+         "title": "A bridge for charge carriers",
+         "type": "article",
+         "volume": "4",
+         "year": 2019
+        },
+        {
+         "author_affiliations": [
+          [
+           {
+            "affiliations": [
+             {
+              "city": "Evanston",
+              "city_id": 4891382,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.16753.36",
+              "name": "Northwestern University",
+              "state": "Illinois",
+              "state_code": "US-IL"
+             },
+             {
+              "city": "Washington D.C.",
+              "city_id": 4140963,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.431371.3",
+              "name": "Federal Energy Regulatory Commission",
+              "state": "District of Columbia",
+              "state_code": "US-DC"
+             }
+            ],
+            "corresponding": true,
+            "current_organization_id": "grid.431371.3",
+            "first_name": "Jacob",
+            "last_name": "Mays",
+            "orcid": "",
+            "researcher_id": "ur.012436726213.65"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Evanston",
+              "city_id": 4891382,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.16753.36",
+              "name": "Northwestern University",
+              "state": "Illinois",
+              "state_code": "US-IL"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.16753.36",
+            "first_name": "David P.",
+            "last_name": "Morton",
+            "orcid": "",
+            "researcher_id": "ur.014627247613.49"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Washington D.C.",
+              "city_id": 4140963,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.431371.3",
+              "name": "Federal Energy Regulatory Commission",
+              "state": "District of Columbia",
+              "state_code": "US-DC"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.431371.3",
+            "first_name": "Richard P.",
+            "last_name": "O’Neill",
+            "orcid": "",
+            "researcher_id": "ur.011031054741.85"
+           }
+          ]
+         ],
+         "id": "pub.1122551372",
+         "issue": "11",
+         "journal": {
+          "id": "jour.1136447",
+          "title": "Nature Energy"
+         },
+         "pages": "912-913",
+         "title": "Decarbonizing electricity requires re-evaluating capacity mechanisms",
+         "type": "article",
+         "volume": "4",
+         "year": 2019
+        },
+        {
+         "author_affiliations": [
+          [
+           {
+            "affiliations": [
+             {
+              "city": "Beijing",
+              "city_id": 1816670,
+              "country": "China",
+              "country_code": "CN",
+              "id": "grid.48166.3d",
+              "name": "Beijing University of Chemical Technology",
+              "state": null,
+              "state_code": null
+             },
+             {
+              "city": "Beijing",
+              "city_id": 1816670,
+              "country": "China",
+              "country_code": "CN",
+              "id": "grid.64939.31",
+              "name": "Beihang University",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.64939.31",
+            "first_name": "Ling",
+            "last_name": "Tang",
+            "orcid": "['0000-0002-2522-9675']",
+            "researcher_id": "ur.013313730165.27"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Beijing",
+              "city_id": 1816670,
+              "country": "China",
+              "country_code": "CN",
+              "id": "grid.419900.5",
+              "name": "Ministry of Environmental Protection",
+              "state": null,
+              "state_code": null
+             },
+             {
+              "city": "Shijiazhuang",
+              "city_id": 1795270,
+              "country": "China",
+              "country_code": "CN",
+              "id": "grid.462323.2",
+              "name": "Hebei University of Science and Technology",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "",
+            "first_name": "Jiabao",
+            "last_name": "Qu",
+            "orcid": "",
+            "researcher_id": ""
+           },
+           {
+            "affiliations": [
+             {
+              "city": "London",
+              "city_id": 2643743,
+              "country": "United Kingdom",
+              "country_code": "GB",
+              "id": "grid.83440.3b",
+              "name": "University College London",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": true,
+            "current_organization_id": "grid.83440.3b",
+            "first_name": "Zhifu",
+            "last_name": "Mi",
+            "orcid": "['0000-0001-8106-0694']",
+            "researcher_id": "ur.012005022175.46"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Beijing",
+              "city_id": 1816670,
+              "country": "China",
+              "country_code": "CN",
+              "id": "grid.419900.5",
+              "name": "Ministry of Environmental Protection",
+              "state": null,
+              "state_code": null
+             },
+             {
+              "city": "Beijing",
+              "city_id": 1816670,
+              "country": "China",
+              "country_code": "CN",
+              "id": "grid.69775.3a",
+              "name": "University of Science and Technology Beijing",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": true,
+            "current_organization_id": "grid.419900.5",
+            "first_name": "Xin",
+            "last_name": "Bo",
+            "orcid": "",
+            "researcher_id": "ur.01104606701.76"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Xi'an",
+              "city_id": 1790630,
+              "country": "China",
+              "country_code": "CN",
+              "id": "grid.43169.39",
+              "name": "Xi'an Jiaotong University",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "",
+            "first_name": "Xiangyu",
+            "last_name": "Chang",
+            "orcid": "",
+            "researcher_id": ""
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Cambridge",
+              "city_id": 2653941,
+              "country": "United Kingdom",
+              "country_code": "GB",
+              "id": "grid.5335.0",
+              "name": "University of Cambridge",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.5335.0",
+            "first_name": "Laura Diaz",
+            "last_name": "Anadon",
+            "orcid": "",
+            "researcher_id": "ur.07626264253.55"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Beijing",
+              "city_id": 1816670,
+              "country": "China",
+              "country_code": "CN",
+              "id": "grid.458463.8",
+              "name": "Academy of Mathematics and Systems Science",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.458463.8",
+            "first_name": "Shouyang",
+            "last_name": "Wang",
+            "orcid": "",
+            "researcher_id": "ur.012712520463.31"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Beijing",
+              "city_id": 1816670,
+              "country": "China",
+              "country_code": "CN",
+              "id": "grid.64939.31",
+              "name": "Beihang University",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "",
+            "first_name": "Xiaoda",
+            "last_name": "Xue",
+            "orcid": "",
+            "researcher_id": ""
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Beijing",
+              "city_id": 1816670,
+              "country": "China",
+              "country_code": "CN",
+              "id": "grid.419900.5",
+              "name": "Ministry of Environmental Protection",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "",
+            "first_name": "Shibei",
+            "last_name": "Li",
+            "orcid": "",
+            "researcher_id": ""
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Beijing",
+              "city_id": 1816670,
+              "country": "China",
+              "country_code": "CN",
+              "id": "grid.464219.c",
+              "name": "China National Environmental Monitoring Center",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "",
+            "first_name": "Xin",
+            "last_name": "Wang",
+            "orcid": "",
+            "researcher_id": ""
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Beijing",
+              "city_id": 1816670,
+              "country": "China",
+              "country_code": "CN",
+              "id": "grid.419900.5",
+              "name": "Ministry of Environmental Protection",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "",
+            "first_name": "Xiaohong",
+            "last_name": "Zhao",
+            "orcid": "",
+            "researcher_id": ""
+           }
+          ]
+         ],
+         "id": "pub.1121531291",
+         "issue": "11",
+         "journal": {
+          "id": "jour.1136447",
+          "title": "Nature Energy"
+         },
+         "pages": "929-938",
+         "title": "Substantial emission reductions from Chinese power plants after the introduction of ultra-low emissions standards",
+         "type": "article",
+         "volume": "4",
+         "year": 2019
+        },
+        {
+         "author_affiliations": [
+          [
+           {
+            "affiliations": [
+             {
+              "city": "Essen",
+              "city_id": 2928810,
+              "country": "Germany",
+              "country_code": "DE",
+              "id": "grid.5718.b",
+              "name": "University of Duisburg-Essen",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": true,
+            "current_organization_id": "",
+            "first_name": "Christoph",
+            "last_name": "Weber",
+            "orcid": "",
+            "researcher_id": ""
+           }
+          ]
+         ],
+         "id": "pub.1122141114",
+         "issue": "11",
+         "journal": {
+          "id": "jour.1136447",
+          "title": "Nature Energy"
+         },
+         "pages": "906-907",
+         "title": "Risky being green",
+         "type": "article",
+         "volume": "4",
+         "year": 2019
+        },
+        {
+         "author_affiliations": [
+          [
+           {
+            "affiliations": [
+             {
+              "city": "Cambridge",
+              "city_id": 4931972,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.116068.8",
+              "name": "Massachusetts Institute of Technology",
+              "state": "Massachusetts",
+              "state_code": "US-MA"
+             }
+            ],
+            "corresponding": true,
+            "current_organization_id": "grid.116068.8",
+            "first_name": "Valerie J.",
+            "last_name": "Karplus",
+            "orcid": "",
+            "researcher_id": "ur.010407620113.30"
+           }
+          ]
+         ],
+         "id": "pub.1121555976",
+         "issue": "11",
+         "journal": {
+          "id": "jour.1136447",
+          "title": "Nature Energy"
+         },
+         "pages": "904-905",
+         "title": "Clearing the air in China",
+         "type": "article",
+         "volume": "4",
+         "year": 2019
+        },
+        {
+         "author_affiliations": [
+          [
+           {
+            "affiliations": [
+             {
+              "city": "Lemont",
+              "city_id": 4899581,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.187073.a",
+              "name": "Argonne National Laboratory",
+              "state": "Illinois",
+              "state_code": "US-IL"
+             },
+             {
+              "city": "Waterloo",
+              "city_id": 6176823,
+              "country": "Canada",
+              "country_code": "CA",
+              "id": "grid.46078.3d",
+              "name": "University of Waterloo",
+              "state": "Ontario",
+              "state_code": "CA-ON"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.187073.a",
+            "first_name": "Yimin A.",
+            "last_name": "Wu",
+            "orcid": "['0000-0002-3807-8431']",
+            "researcher_id": "ur.0643751416.67"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Lemont",
+              "city_id": 4899581,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.187073.a",
+              "name": "Argonne National Laboratory",
+              "state": "Illinois",
+              "state_code": "US-IL"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.187073.a",
+            "first_name": "Ian",
+            "last_name": "McNulty",
+            "orcid": "",
+            "researcher_id": "ur.01014075761.40"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Lemont",
+              "city_id": 4899581,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.187073.a",
+              "name": "Argonne National Laboratory",
+              "state": "Illinois",
+              "state_code": "US-IL"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.187073.a",
+            "first_name": "Cong",
+            "last_name": "Liu",
+            "orcid": "['0000-0002-2145-5034']",
+            "researcher_id": "ur.0576406746.61"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Lemont",
+              "city_id": 4899581,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.187073.a",
+              "name": "Argonne National Laboratory",
+              "state": "Illinois",
+              "state_code": "US-IL"
+             },
+             {
+              "city": "Northridge",
+              "city_id": 5377985,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.253563.4",
+              "name": "California State University, Northridge",
+              "state": "California",
+              "state_code": "US-CA"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.253563.4",
+            "first_name": "Kah Chun",
+            "last_name": "Lau",
+            "orcid": "",
+            "researcher_id": "ur.01244767475.53"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Hong Kong",
+              "city_id": 1819729,
+              "country": "China",
+              "country_code": "CN",
+              "id": "grid.35030.35",
+              "name": "City University of Hong Kong",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.35030.35",
+            "first_name": "Qi",
+            "last_name": "Liu",
+            "orcid": "['0000-0003-4879-1537']",
+            "researcher_id": "ur.015103147364.72"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Lemont",
+              "city_id": 4899581,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.187073.a",
+              "name": "Argonne National Laboratory",
+              "state": "Illinois",
+              "state_code": "US-IL"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.187073.a",
+            "first_name": "Arvydas P.",
+            "last_name": "Paulikas",
+            "orcid": "",
+            "researcher_id": "ur.012634770055.61"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Lemont",
+              "city_id": 4899581,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.187073.a",
+              "name": "Argonne National Laboratory",
+              "state": "Illinois",
+              "state_code": "US-IL"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "",
+            "first_name": "Cheng-Jun",
+            "last_name": "Sun",
+            "orcid": "",
+            "researcher_id": ""
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Lemont",
+              "city_id": 4899581,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.187073.a",
+              "name": "Argonne National Laboratory",
+              "state": "Illinois",
+              "state_code": "US-IL"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.187073.a",
+            "first_name": "Zhonghou",
+            "last_name": "Cai",
+            "orcid": "",
+            "researcher_id": "ur.01206406722.75"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Lemont",
+              "city_id": 4899581,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.187073.a",
+              "name": "Argonne National Laboratory",
+              "state": "Illinois",
+              "state_code": "US-IL"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.187073.a",
+            "first_name": "Jeffrey R.",
+            "last_name": "Guest",
+            "orcid": "['0000-0002-9756-8801']",
+            "researcher_id": "ur.01010154463.50"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Lemont",
+              "city_id": 4899581,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.187073.a",
+              "name": "Argonne National Laboratory",
+              "state": "Illinois",
+              "state_code": "US-IL"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.187073.a",
+            "first_name": "Yang",
+            "last_name": "Ren",
+            "orcid": "['0000-0001-9831-6035']",
+            "researcher_id": "ur.01135671204.12"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Lemont",
+              "city_id": 4899581,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.187073.a",
+              "name": "Argonne National Laboratory",
+              "state": "Illinois",
+              "state_code": "US-IL"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.187073.a",
+            "first_name": "Vojislav",
+            "last_name": "Stamenkovic",
+            "orcid": "",
+            "researcher_id": "ur.0657060565.03"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Lemont",
+              "city_id": 4899581,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.187073.a",
+              "name": "Argonne National Laboratory",
+              "state": "Illinois",
+              "state_code": "US-IL"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.187073.a",
+            "first_name": "Larry A.",
+            "last_name": "Curtiss",
+            "orcid": "",
+            "researcher_id": "ur.01276264006.41"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Lemont",
+              "city_id": 4899581,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.187073.a",
+              "name": "Argonne National Laboratory",
+              "state": "Illinois",
+              "state_code": "US-IL"
+             }
+            ],
+            "corresponding": true,
+            "current_organization_id": "grid.187073.a",
+            "first_name": "Yuzi",
+            "last_name": "Liu",
+            "orcid": "['0000-0002-8733-1683']",
+            "researcher_id": "ur.0704037320.25"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Lemont",
+              "city_id": 4899581,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.187073.a",
+              "name": "Argonne National Laboratory",
+              "state": "Illinois",
+              "state_code": "US-IL"
+             }
+            ],
+            "corresponding": true,
+            "current_organization_id": "grid.187073.a",
+            "first_name": "Tijana",
+            "last_name": "Rajh",
+            "orcid": "",
+            "researcher_id": "ur.0756635446.70"
+           }
+          ]
+         ],
+         "id": "pub.1122297663",
+         "issue": "11",
+         "journal": {
+          "id": "jour.1136447",
+          "title": "Nature Energy"
+         },
+         "pages": "957-968",
+         "title": "Facet-dependent active sites of a single Cu2O particle photocatalyst for CO2 reduction to methanol",
+         "type": "article",
+         "volume": "4",
+         "year": 2019
+        },
+        {
+         "author_affiliations": [
+          [
+           {
+            "affiliations": [
+             {
+              "city": "Exeter",
+              "city_id": 2649808,
+              "country": "United Kingdom",
+              "country_code": "GB",
+              "id": "grid.8391.3",
+              "name": "University of Exeter",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": true,
+            "current_organization_id": "grid.8391.3",
+            "first_name": "Patrick",
+            "last_name": "Devine-Wright",
+            "orcid": "['0000-0001-5768-4835']",
+            "researcher_id": "ur.016466264073.49"
+           }
+          ]
+         ],
+         "id": "pub.1120764436",
+         "issue": "11",
+         "journal": {
+          "id": "jour.1136447",
+          "title": "Nature Energy"
+         },
+         "pages": "894-896",
+         "title": "Community versus local energy in a context of climate emergency",
+         "type": "article",
+         "volume": "4",
+         "year": 2019
+        },
+        {
+         "id": "pub.1122544272",
+         "issue": "11",
+         "journal": {
+          "id": "jour.1136447",
+          "title": "Nature Energy"
+         },
+         "pages": "893-893",
+         "title": "Battery revolution to evolution",
+         "type": "article",
+         "volume": "4",
+         "year": 2019
+        },
+        {
+         "author_affiliations": [
+          [
+           {
+            "affiliations": [
+             {
+              "name": "Mercator Research Institute on Global Commons and Climate Change (MCC) gGmbH, Berlin, Germany"
+             },
+             {
+              "city": "Potsdam",
+              "city_id": 2852458,
+              "country": "Germany",
+              "country_code": "DE",
+              "id": "grid.11348.3f",
+              "name": "University of Potsdam",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.11348.3f",
+            "first_name": "Matthias",
+            "last_name": "Kalkuhl",
+            "orcid": "['0000-0003-4797-6628']",
+            "researcher_id": "ur.015050375633.61"
+           },
+           {
+            "affiliations": [
+             {
+              "name": "Mercator Research Institute on Global Commons and Climate Change (MCC) gGmbH, Berlin, Germany"
+             },
+             {
+              "city": "Potsdam",
+              "city_id": 2852458,
+              "country": "Germany",
+              "country_code": "DE",
+              "id": "grid.4556.2",
+              "name": "Potsdam Institute for Climate Impact Research",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": true,
+            "current_organization_id": "grid.6734.6",
+            "first_name": "Jan Christoph",
+            "last_name": "Steckel",
+            "orcid": "['0000-0002-5325-9214']",
+            "researcher_id": "ur.013324634362.10"
+           },
+           {
+            "affiliations": [
+             {
+              "name": "Mercator Research Institute on Global Commons and Climate Change (MCC) gGmbH, Berlin, Germany"
+             },
+             {
+              "city": "Berlin",
+              "city_id": 2950159,
+              "country": "Germany",
+              "country_code": "DE",
+              "id": "grid.6734.6",
+              "name": "Technical University of Berlin",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "",
+            "first_name": "Lorenzo",
+            "last_name": "Montrone",
+            "orcid": "",
+            "researcher_id": ""
+           },
+           {
+            "affiliations": [
+             {
+              "name": "Mercator Research Institute on Global Commons and Climate Change (MCC) gGmbH, Berlin, Germany"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.4556.2",
+            "first_name": "Michael",
+            "last_name": "Jakob",
+            "orcid": "['0000-0001-5005-3563']",
+            "researcher_id": "ur.015041301143.31"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Essen",
+              "city_id": 2928810,
+              "country": "Germany",
+              "country_code": "DE",
+              "id": "grid.437257.0",
+              "name": "Rheinisch-Westfälisches Institut für Wirtschaftsforschung",
+              "state": null,
+              "state_code": null
+             },
+             {
+              "city": "Passau",
+              "city_id": 2855328,
+              "country": "Germany",
+              "country_code": "DE",
+              "id": "grid.11046.32",
+              "name": "University of Passau",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.11046.32",
+            "first_name": "Jörg",
+            "last_name": "Peters",
+            "orcid": "['0000-0002-7835-8745']",
+            "researcher_id": "ur.0766647555.84"
+           },
+           {
+            "affiliations": [
+             {
+              "name": "Mercator Research Institute on Global Commons and Climate Change (MCC) gGmbH, Berlin, Germany"
+             },
+             {
+              "city": "Potsdam",
+              "city_id": 2852458,
+              "country": "Germany",
+              "country_code": "DE",
+              "id": "grid.4556.2",
+              "name": "Potsdam Institute for Climate Impact Research",
+              "state": null,
+              "state_code": null
+             },
+             {
+              "city": "Berlin",
+              "city_id": 2950159,
+              "country": "Germany",
+              "country_code": "DE",
+              "id": "grid.6734.6",
+              "name": "Technical University of Berlin",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.6734.6",
+            "first_name": "Ottmar",
+            "last_name": "Edenhofer",
+            "orcid": "",
+            "researcher_id": "ur.0707521073.23"
+           }
+          ]
+         ],
+         "id": "pub.1122558635",
+         "issue": "11",
+         "journal": {
+          "id": "jour.1136447",
+          "title": "Nature Energy"
+         },
+         "pages": "897-900",
+         "title": "Successful coal phase-out requires new models of development",
+         "type": "article",
+         "volume": "4",
+         "year": 2019
+        },
+        {
+         "author_affiliations": [
+          [
+           {
+            "affiliations": [
+             {
+              "city": "Toronto",
+              "city_id": 6167865,
+              "country": "Canada",
+              "country_code": "CA",
+              "id": "grid.17063.33",
+              "name": "University of Toronto",
+              "state": "Ontario",
+              "state_code": "CA-ON"
+             },
+             {
+              "city": "Daejeon",
+              "city_id": 1835235,
+              "country": "South Korea",
+              "country_code": "KR",
+              "id": "grid.37172.30",
+              "name": "Korea Advanced Institute of Science and Technology",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.17063.33",
+            "first_name": "Se-Woong",
+            "last_name": "Baek",
+            "orcid": "['0000-0002-5197-0598']",
+            "researcher_id": "ur.0741740770.47"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Evanston",
+              "city_id": 4891382,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.16753.36",
+              "name": "Northwestern University",
+              "state": "Illinois",
+              "state_code": "US-IL"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.16753.36",
+            "first_name": "Sunhong",
+            "last_name": "Jun",
+            "orcid": "",
+            "researcher_id": "ur.013760502746.53"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Daejeon",
+              "city_id": 1835235,
+              "country": "South Korea",
+              "country_code": "KR",
+              "id": "grid.37172.30",
+              "name": "Korea Advanced Institute of Science and Technology",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "",
+            "first_name": "Byeongsu",
+            "last_name": "Kim",
+            "orcid": "",
+            "researcher_id": ""
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Toronto",
+              "city_id": 6167865,
+              "country": "Canada",
+              "country_code": "CA",
+              "id": "grid.17063.33",
+              "name": "University of Toronto",
+              "state": "Ontario",
+              "state_code": "CA-ON"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.17063.33",
+            "first_name": "Andrew H.",
+            "last_name": "Proppe",
+            "orcid": "",
+            "researcher_id": "ur.010520222051.39"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Toronto",
+              "city_id": 6167865,
+              "country": "Canada",
+              "country_code": "CA",
+              "id": "grid.17063.33",
+              "name": "University of Toronto",
+              "state": "Ontario",
+              "state_code": "CA-ON"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.17063.33",
+            "first_name": "Olivier",
+            "last_name": "Ouellette",
+            "orcid": "",
+            "researcher_id": "ur.014121263077.03"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Toronto",
+              "city_id": 6167865,
+              "country": "Canada",
+              "country_code": "CA",
+              "id": "grid.17063.33",
+              "name": "University of Toronto",
+              "state": "Ontario",
+              "state_code": "CA-ON"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.17063.33",
+            "first_name": "Oleksandr",
+            "last_name": "Voznyy",
+            "orcid": "['0000-0002-8656-5074']",
+            "researcher_id": "ur.01123120053.33"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Daejeon",
+              "city_id": 1835235,
+              "country": "South Korea",
+              "country_code": "KR",
+              "id": "grid.37172.30",
+              "name": "Korea Advanced Institute of Science and Technology",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.37172.30",
+            "first_name": "Changjo",
+            "last_name": "Kim",
+            "orcid": "",
+            "researcher_id": "ur.012636037624.85"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Daejeon",
+              "city_id": 1835235,
+              "country": "South Korea",
+              "country_code": "KR",
+              "id": "grid.37172.30",
+              "name": "Korea Advanced Institute of Science and Technology",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "",
+            "first_name": "Junho",
+            "last_name": "Kim",
+            "orcid": "",
+            "researcher_id": ""
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Toronto",
+              "city_id": 6167865,
+              "country": "Canada",
+              "country_code": "CA",
+              "id": "grid.17063.33",
+              "name": "University of Toronto",
+              "state": "Ontario",
+              "state_code": "CA-ON"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.17063.33",
+            "first_name": "Grant",
+            "last_name": "Walters",
+            "orcid": "",
+            "researcher_id": "ur.01017536417.24"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Seoul",
+              "city_id": 1835848,
+              "country": "South Korea",
+              "country_code": "KR",
+              "id": "grid.264381.a",
+              "name": "Sungkyunkwan University",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.410901.d",
+            "first_name": "Jung Hoon",
+            "last_name": "Song",
+            "orcid": "",
+            "researcher_id": "ur.01257416671.94"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Seoul",
+              "city_id": 1835848,
+              "country": "South Korea",
+              "country_code": "KR",
+              "id": "grid.264381.a",
+              "name": "Sungkyunkwan University",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.410901.d",
+            "first_name": "Sohee",
+            "last_name": "Jeong",
+            "orcid": "['0000-0002-9863-1374']",
+            "researcher_id": "ur.0602330407.10"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Seoul",
+              "city_id": 1835848,
+              "country": "South Korea",
+              "country_code": "KR",
+              "id": "grid.264381.a",
+              "name": "Sungkyunkwan University",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.264381.a",
+            "first_name": "Hye Ryung",
+            "last_name": "Byun",
+            "orcid": "",
+            "researcher_id": "ur.016645577763.09"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Seoul",
+              "city_id": 1835848,
+              "country": "South Korea",
+              "country_code": "KR",
+              "id": "grid.264381.a",
+              "name": "Sungkyunkwan University",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.264381.a",
+            "first_name": "Mun Seok",
+            "last_name": "Jeong",
+            "orcid": "['0000-0002-7019-8089']",
+            "researcher_id": "ur.0642211230.26"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Toronto",
+              "city_id": 6167865,
+              "country": "Canada",
+              "country_code": "CA",
+              "id": "grid.17063.33",
+              "name": "University of Toronto",
+              "state": "Ontario",
+              "state_code": "CA-ON"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.17063.33",
+            "first_name": "Sjoerd",
+            "last_name": "Hoogland",
+            "orcid": "['0000-0002-3099-585X']",
+            "researcher_id": "ur.01166325153.15"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Toronto",
+              "city_id": 6167865,
+              "country": "Canada",
+              "country_code": "CA",
+              "id": "grid.17063.33",
+              "name": "University of Toronto",
+              "state": "Ontario",
+              "state_code": "CA-ON"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.17063.33",
+            "first_name": "F. Pelayo",
+            "last_name": "García de Arquer",
+            "orcid": "['0000-0003-2422-6234']",
+            "researcher_id": "ur.0752365422.23"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Toronto",
+              "city_id": 6167865,
+              "country": "Canada",
+              "country_code": "CA",
+              "id": "grid.17063.33",
+              "name": "University of Toronto",
+              "state": "Ontario",
+              "state_code": "CA-ON"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.17063.33",
+            "first_name": "Shana O.",
+            "last_name": "Kelley",
+            "orcid": "['0000-0003-3360-5359']",
+            "researcher_id": "ur.01122766363.58"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Daejeon",
+              "city_id": 1835235,
+              "country": "South Korea",
+              "country_code": "KR",
+              "id": "grid.37172.30",
+              "name": "Korea Advanced Institute of Science and Technology",
+              "state": null,
+              "state_code": null
+             }
+            ],
+            "corresponding": true,
+            "current_organization_id": "grid.37172.30",
+            "first_name": "Jung-Yong",
+            "last_name": "Lee",
+            "orcid": "['0000-0002-5347-8230']",
+            "researcher_id": "ur.01015072742.38"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Toronto",
+              "city_id": 6167865,
+              "country": "Canada",
+              "country_code": "CA",
+              "id": "grid.17063.33",
+              "name": "University of Toronto",
+              "state": "Ontario",
+              "state_code": "CA-ON"
+             }
+            ],
+            "corresponding": true,
+            "current_organization_id": "grid.17063.33",
+            "first_name": "Edward H.",
+            "last_name": "Sargent",
+            "orcid": "",
+            "researcher_id": "ur.01271450314.04"
+           }
+          ]
+         ],
+         "id": "pub.1122554130",
+         "issue": "11",
+         "journal": {
+          "id": "jour.1136447",
+          "title": "Nature Energy"
+         },
+         "pages": "969-976",
+         "title": "Efficient hybrid colloidal quantum dot/organic solar cells mediated by near-infrared sensitizing small molecules",
+         "type": "article",
+         "volume": "4",
+         "year": 2019
+        },
+        {
+         "author_affiliations": [
+          [
+           {
+            "affiliations": [
+             {
+              "name": "Nature Energy"
+             }
+            ],
+            "corresponding": true,
+            "current_organization_id": "",
+            "first_name": "Jenn",
+            "last_name": "Richler",
+            "orcid": "",
+            "researcher_id": "ur.013353267115.79"
+           }
+          ]
+         ],
+         "id": "pub.1122551148",
+         "issue": "11",
+         "journal": {
+          "id": "jour.1136447",
+          "title": "Nature Energy"
+         },
+         "pages": "903-903",
+         "title": "Decommissioning discourse",
+         "type": "article",
+         "volume": "4",
+         "year": 2019
+        },
+        {
+         "author_affiliations": [
+          [
+           {
+            "affiliations": [
+             {
+              "city": "Stanford",
+              "city_id": 5398563,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.168010.e",
+              "name": "Stanford University",
+              "state": "California",
+              "state_code": "US-CA"
+             },
+             {
+              "city": "Golden",
+              "city_id": 5423294,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.419357.d",
+              "name": "National Renewable Energy Laboratory",
+              "state": "Colorado",
+              "state_code": "US-CO"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.168010.e",
+            "first_name": "Rohit",
+            "last_name": "Prasanna",
+            "orcid": "",
+            "researcher_id": "ur.016153676713.32"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Stanford",
+              "city_id": 5398563,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.168010.e",
+              "name": "Stanford University",
+              "state": "California",
+              "state_code": "US-CA"
+             },
+             {
+              "city": "Golden",
+              "city_id": 5423294,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.419357.d",
+              "name": "National Renewable Energy Laboratory",
+              "state": "Colorado",
+              "state_code": "US-CO"
+             },
+             {
+              "name": "Swift Solar, San Carlos, CA, USA"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "",
+            "first_name": "Tomas",
+            "last_name": "Leijtens",
+            "orcid": "",
+            "researcher_id": ""
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Golden",
+              "city_id": 5423294,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.419357.d",
+              "name": "National Renewable Energy Laboratory",
+              "state": "Colorado",
+              "state_code": "US-CO"
+             },
+             {
+              "city": "Boulder",
+              "city_id": 5574991,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.266190.a",
+              "name": "University of Colorado Boulder",
+              "state": "Colorado",
+              "state_code": "US-CO"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "",
+            "first_name": "Sean P.",
+            "last_name": "Dunfield",
+            "orcid": "",
+            "researcher_id": ""
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Stanford",
+              "city_id": 5398563,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.168010.e",
+              "name": "Stanford University",
+              "state": "California",
+              "state_code": "US-CA"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.168010.e",
+            "first_name": "James A.",
+            "last_name": "Raiford",
+            "orcid": "",
+            "researcher_id": "ur.010725551000.01"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Stanford",
+              "city_id": 5398563,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.168010.e",
+              "name": "Stanford University",
+              "state": "California",
+              "state_code": "US-CA"
+             },
+             {
+              "city": "Golden",
+              "city_id": 5423294,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.419357.d",
+              "name": "National Renewable Energy Laboratory",
+              "state": "Colorado",
+              "state_code": "US-CO"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.168010.e",
+            "first_name": "Eli J.",
+            "last_name": "Wolf",
+            "orcid": "['0000-0002-5523-8812']",
+            "researcher_id": "ur.07564237500.21"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Stanford",
+              "city_id": 5398563,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.168010.e",
+              "name": "Stanford University",
+              "state": "California",
+              "state_code": "US-CA"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.168010.e",
+            "first_name": "Simon A.",
+            "last_name": "Swifter",
+            "orcid": "",
+            "researcher_id": "ur.012102214010.15"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Golden",
+              "city_id": 5423294,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.419357.d",
+              "name": "National Renewable Energy Laboratory",
+              "state": "Colorado",
+              "state_code": "US-CO"
+             },
+             {
+              "city": "Boulder",
+              "city_id": 5574991,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.266190.a",
+              "name": "University of Colorado Boulder",
+              "state": "Colorado",
+              "state_code": "US-CO"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "",
+            "first_name": "Jérémie",
+            "last_name": "Werner",
+            "orcid": "",
+            "researcher_id": ""
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Golden",
+              "city_id": 5423294,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.419357.d",
+              "name": "National Renewable Energy Laboratory",
+              "state": "Colorado",
+              "state_code": "US-CO"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "",
+            "first_name": "Giles E.",
+            "last_name": "Eperon",
+            "orcid": "",
+            "researcher_id": ""
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Stanford",
+              "city_id": 5398563,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.168010.e",
+              "name": "Stanford University",
+              "state": "California",
+              "state_code": "US-CA"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "",
+            "first_name": "Camila",
+            "last_name": "de Paula",
+            "orcid": "",
+            "researcher_id": ""
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Golden",
+              "city_id": 5423294,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.419357.d",
+              "name": "National Renewable Energy Laboratory",
+              "state": "Colorado",
+              "state_code": "US-CO"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.419357.d",
+            "first_name": "Axel F.",
+            "last_name": "Palmstrom",
+            "orcid": "",
+            "researcher_id": "ur.012573517163.57"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Stanford",
+              "city_id": 5398563,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.168010.e",
+              "name": "Stanford University",
+              "state": "California",
+              "state_code": "US-CA"
+             },
+             {
+              "city": "Golden",
+              "city_id": 5423294,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.419357.d",
+              "name": "National Renewable Energy Laboratory",
+              "state": "Colorado",
+              "state_code": "US-CO"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.168010.e",
+            "first_name": "Caleb C.",
+            "last_name": "Boyd",
+            "orcid": "",
+            "researcher_id": "ur.016640645516.93"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Golden",
+              "city_id": 5423294,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.419357.d",
+              "name": "National Renewable Energy Laboratory",
+              "state": "Colorado",
+              "state_code": "US-CO"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.419357.d",
+            "first_name": "Maikel F. A. M.",
+            "last_name": "van Hest",
+            "orcid": "",
+            "researcher_id": "ur.011222756103.83"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Stanford",
+              "city_id": 5398563,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.168010.e",
+              "name": "Stanford University",
+              "state": "California",
+              "state_code": "US-CA"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.168010.e",
+            "first_name": "Stacey F.",
+            "last_name": "Bent",
+            "orcid": "",
+            "researcher_id": "ur.0644050505.01"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Golden",
+              "city_id": 5423294,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.419357.d",
+              "name": "National Renewable Energy Laboratory",
+              "state": "Colorado",
+              "state_code": "US-CO"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "",
+            "first_name": "Glenn",
+            "last_name": "Teeter",
+            "orcid": "",
+            "researcher_id": ""
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Golden",
+              "city_id": 5423294,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.419357.d",
+              "name": "National Renewable Energy Laboratory",
+              "state": "Colorado",
+              "state_code": "US-CO"
+             }
+            ],
+            "corresponding": "",
+            "current_organization_id": "grid.419357.d",
+            "first_name": "Joseph J.",
+            "last_name": "Berry",
+            "orcid": "['0000-0003-3874-3582']",
+            "researcher_id": "ur.01256436345.75"
+           },
+           {
+            "affiliations": [
+             {
+              "city": "Golden",
+              "city_id": 5423294,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.419357.d",
+              "name": "National Renewable Energy Laboratory",
+              "state": "Colorado",
+              "state_code": "US-CO"
+             },
+             {
+              "city": "Boulder",
+              "city_id": 5574991,
+              "country": "United States",
+              "country_code": "US",
+              "id": "grid.266190.a",
+              "name": "University of Colorado Boulder",
+              "state": "Colorado",
+              "state_code": "US-CO"
+             }
+            ],
+            "corresponding": true,
+            "current_organization_id": "grid.168010.e",
+            "first_name": "Michael D.",
+            "last_name": "McGehee",
+            "orcid": "['0000-0001-9609-9030']",
+            "researcher_id": "ur.01206145571.87"
+           }
+          ]
+         ],
+         "id": "pub.1121554019",
+         "issue": "11",
+         "journal": {
+          "id": "jour.1136447",
+          "title": "Nature Energy"
+         },
+         "pages": "939-947",
+         "title": "Design of low bandgap tin–lead halide perovskite solar cells to achieve thermal, atmospheric and operational stability",
+         "type": "article",
+         "volume": "4",
+         "year": 2019
+        }
+       ]
+      },
+      "text/plain": [
+       "<dimcli.Result object #140002153721192. Records: 20/901>"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {
+      "tags": []
+     },
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "%dsl search publications where journal.title=\"Nature Energy\" return publications"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "3EY_aJY_MH5M"
+   },
+   "source": [
+    "**Multi-line version** \n",
+    "\n",
+    "You can also split the query into multiple lines, only this time you need to use the `%%dsl` command (two `%`): "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 51
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 691,
+     "status": "ok",
+     "timestamp": 1574679571696,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "xlLuMnCsMH5N",
+    "outputId": "836d0ccb-895c-4eca-b988-6bb333c5bacb"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Returned Publications: 20 (total = 3815)\n"
+     ]
+    },
+    {
+     "data": {
+      "application/json": {
+       "_stats": {
+        "total_count": 3815
+       },
+       "publications": [
+        {
+         "title": "Development of Organo-Dispersible Graphene Oxide via Pseudo-Surface Modification for Thermally Conductive Green Polymer Composites."
+        },
+        {
+         "title": "Anisotropic Crystal Growth, Optical Absorption, and Ground-State Energy Level of CdSe Quantum Dots Adsorbed on the (001) and (102) Surfaces of Anatase-TiO 2 : Quantum Dot-Sensitization System"
+        },
+        {
+         "title": "Nuclear Ab Initio Calculations with the Unitary-Model-Operator Approach"
+        },
+        {
+         "title": "Indium Zinc Oxide Electron Transport Layer for High-Performance Planar Perovskite Solar Cells"
+        },
+        {
+         "title": "Chalcopyrite ZnSnSb2: A Promising Thermoelectric Material."
+        },
+        {
+         "title": "New Tin(II) Fluoride Derivative as a Precursor for Enhancing the Efficiency of Inverted Planar Tin/Lead Perovskite Solar Cells"
+        },
+        {
+         "title": "Reduction of H∞ state feedback control problems for the MIMO servo systems"
+        },
+        {
+         "title": "Periodic addition of anaerobic sludge enhanced the lignocellulosic degradation rate during co-composting of oil palm biomass"
+        },
+        {
+         "title": "FOREWORD"
+        },
+        {
+         "title": "Effect of VR technology matureness on VR sickness"
+        },
+        {
+         "title": "Optimized coordinated control of LFC and SMES to enhance frequency stability of a real multi-source power system considering high renewable energy penetration"
+        },
+        {
+         "title": "Development of Navigation System in Field Robot for Forest Management"
+        },
+        {
+         "title": "A generalization of Hegedüs-Szilágyi’s fixed point theorem in complete metric spaces"
+        },
+        {
+         "title": "Electron carriers increase electricity production in methane microbial fuel cells that reverse methanogenesis"
+        },
+        {
+         "title": "A study of wound repair in Dictyostelium cells by using novel laserporation"
+        },
+        {
+         "title": "Tensor Self-Organizing Map for Kansei Analysis"
+        },
+        {
+         "title": "Large-scale aggregation analysis of eukaryotic proteins reveals an involvement of intrinsically disordered regions in protein folding"
+        },
+        {
+         "title": "Synthesis and characterization of graphene oxide functionalized with magnetic nanoparticle via simple emulsion method"
+        },
+        {
+         "title": "Development of a Control Target Recognition for Autonomous Vehicle using FPGA with Python"
+        },
+        {
+         "title": "Saliency Detection using Boundary Aware Regional Contrast Based Seam-map"
+        }
+       ]
+      },
+      "text/plain": [
+       "<dimcli.Result object #140002179358112. Records: 20/3815>"
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {
+      "tags": []
+     },
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "%%dsl\n",
+    "search publications\n",
+    "where year in [2013:2018] and research_orgs=\"grid.258806.1\"\n",
+    "return publications[title]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "5F1PvQXRMH5P"
+   },
+   "source": [
+    "### Accessing Results \n",
+    "\n",
+    "By default the results of magic command queries are saved into a variable called `dsl_last_results`:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {},
+    "colab_type": "code",
+    "id": "OqZ5WnLcMH5Q",
+    "outputId": "ce297b78-d553-41eb-e870-32bb090abf79"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "dimcli.core.api.Result"
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {
+      "tags": []
+     },
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "type(dsl_last_results)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "0lEr5j83MH5S"
+   },
+   "source": [
+    "A DimCli `Result` object is just a wrapper around the raw JSON data."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 54
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 533,
+     "status": "ok",
+     "timestamp": 1574679650018,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "ZMD8anAIMH5S",
+    "outputId": "c00e3b5b-9e0c-4a41-82df-a3344d74e974"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Development of Organo-Dispersible Graphene Oxide via Pseudo-Surface Modification for Thermally Conductive Green Polymer Composites.\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(dsl_last_results.publications[0]['title'])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "90Wl5kW7MH5V"
+   },
+   "source": [
+    "## 2. Loop queries with `%dslloop` or `%%dslloop` \n",
+    "\n",
+    "This magic command automatically loops over all the pages of a results set set until all possible records have been returned.\n",
+    "\n",
+    "NOTE this is a short version of the `Dimcli.Dsl.query_iterative` method, which takes care of timing queries appropriately and aggregating results within a single object. \n",
+    "\n",
+    "**Single-line version**\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 85,
+     "output_embedded_package_id": "1eDoV2WoC--cpjwjygne8lp_aGn4_vscu"
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 9558,
+     "status": "ok",
+     "timestamp": 1574680225465,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "WgIXWSA9QHDn",
+    "outputId": "cc968466-52cc-4f47-c679-8914ccba2ae5"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Output hidden; open in https://colab.research.google.com to view."
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "%dslloop search publications for \"malaria AND Egypt\" where year=2015 return publications "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "huueWiq4QXOZ"
+   },
+   "source": [
+    "**Multi-line version**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 102,
+     "output_embedded_package_id": "1FWI7FShYkyBxO-PR6eVOtp0DIlU3RoHa"
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 15150,
+     "status": "ok",
+     "timestamp": 1574679750534,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "00EOEw8DMH6G",
+    "outputId": "43ad5315-6b3b-4e09-f6d3-b7ba46c35497"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Output hidden; open in https://colab.research.google.com to view."
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "%%dslloop\n",
+    "search publications\n",
+    "where year in [2013:2018] and research_orgs=\"grid.258806.1\"\n",
+    "return publications"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "-IV2v6e-MH6x"
+   },
+   "source": [
+    "Like before, the results of a `loop` query are stored into the `dsl_last_results` variable. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 34
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 334,
+     "status": "ok",
+     "timestamp": 1574679751660,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "b3XX7fZQMH6y",
+    "outputId": "545c69a6-dc31-479a-f820-184f4d5348d0"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "{'total_count': 3815}"
+      ]
+     },
+     "execution_count": 10,
+     "metadata": {
+      "tags": []
+     },
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "dsl_last_results.stats"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "_OYb8rOPMH49"
+   },
+   "source": [
+    "## 3. Retrieving documentation with `%dsldocs`\n",
+    "\n",
+    "The `%dsldocs` command prints out information about the fields and entities available via the Dimensions Search Language. \n",
+    "\n",
+    "This commands returns a tabular version of the [data model documentation](https://docs.dimensions.ai/dsl/data.html) by using the [`describe`](https://docs.dimensions.ai/dsl/data.html#getting-documentation-programmatically) DSL command behind the scenes. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "mV08LA_dMH4-"
+   },
+   "source": [
+    "For example, if you pass a source name like `grants`, what you get back is a nice table showing all fields available for that source.  "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 894
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 1676,
+     "status": "ok",
+     "timestamp": 1574680313626,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "Wl3HlBBDMH4-",
+    "outputId": "f4831b98-ec96-4a42-db2c-8b0fc19f1438"
+   },
+   "outputs": [
+    {
+     "data": {
+      "application/vnd.google.colaboratory.module+javascript": "\n      import \"https://ssl.gstatic.com/colaboratory/data_table/9e554b27bdd509f3/data_table.js\";\n\n      window.createDataTable({\n        data: [[{\n            'v': 0,\n            'f': \"0\",\n        },\n\"grants\",\n\"FOR\",\n\"categories\",\n\"`ANZSRC Fields of Research classification <https://app.dimensions.ai/browse/publication/for>`_ , second level or 4 digit codes.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 1,\n            'f': \"1\",\n        },\n\"grants\",\n\"FOR_first\",\n\"categories\",\n\"`ANZSRC Fields of Research classification <https://app.dimensions.ai/browse/publication/for>`_ , first level or 2 digit codes.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 2,\n            'f': \"2\",\n        },\n\"grants\",\n\"abstract\",\n\"text\",\n\"Abstract or summary from a grant proposal.\",\nfalse,\nfalse,\nfalse],\n [{\n            'v': 3,\n            'f': \"3\",\n        },\n\"grants\",\n\"active_year\",\n\"integer\",\n\"List of active years for a grant.\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 4,\n            'f': \"4\",\n        },\n\"grants\",\n\"category_bra\",\n\"categories\",\n\"`Broad Research Areas <https://app.dimensions.ai/browse/publication/broad_research_areas?redirect_path=/discover/publication>`_\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 5,\n            'f': \"5\",\n        },\n\"grants\",\n\"category_hra\",\n\"categories\",\n\"`Health Research Areas <https://app.dimensions.ai/browse/publication/health_research_areas?redirect_path=/discover/publication>`_\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 6,\n            'f': \"6\",\n        },\n\"grants\",\n\"category_hrcs_hc\",\n\"categories\",\n\"`HRCS - Health Categories <https://app.dimensions.ai/browse/publication/hrcs_hc>`_ .\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 7,\n            'f': \"7\",\n        },\n\"grants\",\n\"category_hrcs_rac\",\n\"categories\",\n\"`HRCS \\u2013 Research Activity Codes <https://app.dimensions.ai/browse/publication/hrcs_rac>`_ .\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 8,\n            'f': \"8\",\n        },\n\"grants\",\n\"category_rcdc\",\n\"categories\",\n\"`Research, Condition, and Disease Categorization <https://app.dimensions.ai/browse/publication/rcdc>`_ .\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 9,\n            'f': \"9\",\n        },\n\"grants\",\n\"concepts\",\n\"text\",\n\"Concepts describing the main topics of a grant (note: automatically derived from the grant text using machine learning).\",\nfalse,\nfalse,\nfalse],\n [{\n            'v': 10,\n            'f': \"10\",\n        },\n\"grants\",\n\"date_inserted\",\n\"timestamp\",\n\"Date when the record was inserted into Dimensions (note: this field does not support exact match on the data, only range filters e.g. `<=` or `>=`).\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 11,\n            'f': \"11\",\n        },\n\"grants\",\n\"end_date\",\n\"timestamp\",\n\"Date when the grant ends.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 12,\n            'f': \"12\",\n        },\n\"grants\",\n\"funder_countries\",\n\"countries\",\n\"The country linked to the organisation funding the grant, expressed as GeoNames codes.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 13,\n            'f': \"13\",\n        },\n\"grants\",\n\"funders\",\n\"orgs\",\n\"The organisation funding the grant. This is normally a GRID organisation, but in very few cases a Dimensions funder ID is used.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 14,\n            'f': \"14\",\n        },\n\"grants\",\n\"funding_aud\",\n\"financial\",\n\"Funding amount awarded in AUD.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 15,\n            'f': \"15\",\n        },\n\"grants\",\n\"funding_cad\",\n\"financial\",\n\"Funding amount awarded in CAD.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 16,\n            'f': \"16\",\n        },\n\"grants\",\n\"funding_chf\",\n\"financial\",\n\"Funding amount awarded in CHF.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 17,\n            'f': \"17\",\n        },\n\"grants\",\n\"funding_currency\",\n\"label\",\n\"Original funding currency.\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 18,\n            'f': \"18\",\n        },\n\"grants\",\n\"funding_eur\",\n\"financial\",\n\"Funding amount awarded in EUR.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 19,\n            'f': \"19\",\n        },\n\"grants\",\n\"funding_gbp\",\n\"financial\",\n\"Funding amount awarded in GBP.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 20,\n            'f': \"20\",\n        },\n\"grants\",\n\"funding_jpy\",\n\"financial\",\n\"Funding amount awarded in JPY.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 21,\n            'f': \"21\",\n        },\n\"grants\",\n\"funding_nzd\",\n\"financial\",\n\"Funding amount awarded in NZD.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 22,\n            'f': \"22\",\n        },\n\"grants\",\n\"funding_org_acronym\",\n\"label\",\n\"Acronym for funding organisation.\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 23,\n            'f': \"23\",\n        },\n\"grants\",\n\"funding_org_city\",\n\"label\",\n\"City name for funding organisation.\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 24,\n            'f': \"24\",\n        },\n\"grants\",\n\"funding_org_name\",\n\"label\",\n\"Name of funding organisation.\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 25,\n            'f': \"25\",\n        },\n\"grants\",\n\"funding_usd\",\n\"financial\",\n\"Funding amount awarded in USD.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 26,\n            'f': \"26\",\n        },\n\"grants\",\n\"grant_number\",\n\"identifier\",\n\"Grant identifier, as provided by the source (e.g., funder, aggregator) the grant was derived from.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 27,\n            'f': \"27\",\n        },\n\"grants\",\n\"id\",\n\"identifier\",\n\"Dimensions grant ID.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 28,\n            'f': \"28\",\n        },\n\"grants\",\n\"investigator_details\",\n\"json\",\n\"Additional details about investigators, including affiliations and roles e.g. 'PI' or 'Co-PI' (note: if the investigator has a Dimensions researcher ID, that is returned as well).\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 29,\n            'f': \"29\",\n        },\n\"grants\",\n\"language\",\n\"label\",\n\"Grant original language, as ISO 639-1 language codes.\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 30,\n            'f': \"30\",\n        },\n\"grants\",\n\"linkout\",\n\"text\",\n\"Original URL for the grant.\",\nfalse,\nfalse,\nfalse],\n [{\n            'v': 31,\n            'f': \"31\",\n        },\n\"grants\",\n\"original_title\",\n\"text\",\n\"Title of the grant in its original language.\",\nfalse,\nfalse,\nfalse],\n [{\n            'v': 32,\n            'f': \"32\",\n        },\n\"grants\",\n\"research_org_cities\",\n\"cities\",\n\"City of the research organisations receiving the grant, expressed as GeoNames id and name.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 33,\n            'f': \"33\",\n        },\n\"grants\",\n\"research_org_countries\",\n\"countries\",\n\"Country of the research organisations receiving the grant, expressed as GeoNames code and name.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 34,\n            'f': \"34\",\n        },\n\"grants\",\n\"research_org_state_codes\",\n\"states\",\n\"State of the GRID organisations receiving the grant, expressed as GeoNames codes (ISO\\u200c-3166-2).\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 35,\n            'f': \"35\",\n        },\n\"grants\",\n\"research_orgs\",\n\"orgs\",\n\"GRID organisations receiving the grant (note: identifiers are automatically extracted from the source text and can be missing in some cases).\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 36,\n            'f': \"36\",\n        },\n\"grants\",\n\"researchers\",\n\"researchers\",\n\"Dimensions researchers IDs associated to the grant.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 37,\n            'f': \"37\",\n        },\n\"grants\",\n\"start_date\",\n\"timestamp\",\n\"Date when the grant starts, in the format 'YYYY-MM-DD'.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 38,\n            'f': \"38\",\n        },\n\"grants\",\n\"start_year\",\n\"integer\",\n\"Year when the grant starts.\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 39,\n            'f': \"39\",\n        },\n\"grants\",\n\"title\",\n\"text\",\n\"Title of the grant in English (if the grant language is not English, this field contains a translation of the title).\",\nfalse,\nfalse,\nfalse],\n [{\n            'v': 40,\n            'f': \"40\",\n        },\n\"grants\",\n\"title_language\",\n\"label\",\n\"ISO 639-1 language code for the original grant title.\",\ntrue,\nfalse,\ntrue]],\n        columns: [[\"number\", \"index\"], [\"string\", \"sources\"], [\"string\", \"field\"], [\"string\", \"type\"], [\"string\", \"description\"], [\"string\", \"is_filter\"], [\"string\", \"is_entity\"], [\"string\", \"is_facet\"]],\n        columnOptions: [{\"width\": \"1px\", \"className\": \"index_column\"}],\n        rowsPerPage: 25,\n        helpUrl: \"https://colab.research.google.com/notebooks/data_table.ipynb\",\n      });\n    ",
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>sources</th>\n",
+       "      <th>field</th>\n",
+       "      <th>type</th>\n",
+       "      <th>description</th>\n",
+       "      <th>is_filter</th>\n",
+       "      <th>is_entity</th>\n",
+       "      <th>is_facet</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>FOR</td>\n",
+       "      <td>categories</td>\n",
+       "      <td>`ANZSRC Fields of Research classification &lt;htt...</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>FOR_first</td>\n",
+       "      <td>categories</td>\n",
+       "      <td>`ANZSRC Fields of Research classification &lt;htt...</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>abstract</td>\n",
+       "      <td>text</td>\n",
+       "      <td>Abstract or summary from a grant proposal.</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>active_year</td>\n",
+       "      <td>integer</td>\n",
+       "      <td>List of active years for a grant.</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>True</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>category_bra</td>\n",
+       "      <td>categories</td>\n",
+       "      <td>`Broad Research Areas &lt;https://app.dimensions....</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>category_hra</td>\n",
+       "      <td>categories</td>\n",
+       "      <td>`Health Research Areas &lt;https://app.dimensions...</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>6</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>category_hrcs_hc</td>\n",
+       "      <td>categories</td>\n",
+       "      <td>`HRCS - Health Categories &lt;https://app.dimensi...</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>7</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>category_hrcs_rac</td>\n",
+       "      <td>categories</td>\n",
+       "      <td>`HRCS – Research Activity Codes &lt;https://app.d...</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>8</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>category_rcdc</td>\n",
+       "      <td>categories</td>\n",
+       "      <td>`Research, Condition, and Disease Categorizati...</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>9</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>concepts</td>\n",
+       "      <td>text</td>\n",
+       "      <td>Concepts describing the main topics of a grant...</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>10</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>date_inserted</td>\n",
+       "      <td>timestamp</td>\n",
+       "      <td>Date when the record was inserted into Dimensi...</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>11</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>end_date</td>\n",
+       "      <td>timestamp</td>\n",
+       "      <td>Date when the grant ends.</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>12</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>funder_countries</td>\n",
+       "      <td>countries</td>\n",
+       "      <td>The country linked to the organisation funding...</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>13</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>funders</td>\n",
+       "      <td>orgs</td>\n",
+       "      <td>The organisation funding the grant. This is no...</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>14</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>funding_aud</td>\n",
+       "      <td>financial</td>\n",
+       "      <td>Funding amount awarded in AUD.</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>15</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>funding_cad</td>\n",
+       "      <td>financial</td>\n",
+       "      <td>Funding amount awarded in CAD.</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>16</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>funding_chf</td>\n",
+       "      <td>financial</td>\n",
+       "      <td>Funding amount awarded in CHF.</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>17</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>funding_currency</td>\n",
+       "      <td>label</td>\n",
+       "      <td>Original funding currency.</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>True</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>18</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>funding_eur</td>\n",
+       "      <td>financial</td>\n",
+       "      <td>Funding amount awarded in EUR.</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>19</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>funding_gbp</td>\n",
+       "      <td>financial</td>\n",
+       "      <td>Funding amount awarded in GBP.</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>20</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>funding_jpy</td>\n",
+       "      <td>financial</td>\n",
+       "      <td>Funding amount awarded in JPY.</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>21</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>funding_nzd</td>\n",
+       "      <td>financial</td>\n",
+       "      <td>Funding amount awarded in NZD.</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>22</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>funding_org_acronym</td>\n",
+       "      <td>label</td>\n",
+       "      <td>Acronym for funding organisation.</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>True</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>23</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>funding_org_city</td>\n",
+       "      <td>label</td>\n",
+       "      <td>City name for funding organisation.</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>True</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>24</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>funding_org_name</td>\n",
+       "      <td>label</td>\n",
+       "      <td>Name of funding organisation.</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>True</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>25</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>funding_usd</td>\n",
+       "      <td>financial</td>\n",
+       "      <td>Funding amount awarded in USD.</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>26</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>grant_number</td>\n",
+       "      <td>identifier</td>\n",
+       "      <td>Grant identifier, as provided by the source (e...</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>27</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>id</td>\n",
+       "      <td>identifier</td>\n",
+       "      <td>Dimensions grant ID.</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>28</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>investigator_details</td>\n",
+       "      <td>json</td>\n",
+       "      <td>Additional details about investigators, includ...</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>29</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>language</td>\n",
+       "      <td>label</td>\n",
+       "      <td>Grant original language, as ISO 639-1 language...</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>True</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>30</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>linkout</td>\n",
+       "      <td>text</td>\n",
+       "      <td>Original URL for the grant.</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>31</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>original_title</td>\n",
+       "      <td>text</td>\n",
+       "      <td>Title of the grant in its original language.</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>32</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>research_org_cities</td>\n",
+       "      <td>cities</td>\n",
+       "      <td>City of the research organisations receiving t...</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>33</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>research_org_countries</td>\n",
+       "      <td>countries</td>\n",
+       "      <td>Country of the research organisations receivin...</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>34</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>research_org_state_codes</td>\n",
+       "      <td>states</td>\n",
+       "      <td>State of the GRID organisations receiving the ...</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>35</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>research_orgs</td>\n",
+       "      <td>orgs</td>\n",
+       "      <td>GRID organisations receiving the grant (note: ...</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>36</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>researchers</td>\n",
+       "      <td>researchers</td>\n",
+       "      <td>Dimensions researchers IDs associated to the g...</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>37</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>start_date</td>\n",
+       "      <td>timestamp</td>\n",
+       "      <td>Date when the grant starts, in the format 'YYY...</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>38</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>start_year</td>\n",
+       "      <td>integer</td>\n",
+       "      <td>Year when the grant starts.</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>True</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>39</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>title</td>\n",
+       "      <td>text</td>\n",
+       "      <td>Title of the grant in English (if the grant la...</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>40</th>\n",
+       "      <td>grants</td>\n",
+       "      <td>title_language</td>\n",
+       "      <td>label</td>\n",
+       "      <td>ISO 639-1 language code for the original grant...</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>True</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   sources                     field  ... is_entity is_facet\n",
+       "0   grants                       FOR  ...      True     True\n",
+       "1   grants                 FOR_first  ...      True     True\n",
+       "2   grants                  abstract  ...     False    False\n",
+       "3   grants               active_year  ...     False     True\n",
+       "4   grants              category_bra  ...      True     True\n",
+       "5   grants              category_hra  ...      True     True\n",
+       "6   grants          category_hrcs_hc  ...      True     True\n",
+       "7   grants         category_hrcs_rac  ...      True     True\n",
+       "8   grants             category_rcdc  ...      True     True\n",
+       "9   grants                  concepts  ...     False    False\n",
+       "10  grants             date_inserted  ...     False    False\n",
+       "11  grants                  end_date  ...     False    False\n",
+       "12  grants          funder_countries  ...      True     True\n",
+       "13  grants                   funders  ...      True     True\n",
+       "14  grants               funding_aud  ...     False    False\n",
+       "15  grants               funding_cad  ...     False    False\n",
+       "16  grants               funding_chf  ...     False    False\n",
+       "17  grants          funding_currency  ...     False     True\n",
+       "18  grants               funding_eur  ...     False    False\n",
+       "19  grants               funding_gbp  ...     False    False\n",
+       "20  grants               funding_jpy  ...     False    False\n",
+       "21  grants               funding_nzd  ...     False    False\n",
+       "22  grants       funding_org_acronym  ...     False     True\n",
+       "23  grants          funding_org_city  ...     False     True\n",
+       "24  grants          funding_org_name  ...     False     True\n",
+       "25  grants               funding_usd  ...     False    False\n",
+       "26  grants              grant_number  ...     False    False\n",
+       "27  grants                        id  ...     False    False\n",
+       "28  grants      investigator_details  ...     False    False\n",
+       "29  grants                  language  ...     False     True\n",
+       "30  grants                   linkout  ...     False    False\n",
+       "31  grants            original_title  ...     False    False\n",
+       "32  grants       research_org_cities  ...      True     True\n",
+       "33  grants    research_org_countries  ...      True     True\n",
+       "34  grants  research_org_state_codes  ...      True     True\n",
+       "35  grants             research_orgs  ...      True     True\n",
+       "36  grants               researchers  ...      True     True\n",
+       "37  grants                start_date  ...     False    False\n",
+       "38  grants                start_year  ...     False     True\n",
+       "39  grants                     title  ...     False    False\n",
+       "40  grants            title_language  ...     False     True\n",
+       "\n",
+       "[41 rows x 7 columns]"
+      ]
+     },
+     "execution_count": 16,
+     "metadata": {
+      "tags": []
+     },
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "%dsldocs grants"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "SraBJgCuMH5B"
+   },
+   "source": [
+    "Same for objects of type 'Entity' eg `countries`"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 146
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 1500,
+     "status": "ok",
+     "timestamp": 1574680320141,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "EKFUPsPzMH5C",
+    "outputId": "754cf54c-57b1-4e31-ce94-1b33658169c5"
+   },
+   "outputs": [
+    {
+     "data": {
+      "application/vnd.google.colaboratory.module+javascript": "\n      import \"https://ssl.gstatic.com/colaboratory/data_table/9e554b27bdd509f3/data_table.js\";\n\n      window.createDataTable({\n        data: [[{\n            'v': 0,\n            'f': \"0\",\n        },\n\"countries\",\n\"id\",\n\"string\",\n\"GeoNames country code (eg 'US' for `geonames:6252001 <http://www.geonames.org/6252001>`_ )\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 1,\n            'f': \"1\",\n        },\n\"countries\",\n\"name\",\n\"string\",\n\"GeoNames country name.\",\ntrue,\nfalse,\nfalse]],\n        columns: [[\"number\", \"index\"], [\"string\", \"entities\"], [\"string\", \"field\"], [\"string\", \"type\"], [\"string\", \"description\"], [\"string\", \"is_filter\"], [\"string\", \"is_entity\"], [\"string\", \"is_facet\"]],\n        columnOptions: [{\"width\": \"1px\", \"className\": \"index_column\"}],\n        rowsPerPage: 25,\n        helpUrl: \"https://colab.research.google.com/notebooks/data_table.ipynb\",\n      });\n    ",
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>entities</th>\n",
+       "      <th>field</th>\n",
+       "      <th>type</th>\n",
+       "      <th>description</th>\n",
+       "      <th>is_filter</th>\n",
+       "      <th>is_entity</th>\n",
+       "      <th>is_facet</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>countries</td>\n",
+       "      <td>id</td>\n",
+       "      <td>string</td>\n",
+       "      <td>GeoNames country code (eg 'US' for `geonames:6...</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>countries</td>\n",
+       "      <td>name</td>\n",
+       "      <td>string</td>\n",
+       "      <td>GeoNames country name.</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "    entities field    type  ... is_filter  is_entity  is_facet\n",
+       "0  countries    id  string  ...      True      False     False\n",
+       "1  countries  name  string  ...      True      False     False\n",
+       "\n",
+       "[2 rows x 7 columns]"
+      ]
+     },
+     "execution_count": 17,
+     "metadata": {
+      "tags": []
+     },
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "%dsldocs countries"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "0We2LE_kMH5E"
+   },
+   "source": [
+    "But don't worry if you don't get it right: if you pass a wrong object name, the full list of available sources and entities is printed."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 54
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 1248,
+     "status": "ok",
+     "timestamp": 1574680326104,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "Sm2NkoY1MH5E",
+    "outputId": "c6d5feea-9e14-4852-d30c-898169e9f940"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Sorry can't recognize this object. Use one of the following: Sources=[clinical_trials - grants - patents - policy_documents - publications - researchers] Entities=[categories - cities - countries - journals - open_access - org_groups - orgs - states] \n"
+     ]
+    }
+   ],
+   "source": [
+    "%dsldocs unknown"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "X-yt4WIEMH5G"
+   },
+   "source": [
+    "Finally, if no object is requested, the **full documentation for all the sources** gets returned."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 894
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 1850,
+     "status": "ok",
+     "timestamp": 1574680334247,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "7SkKHqbhMH5H",
+    "outputId": "2679636b-202b-4be5-f988-679104dfd68b"
+   },
+   "outputs": [
+    {
+     "data": {
+      "application/vnd.google.colaboratory.module+javascript": "\n      import \"https://ssl.gstatic.com/colaboratory/data_table/9e554b27bdd509f3/data_table.js\";\n\n      window.createDataTable({\n        data: [[{\n            'v': 0,\n            'f': \"0\",\n        },\n\"clinical_trials\",\n\"FOR\",\n\"categories\",\n\"`ANZSRC Fields of Research classification <https://app.dimensions.ai/browse/publication/for>`_ , second level or 4 digit codes.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 1,\n            'f': \"1\",\n        },\n\"clinical_trials\",\n\"FOR_first\",\n\"categories\",\n\"`ANZSRC Fields of Research classification <https://app.dimensions.ai/browse/publication/for>`_ , first level or 2 digit codes.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 2,\n            'f': \"2\",\n        },\n\"clinical_trials\",\n\"abstract\",\n\"text\",\n\"Abstract or description of the clinical trial.\",\nfalse,\nfalse,\nfalse],\n [{\n            'v': 3,\n            'f': \"3\",\n        },\n\"clinical_trials\",\n\"active_years\",\n\"integer\",\n\"List of active years for a clinical trial.\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 4,\n            'f': \"4\",\n        },\n\"clinical_trials\",\n\"associated_grant_ids\",\n\"identifier\",\n\"Dimensions IDs of the grants associated to the clinical trial (see also: :ref:`data-model` section).\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 5,\n            'f': \"5\",\n        },\n\"clinical_trials\",\n\"category_bra\",\n\"categories\",\n\"`Broad Research Areas <https://app.dimensions.ai/browse/publication/broad_research_areas?redirect_path=/discover/publication>`_\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 6,\n            'f': \"6\",\n        },\n\"clinical_trials\",\n\"category_hra\",\n\"categories\",\n\"`Health Research Areas <https://app.dimensions.ai/browse/publication/health_research_areas?redirect_path=/discover/publication>`_\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 7,\n            'f': \"7\",\n        },\n\"clinical_trials\",\n\"category_hrcs_hc\",\n\"categories\",\n\"`HRCS - Health Categories <https://app.dimensions.ai/browse/publication/hrcs_hc>`_\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 8,\n            'f': \"8\",\n        },\n\"clinical_trials\",\n\"category_hrcs_rac\",\n\"categories\",\n\"`HRCS \\u2013 Research Activity Codes <https://app.dimensions.ai/browse/publication/hrcs_rac>`_\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 9,\n            'f': \"9\",\n        },\n\"clinical_trials\",\n\"category_rcdc\",\n\"categories\",\n\"`Research, Condition, and Disease Categorization <https://app.dimensions.ai/browse/publication/rcdc>`_\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 10,\n            'f': \"10\",\n        },\n\"clinical_trials\",\n\"conditions\",\n\"string\",\n\"List of medical conditions names, e.g. 'Breast cancer' or 'Obesity'.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 11,\n            'f': \"11\",\n        },\n\"clinical_trials\",\n\"date\",\n\"timestamp\",\n\"Start date of a clinical trial.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 12,\n            'f': \"12\",\n        },\n\"clinical_trials\",\n\"date_inserted\",\n\"timestamp\",\n\"Date when the record was inserted into Dimensions (note: this field does not support exact match on the data, only range filters e.g. `<=` or `>=').\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 13,\n            'f': \"13\",\n        },\n\"clinical_trials\",\n\"funder_countries\",\n\"countries\",\n\"The country group the GRID funding organisations.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 14,\n            'f': \"14\",\n        },\n\"clinical_trials\",\n\"funder_groups\",\n\"org_groups\",\n\"The organisation group the GRID funding organisations.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 15,\n            'f': \"15\",\n        },\n\"clinical_trials\",\n\"funders\",\n\"orgs\",\n\"GRID funding organisations that are involved with the clinical trial.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 16,\n            'f': \"16\",\n        },\n\"clinical_trials\",\n\"gender\",\n\"string\",\n\"The gender of the clinical trial subjects e.g. 'Male', 'Female' or 'All'.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 17,\n            'f': \"17\",\n        },\n\"clinical_trials\",\n\"id\",\n\"identifier\",\n\"Dimensions clinical trial ID\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 18,\n            'f': \"18\",\n        },\n\"clinical_trials\",\n\"investigator_details\",\n\"json\",\n\"Additional details about investigators, including affiliations and roles.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 19,\n            'f': \"19\",\n        },\n\"clinical_trials\",\n\"linkout\",\n\"text\",\n\"Original URL for the clinical trial.\",\nfalse,\nfalse,\nfalse],\n [{\n            'v': 20,\n            'f': \"20\",\n        },\n\"clinical_trials\",\n\"organizations\",\n\"orgs\",\n\"GRID organizations involved, e.g. as sponsors or collaborators.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 21,\n            'f': \"21\",\n        },\n\"clinical_trials\",\n\"phase\",\n\"string\",\n\"Phase of the clinical trial, as a string.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 22,\n            'f': \"22\",\n        },\n\"clinical_trials\",\n\"publication_ids\",\n\"identifier\",\n\"Dimensions IDs of the publications related to this clinical trial (see also: :ref:`data-model` section).\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 23,\n            'f': \"23\",\n        },\n\"clinical_trials\",\n\"registry\",\n\"string\",\n\"The platform where the clinical trial has been registered, e.g. 'ClinicalTrials.gov' or 'EU-CTR'.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 24,\n            'f': \"24\",\n        },\n\"clinical_trials\",\n\"researchers\",\n\"researchers\",\n\"Dimensions researchers IDs associated to the clinical trial.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 25,\n            'f': \"25\",\n        },\n\"clinical_trials\",\n\"title\",\n\"text\",\n\"The title of the clinical trial.\",\nfalse,\nfalse,\nfalse],\n [{\n            'v': 26,\n            'f': \"26\",\n        },\n\"grants\",\n\"FOR\",\n\"categories\",\n\"`ANZSRC Fields of Research classification <https://app.dimensions.ai/browse/publication/for>`_ , second level or 4 digit codes.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 27,\n            'f': \"27\",\n        },\n\"grants\",\n\"FOR_first\",\n\"categories\",\n\"`ANZSRC Fields of Research classification <https://app.dimensions.ai/browse/publication/for>`_ , first level or 2 digit codes.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 28,\n            'f': \"28\",\n        },\n\"grants\",\n\"abstract\",\n\"text\",\n\"Abstract or summary from a grant proposal.\",\nfalse,\nfalse,\nfalse],\n [{\n            'v': 29,\n            'f': \"29\",\n        },\n\"grants\",\n\"active_year\",\n\"integer\",\n\"List of active years for a grant.\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 30,\n            'f': \"30\",\n        },\n\"grants\",\n\"category_bra\",\n\"categories\",\n\"`Broad Research Areas <https://app.dimensions.ai/browse/publication/broad_research_areas?redirect_path=/discover/publication>`_\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 31,\n            'f': \"31\",\n        },\n\"grants\",\n\"category_hra\",\n\"categories\",\n\"`Health Research Areas <https://app.dimensions.ai/browse/publication/health_research_areas?redirect_path=/discover/publication>`_\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 32,\n            'f': \"32\",\n        },\n\"grants\",\n\"category_hrcs_hc\",\n\"categories\",\n\"`HRCS - Health Categories <https://app.dimensions.ai/browse/publication/hrcs_hc>`_ .\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 33,\n            'f': \"33\",\n        },\n\"grants\",\n\"category_hrcs_rac\",\n\"categories\",\n\"`HRCS \\u2013 Research Activity Codes <https://app.dimensions.ai/browse/publication/hrcs_rac>`_ .\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 34,\n            'f': \"34\",\n        },\n\"grants\",\n\"category_rcdc\",\n\"categories\",\n\"`Research, Condition, and Disease Categorization <https://app.dimensions.ai/browse/publication/rcdc>`_ .\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 35,\n            'f': \"35\",\n        },\n\"grants\",\n\"concepts\",\n\"text\",\n\"Concepts describing the main topics of a grant (note: automatically derived from the grant text using machine learning).\",\nfalse,\nfalse,\nfalse],\n [{\n            'v': 36,\n            'f': \"36\",\n        },\n\"grants\",\n\"date_inserted\",\n\"timestamp\",\n\"Date when the record was inserted into Dimensions (note: this field does not support exact match on the data, only range filters e.g. `<=` or `>=`).\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 37,\n            'f': \"37\",\n        },\n\"grants\",\n\"end_date\",\n\"timestamp\",\n\"Date when the grant ends.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 38,\n            'f': \"38\",\n        },\n\"grants\",\n\"funder_countries\",\n\"countries\",\n\"The country linked to the organisation funding the grant, expressed as GeoNames codes.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 39,\n            'f': \"39\",\n        },\n\"grants\",\n\"funders\",\n\"orgs\",\n\"The organisation funding the grant. This is normally a GRID organisation, but in very few cases a Dimensions funder ID is used.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 40,\n            'f': \"40\",\n        },\n\"grants\",\n\"funding_aud\",\n\"financial\",\n\"Funding amount awarded in AUD.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 41,\n            'f': \"41\",\n        },\n\"grants\",\n\"funding_cad\",\n\"financial\",\n\"Funding amount awarded in CAD.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 42,\n            'f': \"42\",\n        },\n\"grants\",\n\"funding_chf\",\n\"financial\",\n\"Funding amount awarded in CHF.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 43,\n            'f': \"43\",\n        },\n\"grants\",\n\"funding_currency\",\n\"label\",\n\"Original funding currency.\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 44,\n            'f': \"44\",\n        },\n\"grants\",\n\"funding_eur\",\n\"financial\",\n\"Funding amount awarded in EUR.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 45,\n            'f': \"45\",\n        },\n\"grants\",\n\"funding_gbp\",\n\"financial\",\n\"Funding amount awarded in GBP.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 46,\n            'f': \"46\",\n        },\n\"grants\",\n\"funding_jpy\",\n\"financial\",\n\"Funding amount awarded in JPY.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 47,\n            'f': \"47\",\n        },\n\"grants\",\n\"funding_nzd\",\n\"financial\",\n\"Funding amount awarded in NZD.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 48,\n            'f': \"48\",\n        },\n\"grants\",\n\"funding_org_acronym\",\n\"label\",\n\"Acronym for funding organisation.\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 49,\n            'f': \"49\",\n        },\n\"grants\",\n\"funding_org_city\",\n\"label\",\n\"City name for funding organisation.\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 50,\n            'f': \"50\",\n        },\n\"grants\",\n\"funding_org_name\",\n\"label\",\n\"Name of funding organisation.\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 51,\n            'f': \"51\",\n        },\n\"grants\",\n\"funding_usd\",\n\"financial\",\n\"Funding amount awarded in USD.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 52,\n            'f': \"52\",\n        },\n\"grants\",\n\"grant_number\",\n\"identifier\",\n\"Grant identifier, as provided by the source (e.g., funder, aggregator) the grant was derived from.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 53,\n            'f': \"53\",\n        },\n\"grants\",\n\"id\",\n\"identifier\",\n\"Dimensions grant ID.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 54,\n            'f': \"54\",\n        },\n\"grants\",\n\"investigator_details\",\n\"json\",\n\"Additional details about investigators, including affiliations and roles e.g. 'PI' or 'Co-PI' (note: if the investigator has a Dimensions researcher ID, that is returned as well).\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 55,\n            'f': \"55\",\n        },\n\"grants\",\n\"language\",\n\"label\",\n\"Grant original language, as ISO 639-1 language codes.\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 56,\n            'f': \"56\",\n        },\n\"grants\",\n\"linkout\",\n\"text\",\n\"Original URL for the grant.\",\nfalse,\nfalse,\nfalse],\n [{\n            'v': 57,\n            'f': \"57\",\n        },\n\"grants\",\n\"original_title\",\n\"text\",\n\"Title of the grant in its original language.\",\nfalse,\nfalse,\nfalse],\n [{\n            'v': 58,\n            'f': \"58\",\n        },\n\"grants\",\n\"research_org_cities\",\n\"cities\",\n\"City of the research organisations receiving the grant, expressed as GeoNames id and name.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 59,\n            'f': \"59\",\n        },\n\"grants\",\n\"research_org_countries\",\n\"countries\",\n\"Country of the research organisations receiving the grant, expressed as GeoNames code and name.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 60,\n            'f': \"60\",\n        },\n\"grants\",\n\"research_org_state_codes\",\n\"states\",\n\"State of the GRID organisations receiving the grant, expressed as GeoNames codes (ISO\\u200c-3166-2).\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 61,\n            'f': \"61\",\n        },\n\"grants\",\n\"research_orgs\",\n\"orgs\",\n\"GRID organisations receiving the grant (note: identifiers are automatically extracted from the source text and can be missing in some cases).\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 62,\n            'f': \"62\",\n        },\n\"grants\",\n\"researchers\",\n\"researchers\",\n\"Dimensions researchers IDs associated to the grant.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 63,\n            'f': \"63\",\n        },\n\"grants\",\n\"start_date\",\n\"timestamp\",\n\"Date when the grant starts, in the format 'YYYY-MM-DD'.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 64,\n            'f': \"64\",\n        },\n\"grants\",\n\"start_year\",\n\"integer\",\n\"Year when the grant starts.\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 65,\n            'f': \"65\",\n        },\n\"grants\",\n\"title\",\n\"text\",\n\"Title of the grant in English (if the grant language is not English, this field contains a translation of the title).\",\nfalse,\nfalse,\nfalse],\n [{\n            'v': 66,\n            'f': \"66\",\n        },\n\"grants\",\n\"title_language\",\n\"label\",\n\"ISO 639-1 language code for the original grant title.\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 67,\n            'f': \"67\",\n        },\n\"patents\",\n\"FOR\",\n\"categories\",\n\"`ANZSRC Fields of Research classification <https://app.dimensions.ai/browse/publication/for>`_ , second level or 4 digit codes.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 68,\n            'f': \"68\",\n        },\n\"patents\",\n\"FOR_first\",\n\"categories\",\n\"`ANZSRC Fields of Research classification <https://app.dimensions.ai/browse/publication/for>`_ , first level or 2 digit codes.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 69,\n            'f': \"69\",\n        },\n\"patents\",\n\"abstract\",\n\"text\",\n\"Abstract or description of the patent.\",\nfalse,\nfalse,\nfalse],\n [{\n            'v': 70,\n            'f': \"70\",\n        },\n\"patents\",\n\"additional_filters\",\n\"string\",\n\"Additional filters describing the patents, e.g. whether it's about a 'Research Organisation', or it is part of the 'Orange Book'.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 71,\n            'f': \"71\",\n        },\n\"patents\",\n\"assignee_cities\",\n\"cities\",\n\"City of the GRID assignees of the patent, expressed as GeoNames ID and name.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 72,\n            'f': \"72\",\n        },\n\"patents\",\n\"assignee_countries\",\n\"countries\",\n\"Country of the GRID assignees of the patent, expressed as GeoNames code and name.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 73,\n            'f': \"73\",\n        },\n\"patents\",\n\"assignee_names\",\n\"string\",\n\"Name of the GRID assignees of the patent.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 74,\n            'f': \"74\",\n        },\n\"patents\",\n\"assignee_state_codes\",\n\"states\",\n\"State of the GRID assignee, expressed using GeoNames (ISO\\u200c-3166-2) codes.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 75,\n            'f': \"75\",\n        },\n\"patents\",\n\"assignee_state_names\",\n\"label\",\n\"State name of GRID assignee, as a string.\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 76,\n            'f': \"76\",\n        },\n\"patents\",\n\"assignees\",\n\"orgs\",\n\"GRID organisations who own or have owned the rights of a patent (note: this is a combination of `current_assignees` and `original_assigness` fields).\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 77,\n            'f': \"77\",\n        },\n\"patents\",\n\"associated_grant_ids\",\n\"identifier\",\n\"Dimensions IDs of the grants associated to the patent (see also: :ref:`data-model` section).\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 78,\n            'f': \"78\",\n        },\n\"patents\",\n\"category_bra\",\n\"categories\",\n\"`Broad Research Areas <https://app.dimensions.ai/browse/publication/broad_research_areas?redirect_path=/discover/publication>`_\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 79,\n            'f': \"79\",\n        },\n\"patents\",\n\"category_hra\",\n\"categories\",\n\"`Health Research Areas <https://app.dimensions.ai/browse/publication/health_research_areas?redirect_path=/discover/publication>`_\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 80,\n            'f': \"80\",\n        },\n\"patents\",\n\"category_hrcs_hc\",\n\"categories\",\n\"`HRCS - Health Categories <https://app.dimensions.ai/browse/publication/hrcs_hc>`_\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 81,\n            'f': \"81\",\n        },\n\"patents\",\n\"category_hrcs_rac\",\n\"categories\",\n\"`HRCS \\u2013 Research Activity Codes <https://app.dimensions.ai/browse/publication/hrcs_rac>`_\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 82,\n            'f': \"82\",\n        },\n\"patents\",\n\"category_rcdc\",\n\"categories\",\n\"`Research, Condition, and Disease Categorization <https://app.dimensions.ai/browse/publication/rcdc>`_\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 83,\n            'f': \"83\",\n        },\n\"patents\",\n\"cited_by_ids\",\n\"identifier\",\n\"Dimensions IDs of the patents that cite this patent (see also: :ref:`data-model` section).\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 84,\n            'f': \"84\",\n        },\n\"patents\",\n\"cpc\",\n\"label\",\n\"`Cooperative Patent Classification Categorization <https://www.epo.org/searching-for-patents/helpful-resources/first-time-here/classification/cpc.html>`_.\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 85,\n            'f': \"85\",\n        },\n\"patents\",\n\"current_assignee_names\",\n\"string\",\n\"Names of the GRID organisations currently holding the patent.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 86,\n            'f': \"86\",\n        },\n\"patents\",\n\"current_assignees\",\n\"orgs\",\n\"GRID organisations currenlty owning the patent.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 87,\n            'f': \"87\",\n        },\n\"patents\",\n\"date\",\n\"timestamp\",\n\"Date when the patent was filed.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 88,\n            'f': \"88\",\n        },\n\"patents\",\n\"date_inserted\",\n\"timestamp\",\n\"Date when the record was inserted into Dimensions (note: this field does not support exact match on the data, only range filters e.g. `<=` or `>=`).\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 89,\n            'f': \"89\",\n        },\n\"patents\",\n\"expiration_date\",\n\"timestamp\",\n\"Date when the patent expires.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 90,\n            'f': \"90\",\n        },\n\"patents\",\n\"filing_status\",\n\"string\",\n\"Filing Status of the patent e.g. 'Application' or 'Grant'.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 91,\n            'f': \"91\",\n        },\n\"patents\",\n\"funder_groups\",\n\"org_groups\",\n\"Organisation group the GRID patent funder belongs to.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 92,\n            'f': \"92\",\n        },\n\"patents\",\n\"funders\",\n\"orgs\",\n\"GRID organisations funding the patent.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 93,\n            'f': \"93\",\n        },\n\"patents\",\n\"granted_date\",\n\"timestamp\",\n\"The date on which the official body grants the patent.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 94,\n            'f': \"94\",\n        },\n\"patents\",\n\"granted_year\",\n\"integer\",\n\"The year on which the official body grants the patent.\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 95,\n            'f': \"95\",\n        },\n\"patents\",\n\"id\",\n\"identifier\",\n\"Dimensions patent ID\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 96,\n            'f': \"96\",\n        },\n\"patents\",\n\"inventor_names\",\n\"string\",\n\"Names of the people who invented the patent.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 97,\n            'f': \"97\",\n        },\n\"patents\",\n\"ipcr\",\n\"label\",\n\"`International Patent Classification Reform Categorization <https://www.wipo.int/classifications/ipc/en/faq/>`_.\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 98,\n            'f': \"98\",\n        },\n\"patents\",\n\"jurisdiction\",\n\"string\",\n\"The jurisdiction where the patent was granted, e.g. 'US', 'DE', 'EP'...\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 99,\n            'f': \"99\",\n        },\n\"patents\",\n\"legal_status\",\n\"string\",\n\"The legal status of the patent, e.g. 'Granted', 'Active', 'Abandoned' etc..\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 100,\n            'f': \"100\",\n        },\n\"patents\",\n\"original_assignee_names\",\n\"string\",\n\"Name of the GRID organisation that first owned the patent.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 101,\n            'f': \"101\",\n        },\n\"patents\",\n\"original_assignees\",\n\"orgs\",\n\"GRID organisations that first owned the patent.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 102,\n            'f': \"102\",\n        },\n\"patents\",\n\"priority_date\",\n\"timestamp\",\n\"The earliest filing date in a family of patent applications.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 103,\n            'f': \"103\",\n        },\n\"patents\",\n\"priority_year\",\n\"integer\",\n\"The filing year of the earliest application of which priority is claimed.\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 104,\n            'f': \"104\",\n        },\n\"patents\",\n\"publication_date\",\n\"timestamp\",\n\"Date of publication of a patent.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 105,\n            'f': \"105\",\n        },\n\"patents\",\n\"publication_ids\",\n\"identifier\",\n\"Dimensions IDs of the publications related to this patent (see also: :ref:`data-model` section).\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 106,\n            'f': \"106\",\n        },\n\"patents\",\n\"publication_year\",\n\"integer\",\n\"Year of publication of a patent.\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 107,\n            'f': \"107\",\n        },\n\"patents\",\n\"reference_ids\",\n\"identifier\",\n\"Dimensions IDs of the patents which are cited by this patent (see also: :ref:`data-model` section).\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 108,\n            'f': \"108\",\n        },\n\"patents\",\n\"times_cited\",\n\"count\",\n\"The number of times the patent has been cited by other patents.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 109,\n            'f': \"109\",\n        },\n\"patents\",\n\"title\",\n\"text\",\n\"The title of the patent.\",\nfalse,\nfalse,\nfalse],\n [{\n            'v': 110,\n            'f': \"110\",\n        },\n\"patents\",\n\"year\",\n\"integer\",\n\"The year the patent was filed.\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 111,\n            'f': \"111\",\n        },\n\"policy_documents\",\n\"FOR\",\n\"categories\",\n\"`ANZSRC Fields of Research classification <https://app.dimensions.ai/browse/publication/for>`_ , second level or 4 digit codes.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 112,\n            'f': \"112\",\n        },\n\"policy_documents\",\n\"FOR_first\",\n\"categories\",\n\"`ANZSRC Fields of Research classification <https://app.dimensions.ai/browse/publication/for>`_ , first level or 2 digit codes.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 113,\n            'f': \"113\",\n        },\n\"policy_documents\",\n\"category_bra\",\n\"categories\",\n\"`Broad Research Areas <https://app.dimensions.ai/browse/publication/broad_research_areas?redirect_path=/discover/publication>`_\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 114,\n            'f': \"114\",\n        },\n\"policy_documents\",\n\"category_hra\",\n\"categories\",\n\"`Health Research Areas <https://app.dimensions.ai/browse/publication/health_research_areas?redirect_path=/discover/publication>`_\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 115,\n            'f': \"115\",\n        },\n\"policy_documents\",\n\"category_hrcs_hc\",\n\"categories\",\n\"`HRCS - Health Categories <https://app.dimensions.ai/browse/publication/hrcs_hc>`_\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 116,\n            'f': \"116\",\n        },\n\"policy_documents\",\n\"category_hrcs_rac\",\n\"categories\",\n\"`HRCS \\u2013 Research Activity Codes <https://app.dimensions.ai/browse/publication/hrcs_rac>`_\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 117,\n            'f': \"117\",\n        },\n\"policy_documents\",\n\"category_rcdc\",\n\"categories\",\n\"`Research, Condition, and Disease Categorization <https://app.dimensions.ai/browse/publication/rcdc>`_\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 118,\n            'f': \"118\",\n        },\n\"policy_documents\",\n\"date_inserted\",\n\"date\",\n\"Date when the record was inserted into Dimensions (note: this field does not support exact match on the data, only range filters e.g. `<=` or `>=`).\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 119,\n            'f': \"119\",\n        },\n\"policy_documents\",\n\"id\",\n\"identifier\",\n\"Dimensions policy document ID\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 120,\n            'f': \"120\",\n        },\n\"policy_documents\",\n\"linkout\",\n\"text\",\n\"Original URL for the policy document.\",\nfalse,\nfalse,\nfalse],\n [{\n            'v': 121,\n            'f': \"121\",\n        },\n\"policy_documents\",\n\"publication_ids\",\n\"identifier\",\n\"Dimensions IDs of the publications related to this policy document (see also: :ref:`data-model` section).\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 122,\n            'f': \"122\",\n        },\n\"policy_documents\",\n\"publisher_org\",\n\"orgs\",\n\"GRID organization publishing the policy document.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 123,\n            'f': \"123\",\n        },\n\"policy_documents\",\n\"publisher_org_city\",\n\"cities\",\n\"City of the GRID organization publishing the policy document.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 124,\n            'f': \"124\",\n        },\n\"policy_documents\",\n\"publisher_org_country\",\n\"countries\",\n\"Country of the GRID organization publishing the policy document.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 125,\n            'f': \"125\",\n        },\n\"policy_documents\",\n\"publisher_org_state\",\n\"states\",\n\"State of the GRID organization publishing the policy document.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 126,\n            'f': \"126\",\n        },\n\"policy_documents\",\n\"title\",\n\"string\",\n\"Title of the policy document.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 127,\n            'f': \"127\",\n        },\n\"policy_documents\",\n\"year\",\n\"integer\",\n\"Year of publication of the policy document.\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 128,\n            'f': \"128\",\n        },\n\"publications\",\n\"altmetric\",\n\"float\",\n\"Altmetric attention score.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 129,\n            'f': \"129\",\n        },\n\"publications\",\n\"altmetric_id\",\n\"integer\",\n\"AltMetric Publication ID\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 130,\n            'f': \"130\",\n        },\n\"publications\",\n\"authors\",\n\"json\",\n\"Ordered list of authors names and their affiliations, as they appear in the original publication. The list can include researcher and organization identifiers, when available (note: in order to search for disambiguated authors, use the `in researchers` syntax).\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 131,\n            'f': \"131\",\n        },\n\"publications\",\n\"book_doi\",\n\"identifier\",\n\"The DOI of the book a chapter belongs to (note: this field is available only for chapters).\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 132,\n            'f': \"132\",\n        },\n\"publications\",\n\"book_series_title\",\n\"text\",\n\"The title of the book series book, belong to.\",\nfalse,\nfalse,\nfalse],\n [{\n            'v': 133,\n            'f': \"133\",\n        },\n\"publications\",\n\"book_title\",\n\"text\",\n\"The title of the book a chapter belongs to (note: this field is available only for chapters).\",\nfalse,\nfalse,\nfalse],\n [{\n            'v': 134,\n            'f': \"134\",\n        },\n\"publications\",\n\"category_bra\",\n\"categories\",\n\"`Broad Research Areas <https://app.dimensions.ai/browse/publication/broad_research_areas?redirect_path=/discover/publication>`_\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 135,\n            'f': \"135\",\n        },\n\"publications\",\n\"category_for\",\n\"categories\",\n\"`ANZSRC Fields of Research classification <https://app.dimensions.ai/browse/publication/for>`_\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 136,\n            'f': \"136\",\n        },\n\"publications\",\n\"category_hra\",\n\"categories\",\n\"`Health Research Areas <https://app.dimensions.ai/browse/publication/health_research_areas?redirect_path=/discover/publication>`_\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 137,\n            'f': \"137\",\n        },\n\"publications\",\n\"category_hrcs_hc\",\n\"categories\",\n\"`HRCS - Health Categories <https://app.dimensions.ai/browse/publication/hrcs_hc>`_\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 138,\n            'f': \"138\",\n        },\n\"publications\",\n\"category_hrcs_rac\",\n\"categories\",\n\"`HRCS \\u2013 Research Activity Codes <https://app.dimensions.ai/browse/publication/hrcs_rac>`_\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 139,\n            'f': \"139\",\n        },\n\"publications\",\n\"category_rcdc\",\n\"categories\",\n\"`Research, Condition, and Disease Categorization <https://app.dimensions.ai/browse/publication/rcdc>`_\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 140,\n            'f': \"140\",\n        },\n\"publications\",\n\"concepts\",\n\"text\",\n\"Concepts describing the main topics of a publication (note: automatically derived from the publication text using machine learning).\",\nfalse,\nfalse,\nfalse],\n [{\n            'v': 141,\n            'f': \"141\",\n        },\n\"publications\",\n\"date\",\n\"date\",\n\"The publication date of a document, eg \\\"2018-01-01\\\" (note: dates can sometimes be incomplete and include only the month or the year).\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 142,\n            'f': \"142\",\n        },\n\"publications\",\n\"date_inserted\",\n\"timestamp\",\n\"Date when the record was inserted into Dimensions (note: this field does not support exact match on the data, only range filters e.g. `<=` or `>=').\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 143,\n            'f': \"143\",\n        },\n\"publications\",\n\"doi\",\n\"identifier\",\n\"Digital object identifier.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 144,\n            'f': \"144\",\n        },\n\"publications\",\n\"field_citation_ratio\",\n\"float\",\n\"Relative citation performance of article when compared to similarly aged articles in its area of research (note: does not support emptiness filters).\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 145,\n            'f': \"145\",\n        },\n\"publications\",\n\"funder_countries\",\n\"countries\",\n\"The country of the GRID organisation funding this publication.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 146,\n            'f': \"146\",\n        },\n\"publications\",\n\"funders\",\n\"orgs\",\n\"The GRID organisation funding this publication.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 147,\n            'f': \"147\",\n        },\n\"publications\",\n\"id\",\n\"identifier\",\n\"Dimensions publication ID.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 148,\n            'f': \"148\",\n        },\n\"publications\",\n\"issn\",\n\"string\",\n\"International Standard Serial Number\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 149,\n            'f': \"149\",\n        },\n\"publications\",\n\"issue\",\n\"string\",\n\"The issue number of a publication.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 150,\n            'f': \"150\",\n        },\n\"publications\",\n\"journal\",\n\"journals\",\n\"The journal a publication belongs to.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 151,\n            'f': \"151\",\n        },\n\"publications\",\n\"journal_lists\",\n\"string\",\n\"Independent grouping of journals outside of Dimensions, e.g. 'ERA 2015' or 'Norwegian register level 1'.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 152,\n            'f': \"152\",\n        },\n\"publications\",\n\"linkout\",\n\"text\",\n\"Original URL for a publication full text.\",\nfalse,\nfalse,\nfalse],\n [{\n            'v': 153,\n            'f': \"153\",\n        },\n\"publications\",\n\"mesh_terms\",\n\"label\",\n\"Medical Subject Heading terms as used in PubMed.\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 154,\n            'f': \"154\",\n        },\n\"publications\",\n\"open_access_categories\",\n\"open_access\",\n\"Open Access categories for publications. See below for more examples.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 155,\n            'f': \"155\",\n        },\n\"publications\",\n\"pages\",\n\"string\",\n\"The pages of the publication, as they would appear in a citation record.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 156,\n            'f': \"156\",\n        },\n\"publications\",\n\"pmcid\",\n\"identifier\",\n\"PubMed Central ID.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 157,\n            'f': \"157\",\n        },\n\"publications\",\n\"pmid\",\n\"identifier\",\n\"PubMed ID.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 158,\n            'f': \"158\",\n        },\n\"publications\",\n\"proceedings_title\",\n\"text\",\n\"Title of the conference proceedings volume associated to a publication.\",\nfalse,\nfalse,\nfalse],\n [{\n            'v': 159,\n            'f': \"159\",\n        },\n\"publications\",\n\"publisher\",\n\"label\",\n\"Name of the publisher as a string.\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 160,\n            'f': \"160\",\n        },\n\"publications\",\n\"recent_citations\",\n\"integer\",\n\"Number of citations received in the last two years. Does not support emptiness filters\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 161,\n            'f': \"161\",\n        },\n\"publications\",\n\"reference_ids\",\n\"identifier\",\n\"Dimensions publication ID for publications in the references list, i.e. outgoing citations (see also: :ref:`data-model` section).\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 162,\n            'f': \"162\",\n        },\n\"publications\",\n\"relative_citation_ratio\",\n\"float\",\n\"Relative citation performance of an article when compared to others in its area of research (note: does not support emptiness filters).\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 163,\n            'f': \"163\",\n        },\n\"publications\",\n\"research_org_cities\",\n\"cities\",\n\"City of the GRID organisations authors are affiliated to, expressed as GeoNames ID and name.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 164,\n            'f': \"164\",\n        },\n\"publications\",\n\"research_org_countries\",\n\"countries\",\n\"Country of the GRID organisations authors are affiliated to, identified using GeoNames codes (note: this field supports :ref:`filter-functions`: ``count``).\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 165,\n            'f': \"165\",\n        },\n\"publications\",\n\"research_org_country_names\",\n\"string\",\n\"Country name of the GRID organisations authors are affiliated to, as a string.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 166,\n            'f': \"166\",\n        },\n\"publications\",\n\"research_org_state_codes\",\n\"states\",\n\"State of the GRID organisations authors are affiliated to, expressed as GeoNames codes (ISO\\u200c-3166-2).\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 167,\n            'f': \"167\",\n        },\n\"publications\",\n\"research_org_state_names\",\n\"string\",\n\"State name of the GRID organisations authors are affiliated to, as a string.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 168,\n            'f': \"168\",\n        },\n\"publications\",\n\"research_orgs\",\n\"orgs\",\n\"GRID organisations associated to a publication. Identifiers are automatically extracted from author affiliations text, so they can be missing in some cases (note: this field supports :ref:`filter-functions`: ``count``).\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 169,\n            'f': \"169\",\n        },\n\"publications\",\n\"researchers\",\n\"researchers\",\n\"Researcher IDs matched to the publication's authors list. (note: this returns only the disambiguated authors of a publication; in order to get the full authors list, the field `author_affiliations` should be used). This field supports :ref:`filter-functions`: ``count``.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 170,\n            'f': \"170\",\n        },\n\"publications\",\n\"supporting_grant_ids\",\n\"identifier\",\n\"Grants supporting a publication, returned as a list of dimensions grants IDs  (see also: :ref:`data-model` section).\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 171,\n            'f': \"171\",\n        },\n\"publications\",\n\"times_cited\",\n\"count\",\n\"Number of citations (note: does not support emptiness filters).\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 172,\n            'f': \"172\",\n        },\n\"publications\",\n\"title\",\n\"text\",\n\"Title of a publication.\",\nfalse,\nfalse,\nfalse],\n [{\n            'v': 173,\n            'f': \"173\",\n        },\n\"publications\",\n\"type\",\n\"label\",\n\"Publication type (one of: article, chapter, proceeding, monograph, preprint or book).\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 174,\n            'f': \"174\",\n        },\n\"publications\",\n\"volume\",\n\"string\",\n\"Publication volume.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 175,\n            'f': \"175\",\n        },\n\"publications\",\n\"year\",\n\"integer\",\n\"The year of publication (note: when the `date` field is available, this is equal to the year part of the full date).\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 176,\n            'f': \"176\",\n        },\n\"researchers\",\n\"current_research_org\",\n\"orgs\",\n\"The most recent research organization linked to the researcher.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 177,\n            'f': \"177\",\n        },\n\"researchers\",\n\"first_grant_year\",\n\"integer\",\n\"First year the researcher was awarded a grant.\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 178,\n            'f': \"178\",\n        },\n\"researchers\",\n\"first_name\",\n\"string\",\n\"First Name.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 179,\n            'f': \"179\",\n        },\n\"researchers\",\n\"first_publication_year\",\n\"integer\",\nnull,\ntrue,\nfalse,\ntrue],\n [{\n            'v': 180,\n            'f': \"180\",\n        },\n\"researchers\",\n\"id\",\n\"identifier\",\n\"Dimensions researcher ID.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 181,\n            'f': \"181\",\n        },\n\"researchers\",\n\"last_grant_year\",\n\"integer\",\n\"Last year the researcher was awarded a grant.\",\ntrue,\nfalse,\ntrue],\n [{\n            'v': 182,\n            'f': \"182\",\n        },\n\"researchers\",\n\"last_name\",\n\"string\",\n\"Last Name.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 183,\n            'f': \"183\",\n        },\n\"researchers\",\n\"last_publication_year\",\n\"integer\",\nnull,\ntrue,\nfalse,\ntrue],\n [{\n            'v': 184,\n            'f': \"184\",\n        },\n\"researchers\",\n\"obsolete\",\n\"integer\",\n\"Indicates researcher ID status. 0 means that the researcher ID is still active, 1 means that the researcher ID is no longer valid. See the `redirect` field for further information on invalid researcher IDs.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 185,\n            'f': \"185\",\n        },\n\"researchers\",\n\"orcid_id\",\n\"string\",\n\"`ORCID <https://orcid.org/>`_ ID.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 186,\n            'f': \"186\",\n        },\n\"researchers\",\n\"redirect\",\n\"identifier\",\n\"Indicates status of a researcher ID marked as obsolete. Empty means that the researcher ID was deleted. Otherwise ID provided means that is the new ID into which the obsolete one was redirected. If multiple values are available, it means that the original researcher ID was split into multiple IDs.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 187,\n            'f': \"187\",\n        },\n\"researchers\",\n\"research_orgs\",\n\"orgs\",\n\"All research organizations linked to the researcher.\",\ntrue,\ntrue,\ntrue],\n [{\n            'v': 188,\n            'f': \"188\",\n        },\n\"researchers\",\n\"total_grants\",\n\"count\",\n\"Total grants count.\",\ntrue,\nfalse,\nfalse],\n [{\n            'v': 189,\n            'f': \"189\",\n        },\n\"researchers\",\n\"total_publications\",\n\"count\",\n\"Total publications count.\",\ntrue,\nfalse,\nfalse]],\n        columns: [[\"number\", \"index\"], [\"string\", \"sources\"], [\"string\", \"field\"], [\"string\", \"type\"], [\"string\", \"description\"], [\"string\", \"is_filter\"], [\"string\", \"is_entity\"], [\"string\", \"is_facet\"]],\n        columnOptions: [{\"width\": \"1px\", \"className\": \"index_column\"}],\n        rowsPerPage: 25,\n        helpUrl: \"https://colab.research.google.com/notebooks/data_table.ipynb\",\n      });\n    ",
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>sources</th>\n",
+       "      <th>field</th>\n",
+       "      <th>type</th>\n",
+       "      <th>description</th>\n",
+       "      <th>is_filter</th>\n",
+       "      <th>is_entity</th>\n",
+       "      <th>is_facet</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>clinical_trials</td>\n",
+       "      <td>FOR</td>\n",
+       "      <td>categories</td>\n",
+       "      <td>`ANZSRC Fields of Research classification &lt;htt...</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>clinical_trials</td>\n",
+       "      <td>FOR_first</td>\n",
+       "      <td>categories</td>\n",
+       "      <td>`ANZSRC Fields of Research classification &lt;htt...</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>clinical_trials</td>\n",
+       "      <td>abstract</td>\n",
+       "      <td>text</td>\n",
+       "      <td>Abstract or description of the clinical trial.</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>clinical_trials</td>\n",
+       "      <td>active_years</td>\n",
+       "      <td>integer</td>\n",
+       "      <td>List of active years for a clinical trial.</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>True</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>clinical_trials</td>\n",
+       "      <td>associated_grant_ids</td>\n",
+       "      <td>identifier</td>\n",
+       "      <td>Dimensions IDs of the grants associated to the...</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>...</th>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>185</th>\n",
+       "      <td>researchers</td>\n",
+       "      <td>orcid_id</td>\n",
+       "      <td>string</td>\n",
+       "      <td>`ORCID &lt;https://orcid.org/&gt;`_ ID.</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>186</th>\n",
+       "      <td>researchers</td>\n",
+       "      <td>redirect</td>\n",
+       "      <td>identifier</td>\n",
+       "      <td>Indicates status of a researcher ID marked as ...</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>187</th>\n",
+       "      <td>researchers</td>\n",
+       "      <td>research_orgs</td>\n",
+       "      <td>orgs</td>\n",
+       "      <td>All research organizations linked to the resea...</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "      <td>True</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>188</th>\n",
+       "      <td>researchers</td>\n",
+       "      <td>total_grants</td>\n",
+       "      <td>count</td>\n",
+       "      <td>Total grants count.</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>189</th>\n",
+       "      <td>researchers</td>\n",
+       "      <td>total_publications</td>\n",
+       "      <td>count</td>\n",
+       "      <td>Total publications count.</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>190 rows × 7 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "             sources                 field  ... is_entity is_facet\n",
+       "0    clinical_trials                   FOR  ...      True     True\n",
+       "1    clinical_trials             FOR_first  ...      True     True\n",
+       "2    clinical_trials              abstract  ...     False    False\n",
+       "3    clinical_trials          active_years  ...     False     True\n",
+       "4    clinical_trials  associated_grant_ids  ...     False    False\n",
+       "..               ...                   ...  ...       ...      ...\n",
+       "185      researchers              orcid_id  ...     False    False\n",
+       "186      researchers              redirect  ...     False    False\n",
+       "187      researchers         research_orgs  ...      True     True\n",
+       "188      researchers          total_grants  ...     False    False\n",
+       "189      researchers    total_publications  ...     False    False\n",
+       "\n",
+       "[190 rows x 7 columns]"
+      ]
+     },
+     "execution_count": 19,
+     "metadata": {
+      "tags": []
+     },
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "%dsldocs "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "oUKz7tOsMH6z"
+   },
+   "source": [
+    "---\n",
+    "## Want to learn more?\n",
+    "\n",
+    "Check out the [Dimensions API Lab](https://digital-science.github.io/dimensions-api-lab/) website, which contains many tutorials and reusable Jupyter notebooks for scholarly data analytics. "
+   ]
+  }
+ ],
+ "metadata": {
+  "colab": {
+   "collapsed_sections": [],
+   "name": "3-Learning-about-Dimcli-magic-commands.ipynb",
+   "provenance": [],
+   "toc_visible": true
+  },
+  "kernel_info": {
+   "name": "dimcli_env"
+  },
+  "kernelspec": {
+   "display_name": "dimcli_env",
+   "language": "python",
+   "name": "dimcli_env"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.4"
+  },
+  "nteract": {
+   "version": "0.14.5"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

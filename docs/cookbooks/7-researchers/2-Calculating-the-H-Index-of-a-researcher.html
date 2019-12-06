@@ -1,0 +1,449 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Calculating the H-index of a researcher &#8212; Dimensions API Lab - Reusable Solutions for Scholarly Data Analytics</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Searching GRID organizations using the Dimensions API" href="../8-organizations/1-GRID-preview.html" />
+    <link rel="prev" title="Extracting researchers based on affiliations and publications history" href="1-Researchers-Search-tips-V2.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../8-organizations/1-GRID-preview.html" title="Searching GRID organizations using the Dimensions API"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="1-Researchers-Search-tips-V2.html" title="Extracting researchers based on affiliations and publications history"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Dimensions API Lab - Reusable Solutions for Scholarly Data Analytics</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 5ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/cookbooks/7-researchers/2-Calculating-the-H-Index-of-a-researcher.ipynb">Open this notebook in Google Colab</a>, a free cloud-based environment that allows to run Jupyter notebooks, or <a class="reference external" href="https://digital-science.github.io/dimensions-api-lab/blob/master/cookbooks/7-researchers/2-Calculating-the-H-Index-of-a-researcher.ipynb">download it from Github</a> to run it on your local computer.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="Calculating-the-H-index-of-a-researcher">
+<h1>Calculating the H-index of a researcher<a class="headerlink" href="#Calculating-the-H-index-of-a-researcher" title="Permalink to this headline">¶</a></h1>
+<p>This notebook shows how to use Python and the <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> to calculate the H-index of a researcher.</p>
+<div class="section" id="Background">
+<h2>Background<a class="headerlink" href="#Background" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>The <a class="reference external" href="https://en.wikipedia.org/wiki/H-index">h-index</a> is an author-level metric that attempts to measure both the productivity and citation impact of the publications of a scientist or scholar. The index is based on the set of the scientist’s most cited papers and the number of citations that they have received in other publications.</p>
+</div></blockquote>
+<p>A more precise definition:</p>
+<blockquote>
+<div><p>The h-index is defined as the maximum value of h such that the given author/journal has published h papers that have each been cited at least h times.</p>
+</div></blockquote>
+<p>How to calculate it:</p>
+<blockquote>
+<div><p>Formally, if f is the function that corresponds to the number of citations for each publication, we compute the h-index as follows. First we order the values of f from the largest to the lowest value. Then, we look for the last position in which f is greater than or equal to the position (we call h this position). For example, if we have a researcher with 5 publications A, B, C, D, and E with 10, 8, 5, 4, and 3 citations, respectively, the h-index is equal to 4 because the 4th publication has
+4 citations and the 5th has only 3. In contrast, if the same publications have 25, 8, 5, 3, and 3 citations, then the index is 3 because the fourth paper has only 3 citations (<a class="reference external" href="https://en.wikipedia.org/wiki/H-index">wikipedia</a>)</p>
+</div></blockquote>
+</div>
+<div class="section" id="Prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># @markdown Click the &#39;play&#39; button on the left (or shift+enter) after entering your API credentials</span>
+
+<span class="n">username</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1">#@param {type: &quot;string&quot;}</span>
+<span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1">#@param {type: &quot;string&quot;}</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;https://app.dimensions.ai&quot;</span>
+
+<span class="o">!</span>pip install dimcli -U --quiet
+
+<span class="c1"># import all libraries and login</span>
+<span class="kn">import</span> <span class="nn">dimcli</span>
+<span class="kn">from</span> <span class="nn">dimcli.shortcuts</span> <span class="k">import</span> <span class="o">*</span>
+<span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">)</span>
+<span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Selecting-a-researcher">
+<h3>Selecting a researcher<a class="headerlink" href="#Selecting-a-researcher" title="Permalink to this headline">¶</a></h3>
+<p>Let’s take a researcher ID eg <a class="reference external" href="https://app.dimensions.ai/discover/publication?and_facet_researcher=ur.01357111535.49">Michael Boutros ur.01357111535.49</a> and save its ID into a variable that can be referenced later.</p>
+<blockquote>
+<div><p>Try modifying the researcher ID below to get different results!</p>
+</div></blockquote>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">RESEARCHER</span> <span class="o">=</span> <span class="s2">&quot;ur.01357111535.49&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="The-H-Index-function">
+<h3>The H-Index function<a class="headerlink" href="#The-H-Index-function" title="Permalink to this headline">¶</a></h3>
+<p>The h-Index function takes a list of citations and outputs the h-index value as explained above:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">the_H_function</span><span class="p">(</span><span class="n">sorted_citations_list</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;from a list of integers [n1, n2 ..] representing publications citations,</span>
+<span class="sd">    return the max list-position which is &gt;= integer</span>
+
+<span class="sd">    eg</span>
+<span class="sd">    &gt;&gt;&gt; the_H_function([10, 8, 5, 4, 3]) =&gt; 4</span>
+<span class="sd">    &gt;&gt;&gt; the_H_function([25, 8, 5, 3, 3]) =&gt; 3</span>
+<span class="sd">    &gt;&gt;&gt; the_H_function([1000, 20]) =&gt; 2</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">sorted_citations_list</span> <span class="ow">and</span> <span class="n">sorted_citations_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">the_H_function</span><span class="p">(</span><span class="n">sorted_citations_list</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<p>The H-index function is generic and can take any list of numbers representing publication citations.</p>
+</div>
+<div class="section" id="Getting-citations-data-from-Dimensions">
+<h3>Getting citations data from Dimensions<a class="headerlink" href="#Getting-citations-data-from-Dimensions" title="Permalink to this headline">¶</a></h3>
+<p>In order to pass some real-world data to the H-Index function, we can easily use the Dimensions API to extract all publication citations for a researcher, like this:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">get_pubs_citations</span><span class="p">(</span><span class="n">researcher_id</span><span class="p">):</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search publications where researchers.id = &quot;</span><span class="si">{}</span><span class="s2">&quot; return publications[times_cited] sort by times_cited limit 1000&quot;&quot;&quot;</span>
+    <span class="n">pubs</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">researcher_id</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">pubs</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="s1">&#39;times_cited&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Wrapping-things-up">
+<h3>Wrapping things up<a class="headerlink" href="#Wrapping-things-up" title="Permalink to this headline">¶</a></h3>
+<p>Finally, we combine the two functions to calculate the H-Index for a specific researcher:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;H_index is:&quot;</span><span class="p">,</span> <span class="n">the_H_function</span><span class="p">(</span><span class="n">get_pubs_citations</span><span class="p">(</span><span class="n">RESEARCHER</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+H_index is: 53
+</pre></div></div>
+</div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <a class="reference external" href="https://digital-science.github.io/dimensions-api-lab/">Dimensions API Lab</a> contains many notebooks like this one, demonstrating how to carry out useful scholarly analytics tasks using the <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Analytics API</a>. Check out also the associated <a class="reference external" href="https://github.com/digital-science/dimensions-api-lab">Github repository</a> for all the source code files and much more.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Calculating the H-index of a researcher</a><ul>
+<li><a class="reference internal" href="#Background">Background</a></li>
+<li><a class="reference internal" href="#Prerequisites">Prerequisites</a><ul>
+<li><a class="reference internal" href="#Selecting-a-researcher">Selecting a researcher</a></li>
+<li><a class="reference internal" href="#The-H-Index-function">The H-Index function</a></li>
+<li><a class="reference internal" href="#Getting-citations-data-from-Dimensions">Getting citations data from Dimensions</a></li>
+<li><a class="reference internal" href="#Wrapping-things-up">Wrapping things up</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="1-Researchers-Search-tips-V2.html"
+                        title="previous chapter">Extracting researchers based on affiliations and publications history</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../8-organizations/1-GRID-preview.html"
+                        title="next chapter">Searching GRID organizations using the Dimensions API</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/cookbooks/7-researchers/2-Calculating-the-H-Index-of-a-researcher.ipynb.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../8-organizations/1-GRID-preview.html" title="Searching GRID organizations using the Dimensions API"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="1-Researchers-Search-tips-V2.html" title="Extracting researchers based on affiliations and publications history"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Dimensions API Lab - Reusable Solutions for Scholarly Data Analytics</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dimensions API Team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

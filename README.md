@@ -2,13 +2,12 @@
 
 This GitHub repository contains code samples and reusable **Jupyter notebooks** for scholarly data analytics using the [Dimensions API](https://www.dimensions.ai/dimensions-apis/).
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/digital-science/dimensions-api-lab/master) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/digital-science/dimensions-api-lab/)
-
 A companion website including HTML versions of these tutorials is also available:
 * https://digital-science.github.io/dimensions-api-lab/ 
 
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/digital-science/dimensions-api-lab/master) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/digital-science/dimensions-api-lab/)
 
 ### What is Dimensions?
 

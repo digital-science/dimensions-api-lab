@@ -18,4 +18,4 @@ All the notebooks in this folder will automatically discover the file and load y
 
 ### More info
 
-https://github.com/lambdamusic/dimcli#authentication
+https://github.com/digital-science/dimcli#authentication
