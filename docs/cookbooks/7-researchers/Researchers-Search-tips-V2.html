@@ -16,7 +16,7 @@
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Searching GRID organizations using the Dimensions API" href="../8-organizations/GRID-preview.html" />
+    <link rel="next" title="Searching GRID organizations using the Dimensions API" href="../8-organizations/1-GRID-preview.html" />
     <link rel="prev" title="Calculating the H-index of a researcher" href="Calculating-the-H-Index-of-a-researcher.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
@@ -26,7 +26,7 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../8-organizations/GRID-preview.html" title="Searching GRID organizations using the Dimensions API"
+          <a href="../8-organizations/1-GRID-preview.html" title="Searching GRID organizations using the Dimensions API"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="Calculating-the-H-Index-of-a-researcher.html" title="Calculating the H-index of a researcher"
@@ -242,7 +242,7 @@ div.rendered_html tbody tr:hover {
 </style>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p>Try out an interactive version of this notebook by <a class="reference external" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/cookbooks/7-researchers/Researchers-Search-tips-V2.ipynb">opening it with Google Colab</a>, or, alternatively, <a class="reference external" href="https://digital-science.github.io/dimensions-api-lab/blob/master/cookbooks/7-researchers/Researchers-Search-tips-V2.ipynb">download it from Github</a>.</p>
+<p><a class="reference external" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/cookbooks/7-researchers/Researchers-Search-tips-V2.ipynb">Open this notebook in Google Colab</a>, a free cloud-based environment that allows to run Jupyter notebooks, or <a class="reference external" href="https://digital-science.github.io/dimensions-api-lab/blob/master/cookbooks/7-researchers/Researchers-Search-tips-V2.ipynb">download it from Github</a> to run it on your local computer.</p>
 </div>
 <hr class="docutils" />
 <div class="section" id="Extracting-researchers-based-on-affiliations-and-publications-history">
@@ -275,16 +275,18 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">!</span>pip install dimcli -U --quiet
+<span></span><span class="c1"># @markdown Click the &#39;play&#39; button on the left (or shift+enter) after entering your API credentials</span>
 
-<span class="n">username</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="n">username</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1">#@param {type: &quot;string&quot;}</span>
+<span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1">#@param {type: &quot;string&quot;}</span>
 <span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;https://app.dimensions.ai&quot;</span>
+
+<span class="o">!</span>pip install dimcli -U --quiet
 
 <span class="c1"># import all libraries and login</span>
 <span class="kn">import</span> <span class="nn">dimcli</span>
 <span class="kn">from</span> <span class="nn">dimcli.shortcuts</span> <span class="k">import</span> <span class="o">*</span>
-<span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+<span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">)</span>
 <span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
 
 
@@ -1536,9 +1538,12 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 503
 </div>
 </div>
 <hr class="docutils" />
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p>Try out an interactive version of this notebook by <a class="reference external" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/cookbooks/7-researchers/Researchers-Search-tips-V2.ipynb">opening it with Google Colab</a>, or, alternatively, <a class="reference external" href="https://digital-science.github.io/dimensions-api-lab/blob/master/cookbooks/7-researchers/Researchers-Search-tips-V2.ipynb">download it from Github</a>.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <a class="reference external" href="https://digital-science.github.io/dimensions-api-lab/">Dimensions API Lab</a> contains many notebooks like this one, demonstrating how to carry out useful scholarly analytics tasks using the <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Analytics API</a>. Check out also the associated <a class="reference external" href="https://github.com/digital-science/dimensions-api-lab">Github repository</a> for all the source code files and much more.</p>
 </div>
 
 
@@ -1575,7 +1580,7 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 503
   <p class="topless"><a href="Calculating-the-H-Index-of-a-researcher.html"
                         title="previous chapter">Calculating the H-index of a researcher</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../8-organizations/GRID-preview.html"
+  <p class="topless"><a href="../8-organizations/1-GRID-preview.html"
                         title="next chapter">Searching GRID organizations using the Dimensions API</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
@@ -1605,7 +1610,7 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 503
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../8-organizations/GRID-preview.html" title="Searching GRID organizations using the Dimensions API"
+          <a href="../8-organizations/1-GRID-preview.html" title="Searching GRID organizations using the Dimensions API"
              >next</a> |</li>
         <li class="right" >
           <a href="Calculating-the-H-Index-of-a-researcher.html" title="Calculating the H-index of a researcher"

@@ -17,7 +17,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Extracting researchers based on affiliations and publications history" href="Researchers-Search-tips-V2.html" />
-    <link rel="prev" title="Transforming API results into Pandas dataframes" href="../1-getting-started/3-Working-with-dataframes.html" /> 
+    <link rel="prev" title="Extracting Patents that cite Publications from a chosen Research Organization" href="../5-patents/1-Patents-referencing-a-Research-Organization.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -29,7 +29,7 @@
           <a href="Researchers-Search-tips-V2.html" title="Extracting researchers based on affiliations and publications history"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../1-getting-started/3-Working-with-dataframes.html" title="Transforming API results into Pandas dataframes"
+          <a href="../5-patents/1-Patents-referencing-a-Research-Organization.html" title="Extracting Patents that cite Publications from a chosen Research Organization"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">Dimensions API Lab - Reusable Solutions for Scholarly Data Analytics</a> &#187;</li> 
       </ul>
@@ -242,7 +242,7 @@ div.rendered_html tbody tr:hover {
 </style>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p>Try out an interactive version of this notebook by <a class="reference external" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/cookbooks/7-researchers/Calculating-the-H-Index-of-a-researcher.ipynb">opening it with Google Colab</a>, or, alternatively, <a class="reference external" href="https://digital-science.github.io/dimensions-api-lab/blob/master/cookbooks/7-researchers/Calculating-the-H-Index-of-a-researcher.ipynb">download it from Github</a>.</p>
+<p><a class="reference external" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/cookbooks/7-researchers/Calculating-the-H-Index-of-a-researcher.ipynb">Open this notebook in Google Colab</a>, a free cloud-based environment that allows to run Jupyter notebooks, or <a class="reference external" href="https://digital-science.github.io/dimensions-api-lab/blob/master/cookbooks/7-researchers/Calculating-the-H-Index-of-a-researcher.ipynb">download it from Github</a> to run it on your local computer.</p>
 </div>
 <hr class="docutils" />
 <div class="section" id="Calculating-the-H-index-of-a-researcher">
@@ -270,16 +270,18 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">!</span>pip install dimcli -U --quiet
+<span></span><span class="c1"># @markdown Click the &#39;play&#39; button on the left (or shift+enter) after entering your API credentials</span>
 
-<span class="n">username</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="n">username</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1">#@param {type: &quot;string&quot;}</span>
+<span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1">#@param {type: &quot;string&quot;}</span>
 <span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;https://app.dimensions.ai&quot;</span>
+
+<span class="o">!</span>pip install dimcli -U --quiet
 
 <span class="c1"># import all libraries and login</span>
 <span class="kn">import</span> <span class="nn">dimcli</span>
 <span class="kn">from</span> <span class="nn">dimcli.shortcuts</span> <span class="k">import</span> <span class="o">*</span>
-<span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+<span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">)</span>
 <span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -368,9 +370,12 @@ H_index is: 53
 </div>
 </div>
 <hr class="docutils" />
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p>Try out an interactive version of this notebook by <a class="reference external" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/cookbooks/7-researchers/Calculating-the-H-Index-of-a-researcher.ipynb">opening it with Google Colab</a>, or, alternatively, <a class="reference external" href="https://digital-science.github.io/dimensions-api-lab/blob/master/cookbooks/7-researchers/Calculating-the-H-Index-of-a-researcher.ipynb">download it from Github</a>.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <a class="reference external" href="https://digital-science.github.io/dimensions-api-lab/">Dimensions API Lab</a> contains many notebooks like this one, demonstrating how to carry out useful scholarly analytics tasks using the <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Analytics API</a>. Check out also the associated <a class="reference external" href="https://github.com/digital-science/dimensions-api-lab">Github repository</a> for all the source code files and much more.</p>
 </div>
 
 
@@ -395,8 +400,8 @@ H_index is: 53
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../1-getting-started/3-Working-with-dataframes.html"
-                        title="previous chapter">Transforming API results into Pandas dataframes</a></p>
+  <p class="topless"><a href="../5-patents/1-Patents-referencing-a-Research-Organization.html"
+                        title="previous chapter">Extracting Patents that cite Publications from a chosen Research Organization</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="Researchers-Search-tips-V2.html"
                         title="next chapter">Extracting researchers based on affiliations and publications history</a></p>
@@ -431,7 +436,7 @@ H_index is: 53
           <a href="Researchers-Search-tips-V2.html" title="Extracting researchers based on affiliations and publications history"
              >next</a> |</li>
         <li class="right" >
-          <a href="../1-getting-started/3-Working-with-dataframes.html" title="Transforming API results into Pandas dataframes"
+          <a href="../5-patents/1-Patents-referencing-a-Research-Organization.html" title="Extracting Patents that cite Publications from a chosen Research Organization"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">Dimensions API Lab - Reusable Solutions for Scholarly Data Analytics</a> &#187;</li> 
       </ul>

@@ -1,0 +1,671 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Clinical Trials by Volume of Publications &#8212; Dimensions API Lab - Reusable Solutions for Scholarly Data Analytics</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Extracting Patents that cite Publications from a chosen Research Organization" href="../5-patents/1-Patents-referencing-a-Research-Organization.html" />
+    <link rel="prev" title="Citation Analysis using the Dimensions API: An Introduction" href="../2-publications/Citation-Analysis.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../5-patents/1-Patents-referencing-a-Research-Organization.html" title="Extracting Patents that cite Publications from a chosen Research Organization"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../2-publications/Citation-Analysis.html" title="Citation Analysis using the Dimensions API: An Introduction"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Dimensions API Lab - Reusable Solutions for Scholarly Data Analytics</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 5ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/cookbooks/4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.ipynb">Open this notebook in Google Colab</a>, a free cloud-based environment that allows to run Jupyter notebooks, or <a class="reference external" href="https://digital-science.github.io/dimensions-api-lab/blob/master/cookbooks/4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.ipynb">download it from Github</a> to run it on your local computer.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="Clinical-Trials-by-Volume-of-Publications">
+<h1>Clinical Trials by Volume of Publications<a class="headerlink" href="#Clinical-Trials-by-Volume-of-Publications" title="Permalink to this headline">¶</a></h1>
+<p>This notebook shows how use the <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> in order to get a list of clinical trials records and then sort them by the total number of publications they cite.</p>
+<div class="section" id="Load-libraries-and-log-in">
+<h2>Load libraries and log in<a class="headerlink" href="#Load-libraries-and-log-in" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># @markdown # Get the API library and login</span>
+<span class="c1"># @markdown Click the &#39;play&#39; button on the left (or shift+enter) after entering your API credentials</span>
+
+<span class="n">username</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1">#@param {type: &quot;string&quot;}</span>
+<span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1">#@param {type: &quot;string&quot;}</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;https://app.dimensions.ai&quot;</span> <span class="c1">#@param {type: &quot;string&quot;}</span>
+
+
+<span class="o">!</span>pip install dimcli plotly_express -U --quiet
+<span class="kn">import</span> <span class="nn">dimcli</span>
+<span class="kn">from</span> <span class="nn">dimcli.shortcuts</span> <span class="k">import</span> <span class="o">*</span>
+<span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">)</span>
+<span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
+
+<span class="c1">#</span>
+<span class="c1"># load common libraries</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pandas.io.json</span> <span class="k">import</span> <span class="n">json_normalize</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="k">import</span> <span class="n">tqdm_notebook</span> <span class="k">as</span> <span class="n">tqdm</span>
+
+<span class="c1">#</span>
+<span class="c1"># charts libs</span>
+<span class="kn">import</span> <span class="nn">plotly_express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+  <span class="c1"># make js dependecies local / needed by html exports</span>
+  <span class="kn">from</span> <span class="nn">plotly.offline</span> <span class="k">import</span> <span class="n">init_notebook_mode</span>
+  <span class="n">init_notebook_mode</span><span class="p">(</span><span class="n">connected</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+DimCli v0.6.1.2 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (method: manual login)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<script type="text/javascript">
+window.PlotlyConfig = {MathJaxConfig: 'local'};
+if (window.MathJax) {MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+if (typeof require !== 'undefined') {
+require.undef("plotly");
+requirejs.config({
+    paths: {
+        'plotly': ['https://cdn.plot.ly/plotly-latest.min']
+    }
+});
+require(['plotly'], function(Plotly) {
+    window._Plotly = Plotly;
+});
+}
+</script></div>
+</div>
+</div>
+<div class="section" id="Query-for-Clinical-Trials">
+<h2>Query for Clinical Trials<a class="headerlink" href="#Query-for-Clinical-Trials" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search clinical_trials where category_rcdc.name=&quot;Multiple Sclerosis&quot;</span>
+<span class="s2">        and active_years=[2017, 2018, 2019]</span>
+<span class="s2">        return clinical_trials[basics+publication_ids]&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">df</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query_iterative</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1000 / 2132
+2000 / 2132
+2132 / 2132
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>active_years</th>
+      <th>id</th>
+      <th>publication_ids</th>
+      <th>investigator_details</th>
+      <th>title</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>[2005, 2006, 2007, 2008, 2009]</td>
+      <td>NCT00257855</td>
+      <td>[pub.1016078006]</td>
+      <td>[[Raju Kapoor, MD PhD, Study Director, Nationa...</td>
+      <td>A Randomised Controlled Trial of Neuroprotecti...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>[2003, 2004, 2005, 2006]</td>
+      <td>NCT00260741</td>
+      <td>None</td>
+      <td>[[Mark Agius, MD, Principal Investigator, Univ...</td>
+      <td>Cannabis for Spasticity in Multiple Sclerosis:...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>[2006, 2007, 2008, 2009, 2010, 2011]</td>
+      <td>NCT00261326</td>
+      <td>[pub.1014996254]</td>
+      <td>[[Jette L Frederiksen, DrMed, Study Director, ...</td>
+      <td>Simvastatin Treatment of Patients With Acut Op...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>[2000, 2001, 2002, 2003, 2004, 2005, 2006, 200...</td>
+      <td>NCT00262314</td>
+      <td>None</td>
+      <td>[[Randy Bennett, , Study Director, EMD Serono,...</td>
+      <td>Prospective, Open-label Tolerability and Safet...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>None</td>
+      <td>NCT00267319</td>
+      <td>None</td>
+      <td>[[Zuzana Priborska, , Study Director, Sanofi, ...</td>
+      <td>Fatigue Outcomes of Copaxone Users in Relapsin...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Counting-publications-per-clinical-trial">
+<h2>Counting publications per clinical trial<a class="headerlink" href="#Counting-publications-per-clinical-trial" title="Permalink to this headline">¶</a></h2>
+<p>Before we can count publications, we should ensure that all the values are ‘countable’. So we have to transform all None values in <code class="docutils literal notranslate"><span class="pre">publication_ids</span></code> into empty lists first.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># replace empty values with empty lists so that they can be counted</span>
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">publication_ids</span><span class="o">.</span><span class="n">isnull</span><span class="p">(),</span> <span class="s1">&#39;publication_ids&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="s1">&#39;publication_ids&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+</div>
+<p>Now it’s ok to count publications</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># create new column</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;pubs_tot&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;publication_ids&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="c1"># sort</span>
+<span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;pubs_tot&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>active_years</th>
+      <th>id</th>
+      <th>publication_ids</th>
+      <th>investigator_details</th>
+      <th>title</th>
+      <th>pubs_tot</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1695</th>
+      <td>[2019, 2020, 2021]</td>
+      <td>NCT04073940</td>
+      <td>[pub.1022342218, pub.1010367173, pub.104532283...</td>
+      <td>None</td>
+      <td>Exploration of Brain Changes Due to a Targeted...</td>
+      <td>92</td>
+    </tr>
+    <tr>
+      <th>1622</th>
+      <td>[2018, 2019, 2020, 2021, 2022]</td>
+      <td>NCT03782246</td>
+      <td>[pub.1028617232, pub.1035385239, pub.103188188...</td>
+      <td>[[Dawn Ehde, PhD, Principal Investigator, Univ...</td>
+      <td>Mindfulness-based Cognitive Therapy and Cognit...</td>
+      <td>72</td>
+    </tr>
+    <tr>
+      <th>383</th>
+      <td>[2014, 2015, 2016, 2017, 2018]</td>
+      <td>NCT02104661</td>
+      <td>[pub.1042342392, pub.1016078006, pub.102366073...</td>
+      <td>[[Gavin Givannoni, , Principal Investigator, Q...</td>
+      <td>OxCarbazepine as a Neuroprotective Agent in MS...</td>
+      <td>48</td>
+    </tr>
+    <tr>
+      <th>625</th>
+      <td>[2016, 2017, 2018, 2019, 2020]</td>
+      <td>NCT03004079</td>
+      <td>[pub.1033284389, pub.1053353274, pub.107152083...</td>
+      <td>[[Myla Goldman, MD, Principal Investigator, Un...</td>
+      <td>Assessment of the Clinical Importance of Insul...</td>
+      <td>46</td>
+    </tr>
+    <tr>
+      <th>309</th>
+      <td>[2014, 2015]</td>
+      <td>NCT02367222</td>
+      <td>[pub.1026901855, pub.1051111163, pub.106264497...</td>
+      <td>[[Salah Mahmud, MD, PhD, Principal Investigato...</td>
+      <td>An Observational Retrospective Database Analys...</td>
+      <td>43</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>A simple data visualization</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">df</span><span class="p">[:</span><span class="mi">200</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;pubs_tot&quot;</span><span class="p">,</span>
+      <span class="n">hover_name</span><span class="o">=</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="n">hover_data</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;active_years&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+
+
+            <div id="7ccb7fac-3495-4c37-bff1-7407d7e023c7" class="plotly-graph-div" style="height:600px; width:100%;"></div>
+            <script type="text/javascript">
+                require(["plotly"], function(Plotly) {
+                    window.PLOTLYENV=window.PLOTLYENV || {};
+
+                if (document.getElementById("7ccb7fac-3495-4c37-bff1-7407d7e023c7")) {
+                    Plotly.newPlot(
+                        '7ccb7fac-3495-4c37-bff1-7407d7e023c7',
+                        [{"alignmentgroup": "True", "customdata": [[[2019, 2020, 2021]], [[2018, 2019, 2020, 2021, 2022]], [[2014, 2015, 2016, 2017, 2018]], [[2016, 2017, 2018, 2019, 2020]], [[2014, 2015]], [null], [[2017, 2018, 2019]], [[2020, 2021, 2022]], [[2019, 2020, 2021]], [[2020]], [[2014, 2015, 2016]], [[2011, 2012, 2013]], [[2014, 2015, 2016, 2017, 2018, 2019]], [[2018, 2019]], [[2018, 2019, 2020]], [[2010, 2011, 2012, 2013]], [[2015, 2016, 2017]], [[2015, 2016, 2017, 2018, 2019, 2020, 2021]], [[2013, 2014, 2015, 2016, 2017, 2018]], [null], [[2014, 2015, 2016]], [[2018, 2019]], [null], [[2017, 2018, 2019, 2020]], [[2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022]], [[2015, 2016, 2017, 2018, 2019]], [[2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023]], [[2016]], [[2018, 2019, 2020]], [[2012, 2013, 2014, 2015]], [[2019]], [[2017, 2018, 2019, 2020]], [[2016, 2017]], [[2018, 2019]], [[2019, 2020, 2021, 2022, 2023, 2024, 2025]], [[2016, 2017, 2018, 2019, 2020]], [[2019, 2020]], [[2018, 2019, 2020, 2021]], [[2014, 2015, 2016, 2017, 2018]], [[2017, 2018, 2019]], [[2018, 2019, 2020]], [[2016, 2017, 2018]], [[2018, 2019, 2020]], [[2019, 2020, 2021]], [[2002, 2003, 2004, 2005, 2006, 2007, 2008]], [[2018, 2019]], [[2008]], [[2016, 2017, 2018]], [[2012, 2013, 2014, 2015, 2016]], [[2018]], [[2016, 2017, 2018, 2019, 2020]], [[2018, 2019]], [[2015]], [[2012, 2013, 2014]], [[2018, 2019]], [[2012, 2013]], [[2012]], [[2011, 2012, 2013, 2014, 2015, 2016, 2017]], [[2017, 2018, 2019]], [[2018, 2019, 2020, 2021, 2022, 2023, 2024]], [[2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015]], [null], [[2017, 2018, 2019]], [[2018, 2019, 2020]], [[2018, 2019, 2020, 2021]], [[2015, 2016, 2017, 2018, 2019, 2020]], [[2015, 2016]], [[2010, 2011]], [[2014, 2015, 2016]], [[2007, 2008, 2009, 2010, 2011]], [[2018, 2019]], [[2015, 2016, 2017]], [[2006, 2007, 2008, 2009]], [[2002, 2003, 2004, 2005, 2006, 2007, 2008]], [[2016, 2017, 2018, 2019]], [[2014, 2015, 2016]], [[2012, 2013, 2014, 2015, 2016]], [[2019, 2020]], [[2007, 2008, 2009, 2010, 2011]], [[2018, 2019]], [[2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010]], [[2013, 2014, 2015, 2016, 2017, 2018]], [[2019, 2020]], [[2014, 2015, 2016, 2017]], [[2017, 2018, 2019]], [[2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014]], [[2004, 2005, 2006]], [[2016, 2017]], [[2004, 2005, 2006, 2007, 2008, 2009, 2010]], [[2019, 2020, 2021, 2022]], [[2019, 2020, 2021]], [[2005, 2006, 2007, 2008, 2009, 2010, 2011]], [[2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022]], [[2018, 2019, 2020, 2021, 2022]], [[2019, 2020]], [[2018, 2019]], [[2016, 2017, 2018]], [[2009, 2010, 2011]], [[2018, 2019, 2020]], [[2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008]], [[2018, 2019, 2020]], [[2013, 2014]], [null], [[2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015]], [[2019, 2020]], [[2014, 2015]], [[2015, 2016]], [[2006, 2007, 2008, 2009, 2010, 2011]], [[2012, 2013, 2014, 2015, 2016, 2017]], [[2019, 2020]], [[2011, 2012, 2013]], [[2019, 2020]], [[2015, 2016, 2017, 2018, 2019, 2020]], [[2016, 2017, 2018, 2019]], [[2006, 2007, 2008, 2009, 2010, 2011]], [[2017, 2018, 2019, 2020]], [[2004, 2005]], [[2014]], [[2011, 2012, 2013, 2014]], [[2020, 2021, 2022]], [[2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016]], [[2008, 2009, 2010, 2011, 2012]], [[2013, 2014, 2015, 2016, 2017]], [[2018, 2019]], [[2012, 2013, 2014, 2015, 2016, 2017]], [[2018]], [[2015, 2016, 2017, 2018, 2019]], [[2019, 2020, 2021, 2022, 2023, 2024]], [[2010, 2011, 2012, 2013]], [[2010, 2011, 2012, 2013, 2014]], [[2015, 2016]], [[2019, 2020, 2021, 2022]], [[2011, 2012, 2013, 2014, 2015]], [[2009, 2010]], [[2013, 2014, 2015, 2016, 2017, 2018]], [[2015, 2016]], [[2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018]], [[2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009]], [[1999, 2000, 2001, 2002]], [[2019, 2020, 2021, 2022]], [[2005, 2006, 2007, 2008, 2009]], [[2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012]], [[2017, 2018, 2019]], [[2003, 2004, 2005]], [[2005, 2006, 2007, 2008, 2009]], [[2009, 2010, 2011, 2012, 2013, 2014]], [[2010, 2011, 2012]], [[2010, 2011]], [null], [[2014, 2015, 2016]], [[2018]], [[2002, 2003, 2004, 2005]], [[2018]], [[2018, 2019, 2020]], [[2017, 2018]], [[2018]], [[2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011]], [[2011, 2012, 2013, 2014]], [[2007, 2008, 2009, 2010]], [[2009, 2010, 2011, 2012]], [[2015, 2016, 2017]], [[2015, 2016, 2017]], [[2011, 2012, 2013, 2014, 2015]], [[2009, 2010, 2011, 2012]], [[2002, 2003, 2004, 2005, 2006, 2007]], [[2012, 2013]], [[2013, 2014]], [[2007, 2008, 2009, 2010, 2011]], [[2007, 2008, 2009, 2010, 2011]], [null], [[1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008]], [[2018, 2019]], [[2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017]], [[2005]], [[2019, 2020, 2021]], [[2013, 2014, 2015, 2016]], [[2019, 2020]], [[2003, 2004, 2005, 2006]], [[2004, 2005, 2006, 2007, 2008]], [[2013, 2014, 2015, 2016, 2017, 2018, 2019]], [[2018, 2019, 2020, 2021, 2022]], [[2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011]], [null], [[2002, 2003, 2004, 2005, 2006, 2007, 2008]], [[2011, 2012, 2013, 2014]], [null], [[2015, 2016, 2017, 2018, 2019]], [[2011, 2012]], [[2012, 2013, 2014, 2015]], [[2014, 2015, 2016, 2017]], [[2010, 2011, 2012, 2013, 2014, 2015, 2016]], [[2010, 2011, 2012]], [[2008, 2009, 2010, 2011]], [null], [[2012]], [[2019, 2020]], [[2013, 2014, 2015]], [[2009, 2010, 2011]], [[2014, 2015]], [[2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014]]], "hoverlabel": {"namelength": 0}, "hovertemplate": "<b>%{hovertext}</b><br><br>id=%{x}<br>pubs_tot=%{y}<br>active_years=%{customdata[0]}", "hovertext": ["Exploration of Brain Changes Due to a Targeted Ballet Program in Multiple Sclerosis", "Mindfulness-based Cognitive Therapy and Cognitive Behavioral Therapy for Chronic Pain in Multiple Sclerosis", "OxCarbazepine as a Neuroprotective Agent in MS: A Phase 2a Trial", "Assessment of the Clinical Importance of Insulin Resistance & Steroid-Associated Hyperglycemia in Relapsing Multiple Sclerosis", "An Observational Retrospective Database Analysis to Estimate the Risk of Multiple Sclerosis Following Vaccination With Arepanrix\u2122 in Manitoba, Canada", "NARCOMS Global Multiple Sclerosis Registry: A Long-Term Study to Facilitate Research in Multiple Sclerosis", "A Randomized, Placebo-Controlled Study of Mindfulness Meditation in Treating Insomnia in Multiple Sclerosis", "Cladribine Tablets After Treatment With Natalizumab (CLADRINA)", "A Double-blind, Randomised, Placebo-controlled Single-site Study of High Dose Simvastatin Treatment for Secondary Progressive Multiple Sclerosis: Impact on Vascular Perfusion and Oxidative Damage", "The Utilization of Yoga as a Therapeutic Tool to Promote Physical Activity Behavior Change and Improved Postural Control in Individuals With Multiple Sclerosis", "Improving the Quality of Life of People With Multiple Sclerosis and Their Caregivers With a Telemedicine Mindfulness-Based Intervention", "Dalfampridine After Optic Neuritis to Improve Visual Function in Multiple Sclerosis", "Short and Long Term Fampridine Treatment in Persons With Multiple Sclerosis: Cognitive and Motor Performances", "Attitudes, Barriers and Facilitators to Physical Activity in People With Multiple Sclerosis Following a Relapse", "Sequential Natalizumab - Alemtuzumab Therapy in Patients With Relapsing Forms of Multiple Sclerosis (SUPPRESS)", "A Randomised, Double Blinded Cross-over Study Comparing the Efficacy of L-carnitine Versus Placebo in the Treatment of Fatigue in Multiple Sclerosis", "Comparison Between Clinical and MRI Multiple Sclerosis Activity and Expression of Human Endogenous Retrovirus Type W and Herpesvirus in Peripheral Blood of Patients", "A Randomized Trial of Positive Airway Pressure Therapy to Treat Cognitive Dysfunction in MS Patients With Obstructive Sleep Apnea", "Effects of Adrenocorticotropic Hormone (ACTHAR Gel) on Recovery From Cognitive Relapses in Multiple Sclerosis", "Longitudinal Optic Neuritis Study (LONS)", "Real-Life Outcomes of Multiple Sclerosis Treatment With Rebif on Employment Status, Quality of Life and Cognition: a Pilot Study", "Intervention to Reduce Distress From Perceived Cognitive Impairment in Multiple Sclerosis", "Optic Neuritis Treatment Trial (ONTT)", "Intranasal Insulin for Improving Cognitive Function in Multiple Sclerosis", "Evaluation of the Safety and Efficacy of Reduced-intensity Immunoablation and Autologous Hematopoietic Stem Cell Transplantation (AHSCT) in Multiple Sclerosis", "Randomized, Controlled Pilot Trial of Domperidone in Relapsing-Remitting Multiple Sclerosis", "Use of Cellular Stromal Vascular Fraction (cSVF) for Select Multiple Sclerosis, Autoimmune, Inflammatory, and Neurologic Conditions: Clinical Interventional Study of Adverse Events and Clinical Outcomes Using Autologous Stem-Stromal Cells.", "Characterization of Teriflunomide's Therapeutic Mechanisms of Action in Patients With Relapsing Remitting Multiple Sclerosis.", "Risk Factors in Early Multiple Sclerosis", "Randomized, Comparative, Double Blind Controlled Phase II Clinical Trial, to Evaluate the Efficacy of ApE in Patients With Multiple Sclerosis (MS).", "Investigation of the Effects of Respiratory Functions and Trunk Control on Functional Mobility in Individuals With Multiple Sclerosis", "The Effect of Alemtuzumab on the Blood-brain-barrier and Cerebral Metabolism in Multiple Sclerosis Patients; a New MRI Method for Treatment Response Evaluation in Multiple Sclerosis", "Clinical Pilot Study in the Feasibility and Effect of Online Cognitive Training on Cognitive Functions in Patients With Parkinson's Disease, Multiple Sclerosis and Depressive Patients Treated With Electroconvulsive Therapy", "Factors Associated With Dual-Task Performance in Patients With Multiple Sclerosis", "Clinical Relevance of miR-142-3p as Potential Biomarker of Synaptopathy in Multiple Sclerosis", "Effect of Nordic Walking Training Compared With Conventional Endurance Training in Walking Capacity in People With Multiple Sclerosis: a Simple Blinded Randomized Controlled Trial", "Treatment Response Among Chinese Patients With Acute Attack of Neuromyelitis Optica Spectrum Disorders: A Prospective, Multicenter Real-world Study", "Mechanistic Studies of Teriflunomide in Relapsing Remitting Multiple Sclerosis: Regulatory B Lymphocytes as Central Mediators of the Therapeutic Effects of Teriflunomide in MS", "7T MRI Ferumoxytol-Enhanced Characterization of Multiple Sclerosis and Demyelinating Diseases", "Observational Prospective Multicentered Study Evaluating Initial Clinical Presentation of Inflammatory Optic Neuritis (ON) Associated or Not With Autoantibodies Anti- Myelin-oligodendrocyte-glycoprotein (MOG-Ab)", "Single-Arm, Non-Randomized, Time Series, Single-Subject Study: Fecal Microbiota Transplantation (FMT) in Multiple Sclerosis", "Intensity Dependent Clinical Effects of a Task-oriented Upper Limb Training in Multiple Sclerosis", "A Single-center Prospective Measurement of Upper Extremity Function in Multiple Sclerosis Patients With Advanced Disability Treated With Ocrevus\u2122", "The Inflammatory Synaptopathy as a Target of Exercise Therapy in the Fight Against Multiple Sclerosis", "Open-label, Multi-center Phase III Extension of the Double-blind, Placebo-controlled BENEFIT Study (no. 92012/304747) to Obtain Long-term Follow-up Data of Patients With Clinically Definite Multiple Sclerosis (MS) and Patients With a First Demyelinating Event Suggestive of MS Treated With 8 MIU (250 \u00b5g) Interferon Beta-1b (Betaferon\u00ae / Betaseron\u00ae) Given Subcutaneously Every Other Day for at Least 36 Months.", "The Effect of a Gluten Free Diet on the Permeability of the Blood Brain Barrier in Patients With Clinically Isolated Syndrome Measured by Dynamic Contrast Enhanced Magnetic Resonance Imaging", "Immunoregulation by Controlled Parasite Exposure in Multiple Sclerosis.", "How Does Strength Training and Balance Training Affect Gait Function and Fatigue in Patients With Multiple Sclerosis?", "Continuous Positive Airway Pressure for Fatigue Treatment in Patients With Multiple Sclerosis and Obstructive Sleep Apnea", "The Effect of Task-Oriented Training on the Physical and Cognitive Functions in Patients With Multiple Sclerosis", "Dietary Approaches to Treat Multiple Sclerosis-Related Fatigue Study", "Retinal Thickness as a Potential Biomarker of Neurodegeneration and Early Cognitive Impairment in Patients With Multiple Sclerosis", "Theory Based Intervention Program to Support Physical Activity for Individuals With Multiple Sclerosis: a Case Series", "Comparing Lesion Contrast With Both Magnevist and Gadavist and Understanding the Cerebral Perfusion Patterns of Patients With Multiple Sclerosis (MS) Using Magnetic Resonance Imaging (MRI)", "The Effect of Multiple-Task Training on Physical and Cognitive Functions in Patients With Multiple Sclerosis", "A Phase II Study of High Dose Chemotherapy With Autologous Hematopoietic Progenitor Cell Transplant for Multiple Sclerosis That Failed at Least Two Lines of Therapy", "The Effect of Percutaneous Venoplasty on Muscular Function, Mobility and Fatigue of Multiple Sclerosis (MS) Patients With Chronic Cerebrospinal Venous Insufficiency (CCSVI).", "Multiple Sclerosis and Fabry Disease: Prevalence of Fabry Disease in a Defined Population at Risk - Patients Formerly Diagnosed With Multiple Sclerosis - an Epidemiological Study", "Comparison of Expanded Disability Status Scale, Gad-enhanced Brain Lesions, Annualized Relapse Rate, and Side Effects Between Active Secondary Progressive Multiple Sclerosis Patients on Rituximab and Glatiramer Acetate", "A Pilot Trial of Testosterone Treatment for Fatigue in Men With Multiple Sclerosis", "A Phase II Study of High-Dose Immunosuppressive Therapy Using Carmustine, Etoposide, Cytarabine, Melphalan, Thymoglobulin and Autologous CD34+ Hematopoietic Stem Cell Transplant for the Treatment of Poor Prognosis Multiple Sclerosis", "The German Multiple Sclerosis Registry of the German MS Society", "Tolerance-Induction With Dendritic Cells Treated With Vitamin-D3 and Loaded With Myelin Peptides, in Multiple Sclerosis Patients (TOLERVIT-MS)", "Fecal Microbiota Transplantation (FMT) of FMP30 in Relapsing-Remitting Multiple Sclerosis: A Phase 1b Clinical Trial to Evaluate Feasibility, Safety, Tolerability and Effects on Immune Function", "A Randomized Controlled Trial of Telephone-delivered Cognitive Behavioral-therapy, Modafinil, and Combination Therapy of Both Interventions for Fatigue in Multiple Sclerosis", "Open-label, Single-center, Single-arm Futility Trial Evaluating Oral Domperidone 10mg QID for Reducing Progression of Disability in Patients With Secondary Progressive Multiple Sclerosis (SPMS)", "Comparison of Rebif Compared to Tecifdera on Six-month Outcomes in Patients With Relapsing-remitting MS", "De-escalation After Natalizumab Treatment With Interferon-beta-1b in Patients With Relapsing-remitting Multiple Sclerosis", "An Examination of Potential Neurochemical and Cognitive Mediators of the Relationship Between Mindfulness and Emotion Regulation in Individuals With Multiple Sclerosis: An Internet Based Self-Guided Pilot Study.", "A Randomized, Multicenter, Double-Blind, Placebo-Controlled, Dose-Comparison Study to Determine the Efficacy and Safety of BG00012 in Subjects With Relapsing-Remitting Multiple Sclerosis", "Reliability and Validity of Glittre Activities Of Daily Living (ADL) Test in Multiple Sclerosis", "A Phase 1b, Open-label Study to Evaluate the Safety and Tolerability of the Putative Remyelinating Agent, Liothyronine, in Individuals With MS", "A 24-month, Double-blind, Randomized, Multicenter, Placebo-controlled, Parallel-group Study Comparing the Efficacy and Safety of Fingolimod 1.25 mg and 0.5 mg Administered Orally Once Daily Versus Placebo in Patients With Relapsing-remitting Multiple Sclerosis", "Safety and Tolerability of Oral Two-Doses Estroprogestins Associated With Interferon-Beta 1a in Patients With Relapsing-Remitting Multiple Sclerosis", "Effect of a Tissue Selective Estrogen Complex on Menopausal Symptoms in Women With MS: A Pilot Trial.", "Robot-assisted Gait Training in Patients Affected by Multiple Sclerosis: Rehabilitative Efficacy Evaluation and Comparison With Traditional Methods", "A Phase II Proof of Concept Study Evaluating the Reduction of Mitoxantrone-induced Cardiotoxicity and Neurological Outcome in the Combined Use of Mitoxantrone and Dexrazoxane (Cardioxane\u00ae) in Multiple Sclerosis (MSCardioPro)", "The Impact of a Planned 12-week Dosing Interruption of Natalizumab on Immune Cell Trafficking, Pharmacokinetic (PK)/Pharmacodynamic (PD) Parameters, and Multiple Sclerosis (MS) Disease Stability.", "A Randomized, Multicenter, Placebo-Controlled and Active Reference (Glatiramer Acetate) Comparison Study to Evaluate the Efficacy and Safety of BG00012 in Subjects With Relapsing-Remitting Multiple Sclerosis", "Management of Acute Disseminated Encephalomyelitis in Neurology Unit of Assiut University Children Hospital", "A Phase II, Randomized, Open-Label, Three-Arm Study Comparing Low- and High-Dose Alemtuzumab and High-Dose Subcutaneous Interferon Beta-1a (Rebif\u00ae) in Patients With Early, Active Relapsing-Remitting Multiple Sclerosis", "Switching Relapsing Multiple Sclerosis Patients Treated With Natalizumab at Risk for Progressive Multifocal Leukoencephalopathy to Teriflunomide: Is This Safe and Effective?", "Sexual Dysfunction in Patients With Relapsing Remitting Multiple Sclerosis and Associated Comorbidities", "Controlled, Randomized, Double-blind Clinical Trial, 24 Months Duration, to Compare the Efficacy, Safety and Tolerability of Andrographolide Versus Placebo in Patients With Progressive Forms of Multiple Sclerosis", "A Multicentric Randomized PRAGmatic Trial to Compare the Effectiveness of Fingolimod Versus Dimethyl\u2010Fumarate on Patient Overall Disease Experience in Relapsing Remitting Multiple Sclerosis: Novel Data to Inform Decision-makers", "A Combination Trial of Copaxone Plus Estriol in RRMS", "Proposal to Create a Flagship Neurology and Palliative Care Service for South London", "The Effects of Oral Nanocurcumin on Expression Levels of microRNAs and Treg Cells and Th17 Cells Development Factors in Multiple Sclerosis Patients", "A Randomized, Double-Blind, Placebo-Controlled, Parallel Group Design Study to Evaluate the Efficacy and Safety of Teriflunomide in Reducing the Frequency of Relapses and Delaying the Accumulation of Physical Disability in Subjects With Multiple Sclerosis With Relapses", "Behaviour and Well-Being: A Bio-Psycho-Social Model of Resilience in Young Adults Newly Diagnosed With Multiple Sclerosis", "Validation of a Shared Decision-Making Tool, MS-SUPPORT, to Improve Decisions About Disease Modifying Therapies (DMT) for Multiple Sclerosis", "Effect of Cyclical Administration of Interferon \u03b2-1b in Multiple Sclerosis - Comparison With Normal Dose.", "A Double-Blind, Placebo Controlled Trial of Estriol Treatment in Women With Multiple Sclerosis: Effect on Cognition.", "Muscle Strain in Multiple Sclerosis Patients Measured by Ultrasound Speckle Tracking", "The Relationship Between Kinesiophobia, Physical Activity, Balance and Fear of Fall in Multiple Sclerosis Patients", "The Effect of Combined Exercise Training on Cognitive Functions in Patients With Multiple Sclerosis", "Intrathecal Methotrexate for Progressive Multiple Sclerosis: An Open Label Single Arm Study", "An Open Label Study of the Effects of Eculizumab in Neuromyelitis Optica", "Cortical Lesions in the Primary Sensorimotor Hand Area and Their Impact on Dexterity in Multiple Sclerosis: a 7T MRI Study", "Phase 2-3 Use of Bacille Calmette-Gu\u00e8rin (BCG) Vaccine in Patients With a First Clinical Demyelinating Episode: a Multicenter, Randomized, Single Blind Study.", "Exercise as a Supplemental Treatment Strategy Early in the Disease Course of Multiple Sclerosis", "Role of Vitamin D on the Relapse Rate of Multiple Sclerosis", "fMRI and Neurophysiological Study Protocol on Cannabinoids in Multiple Sclerosis", "A Multi-center Double-blind Parallel-group Placebo-controlled Study of the Efficacy and Safety of Teriflunomide in Patients With Relapsing Multiple Sclerosis", "Clinical Patterns of Neuromyelitis Optica Spectrum Disorders in Assiut University Hospital", "Evaluation of Cerebrovascular Hemodynamics With Transcranial Doppler and Near-infrared Spectroscopy in Patients With Multiple Sclerosis", "Evaluating the Effect of Fingolimod With Fish Oil Compared to Fingolimod With Placebo on Tumor Necrosis Factor-\u03b1 , Interleukin1b , Interleukin6, and Interferon-gamma in Patients With Relapsing-Remitting Multiple Sclerosis", "A 12-month Double-blind, Randomized, Multicenter, Active-controlled, Parallel-group Study Comparing the Efficacy and Safety of 0.5 mg and 1.25 mg Fingolimod (FTY720) Administered Orally Once Daily Versus Interferon \u00df-1a (Avonex) Administered im Once Weekly in Patients With Relapsing-remitting Multiple Sclerosis With Optional Extension Phase", "Keratinocyte Growth Factor - Promoting Thymic Reconstitution and Preventing Autoimmunity After Alemtuzumab (Campath-1H) Treatment of Multiple Sclerosis", "Dual Benefits of Vaginal Estriol: Improved Urogenital Health and Re-myelination in Relapsing Remitting Multiple Sclerosis (RRMS)", "Study to Evaluate the Responsiveness and Minimal Clinical Important Difference (MCID) of the 'Multiple Sclerosis Questionnaire for Physiotherapists' (MSQPT)", "The Reliability and Validity of the Functional Reach Test in Patients With Multiple Sclerosis", "Control Fatigue: Sleep Medical Treatment as a Novel Therapeutic Approach to an Unmet Medical Need in Multiple Sclerosis", "Linking Optic Nerve Lesion Length at MRI and the Retinal Axonal Loss at 12 Months From a Clinical Episode of Optic Neuritis", "24-month Double-blind, Randomized, Multicenter, Placebo-controlled, Parallel-group Study Comparing the Efficacy and Safety of 0.5 mg and 1.25 mg Fingolimod (FTY720) Administered Orally Once Daily Versus Placebo in Patients With Relapsing-remitting Multiple Sclerosis With Optional Extension Phase", "Study of the Link Between Retinal Atrophy and Demyelinating Inflammatory Processes on Visual Pathways in Relapsing Multiple Sclerosis in Magnetic Resonance Imaging and Optical Coherence Tomography", "Factors That Influence Compliance With Disease-Modifying Therapy in Multiple Sclerosis", "Efficacy of Sustained-release Oral Dalfampridine on Upper Extremity Function in Patients With Multiple Sclerosis: a Pilot Study", "An Exploratory Randomized Controlled Trial of a Manualized, Nurse-led, Telephone Intervention Support Service for Support Persons of People With Multiple Sclerosis", "Double-blinded, Randomized Controlled Trial of Simvastatin Use As Adjuvant Therapy in Relapsing-Remitting Multiple Sclerosis", "An Extension Protocol for Multiple Sclerosis Patients Who Participated in Genzyme-Sponsored Studies of Alemtuzumab", "Anti-Inflammatory Type II Monocyte Induction by Glatiramer Acetate (Copaxone) Treatment of Multiple Sclerosis", "Neurophysiological, Dynamometric, Functional and Clinical Assessment of the Cross-Training Effect in Patients With Multiple Sclerosis", "The Effects of Extremity and \"Core\" Muscles Strength on Walking and Sit-to-Stand Performance in Patients With Multiple Sclerosis", "Effect of Vitamin D Replacement on Immune Function and Cognition in MS Patients", "The Reliability, Validity, and Responsiveness of the Static Balance Test in Patients With Multiple Sclerosis.", "Teriflunomide Observational Effectiveness Study", "Use of Cellular Stromal Vascular Fraction in Multiple Sclerosis", "The Effectiveness of Endovascular Treatment of Chronic Cerebrospinal Venous Insufficiency (CCSVI) in Patients With Multiple Sclerosis", "Multicenter, Double-blind, Randomized, Parallel-group, Monotherapy, Active-control Study to Determine the Efficacy and Safety of Daclizumab High Yield Process (DAC HYP) Versus Avonex\u00ae (Interferon \u03b2 1a) in Patients With Relapsing-Remitting Multiple Sclerosis", "Randomized Controlled Trial of Core Stability Training in Patients With Multiple Sclerosis: Biomechanical and Performance Based Analysis of Gait", "Health Behaviors, Clinically Isolated Syndrome and Multiple Sclerosis Study", "A Randomised Controlled Pilot Study to Compare the Effects of Prolonged Fasting and Ketogenic Low Glycemic Load Treatment on Health Related Quality of Life in Relapsing-remitting Multiple Sclerosis.", "The Effects of Vitamin D3 Supplementation on the T Cell Compartment in Multiple Sclerosis; a Pilot Study", "Multidimensional Assessment of Fatigue in Multiple Sclerosis- Observational Study - Ticino", "Assessment of the Effectiveness of Guided by a Physiotherapist Versus Non-guided Pelvic Floor Exercises for Urinary Incontinence (UI) in Patients With Relapsing-Remitting (RR) Multiple Sclerosis", "Double Blind Placebo-Controlled Phase I/II Clinical Trial of Idebenone in Patients With Primary Progressive Multiple Sclerosis", "Controlled High-risk Avonex Multiple Sclerosis Prevention Study in Ongoing Neurologic Surveillance (CHAMPIONS10)", "Interventions to Improve Memory in Patients With Multiple Sclerosis", "Calorie Restriction as a Novel Therapeutic Tool to Manipulate Immunity and Improve Therapeutic Potential of First Line Drug Treatments During Relapsing Remitting Multiple Sclerosis", "Fish Oil as an Adjunct Therapy for Depression in Multiple Sclerosis", "POPART'MUS: Prevention of Post Partum Relapses With Progestin and Estradiol in Multiple Sclerosis", "A First-in-Kind Randomized, Controlled Pilot Clinical Trial Testing Proactive vs Reactive Management of a Symptom Triad in Multiple Sclerosis", "A Phase I/II, Open-Label Pilot Trial to Evaluate the Safety of Rapamune (Sirolimus) in Patients With Multiple Sclerosis", "Efficacy, Safety and Tolerability of Atorvastatin 40 mg in Patients With Relapsing-remitting Multiple Sclerosis Treated With Interferon-beta-1b.SWiss Atorvastatin and Interferon-Beta 1b Trial In Multiple Sclerosis.", "Assessment of Lesion Activity Analysis in the Avonex- Steroid Azathioprine (ASA) Study", "A 6-month, Randomized, Active Comparator, Open-label, Multi-Center Study to Evaluate Patient OutComes, Safety and Tolerability of Fingolimod (FTY720) 0.5 mg/Day in Patients With Relapsing Forms of Multiple Sclerosis Who Are Candidates for MS Therapy Change From Previous Disease Modifying Therapy (EPOC)", "An Open-label, Randomised, Crossover Study to Assess the Relative Bioavailability of Different 2mg Formulations of GSK2018682(S1P1 Agonist) in Healthy Volunteers", "Lorraine Registry of Multiple Sclerosis", "Functional Electrical Stimulation to Treat Foot Drop in People With Multiple Sclerosis", "The Reliability, Validity, and Responsiveness of the Timed 360\u00b0 Turn Test Test in Patients With Multiple Sclerosis", "Treatment of Multiple Sclerosis Using Over the Counter Inosine", "The Relationship of Cognitive Functions to Physical and Personal Factors in Patients With Multiple Sclerosis", "Longitudinal Effect of Vitamin D3 Replacement on Cognitive Performance and MRI Markers in Multiple Sclerosis Patients: A Single-Blind Randomized Clinical Trial", "A Multi-center Randomized Clinical Trial of Regulating Gut Microbiota by Probiotic Agents in Management of Immune Thrombocytopenia", "Effects of Immersive Virtual Reality on Balance, Mobility, and Fatigue in Patients With Multiple Sclerosis", "Gene Expression in MS Patients Before and During Treatment With High-dose Interferon Beta: Prospective Study for the Identification of Predicting Factors of Therapeutic Response.", "Correlation Between Relapses in Multiple Sclerosis (MS) and Vitamin D Intake", "SWiss Atorvastatin and Interferon-Beta 1b Trial In Multiple Sclerosis - Follow up Study (\"SWABIMS Follow Up-study\")", "A Multicentre, Non Interventional, Non Randomized, Observational Study for the Assessment of Compliance and Persistence With Rebif\u00ae Therapy of Patients With Relapsing-Remitting Multiple Sclerosis as Well as for the Evaluation of Potential Factors Influencing These Parameters, in Real Life Clinical Practice", "Phase I Study of Oral Guanabenz for Multiple Sclerosis", "Single Test to ARrive at MS Diagnosis. A Prospective, Longitudinal, Investigator Blinded, Pilot Study Assessing the Accuracy of a Single 3 Tesla MRI Scan in Predicting Multiple Sclerosis in Cases of Diagnostic Uncertainty", "Phase IV Study of Oral Prednisone Taper vs. Placebo Following Intravenous Steroids for the Treatment of Acute Relapses in Multiple Sclerosis Within the Ticino Cohort", "Effects of Sensori-motor Integration Balance Training on Balance Disturbances in Patients With Multiple Sclerosis", "Testosterone Treatment for Multiple Sclerosis: A Preliminary Trial", "Natalizumab De-escalation to Interferon-beta-1b in Patients With Relapsing-remitting Multiple Sclerosis: A Swiss Multicenter Study Prospective, Controlled, Single-arm, Open-label, Multi-centre, Phase IV Study", "A Phase II Baseline Versus Treatment Study to Determine the Efficacy of Raltegravir (Isentress) in Preventing Progression of Relapsing Remitting Multiple Sclerosis as Determined by Gadolinium-enhanced MRI", "A Phase 3 Randomized, Rater-Blinded Study Comparing Two Annual Cycles of Intravenous Alemtuzumab to Three-Times Weekly Subcutaneous Interferon Beta-1a (Rebif\u00ae) in Treatment-Na\u00efve Patients With Relapsing-Remitting Multiple Sclerosis", "A Phase 3, Randomized, Rater- and Dose-Blinded Study Comparing Two Annual Cycles of Intravenous Low- and High-Dose Alemtuzumab to Three-Times Weekly Subcutaneous Interferon Beta 1a (Rebif\u00ae) in Patients With Relapsing Remitting Multiple Sclerosis Who Have Relapsed On Therapy", "Evaluation of Progression in Multiple Sclerosis by Magnetic Resonance Imaging (MRI)", "Effect of the Humanized Monoclonal Antibody Against the Interleukin-2 Receptor Alpha Subunit (IL-2R-Alpha; Zenapax(Registered Trademark)) on Inflammatory Activity in the CNS in MS in a Baseline-to-Treatment, Cross-Over, MRI-Controlled Single Center Phase I/II Trial", "Reducing Sedentary Behaviour: A Novel Opportunity for Managing Comorbidity in MS?", "Investigating Mechanism of Action of DAC HYP in the Treatment of High-Inflammatory Multiple Sclerosis (MS)", "A Long-term Follow up of Patients Enrolled in the Pivotal Study of Betaseron\u00ae (Interferon Beta 1b) in Relapsing-remitting Multiple Sclerosis", "Physical Activity Intervention for Improving Vascular Comorbidity Risk in Multiple Sclerosis", "Treatment Adherence in Pediatric Multiple Sclerosis", "Comparison of Robot-Assisted Gait Training and Conventional Therapy in Multiple Sclerosis Patients", "Using MR Perfusion Imaging and Hypercapnia to Study Angiogenesis in Multiple Sclerosis Patients", "Omega-3 Fatty Acid Treatment in Multiple Sclerosis", "Manganese-Enhanced Magnetic Resonance Imaging in Healthy Volunteers and People With Multiple Sclerosis", "The Effect of the Ketogenic Diet on Patients With Relapsing Remitting Multiple Sclerosis", "Immunological Mechanisms of Immune Ablation and Autologous Hematopoietic Stem Cell Transplantation in Secondary Progressive Multiple Sclerosis", "Combined Clinical, Immunological and Virological Assessment of Patients With Multiple Sclerosis (MS)", "An Open-Label, Dose-Escalation Study of T Cell Vaccine in Multiple Sclerosis", "Pacing Activity Self-management for Patients With Multiple Sclerosis: Randomized Controlled Clinical Trial", "Thematic Studies of Multiple Sclerosis and Related Diseases", "In Vivo Characterization of Inflammation With Ferumoxytol, an Ultrasmall Superparamagnetic Iron Oxide Nanoparticle, on 7 Tesla Magnetic Resonance Imaging", "Effects of Electromechanical Gait Trainer on Endurance, Fatigue and Daily Life Autonomy in Patients With Multiple Sclerosis: a Randomized Control Trial", "Randomized Multi-centered Study for Evaluating the Efficacy and Safety of Angioplastic Surgery of the Extracranial Veins in the Treatment of Multiple Sclerosis. Studio Randomizzato Multicentrico Per la Valutazione Dell'Efficacia e Sicurezza Dell'Intervento di Disostruzione Delle Vene Extracraniche Nel Trattamento Della Sclerosi Multipla", "Phase 1 Safety Study of Autologous Bone Marrow-derived Mesenchymal Stem Cell-derived Neural Progenitor Cells (MSC-NP), Expanded Ex Vivo, Administered Intrathecally in Patients With Multiple Sclerosis", "Rehabilitating Extremity Use After Multiple Sclerosis", "A Twenty-four Week, Two Arm, Pilot Trial to Evaluate Remyelination/ Demyelination, Gray Matter Volume and Iron Deposition in the Central Nervous System (CNS) and Immune Status of Subjects With Relapsing-remitting Multiple Sclerosis (RRMS) Treated With Rebif\u00ae 44 mcg Subcutaneously (sc) Three Times a Week (Tiw) Compared to a Healthy Control Group", "Multicenter, Randomized, Double Blind, Clinical Trial to Compare the Clinical and Radiological Efficacy of Equivalent Doses of Methylprednisolone Administered Orally or Intravenously in Patients With Multiple Sclerosis During Relapse", "NIB Repository Protocol", "Apraxia-specific Occupational Therapy in Patients With Multiple Sclerosis", "A Randomized Trial on the Novel Use of Treadmill Plus Music in Multiple Sclerosis Patients With Gate Impairnent", "A Prospective, Randomized, Double-blind, Placebo-controlled Phase II Clinical Study of Trichuris Suis Ova Treatment in Left-sided Ulcerative Colitis and Its Effects on Mucosal Immune State and Microbiota", "A Multi-centre and Prospective Trial to Evaluate the Effects on Multiple Sclerosis Related Fatigue During Treatment With Tysabri in Patients With Relapsing Remitting Multiple Sclerosis Over the Course of 12 Months", "RETRAP - A Double Blind, Randomized, Placebo Controlled Study of the Effect of the Combination of Resistance Training and Prolonged Release Fampridine in Patients With Multiple Sclerosis", "NINDS Biomarkers in Multiple Sclerosis Study (BioMS)"], "legendgroup": "", "marker": {"color": "#636efa"}, "name": "", "offsetgroup": "", "orientation": "v", "showlegend": false, "textposition": "auto", "type": "bar", "x": ["NCT04073940", "NCT03782246", "NCT02104661", "NCT03004079", "NCT02367222", "NCT01018537", "NCT03949296", "NCT04178005", "NCT03896217", "NCT04113135", "NCT02364505", "NCT01337986", "NCT02849782", "NCT03736902", "NCT03135249", "NCT01149525", "NCT02489877", "NCT02544373", "NCT02290444", "NCT00000147", "NCT02377323", "NCT03889327", "NCT00000146", "NCT02988401", "NCT03113162", "NCT02493049", "NCT02939859", "NCT02833714", "NCT03586986", "NCT02280876", "NCT03826095", "NCT03193086", "NCT02525367", "NCT03508284", "NCT03999788", "NCT03976128", "NCT04101058", "NCT03464448", "NCT01973517", "NCT03345537", "NCT03975413", "NCT02688231", "NCT03562975", "NCT03735524", "NCT00185211", "NCT03451955", "NCT00630383", "NCT02870023", "NCT01563900", "NCT03505294", "NCT02914964", "NCT04153773", "NCT02335450", "NCT01836055", "NCT03512886", "NCT01679041", "NCT01555684", "NCT01271699", "NCT03315923", "NCT03000127", "NCT00288626", "DRKS00011257", "NCT02903537", "NCT03594487", "NCT03621761", "NCT02308137", "NCT02419638", "NCT01144052", "NCT02391298", "NCT00420212", "NCT04182269", "NCT02506751", "NCT00289978", "NCT00151801", "NCT02710214", "NCT02291107", "NCT01627938", "NCT04048577", "NCT00451451", "NCT03284801", "NCT00050778", "NCT01970410", "NCT04157283", "NCT02273635", "NCT03345940", "NCT00451204", "NCT00364936", "NCT03150966", "NCT00134563", "NCT03825055", "NCT04122989", "NCT00270816", "NCT01466114", "NCT03847545", "NCT04183751", "NCT03591809", "NCT02644044", "NCT00904826", "NCT03653585", "NCT00202410", "NCT03322761", "NCT01753375", "NCT00202423", "NCT00751881", "NCT03819413", "NCT02389426", "NCT02939079", "NCT00340834", "NCT01712945", "NCT03774407", "NCT02346279", "NCT04185688", "NCT03759249", "NCT03651362", "NCT00355134", "NCT03656055", "NCT00223457", "NCT02259361", "NCT01302431", "NCT04178980", "NCT00930553", "NCT00819195", "NCT02010398", "NCT03597451", "NCT01952483", "NCT03584672", "NCT02490982", "NCT03461419", "NCT01201707", "NCT01064401", "NCT03442049", "NCT04009005", "NCT01538355", "NCT00940719", "NCT02082002", "NCT03000647", "NCT00950248", "NCT00179478", "NCT00062972", "NCT04042415", "NCT00122954", "NCT00127075", "NCT03335618", "NCT00095329", "NCT00942591", "NCT01628315", "NCT01216072", "NCT01466322", "NCT02883335", "NCT02123537", "NCT03718026", "NCT00067327", "NCT03594357", "NCT03610139", "NCT03033199", "NCT03501342", "NCT00202384", "NCT01994018", "NCT01111656", "NCT01112345", "NCT02423083", "NCT02485223", "NCT01411514", "NCT01040117", "NCT00405353", "NCT01701856", "NCT01767701", "NCT00530348", "NCT00548405", "NCT00001248", "NCT00001934", "NCT03136744", "NCT01143441", "NCT00206635", "NCT03944538", "NCT02234713", "NCT03801473", "NCT00064909", "NCT00360906", "NCT01326715", "NCT03718247", "NCT00342134", "NCT00001156", "NCT00587691", "NCT01512329", "NCT02504840", "NCT02511028", "NCT01564511", "NCT01371760", "NCT01933802", "NCT01081275", "NCT01085318", "NCT00753792", "NCT01581567", "NCT01507636", "NCT04019912", "NCT01953354", "NCT00884481", "NCT02143167", "NCT00325988"], "xaxis": "x", "y": [92, 72, 48, 46, 43, 41, 39, 38, 37, 34, 34, 33, 30, 29, 27, 27, 26, 25, 24, 23, 23, 23, 22, 22, 21, 20, 20, 20, 19, 18, 17, 17, 17, 16, 16, 16, 16, 16, 15, 15, 15, 15, 14, 14, 14, 13, 13, 13, 13, 13, 13, 13, 12, 12, 12, 12, 12, 11, 11, 11, 11, 11, 10, 10, 10, 10, 10, 10, 10, 10, 10, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 6, 6, 6, 6, 6, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3], "yaxis": "y"}],
+                        {"barmode": "relative", "height": 600, "legend": {"tracegroupgap": 0}, "margin": {"t": 60}, "template": {"data": {"bar": [{"error_x": {"color": "#2a3f5f"}, "error_y": {"color": "#2a3f5f"}, "marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "bar"}], "barpolar": [{"marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "barpolar"}], "carpet": [{"aaxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "baxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "type": "carpet"}], "choropleth": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "choropleth"}], "contour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "contour"}], "contourcarpet": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "contourcarpet"}], "heatmap": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmap"}], "heatmapgl": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmapgl"}], "histogram": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "histogram"}], "histogram2d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2d"}], "histogram2dcontour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2dcontour"}], "mesh3d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "mesh3d"}], "parcoords": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "parcoords"}], "pie": [{"automargin": true, "type": "pie"}], "scatter": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter"}], "scatter3d": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter3d"}], "scattercarpet": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattercarpet"}], "scattergeo": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergeo"}], "scattergl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergl"}], "scattermapbox": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattermapbox"}], "scatterpolar": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolar"}], "scatterpolargl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolargl"}], "scatterternary": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterternary"}], "surface": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "surface"}], "table": [{"cells": {"fill": {"color": "#EBF0F8"}, "line": {"color": "white"}}, "header": {"fill": {"color": "#C8D4E3"}, "line": {"color": "white"}}, "type": "table"}]}, "layout": {"annotationdefaults": {"arrowcolor": "#2a3f5f", "arrowhead": 0, "arrowwidth": 1}, "coloraxis": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "colorscale": {"diverging": [[0, "#8e0152"], [0.1, "#c51b7d"], [0.2, "#de77ae"], [0.3, "#f1b6da"], [0.4, "#fde0ef"], [0.5, "#f7f7f7"], [0.6, "#e6f5d0"], [0.7, "#b8e186"], [0.8, "#7fbc41"], [0.9, "#4d9221"], [1, "#276419"]], "sequential": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "sequentialminus": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]]}, "colorway": ["#636efa", "#EF553B", "#00cc96", "#ab63fa", "#FFA15A", "#19d3f3", "#FF6692", "#B6E880", "#FF97FF", "#FECB52"], "font": {"color": "#2a3f5f"}, "geo": {"bgcolor": "white", "lakecolor": "white", "landcolor": "#E5ECF6", "showlakes": true, "showland": true, "subunitcolor": "white"}, "hoverlabel": {"align": "left"}, "hovermode": "closest", "mapbox": {"style": "light"}, "paper_bgcolor": "white", "plot_bgcolor": "#E5ECF6", "polar": {"angularaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "radialaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "scene": {"xaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "yaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "zaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}}, "shapedefaults": {"line": {"color": "#2a3f5f"}}, "ternary": {"aaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "baxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "caxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "title": {"x": 0.05}, "xaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}, "yaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}}}, "xaxis": {"anchor": "y", "domain": [0.0, 1.0], "title": {"text": "id"}}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": "pubs_tot"}}},
+                        {"responsive": true}
+                    ).then(function(){
+
+var gd = document.getElementById('7ccb7fac-3495-4c37-bff1-7407d7e023c7');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })
+                };
+                });
+            </script>
+        </div></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <a class="reference external" href="https://digital-science.github.io/dimensions-api-lab/">Dimensions API Lab</a> contains many notebooks like this one, demonstrating how to carry out useful scholarly analytics tasks using the <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Analytics API</a>. Check out also the associated <a class="reference external" href="https://github.com/digital-science/dimensions-api-lab">Github repository</a> for all the source code files and much more.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Clinical Trials by Volume of Publications</a><ul>
+<li><a class="reference internal" href="#Load-libraries-and-log-in">Load libraries and log in</a></li>
+<li><a class="reference internal" href="#Query-for-Clinical-Trials">Query for Clinical Trials</a></li>
+<li><a class="reference internal" href="#Counting-publications-per-clinical-trial">Counting publications per clinical trial</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../2-publications/Citation-Analysis.html"
+                        title="previous chapter">Citation Analysis using the Dimensions API: An Introduction</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../5-patents/1-Patents-referencing-a-Research-Organization.html"
+                        title="next chapter">Extracting Patents that cite Publications from a chosen Research Organization</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/cookbooks/4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.ipynb.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../5-patents/1-Patents-referencing-a-Research-Organization.html" title="Extracting Patents that cite Publications from a chosen Research Organization"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../2-publications/Citation-Analysis.html" title="Citation Analysis using the Dimensions API: An Introduction"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Dimensions API Lab - Reusable Solutions for Scholarly Data Analytics</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dimensions API Team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>
