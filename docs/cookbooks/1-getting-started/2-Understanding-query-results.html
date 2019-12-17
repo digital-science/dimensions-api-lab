@@ -262,7 +262,7 @@ div.rendered_html tbody tr:hover {
 <h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
 <p>This notebook assumes you have installed the <a class="reference external" href="https://pypi.org/project/dimcli/">Dimcli</a> library and are familiar with the <em>Getting Started</em> tutorial.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -271,7 +271,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -291,14 +291,14 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-DimCli v0.6.1.2 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (method: dsl.ini file)
+DimCli v0.6.2 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (method: dsl.ini file)
 </pre></div></div>
 </div>
 <div class="section" id="What-the-query-statistics-refer-to">
 <h3>What the query statistics refer to<a class="headerlink" href="#What-the-query-statistics-refer-to" title="Permalink to this headline">¶</a></h3>
 <p>When performing a DSL search, a <code class="docutils literal notranslate"><span class="pre">_stats</span></code> object is return which contains some useful info eg the total number of records available for a search.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -315,12 +315,12 @@ DimCli v0.6.1.2 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (me
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;total_count&#39;: 3815}
+{&#39;total_count&#39;: 3831}
 </pre></div></div>
 </div>
 <p>It is important to note though that the <strong>total number always refers to the main source</strong> one is searching for, not necessarily the results being returned. For example, in this query we return <code class="docutils literal notranslate"><span class="pre">researchers</span></code> linked to publications:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -337,13 +337,13 @@ DimCli v0.6.1.2 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (me
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;total_count&#39;: 3815}
+{&#39;total_count&#39;: 3831}
 </pre></div></div>
 </div>
 <p>Still 3815 records! That’s because the total count always refers to the main object type one is searching for, not to the <em>facet</em> being returned.</p>
 <p>Tip: this basic information about objects returned is also available via the <code class="docutils literal notranslate"><span class="pre">count_batch</span></code> and <code class="docutils literal notranslate"><span class="pre">count_total</span></code> methods of the query results object.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -366,7 +366,7 @@ DimCli v0.6.1.2 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (me
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Results in this batch:  30
-Results in total:  62600
+Results in total:  62757
 Errors:  None
 </pre></div></div>
 </div>
@@ -379,7 +379,7 @@ Errors:  None
 <div class="section" id="Control-the-fields-you-return">
 <h2>Control the fields you return<a class="headerlink" href="#Control-the-fields-you-return" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -396,11 +396,12 @@ limit 5
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 5 (total = 106004287)
+Returned Publications: 5 (total = 106738001)
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -421,47 +422,47 @@ Returned Publications: 5 (total = 106004287)
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>doi</th>
       <th>id</th>
-      <th>title</th>
+      <th>doi</th>
       <th>year</th>
+      <th>title</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>10.7312/alti19184</td>
-      <td>pub.1122051566</td>
-      <td>Women Mobilizing Memory</td>
+      <td>pub.1122620905</td>
+      <td>10.9785/9783504385415-003</td>
       <td>2020</td>
+      <td>Allgemeines Literaturverzeichnis</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>10.7312/alti19184-022</td>
-      <td>pub.1122051588</td>
-      <td>CHAPTER XX. Making Memory</td>
+      <td>pub.1122620921</td>
+      <td>10.9785/9783504385415-toc</td>
       <td>2020</td>
+      <td>Inhaltsübersicht</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>10.7312/alti19184-010</td>
-      <td>pub.1122051576</td>
-      <td>CHAPTER VIII. Aquí</td>
+      <td>pub.1123021382</td>
+      <td>10.14361/9783839450260-003</td>
       <td>2020</td>
+      <td>Imagining the zadruga</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>10.7312/alti19184-011</td>
-      <td>pub.1122051577</td>
-      <td>CHAPTER IX. #NiUnaMenos (#NotOneWomanLess</td>
+      <td>pub.1122620907</td>
+      <td>10.9785/9783504385415-005</td>
       <td>2020</td>
+      <td>§ 1 Einleitung</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>10.7312/alti19184-015</td>
-      <td>pub.1122051581</td>
-      <td>CHAPTER XIII. Instilling Interference</td>
+      <td>pub.1122620918</td>
+      <td>10.9785/9783504385415-016</td>
       <td>2020</td>
+      <td>Anhang</td>
     </tr>
   </tbody>
 </table>
@@ -471,7 +472,7 @@ Returned Publications: 5 (total = 106004287)
 <div class="section" id="Make-a-mistake,-and-the-DSL-will-tell-you-what-fields-that-you-could-have-used">
 <h2>Make a mistake, and the DSL will tell you what fields that you could have used<a class="headerlink" href="#Make-a-mistake,-and-the-DSL-will-tell-you-what-fields-that-you-could-have-used" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -491,14 +492,14 @@ limit 100
 Returned Errors: 1
 Semantic Error
 Semantic errors found:
-        Field / Fieldset &#39;dois&#39; is not present in Source &#39;publications&#39;. Available fields: FOR,FOR_first,HRCS_HC,HRCS_RAC,RCDC,abstract,altmetric,altmetric_id,author_affiliations,authors,book_doi,book_series_title,book_title,category_bra,category_for,category_hra,category_hrcs_hc,category_hrcs_rac,category_rcdc,concepts,date,date_inserted,doi,field_citation_ratio,funder_countries,funders,id,issn,issue,journal,journal_lists,linkout,mesh_terms,open_access,open_access_categories,pages,pmcid,pmid,proceedings_title,publisher,recent_citations,reference_ids,references,relative_citation_ratio,research_org_cities,research_org_countries,research_org_country_names,research_org_state_codes,research_org_state_names,research_orgs,researchers,score,supporting_grant_ids,terms,times_cited,title,type,volume,year and available fieldsets: all,basics,book,categories,extras
+        Field / Fieldset &#39;dois&#39; is not present in Source &#39;publications&#39;. Available fields: FOR,FOR_first,HRCS_HC,HRCS_RAC,RCDC,abstract,altmetric,altmetric_id,author_affiliations,authors,book_doi,book_series_title,book_title,category_bra,category_for,category_hra,category_hrcs_hc,category_hrcs_rac,category_icrp_cso,category_icrp_ct,category_rcdc,category_ua,concepts,date,date_inserted,doi,field_citation_ratio,funder_countries,funders,id,issn,issue,journal,journal_lists,linkout,mesh_terms,open_access,open_access_categories,pages,pmcid,pmid,proceedings_title,publisher,recent_citations,reference_ids,references,relative_citation_ratio,research_org_cities,research_org_countries,research_org_country_names,research_org_state_codes,research_org_state_names,research_orgs,researchers,score,supporting_grant_ids,terms,times_cited,title,type,volume,year and available fieldsets: all,basics,book,categories,extras
 </pre></div></div>
 </div>
 </div>
 <div class="section" id="Get-all-fields">
 <h2>Get all fields<a class="headerlink" href="#Get-all-fields" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -516,21 +517,22 @@ limit 1
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 1 (total = 716702)
+Returned Publications: 1 (total = 700990)
 WARNINGS [9]
-Field &#39;author_affiliations&#39; is deprecated in favor of authors. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
-Field &#39;open_access&#39; is deprecated in favor of open_access_categories. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
-Field &#39;FOR_first&#39; is deprecated in favor of category_for. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
-Field &#39;FOR&#39; is deprecated in favor of category_for. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
 Field &#39;HRCS_HC&#39; is deprecated in favor of category_hrcs_hc. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
-Field &#39;references&#39; is deprecated in favor of reference_ids. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
-Field &#39;RCDC&#39; is deprecated in favor of category_rcdc. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
-Field &#39;HRCS_RAC&#39; is deprecated in favor of category_hrcs_rac. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
+Field &#39;open_access&#39; is deprecated in favor of open_access_categories. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
 Field &#39;terms&#39; is deprecated in favor of concepts. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
+Field &#39;HRCS_RAC&#39; is deprecated in favor of category_hrcs_rac. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
+Field &#39;author_affiliations&#39; is deprecated in favor of authors. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
+Field &#39;references&#39; is deprecated in favor of reference_ids. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
+Field &#39;FOR&#39; is deprecated in favor of category_for. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
+Field &#39;RCDC&#39; is deprecated in favor of category_rcdc. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
+Field &#39;FOR_first&#39; is deprecated in favor of category_for. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -551,41 +553,25 @@ Field &#39;terms&#39; is deprecated in favor of concepts. Please refer to https:
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>research_orgs</th>
-      <th>category_hra</th>
-      <th>publisher</th>
-      <th>researchers</th>
-      <th>score</th>
-      <th>FOR</th>
-      <th>research_org_cities</th>
-      <th>research_org_state_codes</th>
-      <th>reference_ids</th>
-      <th>references</th>
-      <th>author_affiliations</th>
-      <th>authors</th>
-      <th>research_org_state_names</th>
-      <th>date_inserted</th>
+      <th>doi</th>
+      <th>id</th>
+      <th>issue</th>
       <th>concepts</th>
       <th>terms</th>
-      <th>supporting_grant_ids</th>
-      <th>category_for</th>
+      <th>reference_ids</th>
+      <th>references</th>
+      <th>FOR</th>
+      <th>category_ua</th>
       <th>volume</th>
+      <th>...</th>
       <th>year</th>
+      <th>category_for</th>
       <th>research_org_country_names</th>
-      <th>date</th>
-      <th>research_org_countries</th>
-      <th>journal_lists</th>
-      <th>FOR_first</th>
-      <th>doi</th>
       <th>issn</th>
-      <th>pages</th>
+      <th>date_inserted</th>
+      <th>score</th>
       <th>open_access_categories</th>
-      <th>title</th>
-      <th>funders</th>
-      <th>type</th>
-      <th>pmid</th>
-      <th>id</th>
-      <th>funder_countries</th>
+      <th>date</th>
       <th>journal.id</th>
       <th>journal.title</th>
     </tr>
@@ -593,53 +579,38 @@ Field &#39;terms&#39; is deprecated in favor of concepts. Please refer to https:
   <tbody>
     <tr>
       <th>0</th>
-      <td>[{'id': 'grid.24434.35', 'acronym': 'UNL ', 'n...</td>
-      <td>[{'id': '3900', 'name': 'Biomedical'}]</td>
-      <td>Elsevier</td>
-      <td>[{'id': 'ur.0746317400.02', 'last_name': 'Obat...</td>
-      <td>0.114568</td>
-      <td>[{'id': '2581', 'name': '0601 Biochemistry and...</td>
-      <td>[{'id': 5072006, 'name': 'Lincoln'}]</td>
-      <td>[{'id': 'US-NE', 'name': 'Nebraska'}]</td>
-      <td>[pub.1031637764, pub.1092735356, pub.104575255...</td>
-      <td>[pub.1031637764, pub.1092735356, pub.104575255...</td>
-      <td>[[{'first_name': 'Toshihiro', 'last_name': 'Ob...</td>
-      <td>[{'first_name': 'Toshihiro', 'last_name': 'Oba...</td>
-      <td>[Nebraska]</td>
-      <td>2019-10-26</td>
-      <td>[intermediates, metabolic pathways, pathway, e...</td>
-      <td>[intermediates, metabolic pathways, pathway, e...</td>
-      <td>[grant.7873949]</td>
-      <td>[{'id': '2581', 'name': '0601 Biochemistry and...</td>
-      <td>64</td>
+      <td>10.1080/01419870.2019.1667002</td>
+      <td>pub.1121304245</td>
+      <td>16</td>
+      <td>[article, role, environmental changes, changes...</td>
+      <td>[article, role, environmental changes, changes...</td>
+      <td>[pub.1043890837, pub.1019843900, pub.109848368...</td>
+      <td>[pub.1043890837, pub.1019843900, pub.109848368...</td>
+      <td>[{'id': '3403', 'name': '1603 Demography'}]</td>
+      <td>[{'id': '30025', 'name': 'D25 Area Studies'}]</td>
+      <td>43</td>
+      <td>...</td>
       <td>2020</td>
-      <td>[United States]</td>
-      <td>2020-08-01</td>
-      <td>[{'id': 'US', 'name': 'United States'}]</td>
-      <td>[ERA 2015, Norwegian register level 1, VABB-SH...</td>
-      <td>[{'id': '2206', 'name': '06 Biological Science...</td>
-      <td>10.1016/j.copbio.2019.09.013</td>
-      <td>[0958-1669, 1879-0429]</td>
-      <td>55-61</td>
+      <td>[{'id': '2216', 'name': '16 Studies in Human S...</td>
+      <td>[Germany]</td>
+      <td>[0141-9870, 1466-4356]</td>
+      <td>2019-09-28</td>
+      <td>0.082175</td>
       <td>[{'id': 'closed', 'name': 'Closed', 'descripti...</td>
-      <td>Toward an evaluation of metabolite channeling ...</td>
-      <td>[{'id': 'grid.457768.f', 'acronym': 'NSF BIO',...</td>
-      <td>article</td>
-      <td>31669681</td>
-      <td>pub.1122053200</td>
-      <td>[{'id': 'US', 'name': 'United States'}]</td>
-      <td>jour.1100889</td>
-      <td>Current Opinion in Biotechnology</td>
+      <td>2020-12-02</td>
+      <td>jour.1135076</td>
+      <td>Ethnic and Racial Studies</td>
     </tr>
   </tbody>
 </table>
+<p>1 rows × 33 columns</p>
 </div></div>
 </div>
 <div class="section" id="Full-text-search">
 <h3>Full text search<a class="headerlink" href="#Full-text-search" title="Permalink to this headline">¶</a></h3>
 <p>You can search for full text in the full text, in abstracts or in the title only.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -652,11 +623,12 @@ Field &#39;terms&#39; is deprecated in favor of concepts. Please refer to https:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 20 (total = 131414)
+Returned Publications: 20 (total = 132544)
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -677,13 +649,13 @@ Returned Publications: 20 (total = 131414)
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>title</th>
-      <th>volume</th>
       <th>author_affiliations</th>
-      <th>pages</th>
-      <th>year</th>
       <th>type</th>
       <th>id</th>
+      <th>volume</th>
+      <th>title</th>
+      <th>year</th>
+      <th>pages</th>
       <th>issue</th>
       <th>journal.id</th>
       <th>journal.title</th>
@@ -692,270 +664,270 @@ Returned Publications: 20 (total = 131414)
   <tbody>
     <tr>
       <th>0</th>
-      <td>Comparative Study on In Situ and Laboratory Te...</td>
-      <td>48</td>
       <td>[[{'first_name': 'Bijivemula Sudheer Kumar', '...</td>
-      <td>20170373</td>
-      <td>2020</td>
       <td>article</td>
       <td>pub.1110652249</td>
+      <td>48</td>
+      <td>Comparative Study on In Situ and Laboratory Te...</td>
+      <td>2020</td>
+      <td>20170373</td>
       <td>6</td>
       <td>jour.1044510</td>
       <td>Journal of Testing and Evaluation</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Rearrangement on surface structures by boride ...</td>
-      <td>45</td>
       <td>[[{'first_name': 'Shubiao', 'last_name': 'Xia'...</td>
-      <td>110-118</td>
-      <td>2020</td>
       <td>article</td>
       <td>pub.1121451463</td>
+      <td>45</td>
+      <td>Rearrangement on surface structures by boride ...</td>
+      <td>2020</td>
+      <td>110-118</td>
       <td>NaN</td>
       <td>jour.1141184</td>
       <td>Journal of Energy Chemistry</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>Facile preparation of N-doped corncob-derived ...</td>
-      <td>44</td>
-      <td>[[{'first_name': 'Wei', 'last_name': 'Yan', 'c...</td>
-      <td>121-130</td>
-      <td>2020</td>
+      <td>[[{'first_name': 'Huifa', 'last_name': 'Shi', ...</td>
       <td>article</td>
-      <td>pub.1120901265</td>
+      <td>pub.1122202562</td>
+      <td>45</td>
+      <td>Efficient polysulfide blocker from conductive ...</td>
+      <td>2020</td>
+      <td>135-141</td>
       <td>NaN</td>
       <td>jour.1141184</td>
       <td>Journal of Energy Chemistry</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>Assembling Amorphous (Fe-Ni)Co x -OH/Ni3S2 Nan...</td>
-      <td>263</td>
-      <td>[[{'first_name': 'Qijun', 'last_name': 'Che', ...</td>
-      <td>118338</td>
-      <td>2020</td>
+      <td>[[{'first_name': 'Emily E.', 'last_name': 'Bro...</td>
       <td>article</td>
-      <td>pub.1122258450</td>
-      <td>NaN</td>
-      <td>jour.1039901</td>
-      <td>Applied Catalysis B Environmental</td>
+      <td>pub.1122629088</td>
+      <td>48</td>
+      <td>The State of Stress on the Fault Before, Durin...</td>
+      <td>2020</td>
+      <td>1-26</td>
+      <td>1</td>
+      <td>jour.1026175</td>
+      <td>Annual Review of Earth and Planetary Sciences</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>Enhancing oxygen reduction performance of oxid...</td>
-      <td>263</td>
-      <td>[[{'first_name': 'Fengjiao', 'last_name': 'Li'...</td>
-      <td>118297</td>
-      <td>2020</td>
+      <td>[[{'first_name': 'Wei', 'last_name': 'Yan', 'c...</td>
       <td>article</td>
-      <td>pub.1121921532</td>
+      <td>pub.1120901265</td>
+      <td>44</td>
+      <td>Facile preparation of N-doped corncob-derived ...</td>
+      <td>2020</td>
+      <td>121-130</td>
+      <td>NaN</td>
+      <td>jour.1141184</td>
+      <td>Journal of Energy Chemistry</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>[[{'first_name': 'Yong', 'last_name': 'Yang', ...</td>
+      <td>article</td>
+      <td>pub.1122910946</td>
+      <td>264</td>
+      <td>In Situ No-slot Joint Integration of Half-Meta...</td>
+      <td>2020</td>
+      <td>118470</td>
       <td>NaN</td>
       <td>jour.1039901</td>
       <td>Applied Catalysis B Environmental</td>
     </tr>
     <tr>
-      <th>5</th>
-      <td>In-situ constructing Bi2S3 nanocrystals-modifi...</td>
-      <td>235</td>
-      <td>[[{'first_name': 'Fei', 'last_name': 'Chang', ...</td>
-      <td>116171</td>
-      <td>2020</td>
-      <td>article</td>
-      <td>pub.1121498135</td>
-      <td>NaN</td>
-      <td>jour.1043159</td>
-      <td>Separation and Purification Technology</td>
-    </tr>
-    <tr>
       <th>6</th>
-      <td>Micro-Structural and Morphological Properties ...</td>
-      <td>497</td>
-      <td>[[{'first_name': 'Heiddy P.', 'last_name': 'Qu...</td>
-      <td>165942</td>
-      <td>2020</td>
+      <td>[[{'first_name': 'A.W.', 'last_name': 'Nemetz'...</td>
       <td>article</td>
-      <td>pub.1121476796</td>
+      <td>pub.1123155463</td>
+      <td>278</td>
+      <td>Experimentally validated calculation of the cu...</td>
+      <td>2020</td>
+      <td>116544</td>
       <td>NaN</td>
-      <td>jour.1038953</td>
-      <td>Journal of Magnetism and Magnetic Materials</td>
+      <td>jour.1038302</td>
+      <td>Journal of Materials Processing Technology</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>Evolution of magnetic anisotropy in cobalt fil...</td>
-      <td>497</td>
-      <td>[[{'first_name': 'Khushboo', 'last_name': 'Buk...</td>
-      <td>165934</td>
-      <td>2020</td>
+      <td>[[{'first_name': 'Marco', 'last_name': 'Caniat...</td>
       <td>article</td>
-      <td>pub.1121501604</td>
+      <td>pub.1123313292</td>
+      <td>161</td>
+      <td>Sound absorption performance of sustainable fo...</td>
+      <td>2020</td>
+      <td>107166</td>
       <td>NaN</td>
-      <td>jour.1038953</td>
-      <td>Journal of Magnetism and Magnetic Materials</td>
+      <td>jour.1123347</td>
+      <td>Applied Acoustics</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>Development of a method to evaluate the tender...</td>
-      <td>308</td>
-      <td>[[{'first_name': 'Yingying', 'last_name': 'Zha...</td>
-      <td>125648</td>
-      <td>2020</td>
+      <td>[[{'first_name': 'Mei-Hsuan', 'last_name': 'Li...</td>
       <td>article</td>
-      <td>pub.1121831587</td>
-      <td>NaN</td>
-      <td>jour.1086261</td>
-      <td>Food Chemistry</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>Deep learning-based retrieval of cyanobacteria...</td>
-      <td>110</td>
-      <td>[[{'first_name': 'Inhyeok', 'last_name': 'Yim'...</td>
-      <td>105879</td>
+      <td>pub.1122802647</td>
+      <td>244</td>
+      <td>Prussian Blue Analogue-derived co/fe bimetalli...</td>
       <td>2020</td>
-      <td>article</td>
-      <td>pub.1122413487</td>
-      <td>NaN</td>
-      <td>jour.1032186</td>
-      <td>Ecological Indicators</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>Heavy oil cracking in the presence of steam an...</td>
-      <td>199</td>
-      <td>[[{'first_name': 'Petr M.', 'last_name': 'Yele...</td>
-      <td>106239</td>
-      <td>2020</td>
-      <td>article</td>
-      <td>pub.1122385649</td>
-      <td>NaN</td>
-      <td>jour.1137095</td>
-      <td>Fuel Processing Technology</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>Photoelectrocatalytic degradation of Ag-cyanid...</td>
-      <td>242</td>
-      <td>[[{'first_name': 'Ran', 'last_name': 'Mao', 'c...</td>
-      <td>125156</td>
-      <td>2020</td>
-      <td>article</td>
-      <td>pub.1121966763</td>
+      <td>125444</td>
       <td>NaN</td>
       <td>jour.1015185</td>
       <td>Chemosphere</td>
     </tr>
     <tr>
-      <th>12</th>
-      <td>Accelerated cluster dissolution using electrop...</td>
-      <td>178</td>
-      <td>[[{'first_name': 'Shuyang', 'last_name': 'Qin'...</td>
-      <td>24-28</td>
-      <td>2020</td>
+      <th>9</th>
+      <td>[[{'first_name': 'Xingchao', 'last_name': 'Dai...</td>
       <td>article</td>
-      <td>pub.1122448273</td>
+      <td>pub.1122593226</td>
+      <td>22</td>
+      <td>Green synthesis of N-alkyl-amines and amides v...</td>
+      <td>2020</td>
+      <td>1-6</td>
       <td>NaN</td>
-      <td>jour.1039309</td>
-      <td>Scripta Materialia</td>
+      <td>jour.1291006</td>
+      <td>Current Opinion in Green and Sustainable Chemi...</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>[[{'first_name': 'Yajun', 'last_name': 'Chen',...</td>
+      <td>article</td>
+      <td>pub.1123226266</td>
+      <td>109</td>
+      <td>Electrospun thymol-loaded porous cellulose ace...</td>
+      <td>2020</td>
+      <td>110536</td>
+      <td>NaN</td>
+      <td>jour.1040557</td>
+      <td>Materials Science and Engineering C</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>[[{'first_name': 'Jin-Tao', 'last_name': 'Ren'...</td>
+      <td>article</td>
+      <td>pub.1122278861</td>
+      <td>263</td>
+      <td>Molybdenum-based nanoparticles (Mo2C, MoP and ...</td>
+      <td>2020</td>
+      <td>118352</td>
+      <td>NaN</td>
+      <td>jour.1039901</td>
+      <td>Applied Catalysis B Environmental</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>[[{'first_name': 'Yunan', 'last_name': 'Yi', '...</td>
+      <td>article</td>
+      <td>pub.1121996371</td>
+      <td>263</td>
+      <td>In situ depositing an ultrathin CoOxHy layer o...</td>
+      <td>2020</td>
+      <td>118334</td>
+      <td>NaN</td>
+      <td>jour.1039901</td>
+      <td>Applied Catalysis B Environmental</td>
     </tr>
     <tr>
       <th>13</th>
-      <td>Silver(I) complex with a Schiff base ligand ex...</td>
-      <td>381</td>
-      <td>[[{'first_name': 'Abbas', 'last_name': 'Mohamm...</td>
-      <td>122776</td>
-      <td>2020</td>
+      <td>[[{'first_name': 'Qijun', 'last_name': 'Che', ...</td>
       <td>article</td>
-      <td>pub.1120928990</td>
+      <td>pub.1122258450</td>
+      <td>263</td>
+      <td>Assembling Amorphous (Fe-Ni)Co x -OH/Ni3S2 Nan...</td>
+      <td>2020</td>
+      <td>118338</td>
       <td>NaN</td>
-      <td>jour.1127675</td>
-      <td>Chemical Engineering Journal</td>
+      <td>jour.1039901</td>
+      <td>Applied Catalysis B Environmental</td>
     </tr>
     <tr>
       <th>14</th>
-      <td>Growth of high-density horizontal SWNT arrays ...</td>
-      <td>157</td>
-      <td>[[{'first_name': 'Weiming', 'last_name': 'Liu'...</td>
-      <td>164-168</td>
-      <td>2020</td>
+      <td>[[{'first_name': 'Ning', 'last_name': 'Sun', '...</td>
       <td>article</td>
-      <td>pub.1121578834</td>
+      <td>pub.1121995445</td>
+      <td>263</td>
+      <td>Efficiently photocatalytic degradation of mono...</td>
+      <td>2020</td>
+      <td>118313</td>
       <td>NaN</td>
-      <td>jour.1033315</td>
-      <td>Carbon</td>
+      <td>jour.1039901</td>
+      <td>Applied Catalysis B Environmental</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>Application in situ of zein nanocapsules loade...</td>
-      <td>99</td>
-      <td>[[{'first_name': 'Cleonice Gonçalves', 'last_n...</td>
-      <td>105339</td>
-      <td>2020</td>
+      <td>[[{'first_name': 'T.', 'last_name': 'Loho', 'c...</td>
       <td>article</td>
-      <td>pub.1120599414</td>
+      <td>pub.1122097506</td>
+      <td>271</td>
+      <td>A tensile technique for measuring frozen produ...</td>
+      <td>2020</td>
+      <td>109772</td>
       <td>NaN</td>
-      <td>jour.1096852</td>
-      <td>Food Hydrocolloids</td>
+      <td>jour.1127677</td>
+      <td>Journal of Food Engineering</td>
     </tr>
     <tr>
       <th>16</th>
-      <td>Electronic surface, optical and electrical pro...</td>
-      <td>106</td>
-      <td>[[{'first_name': 'Mohamad Raqif', 'last_name':...</td>
-      <td>104757</td>
-      <td>2020</td>
+      <td>[[{'first_name': 'Fei', 'last_name': 'Zheng', ...</td>
       <td>article</td>
-      <td>pub.1121613487</td>
+      <td>pub.1123238517</td>
+      <td>124</td>
+      <td>Measurement of nitric oxide from cigarette bur...</td>
+      <td>2020</td>
+      <td>105963</td>
       <td>NaN</td>
-      <td>jour.1049830</td>
-      <td>Materials Science in Semiconductor Processing</td>
+      <td>jour.1048637</td>
+      <td>Optics &amp; Laser Technology</td>
     </tr>
     <tr>
       <th>17</th>
-      <td>A multifunctional gelatine–quaternary ammonium...</td>
-      <td>383</td>
-      <td>[[{'first_name': 'Shilin', 'last_name': 'Xu', ...</td>
-      <td>121142</td>
-      <td>2020</td>
+      <td>[[{'first_name': 'Fengjiao', 'last_name': 'Li'...</td>
       <td>article</td>
-      <td>pub.1120791075</td>
+      <td>pub.1121921532</td>
+      <td>263</td>
+      <td>Enhancing oxygen reduction performance of oxid...</td>
+      <td>2020</td>
+      <td>118297</td>
       <td>NaN</td>
-      <td>jour.1106099</td>
-      <td>Journal of Hazardous Materials</td>
+      <td>jour.1039901</td>
+      <td>Applied Catalysis B Environmental</td>
     </tr>
     <tr>
       <th>18</th>
-      <td>Graphene oxide-drove transformation of NiS/Ni3...</td>
-      <td>559</td>
-      <td>[[{'first_name': 'Qin', 'last_name': 'Hu', 'co...</td>
-      <td>115-123</td>
-      <td>2020</td>
+      <td>[[{'first_name': 'Liuhao', 'last_name': 'Ma', ...</td>
       <td>article</td>
-      <td>pub.1121578739</td>
+      <td>pub.1122910986</td>
+      <td>112</td>
+      <td>An improved study of the uniformity of laminar...</td>
+      <td>2020</td>
+      <td>110013</td>
       <td>NaN</td>
-      <td>jour.1005567</td>
-      <td>Journal of Colloid and Interface Science</td>
+      <td>jour.1137241</td>
+      <td>Experimental Thermal and Fluid Science</td>
     </tr>
     <tr>
       <th>19</th>
-      <td>Oxidation of polycrystalline indium nanowires ...</td>
-      <td>260</td>
-      <td>[[{'first_name': 'Alexander', 'last_name': 'Ka...</td>
-      <td>126946</td>
-      <td>2020</td>
+      <td>[[{'first_name': 'Yi-Heng', 'last_name': 'Zhao...</td>
       <td>article</td>
-      <td>pub.1122295629</td>
+      <td>pub.1123226630</td>
+      <td>244</td>
+      <td>Polyphenol-metal network derived nanocomposite...</td>
+      <td>2020</td>
+      <td>125577</td>
       <td>NaN</td>
-      <td>jour.1042608</td>
-      <td>Materials Letters</td>
+      <td>jour.1015185</td>
+      <td>Chemosphere</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -972,11 +944,12 @@ limit 3
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 3 (total = 42268)
+Returned Publications: 3 (total = 42857)
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -997,14 +970,14 @@ Returned Publications: 3 (total = 42268)
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>type</th>
-      <th>year</th>
+      <th>volume</th>
+      <th>title</th>
       <th>pages</th>
       <th>id</th>
-      <th>title</th>
-      <th>volume</th>
-      <th>issue</th>
+      <th>type</th>
+      <th>year</th>
       <th>author_affiliations</th>
+      <th>issue</th>
       <th>journal.id</th>
       <th>journal.title</th>
     </tr>
@@ -1012,12 +985,12 @@ Returned Publications: 3 (total = 42268)
   <tbody>
     <tr>
       <th>0</th>
-      <td>article</td>
-      <td>2020</td>
+      <td>1</td>
+      <td>IEEE Open Journal of Nanotechnology (OJNANO) A...</td>
       <td>1-1</td>
       <td>pub.1120774302</td>
-      <td>IEEE Open Journal of Nanotechnology (OJNANO) A...</td>
-      <td>1</td>
+      <td>article</td>
+      <td>2020</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1025,12 +998,12 @@ Returned Publications: 3 (total = 42268)
     </tr>
     <tr>
       <th>1</th>
-      <td>article</td>
-      <td>2020</td>
+      <td>1</td>
+      <td>Announcing the IEEE Open Journal of Nanotechno...</td>
       <td>1-1</td>
       <td>pub.1120849045</td>
-      <td>Announcing the IEEE Open Journal of Nanotechno...</td>
-      <td>1</td>
+      <td>article</td>
+      <td>2020</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1038,14 +1011,14 @@ Returned Publications: 3 (total = 42268)
     </tr>
     <tr>
       <th>2</th>
+      <td>20</td>
+      <td>Risk Assessment of Nanoparticle Exposure in a ...</td>
+      <td>3610-3619</td>
+      <td>pub.1122758116</td>
       <td>article</td>
       <td>2020</td>
-      <td>1993-2006</td>
-      <td>pub.1120909015</td>
-      <td>Toxicological Evaluation of Graphene-Family Na...</td>
-      <td>20</td>
-      <td>4</td>
-      <td>[[{'first_name': 'Linlin', 'last_name': 'Chen'...</td>
+      <td>[[{'first_name': 'Yuqian', 'last_name': 'Wang'...</td>
+      <td>6</td>
       <td>jour.1297328</td>
       <td>Journal of Nanoscience and Nanotechnology</td>
     </tr>
@@ -1058,7 +1031,7 @@ Returned Publications: 3 (total = 42268)
 <div class="section" id="A-simple-author-search">
 <h2>A simple author search<a class="headerlink" href="#A-simple-author-search" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1079,7 +1052,8 @@ Returned Publications: 10 (total = 76)
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -1100,14 +1074,14 @@ Returned Publications: 10 (total = 76)
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>type</th>
-      <th>id</th>
-      <th>pages</th>
-      <th>volume</th>
       <th>author_affiliations</th>
-      <th>issue</th>
-      <th>title</th>
+      <th>volume</th>
+      <th>pages</th>
       <th>year</th>
+      <th>title</th>
+      <th>id</th>
+      <th>type</th>
+      <th>issue</th>
       <th>journal.id</th>
       <th>journal.title</th>
     </tr>
@@ -1115,131 +1089,131 @@ Returned Publications: 10 (total = 76)
   <tbody>
     <tr>
       <th>0</th>
-      <td>article</td>
-      <td>pub.1115957159</td>
-      <td>e0216783</td>
-      <td>14</td>
       <td>[[{'first_name': 'David', 'last_name': 'Zeitly...</td>
-      <td>5</td>
-      <td>Perception, prestige and PageRank</td>
+      <td>14</td>
+      <td>e0216783</td>
       <td>2019</td>
+      <td>Perception, prestige and PageRank</td>
+      <td>pub.1115957159</td>
+      <td>article</td>
+      <td>5</td>
       <td>jour.1037553</td>
       <td>PLoS ONE</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>preprint</td>
-      <td>pub.1119449118</td>
-      <td>NaN</td>
-      <td>NaN</td>
       <td>[[{'first_name': 'Daniel W.', 'last_name': 'Ho...</td>
       <td>NaN</td>
-      <td>The Price of Gold: Curiosity?</td>
+      <td>NaN</td>
       <td>2019</td>
+      <td>The Price of Gold: Curiosity?</td>
+      <td>pub.1119449118</td>
+      <td>preprint</td>
+      <td>NaN</td>
       <td>jour.1371339</td>
       <td>arXiv</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>preprint</td>
-      <td>pub.1118864658</td>
-      <td>NaN</td>
-      <td>NaN</td>
       <td>[[{'first_name': 'David', 'last_name': 'Zeitly...</td>
       <td>NaN</td>
-      <td>Perception, Prestige and PageRank</td>
+      <td>NaN</td>
       <td>2019</td>
+      <td>Perception, Prestige and PageRank</td>
+      <td>pub.1118864658</td>
+      <td>preprint</td>
+      <td>NaN</td>
       <td>jour.1371339</td>
       <td>arXiv</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>monograph</td>
-      <td>pub.1108567148</td>
-      <td>NaN</td>
-      <td>NaN</td>
       <td>[[{'first_name': 'Carl M', 'last_name': 'Bende...</td>
       <td>NaN</td>
-      <td>PT Symmetry</td>
+      <td>NaN</td>
       <td>2019</td>
+      <td>PT Symmetry</td>
+      <td>pub.1108567148</td>
+      <td>monograph</td>
+      <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>proceeding</td>
-      <td>pub.1111011264</td>
-      <td>1-4</td>
-      <td>NaN</td>
       <td>[[{'first_name': 'Daniel', 'last_name': 'Hook'...</td>
       <td>NaN</td>
-      <td>Optical Fiber Sensor Design for Ground Slope M...</td>
+      <td>1-4</td>
       <td>2018</td>
+      <td>Optical Fiber Sensor Design for Ground Slope M...</td>
+      <td>pub.1111011264</td>
+      <td>proceeding</td>
+      <td>NaN</td>
       <td>jour.1047781</td>
       <td>2010 IEEE Sensors</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>article</td>
-      <td>pub.1106289502</td>
-      <td>23</td>
-      <td>3</td>
       <td>[[{'first_name': 'Daniel W.', 'last_name': 'Ho...</td>
-      <td>NaN</td>
-      <td>Dimensions: Building Context for Search and Ev...</td>
+      <td>3</td>
+      <td>23</td>
       <td>2018</td>
+      <td>Dimensions: Building Context for Search and Ev...</td>
+      <td>pub.1106289502</td>
+      <td>article</td>
+      <td>NaN</td>
       <td>jour.1292498</td>
       <td>Frontiers in Research Metrics and Analytics</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>article</td>
-      <td>pub.1105321123</td>
-      <td>s45</td>
-      <td>41</td>
       <td>[[{'first_name': 'Daniel', 'last_name': 'Hook'...</td>
-      <td>NaN</td>
-      <td>Assessment of the interaction between a natura...</td>
+      <td>41</td>
+      <td>s45</td>
       <td>2018</td>
+      <td>Assessment of the interaction between a natura...</td>
+      <td>pub.1105321123</td>
+      <td>article</td>
+      <td>NaN</td>
       <td>jour.1091476</td>
       <td>Contact Lens and Anterior Eye</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>article</td>
-      <td>pub.1085413261</td>
-      <td>1064-1072</td>
-      <td>106</td>
       <td>[[{'first_name': 'Andrew J.', 'last_name': 'Ho...</td>
-      <td>3</td>
-      <td>Characterization and quantitation of PVP conte...</td>
+      <td>106</td>
+      <td>1064-1072</td>
       <td>2018</td>
+      <td>Characterization and quantitation of PVP conte...</td>
+      <td>pub.1085413261</td>
+      <td>article</td>
+      <td>3</td>
       <td>jour.1312091</td>
       <td>Journal of Biomedical Materials Research Part ...</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>article</td>
-      <td>pub.1085511076</td>
-      <td>052113</td>
-      <td>95</td>
       <td>[[{'first_name': 'Carl M.', 'last_name': 'Bend...</td>
-      <td>5</td>
-      <td>Behavior of eigenvalues in a region of broken ...</td>
+      <td>95</td>
+      <td>052113</td>
       <td>2017</td>
+      <td>Behavior of eigenvalues in a region of broken ...</td>
+      <td>pub.1085511076</td>
+      <td>article</td>
+      <td>5</td>
       <td>jour.1053349</td>
       <td>Physical Review A</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>preprint</td>
-      <td>pub.1118734450</td>
-      <td>NaN</td>
-      <td>NaN</td>
       <td>[[{'first_name': 'Carl M.', 'last_name': 'Bend...</td>
       <td>NaN</td>
-      <td>Behavior of eigenvalues in a region of broken-...</td>
+      <td>NaN</td>
       <td>2017</td>
+      <td>Behavior of eigenvalues in a region of broken-...</td>
+      <td>pub.1118734450</td>
+      <td>preprint</td>
+      <td>NaN</td>
       <td>jour.1371339</td>
       <td>arXiv</td>
     </tr>
@@ -1251,7 +1225,7 @@ Returned Publications: 10 (total = 76)
 <div class="section" id="..or-search-for-a-researcher-by-a-specific-id">
 <h2>..or search for a researcher by a specific id<a class="headerlink" href="#..or-search-for-a-researcher-by-a-specific-id" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1273,7 +1247,8 @@ Returned Publications: 1 (total = 11)
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -1301,8 +1276,8 @@ Returned Publications: 1 (total = 11)
   <tbody>
     <tr>
       <th>0</th>
-      <td>[{'id': 'ur.013514345521.07', 'last_name': 'Pa...</td>
-      <td>10.1021/jacs.9b06036</td>
+      <td>[{'id': 'ur.016543316154.39', 'last_name': 'Ag...</td>
+      <td>10.1021/acsinfecdis.9b00189</td>
     </tr>
   </tbody>
 </table>
@@ -1313,7 +1288,7 @@ Returned Publications: 1 (total = 11)
 <p>One of the queries above is using the <code class="docutils literal notranslate"><span class="pre">researchers</span></code> facet of the <code class="docutils literal notranslate"><span class="pre">publications</span></code> source.</p>
 <p>In general source-queries can return up to 1000 records. For example this throws an exception:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1337,10 +1312,11 @@ Semantic errors found:
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>&lt;dimcli.Result object #4768926416. Errors: 1&gt;
+<span></span>&lt;dimcli.Dataset object #4757681360. Errors: 1&gt;
 </pre></div>
 </div>
 </div>
@@ -1350,7 +1326,7 @@ Semantic errors found:
 <h2>You can paginate through <em>source</em> results up to 50000 rows<a class="headerlink" href="#You-can-paginate-through-source-results-up-to-50000-rows" title="Permalink to this headline">¶</a></h2>
 <p>With <a class="reference external" href="https://docs.dimensions.ai/dsl/data-sources.html">sources</a>, you can use the <a class="reference external" href="https://docs.dimensions.ai/dsl/language.html#paginating-results">limit/skip syntax</a> in order to paginate through results:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1367,14 +1343,15 @@ Semantic errors found:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 1000 (total = 3814)
+Returned Publications: 1000 (total = 3831)
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>&lt;dimcli.Result object #4800280784. Records: 1000/3814&gt;
+<span></span>&lt;dimcli.Dataset object #4771680720. Records: 1000/3831&gt;
 </pre></div>
 </div>
 </div>
@@ -1383,7 +1360,7 @@ Returned Publications: 1000 (total = 3814)
 <h2>You can return max 1000 <code class="docutils literal notranslate"><span class="pre">facet</span></code> rows<a class="headerlink" href="#You-can-return-max-1000-facet-rows" title="Permalink to this headline">¶</a></h2>
 <p>It is important to remember that <a class="reference external" href="https://docs.dimensions.ai/dsl/language.html#returning-facets">when using facets</a> you cannot use the <em>skip</em> operation so the maximum number of records is always 1000.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1407,16 +1384,17 @@ Semantic errors found:
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>&lt;dimcli.Result object #4800305296. Errors: 1&gt;
+<span></span>&lt;dimcli.Dataset object #4757683984. Errors: 1&gt;
 </pre></div>
 </div>
 </div>
 <p>While this works…</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1437,10 +1415,11 @@ Returned Researchers: 1000
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>&lt;dimcli.Result object #4805260176. Records: 1000/3814&gt;
+<span></span>&lt;dimcli.Dataset object #4777062544. Records: 1000/3831&gt;
 </pre></div>
 </div>
 </div>
@@ -1448,7 +1427,7 @@ Returned Researchers: 1000
 <div class="section" id="Just-make-a-mistake,-and-you-will-ge-the-complete-list-of-available-facets">
 <h2>Just make a mistake, and you will ge the complete list of available facets<a class="headerlink" href="#Just-make-a-mistake,-and-you-will-ge-the-complete-list-of-available-facets" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1471,10 +1450,11 @@ Semantic errors found:
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>&lt;dimcli.Result object #4800315344. Errors: 1&gt;
+<span></span>&lt;dimcli.Dataset object #4777063248. Errors: 1&gt;
 </pre></div>
 </div>
 </div>

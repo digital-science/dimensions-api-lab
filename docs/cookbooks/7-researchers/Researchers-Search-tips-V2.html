@@ -261,7 +261,7 @@ div.rendered_html tbody tr:hover {
 </ol>
 <p>For the purpose of this exercise, we will are going to use <a class="reference external" href="https://grid.ac/institutes/grid.258806.1">grid.258806.1</a> and the time frame <strong>2013-2018</strong>. Feel free though to change the parameters below as you want, eg by <a class="reference external" href="https://grid.ac/institutes">choosing another GRID organization</a>.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -277,7 +277,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>Before we start, let’s also load some useful libraries and login with the Dimensions API.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -312,7 +312,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-DimCli v0.6.1.2 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (method: manual login)
+DimCli v0.6.2 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (method: dsl.ini file)
 </pre></div></div>
 </div>
 <div class="section" id="Background:-understanding-the-data-model">
@@ -340,7 +340,7 @@ DimCli v0.6.1.2 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (me
 </div>
 <p>Here’s a object model diagram summing up how data is structured.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -349,7 +349,7 @@ DimCli v0.6.1.2 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (me
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -364,7 +364,7 @@ for researchers, that’s the sum of all research organizations a single individ
 </ul>
 <p>So, in the real world we often have scenarios like the following one:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -373,7 +373,7 @@ for researchers, that’s the sum of all research organizations a single individ
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -417,7 +417,7 @@ for researchers, that’s the sum of all research organizations a single individ
 </ol>
 <p>First off, we can to get all publications based on our search criteria by using a <code class="docutils literal notranslate"><span class="pre">loop</span></code> query.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[59]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -432,7 +432,7 @@ for researchers, that’s the sum of all research organizations a single individ
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-693 / 693
+701 / 701
 </pre></div></div>
 </div>
 <div class="section" id="Researchers-affiliated-to-the-GRID-ID-at-the-time-of-writing">
@@ -441,7 +441,7 @@ for researchers, that’s the sum of all research organizations a single individ
 <p>The <code class="docutils literal notranslate"><span class="pre">affiliation</span></code> data in publications represent exactly that: we can thus loop over them (for each publication/researcher) and keep only the ones matching our GRID ID.</p>
 <p><strong>TIP</strong> affiliations can be extracted easily thanks one of the ‘dataframe’ transformation methods in <a class="reference external" href="https://github.com/digital-science/dimcli">Dimcli</a>: <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors_affiliations</span></code></p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -464,12 +464,12 @@ for researchers, that’s the sum of all research organizations a single individ
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 ===
-Researchers with affiliation to grid.258806.1 at time of writing: 528
+Researchers with affiliation to grid.258806.1 at time of writing: 530
 ===
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -590,7 +590,7 @@ Researchers with affiliation to grid.258806.1 at time of writing: 528
       <td>...</td>
     </tr>
     <tr>
-      <th>3908</th>
+      <th>3939</th>
       <td>grid.258806.1</td>
       <td>Kyushu Institute of Technology</td>
       <td>Kitakyushu</td>
@@ -604,7 +604,7 @@ Researchers with affiliation to grid.258806.1 at time of writing: 528
       <td>YONEMOTO</td>
     </tr>
     <tr>
-      <th>3909</th>
+      <th>3940</th>
       <td>grid.258806.1</td>
       <td>Kyushu Institute of Technology</td>
       <td>Kitakyushu</td>
@@ -618,7 +618,7 @@ Researchers with affiliation to grid.258806.1 at time of writing: 528
       <td>FUJIKAWA</td>
     </tr>
     <tr>
-      <th>3910</th>
+      <th>3941</th>
       <td>grid.258806.1</td>
       <td>Kyushu Institute of Technology</td>
       <td>Kitakyushu</td>
@@ -632,7 +632,7 @@ Researchers with affiliation to grid.258806.1 at time of writing: 528
       <td>URA</td>
     </tr>
     <tr>
-      <th>3911</th>
+      <th>3942</th>
       <td>grid.258806.1</td>
       <td>Kyushu Institute of Technology</td>
       <td>Kitakyushu</td>
@@ -646,7 +646,7 @@ Researchers with affiliation to grid.258806.1 at time of writing: 528
       <td>SUGIMOTO</td>
     </tr>
     <tr>
-      <th>3980</th>
+      <th>4011</th>
       <td>grid.258806.1</td>
       <td>Kyushu Institute of Technology</td>
       <td>Kitakyushu</td>
@@ -661,7 +661,7 @@ Researchers with affiliation to grid.258806.1 at time of writing: 528
     </tr>
   </tbody>
 </table>
-<p>528 rows × 11 columns</p>
+<p>530 rows × 11 columns</p>
 </div></div>
 </div>
 <p>Note: * The first ‘publication-affiliations’ dataframe we get may contain duplicate records - eg if an author has more than one publication it’ll be listed twice. That’s why we have an extra step where we drop the <code class="docutils literal notranslate"><span class="pre">pub_id</span></code> column and simply count unique researchers, based on their researcher ID.</p>
@@ -671,7 +671,7 @@ Researchers with affiliation to grid.258806.1 at time of writing: 528
 <p>This can be achieved simply by taking into consideration a different field, called <code class="docutils literal notranslate"><span class="pre">current_organization_id</span></code>, available at the outer level of the JSON author structure (see the data model section above) - outside the <code class="docutils literal notranslate"><span class="pre">affiliations</span></code> list.</p>
 <p>Luckily Dimcli includes another handy method for umpacking authors into a dataframe: <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors</span></code></p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[61]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -690,12 +690,12 @@ Researchers with affiliation to grid.258806.1 at time of writing: 528
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 ===
-Researchers with affiliation to grid.258806.1 at the time of speaking: 505
+Researchers with affiliation to grid.258806.1 at the time of speaking: 507
 ===
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[61]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -788,7 +788,7 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 505
       <td>...</td>
     </tr>
     <tr>
-      <th>3475</th>
+      <th>3506</th>
       <td>Koichi</td>
       <td>YONEMOTO</td>
       <td></td>
@@ -798,7 +798,7 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 505
       <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
     </tr>
     <tr>
-      <th>3476</th>
+      <th>3507</th>
       <td>Takahiro</td>
       <td>FUJIKAWA</td>
       <td></td>
@@ -808,7 +808,7 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 505
       <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
     </tr>
     <tr>
-      <th>3477</th>
+      <th>3508</th>
       <td>Yusuke</td>
       <td>URA</td>
       <td></td>
@@ -818,7 +818,7 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 505
       <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
     </tr>
     <tr>
-      <th>3478</th>
+      <th>3509</th>
       <td>Junichi</td>
       <td>SUGIMOTO</td>
       <td></td>
@@ -828,7 +828,7 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 505
       <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
     </tr>
     <tr>
-      <th>3509</th>
+      <th>3540</th>
       <td>Yuji</td>
       <td>Fujita</td>
       <td></td>
@@ -839,7 +839,7 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 505
     </tr>
   </tbody>
 </table>
-<p>505 rows × 7 columns</p>
+<p>507 rows × 7 columns</p>
 </div></div>
 </div>
 </div>
@@ -876,7 +876,7 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 505
 </li>
 </ol>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[62]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -893,18 +893,18 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 505
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-1000 / 7369
-2000 / 7369
-3000 / 7369
-4000 / 7369
-5000 / 7369
-6000 / 7369
-7000 / 7369
-7369 / 7369
+1000 / 7348
+2000 / 7348
+3000 / 7348
+4000 / 7348
+5000 / 7348
+6000 / 7348
+7000 / 7348
+7348 / 7348
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[62]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -926,9 +926,9 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 505
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>research_orgs</th>
-      <th>id</th>
       <th>last_name</th>
+      <th>id</th>
+      <th>research_orgs</th>
       <th>first_name</th>
       <th>orcid_id</th>
     </tr>
@@ -936,43 +936,43 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 505
   <tbody>
     <tr>
       <th>0</th>
-      <td>[{'id': 'grid.430387.b', 'city_name': 'New Bru...</td>
-      <td>ur.01266467252.06</td>
-      <td>Horibe</td>
-      <td>Yoichi</td>
-      <td>None</td>
+      <td>Kinoshita</td>
+      <td>ur.01104616261.40</td>
+      <td>[{'id': 'grid.258806.1', 'city_name': 'Kitakyu...</td>
+      <td>Noriaki</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>[{'id': 'grid.9435.b', 'city_name': 'Reading',...</td>
-      <td>ur.01274574426.61</td>
-      <td>Wang</td>
-      <td>Shufeng</td>
-      <td>[0000-0003-3536-8000]</td>
+      <td>Li</td>
+      <td>ur.01250743274.97</td>
+      <td>[{'id': 'grid.258806.1', 'city_name': 'Kitakyu...</td>
+      <td>Xuesong</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>[{'id': 'grid.9435.b', 'city_name': 'Reading',...</td>
-      <td>ur.012326321631.34</td>
-      <td>Wang</td>
-      <td>Shufeng</td>
-      <td>[0000-0003-3536-8000]</td>
+      <td>Saeki</td>
+      <td>ur.012625057235.91</td>
+      <td>[{'id': 'grid.258806.1', 'city_name': 'Kitakyu...</td>
+      <td>Tomonori</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>3</th>
+      <td>Sawasaki</td>
+      <td>ur.015716271155.78</td>
       <td>[{'id': 'grid.258806.1', 'city_name': 'Kitakyu...</td>
-      <td>ur.01104616261.40</td>
-      <td>Kinoshita</td>
-      <td>Noriaki</td>
-      <td>None</td>
+      <td>Sumiko</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>4</th>
+      <td>Nedachi</td>
+      <td>ur.010677726131.01</td>
       <td>[{'id': 'grid.258806.1', 'city_name': 'Kitakyu...</td>
-      <td>ur.01250743274.97</td>
-      <td>Li</td>
-      <td>Xuesong</td>
-      <td>None</td>
+      <td>Naoko</td>
+      <td>NaN</td>
     </tr>
   </tbody>
 </table>
@@ -981,7 +981,7 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 505
 <p>Now we need to select only the researchers who have <strong>published in the time frame [2013:2018]</strong>. So for each researcher ID we must extract the full publication history in order to verify their relevance.</p>
 <p>The most efficient way to do this is to use a query that <strong>extracts the publication history for several researchers at the same time</strong> (so to avoid overruning our API quota), then, as a second step, producing a clean list of relevant researchers from it.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[63]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1007,8 +1007,7 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 505
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;---</span><span class="se">\n</span><span class="s2">Found&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">),</span> <span class="s2">&quot;publications for the given criteria (including duplicates)&quot;</span><span class="p">)</span>
 
 <span class="c1"># simulate a DSL payload using Dimcli</span>
-<span class="kn">from</span> <span class="nn">dimcli.core</span> <span class="k">import</span> <span class="n">api</span>
-<span class="n">pubs_v2</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">Result</span><span class="p">({</span><span class="s2">&quot;publications&quot;</span> <span class="p">:</span> <span class="n">results</span><span class="p">})</span>
+<span class="n">pubs_v2</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_publications_list</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
 
 <span class="c1"># transform to a dataframe to remove duplicates quickly</span>
 <span class="n">pubs_v2_df</span> <span class="o">=</span> <span class="n">pubs_v2</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
@@ -1022,41 +1021,41 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 505
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 23 (total = 23)
-Returned Publications: 75 (total = 75)
-Returned Publications: 37 (total = 37)
-Returned Publications: 91 (total = 91)
-Returned Publications: 100 (total = 100)
-Returned Publications: 87 (total = 87)
+Returned Publications: 18 (total = 18)
 Returned Publications: 53 (total = 53)
-Returned Publications: 48 (total = 48)
-Returned Publications: 69 (total = 69)
-Returned Publications: 50 (total = 50)
-Returned Publications: 57 (total = 57)
-Returned Publications: 86 (total = 86)
-Returned Publications: 28 (total = 28)
-Returned Publications: 38 (total = 38)
-Returned Publications: 27 (total = 27)
-Returned Publications: 91 (total = 91)
-Returned Publications: 61 (total = 61)
-Returned Publications: 86 (total = 86)
 Returned Publications: 32 (total = 32)
-Returned Publications: 51 (total = 51)
-Returned Publications: 62 (total = 62)
 Returned Publications: 68 (total = 68)
-Returned Publications: 108 (total = 108)
-Returned Publications: 46 (total = 46)
-Returned Publications: 65 (total = 65)
+Returned Publications: 66 (total = 66)
+Returned Publications: 131 (total = 131)
+Returned Publications: 66 (total = 66)
+Returned Publications: 49 (total = 49)
+Returned Publications: 50 (total = 50)
+Returned Publications: 31 (total = 31)
+Returned Publications: 90 (total = 90)
+Returned Publications: 114 (total = 114)
+Returned Publications: 18 (total = 18)
+Returned Publications: 28 (total = 28)
+Returned Publications: 44 (total = 44)
+Returned Publications: 76 (total = 76)
+Returned Publications: 60 (total = 60)
+Returned Publications: 77 (total = 77)
+Returned Publications: 53 (total = 53)
+Returned Publications: 45 (total = 45)
+Returned Publications: 58 (total = 58)
+Returned Publications: 75 (total = 75)
+Returned Publications: 54 (total = 54)
+Returned Publications: 132 (total = 132)
+Returned Publications: 33 (total = 33)
 ---
-Found 1539 publications for the given criteria (including duplicates)
-Final result: 665 unique publications
+Found 1521 publications for the given criteria (including duplicates)
+Final result: 672 unique publications
 </pre></div></div>
 </div>
 <div class="section" id="Researchers-affiliated-to-the-GRID-ID-at-the-time-of-writing">
 <h3>Researchers affiliated to the GRID-ID <strong>at the time of writing</strong><a class="headerlink" href="#Researchers-affiliated-to-the-GRID-ID-at-the-time-of-writing" title="Permalink to this headline">¶</a></h3>
 <p>This step is basically the same as in approach 1 above.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[64]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1079,12 +1078,12 @@ Final result: 665 unique publications
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 ===
-Researchers with affiliation to grid.258806.1 at time of writing: 526
+Researchers with affiliation to grid.258806.1 at time of writing: 530
 ===
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[64]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1205,49 +1204,7 @@ Researchers with affiliation to grid.258806.1 at time of writing: 526
       <td>...</td>
     </tr>
     <tr>
-      <th>7870</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
-      <td>Kitakyushu</td>
-      <td>1.85931e+06</td>
-      <td>Japan</td>
-      <td>JP</td>
-      <td></td>
-      <td></td>
-      <td>ur.015112126061.65</td>
-      <td>Kenji</td>
-      <td>Matsuda</td>
-    </tr>
-    <tr>
-      <th>8596</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
-      <td>Kitakyushu</td>
-      <td>1.85931e+06</td>
-      <td>Japan</td>
-      <td>JP</td>
-      <td></td>
-      <td></td>
-      <td>ur.0775361534.49</td>
-      <td>Ken'ichi</td>
-      <td>Yokoyama</td>
-    </tr>
-    <tr>
-      <th>8723</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
-      <td>Kitakyushu</td>
-      <td>1.85931e+06</td>
-      <td>Japan</td>
-      <td>JP</td>
-      <td></td>
-      <td></td>
-      <td>ur.010324112575.69</td>
-      <td>Yoshiki</td>
-      <td>Sato</td>
-    </tr>
-    <tr>
-      <th>8826</th>
+      <th>8554</th>
       <td>grid.258806.1</td>
       <td>Kyushu Institute of Technology</td>
       <td>Kitakyushu</td>
@@ -1261,7 +1218,7 @@ Researchers with affiliation to grid.258806.1 at time of writing: 526
       <td>Kodama</td>
     </tr>
     <tr>
-      <th>9194</th>
+      <th>8601</th>
       <td>grid.258806.1</td>
       <td>Kyushu Institute of Technology</td>
       <td>Kitakyushu</td>
@@ -1274,9 +1231,51 @@ Researchers with affiliation to grid.258806.1 at time of writing: 526
       <td>Noboru</td>
       <td>Sebe</td>
     </tr>
+    <tr>
+      <th>8636</th>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td></td>
+      <td></td>
+      <td>ur.013020061241.24</td>
+      <td>S</td>
+      <td>Gupta</td>
+    </tr>
+    <tr>
+      <th>8645</th>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td></td>
+      <td></td>
+      <td>ur.011715744317.66</td>
+      <td>Hidenori</td>
+      <td>SAITO</td>
+    </tr>
+    <tr>
+      <th>8870</th>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td></td>
+      <td></td>
+      <td>ur.07413015145.49</td>
+      <td>A.</td>
+      <td>Watanabe</td>
+    </tr>
   </tbody>
 </table>
-<p>526 rows × 11 columns</p>
+<p>530 rows × 11 columns</p>
 </div></div>
 </div>
 </div>
@@ -1284,7 +1283,7 @@ Researchers with affiliation to grid.258806.1 at time of writing: 526
 <h3>Researchers affiliated to the GRIDID <strong>at the time of speaking</strong> ie now<a class="headerlink" href="#Researchers-affiliated-to-the-GRIDID-at-the-time-of-speaking-ie-now" title="Permalink to this headline">¶</a></h3>
 <p>Also here, the procedure is exactly the same as in approach 1.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[65]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1303,12 +1302,12 @@ Researchers with affiliation to grid.258806.1 at time of writing: 526
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 ===
-Researchers with affiliation to grid.258806.1 at the time of speaking: 503
+Researchers with affiliation to grid.258806.1 at the time of speaking: 507
 ===
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[65]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1401,7 +1400,7 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 503
       <td>...</td>
     </tr>
     <tr>
-      <th>6790</th>
+      <th>7442</th>
       <td>Hiroki</td>
       <td>Obata</td>
       <td></td>
@@ -1411,27 +1410,7 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 503
       <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
     </tr>
     <tr>
-      <th>6979</th>
-      <td>Kenji</td>
-      <td>Matsuda</td>
-      <td>True</td>
-      <td></td>
-      <td>grid.258806.1</td>
-      <td>ur.015112126061.65</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
-    </tr>
-    <tr>
-      <th>7646</th>
-      <td>Ken'ichi</td>
-      <td>Yokoyama</td>
-      <td>True</td>
-      <td></td>
-      <td>grid.258806.1</td>
-      <td>ur.0775361534.49</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
-    </tr>
-    <tr>
-      <th>7859</th>
+      <th>7525</th>
       <td>Takao</td>
       <td>Kodama</td>
       <td>True</td>
@@ -1441,7 +1420,7 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 503
       <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
     </tr>
     <tr>
-      <th>8148</th>
+      <th>7562</th>
       <td>Noboru</td>
       <td>Sebe</td>
       <td></td>
@@ -1450,9 +1429,29 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 503
       <td>ur.010647607673.28</td>
       <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
     </tr>
+    <tr>
+      <th>7602</th>
+      <td>Hidenori</td>
+      <td>SAITO</td>
+      <td></td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>ur.011715744317.66</td>
+      <td>[{'name': 'Kanagawa Institute of Industrial Sc...</td>
+    </tr>
+    <tr>
+      <th>7820</th>
+      <td>A.</td>
+      <td>Watanabe</td>
+      <td>True</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>ur.07413015145.49</td>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+    </tr>
   </tbody>
 </table>
-<p>503 rows × 7 columns</p>
+<p>507 rows × 7 columns</p>
 </div></div>
 </div>
 </div>
@@ -1461,7 +1460,7 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 503
 <h2>Conclusions<a class="headerlink" href="#Conclusions" title="Permalink to this headline">¶</a></h2>
 <p>As anticipated above, <strong>both approaches are equally valid</strong> and in fact they return the same (or very similar) number of results. Let’s compare them:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[66]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1478,7 +1477,7 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 503
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[66]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1510,15 +1509,15 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 503
     <tr>
       <th>0</th>
       <td>1</td>
-      <td>505</td>
-      <td>528</td>
+      <td>507</td>
+      <td>530</td>
       <td>search publications where year in [2013:2018] ...</td>
     </tr>
     <tr>
       <th>1</th>
       <td>2</td>
-      <td>503</td>
-      <td>526</td>
+      <td>507</td>
+      <td>530</td>
       <td>search researchers where research_orgs="grid.2...</td>
     </tr>
   </tbody>
