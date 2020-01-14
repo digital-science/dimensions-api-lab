@@ -261,11 +261,11 @@ div.rendered_html tbody tr:hover {
 </ol>
 <p>For the purpose of this exercise, we will are going to use <a class="reference external" href="https://grid.ac/institutes/grid.258806.1">grid.258806.1</a> and the time frame <strong>2013-2018</strong>. Feel free though to change the parameters below as you want, eg by <a class="reference external" href="https://grid.ac/institutes">choosing another GRID organization</a>.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># constants  grid.258806.1</span>
+<span></span><span class="c1"># sample org: grid.258806.1</span>
 <span class="n">GRIDID</span> <span class="o">=</span> <span class="s2">&quot;grid.258806.1&quot;</span> <span class="c1">#@param {type:&quot;string&quot;}</span>
 <span class="n">START_YEAR</span> <span class="o">=</span> <span class="mi">2013</span> <span class="c1">#@param {type:&quot;slider&quot;, min:1900, max:2020, step: 1}</span>
 <span class="n">END_YEAR</span> <span class="o">=</span> <span class="mi">2018</span> <span class="c1">#@param {type:&quot;slider&quot;, min:1900, max:2020, step: 1}</span>
@@ -277,7 +277,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>Before we start, let’s also load some useful libraries and login with the Dimensions API.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -312,14 +312,14 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-DimCli v0.6.2 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (method: dsl.ini file)
+DimCli v0.6.2.2 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (method: dsl.ini file)
 </pre></div></div>
 </div>
 <div class="section" id="Background:-understanding-the-data-model">
 <h2>Background: understanding the data model<a class="headerlink" href="#Background:-understanding-the-data-model" title="Permalink to this headline">¶</a></h2>
 <p>In order to process researchers affiliation data in the context of publications, we should first take the time to understand how this data is structured in Dimensions.</p>
-<p>The JSON results of any query with shape <code class="docutils literal notranslate"><span class="pre">search</span> <span class="pre">publications</span> <span class="pre">where</span> <span class="pre">....</span> <span class="pre">return</span> <span class="pre">publications</span></code> are composed by a list of publications. If we open up one single publication record we will immediately see that authors are stored in a nested object <code class="docutils literal notranslate"><span class="pre">author_affiliations</span></code> that contains a list of dictionaries. Each element in this dictionary represents <strong>one single publication author</strong> and includes other information e.g. name, surname, ID, the organizations he/she is affiliated with etc..</p>
-<p>For example, in order to extract the second author of the tenth publication from our results we would do the following: <code class="docutils literal notranslate"><span class="pre">results.publications[10]['author_affiliations'][0][1]</span></code>:</p>
+<p>The JSON results of any query with shape <code class="docutils literal notranslate"><span class="pre">search</span> <span class="pre">publications</span> <span class="pre">where</span> <span class="pre">....</span> <span class="pre">return</span> <span class="pre">publications</span></code> are composed by a list of publications. If we open up one single publication record we will immediately see that authors are stored in a nested object <code class="docutils literal notranslate"><span class="pre">authors</span></code> that contains a list of dictionaries. Each element in this dictionary represents <strong>one single publication author</strong> and includes other information e.g. name, surname, ID, the organizations he/she is affiliated with etc..</p>
+<p>For example, in order to extract the second author of the tenth publication from our results we would do the following: <code class="docutils literal notranslate"><span class="pre">results.publications[10]['authors'][1]</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># author info</span>
 <span class="o">...</span>
     <span class="p">{</span><span class="s1">&#39;first_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Noboru&#39;</span><span class="p">,</span>
@@ -340,44 +340,44 @@ DimCli v0.6.2 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (meth
 </div>
 <p>Here’s a object model diagram summing up how data is structured.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">Image</span><span class="p">(</span><span class="n">url</span><span class="o">=</span> <span class="s2">&quot;http://api-sample-data.dimensions.ai/diagrams/data_model_researchers_publications1.jpg&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">)</span>
+<span></span><span class="n">Image</span><span class="p">(</span><span class="n">url</span><span class="o">=</span> <span class="s2">&quot;http://api-sample-data.dimensions.ai/diagrams/data_model_researchers_publications1.v2.jpg&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
-<img src="http://api-sample-data.dimensions.ai/diagrams/data_model_researchers_publications1.jpg" width="800"/></div>
+<img src="http://api-sample-data.dimensions.ai/diagrams/data_model_researchers_publications1.v2.jpg" width="800"/></div>
 </div>
 <p>There are a few important things to keep in mind:</p>
 <ul class="simple">
-<li><p><strong>Publication Authors VS Researchers</strong>. In Dimensions, <code class="docutils literal notranslate"><span class="pre">authors</span></code> don’t necessarily have a <code class="docutils literal notranslate"><span class="pre">researcher</span></code> ID (eg because they haven’t been disambiguated yet). So a publication may have N authors (stored in JSON within the <code class="docutils literal notranslate"><span class="pre">author_affiliations</span></code> key), but only a subset of these include a <code class="docutils literal notranslate"><span class="pre">researcher_id</span></code> link. PS see also the <a class="reference external" href="https://docs.dimensions.ai/dsl/language.html#searching-for-researchers-authors">searching for researchers</a> section of the API docs for more info on this topic.</p></li>
+<li><p><strong>Publication Authors VS Researchers</strong>. In Dimensions, publication authors don’t necessarily have a <code class="docutils literal notranslate"><span class="pre">researcher</span></code> ID (eg because they haven’t been disambiguated yet). So a publication may have N authors (stored in JSON within the <code class="docutils literal notranslate"><span class="pre">authors</span></code> key), but only a subset of these include a <code class="docutils literal notranslate"><span class="pre">researcher_id</span></code> link. PS see also the <a class="reference external" href="https://docs.dimensions.ai/dsl/language.html#searching-for-researchers-authors">searching for researchers</a> section of the API docs for more info on this topic.</p></li>
 <li><p><strong>Time of the affiliation</strong>. Researchers can be affiliated to a specific GRID organization either <em>at the time of speaking</em> (now), <strong>or</strong> <em>at the time of writing</em> (i.e. when the article was published). The DSL uses different properties to express this fact: <code class="docutils literal notranslate"><span class="pre">current_research_org</span></code> or simply <code class="docutils literal notranslate"><span class="pre">research_orgs</span></code>. For the sake of this exercise, we will look at both.</p></li>
-<li><p><strong>Denormalized fields</strong>. Both the <a class="reference external" href="https://docs.dimensions.ai/dsl/data-sources.html#publications">Publication</a> and <a class="reference external" href="https://docs.dimensions.ai/dsl/data-sources.html#researchers">Researcher</a> sources include a <code class="docutils literal notranslate"><span class="pre">research_orgs</span></code> field - both are ‘denormalized’ shortcut versions of the data you’d find via the <code class="docutils literal notranslate"><span class="pre">author_affiliations</span></code> structure in publications. However they don’t have the same meaning: for publications, the field contains the sum of all authors’ research organizations, while
-for researchers, that’s the sum of all research organizations a single individual has been affiliated to throught his career (as far as Dimensions knows, of course!).</p></li>
+<li><p><strong>Denormalized fields</strong>. Both the <a class="reference external" href="https://docs.dimensions.ai/dsl/data-sources.html#publications">Publication</a> and <a class="reference external" href="https://docs.dimensions.ai/dsl/data-sources.html#researchers">Researcher</a> sources include a <code class="docutils literal notranslate"><span class="pre">research_orgs</span></code> field - both are ‘denormalized’ shortcut versions of the data you’d find via the <code class="docutils literal notranslate"><span class="pre">authors</span></code> structure in publications. However they don’t have the same meaning: for publications, the field contains the sum of all authors’ research organizations, while for
+researchers, that’s the sum of all research organizations a single individual has been affiliated to throught his career (as far as Dimensions knows, of course!).</p></li>
 </ul>
 <p>So, in the real world we often have scenarios like the following one:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">Image</span><span class="p">(</span><span class="n">url</span><span class="o">=</span> <span class="s2">&quot;http://api-sample-data.dimensions.ai/diagrams/data_model_researchers_publications2.jpg&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span></span><span class="n">Image</span><span class="p">(</span><span class="n">url</span><span class="o">=</span> <span class="s2">&quot;http://api-sample-data.dimensions.ai/diagrams/data_model_researchers_publications2.v2.jpg&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
-<img src="http://api-sample-data.dimensions.ai/diagrams/data_model_researchers_publications2.jpg" width="1000"/></div>
+<img src="http://api-sample-data.dimensions.ai/diagrams/data_model_researchers_publications2.v2.jpg" width="1000"/></div>
 </div>
 </div>
 <div class="section" id="Methodology:-two-options-available">
@@ -417,13 +417,13 @@ for researchers, that’s the sum of all research organizations a single individ
 </ol>
 <p>First off, we can to get all publications based on our search criteria by using a <code class="docutils literal notranslate"><span class="pre">loop</span></code> query.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">pubs</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query_iterative</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;&quot;&quot;search publications</span>
 <span class="s2">                                where year in </span><span class="si">{YEARS}</span><span class="s2"> and research_orgs=&quot;</span><span class="si">{GRIDID}</span><span class="s2">&quot;</span>
-<span class="s2">                            return publications&quot;&quot;&quot;</span><span class="p">)</span>
+<span class="s2">                            return publications[id+title+doi+year+type+authors+journal+issue+volume]&quot;&quot;&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -432,16 +432,16 @@ for researchers, that’s the sum of all research organizations a single individ
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-701 / 701
+699 / 699
 </pre></div></div>
 </div>
 <div class="section" id="Researchers-affiliated-to-the-GRID-ID-at-the-time-of-writing">
 <h3>Researchers affiliated to the GRID-ID <strong>at the time of writing</strong><a class="headerlink" href="#Researchers-affiliated-to-the-GRID-ID-at-the-time-of-writing" title="Permalink to this headline">¶</a></h3>
 <p>First we want to know how many researchers linked to these publications were affiliated to the GRID organization <em>when the publication was created</em> (note: they may be at at a different institution right now).</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">affiliation</span></code> data in publications represent exactly that: we can thus loop over them (for each publication/researcher) and keep only the ones matching our GRID ID.</p>
+<p>The affiliation data in publications represent exactly that: we can thus loop over them (for each publication/researcher) and keep only the ones matching our GRID ID.</p>
 <p><strong>TIP</strong> affiliations can be extracted easily thanks one of the ‘dataframe’ transformation methods in <a class="reference external" href="https://github.com/digital-science/dimcli">Dimcli</a>: <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors_affiliations</span></code></p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -464,12 +464,12 @@ for researchers, that’s the sum of all research organizations a single individ
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 ===
-Researchers with affiliation to grid.258806.1 at time of writing: 530
+Researchers with affiliation to grid.258806.1 at time of writing: 535
 ===
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -491,12 +491,12 @@ Researchers with affiliation to grid.258806.1 at time of writing: 530
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>aff_id</th>
-      <th>aff_name</th>
       <th>aff_city</th>
       <th>aff_city_id</th>
       <th>aff_country</th>
       <th>aff_country_code</th>
+      <th>aff_id</th>
+      <th>aff_name</th>
       <th>aff_state</th>
       <th>aff_state_code</th>
       <th>researcher_id</th>
@@ -507,12 +507,12 @@ Researchers with affiliation to grid.258806.1 at time of writing: 530
   <tbody>
     <tr>
       <th>0</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
       <td>Kitakyushu</td>
       <td>1.85931e+06</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
       <td></td>
       <td></td>
       <td></td>
@@ -521,12 +521,12 @@ Researchers with affiliation to grid.258806.1 at time of writing: 530
     </tr>
     <tr>
       <th>1</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
       <td>Kitakyushu</td>
       <td>1.85931e+06</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
       <td></td>
       <td></td>
       <td>ur.01116323260.31</td>
@@ -535,12 +535,12 @@ Researchers with affiliation to grid.258806.1 at time of writing: 530
     </tr>
     <tr>
       <th>6</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
       <td>Kitakyushu</td>
       <td>1.85931e+06</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
       <td></td>
       <td></td>
       <td>ur.010362311021.55</td>
@@ -549,12 +549,12 @@ Researchers with affiliation to grid.258806.1 at time of writing: 530
     </tr>
     <tr>
       <th>7</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
       <td>Kitakyushu</td>
       <td>1.85931e+06</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
       <td></td>
       <td></td>
       <td>ur.011724474721.84</td>
@@ -563,17 +563,367 @@ Researchers with affiliation to grid.258806.1 at time of writing: 530
     </tr>
     <tr>
       <th>14</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
       <td>Kitakyushu</td>
       <td>1.85931e+06</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
       <td></td>
       <td></td>
       <td>ur.01055753603.27</td>
       <td>Shuzi</td>
       <td>Hayase</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.016307426665.31</td>
+      <td>R.</td>
+      <td>Okamoto</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.01144540527.52</td>
+      <td>Tingli</td>
+      <td>Ma</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.013511663141.85</td>
+      <td>Manabu</td>
+      <td>Ishimaru</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.01314463063.90</td>
+      <td>Teresa S.</td>
+      <td>Ripolles</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.012370540663.87</td>
+      <td>Daiki</td>
+      <td>Yamasuso</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.011773542351.82</td>
+      <td>Muhammad Akmal</td>
+      <td>Kamarudin</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.010207475623.17</td>
+      <td>Daisuke</td>
+      <td>Hirotani</td>
+    </tr>
+    <tr>
+      <th>57</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.010647607673.28</td>
+      <td>Noboru</td>
+      <td>Sebe</td>
+    </tr>
+    <tr>
+      <th>62</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.012054304515.50</td>
+      <td>Yoshihito</td>
+      <td>Shirai</td>
+    </tr>
+    <tr>
+      <th>66</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.07526624011.09</td>
+      <td>Akihiro</td>
+      <td>FUJIWARA</td>
+    </tr>
+    <tr>
+      <th>68</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.016357156077.09</td>
+      <td>Huimin</td>
+      <td>Lu</td>
+    </tr>
+    <tr>
+      <th>70</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.015545344066.66</td>
+      <td>Ayumu</td>
+      <td>Tominaga</td>
+    </tr>
+    <tr>
+      <th>73</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.015517552231.23</td>
+      <td>Tomonari</td>
+      <td>Suzuki</td>
+    </tr>
+    <tr>
+      <th>75</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.0710646763.59</td>
+      <td>Toshinari</td>
+      <td>Maeda</td>
+    </tr>
+    <tr>
+      <th>82</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.0727414150.29</td>
+      <td>Yusuke V.</td>
+      <td>Morimoto</td>
+    </tr>
+    <tr>
+      <th>88</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.010214262704.60</td>
+      <td>Gaber</td>
+      <td>Magdy</td>
+    </tr>
+    <tr>
+      <th>93</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.011456332771.53</td>
+      <td>Yasunori</td>
+      <td>Mitani</td>
+    </tr>
+    <tr>
+      <th>97</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.07760667174.22</td>
+      <td>Hiroki</td>
+      <td>Bingo</td>
+    </tr>
+    <tr>
+      <th>100</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.01200333056.11</td>
+      <td>Tetsuo</td>
+      <td>Furukawa</td>
+    </tr>
+    <tr>
+      <th>104</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.01363435554.47</td>
+      <td>Kazuhiro</td>
+      <td>Takemoto</td>
+    </tr>
+    <tr>
+      <th>113</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.0724144151.56</td>
+      <td>Joo Kooi</td>
+      <td>Tan</td>
+    </tr>
+    <tr>
+      <th>114</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.015773714465.27</td>
+      <td>Hiroaki</td>
+      <td>Wagatsuma</td>
+    </tr>
+    <tr>
+      <th>117</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.012726370125.57</td>
+      <td>Emad A.</td>
+      <td>Mohamed</td>
+    </tr>
+    <tr>
+      <th>123</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.014211537733.39</td>
+      <td>Masashi</td>
+      <td>Kondo</td>
+    </tr>
+    <tr>
+      <th>126</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.012240303741.11</td>
+      <td>Hyoungseop</td>
+      <td>Kim</td>
     </tr>
     <tr>
       <th>...</th>
@@ -590,13 +940,363 @@ Researchers with affiliation to grid.258806.1 at time of writing: 530
       <td>...</td>
     </tr>
     <tr>
-      <th>3939</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
+      <th>3629</th>
       <td>Kitakyushu</td>
       <td>1.85931e+06</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.07423161240.29</td>
+      <td>Moe</td>
+      <td>Matsuki</td>
+    </tr>
+    <tr>
+      <th>3634</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.011653210512.61</td>
+      <td>T.</td>
+      <td>Yamazaki</td>
+    </tr>
+    <tr>
+      <th>3638</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.013443363554.40</td>
+      <td>Takeru</td>
+      <td>MINAMI</td>
+    </tr>
+    <tr>
+      <th>3641</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.012714116354.50</td>
+      <td>Yinsa</td>
+      <td>HUANG</td>
+    </tr>
+    <tr>
+      <th>3642</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.015104437754.32</td>
+      <td>Yuuka</td>
+      <td>BIROU</td>
+    </tr>
+    <tr>
+      <th>3645</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.01240112276.02</td>
+      <td>Shunsuke</td>
+      <td>Aoki</td>
+    </tr>
+    <tr>
+      <th>3671</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.010672460577.50</td>
+      <td>S.</td>
+      <td>Hamamura</td>
+    </tr>
+    <tr>
+      <th>3726</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.012270025364.95</td>
+      <td>Naoya</td>
+      <td>Higuchi</td>
+    </tr>
+    <tr>
+      <th>3727</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.013003725541.53</td>
+      <td>Yasunobu</td>
+      <td>Imamura</td>
+    </tr>
+    <tr>
+      <th>3729</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.013435033263.67</td>
+      <td>Kouichi</td>
+      <td>Hirata</td>
+    </tr>
+    <tr>
+      <th>3730</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.015310517641.55</td>
+      <td>Takeshi</td>
+      <td>Shinohara</td>
+    </tr>
+    <tr>
+      <th>3733</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.010506211574.85</td>
+      <td>Akane</td>
+      <td>INOUE</td>
+    </tr>
+    <tr>
+      <th>3735</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.011105450227.31</td>
+      <td>Yunong</td>
+      <td>SHEN</td>
+    </tr>
+    <tr>
+      <th>3743</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.013550325344.78</td>
+      <td>Kyohei</td>
+      <td>Fujioka</td>
+    </tr>
+    <tr>
+      <th>3776</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.010166554273.01</td>
+      <td>Yoshiaki</td>
+      <td>Matsukawa</td>
+    </tr>
+    <tr>
+      <th>3778</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.015472722203.93</td>
+      <td>Hibiki</td>
+      <td>Takahashi</td>
+    </tr>
+    <tr>
+      <th>3790</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.010345074254.73</td>
+      <td>Masahiro</td>
+      <td>USHIO</td>
+    </tr>
+    <tr>
+      <th>3861</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.010712350204.98</td>
+      <td>Yutaro</td>
+      <td>SHIOTSUKI</td>
+    </tr>
+    <tr>
+      <th>3862</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.011325041121.67</td>
+      <td>Hiroshi</td>
+      <td>YAMADA</td>
+    </tr>
+    <tr>
+      <th>3882</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.013072446232.74</td>
+      <td>Tsubasa</td>
+      <td>Miyazono</td>
+    </tr>
+    <tr>
+      <th>3891</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.016263732354.34</td>
+      <td>Yoshihito</td>
+      <td>KUROSHIMA</td>
+    </tr>
+    <tr>
+      <th>3903</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.016555145200.52</td>
+      <td>Tatsuki</td>
+      <td>Shinoda</td>
+    </tr>
+    <tr>
+      <th>3916</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.016203743500.80</td>
+      <td>Taiga</td>
+      <td>Kawaguchi</td>
+    </tr>
+    <tr>
+      <th>3917</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.07416214245.15</td>
+      <td>Takuya</td>
+      <td>Yoshino</td>
+    </tr>
+    <tr>
+      <th>3921</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.010072542141.62</td>
+      <td>Hirotoshi</td>
+      <td>TSUKAMOTO</td>
+    </tr>
+    <tr>
+      <th>3922</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
       <td></td>
       <td></td>
       <td>ur.010170714165.07</td>
@@ -604,13 +1304,13 @@ Researchers with affiliation to grid.258806.1 at time of writing: 530
       <td>YONEMOTO</td>
     </tr>
     <tr>
-      <th>3940</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
+      <th>3923</th>
       <td>Kitakyushu</td>
       <td>1.85931e+06</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
       <td></td>
       <td></td>
       <td>ur.010201401200.87</td>
@@ -618,13 +1318,13 @@ Researchers with affiliation to grid.258806.1 at time of writing: 530
       <td>FUJIKAWA</td>
     </tr>
     <tr>
-      <th>3941</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
+      <th>3924</th>
       <td>Kitakyushu</td>
       <td>1.85931e+06</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
       <td></td>
       <td></td>
       <td>ur.015542442300.36</td>
@@ -632,13 +1332,13 @@ Researchers with affiliation to grid.258806.1 at time of writing: 530
       <td>URA</td>
     </tr>
     <tr>
-      <th>3942</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
+      <th>3925</th>
       <td>Kitakyushu</td>
       <td>1.85931e+06</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
       <td></td>
       <td></td>
       <td>ur.013375341064.50</td>
@@ -646,13 +1346,13 @@ Researchers with affiliation to grid.258806.1 at time of writing: 530
       <td>SUGIMOTO</td>
     </tr>
     <tr>
-      <th>4011</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
+      <th>3992</th>
       <td>Kitakyushu</td>
       <td>1.85931e+06</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
       <td></td>
       <td></td>
       <td>ur.010735656764.15</td>
@@ -661,7 +1361,7 @@ Researchers with affiliation to grid.258806.1 at time of writing: 530
     </tr>
   </tbody>
 </table>
-<p>530 rows × 11 columns</p>
+<p>535 rows × 11 columns</p>
 </div></div>
 </div>
 <p>Note: * The first ‘publication-affiliations’ dataframe we get may contain duplicate records - eg if an author has more than one publication it’ll be listed twice. That’s why we have an extra step where we drop the <code class="docutils literal notranslate"><span class="pre">pub_id</span></code> column and simply count unique researchers, based on their researcher ID.</p>
@@ -671,7 +1371,7 @@ Researchers with affiliation to grid.258806.1 at time of writing: 530
 <p>This can be achieved simply by taking into consideration a different field, called <code class="docutils literal notranslate"><span class="pre">current_organization_id</span></code>, available at the outer level of the JSON author structure (see the data model section above) - outside the <code class="docutils literal notranslate"><span class="pre">affiliations</span></code> list.</p>
 <p>Luckily Dimcli includes another handy method for umpacking authors into a dataframe: <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors</span></code></p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -690,12 +1390,12 @@ Researchers with affiliation to grid.258806.1 at time of writing: 530
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 ===
-Researchers with affiliation to grid.258806.1 at the time of speaking: 507
+Researchers with affiliation to grid.258806.1 at the time of speaking: 513
 ===
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -717,65 +1417,315 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 507
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>affiliations</th>
+      <th>corresponding</th>
+      <th>current_organization_id</th>
       <th>first_name</th>
       <th>last_name</th>
-      <th>corresponding</th>
       <th>orcid</th>
-      <th>current_organization_id</th>
       <th>researcher_id</th>
-      <th>affiliations</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>1</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
       <td>Yoshito</td>
       <td>Andou</td>
       <td></td>
-      <td></td>
-      <td>grid.258806.1</td>
       <td>ur.01116323260.31</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
     </tr>
     <tr>
       <th>6</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
       <td>Kubra</td>
       <td>Eksiler</td>
       <td></td>
-      <td></td>
-      <td>grid.258806.1</td>
       <td>ur.010362311021.55</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
     </tr>
     <tr>
       <th>7</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
       <td>Satoshi</td>
       <td>Iikubo</td>
-      <td></td>
       <td>['0000-0002-5186-4058']</td>
-      <td>grid.258806.1</td>
       <td>ur.011724474721.84</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
     </tr>
     <tr>
       <th>14</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
       <td>Shuzi</td>
       <td>Hayase</td>
       <td></td>
-      <td></td>
-      <td>grid.258806.1</td>
       <td>ur.01055753603.27</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
     </tr>
     <tr>
       <th>19</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
       <td>R.</td>
       <td>Okamoto</td>
       <td></td>
+      <td>ur.016307426665.31</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
       <td></td>
       <td>grid.258806.1</td>
-      <td>ur.016307426665.31</td>
+      <td>Tingli</td>
+      <td>Ma</td>
+      <td></td>
+      <td>ur.01144540527.52</td>
+    </tr>
+    <tr>
+      <th>30</th>
       <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Manabu</td>
+      <td>Ishimaru</td>
+      <td></td>
+      <td>ur.013511663141.85</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Teresa S.</td>
+      <td>Ripolles</td>
+      <td>['0000-0002-0451-176X']</td>
+      <td>ur.01314463063.90</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Daiki</td>
+      <td>Yamasuso</td>
+      <td></td>
+      <td>ur.012370540663.87</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Muhammad Akmal</td>
+      <td>Kamarudin</td>
+      <td>['0000-0002-2256-5948']</td>
+      <td>ur.011773542351.82</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Daisuke</td>
+      <td>Hirotani</td>
+      <td></td>
+      <td>ur.010207475623.17</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Noboru</td>
+      <td>Sebe</td>
+      <td></td>
+      <td>ur.010647607673.28</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Yoshihito</td>
+      <td>Shirai</td>
+      <td></td>
+      <td>ur.012054304515.50</td>
+    </tr>
+    <tr>
+      <th>57</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Akihiro</td>
+      <td>FUJIWARA</td>
+      <td></td>
+      <td>ur.07526624011.09</td>
+    </tr>
+    <tr>
+      <th>59</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Huimin</td>
+      <td>Lu</td>
+      <td>['0000-0001-9794-3221']</td>
+      <td>ur.016357156077.09</td>
+    </tr>
+    <tr>
+      <th>61</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Ayumu</td>
+      <td>Tominaga</td>
+      <td></td>
+      <td>ur.015545344066.66</td>
+    </tr>
+    <tr>
+      <th>64</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>True</td>
+      <td>grid.258806.1</td>
+      <td>Tomonari</td>
+      <td>Suzuki</td>
+      <td>['0000-0002-2524-6045']</td>
+      <td>ur.015517552231.23</td>
+    </tr>
+    <tr>
+      <th>66</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Toshinari</td>
+      <td>Maeda</td>
+      <td></td>
+      <td>ur.0710646763.59</td>
+    </tr>
+    <tr>
+      <th>72</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Yusuke V.</td>
+      <td>Morimoto</td>
+      <td>['0000-0003-1573-8967']</td>
+      <td>ur.0727414150.29</td>
+    </tr>
+    <tr>
+      <th>76</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>True</td>
+      <td>grid.258806.1</td>
+      <td>Gaber</td>
+      <td>Magdy</td>
+      <td>['0000-0001-6894-695X']</td>
+      <td>ur.010214262704.60</td>
+    </tr>
+    <tr>
+      <th>79</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Yasunori</td>
+      <td>Mitani</td>
+      <td></td>
+      <td>ur.011456332771.53</td>
+    </tr>
+    <tr>
+      <th>83</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Hiroki</td>
+      <td>Bingo</td>
+      <td></td>
+      <td>ur.07760667174.22</td>
+    </tr>
+    <tr>
+      <th>86</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Tetsuo</td>
+      <td>Furukawa</td>
+      <td>['0000-0002-4469-7749']</td>
+      <td>ur.01200333056.11</td>
+    </tr>
+    <tr>
+      <th>90</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Kazuhiro</td>
+      <td>Takemoto</td>
+      <td>['0000-0002-6355-1366']</td>
+      <td>ur.01363435554.47</td>
+    </tr>
+    <tr>
+      <th>99</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Joo Kooi</td>
+      <td>Tan</td>
+      <td></td>
+      <td>ur.0724144151.56</td>
+    </tr>
+    <tr>
+      <th>100</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Hiroaki</td>
+      <td>Wagatsuma</td>
+      <td></td>
+      <td>ur.015773714465.27</td>
+    </tr>
+    <tr>
+      <th>102</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Emad A.</td>
+      <td>Mohamed</td>
+      <td>['0000-0001-8032-0554']</td>
+      <td>ur.012726370125.57</td>
+    </tr>
+    <tr>
+      <th>107</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Masashi</td>
+      <td>Kondo</td>
+      <td></td>
+      <td>ur.014211537733.39</td>
+    </tr>
+    <tr>
+      <th>110</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Hyoungseop</td>
+      <td>Kim</td>
+      <td></td>
+      <td>ur.012240303741.11</td>
+    </tr>
+    <tr>
+      <th>123</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>True</td>
+      <td>grid.258806.1</td>
+      <td>Arindam Gajendra</td>
+      <td>Mahapatra</td>
+      <td></td>
+      <td>ur.011742657512.04</td>
     </tr>
     <tr>
       <th>...</th>
@@ -788,58 +1738,308 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 507
       <td>...</td>
     </tr>
     <tr>
-      <th>3506</th>
+      <th>3294</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>T.</td>
+      <td>Yamazaki</td>
+      <td></td>
+      <td>ur.011653210512.61</td>
+    </tr>
+    <tr>
+      <th>3298</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Takeru</td>
+      <td>MINAMI</td>
+      <td></td>
+      <td>ur.013443363554.40</td>
+    </tr>
+    <tr>
+      <th>3301</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Yinsa</td>
+      <td>HUANG</td>
+      <td></td>
+      <td>ur.012714116354.50</td>
+    </tr>
+    <tr>
+      <th>3302</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Yuuka</td>
+      <td>BIROU</td>
+      <td></td>
+      <td>ur.015104437754.32</td>
+    </tr>
+    <tr>
+      <th>3305</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Shunsuke</td>
+      <td>Aoki</td>
+      <td></td>
+      <td>ur.01240112276.02</td>
+    </tr>
+    <tr>
+      <th>3313</th>
+      <td>[{'name': 'Laboratoire d&amp;apos; Energ&amp;#233;tiqu...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Laurent</td>
+      <td>Tranchant</td>
+      <td></td>
+      <td>ur.010570624411.54</td>
+    </tr>
+    <tr>
+      <th>3319</th>
+      <td>[{'name': 'Graduate school of Engineering, Kyu...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Kohei</td>
+      <td>Fukushima</td>
+      <td></td>
+      <td>ur.011262551137.51</td>
+    </tr>
+    <tr>
+      <th>3345</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Naoya</td>
+      <td>Higuchi</td>
+      <td></td>
+      <td>ur.012270025364.95</td>
+    </tr>
+    <tr>
+      <th>3346</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Yasunobu</td>
+      <td>Imamura</td>
+      <td></td>
+      <td>ur.013003725541.53</td>
+    </tr>
+    <tr>
+      <th>3348</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Kouichi</td>
+      <td>Hirata</td>
+      <td></td>
+      <td>ur.013435033263.67</td>
+    </tr>
+    <tr>
+      <th>3349</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Takeshi</td>
+      <td>Shinohara</td>
+      <td></td>
+      <td>ur.015310517641.55</td>
+    </tr>
+    <tr>
+      <th>3352</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Akane</td>
+      <td>INOUE</td>
+      <td></td>
+      <td>ur.010506211574.85</td>
+    </tr>
+    <tr>
+      <th>3354</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Yunong</td>
+      <td>SHEN</td>
+      <td></td>
+      <td>ur.011105450227.31</td>
+    </tr>
+    <tr>
+      <th>3394</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Yoshiaki</td>
+      <td>Matsukawa</td>
+      <td></td>
+      <td>ur.010166554273.01</td>
+    </tr>
+    <tr>
+      <th>3396</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Hibiki</td>
+      <td>Takahashi</td>
+      <td></td>
+      <td>ur.015472722203.93</td>
+    </tr>
+    <tr>
+      <th>3408</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Masahiro</td>
+      <td>USHIO</td>
+      <td></td>
+      <td>ur.010345074254.73</td>
+    </tr>
+    <tr>
+      <th>3436</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Yutaro</td>
+      <td>SHIOTSUKI</td>
+      <td></td>
+      <td>ur.010712350204.98</td>
+    </tr>
+    <tr>
+      <th>3437</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Hiroshi</td>
+      <td>YAMADA</td>
+      <td>['0000-0001-8309-1283']</td>
+      <td>ur.011325041121.67</td>
+    </tr>
+    <tr>
+      <th>3451</th>
+      <td>[{'name': 'Department of Mechanical Engineerin...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Dejian</td>
+      <td>Zhang</td>
+      <td></td>
+      <td>ur.012504522777.38</td>
+    </tr>
+    <tr>
+      <th>3457</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Tsubasa</td>
+      <td>Miyazono</td>
+      <td></td>
+      <td>ur.013072446232.74</td>
+    </tr>
+    <tr>
+      <th>3466</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Yoshihito</td>
+      <td>KUROSHIMA</td>
+      <td></td>
+      <td>ur.016263732354.34</td>
+    </tr>
+    <tr>
+      <th>3472</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Tatsuki</td>
+      <td>Shinoda</td>
+      <td>['0000-0002-5516-2221']</td>
+      <td>ur.016555145200.52</td>
+    </tr>
+    <tr>
+      <th>3483</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Taiga</td>
+      <td>Kawaguchi</td>
+      <td></td>
+      <td>ur.016203743500.80</td>
+    </tr>
+    <tr>
+      <th>3484</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Takuya</td>
+      <td>Yoshino</td>
+      <td></td>
+      <td>ur.07416214245.15</td>
+    </tr>
+    <tr>
+      <th>3488</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Hirotoshi</td>
+      <td>TSUKAMOTO</td>
+      <td></td>
+      <td>ur.010072542141.62</td>
+    </tr>
+    <tr>
+      <th>3489</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
       <td>Koichi</td>
       <td>YONEMOTO</td>
       <td></td>
-      <td></td>
-      <td>grid.258806.1</td>
       <td>ur.010170714165.07</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
     </tr>
     <tr>
-      <th>3507</th>
+      <th>3490</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
       <td>Takahiro</td>
       <td>FUJIKAWA</td>
       <td></td>
-      <td></td>
-      <td>grid.258806.1</td>
       <td>ur.010201401200.87</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
     </tr>
     <tr>
-      <th>3508</th>
+      <th>3491</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
       <td>Yusuke</td>
       <td>URA</td>
       <td></td>
-      <td></td>
-      <td>grid.258806.1</td>
       <td>ur.015542442300.36</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
     </tr>
     <tr>
-      <th>3509</th>
+      <th>3492</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
       <td>Junichi</td>
       <td>SUGIMOTO</td>
       <td></td>
-      <td></td>
-      <td>grid.258806.1</td>
       <td>ur.013375341064.50</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
     </tr>
     <tr>
-      <th>3540</th>
+      <th>3521</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
       <td>Yuji</td>
       <td>Fujita</td>
       <td></td>
-      <td></td>
-      <td>grid.258806.1</td>
       <td>ur.010735656764.15</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
     </tr>
   </tbody>
 </table>
-<p>507 rows × 7 columns</p>
+<p>513 rows × 7 columns</p>
 </div></div>
 </div>
 </div>
@@ -876,7 +2076,7 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 507
 </li>
 </ol>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -893,18 +2093,18 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 507
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-1000 / 7348
-2000 / 7348
-3000 / 7348
-4000 / 7348
-5000 / 7348
-6000 / 7348
-7000 / 7348
-7348 / 7348
+1000 / 7371
+2000 / 7371
+3000 / 7371
+4000 / 7371
+5000 / 7371
+6000 / 7371
+7000 / 7371
+7371 / 7371
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -926,53 +2126,53 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 507
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>last_name</th>
-      <th>id</th>
-      <th>research_orgs</th>
       <th>first_name</th>
+      <th>id</th>
+      <th>last_name</th>
       <th>orcid_id</th>
+      <th>research_orgs</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>Kinoshita</td>
-      <td>ur.01104616261.40</td>
-      <td>[{'id': 'grid.258806.1', 'city_name': 'Kitakyu...</td>
-      <td>Noriaki</td>
+      <td>Takeshi</td>
+      <td>ur.013052640635.55</td>
+      <td>Inada</td>
       <td>NaN</td>
+      <td>[{'id': 'grid.258806.1', 'city_name': 'Kitakyu...</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Li</td>
-      <td>ur.01250743274.97</td>
-      <td>[{'id': 'grid.258806.1', 'city_name': 'Kitakyu...</td>
-      <td>Xuesong</td>
+      <td>Shunsuke</td>
+      <td>ur.010661770355.64</td>
+      <td>Araki</td>
       <td>NaN</td>
+      <td>[{'id': 'grid.258806.1', 'city_name': 'Kitakyu...</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>Saeki</td>
-      <td>ur.012625057235.91</td>
-      <td>[{'id': 'grid.258806.1', 'city_name': 'Kitakyu...</td>
-      <td>Tomonori</td>
+      <td>Shougo</td>
+      <td>ur.012041355125.26</td>
+      <td>Kinugawa</td>
       <td>NaN</td>
+      <td>[{'id': 'grid.444515.5', 'city_name': 'Nomi Sh...</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>Sawasaki</td>
-      <td>ur.015716271155.78</td>
-      <td>[{'id': 'grid.258806.1', 'city_name': 'Kitakyu...</td>
-      <td>Sumiko</td>
+      <td>Takaki</td>
+      <td>ur.015056432131.23</td>
+      <td>Fujimoto</td>
       <td>NaN</td>
+      <td>[{'id': 'grid.258806.1', 'city_name': 'Kitakyu...</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>Nedachi</td>
-      <td>ur.010677726131.01</td>
-      <td>[{'id': 'grid.258806.1', 'city_name': 'Kitakyu...</td>
-      <td>Naoko</td>
+      <td>Satoko</td>
+      <td>ur.010164167315.41</td>
+      <td>Shinkai</td>
       <td>NaN</td>
+      <td>[{'id': 'grid.258806.1', 'city_name': 'Kitakyu...</td>
     </tr>
   </tbody>
 </table>
@@ -981,7 +2181,7 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 507
 <p>Now we need to select only the researchers who have <strong>published in the time frame [2013:2018]</strong>. So for each researcher ID we must extract the full publication history in order to verify their relevance.</p>
 <p>The most efficient way to do this is to use a query that <strong>extracts the publication history for several researchers at the same time</strong> (so to avoid overruning our API quota), then, as a second step, producing a clean list of relevant researchers from it.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -994,7 +2194,7 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 507
 <span class="s2">                where researchers.id in </span><span class="si">{}</span><span class="s2"></span>
 <span class="s2">                and year in </span><span class="si">{}</span><span class="s2"></span>
 <span class="s2">                and research_orgs=&quot;</span><span class="si">{}</span><span class="s2">&quot;</span>
-<span class="s2">            return publications limit 1000&quot;&quot;&quot;</span>
+<span class="s2">            return publications[id+title+doi+year+type+authors+journal+issue+volume] limit 1000&quot;&quot;&quot;</span>
 
 
 <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">chunks_of</span><span class="p">(</span><span class="n">researchers_ids</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">CHUNKS_SIZE</span><span class="p">):</span>
@@ -1021,41 +2221,41 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 507
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 18 (total = 18)
-Returned Publications: 53 (total = 53)
-Returned Publications: 32 (total = 32)
-Returned Publications: 68 (total = 68)
-Returned Publications: 66 (total = 66)
-Returned Publications: 131 (total = 131)
-Returned Publications: 66 (total = 66)
+Returned Publications: 23 (total = 23)
+Returned Publications: 39 (total = 39)
+Returned Publications: 65 (total = 65)
 Returned Publications: 49 (total = 49)
+Returned Publications: 123 (total = 123)
+Returned Publications: 96 (total = 96)
+Returned Publications: 52 (total = 52)
 Returned Publications: 50 (total = 50)
-Returned Publications: 31 (total = 31)
-Returned Publications: 90 (total = 90)
-Returned Publications: 114 (total = 114)
-Returned Publications: 18 (total = 18)
-Returned Publications: 28 (total = 28)
-Returned Publications: 44 (total = 44)
-Returned Publications: 76 (total = 76)
-Returned Publications: 60 (total = 60)
-Returned Publications: 77 (total = 77)
-Returned Publications: 53 (total = 53)
 Returned Publications: 45 (total = 45)
-Returned Publications: 58 (total = 58)
-Returned Publications: 75 (total = 75)
+Returned Publications: 29 (total = 29)
+Returned Publications: 98 (total = 98)
+Returned Publications: 80 (total = 80)
+Returned Publications: 28 (total = 28)
+Returned Publications: 51 (total = 51)
+Returned Publications: 32 (total = 32)
+Returned Publications: 56 (total = 56)
+Returned Publications: 30 (total = 30)
+Returned Publications: 105 (total = 105)
+Returned Publications: 42 (total = 42)
+Returned Publications: 35 (total = 35)
 Returned Publications: 54 (total = 54)
-Returned Publications: 132 (total = 132)
-Returned Publications: 33 (total = 33)
+Returned Publications: 22 (total = 22)
+Returned Publications: 59 (total = 59)
+Returned Publications: 141 (total = 141)
+Returned Publications: 84 (total = 84)
 ---
-Found 1521 publications for the given criteria (including duplicates)
-Final result: 672 unique publications
+Found 1488 publications for the given criteria (including duplicates)
+Final result: 649 unique publications
 </pre></div></div>
 </div>
 <div class="section" id="Researchers-affiliated-to-the-GRID-ID-at-the-time-of-writing">
 <h3>Researchers affiliated to the GRID-ID <strong>at the time of writing</strong><a class="headerlink" href="#Researchers-affiliated-to-the-GRID-ID-at-the-time-of-writing" title="Permalink to this headline">¶</a></h3>
 <p>This step is basically the same as in approach 1 above.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1078,12 +2278,12 @@ Final result: 672 unique publications
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 ===
-Researchers with affiliation to grid.258806.1 at time of writing: 530
+Researchers with affiliation to grid.258806.1 at time of writing: 526
 ===
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1105,12 +2305,12 @@ Researchers with affiliation to grid.258806.1 at time of writing: 530
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>aff_id</th>
-      <th>aff_name</th>
       <th>aff_city</th>
       <th>aff_city_id</th>
       <th>aff_country</th>
       <th>aff_country_code</th>
+      <th>aff_id</th>
+      <th>aff_name</th>
       <th>aff_state</th>
       <th>aff_state_code</th>
       <th>researcher_id</th>
@@ -1120,74 +2320,424 @@ Researchers with affiliation to grid.258806.1 at time of writing: 530
   </thead>
   <tbody>
     <tr>
-      <th>3</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
+      <th>0</th>
       <td>Kitakyushu</td>
       <td>1.85931e+06</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
       <td></td>
       <td></td>
-      <td>ur.07545333321.42</td>
-      <td>Rahmi</td>
-      <td>Rahmatillah</td>
+      <td>ur.011113737576.59</td>
+      <td>Zhen</td>
+      <td>Wang</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.016323530642.42</td>
+      <td>Zhaosheng</td>
+      <td>Hu</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.011773542351.82</td>
+      <td>Muhammad Akmal</td>
+      <td>Kamarudin</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.07620457442.79</td>
+      <td>Gaurav</td>
+      <td>Kapil</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
       <td>Kitakyushu</td>
       <td>1.85931e+06</td>
       <td>Japan</td>
       <td>JP</td>
-      <td></td>
-      <td></td>
-      <td>ur.014623572367.39</td>
-      <td>Kateryna</td>
-      <td>Aheieva</td>
-    </tr>
-    <tr>
-      <th>6</th>
       <td>grid.258806.1</td>
       <td>Kyushu Institute of Technology</td>
-      <td>Kitakyushu</td>
-      <td>1.85931e+06</td>
-      <td>Japan</td>
-      <td>JP</td>
       <td></td>
       <td></td>
-      <td>ur.013152112405.28</td>
-      <td>Mengu</td>
-      <td>Cho</td>
+      <td>ur.015622353764.28</td>
+      <td>Atul</td>
+      <td>Tripathi</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
       <td>Kitakyushu</td>
       <td>1.85931e+06</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
       <td></td>
       <td></td>
-      <td>ur.07706074430.00</td>
-      <td>Zhanglin</td>
-      <td>Guo</td>
+      <td>ur.07436424670.11</td>
+      <td>Sham S.</td>
+      <td>Pandey</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.01055753603.27</td>
+      <td>Shuzi</td>
+      <td>Hayase</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
       <td>Kitakyushu</td>
       <td>1.85931e+06</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
       <td></td>
       <td></td>
-      <td>ur.012076416030.50</td>
-      <td>Zhenhua</td>
-      <td>Xu</td>
+      <td>ur.015611316173.53</td>
+      <td>M.</td>
+      <td>Komori</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.015004025620.80</td>
+      <td>K.</td>
+      <td>Hara</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.011647500507.00</td>
+      <td>K.</td>
+      <td>Asami</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.011646110331.53</td>
+      <td>N.</td>
+      <td>Sakai</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.013214050135.04</td>
+      <td>Masaki</td>
+      <td>Oshita</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.015405700116.58</td>
+      <td>Yuta</td>
+      <td>Senju</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.01000075176.85</td>
+      <td>Emiko</td>
+      <td>Mouri</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.014771747754.62</td>
+      <td>Sanami</td>
+      <td>Moroi</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.014533560064.73</td>
+      <td>Hiromasa</td>
+      <td>Yoshizumi</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.011550342143.09</td>
+      <td>Yusuke</td>
+      <td>Nakano</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.07644453127.11</td>
+      <td>Masahiro</td>
+      <td>Kozako</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.011212042763.67</td>
+      <td>Masayuki</td>
+      <td>Hikita</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.07706367411.17</td>
+      <td>M.</td>
+      <td>Mito</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.016025302142.25</td>
+      <td>K.</td>
+      <td>Shibayama</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.010517116526.32</td>
+      <td>S.</td>
+      <td>Takagi</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.012347371535.81</td>
+      <td>Ahmed M. M.</td>
+      <td>Almassri</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.01115775542.04</td>
+      <td>Chikamune</td>
+      <td>Wada</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>Keiichi</td>
+      <td>Horio</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.016357156077.09</td>
+      <td>Huimin</td>
+      <td>Lu</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.07507645664.77</td>
+      <td>Yoshiki</td>
+      <td>Nakayama</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.012240303741.11</td>
+      <td>Hyoungseop</td>
+      <td>Kim</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.011567324032.03</td>
+      <td>Seiichi</td>
+      <td>Serikawa</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.012413075361.99</td>
+      <td>Nao-aki</td>
+      <td>Noda</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1204,13 +2754,321 @@ Researchers with affiliation to grid.258806.1 at time of writing: 530
       <td>...</td>
     </tr>
     <tr>
-      <th>8554</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
+      <th>6514</th>
       <td>Kitakyushu</td>
       <td>1.85931e+06</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.010402154535.26</td>
+      <td>Kyunghoon</td>
+      <td>Jang</td>
+    </tr>
+    <tr>
+      <th>6563</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.011222056445.46</td>
+      <td>Harald</td>
+      <td>KLEINE</td>
+    </tr>
+    <tr>
+      <th>6567</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.011027771463.75</td>
+      <td>Yasuhiro</td>
+      <td>Akahoshi</td>
+    </tr>
+    <tr>
+      <th>6621</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.013550325344.78</td>
+      <td>Kyohei</td>
+      <td>Fujioka</td>
+    </tr>
+    <tr>
+      <th>6649</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.015545344066.66</td>
+      <td>Ayumu</td>
+      <td>Tominaga</td>
+    </tr>
+    <tr>
+      <th>6732</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.015606643333.33</td>
+      <td>Giorgia</td>
+      <td>Longobardi</td>
+    </tr>
+    <tr>
+      <th>6762</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.011566453257.48</td>
+      <td>Yuta</td>
+      <td>Hanazawa</td>
+    </tr>
+    <tr>
+      <th>6798</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.013152454441.15</td>
+      <td>KAZUHIRO</td>
+      <td>TOYODA</td>
+    </tr>
+    <tr>
+      <th>6832</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.010261153733.72</td>
+      <td>YUJI</td>
+      <td>MORIMOTO</td>
+    </tr>
+    <tr>
+      <th>6833</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.011056534333.51</td>
+      <td>JUN</td>
+      <td>EJIMA</td>
+    </tr>
+    <tr>
+      <th>6836</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.012640053622.45</td>
+      <td>Akihiro</td>
+      <td>Suzuki</td>
+    </tr>
+    <tr>
+      <th>6875</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.014441041243.00</td>
+      <td>Fang</td>
+      <td>Jin</td>
+    </tr>
+    <tr>
+      <th>6921</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.014036341366.26</td>
+      <td>Kei</td>
+      <td>Ohnishi</td>
+    </tr>
+    <tr>
+      <th>7336</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.012423177572.06</td>
+      <td>Daiki</td>
+      <td>Okabe</td>
+    </tr>
+    <tr>
+      <th>7337</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.014462273762.86</td>
+      <td>Yoshihisa</td>
+      <td>Nakatoh</td>
+    </tr>
+    <tr>
+      <th>7338</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.014002425662.11</td>
+      <td>Taiki</td>
+      <td>Torigoe</td>
+    </tr>
+    <tr>
+      <th>7457</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.015112126061.65</td>
+      <td>Kenji</td>
+      <td>Matsuda</td>
+    </tr>
+    <tr>
+      <th>7481</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.01004062131.45</td>
+      <td>Momoko</td>
+      <td>Kumemura</td>
+    </tr>
+    <tr>
+      <th>7505</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.010324112575.69</td>
+      <td>Yoshiki</td>
+      <td>Sato</td>
+    </tr>
+    <tr>
+      <th>7751</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.07413015145.49</td>
+      <td>A.</td>
+      <td>Watanabe</td>
+    </tr>
+    <tr>
+      <th>7753</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.010554026115.59</td>
+      <td>Fuminori</td>
+      <td>Kobayashi</td>
+    </tr>
+    <tr>
+      <th>7830</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.01156670436.97</td>
+      <td>Hiroki</td>
+      <td>Obata</td>
+    </tr>
+    <tr>
+      <th>7962</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
       <td></td>
       <td></td>
       <td>ur.011176635061.41</td>
@@ -1218,13 +3076,13 @@ Researchers with affiliation to grid.258806.1 at time of writing: 530
       <td>Kodama</td>
     </tr>
     <tr>
-      <th>8601</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
+      <th>7993</th>
       <td>Kitakyushu</td>
       <td>1.85931e+06</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
       <td></td>
       <td></td>
       <td>ur.010647607673.28</td>
@@ -1232,13 +3090,13 @@ Researchers with affiliation to grid.258806.1 at time of writing: 530
       <td>Sebe</td>
     </tr>
     <tr>
-      <th>8636</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
+      <th>8062</th>
       <td>Kitakyushu</td>
       <td>1.85931e+06</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
       <td></td>
       <td></td>
       <td>ur.013020061241.24</td>
@@ -1246,13 +3104,13 @@ Researchers with affiliation to grid.258806.1 at time of writing: 530
       <td>Gupta</td>
     </tr>
     <tr>
-      <th>8645</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
+      <th>8076</th>
       <td>Kitakyushu</td>
       <td>1.85931e+06</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
       <td></td>
       <td></td>
       <td>ur.011715744317.66</td>
@@ -1260,22 +3118,64 @@ Researchers with affiliation to grid.258806.1 at time of writing: 530
       <td>SAITO</td>
     </tr>
     <tr>
-      <th>8870</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
+      <th>8184</th>
       <td>Kitakyushu</td>
       <td>1.85931e+06</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
       <td></td>
       <td></td>
-      <td>ur.07413015145.49</td>
-      <td>A.</td>
-      <td>Watanabe</td>
+      <td>ur.014717671563.31</td>
+      <td>Katsuya</td>
+      <td>Nagayama</td>
+    </tr>
+    <tr>
+      <th>8272</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.012167761063.25</td>
+      <td>Masahiro</td>
+      <td>Shibata</td>
+    </tr>
+    <tr>
+      <th>8688</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.015623740474.13</td>
+      <td>Narumichi</td>
+      <td>Kajihara</td>
+    </tr>
+    <tr>
+      <th>9185</th>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td></td>
+      <td></td>
+      <td>ur.0775361534.49</td>
+      <td>Ken'ichi</td>
+      <td>Yokoyama</td>
     </tr>
   </tbody>
 </table>
-<p>530 rows × 11 columns</p>
+<p>526 rows × 11 columns</p>
 </div></div>
 </div>
 </div>
@@ -1283,7 +3183,7 @@ Researchers with affiliation to grid.258806.1 at time of writing: 530
 <h3>Researchers affiliated to the GRIDID <strong>at the time of speaking</strong> ie now<a class="headerlink" href="#Researchers-affiliated-to-the-GRIDID-at-the-time-of-speaking-ie-now" title="Permalink to this headline">¶</a></h3>
 <p>Also here, the procedure is exactly the same as in approach 1.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1302,12 +3202,12 @@ Researchers with affiliation to grid.258806.1 at time of writing: 530
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 ===
-Researchers with affiliation to grid.258806.1 at the time of speaking: 507
+Researchers with affiliation to grid.258806.1 at the time of speaking: 505
 ===
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1329,65 +3229,315 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 507
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>affiliations</th>
+      <th>corresponding</th>
+      <th>current_organization_id</th>
       <th>first_name</th>
       <th>last_name</th>
-      <th>corresponding</th>
       <th>orcid</th>
-      <th>current_organization_id</th>
       <th>researcher_id</th>
-      <th>affiliations</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>3</th>
-      <td>Rahmi</td>
-      <td>Rahmatillah</td>
-      <td></td>
+      <th>0</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>True</td>
+      <td>grid.258806.1</td>
+      <td>Zhen</td>
+      <td>Wang</td>
+      <td>['0000-0002-9136-3100']</td>
+      <td>ur.011113737576.59</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
       <td></td>
       <td>grid.258806.1</td>
-      <td>ur.07545333321.42</td>
+      <td>Zhaosheng</td>
+      <td>Hu</td>
+      <td></td>
+      <td>ur.016323530642.42</td>
+    </tr>
+    <tr>
+      <th>2</th>
       <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Muhammad Akmal</td>
+      <td>Kamarudin</td>
+      <td>['0000-0002-2256-5948']</td>
+      <td>ur.011773542351.82</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Gaurav</td>
+      <td>Kapil</td>
+      <td></td>
+      <td>ur.07620457442.79</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>Kateryna</td>
-      <td>Aheieva</td>
-      <td></td>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
       <td></td>
       <td>grid.258806.1</td>
-      <td>ur.014623572367.39</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>Atul</td>
+      <td>Tripathi</td>
+      <td></td>
+      <td>ur.015622353764.28</td>
     </tr>
     <tr>
-      <th>6</th>
-      <td>Mengu</td>
-      <td>Cho</td>
-      <td></td>
+      <th>8</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
       <td></td>
       <td>grid.258806.1</td>
-      <td>ur.013152112405.28</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>Zhanglin</td>
-      <td>Guo</td>
+      <td>Sham S.</td>
+      <td>Pandey</td>
       <td></td>
-      <td></td>
-      <td>grid.258806.1</td>
-      <td>ur.07706074430.00</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>ur.07436424670.11</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>Zhenhua</td>
-      <td>Xu</td>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>True</td>
+      <td>grid.258806.1</td>
+      <td>Shuzi</td>
+      <td>Hayase</td>
       <td></td>
+      <td>ur.01055753603.27</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
       <td></td>
       <td>grid.258806.1</td>
-      <td>ur.012076416030.50</td>
+      <td>M.</td>
+      <td>Komori</td>
+      <td>['0000-0001-8714-3829']</td>
+      <td>ur.015611316173.53</td>
+    </tr>
+    <tr>
+      <th>11</th>
       <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>K.</td>
+      <td>Hara</td>
+      <td></td>
+      <td>ur.015004025620.80</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>K.</td>
+      <td>Asami</td>
+      <td></td>
+      <td>ur.011647500507.00</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>N.</td>
+      <td>Sakai</td>
+      <td></td>
+      <td>ur.011646110331.53</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Masaki</td>
+      <td>Oshita</td>
+      <td></td>
+      <td>ur.013214050135.04</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Yuta</td>
+      <td>Senju</td>
+      <td></td>
+      <td>ur.015405700116.58</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>True</td>
+      <td>grid.258806.1</td>
+      <td>Emiko</td>
+      <td>Mouri</td>
+      <td></td>
+      <td>ur.01000075176.85</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Sanami</td>
+      <td>Moroi</td>
+      <td></td>
+      <td>ur.014771747754.62</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Hiromasa</td>
+      <td>Yoshizumi</td>
+      <td></td>
+      <td>ur.014533560064.73</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Yusuke</td>
+      <td>Nakano</td>
+      <td></td>
+      <td>ur.011550342143.09</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Masahiro</td>
+      <td>Kozako</td>
+      <td></td>
+      <td>ur.07644453127.11</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Masayuki</td>
+      <td>Hikita</td>
+      <td></td>
+      <td>ur.011212042763.67</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>M.</td>
+      <td>Mito</td>
+      <td></td>
+      <td>ur.07706367411.17</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>K.</td>
+      <td>Shibayama</td>
+      <td></td>
+      <td>ur.016025302142.25</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>S.</td>
+      <td>Takagi</td>
+      <td></td>
+      <td>ur.010517116526.32</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Ahmed M. M.</td>
+      <td>Almassri</td>
+      <td>['0000-0002-3608-2023']</td>
+      <td>ur.012347371535.81</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Chikamune</td>
+      <td>Wada</td>
+      <td></td>
+      <td>ur.01115775542.04</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Huimin</td>
+      <td>Lu</td>
+      <td>['0000-0001-9794-3221']</td>
+      <td>ur.016357156077.09</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Yoshiki</td>
+      <td>Nakayama</td>
+      <td></td>
+      <td>ur.07507645664.77</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Hyoungseop</td>
+      <td>Kim</td>
+      <td></td>
+      <td>ur.012240303741.11</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Seiichi</td>
+      <td>Serikawa</td>
+      <td></td>
+      <td>ur.011567324032.03</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Nao-aki</td>
+      <td>Noda</td>
+      <td></td>
+      <td>ur.012413075361.99</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>[{'name': 'Department of Mechanical and Contro...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Fei</td>
+      <td>Ren</td>
+      <td></td>
+      <td>ur.014661327503.09</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1400,58 +3550,308 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 507
       <td>...</td>
     </tr>
     <tr>
-      <th>7442</th>
+      <th>5187</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Takeshi</td>
+      <td>Tachibana</td>
+      <td></td>
+      <td>ur.011270250211.84</td>
+    </tr>
+    <tr>
+      <th>5230</th>
+      <td>[{'name': 'Laboratoire d&amp;apos; Energ&amp;#233;tiqu...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Laurent</td>
+      <td>Tranchant</td>
+      <td></td>
+      <td>ur.010570624411.54</td>
+    </tr>
+    <tr>
+      <th>5256</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>True</td>
+      <td>grid.258806.1</td>
+      <td>Ryusuke</td>
+      <td>Fujisawa</td>
+      <td></td>
+      <td>ur.014546667435.13</td>
+    </tr>
+    <tr>
+      <th>5619</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Koju</td>
+      <td>Hiraki</td>
+      <td></td>
+      <td>ur.012442471303.45</td>
+    </tr>
+    <tr>
+      <th>5756</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Kyunghoon</td>
+      <td>Jang</td>
+      <td></td>
+      <td>ur.010402154535.26</td>
+    </tr>
+    <tr>
+      <th>5809</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Yasuhiro</td>
+      <td>Akahoshi</td>
+      <td></td>
+      <td>ur.011027771463.75</td>
+    </tr>
+    <tr>
+      <th>5854</th>
+      <td>[{'name': 'Graduate school of Engineering, Kyu...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Kohei</td>
+      <td>Fukushima</td>
+      <td></td>
+      <td>ur.011262551137.51</td>
+    </tr>
+    <tr>
+      <th>5872</th>
+      <td>[{'name': 'Department of Mechanical Engineerin...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Dejian</td>
+      <td>Zhang</td>
+      <td></td>
+      <td>ur.012504522777.38</td>
+    </tr>
+    <tr>
+      <th>5886</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Ayumu</td>
+      <td>Tominaga</td>
+      <td></td>
+      <td>ur.015545344066.66</td>
+    </tr>
+    <tr>
+      <th>5989</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Yuta</td>
+      <td>Hanazawa</td>
+      <td></td>
+      <td>ur.011566453257.48</td>
+    </tr>
+    <tr>
+      <th>6022</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>KAZUHIRO</td>
+      <td>TOYODA</td>
+      <td></td>
+      <td>ur.013152454441.15</td>
+    </tr>
+    <tr>
+      <th>6056</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>YUJI</td>
+      <td>MORIMOTO</td>
+      <td></td>
+      <td>ur.010261153733.72</td>
+    </tr>
+    <tr>
+      <th>6057</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>JUN</td>
+      <td>EJIMA</td>
+      <td></td>
+      <td>ur.011056534333.51</td>
+    </tr>
+    <tr>
+      <th>6060</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Akihiro</td>
+      <td>Suzuki</td>
+      <td>['0000-0002-4164-5193']</td>
+      <td>ur.012640053622.45</td>
+    </tr>
+    <tr>
+      <th>6094</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Fang</td>
+      <td>Jin</td>
+      <td></td>
+      <td>ur.014441041243.00</td>
+    </tr>
+    <tr>
+      <th>6127</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Kei</td>
+      <td>Ohnishi</td>
+      <td></td>
+      <td>ur.014036341366.26</td>
+    </tr>
+    <tr>
+      <th>6504</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Daiki</td>
+      <td>Okabe</td>
+      <td></td>
+      <td>ur.012423177572.06</td>
+    </tr>
+    <tr>
+      <th>6505</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Yoshihisa</td>
+      <td>Nakatoh</td>
+      <td></td>
+      <td>ur.014462273762.86</td>
+    </tr>
+    <tr>
+      <th>6506</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Taiki</td>
+      <td>Torigoe</td>
+      <td></td>
+      <td>ur.014002425662.11</td>
+    </tr>
+    <tr>
+      <th>6607</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>True</td>
+      <td>grid.258806.1</td>
+      <td>Kenji</td>
+      <td>Matsuda</td>
+      <td></td>
+      <td>ur.015112126061.65</td>
+    </tr>
+    <tr>
+      <th>6872</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>True</td>
+      <td>grid.258806.1</td>
+      <td>A.</td>
+      <td>Watanabe</td>
+      <td></td>
+      <td>ur.07413015145.49</td>
+    </tr>
+    <tr>
+      <th>6874</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Fuminori</td>
+      <td>Kobayashi</td>
+      <td></td>
+      <td>ur.010554026115.59</td>
+    </tr>
+    <tr>
+      <th>6939</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
       <td>Hiroki</td>
       <td>Obata</td>
       <td></td>
-      <td></td>
-      <td>grid.258806.1</td>
       <td>ur.01156670436.97</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
     </tr>
     <tr>
-      <th>7525</th>
+      <th>7041</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>True</td>
+      <td>grid.258806.1</td>
       <td>Takao</td>
       <td>Kodama</td>
-      <td>True</td>
       <td></td>
-      <td>grid.258806.1</td>
       <td>ur.011176635061.41</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
     </tr>
     <tr>
-      <th>7562</th>
+      <th>7066</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
       <td>Noboru</td>
       <td>Sebe</td>
       <td></td>
-      <td></td>
-      <td>grid.258806.1</td>
       <td>ur.010647607673.28</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
     </tr>
     <tr>
-      <th>7602</th>
+      <th>7144</th>
+      <td>[{'name': 'Kanagawa Institute of Industrial Sc...</td>
+      <td></td>
+      <td>grid.258806.1</td>
       <td>Hidenori</td>
       <td>SAITO</td>
       <td></td>
-      <td></td>
-      <td>grid.258806.1</td>
       <td>ur.011715744317.66</td>
-      <td>[{'name': 'Kanagawa Institute of Industrial Sc...</td>
     </tr>
     <tr>
-      <th>7820</th>
-      <td>A.</td>
-      <td>Watanabe</td>
-      <td>True</td>
+      <th>7248</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
       <td></td>
       <td>grid.258806.1</td>
-      <td>ur.07413015145.49</td>
+      <td>Katsuya</td>
+      <td>Nagayama</td>
+      <td></td>
+      <td>ur.014717671563.31</td>
+    </tr>
+    <tr>
+      <th>7332</th>
       <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>True</td>
+      <td>grid.258806.1</td>
+      <td>Masahiro</td>
+      <td>Shibata</td>
+      <td></td>
+      <td>ur.012167761063.25</td>
+    </tr>
+    <tr>
+      <th>7716</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Narumichi</td>
+      <td>Kajihara</td>
+      <td></td>
+      <td>ur.015623740474.13</td>
+    </tr>
+    <tr>
+      <th>8134</th>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>True</td>
+      <td>grid.258806.1</td>
+      <td>Ken'ichi</td>
+      <td>Yokoyama</td>
+      <td></td>
+      <td>ur.0775361534.49</td>
     </tr>
   </tbody>
 </table>
-<p>507 rows × 7 columns</p>
+<p>505 rows × 7 columns</p>
 </div></div>
 </div>
 </div>
@@ -1460,7 +3860,7 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 507
 <h2>Conclusions<a class="headerlink" href="#Conclusions" title="Permalink to this headline">¶</a></h2>
 <p>As anticipated above, <strong>both approaches are equally valid</strong> and in fact they return the same (or very similar) number of results. Let’s compare them:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1477,7 +3877,7 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 507
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1509,15 +3909,15 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 507
     <tr>
       <th>0</th>
       <td>1</td>
-      <td>507</td>
-      <td>530</td>
+      <td>513</td>
+      <td>535</td>
       <td>search publications where year in [2013:2018] ...</td>
     </tr>
     <tr>
       <th>1</th>
       <td>2</td>
-      <td>507</td>
-      <td>530</td>
+      <td>505</td>
+      <td>526</td>
       <td>search researchers where research_orgs="grid.2...</td>
     </tr>
   </tbody>
