@@ -262,11 +262,10 @@ div.rendered_html tbody tr:hover {
 <span class="c1"># @markdown Click the &#39;play&#39; button on the left (or shift+enter) after entering your API credentials</span>
 
 <span class="n">username</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1">#@param {type: &quot;string&quot;}</span>
-<span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1">#@param {type: &quot;string&quot;}</span>
+<span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1">#@pararun m {type: &quot;string&quot;}</span>
 <span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;https://app.dimensions.ai&quot;</span> <span class="c1">#@param {type: &quot;string&quot;}</span>
 
 
-<span class="c1"># !pip install dimcli plotly_express -U --quiet</span>
 <span class="o">!</span>pip install dimcli plotly tqdm -U --quiet
 <span class="kn">import</span> <span class="nn">dimcli</span>
 <span class="kn">from</span> <span class="nn">dimcli.shortcuts</span> <span class="k">import</span> <span class="o">*</span>
@@ -284,7 +283,6 @@ div.rendered_html tbody tr:hover {
 
 <span class="c1">#</span>
 <span class="c1"># charts libs</span>
-<span class="c1"># import plotly_express as px</span>
 <span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
   <span class="c1"># make js dependecies local / needed by html exports</span>
@@ -447,15 +445,23 @@ Time period: 2000 to 2016 <br /><br /></div>
 <span class="c1">#</span>
 <span class="c1"># loop through all grids</span>
 
+<span class="n">ITERATION_RECORDS</span> <span class="o">=</span> <span class="mi">1000</span>  <span class="c1"># Publication records per query iteration</span>
+<span class="n">GRID_RECORDS</span> <span class="o">=</span> <span class="mi">200</span>       <span class="c1"># grid IDs per query</span>
+<span class="n">VERBOSE</span> <span class="o">=</span> <span class="kc">False</span>          <span class="c1"># set to True to view full extraction logs</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;===</span><span class="se">\n</span><span class="s2">Extracting </span><span class="si">{GRIDID}</span><span class="s2"> publications with industry collaborators ...&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Records per query : &quot;</span><span class="p">,</span> <span class="n">ITERATION_RECORDS</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;GRID IDs per query: &quot;</span><span class="p">,</span> <span class="n">GRID_RECORDS</span><span class="p">)</span>
 <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">BATCHSIZE</span> <span class="o">=</span> <span class="mi">200</span>
-<span class="n">VERBOSE</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># set to True to see extraction logs</span>
 
-<span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">progress</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">chunks_of</span><span class="p">(</span><span class="n">gridis</span><span class="p">,</span> <span class="n">BATCHSIZE</span><span class="p">))):</span>
+
+<span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">progress</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">chunks_of</span><span class="p">(</span><span class="n">gridis</span><span class="p">,</span> <span class="n">GRID_RECORDS</span><span class="p">))):</span>
     <span class="n">query</span> <span class="o">=</span> <span class="n">query_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">GRIDID</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">chunk</span><span class="p">),</span> <span class="n">YEAR_START</span><span class="p">,</span> <span class="n">YEAR_END</span><span class="p">)</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query_iterative</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">VERBOSE</span><span class="p">)</span>
-    <span class="n">results</span> <span class="o">+=</span> <span class="n">data</span><span class="o">.</span><span class="n">publications</span>
+<span class="c1">#     print(query)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query_iterative</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">VERBOSE</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="n">ITERATION_RECORDS</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">errors</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">Iteration failed: due an error no data was extracted for this iteration. </span><span class="se">\n</span><span class="s2">Try adjusting the ITERATION_RECORDS or BATCHSIZE parameters and rerun the extraction.&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">results</span> <span class="o">+=</span> <span class="n">data</span><span class="o">.</span><span class="n">publications</span>
     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
 
 <span class="c1">#</span>
