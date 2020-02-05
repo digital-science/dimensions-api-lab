@@ -261,7 +261,7 @@ div.rendered_html tbody tr:hover {
 <div><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/">pandas</a> is a popular software library written for the Python programming language for data manipulation and analysis.</p>
 </div></blockquote>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -286,11 +286,11 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-DimCli v0.6.2.1 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (method: dsl.ini file)
+DimCli v0.6.2.4 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (method: dsl.ini file)
 </pre></div></div>
 </div>
-<div class="section" id="1.-Getting-started:-the-as_dataframe-method">
-<h2>1. Getting started: the <code class="docutils literal notranslate"><span class="pre">as_dataframe</span></code> method<a class="headerlink" href="#1.-Getting-started:-the-as_dataframe-method" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="1.-The-Dataset.as_dataframe-method">
+<h2>1. The <code class="docutils literal notranslate"><span class="pre">Dataset.as_dataframe</span></code> method<a class="headerlink" href="#1.-The-Dataset.as_dataframe-method" title="Permalink to this headline">¶</a></h2>
 <p>This utility method allows to quickly turn any query results into a dataframe.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
@@ -561,9 +561,619 @@ Name: type, dtype: int64
 </pre></div>
 </div>
 </div>
+<div class="section" id="Magic-commands:-%dsldf-and-%dslloopdf">
+<h3>Magic commands: <code class="docutils literal notranslate"><span class="pre">%dsldf</span></code> and <code class="docutils literal notranslate"><span class="pre">%dslloopdf</span></code><a class="headerlink" href="#Magic-commands:-%dsldf-and-%dslloopdf" title="Permalink to this headline">¶</a></h3>
+<p>Dimcli includes a few <a class="reference external" href="https://ipython.readthedocs.io/en/stable/interactive/magics.html">Python magic commands</a> that make working with dataframes easier.</p>
+<p>Magic commands can be very useful when testing things out e.g. while trying out a new query, or checking what data is available in Dimensions on a certain topic.</p>
+<p>Moreover, if you hit <strong>‘tab’</strong> after the command, you can also take advantage of a custom <strong>Dimensions Search Language autocompleter</strong>.</p>
+<p><strong>Single-line version</strong></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
 </div>
-<div class="section" id="2.-Helper-Methods-for-‘Publications’-queries">
-<h2>2. Helper Methods for ‘Publications’ queries<a class="headerlink" href="#2.-Helper-Methods-for-‘Publications’-queries" title="Permalink to this headline">¶</a></h2>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">dsldf</span> search publications where journal.id=&quot;jour.1136447&quot; return publications
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Returned Publications: 20 (total = 943)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>author_affiliations</th>
+      <th>id</th>
+      <th>issue</th>
+      <th>journal.id</th>
+      <th>journal.title</th>
+      <th>pages</th>
+      <th>title</th>
+      <th>type</th>
+      <th>volume</th>
+      <th>year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>NaN</td>
+      <td>pub.1124361199</td>
+      <td>NaN</td>
+      <td>jour.1136447</td>
+      <td>Nature Energy</td>
+      <td>1-1</td>
+      <td>Publisher Correction: Perovskites take steps t...</td>
+      <td>article</td>
+      <td>NaN</td>
+      <td>2020</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>[[{'first_name': 'Kimberly S.', 'last_name': '...</td>
+      <td>pub.1124340939</td>
+      <td>NaN</td>
+      <td>jour.1136447</td>
+      <td>Nature Energy</td>
+      <td>1-11</td>
+      <td>Peer influence on household energy behaviours</td>
+      <td>article</td>
+      <td>NaN</td>
+      <td>2020</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>[[{'first_name': 'Jennifer', 'last_name': 'Wil...</td>
+      <td>pub.1124342004</td>
+      <td>NaN</td>
+      <td>jour.1136447</td>
+      <td>Nature Energy</td>
+      <td>1-2</td>
+      <td>An electro-swing approach</td>
+      <td>article</td>
+      <td>NaN</td>
+      <td>2020</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>[[{'first_name': 'Xiaopeng', 'last_name': 'Zhe...</td>
+      <td>pub.1124190675</td>
+      <td>NaN</td>
+      <td>jour.1136447</td>
+      <td>Nature Energy</td>
+      <td>1-10</td>
+      <td>Managing grains and interfaces via ligand anch...</td>
+      <td>article</td>
+      <td>NaN</td>
+      <td>2020</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>[[{'first_name': 'Abhishek', 'last_name': 'Kar...</td>
+      <td>pub.1124192098</td>
+      <td>NaN</td>
+      <td>jour.1136447</td>
+      <td>Nature Energy</td>
+      <td>1-2</td>
+      <td>Capital cost subsidies through India’s Ujjwala...</td>
+      <td>article</td>
+      <td>NaN</td>
+      <td>2020</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>[[{'first_name': 'Giulia', 'last_name': 'Tregn...</td>
+      <td>pub.1124223699</td>
+      <td>1</td>
+      <td>jour.1136447</td>
+      <td>Nature Energy</td>
+      <td>2-2</td>
+      <td>High-speed films</td>
+      <td>article</td>
+      <td>5</td>
+      <td>2020</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>[[{'first_name': 'Deepak', 'last_name': 'Rajag...</td>
+      <td>pub.1124048660</td>
+      <td>1</td>
+      <td>jour.1136447</td>
+      <td>Nature Energy</td>
+      <td>18-19</td>
+      <td>The United States can generate up to 3.2 EJ of...</td>
+      <td>article</td>
+      <td>5</td>
+      <td>2020</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>[[{'first_name': 'Lee V.', 'last_name': 'White...</td>
+      <td>pub.1123426945</td>
+      <td>1</td>
+      <td>jour.1136447</td>
+      <td>Nature Energy</td>
+      <td>16-17</td>
+      <td>Varied health and financial impacts of time-of...</td>
+      <td>article</td>
+      <td>5</td>
+      <td>2020</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>[[{'first_name': 'Nicky', 'last_name': 'Dean',...</td>
+      <td>pub.1124213396</td>
+      <td>1</td>
+      <td>jour.1136447</td>
+      <td>Nature Energy</td>
+      <td>5-5</td>
+      <td>Performance factors</td>
+      <td>article</td>
+      <td>5</td>
+      <td>2020</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>[[{'first_name': 'Linan', 'last_name': 'Zhou',...</td>
+      <td>pub.1123828460</td>
+      <td>1</td>
+      <td>jour.1136447</td>
+      <td>Nature Energy</td>
+      <td>61-70</td>
+      <td>Light-driven methane dry reforming with single...</td>
+      <td>article</td>
+      <td>5</td>
+      <td>2020</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>[[{'first_name': 'Johan', 'last_name': 'Lillie...</td>
+      <td>pub.1124049483</td>
+      <td>1</td>
+      <td>jour.1136447</td>
+      <td>Nature Energy</td>
+      <td>71-78</td>
+      <td>Understanding and accounting for the effect of...</td>
+      <td>article</td>
+      <td>5</td>
+      <td>2020</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>[[{'first_name': 'Chuan', 'last_name': 'Xia', ...</td>
+      <td>pub.1123470085</td>
+      <td>1</td>
+      <td>jour.1136447</td>
+      <td>Nature Energy</td>
+      <td>90-90</td>
+      <td>Author Correction: Continuous production of pu...</td>
+      <td>article</td>
+      <td>5</td>
+      <td>2020</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>[[{'first_name': 'Joel', 'last_name': 'Jean', ...</td>
+      <td>pub.1124190016</td>
+      <td>1</td>
+      <td>jour.1136447</td>
+      <td>Nature Energy</td>
+      <td>10-11</td>
+      <td>Getting high with quantum dot solar cells</td>
+      <td>article</td>
+      <td>5</td>
+      <td>2020</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>[[{'first_name': 'Sujoy', 'last_name': 'Saha',...</td>
+      <td>pub.1123462690</td>
+      <td>1</td>
+      <td>jour.1136447</td>
+      <td>Nature Energy</td>
+      <td>91-91</td>
+      <td>Publisher Correction: Exploring the bottleneck...</td>
+      <td>article</td>
+      <td>5</td>
+      <td>2020</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>[[{'first_name': 'Mengmeng', 'last_name': 'Hao...</td>
+      <td>pub.1124192096</td>
+      <td>1</td>
+      <td>jour.1136447</td>
+      <td>Nature Energy</td>
+      <td>79-88</td>
+      <td>Ligand-assisted cation-exchange engineering fo...</td>
+      <td>article</td>
+      <td>5</td>
+      <td>2020</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>[[{'first_name': 'Jenn', 'last_name': 'Richler...</td>
+      <td>pub.1124217194</td>
+      <td>1</td>
+      <td>jour.1136447</td>
+      <td>Nature Energy</td>
+      <td>4-4</td>
+      <td>Effective stakeholder engagement</td>
+      <td>article</td>
+      <td>5</td>
+      <td>2020</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>[[{'first_name': 'Yimin A.', 'last_name': 'Wu'...</td>
+      <td>pub.1122796302</td>
+      <td>1</td>
+      <td>jour.1136447</td>
+      <td>Nature Energy</td>
+      <td>89-89</td>
+      <td>Author Correction: Facet-dependent active site...</td>
+      <td>article</td>
+      <td>5</td>
+      <td>2020</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>[[{'first_name': 'Sarah Josephine', 'last_name...</td>
+      <td>pub.1124049220</td>
+      <td>1</td>
+      <td>jour.1136447</td>
+      <td>Nature Energy</td>
+      <td>14-15</td>
+      <td>Careful currency conversion</td>
+      <td>article</td>
+      <td>5</td>
+      <td>2020</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>NaN</td>
+      <td>pub.1124222189</td>
+      <td>1</td>
+      <td>jour.1136447</td>
+      <td>Nature Energy</td>
+      <td>1-1</td>
+      <td>Perovskites take steps to industrialization</td>
+      <td>article</td>
+      <td>5</td>
+      <td>2020</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>[[{'first_name': 'Wangda', 'last_name': 'Li', ...</td>
+      <td>pub.1124049278</td>
+      <td>1</td>
+      <td>jour.1136447</td>
+      <td>Nature Energy</td>
+      <td>26-34</td>
+      <td>High-nickel layered oxide cathodes for lithium...</td>
+      <td>article</td>
+      <td>5</td>
+      <td>2020</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p><strong>Multi-line version</strong></p>
+<p>You can split the query into multiple lines, only this time you need to use the <code class="docutils literal notranslate"><span class="pre">%%dsldf</span></code> command (two <code class="docutils literal notranslate"><span class="pre">%</span></code>):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
+search publications
+where year in [2013:2018] and research_orgs=&quot;grid.258806.1&quot;
+return publications[title+year+times_cited] sort by times_cited
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Returned Publications: 20 (total = 3826)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>times_cited</th>
+      <th>title</th>
+      <th>year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>423</td>
+      <td>Asymmetric Supercapacitors Using 3D Nanoporous...</td>
+      <td>2015</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>410</td>
+      <td>CH3NH3SnxPb(1-x)I3 Perovskite Solar Cells Cove...</td>
+      <td>2014</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>308</td>
+      <td>Pt‐Free Counter Electrode for Dye‐Sensitized S...</td>
+      <td>2014</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>237</td>
+      <td>Hierarchical Gaussian Descriptor for Person Re...</td>
+      <td>2016</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>233</td>
+      <td>Brain Intelligence: Go beyond Artificial Intel...</td>
+      <td>2018</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>231</td>
+      <td>Improved understanding of the electronic and e...</td>
+      <td>2014</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>211</td>
+      <td>Comparative study of ceramic and single crysta...</td>
+      <td>2013</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>205</td>
+      <td>Underwater image dehazing using joint trilater...</td>
+      <td>2014</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>182</td>
+      <td>Flexible Graphene-Based Supercapacitors: A Review</td>
+      <td>2016</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>164</td>
+      <td>Recent Progress of Counter Electrode Catalysts...</td>
+      <td>2014</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>152</td>
+      <td>Hole-Conductor-Free, Metal-Electrode-Free TiO2...</td>
+      <td>2014</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>138</td>
+      <td>Study of rare-earth-doped scintillators</td>
+      <td>2013</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>137</td>
+      <td>Highly Luminescent Phase-Stable CsPbI3 Perovsk...</td>
+      <td>2017</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>132</td>
+      <td>Motor Anomaly Detection for Unmanned Aerial Ve...</td>
+      <td>2018</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>130</td>
+      <td>Low-Temperature and Solution-Processed Amorpho...</td>
+      <td>2015</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>123</td>
+      <td>Low illumination underwater light field images...</td>
+      <td>2018</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>114</td>
+      <td>All-Solid Perovskite Solar Cells with HOCO-R-N...</td>
+      <td>2014</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>111</td>
+      <td>Implementation of Super-Twisting Control: Supe...</td>
+      <td>2016</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>107</td>
+      <td>Maximum Torque per Ampere (MTPA) Control of an...</td>
+      <td>2013</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>104</td>
+      <td>Insight into Perovskite Solar Cells Based on S...</td>
+      <td>2015</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Note: the autocompleter is available only with single-line queries.</p>
+<p><strong>Loop versions</strong></p>
+<p>Two more magic commands are available:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">%dslloopdf</span></code> (single-line)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%%dslloopdf</span></code> (multi-line)</p></li>
+</ul>
+<p>These commands behave just like the ones above, only they trigger an <strong>iterative query</strong> that will attempt to extract all records available for a chosen DSL query up to the maximum limit of 50k.</p>
+</div>
+<div class="section" id="Accessing-data-returned-by-magic-queries">
+<h3>Accessing data returned by magic queries<a class="headerlink" href="#Accessing-data-returned-by-magic-queries" title="Permalink to this headline">¶</a></h3>
+<p>By default the results of magic command queries are saved into a variable called <code class="docutils literal notranslate"><span class="pre">dsl_last_results</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">type</span><span class="p">(</span><span class="n">dsl_last_results</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>pandas.core.frame.DataFrame
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">dsl_last_results</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>times_cited</th>
+      <th>year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>20.000000</td>
+      <td>20.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>192.600000</td>
+      <td>2015.050000</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>94.126119</td>
+      <td>1.669384</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>104.000000</td>
+      <td>2013.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>128.250000</td>
+      <td>2014.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>158.000000</td>
+      <td>2014.500000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>231.500000</td>
+      <td>2016.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>423.000000</td>
+      <td>2018.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+</div>
+<div class="section" id="2.-Dataframe-Methods-for-‘Publications’-queries">
+<h2>2. Dataframe Methods for ‘Publications’ queries<a class="headerlink" href="#2.-Dataframe-Methods-for-‘Publications’-queries" title="Permalink to this headline">¶</a></h2>
 <p>What follows are specialized versions of the <code class="docutils literal notranslate"><span class="pre">as_dataframe</span></code> method for results sets composed of publication records.</p>
 <div class="section" id="Extracting-authors:-as_dataframe_authors">
 <h3>Extracting authors: <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors</span></code><a class="headerlink" href="#Extracting-authors:-as_dataframe_authors" title="Permalink to this headline">¶</a></h3>
@@ -953,553 +1563,9 @@ Name: type, dtype: int64
 </div>
 </div>
 </div>
-<div class="section" id="Extracting-Concepts:-as_dataframe_concepts">
-<h3>Extracting Concepts: <code class="docutils literal notranslate"><span class="pre">as_dataframe_concepts</span></code><a class="headerlink" href="#Extracting-Concepts:-as_dataframe_concepts" title="Permalink to this headline">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">as_dataframe_concepts</span></code> method allows to quickly extract all concepts attached to publications <strong>one row per concept</strong>, so to make it easier to do operations like counting or plotting the results.</p>
-<p>NOTE: concepts are normalized keywords describing the main topics of a publication, which are automatically derived from the publication text using machine learning. In the JSON data, concepts are returned with an ordered list like this (first concepts are the most relevant):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;concepts&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;electrochemical conversion&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;conversion&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;CO2&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;formate&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;formic acid&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;acid&#39;</span><span class="p">],</span>
- <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;pub.1122072646&#39;</span><span class="p">}</span>
-</pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">as_dataframe_concepts</span></code> method includes in the results three extra measures that are handy to carry out further analyses:</p>
-<ol class="arabic simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">position</span></code>: an integer representing the position of the concept in the list, in absolute terms e.g. the first concept gets 1, while the fifth gets 5.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">score</span></code>: an integer representing the relevance of the concept, normalized against the total number of concepts for that publication. So if a publication has 10 concepts in total, the first one gets 1, the second one 0.9, etc..</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">frequency</span></code>: an integer repreenting how often that concept occurs in the dataset returned ie how many documents have that concept.</p></li>
-</ol>
-<p>By sorting and segmenting concepts using these three parameters, it is possible to fine-tune the concept extraction algorithm that is most suitable to the application at hand.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">concepts</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;search publications for &quot;graphene&quot; where year=2019 return publications[id+title+year+concepts] limit 100&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe_concepts</span><span class="p">()</span>
-<span class="n">concepts</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Returned Publications: 100 (total = 100511)
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>name</th>
-      <th>position</th>
-      <th>score</th>
-      <th>frequency</th>
-      <th>pubid</th>
-      <th>title</th>
-      <th>year</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>graphene oxide synthesis</td>
-      <td>1</td>
-      <td>1.0</td>
-      <td>1</td>
-      <td>pub.1120445400</td>
-      <td>Graphene oxide synthesis by facile method and ...</td>
-      <td>2019</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>synthesis</td>
-      <td>2</td>
-      <td>0.8</td>
-      <td>8</td>
-      <td>pub.1120445400</td>
-      <td>Graphene oxide synthesis by facile method and ...</td>
-      <td>2019</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>facile method</td>
-      <td>3</td>
-      <td>0.6</td>
-      <td>1</td>
-      <td>pub.1120445400</td>
-      <td>Graphene oxide synthesis by facile method and ...</td>
-      <td>2019</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>method</td>
-      <td>4</td>
-      <td>0.4</td>
-      <td>27</td>
-      <td>pub.1120445400</td>
-      <td>Graphene oxide synthesis by facile method and ...</td>
-      <td>2019</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>characterization</td>
-      <td>5</td>
-      <td>0.2</td>
-      <td>4</td>
-      <td>pub.1120445400</td>
-      <td>Graphene oxide synthesis by facile method and ...</td>
-      <td>2019</td>
-    </tr>
-  </tbody>
-</table>
-</div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">concepts</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-Int64Index: 4137 entries, 0 to 44
-Data columns (total 7 columns):
-name         4137 non-null object
-position     4137 non-null int64
-score        4137 non-null float64
-frequency    4137 non-null int64
-pubid        4137 non-null object
-title        4137 non-null object
-year         4137 non-null object
-dtypes: float64(1), int64(2), object(4)
-memory usage: 258.6+ KB
-</pre></div></div>
-</div>
-<p>E.g. Sorting by <strong>position</strong> permits to highlight concepts that are important but don’t appear in many documents.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">concepts</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;position&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>position</th>
-      <th>score</th>
-      <th>frequency</th>
-    </tr>
-    <tr>
-      <th>name</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>system stores</th>
-      <td>1</td>
-      <td>1.00</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>combined study</th>
-      <td>1</td>
-      <td>1.00</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>cerium compounds</th>
-      <td>1</td>
-      <td>1.00</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>green reduction</th>
-      <td>1</td>
-      <td>1.00</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>polymer surface</th>
-      <td>1</td>
-      <td>1.00</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>results</th>
-      <td>591</td>
-      <td>5.61</td>
-      <td>289</td>
-    </tr>
-    <tr>
-      <th>structure</th>
-      <td>619</td>
-      <td>14.17</td>
-      <td>576</td>
-    </tr>
-    <tr>
-      <th>effects</th>
-      <td>652</td>
-      <td>7.52</td>
-      <td>324</td>
-    </tr>
-    <tr>
-      <th>applications</th>
-      <td>667</td>
-      <td>15.92</td>
-      <td>900</td>
-    </tr>
-    <tr>
-      <th>materials</th>
-      <td>764</td>
-      <td>21.59</td>
-      <td>1225</td>
-    </tr>
-  </tbody>
-</table>
-<p>2702 rows × 3 columns</p>
-</div></div>
-</div>
-<p>E.g. Sorting by <strong>frequency</strong> highlights concepts that are shared by many documents in our dataset (= the one generated by the original query).</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">concepts</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;frequency&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>name</th>
-      <th>position</th>
-      <th>score</th>
-      <th>frequency</th>
-      <th>pubid</th>
-      <th>title</th>
-      <th>year</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>graphene oxide synthesis</td>
-      <td>1</td>
-      <td>1.00</td>
-      <td>1</td>
-      <td>pub.1120445400</td>
-      <td>Graphene oxide synthesis by facile method and ...</td>
-      <td>2019</td>
-    </tr>
-    <tr>
-      <th>69</th>
-      <td>pure TiO 2</td>
-      <td>70</td>
-      <td>0.23</td>
-      <td>1</td>
-      <td>pub.1123014472</td>
-      <td>Вплив модифікування діоксиду титану сіркою та ...</td>
-      <td>2019</td>
-    </tr>
-    <tr>
-      <th>70</th>
-      <td>gap narrowing</td>
-      <td>71</td>
-      <td>0.22</td>
-      <td>1</td>
-      <td>pub.1123014472</td>
-      <td>Вплив модифікування діоксиду титану сіркою та ...</td>
-      <td>2019</td>
-    </tr>
-    <tr>
-      <th>71</th>
-      <td>nanocomposite samples</td>
-      <td>72</td>
-      <td>0.21</td>
-      <td>1</td>
-      <td>pub.1123014472</td>
-      <td>Вплив модифікування діоксиду титану сіркою та ...</td>
-      <td>2019</td>
-    </tr>
-    <tr>
-      <th>74</th>
-      <td>safranine T</td>
-      <td>75</td>
-      <td>0.18</td>
-      <td>1</td>
-      <td>pub.1123014472</td>
-      <td>Вплив модифікування діоксиду титану сіркою та ...</td>
-      <td>2019</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>structure</td>
-      <td>7</td>
-      <td>0.82</td>
-      <td>24</td>
-      <td>pub.1112946271</td>
-      <td>Synthesis and modelling of the mechanical prop...</td>
-      <td>2019</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>method</td>
-      <td>4</td>
-      <td>0.40</td>
-      <td>27</td>
-      <td>pub.1120445400</td>
-      <td>Graphene oxide synthesis by facile method and ...</td>
-      <td>2019</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>applications</td>
-      <td>18</td>
-      <td>0.11</td>
-      <td>30</td>
-      <td>pub.1122256034</td>
-      <td>The Surface of Polymers</td>
-      <td>2019</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>materials</td>
-      <td>8</td>
-      <td>0.79</td>
-      <td>35</td>
-      <td>pub.1112946271</td>
-      <td>Synthesis and modelling of the mechanical prop...</td>
-      <td>2019</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>properties</td>
-      <td>11</td>
-      <td>0.71</td>
-      <td>36</td>
-      <td>pub.1112946271</td>
-      <td>Synthesis and modelling of the mechanical prop...</td>
-      <td>2019</td>
-    </tr>
-  </tbody>
-</table>
-<p>2702 rows × 7 columns</p>
-</div></div>
-</div>
-<p>E.g. Sorting by <strong>score</strong> permits to identify concepts that are both frequent and important.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">concepts</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;score&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>position</th>
-      <th>score</th>
-      <th>frequency</th>
-    </tr>
-    <tr>
-      <th>name</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>properties</th>
-      <td>572</td>
-      <td>25.75</td>
-      <td>1296</td>
-    </tr>
-    <tr>
-      <th>materials</th>
-      <td>764</td>
-      <td>21.59</td>
-      <td>1225</td>
-    </tr>
-    <tr>
-      <th>method</th>
-      <td>532</td>
-      <td>17.45</td>
-      <td>729</td>
-    </tr>
-    <tr>
-      <th>applications</th>
-      <td>667</td>
-      <td>15.92</td>
-      <td>900</td>
-    </tr>
-    <tr>
-      <th>structure</th>
-      <td>619</td>
-      <td>14.17</td>
-      <td>576</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>ecological point</th>
-      <td>77</td>
-      <td>0.01</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>probe molecules</th>
-      <td>69</td>
-      <td>0.01</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>delivery</th>
-      <td>100</td>
-      <td>0.01</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>conventional methods</th>
-      <td>83</td>
-      <td>0.01</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>detoxification</th>
-      <td>79</td>
-      <td>0.01</td>
-      <td>1</td>
-    </tr>
-  </tbody>
-</table>
-<p>2702 rows × 3 columns</p>
-</div></div>
-</div>
-</div>
-</div>
-<div class="section" id="2.-Helper-Methods-for-‘Grants’-queries">
-<h2>2. Helper Methods for ‘Grants’ queries<a class="headerlink" href="#2.-Helper-Methods-for-‘Grants’-queries" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="3.-Dataframe-Methods-for-‘Grants’-queries">
+<h2>3. Dataframe Methods for ‘Grants’ queries<a class="headerlink" href="#3.-Dataframe-Methods-for-‘Grants’-queries" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="Extracting-Funders:-as_dataframe_funders">
 <h3>Extracting Funders: <code class="docutils literal notranslate"><span class="pre">as_dataframe_funders</span></code><a class="headerlink" href="#Extracting-Funders:-as_dataframe_funders" title="Permalink to this headline">¶</a></h3>
 <p>Grant funders authors are usually returned by the Dimensions API inside a nested JSON object in the <code class="docutils literal notranslate"><span class="pre">funders</span></code> sub-key.</p>
@@ -1956,6 +2022,1657 @@ Field &#39;project_num&#39; is deprecated in favor of grant_number. Please refer
 </div>
 </div>
 </div>
+<div class="section" id="4.-Dataframe-Methods-for-‘Concepts’-queries">
+<h2>4. Dataframe Methods for ‘Concepts’ queries<a class="headerlink" href="#4.-Dataframe-Methods-for-‘Concepts’-queries" title="Permalink to this headline">¶</a></h2>
+<p>These methods can be used with all content types that support the extraction of concepts, e.g. <code class="docutils literal notranslate"><span class="pre">publications</span></code> or <code class="docutils literal notranslate"><span class="pre">grants</span></code>. See the official documentation for more details.</p>
+<div class="section" id="Extracting-Concepts:-as_dataframe_concepts">
+<h3>Extracting Concepts: <code class="docutils literal notranslate"><span class="pre">as_dataframe_concepts</span></code><a class="headerlink" href="#Extracting-Concepts:-as_dataframe_concepts" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">as_dataframe_concepts</span></code> method allows to quickly extract all concepts attached to a record, <strong>one row per concept</strong>, so to make it easier to do operations like counting or plotting the results.</p>
+<p>NOTE: concepts are normalized keywords describing the main topics of a publication (or grant), which are automatically derived from the full text using machine learning. In the JSON data, concepts are returned with an ordered list (=first items are the most relevant), like this one:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;concepts&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;electrochemical conversion&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;conversion&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;CO2&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;formate&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;formic acid&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;acid&#39;</span><span class="p">],</span>
+ <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;pub.1122072646&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">as_dataframe_concepts</span></code> extracts all concepts data from JSON to a dataframe. Moreover, it calculates three figures that can be handy in order to carry out further analyses:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">position</span></code>: an integer representing the position of the concept within the list for a single document, in absolute terms. E.g., the first concept has position=1, while the fifth has position=5.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">score</span></code>: an integer representing the relevance of the concept, normalized against the total number of concepts for a single document (eg publication or gant). So if a document has 10 concepts in total, the first concept gets a score=1, the second score=0.9, etc..</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">frequency</span></code>: an integer representing how often that concept occurs within the full set of documents returned by your query, i.e. how many documents have that concept. So if a concept appears in 5 documents, frequency=5.</p></li>
+</ol>
+<p>By sorting and segmenting concepts using these three parameters, it is possible to fine-tune the concept extraction algorithm, so to make more suitable for the application at hand.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search publications for &quot;graphene&quot;</span>
+<span class="s2">            where year=2019</span>
+<span class="s2">       return publications[id+title+year+concepts] limit 100&quot;&quot;&quot;</span>
+<span class="n">concepts</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe_concepts</span><span class="p">()</span>
+<span class="n">concepts</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Returned Publications: 100 (total = 99197)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>position</th>
+      <th>score</th>
+      <th>frequency</th>
+      <th>pubid</th>
+      <th>title</th>
+      <th>year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>graphene oxide synthesis</td>
+      <td>1</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>pub.1120445400</td>
+      <td>Graphene oxide synthesis by facile method and ...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>synthesis</td>
+      <td>2</td>
+      <td>0.8</td>
+      <td>10</td>
+      <td>pub.1120445400</td>
+      <td>Graphene oxide synthesis by facile method and ...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>facile method</td>
+      <td>3</td>
+      <td>0.6</td>
+      <td>1</td>
+      <td>pub.1120445400</td>
+      <td>Graphene oxide synthesis by facile method and ...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>method</td>
+      <td>4</td>
+      <td>0.4</td>
+      <td>25</td>
+      <td>pub.1120445400</td>
+      <td>Graphene oxide synthesis by facile method and ...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>characterization</td>
+      <td>5</td>
+      <td>0.2</td>
+      <td>4</td>
+      <td>pub.1120445400</td>
+      <td>Graphene oxide synthesis by facile method and ...</td>
+      <td>2019</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">concepts</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+Int64Index: 3975 entries, 0 to 53
+Data columns (total 7 columns):
+name         3975 non-null object
+position     3975 non-null int64
+score        3975 non-null float64
+frequency    3975 non-null int64
+pubid        3975 non-null object
+title        3975 non-null object
+year         3975 non-null object
+dtypes: float64(1), int64(2), object(4)
+memory usage: 248.4+ KB
+</pre></div></div>
+</div>
+<p>E.g. Sorting by <strong>position</strong> permits to highlight concepts that are important but don’t appear in many documents.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">concepts</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;position&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>position</th>
+      <th>score</th>
+      <th>frequency</th>
+    </tr>
+    <tr>
+      <th>name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>magnetohydrodynamic flow</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>porous polymers</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>global warming</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>fundamental mechanisms</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>hydrogen adsorption</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>friendly preparation</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>supercritical CO2</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>cuprous oxide nanoparticles</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>thin-film transistors</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>plasmonic photocatalytic reaction</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>one-dimensional graphene superlattices</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>pyrite</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>carbon nitride</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>use of chitosan</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>nanofiber mats</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>formaldehyde</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>stretchable electronics</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>mechanical energy</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>MXene</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>aptasensor</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>decolorization</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>operational characteristics</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>toxic metal ions</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>graphitic biochar</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>breast tissue engineering</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>significant research</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>tremendous development</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>graphene oxide synthesis</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>silicon carbide</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>study</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>time</th>
+      <td>245</td>
+      <td>5.96</td>
+      <td>121</td>
+    </tr>
+    <tr>
+      <th>size</th>
+      <td>247</td>
+      <td>3.54</td>
+      <td>64</td>
+    </tr>
+    <tr>
+      <th>content</th>
+      <td>252</td>
+      <td>3.31</td>
+      <td>64</td>
+    </tr>
+    <tr>
+      <th>synthesis</th>
+      <td>253</td>
+      <td>5.14</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>morphology</th>
+      <td>264</td>
+      <td>3.92</td>
+      <td>81</td>
+    </tr>
+    <tr>
+      <th>coatings</th>
+      <td>267</td>
+      <td>3.42</td>
+      <td>64</td>
+    </tr>
+    <tr>
+      <th>layer</th>
+      <td>287</td>
+      <td>7.12</td>
+      <td>144</td>
+    </tr>
+    <tr>
+      <th>system</th>
+      <td>290</td>
+      <td>7.41</td>
+      <td>196</td>
+    </tr>
+    <tr>
+      <th>technique</th>
+      <td>291</td>
+      <td>7.24</td>
+      <td>169</td>
+    </tr>
+    <tr>
+      <th>microscopy</th>
+      <td>303</td>
+      <td>7.26</td>
+      <td>169</td>
+    </tr>
+    <tr>
+      <th>electron microscopy</th>
+      <td>304</td>
+      <td>6.28</td>
+      <td>144</td>
+    </tr>
+    <tr>
+      <th>results</th>
+      <td>313</td>
+      <td>4.92</td>
+      <td>121</td>
+    </tr>
+    <tr>
+      <th>temperature</th>
+      <td>317</td>
+      <td>4.18</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>concentration</th>
+      <td>329</td>
+      <td>4.58</td>
+      <td>121</td>
+    </tr>
+    <tr>
+      <th>solution</th>
+      <td>345</td>
+      <td>6.77</td>
+      <td>169</td>
+    </tr>
+    <tr>
+      <th>mechanism</th>
+      <td>347</td>
+      <td>4.19</td>
+      <td>121</td>
+    </tr>
+    <tr>
+      <th>potential</th>
+      <td>349</td>
+      <td>3.06</td>
+      <td>81</td>
+    </tr>
+    <tr>
+      <th>devices</th>
+      <td>397</td>
+      <td>6.23</td>
+      <td>169</td>
+    </tr>
+    <tr>
+      <th>stability</th>
+      <td>398</td>
+      <td>3.29</td>
+      <td>121</td>
+    </tr>
+    <tr>
+      <th>spectroscopy</th>
+      <td>400</td>
+      <td>7.38</td>
+      <td>196</td>
+    </tr>
+    <tr>
+      <th>process</th>
+      <td>408</td>
+      <td>7.99</td>
+      <td>256</td>
+    </tr>
+    <tr>
+      <th>surface</th>
+      <td>429</td>
+      <td>7.49</td>
+      <td>196</td>
+    </tr>
+    <tr>
+      <th>performance</th>
+      <td>435</td>
+      <td>8.04</td>
+      <td>289</td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td>463</td>
+      <td>14.32</td>
+      <td>625</td>
+    </tr>
+    <tr>
+      <th>structure</th>
+      <td>586</td>
+      <td>13.68</td>
+      <td>576</td>
+    </tr>
+    <tr>
+      <th>effects</th>
+      <td>601</td>
+      <td>12.82</td>
+      <td>625</td>
+    </tr>
+    <tr>
+      <th>addition</th>
+      <td>634</td>
+      <td>7.41</td>
+      <td>400</td>
+    </tr>
+    <tr>
+      <th>properties</th>
+      <td>651</td>
+      <td>23.78</td>
+      <td>1369</td>
+    </tr>
+    <tr>
+      <th>materials</th>
+      <td>768</td>
+      <td>21.95</td>
+      <td>1369</td>
+    </tr>
+    <tr>
+      <th>applications</th>
+      <td>949</td>
+      <td>13.56</td>
+      <td>1024</td>
+    </tr>
+  </tbody>
+</table>
+<p>2624 rows × 3 columns</p>
+</div></div>
+</div>
+<p>E.g. Sorting by <strong>frequency</strong> highlights concepts that are shared by many documents in our dataset (= the one generated by the original query).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">concepts</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;frequency&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>position</th>
+      <th>score</th>
+      <th>frequency</th>
+      <th>pubid</th>
+      <th>title</th>
+      <th>year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>10</th>
+      <td>properties</td>
+      <td>11</td>
+      <td>0.71</td>
+      <td>37</td>
+      <td>pub.1112946271</td>
+      <td>Synthesis and modelling of the mechanical prop...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>materials</td>
+      <td>8</td>
+      <td>0.79</td>
+      <td>37</td>
+      <td>pub.1112946271</td>
+      <td>Synthesis and modelling of the mechanical prop...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>applications</td>
+      <td>18</td>
+      <td>0.11</td>
+      <td>32</td>
+      <td>pub.1122256034</td>
+      <td>The Surface of Polymers</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>method</td>
+      <td>4</td>
+      <td>0.40</td>
+      <td>25</td>
+      <td>pub.1120445400</td>
+      <td>Graphene oxide synthesis by facile method and ...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>effects</td>
+      <td>6</td>
+      <td>0.85</td>
+      <td>25</td>
+      <td>pub.1112946271</td>
+      <td>Synthesis and modelling of the mechanical prop...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>structure</td>
+      <td>7</td>
+      <td>0.82</td>
+      <td>24</td>
+      <td>pub.1112946271</td>
+      <td>Synthesis and modelling of the mechanical prop...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>addition</td>
+      <td>34</td>
+      <td>0.37</td>
+      <td>20</td>
+      <td>pub.1112218495</td>
+      <td>Simultaneously enhanced optical, electrical, a...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>performance</td>
+      <td>47</td>
+      <td>0.04</td>
+      <td>17</td>
+      <td>pub.1123780721</td>
+      <td>Synergetic Performance of Graphene Oxide and C...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>process</td>
+      <td>13</td>
+      <td>0.82</td>
+      <td>16</td>
+      <td>pub.1123754647</td>
+      <td>Nanolayer Film on Poly(Styrene/Ethylene Glycol...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>system</td>
+      <td>25</td>
+      <td>0.29</td>
+      <td>14</td>
+      <td>pub.1112946271</td>
+      <td>Synthesis and modelling of the mechanical prop...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>composites</td>
+      <td>3</td>
+      <td>0.96</td>
+      <td>14</td>
+      <td>pub.1123780721</td>
+      <td>Synergetic Performance of Graphene Oxide and C...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>spectroscopy</td>
+      <td>34</td>
+      <td>0.49</td>
+      <td>14</td>
+      <td>pub.1123754647</td>
+      <td>Nanolayer Film on Poly(Styrene/Ethylene Glycol...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>surface</td>
+      <td>2</td>
+      <td>0.95</td>
+      <td>14</td>
+      <td>pub.1122256034</td>
+      <td>The Surface of Polymers</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>59</th>
+      <td>solution</td>
+      <td>60</td>
+      <td>0.09</td>
+      <td>13</td>
+      <td>pub.1123754647</td>
+      <td>Nanolayer Film on Poly(Styrene/Ethylene Glycol...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>microscopy</td>
+      <td>11</td>
+      <td>0.44</td>
+      <td>13</td>
+      <td>pub.1124068441</td>
+      <td>Photocatalytic Degradation of Organic Pollutan...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>technique</td>
+      <td>24</td>
+      <td>0.65</td>
+      <td>13</td>
+      <td>pub.1123754647</td>
+      <td>Nanolayer Film on Poly(Styrene/Ethylene Glycol...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>devices</td>
+      <td>16</td>
+      <td>0.74</td>
+      <td>13</td>
+      <td>pub.1123924946</td>
+      <td>Thermal Analysis and Operational Characteristi...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>layer</td>
+      <td>22</td>
+      <td>0.68</td>
+      <td>12</td>
+      <td>pub.1123754647</td>
+      <td>Nanolayer Film on Poly(Styrene/Ethylene Glycol...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>work</td>
+      <td>12</td>
+      <td>0.81</td>
+      <td>12</td>
+      <td>pub.1123747931</td>
+      <td>Porosity‐Engineering MXene as Supporting Mater...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>electron microscopy</td>
+      <td>10</td>
+      <td>0.50</td>
+      <td>12</td>
+      <td>pub.1124068441</td>
+      <td>Photocatalytic Degradation of Organic Pollutan...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>time</td>
+      <td>33</td>
+      <td>0.52</td>
+      <td>11</td>
+      <td>pub.1121960617</td>
+      <td>UV cross-linked polyvinylpyrrolidone electrosp...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>concentration</td>
+      <td>27</td>
+      <td>0.46</td>
+      <td>11</td>
+      <td>pub.1123678421</td>
+      <td>Removal of Formaldehyde from Aqueous Solution ...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>results</td>
+      <td>6</td>
+      <td>0.82</td>
+      <td>11</td>
+      <td>pub.1123814693</td>
+      <td>Enhanced adsorption of sulfonamide antibiotics...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>mechanism</td>
+      <td>14</td>
+      <td>0.58</td>
+      <td>11</td>
+      <td>pub.1123769652</td>
+      <td>Indirect detection of 5-hydroxytryptamine and ...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>oxide</td>
+      <td>11</td>
+      <td>0.79</td>
+      <td>11</td>
+      <td>pub.1123780721</td>
+      <td>Synergetic Performance of Graphene Oxide and C...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>stability</td>
+      <td>36</td>
+      <td>0.33</td>
+      <td>11</td>
+      <td>pub.1112218495</td>
+      <td>Simultaneously enhanced optical, electrical, a...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>synthesis</td>
+      <td>2</td>
+      <td>0.80</td>
+      <td>10</td>
+      <td>pub.1120445400</td>
+      <td>Graphene oxide synthesis by facile method and ...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>temperature</td>
+      <td>31</td>
+      <td>0.47</td>
+      <td>10</td>
+      <td>pub.1123747931</td>
+      <td>Porosity‐Engineering MXene as Supporting Mater...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>conditions</td>
+      <td>15</td>
+      <td>0.55</td>
+      <td>10</td>
+      <td>pub.1123769652</td>
+      <td>Indirect detection of 5-hydroxytryptamine and ...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>polymers</td>
+      <td>6</td>
+      <td>0.74</td>
+      <td>10</td>
+      <td>pub.1122256034</td>
+      <td>The Surface of Polymers</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>reversible complex</td>
+      <td>6</td>
+      <td>0.79</td>
+      <td>1</td>
+      <td>pub.1124269456</td>
+      <td>Phenylboronic acid-decorated polymeric nanomat...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>complexes</td>
+      <td>7</td>
+      <td>0.75</td>
+      <td>1</td>
+      <td>pub.1124269456</td>
+      <td>Phenylboronic acid-decorated polymeric nanomat...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>polyols</td>
+      <td>8</td>
+      <td>0.71</td>
+      <td>1</td>
+      <td>pub.1124269456</td>
+      <td>Phenylboronic acid-decorated polymeric nanomat...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>sugars</td>
+      <td>9</td>
+      <td>0.67</td>
+      <td>1</td>
+      <td>pub.1124269456</td>
+      <td>Phenylboronic acid-decorated polymeric nanomat...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>diphenols</td>
+      <td>11</td>
+      <td>0.58</td>
+      <td>1</td>
+      <td>pub.1124269456</td>
+      <td>Phenylboronic acid-decorated polymeric nanomat...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>different magnitudes</td>
+      <td>18</td>
+      <td>0.60</td>
+      <td>1</td>
+      <td>pub.1124297799</td>
+      <td>A review on the mechanical properties for thin...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>unique chemistry</td>
+      <td>12</td>
+      <td>0.54</td>
+      <td>1</td>
+      <td>pub.1124269456</td>
+      <td>Phenylboronic acid-decorated polymeric nanomat...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>therapeutic applications</td>
+      <td>14</td>
+      <td>0.46</td>
+      <td>1</td>
+      <td>pub.1124269456</td>
+      <td>Phenylboronic acid-decorated polymeric nanomat...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>sialic acid</td>
+      <td>20</td>
+      <td>0.21</td>
+      <td>1</td>
+      <td>pub.1124269456</td>
+      <td>Phenylboronic acid-decorated polymeric nanomat...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>significant advantages</td>
+      <td>2</td>
+      <td>0.98</td>
+      <td>1</td>
+      <td>pub.1122256646</td>
+      <td>Surface Modification of Polymer Substrates for...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>cheapness</td>
+      <td>4</td>
+      <td>0.94</td>
+      <td>1</td>
+      <td>pub.1122256646</td>
+      <td>Surface Modification of Polymer Substrates for...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>high flexibility</td>
+      <td>5</td>
+      <td>0.92</td>
+      <td>1</td>
+      <td>pub.1122256646</td>
+      <td>Surface Modification of Polymer Substrates for...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>adhesion properties</td>
+      <td>43</td>
+      <td>0.02</td>
+      <td>1</td>
+      <td>pub.1124297799</td>
+      <td>A review on the mechanical properties for thin...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>important parameters</td>
+      <td>41</td>
+      <td>0.07</td>
+      <td>1</td>
+      <td>pub.1124297799</td>
+      <td>A review on the mechanical properties for thin...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>load</td>
+      <td>40</td>
+      <td>0.09</td>
+      <td>1</td>
+      <td>pub.1124297799</td>
+      <td>A review on the mechanical properties for thin...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>critical load</td>
+      <td>39</td>
+      <td>0.12</td>
+      <td>1</td>
+      <td>pub.1124297799</td>
+      <td>A review on the mechanical properties for thin...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>friction</td>
+      <td>38</td>
+      <td>0.14</td>
+      <td>1</td>
+      <td>pub.1124297799</td>
+      <td>A review on the mechanical properties for thin...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>coefficient of friction</td>
+      <td>36</td>
+      <td>0.19</td>
+      <td>1</td>
+      <td>pub.1124297799</td>
+      <td>A review on the mechanical properties for thin...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>material samples</td>
+      <td>35</td>
+      <td>0.21</td>
+      <td>1</td>
+      <td>pub.1124297799</td>
+      <td>A review on the mechanical properties for thin...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>interfacial properties</td>
+      <td>34</td>
+      <td>0.23</td>
+      <td>1</td>
+      <td>pub.1124297799</td>
+      <td>A review on the mechanical properties for thin...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>deeper understand</td>
+      <td>32</td>
+      <td>0.28</td>
+      <td>1</td>
+      <td>pub.1124297799</td>
+      <td>A review on the mechanical properties for thin...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>block structure</td>
+      <td>31</td>
+      <td>0.30</td>
+      <td>1</td>
+      <td>pub.1124297799</td>
+      <td>A review on the mechanical properties for thin...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>film structure</td>
+      <td>29</td>
+      <td>0.35</td>
+      <td>1</td>
+      <td>pub.1124297799</td>
+      <td>A review on the mechanical properties for thin...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>layered film structure</td>
+      <td>28</td>
+      <td>0.37</td>
+      <td>1</td>
+      <td>pub.1124297799</td>
+      <td>A review on the mechanical properties for thin...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>structural samples</td>
+      <td>25</td>
+      <td>0.44</td>
+      <td>1</td>
+      <td>pub.1124297799</td>
+      <td>A review on the mechanical properties for thin...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>characterisation</td>
+      <td>24</td>
+      <td>0.47</td>
+      <td>1</td>
+      <td>pub.1124297799</td>
+      <td>A review on the mechanical properties for thin...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>tribological performance</td>
+      <td>22</td>
+      <td>0.51</td>
+      <td>1</td>
+      <td>pub.1124297799</td>
+      <td>A review on the mechanical properties for thin...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>microscratch test</td>
+      <td>21</td>
+      <td>0.53</td>
+      <td>1</td>
+      <td>pub.1124297799</td>
+      <td>A review on the mechanical properties for thin...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>magnitude</td>
+      <td>19</td>
+      <td>0.58</td>
+      <td>1</td>
+      <td>pub.1124297799</td>
+      <td>A review on the mechanical properties for thin...</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>magnetite nanoparticles</td>
+      <td>53</td>
+      <td>0.04</td>
+      <td>1</td>
+      <td>pub.1122086607</td>
+      <td>Metal-organic framework-coated magnetite nanop...</td>
+      <td>2019</td>
+    </tr>
+  </tbody>
+</table>
+<p>2624 rows × 7 columns</p>
+</div></div>
+</div>
+<p>E.g. Sorting by <strong>score</strong> permits to identify concepts that are both frequent and important.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">concepts</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;score&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>position</th>
+      <th>score</th>
+      <th>frequency</th>
+    </tr>
+    <tr>
+      <th>name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>properties</th>
+      <td>651</td>
+      <td>23.78</td>
+      <td>1369</td>
+    </tr>
+    <tr>
+      <th>materials</th>
+      <td>768</td>
+      <td>21.95</td>
+      <td>1369</td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td>463</td>
+      <td>14.32</td>
+      <td>625</td>
+    </tr>
+    <tr>
+      <th>structure</th>
+      <td>586</td>
+      <td>13.68</td>
+      <td>576</td>
+    </tr>
+    <tr>
+      <th>applications</th>
+      <td>949</td>
+      <td>13.56</td>
+      <td>1024</td>
+    </tr>
+    <tr>
+      <th>effects</th>
+      <td>601</td>
+      <td>12.82</td>
+      <td>625</td>
+    </tr>
+    <tr>
+      <th>composites</th>
+      <td>221</td>
+      <td>9.70</td>
+      <td>196</td>
+    </tr>
+    <tr>
+      <th>oxide</th>
+      <td>92</td>
+      <td>9.21</td>
+      <td>121</td>
+    </tr>
+    <tr>
+      <th>work</th>
+      <td>180</td>
+      <td>8.54</td>
+      <td>144</td>
+    </tr>
+    <tr>
+      <th>performance</th>
+      <td>435</td>
+      <td>8.04</td>
+      <td>289</td>
+    </tr>
+    <tr>
+      <th>process</th>
+      <td>408</td>
+      <td>7.99</td>
+      <td>256</td>
+    </tr>
+    <tr>
+      <th>surface</th>
+      <td>429</td>
+      <td>7.49</td>
+      <td>196</td>
+    </tr>
+    <tr>
+      <th>addition</th>
+      <td>634</td>
+      <td>7.41</td>
+      <td>400</td>
+    </tr>
+    <tr>
+      <th>system</th>
+      <td>290</td>
+      <td>7.41</td>
+      <td>196</td>
+    </tr>
+    <tr>
+      <th>spectroscopy</th>
+      <td>400</td>
+      <td>7.38</td>
+      <td>196</td>
+    </tr>
+    <tr>
+      <th>graphene oxide</th>
+      <td>42</td>
+      <td>7.27</td>
+      <td>64</td>
+    </tr>
+    <tr>
+      <th>microscopy</th>
+      <td>303</td>
+      <td>7.26</td>
+      <td>169</td>
+    </tr>
+    <tr>
+      <th>technique</th>
+      <td>291</td>
+      <td>7.24</td>
+      <td>169</td>
+    </tr>
+    <tr>
+      <th>layer</th>
+      <td>287</td>
+      <td>7.12</td>
+      <td>144</td>
+    </tr>
+    <tr>
+      <th>solution</th>
+      <td>345</td>
+      <td>6.77</td>
+      <td>169</td>
+    </tr>
+    <tr>
+      <th>sensors</th>
+      <td>161</td>
+      <td>6.75</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>electron microscopy</th>
+      <td>304</td>
+      <td>6.28</td>
+      <td>144</td>
+    </tr>
+    <tr>
+      <th>devices</th>
+      <td>397</td>
+      <td>6.23</td>
+      <td>169</td>
+    </tr>
+    <tr>
+      <th>graphene</th>
+      <td>87</td>
+      <td>6.09</td>
+      <td>64</td>
+    </tr>
+    <tr>
+      <th>technology</th>
+      <td>105</td>
+      <td>6.06</td>
+      <td>64</td>
+    </tr>
+    <tr>
+      <th>polymers</th>
+      <td>213</td>
+      <td>6.02</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>time</th>
+      <td>245</td>
+      <td>5.96</td>
+      <td>121</td>
+    </tr>
+    <tr>
+      <th>films</th>
+      <td>225</td>
+      <td>5.49</td>
+      <td>81</td>
+    </tr>
+    <tr>
+      <th>reaction</th>
+      <td>227</td>
+      <td>5.31</td>
+      <td>81</td>
+    </tr>
+    <tr>
+      <th>mechanical properties</th>
+      <td>76</td>
+      <td>5.27</td>
+      <td>49</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>adhesion properties</th>
+      <td>43</td>
+      <td>0.02</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>new developments</th>
+      <td>55</td>
+      <td>0.02</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>purification membranes</th>
+      <td>55</td>
+      <td>0.02</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>drug delivery</th>
+      <td>99</td>
+      <td>0.02</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>triboelectric energy</th>
+      <td>53</td>
+      <td>0.02</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>reverse electrodialysis</th>
+      <td>63</td>
+      <td>0.02</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>gate HEMTs</th>
+      <td>48</td>
+      <td>0.02</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>incorporation content</th>
+      <td>65</td>
+      <td>0.02</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>remediation</th>
+      <td>47</td>
+      <td>0.02</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>removal of dyes</th>
+      <td>54</td>
+      <td>0.02</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>good thermoelectric materials</th>
+      <td>52</td>
+      <td>0.02</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>simulation study</th>
+      <td>57</td>
+      <td>0.02</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>supercapacitors</th>
+      <td>56</td>
+      <td>0.02</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>different organic solvents</th>
+      <td>51</td>
+      <td>0.02</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>alumina</th>
+      <td>62</td>
+      <td>0.02</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>MEMS humidity sensor</th>
+      <td>52</td>
+      <td>0.02</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>antimicrobial activity</th>
+      <td>56</td>
+      <td>0.02</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>nanotube sheets</th>
+      <td>42</td>
+      <td>0.02</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>module</th>
+      <td>66</td>
+      <td>0.02</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>overall water</th>
+      <td>57</td>
+      <td>0.02</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>cubic SiC</th>
+      <td>43</td>
+      <td>0.02</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>organic surface modifiers</th>
+      <td>52</td>
+      <td>0.02</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>stranded DNA</th>
+      <td>44</td>
+      <td>0.02</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>interacts</th>
+      <td>48</td>
+      <td>0.02</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>HPLC method</th>
+      <td>48</td>
+      <td>0.02</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>crystallisation</th>
+      <td>47</td>
+      <td>0.02</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>doped</th>
+      <td>44</td>
+      <td>0.02</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>templated carbons</th>
+      <td>68</td>
+      <td>0.01</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>LEDs</th>
+      <td>70</td>
+      <td>0.01</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>delivery</th>
+      <td>100</td>
+      <td>0.01</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+<p>2624 rows × 3 columns</p>
+</div></div>
+</div>
+</div>
+</div>
 <div class="section" id="Conclusions">
 <h2>Conclusions<a class="headerlink" href="#Conclusions" title="Permalink to this headline">¶</a></h2>
 <p>Moving Dimensions API results to pandas dataframes <strong>makes it easier</strong> to <strong>analyze the data</strong> and <strong>answer research questions</strong>.</p>
@@ -1984,16 +3701,23 @@ Field &#39;project_num&#39; is deprecated in favor of grant_number. Please refer
   <h3><a href="../../index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Transforming API results into Pandas dataframes</a><ul>
-<li><a class="reference internal" href="#1.-Getting-started:-the-as_dataframe-method">1. Getting started: the <code class="docutils literal notranslate"><span class="pre">as_dataframe</span></code> method</a></li>
-<li><a class="reference internal" href="#2.-Helper-Methods-for-‘Publications’-queries">2. Helper Methods for ‘Publications’ queries</a><ul>
-<li><a class="reference internal" href="#Extracting-authors:-as_dataframe_authors">Extracting authors: <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors</span></code></a></li>
-<li><a class="reference internal" href="#Extracting-Affiliations:-as_dataframe_authors_affiliations">Extracting Affiliations: <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors_affiliations</span></code></a></li>
-<li><a class="reference internal" href="#Extracting-Concepts:-as_dataframe_concepts">Extracting Concepts: <code class="docutils literal notranslate"><span class="pre">as_dataframe_concepts</span></code></a></li>
+<li><a class="reference internal" href="#1.-The-Dataset.as_dataframe-method">1. The <code class="docutils literal notranslate"><span class="pre">Dataset.as_dataframe</span></code> method</a><ul>
+<li><a class="reference internal" href="#Magic-commands:-%dsldf-and-%dslloopdf">Magic commands: <code class="docutils literal notranslate"><span class="pre">%dsldf</span></code> and <code class="docutils literal notranslate"><span class="pre">%dslloopdf</span></code></a></li>
+<li><a class="reference internal" href="#Accessing-data-returned-by-magic-queries">Accessing data returned by magic queries</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#2.-Helper-Methods-for-‘Grants’-queries">2. Helper Methods for ‘Grants’ queries</a><ul>
+<li><a class="reference internal" href="#2.-Dataframe-Methods-for-‘Publications’-queries">2. Dataframe Methods for ‘Publications’ queries</a><ul>
+<li><a class="reference internal" href="#Extracting-authors:-as_dataframe_authors">Extracting authors: <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors</span></code></a></li>
+<li><a class="reference internal" href="#Extracting-Affiliations:-as_dataframe_authors_affiliations">Extracting Affiliations: <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors_affiliations</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#3.-Dataframe-Methods-for-‘Grants’-queries">3. Dataframe Methods for ‘Grants’ queries</a><ul>
 <li><a class="reference internal" href="#Extracting-Funders:-as_dataframe_funders">Extracting Funders: <code class="docutils literal notranslate"><span class="pre">as_dataframe_funders</span></code></a></li>
 <li><a class="reference internal" href="#Extracting-investigators:-as_dataframe_investigators">Extracting investigators: <code class="docutils literal notranslate"><span class="pre">as_dataframe_investigators</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#4.-Dataframe-Methods-for-‘Concepts’-queries">4. Dataframe Methods for ‘Concepts’ queries</a><ul>
+<li><a class="reference internal" href="#Extracting-Concepts:-as_dataframe_concepts">Extracting Concepts: <code class="docutils literal notranslate"><span class="pre">as_dataframe_concepts</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#Conclusions">Conclusions</a></li>
