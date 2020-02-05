@@ -259,7 +259,7 @@ div.rendered_html tbody tr:hover {
 <div class="section" id="Load-libraries-and-log-in">
 <h2>Load libraries and log in<a class="headerlink" href="#Load-libraries-and-log-in" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -270,7 +270,7 @@ div.rendered_html tbody tr:hover {
 <span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;https://app.dimensions.ai&quot;</span> <span class="c1">#@param {type: &quot;string&quot;}</span>
 
 
-<span class="o">!</span>pip install dimcli plotly_express -U --quiet
+<span class="o">!</span>pip install dimcli tqdm plotly -U --quiet
 <span class="kn">import</span> <span class="nn">dimcli</span>
 <span class="kn">from</span> <span class="nn">dimcli.shortcuts</span> <span class="k">import</span> <span class="o">*</span>
 <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">)</span>
@@ -283,11 +283,11 @@ div.rendered_html tbody tr:hover {
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">pandas.io.json</span> <span class="k">import</span> <span class="n">json_normalize</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="k">import</span> <span class="n">tqdm_notebook</span> <span class="k">as</span> <span class="n">tqdm</span>
+<span class="kn">import</span> <span class="nn">tqdm.notebook</span> <span class="k">as</span> <span class="nn">tqdm</span>
 
 <span class="c1">#</span>
 <span class="c1"># charts libs</span>
-<span class="kn">import</span> <span class="nn">plotly_express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
   <span class="c1"># make js dependecies local / needed by html exports</span>
   <span class="kn">from</span> <span class="nn">plotly.offline</span> <span class="k">import</span> <span class="n">init_notebook_mode</span>
@@ -300,7 +300,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-DimCli v0.6.1.2 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (method: dsl.ini file)
+DimCli v0.6.2.4 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (method: dsl.ini file)
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -328,7 +328,7 @@ require(['plotly'], function(Plotly) {
 <h2>Choose a Research Organization<a class="headerlink" href="#Choose-a-Research-Organization" title="Permalink to this headline">¶</a></h2>
 <p>For the purpose of this exercise, we will are going to use <a class="reference external" href="https://grid.ac/institutes/grid.471244.0">grid.471244.0</a>. Feel free though to change the parameters below as you want, eg by <a class="reference external" href="https://grid.ac/institutes">choosing another GRID organization</a>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -342,15 +342,9 @@ require(['plotly'], function(Plotly) {
 <span class="k">if</span> <span class="n">YEAR_END</span> <span class="o">&lt;</span> <span class="n">YEAR_START</span><span class="p">:</span>
   <span class="n">YEAR_END</span> <span class="o">=</span> <span class="n">YEAR_START</span>
 
-<span class="c1">#</span>
-<span class="c1"># gen link to Dimensions</span>
-<span class="c1">#</span>
-<span class="k">def</span> <span class="nf">dimensions_url</span><span class="p">(</span><span class="n">grids</span><span class="p">):</span>
-    <span class="n">root</span> <span class="o">=</span> <span class="s2">&quot;https://app.dimensions.ai/discover/publication?or_facet_research_org=&quot;</span>
-    <span class="k">return</span> <span class="n">root</span> <span class="o">+</span> <span class="s2">&quot;&amp;or_facet_research_org=&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">grids</span><span class="p">])</span>
 
 <span class="kn">from</span> <span class="nn">IPython.core.display</span> <span class="k">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
-<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s1">&#39;---&lt;br /&gt;&lt;a href=&quot;</span><span class="si">{}</span><span class="s1">&quot;&gt;Preview </span><span class="si">{}</span><span class="s1"> Dimensions &amp;#x29c9;&lt;/a&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dimensions_url</span><span class="p">([</span><span class="n">GRIDID</span><span class="p">]),</span> <span class="n">GRIDID</span><span class="p">)))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s1">&#39;---&lt;br /&gt;&lt;a href=&quot;</span><span class="si">{}</span><span class="s1">&quot;&gt;Preview </span><span class="si">{}</span><span class="s1"> in Dimensions &amp;#x29c9;&lt;/a&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dimensions_url</span><span class="p">(</span><span class="n">GRIDID</span><span class="p">),</span> <span class="n">GRIDID</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
@@ -358,7 +352,7 @@ require(['plotly'], function(Plotly) {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
----<br /><a href="https://app.dimensions.ai/discover/publication?or_facet_research_org=grid.471244.0">Preview grid.471244.0 Dimensions &#x29c9;</a></div>
+---<br /><a href="https://app.dimensions.ai/discover/publication?and_facet_research_org=grid.471244.0">Preview grid.471244.0 in Dimensions &#x29c9;</a></div>
 </div>
 </div>
 <div class="section" id="3.-Extracting-most-relevant-concepts-from-publications">
