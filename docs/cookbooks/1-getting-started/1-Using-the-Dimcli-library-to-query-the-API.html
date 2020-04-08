@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Installing the Dimcli Python library &#8212; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
+    <title>The Dimcli Python library: Installation and Querying &#8212; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
@@ -253,9 +253,10 @@ div.rendered_html tbody tr:hover {
 <a class="reference external image-reference" href="https://github.com/digital-science/dimensions-api-lab/blob/master/cookbooks/1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.ipynb"><img alt="../../_images/badge-github-custom.svg" src="../../_images/badge-github-custom.svg" /></a>
 <a class="reference external image-reference" href="https://www.dimensions.ai/dimensions-apis/"><img alt="../../_images/badge-dimensions-api.svg" src="../../_images/badge-dimensions-api.svg" /></a>
 <hr class="docutils" />
-<div class="section" id="Installing-the-Dimcli-Python-library">
-<h1>Installing the Dimcli Python library<a class="headerlink" href="#Installing-the-Dimcli-Python-library" title="Permalink to this headline">¶</a></h1>
-<p>The purpose of this notebook is to show how to use DimCli. <a class="reference external" href="https://github.com/lambdamusic/dimcli">DimCLI</a> is an open source python library which contains various commands that make it easier to interact with the Dimensions API from Python notebooks.</p>
+<div class="section" id="The-Dimcli-Python-library:-Installation-and-Querying">
+<h1>The Dimcli Python library: Installation and Querying<a class="headerlink" href="#The-Dimcli-Python-library:-Installation-and-Querying" title="Permalink to this headline">¶</a></h1>
+<p>The purpose of this notebook is to show how to use Dimcli. <a class="reference external" href="https://github.com/lambdamusic/dimcli">Dimcli</a> is an open source Python client for accessing the Dimensions Analytics API. It makes it easier to authenticate against the API, send queries to it and process the JSON data being returned.</p>
+<p>Dimcli includes also a command line interface (CLI) that aims at simplifying the process of learning the grammar of the Dimensions Search Language (DSL). Running <code class="docutils literal notranslate"><span class="pre">dimcli</span></code> from the terminal opens up an interactive query console with syntax autocomplete, persistent history across sessions, pretty-printing and preview of JSON results, export to HTML and CSV, and more.</p>
 <blockquote>
 <div><p>This guide assumes that you already have a Python 3 working environment and <a class="reference external" href="https://pypi.org/project/pip/">pip</a> - the python package manager - installed. For more background, see this <a class="reference external" href="https://realpython.com/installing-python/">link</a>.</p>
 </div></blockquote>
@@ -522,912 +523,64 @@ Semantic ErrorSemantic errors found:
 </div>
 </div>
 </div>
-<div class="section" id="Dimcli-‘magic’-commands">
-<h2>Dimcli ‘magic’ commands<a class="headerlink" href="#Dimcli-‘magic’-commands" title="Permalink to this headline">¶</a></h2>
-<p>Dimcli includes a few <a class="reference external" href="https://ipython.readthedocs.io/en/stable/interactive/magics.html">Python magic commands</a>.</p>
-<p>Magic commands are essentially shortcuts that allow to launch queries without having to create a query object (i.e. using the syntax <code class="docutils literal notranslate"><span class="pre">dsl</span> <span class="pre">=</span> <span class="pre">dimcli.Dsl()</span></code>).</p>
-<p>Magic commands can be very useful when testing things out e.g. while trying out a new query, or checking what data is available in Dimensions on a certain topic.</p>
-<div class="section" id="Querying-with-%dsl-or-%%dsl">
-<h3>Querying with <code class="docutils literal notranslate"><span class="pre">%dsl</span></code> or <code class="docutils literal notranslate"><span class="pre">%%dsl</span></code><a class="headerlink" href="#Querying-with-%dsl-or-%%dsl" title="Permalink to this headline">¶</a></h3>
-<p>This command allows to simply pass an API query after typing <code class="docutils literal notranslate"><span class="pre">%dsl</span></code>. If you hit <strong>‘tab’</strong> after the command, you can also take advantage of a custom <strong>Dimensions Search Language autocompleter</strong>.</p>
-<p><strong>Single-line version</strong></p>
+<div class="section" id="Command-line-interface">
+<h2>Command line interface<a class="headerlink" href="#Command-line-interface" title="Permalink to this headline">¶</a></h2>
+<p>If you have access to a command-prompt or terminal, Dimcli includes a handy <a class="reference external" href="https://en.wikipedia.org/wiki/Command-line_interface">Command Line Interface</a> that allows to query the Dimensions API interactively, similarly to what a <em>query console</em> would do.</p>
+<p>The CLI has several features but, most importantly, it allows to use the TAB key to autocomplete your queries (based on the latest API syntax and fields), which makes it an ideal tool for both newbies and expert users.</p>
+<div class="section" id="Running-the-CLI">
+<h3>Running the CLI<a class="headerlink" href="#Running-the-CLI" title="Permalink to this headline">¶</a></h3>
+<p>On a Jupyterlab environment, for example, use the menu <code class="docutils literal notranslate"><span class="pre">File</span> <span class="pre">&gt;</span> <span class="pre">new</span> <span class="pre">&gt;</span> <span class="pre">terminal</span></code> to open a terminal window. Then simply type in <code class="docutils literal notranslate"><span class="pre">dimcli</span></code> to start:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ dimcli
+
+Dimcli - Dimensions API Client (v0.6.6.5)
+Welcome! Type help for more info.
+Using endpoint: https://app.dimensions.ai - DSL version: 1.23.1
+
+&gt; help
+
+COMMANDS LIST
+====================
+All special commands start with &#39;.&#39;
+----
+&gt;&gt;&gt; help: show this help message
+----
+&gt;&gt;&gt; &lt;tab&gt;:  autocomplete.
+----
+&gt;&gt;&gt; .docs: print out documentation for DSL data objects.
+&gt;&gt;&gt; .export_as_json: save results from last query as JSON file.
+&gt;&gt;&gt; .export_as_csv: save results from last query as CSV file.
+&gt;&gt;&gt; .export_as_html: save results from last query as HTML file.
+&gt;&gt;&gt; .export_as_bar_chart: save results from last query as Plotly bar chart.
+&gt;&gt;&gt; .show [optional: N]: print N results from last query, trying to build URLs for objects. Default N=10.
+&gt;&gt;&gt; .json_compact: print results of last query as single-line JSON.
+&gt;&gt;&gt; .json_full: print results of last query as formatted JSON.
+&gt;&gt;&gt; .url: resolve a Dimensions ID into a public URL.
+----
+&gt;&gt;&gt; &lt;Ctrl-o&gt;: search docs online.
+&gt;&gt;&gt; &lt;Ctrl-c&gt;: abort query.
+&gt;&gt;&gt; &lt;Ctrl-d&gt;: exit console.
+----
+&gt;&gt;&gt; quit: exit console
+====================
+</pre></div>
+</div>
+<p>See the video below for a quick demonstration of the query autocomplete functionalities, or please visit the <a class="reference external" href="https://github.com/digital-science/dimcli#dimcli-as-a-command-line-interface">Github repo</a> for more information.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%</span><span class="k">dsl</span> search publications where journal.title=&quot;Nature Energy&quot; return publications
-</pre></div>
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Returned Publications: 20 (total = 918)
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
-</pre></div>
-</div>
-<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>&lt;dimcli.Dataset object #4763999312. Records: 20/918&gt;
-</pre></div>
-</div>
-</div>
-<p><strong>Multi-line version</strong></p>
-<p>You can split the query into multiple lines, only this time you need to use the <code class="docutils literal notranslate"><span class="pre">%%dsl</span></code> command (two <code class="docutils literal notranslate"><span class="pre">%</span></code>):</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%%</span><span class="k">dsl</span>
-search publications
-where year in [2013:2018] and research_orgs=&quot;grid.258806.1&quot;
-return publications[title]
-</pre></div>
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Returned Publications: 20 (total = 3831)
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
-</pre></div>
-</div>
-<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>&lt;dimcli.Dataset object #4730256400. Records: 20/3831&gt;
-</pre></div>
-</div>
-</div>
-<p>Note: the autocompleter is available only with single-line queries.</p>
-</div>
-<div class="section" id="Accessing-data-returned-by-magic-queries">
-<h3>Accessing data returned by magic queries<a class="headerlink" href="#Accessing-data-returned-by-magic-queries" title="Permalink to this headline">¶</a></h3>
-<p>By default the results of magic command queries are saved into a variable called <code class="docutils literal notranslate"><span class="pre">dsl_last_results</span></code>:</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="nb">type</span><span class="p">(</span><span class="n">dsl_last_results</span><span class="p">)</span>
+<span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="k">import</span> <span class="n">Image</span>
+<span class="n">Image</span><span class="p">(</span><span class="n">url</span><span class="o">=</span> <span class="s2">&quot;http://api-sample-data.dimensions.ai/videos/dimcli_animated.gif&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
-</pre></div>
-</div>
-<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>dimcli.core.api.Dataset
-</pre></div>
-</div>
-</div>
-<p>A DimCli <code class="docutils literal notranslate"><span class="pre">Dataset</span></code> object is a useful wrapper around the raw JSON data, which provides various functionalities (eg counting objects, returning dataframes etc..)</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="nb">print</span><span class="p">(</span><span class="n">dsl_last_results</span><span class="o">.</span><span class="n">publications</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;title&#39;</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Development of Organo-Dispersible Graphene Oxide via Pseudo-Surface Modification for Thermally Conductive Green Polymer Composites.
-</pre></div></div>
-</div>
-</div>
-<div class="section" id="Loop-queries-with-%dslloop-or-%%dslloop">
-<h3>Loop queries with <code class="docutils literal notranslate"><span class="pre">%dslloop</span></code> or <code class="docutils literal notranslate"><span class="pre">%%dslloop</span></code><a class="headerlink" href="#Loop-queries-with-%dslloop-or-%%dslloop" title="Permalink to this headline">¶</a></h3>
-<p>This magic command automatically loops over all the pages of a results set set until all possible records have been returned.</p>
-<p>NOTE this is a short version of the <code class="docutils literal notranslate"><span class="pre">Dimcli.Dsl.query_iterative</span></code> method, which takes care of timing queries appropriately and aggregating results within a single object (see above).</p>
-<p><strong>Single-line version</strong></p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%</span><span class="k">dslloop</span> search publications for &quot;malaria AND Egypt&quot; where year=2015 return publications
-</pre></div>
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-1000 / 2432
-2000 / 2432
-2432 / 2432
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
-</pre></div>
-</div>
-<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>&lt;dimcli.Dataset object #4730371920. Records: 2432/2432&gt;
-</pre></div>
-</div>
-</div>
-<p><strong>Multi-line version</strong></p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%%</span><span class="k">dslloop</span>
-search publications
-where year in [2013:2018] and research_orgs=&quot;grid.258806.1&quot;
-return publications
-</pre></div>
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-1000 / 3831
-2000 / 3831
-3000 / 3831
-3831 / 3831
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
-</pre></div>
-</div>
-<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>&lt;dimcli.Dataset object #4767329616. Records: 3831/3831&gt;
-</pre></div>
-</div>
-</div>
-<p>Like before, the results of a <code class="docutils literal notranslate"><span class="pre">loop</span></code> query are stored into the <code class="docutils literal notranslate"><span class="pre">dsl_last_results</span></code> variable.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">dsl_last_results</span><span class="o">.</span><span class="n">stats</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
-</pre></div>
-</div>
-<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>{&#39;total_count&#39;: 3831}
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="Get-DSL-documentation-with-%dsldocs">
-<h3>Get DSL documentation with <code class="docutils literal notranslate"><span class="pre">%dsldocs</span></code><a class="headerlink" href="#Get-DSL-documentation-with-%dsldocs" title="Permalink to this headline">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">%dsldocs</span></code> magic prints out information about the fields and entities available via the Dimensions Search Language. This command returns a tabular version of the <a class="reference external" href="https://docs.dimensions.ai/dsl/data.html">data model specs online</a> (in case you are interested, this is possible thanks to the <a class="reference external" href="https://docs.dimensions.ai/dsl/data.html#getting-documentation-programmatically">describe</a> DSL command).</p>
-<p>For example, if you pass a source name like <code class="docutils literal notranslate"><span class="pre">grants</span></code>, what you get back is a nice table showing all fields available for that source.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%</span><span class="k">dsldocs</span> grants
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>sources</th>
-      <th>field</th>
-      <th>type</th>
-      <th>description</th>
-      <th>is_filter</th>
-      <th>is_entity</th>
-      <th>is_facet</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>grants</td>
-      <td>abstract</td>
-      <td>string</td>
-      <td>Abstract or summary from a grant proposal.</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>grants</td>
-      <td>active_year</td>
-      <td>integer</td>
-      <td>List of active years for a grant.</td>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>grants</td>
-      <td>category_bra</td>
-      <td>categories</td>
-      <td>`Broad Research Areas &lt;https://app.dimensions....</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>grants</td>
-      <td>category_for</td>
-      <td>categories</td>
-      <td>`ANZSRC Fields of Research classification &lt;htt...</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>grants</td>
-      <td>category_hra</td>
-      <td>categories</td>
-      <td>`Health Research Areas &lt;https://app.dimensions...</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>grants</td>
-      <td>category_hrcs_hc</td>
-      <td>categories</td>
-      <td>`HRCS - Health Categories &lt;https://app.dimensi...</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>grants</td>
-      <td>category_hrcs_rac</td>
-      <td>categories</td>
-      <td>`HRCS – Research Activity Codes &lt;https://app.d...</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>grants</td>
-      <td>category_icrp_cso</td>
-      <td>categories</td>
-      <td>`ICRP Common Scientific Outline &lt;https://app.d...</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>grants</td>
-      <td>category_icrp_ct</td>
-      <td>categories</td>
-      <td>`ICRP Cancer Types &lt;https://app.dimensions.ai/...</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>grants</td>
-      <td>category_rcdc</td>
-      <td>categories</td>
-      <td>`Research, Condition, and Disease Categorizati...</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>grants</td>
-      <td>concepts</td>
-      <td>string</td>
-      <td>Concepts describing the main topics of a grant...</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>grants</td>
-      <td>date_inserted</td>
-      <td>date</td>
-      <td>Date when the record was inserted into Dimensi...</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>grants</td>
-      <td>end_date</td>
-      <td>date</td>
-      <td>Date when the grant ends.</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>grants</td>
-      <td>funder_countries</td>
-      <td>countries</td>
-      <td>The country linked to the organisation funding...</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>grants</td>
-      <td>funders</td>
-      <td>organizations</td>
-      <td>The organisation funding the grant. This is no...</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>grants</td>
-      <td>funding_aud</td>
-      <td>float</td>
-      <td>Funding amount awarded in AUD.</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>grants</td>
-      <td>funding_cad</td>
-      <td>float</td>
-      <td>Funding amount awarded in CAD.</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>grants</td>
-      <td>funding_chf</td>
-      <td>float</td>
-      <td>Funding amount awarded in CHF.</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>grants</td>
-      <td>funding_currency</td>
-      <td>string</td>
-      <td>Original funding currency.</td>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>grants</td>
-      <td>funding_eur</td>
-      <td>float</td>
-      <td>Funding amount awarded in EUR.</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>grants</td>
-      <td>funding_gbp</td>
-      <td>float</td>
-      <td>Funding amount awarded in GBP.</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>grants</td>
-      <td>funding_jpy</td>
-      <td>float</td>
-      <td>Funding amount awarded in JPY.</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>grants</td>
-      <td>funding_nzd</td>
-      <td>float</td>
-      <td>Funding amount awarded in NZD.</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>grants</td>
-      <td>funding_org_acronym</td>
-      <td>string</td>
-      <td>Acronym for funding organisation.</td>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>grants</td>
-      <td>funding_org_city</td>
-      <td>string</td>
-      <td>City name for funding organisation.</td>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>grants</td>
-      <td>funding_org_name</td>
-      <td>string</td>
-      <td>Name of funding organisation.</td>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>26</th>
-      <td>grants</td>
-      <td>funding_usd</td>
-      <td>float</td>
-      <td>Funding amount awarded in USD.</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>27</th>
-      <td>grants</td>
-      <td>grant_number</td>
-      <td>string</td>
-      <td>Grant identifier, as provided by the source (e...</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>28</th>
-      <td>grants</td>
-      <td>id</td>
-      <td>string</td>
-      <td>Dimensions grant ID.</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>29</th>
-      <td>grants</td>
-      <td>investigator_details</td>
-      <td>json</td>
-      <td>Additional details about investigators, includ...</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>30</th>
-      <td>grants</td>
-      <td>language</td>
-      <td>string</td>
-      <td>Grant original language, as ISO 639-1 language...</td>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>31</th>
-      <td>grants</td>
-      <td>linkout</td>
-      <td>string</td>
-      <td>Original URL for the grant.</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>32</th>
-      <td>grants</td>
-      <td>original_title</td>
-      <td>string</td>
-      <td>Title of the grant in its original language.</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>33</th>
-      <td>grants</td>
-      <td>research_org_cities</td>
-      <td>cities</td>
-      <td>City of the research organisations receiving t...</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>34</th>
-      <td>grants</td>
-      <td>research_org_countries</td>
-      <td>countries</td>
-      <td>Country of the research organisations receivin...</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>35</th>
-      <td>grants</td>
-      <td>research_org_state_codes</td>
-      <td>states</td>
-      <td>State of the organisations receiving the grant...</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>36</th>
-      <td>grants</td>
-      <td>research_orgs</td>
-      <td>organizations</td>
-      <td>GRID organisations receiving the grant (note: ...</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>37</th>
-      <td>grants</td>
-      <td>researchers</td>
-      <td>researchers</td>
-      <td>Dimensions researchers IDs associated to the g...</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>38</th>
-      <td>grants</td>
-      <td>start_date</td>
-      <td>date</td>
-      <td>Date when the grant starts, in the format 'YYY...</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>39</th>
-      <td>grants</td>
-      <td>start_year</td>
-      <td>integer</td>
-      <td>Year when the grant starts.</td>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>40</th>
-      <td>grants</td>
-      <td>title</td>
-      <td>string</td>
-      <td>Title of the grant in English (if the grant la...</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>41</th>
-      <td>grants</td>
-      <td>title_language</td>
-      <td>string</td>
-      <td>ISO 639-1 language code for the original grant...</td>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
-    </tr>
-  </tbody>
-</table>
-</div></div>
-</div>
-<p>Similarly, for objects of type ‘Entity’ eg <code class="docutils literal notranslate"><span class="pre">countries</span></code></p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%</span><span class="k">dsldocs</span> countries
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>entities</th>
-      <th>field</th>
-      <th>type</th>
-      <th>description</th>
-      <th>is_filter</th>
-      <th>is_entity</th>
-      <th>is_facet</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>countries</td>
-      <td>id</td>
-      <td>string</td>
-      <td>GeoNames country code (eg 'US' for `geonames:6...</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>countries</td>
-      <td>name</td>
-      <td>string</td>
-      <td>GeoNames country name.</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-  </tbody>
-</table>
-</div></div>
-</div>
-<p>But don’t worry if you don’t get it right: if you pass a wrong object name, the full list of available sources and entities is printed.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%</span><span class="k">dsldocs</span> unknown
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Sorry can&#39;t recognize this object. Use one of the following: Sources=[publications - grants - patents - clinical_trials - policy_documents - researchers - organizations] Entities=[categories - cities - countries - journals - org_groups - states - open_access]
-</pre></div></div>
-</div>
-<p>Finally, if no object is requested, the <strong>full documentation for all the sources</strong> gets returned.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%</span><span class="k">dsldocs</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>sources</th>
-      <th>field</th>
-      <th>type</th>
-      <th>description</th>
-      <th>is_filter</th>
-      <th>is_entity</th>
-      <th>is_facet</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>publications</td>
-      <td>altmetric</td>
-      <td>float</td>
-      <td>Altmetric attention score.</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>publications</td>
-      <td>altmetric_id</td>
-      <td>integer</td>
-      <td>AltMetric Publication ID</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>publications</td>
-      <td>authors</td>
-      <td>json</td>
-      <td>Ordered list of authors names and their affili...</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>publications</td>
-      <td>book_doi</td>
-      <td>string</td>
-      <td>The DOI of the book a chapter belongs to (note...</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>publications</td>
-      <td>book_series_title</td>
-      <td>string</td>
-      <td>The title of the book series book, belong to.</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>216</th>
-      <td>organizations</td>
-      <td>types</td>
-      <td>string</td>
-      <td>Type of an organization. Available types inclu...</td>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>217</th>
-      <td>organizations</td>
-      <td>ucas_ids</td>
-      <td>string</td>
-      <td>UCAS IDs for this organization</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>218</th>
-      <td>organizations</td>
-      <td>ukprn_ids</td>
-      <td>string</td>
-      <td>UKPRN IDs for this organization</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>219</th>
-      <td>organizations</td>
-      <td>wikidata_ids</td>
-      <td>string</td>
-      <td>WikiData IDs for this organization</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>220</th>
-      <td>organizations</td>
-      <td>wikipedia_url</td>
-      <td>string</td>
-      <td>Wikipedia URL</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-  </tbody>
-</table>
-<p>221 rows × 7 columns</p>
-</div></div>
+<img src="http://api-sample-data.dimensions.ai/videos/dimcli_animated.gif" width="800"/></div>
 </div>
 </div>
 </div>
@@ -1453,7 +606,7 @@ Sorry can&#39;t recognize this object. Use one of the following: Sources=[public
             </a></p>
   <h3><a href="../../index.html">Table of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Installing the Dimcli Python library</a><ul>
+<li><a class="reference internal" href="#">The Dimcli Python library: Installation and Querying</a><ul>
 <li><a class="reference internal" href="#Installation">Installation</a></li>
 <li><a class="reference internal" href="#Authentication">Authentication</a><ul>
 <li><a class="reference internal" href="#More-secure-method:-storing-a-private-credentials-file">More secure method: storing a private credentials file</a></li>
@@ -1464,11 +617,8 @@ Sorry can&#39;t recognize this object. Use one of the following: Sources=[public
 <li><a class="reference internal" href="#Iterative-querying-(loops)">Iterative querying (loops)</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#Dimcli-‘magic’-commands">Dimcli ‘magic’ commands</a><ul>
-<li><a class="reference internal" href="#Querying-with-%dsl-or-%%dsl">Querying with <code class="docutils literal notranslate"><span class="pre">%dsl</span></code> or <code class="docutils literal notranslate"><span class="pre">%%dsl</span></code></a></li>
-<li><a class="reference internal" href="#Accessing-data-returned-by-magic-queries">Accessing data returned by magic queries</a></li>
-<li><a class="reference internal" href="#Loop-queries-with-%dslloop-or-%%dslloop">Loop queries with <code class="docutils literal notranslate"><span class="pre">%dslloop</span></code> or <code class="docutils literal notranslate"><span class="pre">%%dslloop</span></code></a></li>
-<li><a class="reference internal" href="#Get-DSL-documentation-with-%dsldocs">Get DSL documentation with <code class="docutils literal notranslate"><span class="pre">%dsldocs</span></code></a></li>
+<li><a class="reference internal" href="#Command-line-interface">Command line interface</a><ul>
+<li><a class="reference internal" href="#Running-the-CLI">Running the CLI</a></li>
 </ul>
 </li>
 </ul>
