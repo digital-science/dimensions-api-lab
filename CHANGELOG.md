@@ -11,10 +11,22 @@ The Dimcli notebooks have been improved and split it up into 3 tutorials with a 
 * [The Dimcli Python library: Magic Commands](https://api-lab.dimensions.ai/cookbooks/1-getting-started/4-Dimcli-magic-commands.html)
 
 The GRID intro notebook has been updated with new bar chart
-* [Searching GRID organizations using the Dimensions API](https://api-lab.dimensions.ai/cookbooks/8-organizations/1-GRID-preview.html)
+* [Searching GRID organizations](https://api-lab.dimensions.ai/cookbooks/8-organizations/1-GRID-preview.html)
 
 The Organizations Network notebook has been extended with a new section (no. 6) showing how to filter the network by organization type:
-* [Building an Organizations Collaboration Network using the Dimensions API](https://api-lab.dimensions.ai/cookbooks/8-organizations/3-Organizations-Collaboration-Network.html)
+* [Building an Organizations Collaboration Network](https://api-lab.dimensions.ai/cookbooks/8-organizations/3-Organizations-Collaboration-Network.html)
+
+
+### 2020-02-19
+
+New notebook:
+* [Searching Datasets using the Dimensions API](https://api-lab.dimensions.ai/cookbooks/9-datasets/1-introducing-datasets.html)
+
+
+### 2020-02-06
+
+New notebook:
+* [Building an Organizations Collaboration Network](https://api-lab.dimensions.ai/cookbooks/8-organizations/3-Organizations-Collaboration-Network.html)
 
 
 ### 2020-01-23
@@ -23,9 +35,9 @@ New notebook:
 * [Industry Collaborations](https://digital-science.github.io/dimensions-api-lab/cookbooks/8-organizations/2-Industry-Collaboration.html)
 
 
-### 13/12/2019
+### 2019-12-13
 
-Misc improvement to [API Lab website](https://digital-science.github.io/dimensions-api-lab/)
+Updates to the [API Lab website](https://digital-science.github.io/dimensions-api-lab/)
 
 * Improved navigation. A new layout incorporates table of contents and navigation controls so it's easier to move through the tutorials.
 * Added simple search box allows to type in keywords you are interested in and see all the tutorials that include it.
@@ -33,24 +45,30 @@ Misc improvement to [API Lab website](https://digital-science.github.io/dimensio
 * Google Colab integration. All the tutorials have been optimized for the free Google Colab Jupyter environment. Just click on the 'Open in Colab' button to run the notebook in the cloud, no installs needed!
 
 
-### 22/10/2019
+### 2019-29-11
+
+New notebook:
+* [Searching GRID organizations via the API](https://api-lab.dimensions.ai/cookbooks/8-organizations/1-GRID-preview.html)
+
+
+### 2019-10-22 
 
 New notebook:
 * [Citation Analysis using the Dimensions API: An Introduction](https://digital-science.github.io/dimensions-api-lab/cookbooks/2-publications/Citation-Analysis.html)
 
 
-### 10/10/2019
+### 2019-10-10 
 
 New notebook:
 * [What Journals Have Been Citing My Organization](https://digital-science.github.io/dimensions-api-lab/cookbooks/2-publications/Which-Are-the-Journals-Citing-My-Organization.html)
 
 
-### 05/06/2019
+### 2019-06-05 
 
 Dimensions API Lab [website](https://github.com/digital-science/dimensions-api-lab/) launched. 
-Preexisting set notebooks loaded.
+Preexisting set of notebooks loaded.
 
 
-### 11/04/2019
+### 2019-04-11
 
 Dimensions API Lab [github repo](https://github.com/digital-science/dimensions-api-lab/) launched. 
