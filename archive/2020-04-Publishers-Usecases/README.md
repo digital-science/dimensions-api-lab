@@ -12,3 +12,6 @@ Notebooks available in this collection:
    * [download Jupyter notebook](https://github.com/digital-science/dimensions-api-lab/tree/master/archive/2020-04-Publishers-Usecases/4-Institutions-for-a-journal.ipynb) | [open in Google Colab](https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/archive/2020-04-Publishers-Usecases/4-Institutions-for-a-journal.ipynb)
 5. Competing journals analysis 
    * [download Jupyter notebook](https://github.com/digital-science/dimensions-api-lab/tree/master/archive/2020-04-Publishers-Usecases/5-Competing-Journals.ipynb) | [open in Google Colab](https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/archive/2020-04-Publishers-Usecases/5-Competing-Journals.ipynb)
+
+
+> NOTE when running the notebooks in Google Colab, make sure you first upload the `/data` folder in the Files section of Colab first. 
