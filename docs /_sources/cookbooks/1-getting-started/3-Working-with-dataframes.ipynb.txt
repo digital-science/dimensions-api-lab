@@ -1,0 +1,2622 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "8XNB2EeXR4DA"
+   },
+   "source": [
+    "# The Dimcli Python library: Working with Pandas Dataframes\n",
+    "\n",
+    "[Dimcli](https://github.com/lambdamusic/dimcli) includes a few utilities that make it easier to transform Dimensions JSON data into Pandas [dataframe objects](https://pandas.pydata.org/pandas-docs/stable/getting_started/dsintro.html#dataframe). \n",
+    "\n",
+    "Dataframes are then easy to sort, analyse, export as CSV and use within visualisation softwares.\n",
+    "\n",
+    ">  [pandas](https://pandas.pydata.org/pandas-docs/stable/) is a popular software library written for the Python programming language for data manipulation and analysis.\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 51
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 6993,
+     "status": "ok",
+     "timestamp": 1575637337420,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "ZFn1lPjmR4DB",
+    "outputId": "3af69bca-ad2c-4f80-e4db-e5fe39d379fa"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "DimCli v0.6.6.4 - Succesfully connected to <https://app.dimensions.ai> (method: dsl.ini file)\n"
+     ]
+    }
+   ],
+   "source": [
+    "# @markdown Click the 'play' button on the left (or shift+enter) after entering your API credentials\n",
+    "\n",
+    "username = \"\" #@param {type: \"string\"}\n",
+    "password = \"\" #@param {type: \"string\"}\n",
+    "endpoint = \"https://app.dimensions.ai\"\n",
+    "\n",
+    "!pip install dimcli -U --quiet\n",
+    "\n",
+    "# import all libraries and login\n",
+    "import pandas\n",
+    "import dimcli\n",
+    "dimcli.login(username, password, endpoint)\n",
+    "dsl = dimcli.Dsl()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "oMLG9WL0R4DE"
+   },
+   "source": [
+    "## 1. General method to transform JSON query results into a dataframe \n",
+    "\n",
+    "The `Dataset.as_dataframe` method allows to quickly turn any query results into a dataframe. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 34
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 3008,
+     "status": "ok",
+     "timestamp": 1574681077688,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "19qgos2dR4DF",
+    "outputId": "a4bdf8a3-a760-4b80-cb1d-fb89b6cf08ca"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Returned Publications: 1000 (total = 425758)\n"
+     ]
+    }
+   ],
+   "source": [
+    "# we'll reuse this query later on \n",
+    "query = \"\"\"search publications for \"graphene\" \n",
+    "            where year in [2013:2019] \n",
+    "            return publications sort by times_cited limit 1000\"\"\"\n",
+    "res = dsl.query(query)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 1000
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 1346,
+     "status": "ok",
+     "timestamp": 1574681079469,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "6LCGKJPwR4DG",
+    "outputId": "b0b6e7e6-10de-4a17-e037-33083352fc8f"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>volume</th>\n",
+       "      <th>issue</th>\n",
+       "      <th>type</th>\n",
+       "      <th>author_affiliations</th>\n",
+       "      <th>year</th>\n",
+       "      <th>id</th>\n",
+       "      <th>title</th>\n",
+       "      <th>pages</th>\n",
+       "      <th>journal.id</th>\n",
+       "      <th>journal.title</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>5</td>\n",
+       "      <td>4</td>\n",
+       "      <td>article</td>\n",
+       "      <td>[[{'first_name': 'Manish', 'last_name': 'Chhow...</td>\n",
+       "      <td>2013</td>\n",
+       "      <td>pub.1050119463</td>\n",
+       "      <td>The chemistry of two-dimensional layered trans...</td>\n",
+       "      <td>263-275</td>\n",
+       "      <td>jour.1041224</td>\n",
+       "      <td>Nature Chemistry</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>499</td>\n",
+       "      <td>7459</td>\n",
+       "      <td>article</td>\n",
+       "      <td>[[{'first_name': 'A. K.', 'last_name': 'Geim',...</td>\n",
+       "      <td>2013</td>\n",
+       "      <td>pub.1024857999</td>\n",
+       "      <td>Van der Waals heterostructures</td>\n",
+       "      <td>419-425</td>\n",
+       "      <td>jour.1018957</td>\n",
+       "      <td>Nature</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>345</td>\n",
+       "      <td>6196</td>\n",
+       "      <td>article</td>\n",
+       "      <td>[[{'first_name': 'Huanping', 'last_name': 'Zho...</td>\n",
+       "      <td>2014</td>\n",
+       "      <td>pub.1004394295</td>\n",
+       "      <td>Interface engineering of highly efficient pero...</td>\n",
+       "      <td>542-546</td>\n",
+       "      <td>jour.1346339</td>\n",
+       "      <td>Science</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>9</td>\n",
+       "      <td>5</td>\n",
+       "      <td>article</td>\n",
+       "      <td>[[{'first_name': 'Likai', 'last_name': 'Li', '...</td>\n",
+       "      <td>2014</td>\n",
+       "      <td>pub.1032956475</td>\n",
+       "      <td>Black phosphorus field-effect transistors</td>\n",
+       "      <td>372-377</td>\n",
+       "      <td>jour.1037429</td>\n",
+       "      <td>Nature Nanotechnology</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>135</td>\n",
+       "      <td>4</td>\n",
+       "      <td>article</td>\n",
+       "      <td>[[{'first_name': 'John B.', 'last_name': 'Good...</td>\n",
+       "      <td>2013</td>\n",
+       "      <td>pub.1019126274</td>\n",
+       "      <td>The Li-ion rechargeable battery: a perspective.</td>\n",
+       "      <td>1167-76</td>\n",
+       "      <td>jour.1081898</td>\n",
+       "      <td>Journal of the American Chemical Society</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>book</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>2013</td>\n",
+       "      <td>pub.1031762191</td>\n",
+       "      <td>Nanoenergy, Nanotechnology Applied for Energy ...</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>6</th>\n",
+       "      <td>40</td>\n",
+       "      <td>10</td>\n",
+       "      <td>article</td>\n",
+       "      <td>[[{'first_name': 'C.', 'last_name': 'Patrignan...</td>\n",
+       "      <td>2016</td>\n",
+       "      <td>pub.1059158429</td>\n",
+       "      <td>Review of Particle Physics</td>\n",
+       "      <td>100001</td>\n",
+       "      <td>jour.1327822</td>\n",
+       "      <td>Chinese Physics C</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>7</th>\n",
+       "      <td>8</td>\n",
+       "      <td>4</td>\n",
+       "      <td>article</td>\n",
+       "      <td>[[{'first_name': 'Han', 'last_name': 'Liu', 'i...</td>\n",
+       "      <td>2014</td>\n",
+       "      <td>pub.1009826879</td>\n",
+       "      <td>Phosphorene: an unexplored 2D semiconductor wi...</td>\n",
+       "      <td>4033-41</td>\n",
+       "      <td>jour.1038917</td>\n",
+       "      <td>ACS Nano</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>8</th>\n",
+       "      <td>8</td>\n",
+       "      <td>4</td>\n",
+       "      <td>article</td>\n",
+       "      <td>[[{'first_name': 'Andrea C.', 'last_name': 'Fe...</td>\n",
+       "      <td>2013</td>\n",
+       "      <td>pub.1015305822</td>\n",
+       "      <td>Raman spectroscopy as a versatile tool for stu...</td>\n",
+       "      <td>235-246</td>\n",
+       "      <td>jour.1037429</td>\n",
+       "      <td>Nature Nanotechnology</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>9</th>\n",
+       "      <td>339</td>\n",
+       "      <td>6119</td>\n",
+       "      <td>article</td>\n",
+       "      <td>[[{'first_name': 'Michael F. L.', 'last_name':...</td>\n",
+       "      <td>2013</td>\n",
+       "      <td>pub.1007405937</td>\n",
+       "      <td>Carbon Nanotubes: Present and Future Commercia...</td>\n",
+       "      <td>535-539</td>\n",
+       "      <td>jour.1346339</td>\n",
+       "      <td>Science</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "  volume issue     type                                author_affiliations  \\\n",
+       "0      5     4  article  [[{'first_name': 'Manish', 'last_name': 'Chhow...   \n",
+       "1    499  7459  article  [[{'first_name': 'A. K.', 'last_name': 'Geim',...   \n",
+       "2    345  6196  article  [[{'first_name': 'Huanping', 'last_name': 'Zho...   \n",
+       "3      9     5  article  [[{'first_name': 'Likai', 'last_name': 'Li', '...   \n",
+       "4    135     4  article  [[{'first_name': 'John B.', 'last_name': 'Good...   \n",
+       "5    NaN   NaN     book                                                NaN   \n",
+       "6     40    10  article  [[{'first_name': 'C.', 'last_name': 'Patrignan...   \n",
+       "7      8     4  article  [[{'first_name': 'Han', 'last_name': 'Liu', 'i...   \n",
+       "8      8     4  article  [[{'first_name': 'Andrea C.', 'last_name': 'Fe...   \n",
+       "9    339  6119  article  [[{'first_name': 'Michael F. L.', 'last_name':...   \n",
+       "\n",
+       "   year              id                                              title  \\\n",
+       "0  2013  pub.1050119463  The chemistry of two-dimensional layered trans...   \n",
+       "1  2013  pub.1024857999                     Van der Waals heterostructures   \n",
+       "2  2014  pub.1004394295  Interface engineering of highly efficient pero...   \n",
+       "3  2014  pub.1032956475          Black phosphorus field-effect transistors   \n",
+       "4  2013  pub.1019126274    The Li-ion rechargeable battery: a perspective.   \n",
+       "5  2013  pub.1031762191  Nanoenergy, Nanotechnology Applied for Energy ...   \n",
+       "6  2016  pub.1059158429                         Review of Particle Physics   \n",
+       "7  2014  pub.1009826879  Phosphorene: an unexplored 2D semiconductor wi...   \n",
+       "8  2013  pub.1015305822  Raman spectroscopy as a versatile tool for stu...   \n",
+       "9  2013  pub.1007405937  Carbon Nanotubes: Present and Future Commercia...   \n",
+       "\n",
+       "     pages    journal.id                             journal.title  \n",
+       "0  263-275  jour.1041224                          Nature Chemistry  \n",
+       "1  419-425  jour.1018957                                    Nature  \n",
+       "2  542-546  jour.1346339                                   Science  \n",
+       "3  372-377  jour.1037429                     Nature Nanotechnology  \n",
+       "4  1167-76  jour.1081898  Journal of the American Chemical Society  \n",
+       "5      NaN           NaN                                       NaN  \n",
+       "6   100001  jour.1327822                         Chinese Physics C  \n",
+       "7  4033-41  jour.1038917                                  ACS Nano  \n",
+       "8  235-246  jour.1037429                     Nature Nanotechnology  \n",
+       "9  535-539  jour.1346339                                   Science  "
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df = res.as_dataframe()\n",
+    "df.head(10)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "tCq1lF6HR4DI"
+   },
+   "source": [
+    "Pandas dataframes offer a myriad of utilities for inspecting data. Check out the [official docs](https://pandas.pydata.org/pandas-docs/stable/getting_started/10min.html) or google a [pandas tutorial](https://www.google.com/search?q=pandas+tutorial) to lean more about it. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 34
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 1124,
+     "status": "ok",
+     "timestamp": 1574681118435,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "k_3GoeDkR4DJ",
+    "outputId": "04323988-d055-4928-80f9-b283b34c8328"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "(1000, 10)"
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# the table shape\n",
+    "df.shape"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 136
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 929,
+     "status": "ok",
+     "timestamp": 1574681130276,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "CjvMBNCBR4DK",
+    "outputId": "771e011c-1a06-43d4-a12c-851e9edacce0"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "2013    332\n",
+       "2014    306\n",
+       "2015    212\n",
+       "2016     97\n",
+       "2017     45\n",
+       "2018      8\n",
+       "Name: year, dtype: int64"
+      ]
+     },
+     "execution_count": 6,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# the 'value_counts' method returns the distribution of a specific field eg publication [years]\n",
+    "df['year'].value_counts()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 102
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 817,
+     "status": "ok",
+     "timestamp": 1574681132393,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "vndAnGmyR4DM",
+    "jupyter": {
+     "source_hidden": true
+    },
+    "outputId": "68301915-01d4-46fc-ddb2-5fa23f768e3f"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "article    997\n",
+       "book         2\n",
+       "chapter      1\n",
+       "Name: type, dtype: int64"
+      ]
+     },
+     "execution_count": 7,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# eg distribution of publication [type]\n",
+    "df['type'].value_counts()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "ye1VswB3R4DO"
+   },
+   "source": [
+    "## 2. Dataframe Methods for 'Publications' queries\n",
+    "\n",
+    "What follows are specialized versions of the `as_dataframe` method for results sets composed of publication records. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "j75inlUMR4DO"
+   },
+   "source": [
+    "###  Extracting authors: `as_dataframe_authors`\n",
+    "\n",
+    "Publications authors are usually returned by the Dimensions API inside a nested JSON object in the `authors_affiliations` sub-key. \n",
+    "\n",
+    "> Note: the order of authors in the JSON is consistent with the ordering of authors in the original publication\n",
+    "\n",
+    "This methods allows to quickly extract that data and return a dataframe with **one row per author**."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 1000
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 940,
+     "status": "ok",
+     "timestamp": 1574681159951,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "0_KbE4ylR4DP",
+    "outputId": "d5ad1426-b64b-4b64-d76f-6c1fb05348d7"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>first_name</th>\n",
+       "      <th>last_name</th>\n",
+       "      <th>initials</th>\n",
+       "      <th>corresponding</th>\n",
+       "      <th>orcid</th>\n",
+       "      <th>current_organization_id</th>\n",
+       "      <th>researcher_id</th>\n",
+       "      <th>affiliations</th>\n",
+       "      <th>pub_id</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>Manish</td>\n",
+       "      <td>Chhowalla</td>\n",
+       "      <td></td>\n",
+       "      <td>True</td>\n",
+       "      <td></td>\n",
+       "      <td>grid.5335.0</td>\n",
+       "      <td>ur.0633062306.03</td>\n",
+       "      <td>[{'id': 'grid.430387.b', 'name': 'Rutgers, The...</td>\n",
+       "      <td>pub.1050119463</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>Hyeon Suk</td>\n",
+       "      <td>Shin</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>grid.42687.3f</td>\n",
+       "      <td>ur.07617630407.83</td>\n",
+       "      <td>[{'id': 'grid.42687.3f', 'name': 'Ulsan Nation...</td>\n",
+       "      <td>pub.1050119463</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>Goki</td>\n",
+       "      <td>Eda</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>grid.4280.e</td>\n",
+       "      <td>ur.01150450507.27</td>\n",
+       "      <td>[{'id': 'grid.4280.e', 'name': 'National Unive...</td>\n",
+       "      <td>pub.1050119463</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>Lain-Jong</td>\n",
+       "      <td>Li</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>['0000-0002-4059-7783']</td>\n",
+       "      <td>grid.45672.32</td>\n",
+       "      <td>ur.01313340113.13</td>\n",
+       "      <td>[{'id': 'grid.28665.3f', 'name': 'Academia Sin...</td>\n",
+       "      <td>pub.1050119463</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>Kian Ping</td>\n",
+       "      <td>Loh</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>['0000-0002-1491-743X']</td>\n",
+       "      <td>grid.4280.e</td>\n",
+       "      <td>ur.0752174033.73</td>\n",
+       "      <td>[{'id': 'grid.4280.e', 'name': 'National Unive...</td>\n",
+       "      <td>pub.1050119463</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "  first_name  last_name initials corresponding                    orcid  \\\n",
+       "0     Manish  Chhowalla                   True                            \n",
+       "1  Hyeon Suk       Shin                                                   \n",
+       "2       Goki        Eda                                                   \n",
+       "3  Lain-Jong         Li                         ['0000-0002-4059-7783']   \n",
+       "4  Kian Ping        Loh                         ['0000-0002-1491-743X']   \n",
+       "\n",
+       "  current_organization_id      researcher_id  \\\n",
+       "0             grid.5335.0   ur.0633062306.03   \n",
+       "1           grid.42687.3f  ur.07617630407.83   \n",
+       "2             grid.4280.e  ur.01150450507.27   \n",
+       "3           grid.45672.32  ur.01313340113.13   \n",
+       "4             grid.4280.e   ur.0752174033.73   \n",
+       "\n",
+       "                                        affiliations          pub_id  \n",
+       "0  [{'id': 'grid.430387.b', 'name': 'Rutgers, The...  pub.1050119463  \n",
+       "1  [{'id': 'grid.42687.3f', 'name': 'Ulsan Nation...  pub.1050119463  \n",
+       "2  [{'id': 'grid.4280.e', 'name': 'National Unive...  pub.1050119463  \n",
+       "3  [{'id': 'grid.28665.3f', 'name': 'Academia Sin...  pub.1050119463  \n",
+       "4  [{'id': 'grid.4280.e', 'name': 'National Unive...  pub.1050119463  "
+      ]
+     },
+     "execution_count": 12,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "authors = res.as_dataframe_authors()\n",
+    "authors.head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "N1VtHVQbR4DQ"
+   },
+   "source": [
+    "Using the authors dataframe, we can easily get the top ten values for `current_organization_id`. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 204
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 1031,
+     "status": "ok",
+     "timestamp": 1574681165815,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "ut6y8Di0R4DR",
+    "outputId": "3a56a8d3-f5e2-463e-b367-e53f1f9d70b1"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "                 188\n",
+       "grid.168010.e    153\n",
+       "grid.59025.3b    143\n",
+       "grid.12527.33     88\n",
+       "grid.5379.8       85\n",
+       "grid.116068.8     84\n",
+       "grid.59053.3a     83\n",
+       "grid.19006.3e     75\n",
+       "grid.13402.34     72\n",
+       "grid.21729.3f     64\n",
+       "Name: current_organization_id, dtype: int64"
+      ]
+     },
+     "execution_count": 13,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "authors['current_organization_id'].value_counts()[:10]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "6NpFRYBGR4DS"
+   },
+   "source": [
+    "> Explanation: the most frequent value turns to be grid.59025.3b ie [Nanyang Technological University in Singapore](https://www.grid.ac/institutes/grid.59025.3b). The first result is empty, meaning that for those authors Dimensions has no info about `current_organization_id`. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "p2eN2Y8GR4DT"
+   },
+   "source": [
+    "### Extracting Affiliations: `as_dataframe_authors_affiliations`\n",
+    "\n",
+    "As you can see from the results of the previous section, the `affiliations` of each author is yet another nested JSON object. \n",
+    "\n",
+    "> Note: the order of affiliations in the JSON is consistent with the affiliations order in the original publication\n",
+    "\n",
+    "The `as_dataframe_authors_affiliations` method allows to quickly extract that affiliations data and return a dataframe with **one row per affiliation**.\n",
+    "\n",
+    "This can be useful e.g. if one wants to count research organizations at *the time of writing* (as opposed to `current_organization_id`, which is the *most recent organization* of a researcher). "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 464
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 1544,
+     "status": "ok",
+     "timestamp": 1574681203066,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "fszvKPHdR4DT",
+    "outputId": "704b1027-ff46-4417-e3d5-4c5f5e2c20f7"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>aff_id</th>\n",
+       "      <th>aff_name</th>\n",
+       "      <th>aff_city</th>\n",
+       "      <th>aff_city_id</th>\n",
+       "      <th>aff_country</th>\n",
+       "      <th>aff_country_code</th>\n",
+       "      <th>aff_state</th>\n",
+       "      <th>aff_state_code</th>\n",
+       "      <th>pub_id</th>\n",
+       "      <th>researcher_id</th>\n",
+       "      <th>first_name</th>\n",
+       "      <th>last_name</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>grid.430387.b</td>\n",
+       "      <td>Rutgers, The State University of New Jersey</td>\n",
+       "      <td>New Brunswick</td>\n",
+       "      <td>5.10172e+06</td>\n",
+       "      <td>United States</td>\n",
+       "      <td>US</td>\n",
+       "      <td>New Jersey</td>\n",
+       "      <td>US-NJ</td>\n",
+       "      <td>pub.1050119463</td>\n",
+       "      <td>ur.0633062306.03</td>\n",
+       "      <td>Manish</td>\n",
+       "      <td>Chhowalla</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>grid.42687.3f</td>\n",
+       "      <td>Ulsan National Institute of Science and Techno...</td>\n",
+       "      <td>Ulsan</td>\n",
+       "      <td>1.83375e+06</td>\n",
+       "      <td>South Korea</td>\n",
+       "      <td>KR</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>pub.1050119463</td>\n",
+       "      <td>ur.07617630407.83</td>\n",
+       "      <td>Hyeon Suk</td>\n",
+       "      <td>Shin</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>grid.4280.e</td>\n",
+       "      <td>National University of Singapore</td>\n",
+       "      <td>Singapore</td>\n",
+       "      <td>1.88025e+06</td>\n",
+       "      <td>Singapore</td>\n",
+       "      <td>SG</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>pub.1050119463</td>\n",
+       "      <td>ur.01150450507.27</td>\n",
+       "      <td>Goki</td>\n",
+       "      <td>Eda</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>grid.4280.e</td>\n",
+       "      <td>National University of Singapore</td>\n",
+       "      <td>Singapore</td>\n",
+       "      <td>1.88025e+06</td>\n",
+       "      <td>Singapore</td>\n",
+       "      <td>SG</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>pub.1050119463</td>\n",
+       "      <td>ur.01150450507.27</td>\n",
+       "      <td>Goki</td>\n",
+       "      <td>Eda</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>grid.4280.e</td>\n",
+       "      <td>National University of Singapore</td>\n",
+       "      <td>Singapore</td>\n",
+       "      <td>1.88025e+06</td>\n",
+       "      <td>Singapore</td>\n",
+       "      <td>SG</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>pub.1050119463</td>\n",
+       "      <td>ur.01150450507.27</td>\n",
+       "      <td>Goki</td>\n",
+       "      <td>Eda</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "          aff_id                                           aff_name  \\\n",
+       "0  grid.430387.b        Rutgers, The State University of New Jersey   \n",
+       "1  grid.42687.3f  Ulsan National Institute of Science and Techno...   \n",
+       "2    grid.4280.e                   National University of Singapore   \n",
+       "3    grid.4280.e                   National University of Singapore   \n",
+       "4    grid.4280.e                   National University of Singapore   \n",
+       "\n",
+       "        aff_city  aff_city_id    aff_country aff_country_code   aff_state  \\\n",
+       "0  New Brunswick  5.10172e+06  United States               US  New Jersey   \n",
+       "1          Ulsan  1.83375e+06    South Korea               KR               \n",
+       "2      Singapore  1.88025e+06      Singapore               SG               \n",
+       "3      Singapore  1.88025e+06      Singapore               SG               \n",
+       "4      Singapore  1.88025e+06      Singapore               SG               \n",
+       "\n",
+       "  aff_state_code          pub_id      researcher_id first_name  last_name  \n",
+       "0          US-NJ  pub.1050119463   ur.0633062306.03     Manish  Chhowalla  \n",
+       "1                 pub.1050119463  ur.07617630407.83  Hyeon Suk       Shin  \n",
+       "2                 pub.1050119463  ur.01150450507.27       Goki        Eda  \n",
+       "3                 pub.1050119463  ur.01150450507.27       Goki        Eda  \n",
+       "4                 pub.1050119463  ur.01150450507.27       Goki        Eda  "
+      ]
+     },
+     "execution_count": 14,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "affiliations = res.as_dataframe_authors_affiliations()\n",
+    "affiliations.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 219
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 797,
+     "status": "ok",
+     "timestamp": 1574681207520,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "Ci5OzQyJR4DV",
+    "outputId": "35131ce4-d325-4d49-87a3-087198f0fb72"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>aff_id</th>\n",
+       "      <th>aff_name</th>\n",
+       "      <th>aff_city</th>\n",
+       "      <th>aff_city_id</th>\n",
+       "      <th>aff_country</th>\n",
+       "      <th>aff_country_code</th>\n",
+       "      <th>aff_state</th>\n",
+       "      <th>aff_state_code</th>\n",
+       "      <th>pub_id</th>\n",
+       "      <th>researcher_id</th>\n",
+       "      <th>first_name</th>\n",
+       "      <th>last_name</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>count</th>\n",
+       "      <td>7768</td>\n",
+       "      <td>7768</td>\n",
+       "      <td>7768</td>\n",
+       "      <td>7768</td>\n",
+       "      <td>7768</td>\n",
+       "      <td>7768</td>\n",
+       "      <td>7768</td>\n",
+       "      <td>7768</td>\n",
+       "      <td>7768</td>\n",
+       "      <td>7768</td>\n",
+       "      <td>7768</td>\n",
+       "      <td>7768</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>unique</th>\n",
+       "      <td>710</td>\n",
+       "      <td>1059</td>\n",
+       "      <td>430</td>\n",
+       "      <td>432</td>\n",
+       "      <td>51</td>\n",
+       "      <td>51</td>\n",
+       "      <td>53</td>\n",
+       "      <td>53</td>\n",
+       "      <td>984</td>\n",
+       "      <td>4306</td>\n",
+       "      <td>3439</td>\n",
+       "      <td>2021</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>top</th>\n",
+       "      <td></td>\n",
+       "      <td>Nanyang Technological University</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>United States</td>\n",
+       "      <td>US</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>pub.1019661721</td>\n",
+       "      <td></td>\n",
+       "      <td>Yi</td>\n",
+       "      <td>Wang</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>freq</th>\n",
+       "      <td>995</td>\n",
+       "      <td>261</td>\n",
+       "      <td>995</td>\n",
+       "      <td>1001</td>\n",
+       "      <td>2127</td>\n",
+       "      <td>2127</td>\n",
+       "      <td>5343</td>\n",
+       "      <td>5343</td>\n",
+       "      <td>108</td>\n",
+       "      <td>173</td>\n",
+       "      <td>71</td>\n",
+       "      <td>324</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "       aff_id                          aff_name aff_city aff_city_id  \\\n",
+       "count    7768                              7768     7768        7768   \n",
+       "unique    710                              1059      430         432   \n",
+       "top            Nanyang Technological University                        \n",
+       "freq      995                               261      995        1001   \n",
+       "\n",
+       "          aff_country aff_country_code aff_state aff_state_code  \\\n",
+       "count            7768             7768      7768           7768   \n",
+       "unique             51               51        53             53   \n",
+       "top     United States               US                            \n",
+       "freq             2127             2127      5343           5343   \n",
+       "\n",
+       "                pub_id researcher_id first_name last_name  \n",
+       "count             7768          7768       7768      7768  \n",
+       "unique             984          4306       3439      2021  \n",
+       "top     pub.1019661721                       Yi      Wang  \n",
+       "freq               108           173         71       324  "
+      ]
+     },
+     "execution_count": 15,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "affiliations.describe(include=\"all\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "at7DTaU5R4DW"
+   },
+   "source": [
+    "Let's get the top ten values for `aff_id`. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 204
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 877,
+     "status": "ok",
+     "timestamp": 1574681214999,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "o2zUnRg0R4DX",
+    "outputId": "d777c549-679c-4623-8cb0-866ec0b4bc4b"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "                 995\n",
+       "grid.59025.3b    261\n",
+       "grid.168010.e    214\n",
+       "grid.19006.3e    134\n",
+       "grid.4280.e      124\n",
+       "grid.21729.3f    116\n",
+       "grid.8217.c      113\n",
+       "grid.12527.33    105\n",
+       "grid.5379.8      103\n",
+       "grid.116068.8    100\n",
+       "Name: aff_id, dtype: int64"
+      ]
+     },
+     "execution_count": 16,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "affiliations['aff_id'].value_counts()[:10]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "aPQNuTpuR4DY"
+   },
+   "source": [
+    "> Explanation: the most frequent value is still [grid.59025.3b](https://www.grid.ac/institutes/grid.59025.3b), meaning that most authors' current organization is the same organization of when they published these articles. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "Zmv0M_PkR4DZ"
+   },
+   "source": [
+    "Another example: we can now easily analyze the data by country too. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 204
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 1021,
+     "status": "ok",
+     "timestamp": 1574681222068,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "OnmvjI-8R4DZ",
+    "outputId": "d596422c-961f-471f-9cb4-289fc066cb71"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "United States     2127\n",
+       "China             1861\n",
+       "                   995\n",
+       "Singapore          410\n",
+       "South Korea        335\n",
+       "United Kingdom     290\n",
+       "Germany            220\n",
+       "Japan              174\n",
+       "Australia          173\n",
+       "Canada             125\n",
+       "Name: aff_country, dtype: int64"
+      ]
+     },
+     "execution_count": 17,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "affiliations['aff_country'].value_counts()[:10]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "a83GEMfQR4Db"
+   },
+   "source": [
+    "> Explanation: the vast majority of authors in this dataset are from China, closely followed by the USA. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "69JItbFgR4Db"
+   },
+   "source": [
+    "## 3. Dataframe Methods for 'Grants' queries"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "true",
+    "colab_type": "text",
+    "id": "P0FLXthRR4Dc"
+   },
+   "source": [
+    "###  Extracting Funders: `as_dataframe_funders`\n",
+    "\n",
+    "Grant funders authors are usually returned by the Dimensions API inside a nested JSON object in the `funders` sub-key. \n",
+    "\n",
+    "This methods allows to quickly extract that data and return a dataframe with **one row per funder**."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 34
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 3344,
+     "status": "ok",
+     "timestamp": 1574681269386,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "kjxgoy_VR4Dc",
+    "outputId": "59ee9e43-ed66-4e6f-ee5e-7e81e5f9d515"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Returned Grants: 1000 (total = 10714)\n"
+     ]
+    }
+   ],
+   "source": [
+    "# get a sample list of grants\n",
+    "query = \"\"\"search grants for \"malaria\" return grants limit 1000\"\"\"\n",
+    "res = dsl.query(query)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 1000
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 736,
+     "status": "ok",
+     "timestamp": 1574681271845,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "56iPhGTUR4Dd",
+    "outputId": "c94bba81-caf4-4f7b-e85b-e8969e4c8b6a"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>id</th>\n",
+       "      <th>longitude</th>\n",
+       "      <th>latitude</th>\n",
+       "      <th>country_name</th>\n",
+       "      <th>acronym</th>\n",
+       "      <th>name</th>\n",
+       "      <th>linkout</th>\n",
+       "      <th>city_name</th>\n",
+       "      <th>types</th>\n",
+       "      <th>state_name</th>\n",
+       "      <th>grant_id</th>\n",
+       "      <th>grant_title</th>\n",
+       "      <th>grant_start_date</th>\n",
+       "      <th>grant_end_date</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>grid.270680.b</td>\n",
+       "      <td>4.363670</td>\n",
+       "      <td>50.851650</td>\n",
+       "      <td>Belgium</td>\n",
+       "      <td>EC</td>\n",
+       "      <td>European Commission</td>\n",
+       "      <td>[http://ec.europa.eu/index_en.htm]</td>\n",
+       "      <td>Brussels</td>\n",
+       "      <td>[Government]</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>grant.8964341</td>\n",
+       "      <td>mAlaRIa Sex dEtermination</td>\n",
+       "      <td>2020-10-01</td>\n",
+       "      <td>2022-09-30</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>grid.270680.b</td>\n",
+       "      <td>4.363670</td>\n",
+       "      <td>50.851650</td>\n",
+       "      <td>Belgium</td>\n",
+       "      <td>EC</td>\n",
+       "      <td>European Commission</td>\n",
+       "      <td>[http://ec.europa.eu/index_en.htm]</td>\n",
+       "      <td>Brussels</td>\n",
+       "      <td>[Government]</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>grant.8585457</td>\n",
+       "      <td>Estimating the Prevalence of AntiMicrobial Res...</td>\n",
+       "      <td>2020-04-01</td>\n",
+       "      <td>2022-03-31</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>grid.425888.b</td>\n",
+       "      <td>7.432395</td>\n",
+       "      <td>46.949230</td>\n",
+       "      <td>Switzerland</td>\n",
+       "      <td>SNF</td>\n",
+       "      <td>Swiss National Science Foundation</td>\n",
+       "      <td>[http://www.snf.ch/en]</td>\n",
+       "      <td>Bern</td>\n",
+       "      <td>[Government]</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>grant.8968483</td>\n",
+       "      <td>Adressing concerns over gene drive based malar...</td>\n",
+       "      <td>2020-04-01</td>\n",
+       "      <td>2020-06-30</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>grid.421091.f</td>\n",
+       "      <td>-1.784602</td>\n",
+       "      <td>51.567093</td>\n",
+       "      <td>United Kingdom</td>\n",
+       "      <td>EPSRC</td>\n",
+       "      <td>Engineering and Physical Sciences Research Cou...</td>\n",
+       "      <td>[https://www.epsrc.ac.uk/]</td>\n",
+       "      <td>Swindon</td>\n",
+       "      <td>[Government]</td>\n",
+       "      <td>England</td>\n",
+       "      <td>grant.8856896</td>\n",
+       "      <td>EQATA: Equitable access to Quality Antibiotic ...</td>\n",
+       "      <td>2020-03-31</td>\n",
+       "      <td>2022-03-30</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>grid.421091.f</td>\n",
+       "      <td>-1.784602</td>\n",
+       "      <td>51.567093</td>\n",
+       "      <td>United Kingdom</td>\n",
+       "      <td>EPSRC</td>\n",
+       "      <td>Engineering and Physical Sciences Research Cou...</td>\n",
+       "      <td>[https://www.epsrc.ac.uk/]</td>\n",
+       "      <td>Swindon</td>\n",
+       "      <td>[Government]</td>\n",
+       "      <td>England</td>\n",
+       "      <td>grant.8857053</td>\n",
+       "      <td>Patient-centric supramolecular formulations of...</td>\n",
+       "      <td>2020-03-31</td>\n",
+       "      <td>2022-03-30</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td>grid.421091.f</td>\n",
+       "      <td>-1.784602</td>\n",
+       "      <td>51.567093</td>\n",
+       "      <td>United Kingdom</td>\n",
+       "      <td>EPSRC</td>\n",
+       "      <td>Engineering and Physical Sciences Research Cou...</td>\n",
+       "      <td>[https://www.epsrc.ac.uk/]</td>\n",
+       "      <td>Swindon</td>\n",
+       "      <td>[Government]</td>\n",
+       "      <td>England</td>\n",
+       "      <td>grant.8558055</td>\n",
+       "      <td>UK-Africa Postgraduate Advanced Study Institut...</td>\n",
+       "      <td>2020-03-31</td>\n",
+       "      <td>2021-03-30</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>6</th>\n",
+       "      <td>grid.25111.36</td>\n",
+       "      <td>16.352383</td>\n",
+       "      <td>48.219303</td>\n",
+       "      <td>Austria</td>\n",
+       "      <td>FWF</td>\n",
+       "      <td>FWF Austrian Science Fund</td>\n",
+       "      <td>[https://www.fwf.ac.at/en/]</td>\n",
+       "      <td>Vienna</td>\n",
+       "      <td>[Nonprofit]</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>grant.8966928</td>\n",
+       "      <td>Further insights into the pathogenesis of avia...</td>\n",
+       "      <td>2020-03-09</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>7</th>\n",
+       "      <td>grid.452896.4</td>\n",
+       "      <td>4.359973</td>\n",
+       "      <td>50.856167</td>\n",
+       "      <td>Belgium</td>\n",
+       "      <td>ERC</td>\n",
+       "      <td>European Research Council</td>\n",
+       "      <td>[http://erc.europa.eu/]</td>\n",
+       "      <td>Brussels</td>\n",
+       "      <td>[Government]</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>grant.8709736</td>\n",
+       "      <td>Toxin-antidote selfish elements in animals: fr...</td>\n",
+       "      <td>2020-03-01</td>\n",
+       "      <td>2025-02-28</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>8</th>\n",
+       "      <td>grid.425888.b</td>\n",
+       "      <td>7.432395</td>\n",
+       "      <td>46.949230</td>\n",
+       "      <td>Switzerland</td>\n",
+       "      <td>SNF</td>\n",
+       "      <td>Swiss National Science Foundation</td>\n",
+       "      <td>[http://www.snf.ch/en]</td>\n",
+       "      <td>Bern</td>\n",
+       "      <td>[Government]</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>grant.8968024</td>\n",
+       "      <td>Multichannel confocal microscope with fluoresc...</td>\n",
+       "      <td>2020-03-01</td>\n",
+       "      <td>2021-02-28</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>9</th>\n",
+       "      <td>grid.426413.6</td>\n",
+       "      <td>-1.784473</td>\n",
+       "      <td>51.567112</td>\n",
+       "      <td>United Kingdom</td>\n",
+       "      <td>AHRC</td>\n",
+       "      <td>Arts and Humanities Research Council</td>\n",
+       "      <td>[http://www.ahrc.ac.uk/]</td>\n",
+       "      <td>Swindon</td>\n",
+       "      <td>[Government]</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>grant.8856186</td>\n",
+       "      <td>Life-Saving Lullabies: Reducing adolescent mat...</td>\n",
+       "      <td>2020-02-21</td>\n",
+       "      <td>2021-02-20</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "              id  longitude   latitude    country_name acronym  \\\n",
+       "0  grid.270680.b   4.363670  50.851650         Belgium      EC   \n",
+       "1  grid.270680.b   4.363670  50.851650         Belgium      EC   \n",
+       "2  grid.425888.b   7.432395  46.949230     Switzerland     SNF   \n",
+       "3  grid.421091.f  -1.784602  51.567093  United Kingdom   EPSRC   \n",
+       "4  grid.421091.f  -1.784602  51.567093  United Kingdom   EPSRC   \n",
+       "5  grid.421091.f  -1.784602  51.567093  United Kingdom   EPSRC   \n",
+       "6  grid.25111.36  16.352383  48.219303         Austria     FWF   \n",
+       "7  grid.452896.4   4.359973  50.856167         Belgium     ERC   \n",
+       "8  grid.425888.b   7.432395  46.949230     Switzerland     SNF   \n",
+       "9  grid.426413.6  -1.784473  51.567112  United Kingdom    AHRC   \n",
+       "\n",
+       "                                                name  \\\n",
+       "0                                European Commission   \n",
+       "1                                European Commission   \n",
+       "2                  Swiss National Science Foundation   \n",
+       "3  Engineering and Physical Sciences Research Cou...   \n",
+       "4  Engineering and Physical Sciences Research Cou...   \n",
+       "5  Engineering and Physical Sciences Research Cou...   \n",
+       "6                          FWF Austrian Science Fund   \n",
+       "7                          European Research Council   \n",
+       "8                  Swiss National Science Foundation   \n",
+       "9               Arts and Humanities Research Council   \n",
+       "\n",
+       "                              linkout city_name         types state_name  \\\n",
+       "0  [http://ec.europa.eu/index_en.htm]  Brussels  [Government]        NaN   \n",
+       "1  [http://ec.europa.eu/index_en.htm]  Brussels  [Government]        NaN   \n",
+       "2              [http://www.snf.ch/en]      Bern  [Government]        NaN   \n",
+       "3          [https://www.epsrc.ac.uk/]   Swindon  [Government]    England   \n",
+       "4          [https://www.epsrc.ac.uk/]   Swindon  [Government]    England   \n",
+       "5          [https://www.epsrc.ac.uk/]   Swindon  [Government]    England   \n",
+       "6         [https://www.fwf.ac.at/en/]    Vienna   [Nonprofit]        NaN   \n",
+       "7             [http://erc.europa.eu/]  Brussels  [Government]        NaN   \n",
+       "8              [http://www.snf.ch/en]      Bern  [Government]        NaN   \n",
+       "9            [http://www.ahrc.ac.uk/]   Swindon  [Government]        NaN   \n",
+       "\n",
+       "        grant_id                                        grant_title  \\\n",
+       "0  grant.8964341                          mAlaRIa Sex dEtermination   \n",
+       "1  grant.8585457  Estimating the Prevalence of AntiMicrobial Res...   \n",
+       "2  grant.8968483  Adressing concerns over gene drive based malar...   \n",
+       "3  grant.8856896  EQATA: Equitable access to Quality Antibiotic ...   \n",
+       "4  grant.8857053  Patient-centric supramolecular formulations of...   \n",
+       "5  grant.8558055  UK-Africa Postgraduate Advanced Study Institut...   \n",
+       "6  grant.8966928  Further insights into the pathogenesis of avia...   \n",
+       "7  grant.8709736  Toxin-antidote selfish elements in animals: fr...   \n",
+       "8  grant.8968024  Multichannel confocal microscope with fluoresc...   \n",
+       "9  grant.8856186  Life-Saving Lullabies: Reducing adolescent mat...   \n",
+       "\n",
+       "  grant_start_date grant_end_date  \n",
+       "0       2020-10-01     2022-09-30  \n",
+       "1       2020-04-01     2022-03-31  \n",
+       "2       2020-04-01     2020-06-30  \n",
+       "3       2020-03-31     2022-03-30  \n",
+       "4       2020-03-31     2022-03-30  \n",
+       "5       2020-03-31     2021-03-30  \n",
+       "6       2020-03-09            NaN  \n",
+       "7       2020-03-01     2025-02-28  \n",
+       "8       2020-03-01     2021-02-28  \n",
+       "9       2020-02-21     2021-02-20  "
+      ]
+     },
+     "execution_count": 19,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "res.as_dataframe_funders().head(10)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "true",
+    "colab_type": "text",
+    "id": "UqanXsrmR4Df"
+   },
+   "source": [
+    "### Extracting investigators: `as_dataframe_investigators`\n",
+    "\n",
+    "Grant investigators are usually returned by the Dimensions API inside a nested JSON object in the `investigator_details` sub-key. \n",
+    "\n",
+    "This methods allows to quickly extract that data and return a dataframe with **one row per investigator**.\n",
+    "\n",
+    "> NOTE: `investigator_details` are not returned by default in a grants query hence one must specify this in the query results"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 88
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 3591,
+     "status": "ok",
+     "timestamp": 1574681293076,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "QZS6TePGR4Df",
+    "outputId": "aae7e731-18a0-488f-b65f-111dfab61b8b"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Returned Grants: 1000 (total = 10714)\n",
+      "WARNINGS [2]\n",
+      "Field 'project_num' is deprecated in favor of grant_number. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details\n",
+      "Field 'title_language' is deprecated in favor of language_title. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details\n"
+     ]
+    }
+   ],
+   "source": [
+    "# get a sample list of grants\n",
+    "query = \"\"\"search grants for \"malaria\" return grants[basics+investigator_details] limit 1000\"\"\"\n",
+    "res = dsl.query(query)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>first_name</th>\n",
+       "      <th>id</th>\n",
+       "      <th>affiliations</th>\n",
+       "      <th>last_name</th>\n",
+       "      <th>role</th>\n",
+       "      <th>middle_name</th>\n",
+       "      <th>grant_id</th>\n",
+       "      <th>grant_title</th>\n",
+       "      <th>grant_start_date</th>\n",
+       "      <th>grant_end_date</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>Marie-Valentine</td>\n",
+       "      <td>None</td>\n",
+       "      <td>[{'city': None, 'city_id': '2659994', 'country...</td>\n",
+       "      <td>Florin</td>\n",
+       "      <td>PI</td>\n",
+       "      <td>None</td>\n",
+       "      <td>grant.8968483</td>\n",
+       "      <td>Adressing concerns over gene drive based malar...</td>\n",
+       "      <td>2020-04-01</td>\n",
+       "      <td>2020-06-30</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>Gordon</td>\n",
+       "      <td>None</td>\n",
+       "      <td>[{'state_code': None, 'city': None, 'city_id':...</td>\n",
+       "      <td>Florence</td>\n",
+       "      <td>PI</td>\n",
+       "      <td>John</td>\n",
+       "      <td>grant.8856896</td>\n",
+       "      <td>EQATA: Equitable access to Quality Antibiotic ...</td>\n",
+       "      <td>2020-03-31</td>\n",
+       "      <td>2022-03-30</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>Thomas</td>\n",
+       "      <td>None</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>Dzeha</td>\n",
+       "      <td>Co-PI</td>\n",
+       "      <td></td>\n",
+       "      <td>grant.8856896</td>\n",
+       "      <td>EQATA: Equitable access to Quality Antibiotic ...</td>\n",
+       "      <td>2020-03-31</td>\n",
+       "      <td>2022-03-30</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>Paul</td>\n",
+       "      <td>None</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>Kazyoba</td>\n",
+       "      <td>Co-PI</td>\n",
+       "      <td>Erasto</td>\n",
+       "      <td>grant.8856896</td>\n",
+       "      <td>EQATA: Equitable access to Quality Antibiotic ...</td>\n",
+       "      <td>2020-03-31</td>\n",
+       "      <td>2022-03-30</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>Rebecca</td>\n",
+       "      <td>None</td>\n",
+       "      <td>[{'state_code': None, 'city': None, 'city_id':...</td>\n",
+       "      <td>Goss</td>\n",
+       "      <td>Co-PI</td>\n",
+       "      <td>Jane</td>\n",
+       "      <td>grant.8856896</td>\n",
+       "      <td>EQATA: Equitable access to Quality Antibiotic ...</td>\n",
+       "      <td>2020-03-31</td>\n",
+       "      <td>2022-03-30</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td>Hong</td>\n",
+       "      <td>None</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>Gao</td>\n",
+       "      <td>Co-PI</td>\n",
+       "      <td></td>\n",
+       "      <td>grant.8856896</td>\n",
+       "      <td>EQATA: Equitable access to Quality Antibiotic ...</td>\n",
+       "      <td>2020-03-31</td>\n",
+       "      <td>2022-03-30</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>6</th>\n",
+       "      <td>Matthias</td>\n",
+       "      <td>None</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>Agbo</td>\n",
+       "      <td>Co-PI</td>\n",
+       "      <td>Onyebuchi</td>\n",
+       "      <td>grant.8856896</td>\n",
+       "      <td>EQATA: Equitable access to Quality Antibiotic ...</td>\n",
+       "      <td>2020-03-31</td>\n",
+       "      <td>2022-03-30</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>7</th>\n",
+       "      <td>Stephen</td>\n",
+       "      <td>None</td>\n",
+       "      <td>[{'state_code': None, 'city': None, 'city_id':...</td>\n",
+       "      <td>Gillespie</td>\n",
+       "      <td>Co-PI</td>\n",
+       "      <td>Henry</td>\n",
+       "      <td>grant.8856896</td>\n",
+       "      <td>EQATA: Equitable access to Quality Antibiotic ...</td>\n",
+       "      <td>2020-03-31</td>\n",
+       "      <td>2022-03-30</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>8</th>\n",
+       "      <td>Patrick</td>\n",
+       "      <td>None</td>\n",
+       "      <td>[{'state_code': None, 'city': None, 'city_id':...</td>\n",
+       "      <td>Steel</td>\n",
+       "      <td>PI</td>\n",
+       "      <td></td>\n",
+       "      <td>grant.8857053</td>\n",
+       "      <td>Patient-centric supramolecular formulations of...</td>\n",
+       "      <td>2020-03-31</td>\n",
+       "      <td>2022-03-30</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>9</th>\n",
+       "      <td>Sundar</td>\n",
+       "      <td>None</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>Shyam</td>\n",
+       "      <td>Co-PI</td>\n",
+       "      <td></td>\n",
+       "      <td>grant.8857053</td>\n",
+       "      <td>Patient-centric supramolecular formulations of...</td>\n",
+       "      <td>2020-03-31</td>\n",
+       "      <td>2022-03-30</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "        first_name    id                                       affiliations  \\\n",
+       "0  Marie-Valentine  None  [{'city': None, 'city_id': '2659994', 'country...   \n",
+       "1           Gordon  None  [{'state_code': None, 'city': None, 'city_id':...   \n",
+       "2           Thomas  None                                                NaN   \n",
+       "3             Paul  None                                                NaN   \n",
+       "4          Rebecca  None  [{'state_code': None, 'city': None, 'city_id':...   \n",
+       "5             Hong  None                                                NaN   \n",
+       "6         Matthias  None                                                NaN   \n",
+       "7          Stephen  None  [{'state_code': None, 'city': None, 'city_id':...   \n",
+       "8          Patrick  None  [{'state_code': None, 'city': None, 'city_id':...   \n",
+       "9           Sundar  None                                                NaN   \n",
+       "\n",
+       "   last_name   role middle_name       grant_id  \\\n",
+       "0     Florin     PI        None  grant.8968483   \n",
+       "1   Florence     PI        John  grant.8856896   \n",
+       "2      Dzeha  Co-PI              grant.8856896   \n",
+       "3    Kazyoba  Co-PI      Erasto  grant.8856896   \n",
+       "4       Goss  Co-PI        Jane  grant.8856896   \n",
+       "5        Gao  Co-PI              grant.8856896   \n",
+       "6       Agbo  Co-PI   Onyebuchi  grant.8856896   \n",
+       "7  Gillespie  Co-PI       Henry  grant.8856896   \n",
+       "8      Steel     PI              grant.8857053   \n",
+       "9      Shyam  Co-PI              grant.8857053   \n",
+       "\n",
+       "                                         grant_title grant_start_date  \\\n",
+       "0  Adressing concerns over gene drive based malar...       2020-04-01   \n",
+       "1  EQATA: Equitable access to Quality Antibiotic ...       2020-03-31   \n",
+       "2  EQATA: Equitable access to Quality Antibiotic ...       2020-03-31   \n",
+       "3  EQATA: Equitable access to Quality Antibiotic ...       2020-03-31   \n",
+       "4  EQATA: Equitable access to Quality Antibiotic ...       2020-03-31   \n",
+       "5  EQATA: Equitable access to Quality Antibiotic ...       2020-03-31   \n",
+       "6  EQATA: Equitable access to Quality Antibiotic ...       2020-03-31   \n",
+       "7  EQATA: Equitable access to Quality Antibiotic ...       2020-03-31   \n",
+       "8  Patient-centric supramolecular formulations of...       2020-03-31   \n",
+       "9  Patient-centric supramolecular formulations of...       2020-03-31   \n",
+       "\n",
+       "  grant_end_date  \n",
+       "0     2020-06-30  \n",
+       "1     2022-03-30  \n",
+       "2     2022-03-30  \n",
+       "3     2022-03-30  \n",
+       "4     2022-03-30  \n",
+       "5     2022-03-30  \n",
+       "6     2022-03-30  \n",
+       "7     2022-03-30  \n",
+       "8     2022-03-30  \n",
+       "9     2022-03-30  "
+      ]
+     },
+     "execution_count": 21,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "res.as_dataframe_investigators().head(10)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "p2eN2Y8GR4DT"
+   },
+   "source": [
+    "## 4. Dataframe Methods for 'Concepts' queries\n",
+    "\n",
+    "These methods can be used with all content types that support the extraction of concepts, i.e., `publications` or `grants`. See the [official documentation](https://docs.dimensions.ai/dsl/data-sources.html) for more details."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "p2eN2Y8GR4DT"
+   },
+   "source": [
+    "### Extracting Concepts: `as_dataframe_concepts`\n",
+    "\n",
+    "The `as_dataframe_concepts` method allows to quickly extract all concepts attached to a record, **one row per concept**, so to make it easier to do operations like counting or plotting the results.\n",
+    "\n",
+    "NOTE: concepts are normalized keywords describing the main topics of a document, which are automatically derived from the full text  using machine learning. In the JSON data, concepts are returned with an ordered list (=first items are the most relevant), like this one: \n",
+    "\n",
+    "```\n",
+    "{'concepts': ['electrochemical conversion',\n",
+    "  'conversion',\n",
+    "  'CO2',\n",
+    "  'formate',\n",
+    "  'formic acid',\n",
+    "  'acid'],\n",
+    " 'id': 'pub.1122072646'}\n",
+    "```\n",
+    "\n",
+    "The `as_dataframe_concepts` extracts all concepts data from JSON to a dataframe (ps this is functionally equivalent to pandas's [explode method](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.explode.html)). Moreover, it automatically creates a number of metrics that can be used to carry out further analyses:\n",
+    "\n",
+    "1. `concepts_count`: an integer representing the total number of concepts per single document ID.\n",
+    "2. `score`: a float representing the weighted importance of the concept within a document. This is obtained by  normalizing its ranking against the total number of concepts for a single document. E.g., if a document has 10 concepts in total, the first concept gets a score=1, the second score=0.9, etc..\n",
+    "3. `frequency`: an integer representing how often that concept occurs within the full results-set returned by a query, i.e. how many documents have that concept name. E.g., if a concept appears in 5 documents, frequency=5.\n",
+    "4. `score_avg`: the average (mean) value of all scores for a single concept, across the full set of documents returned by a query. \n",
+    "\n",
+    "\n",
+    "By sorting and segmenting concepts using these parameters, it is possible to fine-tune the concept extraction algorithm, so to make more suitable for the application at hand."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Returned Publications: 100 (total = 101989)\n"
+     ]
+    },
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>year</th>\n",
+       "      <th>id</th>\n",
+       "      <th>title</th>\n",
+       "      <th>concept</th>\n",
+       "      <th>concepts_count</th>\n",
+       "      <th>score</th>\n",
+       "      <th>frequency</th>\n",
+       "      <th>score_avg</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>2019</td>\n",
+       "      <td>pub.1122259223</td>\n",
+       "      <td>Surface Modification of Water Purification Mem...</td>\n",
+       "      <td>method</td>\n",
+       "      <td>54</td>\n",
+       "      <td>1.000</td>\n",
+       "      <td>23</td>\n",
+       "      <td>0.574</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>2019</td>\n",
+       "      <td>pub.1122259223</td>\n",
+       "      <td>Surface Modification of Water Purification Mem...</td>\n",
+       "      <td>water supply</td>\n",
+       "      <td>54</td>\n",
+       "      <td>0.981</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0.981</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>2019</td>\n",
+       "      <td>pub.1122259223</td>\n",
+       "      <td>Surface Modification of Water Purification Mem...</td>\n",
+       "      <td>cycle</td>\n",
+       "      <td>54</td>\n",
+       "      <td>0.963</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0.963</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>2019</td>\n",
+       "      <td>pub.1122259223</td>\n",
+       "      <td>Surface Modification of Water Purification Mem...</td>\n",
+       "      <td>desalination</td>\n",
+       "      <td>54</td>\n",
+       "      <td>0.944</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0.944</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>2019</td>\n",
+       "      <td>pub.1122259223</td>\n",
+       "      <td>Surface Modification of Water Purification Mem...</td>\n",
+       "      <td>water reuse</td>\n",
+       "      <td>54</td>\n",
+       "      <td>0.926</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0.926</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   year              id                                              title  \\\n",
+       "0  2019  pub.1122259223  Surface Modification of Water Purification Mem...   \n",
+       "1  2019  pub.1122259223  Surface Modification of Water Purification Mem...   \n",
+       "2  2019  pub.1122259223  Surface Modification of Water Purification Mem...   \n",
+       "3  2019  pub.1122259223  Surface Modification of Water Purification Mem...   \n",
+       "4  2019  pub.1122259223  Surface Modification of Water Purification Mem...   \n",
+       "\n",
+       "        concept  concepts_count  score  frequency  score_avg  \n",
+       "0        method              54  1.000         23      0.574  \n",
+       "1  water supply              54  0.981          1      0.981  \n",
+       "2         cycle              54  0.963          1      0.963  \n",
+       "3  desalination              54  0.944          1      0.944  \n",
+       "4   water reuse              54  0.926          1      0.926  "
+      ]
+     },
+     "execution_count": 22,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "q = \"\"\"search publications for \"graphene\" \n",
+    "            where year=2019 \n",
+    "       return publications[id+title+year+concepts] limit 100\"\"\"\n",
+    "concepts = dsl.query(q).as_dataframe_concepts()\n",
+    "concepts.head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "**E.g. Sorting by score_avg** permits to highlight concepts that are important throughout the dataset.\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 24,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [],
+   "source": [
+    "concepts_unique = concepts.drop_duplicates(\"concept\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 28,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>year</th>\n",
+       "      <th>id</th>\n",
+       "      <th>title</th>\n",
+       "      <th>concept</th>\n",
+       "      <th>concepts_count</th>\n",
+       "      <th>score</th>\n",
+       "      <th>frequency</th>\n",
+       "      <th>score_avg</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>2837</th>\n",
+       "      <td>2019</td>\n",
+       "      <td>pub.1123776488</td>\n",
+       "      <td>Potency of Bacillus subtilis and Lysinibacillu...</td>\n",
+       "      <td>leaf blight disease</td>\n",
+       "      <td>41</td>\n",
+       "      <td>1.000</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1.000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3264</th>\n",
+       "      <td>2019</td>\n",
+       "      <td>pub.1122232849</td>\n",
+       "      <td>Development and Validation of HPTLC and Green ...</td>\n",
+       "      <td>sensitive chromatographic method</td>\n",
+       "      <td>47</td>\n",
+       "      <td>1.000</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1.000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>103</th>\n",
+       "      <td>2019</td>\n",
+       "      <td>pub.1123010291</td>\n",
+       "      <td>Chitosan for Sensors and Electrochemical Appli...</td>\n",
+       "      <td>use of chitosan</td>\n",
+       "      <td>35</td>\n",
+       "      <td>1.000</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1.000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2308</th>\n",
+       "      <td>2019</td>\n",
+       "      <td>pub.1123011734</td>\n",
+       "      <td>Chitosan‐Based Drug Delivery Systems</td>\n",
+       "      <td>drug delivery systems</td>\n",
+       "      <td>42</td>\n",
+       "      <td>1.000</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1.000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>549</th>\n",
+       "      <td>2019</td>\n",
+       "      <td>pub.1112217617</td>\n",
+       "      <td>MEMS vibrational energy harvesters</td>\n",
+       "      <td>fundamental mechanisms</td>\n",
+       "      <td>38</td>\n",
+       "      <td>1.000</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1.000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>...</th>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>862</th>\n",
+       "      <td>2019</td>\n",
+       "      <td>pub.1123764869</td>\n",
+       "      <td>Design of Monovalent Ion Selective Membranes f...</td>\n",
+       "      <td>selective membranes</td>\n",
+       "      <td>60</td>\n",
+       "      <td>0.017</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0.017</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2527</th>\n",
+       "      <td>2019</td>\n",
+       "      <td>pub.1123764790</td>\n",
+       "      <td>Enhancement of HDO Activity of MoP/SiO2 Cataly...</td>\n",
+       "      <td>alumina</td>\n",
+       "      <td>61</td>\n",
+       "      <td>0.016</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0.016</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3911</th>\n",
+       "      <td>2019</td>\n",
+       "      <td>pub.1123469635</td>\n",
+       "      <td>Inkjet-Printed Imbedded Graphene Nanoplatelet/...</td>\n",
+       "      <td>photodetection</td>\n",
+       "      <td>61</td>\n",
+       "      <td>0.016</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0.016</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>802</th>\n",
+       "      <td>2019</td>\n",
+       "      <td>pub.1123764781</td>\n",
+       "      <td>Microstructure, Wettability, Corrosion Resista...</td>\n",
+       "      <td>incorporation content</td>\n",
+       "      <td>67</td>\n",
+       "      <td>0.015</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0.015</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3131</th>\n",
+       "      <td>2019</td>\n",
+       "      <td>pub.1122803664</td>\n",
+       "      <td>Tetrahedral amorphous carbon prepared filter c...</td>\n",
+       "      <td>LEDs</td>\n",
+       "      <td>71</td>\n",
+       "      <td>0.014</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0.014</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>2558 rows × 8 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "      year              id                                              title  \\\n",
+       "2837  2019  pub.1123776488  Potency of Bacillus subtilis and Lysinibacillu...   \n",
+       "3264  2019  pub.1122232849  Development and Validation of HPTLC and Green ...   \n",
+       "103   2019  pub.1123010291  Chitosan for Sensors and Electrochemical Appli...   \n",
+       "2308  2019  pub.1123011734               Chitosan‐Based Drug Delivery Systems   \n",
+       "549   2019  pub.1112217617                 MEMS vibrational energy harvesters   \n",
+       "...    ...             ...                                                ...   \n",
+       "862   2019  pub.1123764869  Design of Monovalent Ion Selective Membranes f...   \n",
+       "2527  2019  pub.1123764790  Enhancement of HDO Activity of MoP/SiO2 Cataly...   \n",
+       "3911  2019  pub.1123469635  Inkjet-Printed Imbedded Graphene Nanoplatelet/...   \n",
+       "802   2019  pub.1123764781  Microstructure, Wettability, Corrosion Resista...   \n",
+       "3131  2019  pub.1122803664  Tetrahedral amorphous carbon prepared filter c...   \n",
+       "\n",
+       "                               concept  concepts_count  score  frequency  \\\n",
+       "2837               leaf blight disease              41  1.000          1   \n",
+       "3264  sensitive chromatographic method              47  1.000          1   \n",
+       "103                    use of chitosan              35  1.000          1   \n",
+       "2308             drug delivery systems              42  1.000          1   \n",
+       "549             fundamental mechanisms              38  1.000          1   \n",
+       "...                                ...             ...    ...        ...   \n",
+       "862                selective membranes              60  0.017          1   \n",
+       "2527                           alumina              61  0.016          1   \n",
+       "3911                    photodetection              61  0.016          1   \n",
+       "802              incorporation content              67  0.015          1   \n",
+       "3131                              LEDs              71  0.014          1   \n",
+       "\n",
+       "      score_avg  \n",
+       "2837      1.000  \n",
+       "3264      1.000  \n",
+       "103       1.000  \n",
+       "2308      1.000  \n",
+       "549       1.000  \n",
+       "...         ...  \n",
+       "862       0.017  \n",
+       "2527      0.016  \n",
+       "3911      0.016  \n",
+       "802       0.015  \n",
+       "3131      0.014  \n",
+       "\n",
+       "[2558 rows x 8 columns]"
+      ]
+     },
+     "execution_count": 28,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "concepts_unique.sort_values(\"score_avg\", ascending=False)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "**E.g. Sorting by frequency** highlights concepts that are shared by many documents, but are not necessarily having a high score."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 29,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>year</th>\n",
+       "      <th>id</th>\n",
+       "      <th>title</th>\n",
+       "      <th>concept</th>\n",
+       "      <th>concepts_count</th>\n",
+       "      <th>score</th>\n",
+       "      <th>frequency</th>\n",
+       "      <th>score_avg</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>119</th>\n",
+       "      <td>2019</td>\n",
+       "      <td>pub.1123010291</td>\n",
+       "      <td>Chitosan for Sensors and Electrochemical Appli...</td>\n",
+       "      <td>properties</td>\n",
+       "      <td>35</td>\n",
+       "      <td>0.543</td>\n",
+       "      <td>35</td>\n",
+       "      <td>0.627</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>114</th>\n",
+       "      <td>2019</td>\n",
+       "      <td>pub.1123010291</td>\n",
+       "      <td>Chitosan for Sensors and Electrochemical Appli...</td>\n",
+       "      <td>materials</td>\n",
+       "      <td>35</td>\n",
+       "      <td>0.686</td>\n",
+       "      <td>33</td>\n",
+       "      <td>0.583</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>107</th>\n",
+       "      <td>2019</td>\n",
+       "      <td>pub.1123010291</td>\n",
+       "      <td>Chitosan for Sensors and Electrochemical Appli...</td>\n",
+       "      <td>applications</td>\n",
+       "      <td>35</td>\n",
+       "      <td>0.886</td>\n",
+       "      <td>32</td>\n",
+       "      <td>0.439</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>128</th>\n",
+       "      <td>2019</td>\n",
+       "      <td>pub.1123010291</td>\n",
+       "      <td>Chitosan for Sensors and Electrochemical Appli...</td>\n",
+       "      <td>effect</td>\n",
+       "      <td>35</td>\n",
+       "      <td>0.286</td>\n",
+       "      <td>24</td>\n",
+       "      <td>0.562</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>2019</td>\n",
+       "      <td>pub.1122259223</td>\n",
+       "      <td>Surface Modification of Water Purification Mem...</td>\n",
+       "      <td>method</td>\n",
+       "      <td>54</td>\n",
+       "      <td>1.000</td>\n",
+       "      <td>23</td>\n",
+       "      <td>0.574</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>...</th>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1316</th>\n",
+       "      <td>2019</td>\n",
+       "      <td>pub.1124185006</td>\n",
+       "      <td>Topological Descriptor of 2-Dimensional Silico...</td>\n",
+       "      <td>silicon carbon</td>\n",
+       "      <td>18</td>\n",
+       "      <td>0.111</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0.111</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1315</th>\n",
+       "      <td>2019</td>\n",
+       "      <td>pub.1124185006</td>\n",
+       "      <td>Topological Descriptor of 2-Dimensional Silico...</td>\n",
+       "      <td>topological descriptors</td>\n",
+       "      <td>18</td>\n",
+       "      <td>0.167</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0.167</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1312</th>\n",
+       "      <td>2019</td>\n",
+       "      <td>pub.1124185006</td>\n",
+       "      <td>Topological Descriptor of 2-Dimensional Silico...</td>\n",
+       "      <td>Si2C3</td>\n",
+       "      <td>18</td>\n",
+       "      <td>0.333</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0.333</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1311</th>\n",
+       "      <td>2019</td>\n",
+       "      <td>pub.1124185006</td>\n",
+       "      <td>Topological Descriptor of 2-Dimensional Silico...</td>\n",
+       "      <td>descriptors</td>\n",
+       "      <td>18</td>\n",
+       "      <td>0.389</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0.389</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3911</th>\n",
+       "      <td>2019</td>\n",
+       "      <td>pub.1123469635</td>\n",
+       "      <td>Inkjet-Printed Imbedded Graphene Nanoplatelet/...</td>\n",
+       "      <td>photodetection</td>\n",
+       "      <td>61</td>\n",
+       "      <td>0.016</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0.016</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>2558 rows × 8 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "      year              id                                              title  \\\n",
+       "119   2019  pub.1123010291  Chitosan for Sensors and Electrochemical Appli...   \n",
+       "114   2019  pub.1123010291  Chitosan for Sensors and Electrochemical Appli...   \n",
+       "107   2019  pub.1123010291  Chitosan for Sensors and Electrochemical Appli...   \n",
+       "128   2019  pub.1123010291  Chitosan for Sensors and Electrochemical Appli...   \n",
+       "0     2019  pub.1122259223  Surface Modification of Water Purification Mem...   \n",
+       "...    ...             ...                                                ...   \n",
+       "1316  2019  pub.1124185006  Topological Descriptor of 2-Dimensional Silico...   \n",
+       "1315  2019  pub.1124185006  Topological Descriptor of 2-Dimensional Silico...   \n",
+       "1312  2019  pub.1124185006  Topological Descriptor of 2-Dimensional Silico...   \n",
+       "1311  2019  pub.1124185006  Topological Descriptor of 2-Dimensional Silico...   \n",
+       "3911  2019  pub.1123469635  Inkjet-Printed Imbedded Graphene Nanoplatelet/...   \n",
+       "\n",
+       "                      concept  concepts_count  score  frequency  score_avg  \n",
+       "119                properties              35  0.543         35      0.627  \n",
+       "114                 materials              35  0.686         33      0.583  \n",
+       "107              applications              35  0.886         32      0.439  \n",
+       "128                    effect              35  0.286         24      0.562  \n",
+       "0                      method              54  1.000         23      0.574  \n",
+       "...                       ...             ...    ...        ...        ...  \n",
+       "1316           silicon carbon              18  0.111          1      0.111  \n",
+       "1315  topological descriptors              18  0.167          1      0.167  \n",
+       "1312                    Si2C3              18  0.333          1      0.333  \n",
+       "1311              descriptors              18  0.389          1      0.389  \n",
+       "3911           photodetection              61  0.016          1      0.016  \n",
+       "\n",
+       "[2558 rows x 8 columns]"
+      ]
+     },
+     "execution_count": 29,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "concepts_unique.sort_values(\"frequency\", ascending=False)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "#### Which concepts metrics should you use? \n",
+    "\n",
+    "That depends on the data you have (eg how homogeneous it is) and your projects goals too. \n",
+    "\n",
+    "The various indicators available are meant to help you construct filtered lists of concepts more easily. But it's down to you to determine the right combination of `score` and `frequency` so that the 'right' concepts become more apparent! \n",
+    "\n",
+    "Tip: see also the [Topic Modeling Analysis](https://api-lab.dimensions.ai/cookbooks/2-publications/Simple-topic-analysis.html) notebook for more examples about this topic.\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "WkolG6VKR4Dj"
+   },
+   "source": [
+    "## Conclusions \n",
+    "\n",
+    "Moving Dimensions API results to pandas dataframes **makes it easier** to **analyze the data** and **answer research questions**. \n",
+    "\n",
+    "Note: the examples above only scratch the surface of what can be done with pandas! \n",
+    "\n",
+    "> Tip: see also the *Dimcli: Magic Commands* notebook to find out what shortcuts are available for these dataframe methods. "
+   ]
+  }
+ ],
+ "metadata": {
+  "colab": {
+   "collapsed_sections": [],
+   "name": "3-Working-with-dataframes.ipynb",
+   "provenance": [],
+   "toc_visible": true
+  },
+  "kernel_info": {
+   "name": "python3"
+  },
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.4"
+  },
+  "nteract": {
+   "version": "0.14.5"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

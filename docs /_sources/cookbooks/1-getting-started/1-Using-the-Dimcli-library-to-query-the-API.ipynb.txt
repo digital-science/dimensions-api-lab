@@ -1,0 +1,709 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "064T7id29lAk"
+   },
+   "source": [
+    "# The Dimcli Python library: Installation and Querying\n",
+    "\n",
+    "The purpose of this notebook is to show how to use Dimcli. [Dimcli](https://github.com/lambdamusic/dimcli) is an open source Python client for accessing the Dimensions Analytics API. It makes it easier to authenticate against the API, send queries to it and process the JSON data being returned.\n",
+    "\n",
+    "Dimcli includes also a command line interface (CLI) that aims at simplifying the process of learning the grammar of the Dimensions Search Language (DSL). Running `dimcli` from the terminal opens up an interactive query console with syntax autocomplete, persistent history across sessions, pretty-printing and preview of JSON results, export to HTML and CSV, and more.\n",
+    "\n",
+    "> This guide assumes that you already have a Python 3 working environment and [pip](https://pypi.org/project/pip/) - the python package manager - installed. For more background, see this [link](https://realpython.com/installing-python/)."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "oSNg5b0f9lAl"
+   },
+   "source": [
+    "## Installation"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "epDkbGsg9lAl"
+   },
+   "source": [
+    "You can install DimCli as follows from a Jupyter notebook:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {},
+    "colab_type": "code",
+    "id": "xkVHsVNf9lAm"
+   },
+   "outputs": [],
+   "source": [
+    "!pip install dimcli -U"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "_RsBBfOJ9lAp"
+   },
+   "source": [
+    "Then each time you want to use it within a notebook you can load it like this:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {},
+    "colab_type": "code",
+    "id": "712QV1wY9lAq"
+   },
+   "outputs": [],
+   "source": [
+    "import dimcli"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "LTfvVpNo9lAs"
+   },
+   "source": [
+    "## Authentication \n",
+    "\n",
+    "There are [different ways](https://github.com/lambdamusic/dimcli#the-credentials-file) to authenticate with the Dimensions API using DimCli. The easiest is passing your credentials explicilty like this: "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [],
+   "source": [
+    "dimcli.login(username=\"dimensions-username@me.com\", \n",
+    "             password=\"my-secret-password\", \n",
+    "             endpoint=\"https://your-url.dimensions.ai\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "BFSHORhA9lAu"
+   },
+   "source": [
+    "This method could be handy if you quickly want to login and cannot save a credentials file. However, this method is not ideal if you want to protect your credentials, especially within a shared environment.  \n",
+    "\n",
+    "### More secure method: storing a private credentials file\n",
+    "\n",
+    "DimCli allows you to store your access credentials (e.g. email and password) in a file on your computer, so that you don't have to type it in each time. \n",
+    "\n",
+    "If you have access to a terminal prompt, you can use Dimcli's setup assistant to automatically create the API credentials file (for more info see also [the docs](https://github.com/digital-science/dimcli#creating-a-credentials-file-using-the-helper-script-recommended)): \n",
+    "\n",
+    "```\n",
+    "dimcli --init\n",
+    "```\n",
+    "\n",
+    "Alternatively, if you don't have access to a terminal prompt, you can create the credentials file manually as follows:\n",
+    "\n",
+    "* create a file called `dsl.ini` in the uppermost directory where your notebooks are located\n",
+    "* open the file and add your credentials, making sure that\n",
+    "    * the text structure is **exactly** the same as below (in particular, don't change the `instance.live` directive unless you know what you're doing!)\n",
+    "    * you update the login and password fields as needed!\n",
+    "   \n",
+    "This is what the `dsl.ini` file should look like:\n",
+    "\n",
+    "```\n",
+    "[instance.live]\n",
+    "url=https://app.dimensions.ai\n",
+    "login=user@mail.com\n",
+    "password=yourpasswordhere\n",
+    "```\n",
+    "\n",
+    "Then, all you have to do is: "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {},
+    "colab_type": "code",
+    "id": "CftB8QLq9lAv",
+    "outputId": "633b1708-252d-4a93-fe00-8e18a60af4a4"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "DimCli v0.6.2 - Succesfully connected to <https://app.dimensions.ai> (method: dsl.ini file)\n"
+     ]
+    }
+   ],
+   "source": [
+    "dimcli.login()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "5HG-omZ79lAy"
+   },
+   "source": [
+    "## Querying \n",
+    "\n",
+    "Dimcli provides a few handy shortcuts for querying the API. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "5h9SgzfoS2QZ"
+   },
+   "source": [
+    "### Simple Querying"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 34
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 1882,
+     "status": "ok",
+     "timestamp": 1574676681396,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "OCKXidss9lAy",
+    "outputId": "36908507-d9c1-4eb9-f160-aca8f1bc63e6"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Returned Publications: 20 (total = 1411777)\n"
+     ]
+    }
+   ],
+   "source": [
+    "dsl = dimcli.Dsl()\n",
+    "data = dsl.query(\"\"\"search publications for \"black holes\" return publications\"\"\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "apuFkc5fET7_"
+   },
+   "source": [
+    "By default, Dimcli prints out a short statement with info about the query. \n",
+    "You can turn that off by passing the argument `verbose=False`. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {},
+    "colab_type": "code",
+    "id": "1xe8-PpzS2Qc"
+   },
+   "outputs": [],
+   "source": [
+    "data = dsl.query(\"\"\"search publications for \"black holes\" return publications\"\"\", verbose=False)\n",
+    "# no feedback this time!"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "8lA7sQyY9lA0"
+   },
+   "source": [
+    "The raw json data is accessible via the `json` property of the resulting object."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 34
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 1012,
+     "status": "ok",
+     "timestamp": 1574676684782,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "4EnqfPfO9lA0",
+    "outputId": "0cc0db4b-d001-45c9-d1db-3ae3e2797d25"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "dict_keys(['_stats', 'publications'])"
+      ]
+     },
+     "execution_count": 8,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "data.json.keys()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "rSSDlPiD9lA2"
+   },
+   "source": [
+    "The main JSON keys of the data returned are accessible as properties"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 34
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 737,
+     "status": "ok",
+     "timestamp": 1574676694305,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "GL0DY1x79lA3",
+    "outputId": "93f95956-3737-4389-eb30-a439d347e21a"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "20"
+      ]
+     },
+     "execution_count": 9,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "len(data.publications)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "bd88h2snDJbU"
+   },
+   "source": [
+    "The `count_batch` and `count_total` methods provide quick shortcuts to find out how many records are available:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 34
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 482,
+     "status": "ok",
+     "timestamp": 1574676759891,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "gtBMBp1eC60L",
+    "outputId": "6a7a7b7c-dab0-4402-f80e-15f2739b1472"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "We got 20 results out of 1411777\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(\"We got\", data.count_batch, \"results out of\", data.count_total)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "yQSih8GeDu0e"
+   },
+   "source": [
+    "If the query returns an error, the `errors` and `errors_string` methods can be handy too:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 105
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 636,
+     "status": "ok",
+     "timestamp": 1574677055959,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "t4el0Zg-Dez8",
+    "outputId": "b17a7fe4-9d7c-4624-d5fe-145bcda45abf"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Returned Errors: 1\n",
+      "Semantic Error\n",
+      "Semantic errors found:\n",
+      "\tFacet 'spaceships' is not present in source 'publications'. Available facets are: FOR,FOR_first,HRCS_HC,HRCS_RAC,RCDC,category_bra,category_for,category_hra,category_hrcs_hc,category_hrcs_rac,category_icrp_cso,category_icrp_ct,category_rcdc,category_ua,funder_countries,funders,journal,journal_lists,mesh_terms,open_access_categories,publisher,research_org_cities,research_org_countries,research_org_state_codes,research_orgs,researchers,times_cited,type,year\n"
+     ]
+    }
+   ],
+   "source": [
+    "# ps errors are printed out by default \n",
+    "data = dsl.query(\"\"\"search publications for \"black holes\" return spaceships\"\"\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 71
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 481,
+     "status": "ok",
+     "timestamp": 1574677009997,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "7FA2USyUEB-a",
+    "outputId": "6874439a-6fe0-4f16-bacf-7d1226862d7e"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Semantic ErrorSemantic errors found:\n",
+      "\tFacet 'spaceships' is not present in source 'publications'. Available facets are: FOR,FOR_first,HRCS_HC,HRCS_RAC,RCDC,category_bra,category_for,category_hra,category_hrcs_hc,category_hrcs_rac,category_icrp_cso,category_icrp_ct,category_rcdc,category_ua,funder_countries,funders,journal,journal_lists,mesh_terms,open_access_categories,publisher,research_org_cities,research_org_countries,research_org_state_codes,research_orgs,researchers,times_cited,type,year\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(data.errors_string)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "GftbbgqN9lA4"
+   },
+   "source": [
+    "### Iterative querying (loops)\n",
+    "\n",
+    "Dimcli includes a utility method for looping over a query that produces **more than 1000 results** (the max number of records a single query can return). \n",
+    "This method basically generates a loop in the background, which goes through all results available for a query using the [limit/skip syntax](https://docs.dimensions.ai/dsl/language.html#paginating-results).\n",
+    "\n",
+    "Looped queries are very useful e.g. if you want to quickly extract a full dataset. There are a few things to remember though: \n",
+    "\n",
+    "* Each query happens after **one second**, so to comply with the 30 queries per minute API limit. \n",
+    "* The results are collated into a single `dimcli.Dataset` object (same as with normal querying) that can be accessed via the methods illustrated above. So no need for any extra aggregration step when the query completes.\n",
+    "* You can use `verbose=False` to off the notifications e.g. within a larger script with multiple steps.\n",
+    "* You can pass `limit = 500` (or any other number <=1000) to specify how many records to extract per iteration - which by default is 1000 (the max amount). This can be handy i.e. when a query is particularly long and so it may impact the API performance (or cause an error); in this case returning less records per iteration ensures that the API server never gets overloaded. \n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 85
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 10147,
+     "status": "ok",
+     "timestamp": 1574677166270,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "BJcHIwBk9lA5",
+    "outputId": "d5e60f60-2b48-4235-84c7-73a2d57e4feb"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "1000 / 3077\n",
+      "2000 / 3077\n",
+      "3000 / 3077\n",
+      "3077 / 3077\n"
+     ]
+    }
+   ],
+   "source": [
+    "data = dsl.query_iterative(\"\"\"search publications for \"black holes\" where year=1990 and times_cited > 10 return publications\"\"\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 34
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 459,
+     "status": "ok",
+     "timestamp": 1574677171411,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": 0
+    },
+    "id": "3WXoqZEC9lA6",
+    "outputId": "f6f4a505-b1d4-4014-b5bc-b458cc92b981"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "3077"
+      ]
+     },
+     "execution_count": 14,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "len(data.publications)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "6g6oQUGFMH45"
+   },
+   "source": [
+    "## Command line interface\n",
+    "\n",
+    "If you have access to a command-prompt or terminal, Dimcli includes a handy [Command Line Interface](https://en.wikipedia.org/wiki/Command-line_interface) that allows to query the Dimensions API interactively, similarly to what a *query console* would do. \n",
+    "\n",
+    "The CLI has several features but, most importantly, it allows to use the TAB key to autocomplete your queries (based on the latest API syntax and fields), which makes it an ideal tool for both newbies and expert users.\n",
+    "\n",
+    "\n",
+    "### Running the CLI\n",
+    "\n",
+    "On a Jupyterlab environment, for example, use the menu `File > new > terminal` to open a terminal window. Then simply type in `dimcli` to start:\n",
+    "\n",
+    "```\n",
+    "$ dimcli\n",
+    "\n",
+    "Dimcli - Dimensions API Client (v0.6.6.5)\n",
+    "Welcome! Type help for more info.\n",
+    "Using endpoint: https://app.dimensions.ai - DSL version: 1.23.1\n",
+    "\n",
+    "> help\n",
+    "\n",
+    "COMMANDS LIST\n",
+    "====================\n",
+    "All special commands start with '.'\n",
+    "----\n",
+    ">>> help: show this help message\n",
+    "----\n",
+    ">>> <tab>:  autocomplete.\n",
+    "----\n",
+    ">>> .docs: print out documentation for DSL data objects.\n",
+    ">>> .export_as_json: save results from last query as JSON file.\n",
+    ">>> .export_as_csv: save results from last query as CSV file.\n",
+    ">>> .export_as_html: save results from last query as HTML file.\n",
+    ">>> .export_as_bar_chart: save results from last query as Plotly bar chart.\n",
+    ">>> .show [optional: N]: print N results from last query, trying to build URLs for objects. Default N=10.\n",
+    ">>> .json_compact: print results of last query as single-line JSON.\n",
+    ">>> .json_full: print results of last query as formatted JSON.\n",
+    ">>> .url: resolve a Dimensions ID into a public URL.\n",
+    "----\n",
+    ">>> <Ctrl-o>: search docs online.\n",
+    ">>> <Ctrl-c>: abort query.\n",
+    ">>> <Ctrl-d>: exit console.\n",
+    "----\n",
+    ">>> quit: exit console\n",
+    "====================\n",
+    "```\n",
+    "\n",
+    "See the video below for a quick demonstration of the query autocomplete functionalities, or please visit the [Github repo](https://github.com/digital-science/dimcli#dimcli-as-a-command-line-interface) for more information. \n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<img src=\"http://api-sample-data.dimensions.ai/videos/dimcli_animated.gif\" width=\"800\"/>"
+      ],
+      "text/plain": [
+       "<IPython.core.display.Image object>"
+      ]
+     },
+     "execution_count": 1,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "from IPython.display import Image\n",
+    "Image(url= \"http://api-sample-data.dimensions.ai/videos/dimcli_animated.gif\", width=800)"
+   ]
+  }
+ ],
+ "metadata": {
+  "colab": {
+   "collapsed_sections": [],
+   "name": "1-Using-the-Dimcli-library-to-query-the-API.ipynb",
+   "provenance": []
+  },
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.4"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}
