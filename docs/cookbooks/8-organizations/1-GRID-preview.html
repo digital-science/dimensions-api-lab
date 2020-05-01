@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Searching GRID organizations using the Dimensions API &#8212; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
+    <title>The Organizations API: Features Overview &#8212; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
@@ -19,7 +19,7 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Identifying Industry Collaborations" href="2-Industry-Collaboration.html" />
+    <link rel="next" title="Identifying the Industry Collaborators of an Academic Institution" href="2-Industry-Collaboration.html" />
     <link rel="prev" title="Extracting researchers based on affiliations and publications history" href="../7-researchers/Researchers-Search-tips-V2.html" />
        
 
@@ -36,7 +36,7 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="2-Industry-Collaboration.html" title="Identifying Industry Collaborations"
+          <a href="2-Industry-Collaboration.html" title="Identifying the Industry Collaborators of an Academic Institution"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="../7-researchers/Researchers-Search-tips-V2.html" title="Extracting researchers based on affiliations and publications history"
@@ -255,9 +255,16 @@ div.rendered_html tbody tr:hover {
 <a class="reference external image-reference" href="https://github.com/digital-science/dimensions-api-lab/blob/master/cookbooks/8-organizations/1-GRID-preview.ipynb"><img alt="../../_images/badge-github-custom.svg" src="../../_images/badge-github-custom.svg" /></a>
 <a class="reference external image-reference" href="https://www.dimensions.ai/dimensions-apis/"><img alt="../../_images/badge-dimensions-api.svg" src="../../_images/badge-dimensions-api.svg" /></a>
 <hr class="docutils" />
-<div class="section" id="Searching-GRID-organizations-using-the-Dimensions-API">
-<h1>Searching GRID organizations using the Dimensions API<a class="headerlink" href="#Searching-GRID-organizations-using-the-Dimensions-API" title="Permalink to this headline">¶</a></h1>
-<p>The purpose of this notebook is to demostrate the integration of <a class="reference external" href="https://grid.ac/">GRID</a> - the Global Research Identifiers Database - within the <a class="reference external" href="https://docs.dimensions.ai/dsl/">Dimensions Analytics API</a>.</p>
+<div class="section" id="The-Organizations-API:-Features-Overview">
+<h1>The Organizations API: Features Overview<a class="headerlink" href="#The-Organizations-API:-Features-Overview" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial provides an overview of the <a class="reference external" href="https://docs.dimensions.ai/dsl/datasource-organizations.html">Organizations data source</a> available via the <a class="reference external" href="https://docs.dimensions.ai/dsl/">Dimensions Analytics API</a>.</p>
+<p>Organizations data in Dimensions is based on <a class="reference external" href="https://grid.ac/">GRID</a> - the Global Research Identifiers Database.</p>
+<p>The topics covered in this notebook are:</p>
+<ul class="simple">
+<li><p>How to align your affiliation data with GRID/Dimensions using the API <a class="reference external" href="https://docs.dimensions.ai/dsl/1.21.0-preview/functions.html#function-extract-affiliations">disambiguation service</a></p></li>
+<li><p>How to retrieve organizations metadata using the <a class="reference external" href="https://docs.dimensions.ai/dsl/datasource-organizations.html">search fields</a> available</p></li>
+<li><p>How to use the <a class="reference external" href="https://docs.dimensions.ai/dsl/data-sources.html#metadata-api">schema API</a> to obtain some statistics about the Organizations data available</p></li>
+</ul>
 <div class="section" id="Prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
 <p>Please install the latest versions of these libraries to run this notebook.</p>
@@ -298,8 +305,8 @@ DimCli v0.6.6.5 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (me
 </div>
 </div>
 <hr class="docutils" />
-<div class="section" id="Matching-affiliation-data-to-GRID-IDs-using-extract_affiliations">
-<h2>Matching affiliation data to GRID IDs using <code class="docutils literal notranslate"><span class="pre">extract_affiliations</span></code><a class="headerlink" href="#Matching-affiliation-data-to-GRID-IDs-using-extract_affiliations" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="1.-Matching-affiliation-data-to-GRID-IDs-using-extract_affiliations">
+<h2>1. Matching affiliation data to GRID IDs using <code class="docutils literal notranslate"><span class="pre">extract_affiliations</span></code><a class="headerlink" href="#1.-Matching-affiliation-data-to-GRID-IDs-using-extract_affiliations" title="Permalink to this headline">¶</a></h2>
 <p>The API function <code class="docutils literal notranslate"><span class="pre">extract_affiliations</span></code> (<a class="reference external" href="https://docs.dimensions.ai/dsl/1.21.0-preview/functions.html#function-extract-affiliations">docs</a>) can be used to enrich private datasets including non-disambiguated organizations data with Dimensions IDs, so to then take advantage of the wealth of linked data available in Dimensions.</p>
 <p>For example, let’s assume our dataset has four columns (<em>affiliation name</em>, <em>city</em>, <em>state</em> and <em>country</em>) - any of which can be empty of course. Like this:</p>
 <div class="nbinput nblast docutils container">
@@ -402,8 +409,8 @@ DimCli v0.6.6.5 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (me
 </div>
 </div>
 </div>
-<div class="section" id="Searching-GRID-organizations">
-<h2>Searching GRID organizations<a class="headerlink" href="#Searching-GRID-organizations" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="2.-Searching-GRID-organizations">
+<h2>2. Searching GRID organizations<a class="headerlink" href="#2.-Searching-GRID-organizations" title="Permalink to this headline">¶</a></h2>
 <p>This can be done using full text search and/or fielded search.</p>
 <div class="section" id="Full-text-search">
 <h3>Full-text search<a class="headerlink" href="#Full-text-search" title="Permalink to this headline">¶</a></h3>
@@ -1383,8 +1390,8 @@ Returned Types: 8
 </div>
 </div>
 </div>
-<div class="section" id="A-closer-look-at-the-organizations-data-statistics">
-<h2>A closer look at the organizations data statistics<a class="headerlink" href="#A-closer-look-at-the-organizations-data-statistics" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="3.-A-closer-look-at-the-organizations-data-statistics">
+<h2>3. A closer look at the organizations data statistics<a class="headerlink" href="#3.-A-closer-look-at-the-organizations-data-statistics" title="Permalink to this headline">¶</a></h2>
 <p>The Dimensions Search Language <a class="reference external" href="https://docs.dimensions.ai/dsl/data.html#getting-documentation-programmatically">exposes programmatically metadata</a>, such as supported sources and entities, along with their fields, facets, fieldsets, metrics and search fields.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
@@ -2008,16 +2015,16 @@ if (outputEl) {{
             </a></p>
   <h3><a href="../../index.html">Table of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Searching GRID organizations using the Dimensions API</a><ul>
+<li><a class="reference internal" href="#">The Organizations API: Features Overview</a><ul>
 <li><a class="reference internal" href="#Prerequisites">Prerequisites</a></li>
-<li><a class="reference internal" href="#Matching-affiliation-data-to-GRID-IDs-using-extract_affiliations">Matching affiliation data to GRID IDs using <code class="docutils literal notranslate"><span class="pre">extract_affiliations</span></code></a></li>
-<li><a class="reference internal" href="#Searching-GRID-organizations">Searching GRID organizations</a><ul>
+<li><a class="reference internal" href="#1.-Matching-affiliation-data-to-GRID-IDs-using-extract_affiliations">1. Matching affiliation data to GRID IDs using <code class="docutils literal notranslate"><span class="pre">extract_affiliations</span></code></a></li>
+<li><a class="reference internal" href="#2.-Searching-GRID-organizations">2. Searching GRID organizations</a><ul>
 <li><a class="reference internal" href="#Full-text-search">Full-text search</a></li>
 <li><a class="reference internal" href="#Fielded-search">Fielded search</a></li>
 <li><a class="reference internal" href="#Returning-facets">Returning facets</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#A-closer-look-at-the-organizations-data-statistics">A closer look at the organizations data statistics</a><ul>
+<li><a class="reference internal" href="#3.-A-closer-look-at-the-organizations-data-statistics">3. A closer look at the organizations data statistics</a><ul>
 <li><a class="reference internal" href="#Let’s-visualize-the-data-with-plotly">Let’s visualize the data with plotly</a></li>
 </ul>
 </li>
@@ -2031,7 +2038,7 @@ if (outputEl) {{
                         title="previous chapter">Extracting researchers based on affiliations and publications history</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="2-Industry-Collaboration.html"
-                        title="next chapter">Identifying Industry Collaborations</a></p>
+                        title="next chapter">Identifying the Industry Collaborators of an Academic Institution</a></p>
 
 
 
@@ -2073,7 +2080,7 @@ if (outputEl) {{
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="2-Industry-Collaboration.html" title="Identifying Industry Collaborations"
+          <a href="2-Industry-Collaboration.html" title="Identifying the Industry Collaborators of an Academic Institution"
              >next</a> |</li>
         <li class="right" >
           <a href="../7-researchers/Researchers-Search-tips-V2.html" title="Extracting researchers based on affiliations and publications history"

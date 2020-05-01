@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Identifying Industry Collaborations &#8212; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
+    <title>Identifying the Industry Collaborators of an Academic Institution &#8212; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
@@ -19,8 +19,8 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Building an Organizations Collaboration Network using the Dimensions API." href="3-Organizations-Collaboration-Network.html" />
-    <link rel="prev" title="Searching GRID organizations using the Dimensions API" href="1-GRID-preview.html" />
+    <link rel="next" title="Building an Organizations Collaboration Network Diagram" href="3-Organizations-Collaboration-Network.html" />
+    <link rel="prev" title="The Organizations API: Features Overview" href="1-GRID-preview.html" />
        
 
 		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-149959808-1"></script>
@@ -36,10 +36,10 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="3-Organizations-Collaboration-Network.html" title="Building an Organizations Collaboration Network using the Dimensions API."
+          <a href="3-Organizations-Collaboration-Network.html" title="Building an Organizations Collaboration Network Diagram"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="1-GRID-preview.html" title="Searching GRID organizations using the Dimensions API"
+          <a href="1-GRID-preview.html" title="The Organizations API: Features Overview"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</a> &#187;</li> 
       </ul>
@@ -255,12 +255,14 @@ div.rendered_html tbody tr:hover {
 <a class="reference external image-reference" href="https://github.com/digital-science/dimensions-api-lab/blob/master/cookbooks/8-organizations/2-Industry-Collaboration.ipynb"><img alt="../../_images/badge-github-custom.svg" src="../../_images/badge-github-custom.svg" /></a>
 <a class="reference external image-reference" href="https://www.dimensions.ai/dimensions-apis/"><img alt="../../_images/badge-dimensions-api.svg" src="../../_images/badge-dimensions-api.svg" /></a>
 <hr class="docutils" />
-<div class="section" id="Identifying-Industry-Collaborations">
-<h1>Identifying Industry Collaborations<a class="headerlink" href="#Identifying-Industry-Collaborations" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Identifying-the-Industry-Collaborators-of-an-Academic-Institution">
+<h1>Identifying the Industry Collaborators of an Academic Institution<a class="headerlink" href="#Identifying-the-Industry-Collaborators-of-an-Academic-Institution" title="Permalink to this headline">¶</a></h1>
 <p>Dimensions uses <a class="reference external" href="https://grid.ac/">GRID</a> identifiers for institutions, hence you can take advantage of the GRID metadata with Dimensions queries.</p>
-<p>In this tutorial we identify all organizations that have an <code class="docutils literal notranslate"><span class="pre">industry</span></code> type. This list of organizations is then used to identify industry collaborations within a chosen academic institution.</p>
-<div class="section" id="Load-libraries-and-log-in">
-<h2>Load libraries and log in<a class="headerlink" href="#Load-libraries-and-log-in" title="Permalink to this headline">¶</a></h2>
+<p>In this tutorial we identify all organizations that have an <code class="docutils literal notranslate"><span class="pre">industry</span></code> type.</p>
+<p>This list of organizations is then used to identify industry collaborations for a chosen academic institution.</p>
+<div class="section" id="Prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>Please install the latest versions of these libraries to run this notebook.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
@@ -328,8 +330,8 @@ require(['plotly'], function(Plotly) {
 </script></div>
 </div>
 </div>
-<div class="section" id="Selecting-a-Research-Organization">
-<h2>Selecting a Research Organization<a class="headerlink" href="#Selecting-a-Research-Organization" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="1.-Selecting-an-academic-institution">
+<h2>1. Selecting an academic institution<a class="headerlink" href="#1.-Selecting-an-academic-institution" title="Permalink to this headline">¶</a></h2>
 <p>For the purpose of this exercise, we will use <a class="reference external" href="https://grid.ac/institutes/grid.11696.39">University of Trento, Italy (grid.11696.39)</a> as a starting point. You can pick any other GRID organization of course. Just use a <a class="reference external" href="https://digital-science.github.io/dimensions-api-lab/cookbooks/8-organizations/1-GRID-preview.html">DSL query</a> or the <a class="reference external" href="https://grid.ac/institutes">GRID website</a> to discover the ID of an organization that interests you.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
@@ -373,8 +375,8 @@ GRID: <a href="https://app.dimensions.ai/discover/publication?and_facet_research
 Time period: 2000 to 2016 <br /><br /></div>
 </div>
 </div>
-<div class="section" id="Identifying-industry-collaborations">
-<h2>Identifying industry collaborations<a class="headerlink" href="#Identifying-industry-collaborations" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="2.-Extracting-publications-from-industry-collaborations">
+<h2>2. Extracting publications from industry collaborations<a class="headerlink" href="#2.-Extracting-publications-from-industry-collaborations" title="Permalink to this headline">¶</a></h2>
 <p>First of all we want to extract all GRID orgs with <code class="docutils literal notranslate"><span class="pre">type='Company'</span></code> using the API. Then we will use this list of organizations to identify industry collaborators for our chosen institution.</p>
 <ul class="simple">
 <li><p>We can use the <a class="reference external" href="https://digital-science.github.io/dimensions-api-lab/cookbooks/1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Iterative-querying-(loops)">dimcli.query_iterative</a> method to automatically retrieve ‘company’ GRID orgs in batches of 1000.</p></li>
@@ -640,8 +642,11 @@ Preview:
 </div></div>
 </div>
 </div>
-<div class="section" id="Count-of-Publications-per-year-from-Industry-Collaboration">
-<h2>Count of Publications per year from Industry Collaboration<a class="headerlink" href="#Count-of-Publications-per-year-from-Industry-Collaboration" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="3.-Analyses">
+<h2>3. Analyses<a class="headerlink" href="#3.-Analyses" title="Permalink to this headline">¶</a></h2>
+<p>In this section we will build some visualizations that help understanding the data we extracted.</p>
+<div class="section" id="3.1-Count-of-Publications-per-year-from-Industry-Collaborations">
+<h3>3.1 Count of Publications per year from Industry Collaborations<a class="headerlink" href="#3.1-Count-of-Publications-per-year-from-Industry-Collaborations" title="Permalink to this headline">¶</a></h3>
 <p>A simple histogram chart can tell us the rate of publications per year.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
@@ -702,8 +707,8 @@ if (outputEl) {{
         </div></div>
 </div>
 </div>
-<div class="section" id="Citations-from-Industry-Collaboration">
-<h2>Citations from Industry Collaboration<a class="headerlink" href="#Citations-from-Industry-Collaboration" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="3.2-Citations-from-Industry-Collaboration">
+<h3>3.2 Citations from Industry Collaboration<a class="headerlink" href="#3.2-Citations-from-Industry-Collaboration" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
@@ -764,8 +769,8 @@ if (outputEl) {{
         </div></div>
 </div>
 </div>
-<div class="section" id="Top-Industry-Collaborators">
-<h2>Top Industry Collaborators<a class="headerlink" href="#Top-Industry-Collaborators" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="3.3-Top-Industry-Collaborators">
+<h3>3.3 Top Industry Collaborators<a class="headerlink" href="#3.3-Top-Industry-Collaborators" title="Permalink to this headline">¶</a></h3>
 <p>In order to dig deeper into the industry affiliations we have to process the <strong>nested JSON data</strong> in the ‘authors’ column. By doing so, we can process authors &amp; affiliations information and identify the ones belonging to the ‘industry’ set defined above.</p>
 <p>For example, if we extract the authors data for the first publication/row (<code class="docutils literal notranslate"><span class="pre">pubs.iloc[0]['authors']</span></code>), this is what it’d look like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[{</span><span class="s1">&#39;first_name&#39;</span><span class="p">:</span> <span class="s1">&#39;LUCA DALLA&#39;</span><span class="p">,</span>
@@ -1021,8 +1026,8 @@ if (outputEl) {{
         </div></div>
 </div>
 </div>
-<div class="section" id="Countries-of-Industry-Collaborators">
-<h2>Countries of Industry Collaborators<a class="headerlink" href="#Countries-of-Industry-Collaborators" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="3.4-Countries-of-Industry-Collaborators">
+<h3>3.4 Countries of Industry Collaborators<a class="headerlink" href="#3.4-Countries-of-Industry-Collaborators" title="Permalink to this headline">¶</a></h3>
 <p>We can use the same dataset to segment the data by country.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
@@ -1083,8 +1088,8 @@ if (outputEl) {{
         </div></div>
 </div>
 </div>
-<div class="section" id="Putting-Countries-and-Collaborators-together…">
-<h2>Putting Countries and Collaborators together…<a class="headerlink" href="#Putting-Countries-and-Collaborators-together…" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="3.5-Putting-Countries-and-Collaborators-together">
+<h3>3.5 Putting Countries and Collaborators together<a class="headerlink" href="#3.5-Putting-Countries-and-Collaborators-together" title="Permalink to this headline">¶</a></h3>
 <p><strong>TIP</strong> by clicking on the right panel you can turn on/off specific countries</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
@@ -1145,18 +1150,10 @@ if (outputEl) {{
             </script>
         </div></div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>
-</pre></div>
-</div>
-</div>
 <script type="application/vnd.jupyter.widget-state+json">
 {"25a23859e0ce4aea9c7dcf292c8d4273": {"model_module": "@jupyter-widgets/controls", "model_name": "ProgressStyleModel", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "ProgressStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "bar_color": null, "description_width": "initial"}}, "297a076ea466401d8da0d7ebfdd9e9f5": {"model_module": "@jupyter-widgets/base", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "3f9c64a18f114f2a855bf6adf729889c": {"model_module": "@jupyter-widgets/base", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "8e2793aae8c2441980cb7c2405a5f2e4": {"model_module": "@jupyter-widgets/base", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "c28823c1a7ca4713ba1112d0ae657c82": {"model_module": "@jupyter-widgets/controls", "model_name": "DescriptionStyleModel", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "DescriptionStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": ""}}, "d0676b66f5ba4e3bb240acb480e72300": {"model_module": "@jupyter-widgets/controls", "model_name": "FloatProgressModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "FloatProgressModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "ProgressView", "bar_style": "success", "description": "100%", "description_tooltip": null, "layout": "IPY_MODEL_297a076ea466401d8da0d7ebfdd9e9f5", "max": 140, "min": 0, "orientation": "horizontal", "style": "IPY_MODEL_25a23859e0ce4aea9c7dcf292c8d4273", "value": 140}}, "d1668f03e7854af4831bd4d14d4c1768": {"model_module": "@jupyter-widgets/controls", "model_name": "HBoxModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HBoxView", "box_style": "", "children": ["IPY_MODEL_d0676b66f5ba4e3bb240acb480e72300", "IPY_MODEL_e1363587f7da45329330cb0d05718e5d"], "layout": "IPY_MODEL_3f9c64a18f114f2a855bf6adf729889c"}}, "e1363587f7da45329330cb0d05718e5d": {"model_module": "@jupyter-widgets/controls", "model_name": "HTMLModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HTMLView", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_8e2793aae8c2441980cb7c2405a5f2e4", "placeholder": "\u200b", "style": "IPY_MODEL_c28823c1a7ca4713ba1112d0ae657c82", "value": " 140/140 [07:11&lt;00:00,  3.09s/it]"}}}
 </script></div>
+</div>
 </div>
 <hr class="docutils" />
 <div class="line-block">
@@ -1179,25 +1176,28 @@ if (outputEl) {{
             </a></p>
   <h3><a href="../../index.html">Table of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Identifying Industry Collaborations</a><ul>
-<li><a class="reference internal" href="#Load-libraries-and-log-in">Load libraries and log in</a></li>
-<li><a class="reference internal" href="#Selecting-a-Research-Organization">Selecting a Research Organization</a></li>
-<li><a class="reference internal" href="#Identifying-industry-collaborations">Identifying industry collaborations</a></li>
-<li><a class="reference internal" href="#Count-of-Publications-per-year-from-Industry-Collaboration">Count of Publications per year from Industry Collaboration</a></li>
-<li><a class="reference internal" href="#Citations-from-Industry-Collaboration">Citations from Industry Collaboration</a></li>
-<li><a class="reference internal" href="#Top-Industry-Collaborators">Top Industry Collaborators</a></li>
-<li><a class="reference internal" href="#Countries-of-Industry-Collaborators">Countries of Industry Collaborators</a></li>
-<li><a class="reference internal" href="#Putting-Countries-and-Collaborators-together…">Putting Countries and Collaborators together…</a></li>
+<li><a class="reference internal" href="#">Identifying the Industry Collaborators of an Academic Institution</a><ul>
+<li><a class="reference internal" href="#Prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#1.-Selecting-an-academic-institution">1. Selecting an academic institution</a></li>
+<li><a class="reference internal" href="#2.-Extracting-publications-from-industry-collaborations">2. Extracting publications from industry collaborations</a></li>
+<li><a class="reference internal" href="#3.-Analyses">3. Analyses</a><ul>
+<li><a class="reference internal" href="#3.1-Count-of-Publications-per-year-from-Industry-Collaborations">3.1 Count of Publications per year from Industry Collaborations</a></li>
+<li><a class="reference internal" href="#3.2-Citations-from-Industry-Collaboration">3.2 Citations from Industry Collaboration</a></li>
+<li><a class="reference internal" href="#3.3-Top-Industry-Collaborators">3.3 Top Industry Collaborators</a></li>
+<li><a class="reference internal" href="#3.4-Countries-of-Industry-Collaborators">3.4 Countries of Industry Collaborators</a></li>
+<li><a class="reference internal" href="#3.5-Putting-Countries-and-Collaborators-together">3.5 Putting Countries and Collaborators together</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="1-GRID-preview.html"
-                        title="previous chapter">Searching GRID organizations using the Dimensions API</a></p>
+                        title="previous chapter">The Organizations API: Features Overview</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="3-Organizations-Collaboration-Network.html"
-                        title="next chapter">Building an Organizations Collaboration Network using the Dimensions API.</a></p>
+                        title="next chapter">Building an Organizations Collaboration Network Diagram</a></p>
 
 
 
@@ -1239,10 +1239,10 @@ if (outputEl) {{
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="3-Organizations-Collaboration-Network.html" title="Building an Organizations Collaboration Network using the Dimensions API."
+          <a href="3-Organizations-Collaboration-Network.html" title="Building an Organizations Collaboration Network Diagram"
              >next</a> |</li>
         <li class="right" >
-          <a href="1-GRID-preview.html" title="Searching GRID organizations using the Dimensions API"
+          <a href="1-GRID-preview.html" title="The Organizations API: Features Overview"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</a> &#187;</li> 
       </ul>

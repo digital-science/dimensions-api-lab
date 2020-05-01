@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Building an Organizations Collaboration Network using the Dimensions API. &#8212; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
+    <title>Building an Organizations Collaboration Network Diagram &#8212; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
@@ -19,7 +19,7 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="prev" title="Identifying Industry Collaborations" href="2-Industry-Collaboration.html" />
+    <link rel="prev" title="Identifying the Industry Collaborators of an Academic Institution" href="2-Industry-Collaboration.html" />
        
 
 		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-149959808-1"></script>
@@ -35,7 +35,7 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="2-Industry-Collaboration.html" title="Identifying Industry Collaborations"
+          <a href="2-Industry-Collaboration.html" title="Identifying the Industry Collaborators of an Academic Institution"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</a> &#187;</li> 
       </ul>
@@ -251,13 +251,15 @@ div.rendered_html tbody tr:hover {
 <a class="reference external image-reference" href="https://github.com/digital-science/dimensions-api-lab/blob/master/cookbooks/8-organizations/3-Organizations-Collaboration-Network.ipynb"><img alt="../../_images/badge-github-custom.svg" src="../../_images/badge-github-custom.svg" /></a>
 <a class="reference external image-reference" href="https://www.dimensions.ai/dimensions-apis/"><img alt="../../_images/badge-dimensions-api.svg" src="../../_images/badge-dimensions-api.svg" /></a>
 <hr class="docutils" />
-<div class="section" id="Building-an-Organizations-Collaboration-Network-using-the-Dimensions-API.">
-<h1>Building an Organizations Collaboration Network using the Dimensions API.<a class="headerlink" href="#Building-an-Organizations-Collaboration-Network-using-the-Dimensions-API." title="Permalink to this headline">¶</a></h1>
-<p>This notebook shows how to analyse organizations collaboration data. Starting from a research organization, we will extract information about other organizations that collaborated with it, based on shared publications data.</p>
-<p>In order to make the analysis more focused, we are going to select also a topic and a time-frame. By appying these extra constraints we will reduce the number of shared publications data and also make the overall extraction faster.</p>
-<p>At the end of the tutorial we will generate a ‘collaborations network diagram’, in which the nodes represent the organizations working together, and the edges represent the number of publications they have in common. An example of the resulting network diagram <a class="reference external" href="http://api-sample-data.dimensions.ai/dataviz-exports/3-Organizations-Collaboration-Network/network_2_levels_grid.412125.1.html">can be seen here</a>.</p>
+<div class="section" id="Building-an-Organizations-Collaboration-Network-Diagram">
+<h1>Building an Organizations Collaboration Network Diagram<a class="headerlink" href="#Building-an-Organizations-Collaboration-Network-Diagram" title="Permalink to this headline">¶</a></h1>
+<p>This notebook shows how to analyse organizations collaboration data using the <a class="reference external" href="https://docs.dimensions.ai/dsl/datasource-organizations.html">Organizations data source</a> available via the <a class="reference external" href="https://docs.dimensions.ai/dsl/">Dimensions Analytics API</a>.</p>
+<p>Starting from a <strong>research organization</strong>, we will extract information about other organizations that collaborated with it, based on shared publications data.</p>
+<p>In order to make the analysis more focused, we are going to select also a <strong>topic</strong> and a <strong>time-frame</strong>. By appying these extra constraints we will reduce the number of shared publications data and also make the overall extraction faster.</p>
+<p>At the end of the tutorial we will generate a ‘collaborations network diagram’. The diagram nodes represent the organizations working together, while the edges represent the number of publications they have in common. An example of the resulting network diagram <a class="reference external" href="http://api-sample-data.dimensions.ai/dataviz-exports/3-Organizations-Collaboration-Network/network_2_levels_grid.412125.1.html">can be seen here</a>.</p>
 <div class="section" id="1.-Prerequisites:-load-libraries-and-log-in">
 <h2>1. Prerequisites: load libraries and log in<a class="headerlink" href="#1.-Prerequisites:-load-libraries-and-log-in" title="Permalink to this headline">¶</a></h2>
+<p>Please install the latest versions of these libraries to run this notebook.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
 </pre></div>
@@ -1205,7 +1207,7 @@ Returned Types: 13
             </a></p>
   <h3><a href="../../index.html">Table of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Building an Organizations Collaboration Network using the Dimensions API.</a><ul>
+<li><a class="reference internal" href="#">Building an Organizations Collaboration Network Diagram</a><ul>
 <li><a class="reference internal" href="#1.-Prerequisites:-load-libraries-and-log-in">1. Prerequisites: load libraries and log in</a></li>
 <li><a class="reference internal" href="#2.-Choose-an-Organization-and-a-keyword-(topic)">2. Choose an Organization and a keyword (topic)</a></li>
 <li><a class="reference internal" href="#3.-Building-a-one-degree-network-of-collaborating-institutions">3. Building a one-degree network of collaborating institutions</a></li>
@@ -1219,7 +1221,7 @@ Returned Types: 13
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="2-Industry-Collaboration.html"
-                        title="previous chapter">Identifying Industry Collaborations</a></p>
+                        title="previous chapter">Identifying the Industry Collaborators of an Academic Institution</a></p>
 
 
 
@@ -1261,7 +1263,7 @@ Returned Types: 13
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="2-Industry-Collaboration.html" title="Identifying Industry Collaborations"
+          <a href="2-Industry-Collaboration.html" title="Identifying the Industry Collaborators of an Academic Institution"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</a> &#187;</li> 
       </ul>

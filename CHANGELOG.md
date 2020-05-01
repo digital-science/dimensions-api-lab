@@ -6,11 +6,14 @@
 New notebook:
 * [Deep Dive into the Dimensions Search Language](https://api-lab.dimensions.ai/cookbooks/1-getting-started/5-Deep-dive-DSL-language.html)
 
+Updates:
+* The title of the notebooks in the 'Organizations' section was changed
+* The title of the citation-analysis notebooks in the 'Publications' section was changed
 
 
 ### 2020-04-08
 
-Changes:
+Updates:
 
 The Dimcli notebooks have been improved and split up into 3 tutorials with a clearer focus:
 * [The Dimcli Python library: Installation and Querying](https://api-lab.dimensions.ai/cookbooks/1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html)
