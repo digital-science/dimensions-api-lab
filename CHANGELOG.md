@@ -1,6 +1,15 @@
 # Changelog - Dimensions API Lab 
 
 
+### 2020-05-07
+
+New notebook:
+* [The Patents API: Features Overview](https://api-lab.dimensions.ai/cookbooks/5-patents/1-introducing-patents.html)
+
+Updates:
+* [Measuring the Innovation Impact of an Organization using Patents Citations](https://api-lab.dimensions.ai/cookbooks/5-patents/1-Patents-referencing-a-Research-Organization.html) (previous title: Extracting Patents citing Publications from a chosen Research Organization) 
+
+
 ### 2020-04-30
 
 New notebook:

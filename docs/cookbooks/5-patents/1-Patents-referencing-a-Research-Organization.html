@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Measuring the innovation impact of an organization using Patents citations &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
+  <title>Measuring the Innovation Impact of an Organization using Patents Citations &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
   
 
   
@@ -43,7 +43,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="The Datasets API: Features Overview" href="../9-datasets/1-introducing-datasets.html" />
-    <link rel="prev" title="Clinical Trials by Volume of Publications" href="../4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.html" />
+    <link rel="prev" title="The Patents API: Features Overview" href="1-introducing-patents.html" />
     
 
    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149959808-1"></script>
@@ -300,7 +300,35 @@
 </ul>
 <p class="caption"><span class="caption-text">Patents</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Measuring the innovation impact of an organization using Patents citations</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="1-introducing-patents.html">The Patents API: Features Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="1-introducing-patents.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1-introducing-patents.html#1.-Sample-Patents-Queries">1. Sample Patents Queries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="1-introducing-patents.html#Searching-patents-by-keyword">Searching patents by keyword</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1-introducing-patents.html#Searching-using-fielded-search">Searching using fielded search</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="1-introducing-patents.html#Searching-using-dates">Searching using dates</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="1-introducing-patents.html#Extracting-cited-publications-via-publication_ids">Extracting cited publications via <code class="docutils literal notranslate"><span class="pre">publication_ids</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="1-introducing-patents.html#Extracting-cited-patents-via-reference_ids">Extracting cited patents via <code class="docutils literal notranslate"><span class="pre">reference_ids</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="1-introducing-patents.html#Aggregating-results-using-facets">Aggregating results using facets</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="1-introducing-patents.html#Top-assignees">Top assignees</a></li>
+<li class="toctree-l4"><a class="reference internal" href="1-introducing-patents.html#Top-researchers">Top researchers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="1-introducing-patents.html#Top-FOR-categories">Top FOR categories</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="1-introducing-patents.html#2.-A-closer-look-at-Patents-statistics">2. A closer look at Patents statistics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="1-introducing-patents.html#Counting-records-per-each-field">Counting records per each field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1-introducing-patents.html#Creating-a-bar-chart">Creating a bar chart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1-introducing-patents.html#Counting-the-yearly-distribution-of-field/records-data">Counting the yearly distribution of field/records data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1-introducing-patents.html#Creating-a-line-chart">Creating a line chart</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="1-introducing-patents.html#Where-to-find-out-more">Where to find out more</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Measuring the Innovation Impact of an Organization using Patents Citations</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#Prerequisites">Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#1.-Choosing-a-GRID-Research-Organization">1. Choosing a GRID Research Organization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#2.-Extracting-Publications-Data">2. Extracting Publications Data</a><ul>
@@ -724,8 +752,8 @@ div.rendered_html tbody tr:hover {
 <script>require=requirejs;</script><a class="reference external image-reference" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/cookbooks/5-patents/1-Patents-referencing-a-Research-Organization.ipynb"><img alt="../../_images/badge-colab.svg" src="../../_images/badge-colab.svg" /></a>
 <a class="reference external image-reference" href="https://github.com/digital-science/dimensions-api-lab/blob/master/cookbooks/5-patents/1-Patents-referencing-a-Research-Organization.ipynb"><img alt="../../_images/badge-github-custom.svg" src="../../_images/badge-github-custom.svg" /></a>
 <hr class="docutils" />
-<div class="section" id="Measuring-the-innovation-impact-of-an-organization-using-Patents-citations">
-<h1>Measuring the innovation impact of an organization using Patents citations<a class="headerlink" href="#Measuring-the-innovation-impact-of-an-organization-using-Patents-citations" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Measuring-the-Innovation-Impact-of-an-Organization-using-Patents-Citations">
+<h1>Measuring the Innovation Impact of an Organization using Patents Citations<a class="headerlink" href="#Measuring-the-Innovation-Impact-of-an-Organization-using-Patents-Citations" title="Permalink to this headline">¶</a></h1>
 <p>This notebook shows how to use the <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> to analyze the innovation impact of an organization.</p>
 <p>There are <strong>two ways</strong> to achieve this. The <strong>first method</strong> is counting how many patents have inventors (assignees) affiliated to the GRID organization we are interested in. This method returns the <em>direct</em> innovation impact of an organization, which can be easily achieved via a single <a class="reference external" href="https://docs.dimensions.ai/dsl/datasource-patents.html">patents API</a> query:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">search</span> <span class="n">patents</span> <span class="n">where</span> <span class="n">assignees</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;grid.89170.37&quot;</span><span class="p">]</span> <span class="k">return</span> <span class="n">patents</span> <span class="n">limit</span> <span class="mi">500</span>
