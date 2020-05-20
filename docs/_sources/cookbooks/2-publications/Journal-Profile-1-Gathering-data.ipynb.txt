@@ -1,0 +1,2698 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "Pesu5qAD6J7-"
+   },
+   "source": [
+    "# Journal Profiling Part 1: Getting the Data\n",
+    "\n",
+    "This Python notebook shows how to use the [Dimensions Analytics API](https://www.dimensions.ai/dimensions-apis/) to extract [publications data ](https://docs.dimensions.ai/dsl/datasource-publications.html) for a specific journal, as well its authors and affiliations.\n",
+    "\n",
+    "This tutorial is the first of a series that uses the data extracted in order to generate a 'journal profile' report. See the [API Lab homepage](https://api-lab.dimensions.ai/) for the other tutorials in this series.\n",
+    "\n",
+    "\n",
+    "In this notebook we are going to:\n",
+    "\n",
+    "* extract all publications data for a given journal\n",
+    "* have a quick look at the publications' authors and affiliations \n",
+    "* review how many authors have been disambiguated with a Dimensions Researcher ID\n",
+    "* produce a dataset of non-disambiguated authors that can be used for manual disambiguation "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "ghfJ7CSbo6Dr"
+   },
+   "source": [
+    "## Prerequisites: Installing the Dimensions Library and Logging in"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 85
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 22421,
+     "status": "ok",
+     "timestamp": 1590004308752,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GiYfmLTPbeMuYDDrETLbTVXTXnfVr9f7eBtkmR73A=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "zN1l7rvMo6Ds",
+    "outputId": "cf4253c6-272a-4186-8461-72db2a225670"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "DimCli v0.6.8.1 - Succesfully connected to <https://app.dimensions.ai> (method: dsl.ini file)\n"
+     ]
+    },
+    {
+     "data": {
+      "text/html": [
+       "        <script type=\"text/javascript\">\n",
+       "        window.PlotlyConfig = {MathJaxConfig: 'local'};\n",
+       "        if (window.MathJax) {MathJax.Hub.Config({SVG: {font: \"STIX-Web\"}});}\n",
+       "        if (typeof require !== 'undefined') {\n",
+       "        require.undef(\"plotly\");\n",
+       "        requirejs.config({\n",
+       "            paths: {\n",
+       "                'plotly': ['https://cdn.plot.ly/plotly-latest.min']\n",
+       "            }\n",
+       "        });\n",
+       "        require(['plotly'], function(Plotly) {\n",
+       "            window._Plotly = Plotly;\n",
+       "        });\n",
+       "        }\n",
+       "        </script>\n",
+       "        "
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "\n",
+    "# @markdown # Get the API library and login\n",
+    "# @markdown Click the 'play' button on the left (or shift+enter) after entering your API credentials\n",
+    "\n",
+    "username = \"\" #@param {type: \"string\"}\n",
+    "password = \"\" #@param {type: \"string\"}\n",
+    "endpoint = \"https://app.dimensions.ai\" #@param {type: \"string\"}\n",
+    "\n",
+    "\n",
+    "!pip install dimcli plotly tqdm -U --quiet\n",
+    "import dimcli\n",
+    "from dimcli.shortcuts import *\n",
+    "dimcli.login(username, password, endpoint)\n",
+    "dsl = dimcli.Dsl()\n",
+    "\n",
+    "#\n",
+    "# load common libraries\n",
+    "import time\n",
+    "import sys\n",
+    "import json\n",
+    "import os\n",
+    "import pandas as pd\n",
+    "from pandas.io.json import json_normalize\n",
+    "from tqdm.notebook import tqdm as progress\n",
+    "\n",
+    "#\n",
+    "# charts libs\n",
+    "# import plotly_express as px\n",
+    "import plotly.express as px\n",
+    "if not 'google.colab' in sys.modules:\n",
+    "  # make js dependecies local / needed by html exports\n",
+    "  from plotly.offline import init_notebook_mode\n",
+    "  init_notebook_mode(connected=True)\n",
+    "#\n",
+    "# create output data folder\n",
+    "FOLDER_NAME = \"journal-profile-data\"\n",
+    "if not(os.path.exists(FOLDER_NAME)):\n",
+    "    os.mkdir(FOLDER_NAME)\n",
+    "    \n",
+    "def save(df,filename_dot_csv):\n",
+    "    df.to_csv(FOLDER_NAME+\"/\"+filename_dot_csv, index=False)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "Z1jwOf1F64mr"
+   },
+   "source": [
+    "## Selecting a Journal and Extracting All Publications Metadata"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {
+    "Collapsed": "false",
+    "cellView": "form",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 238
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 30263,
+     "status": "ok",
+     "timestamp": 1590004324419,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GiYfmLTPbeMuYDDrETLbTVXTXnfVr9f7eBtkmR73A=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "Ku0GkHfE7JI7",
+    "outputId": "23e41dd0-af76-4150-9a60-17da1bd1746e"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "DSL Query:\n",
+      "----\n",
+      " search publications where \n",
+      "    journal.title=\"Nature Genetics\" and \n",
+      "    year>=2015 \n",
+      "    return publications[basics+altmetric+times_cited] \n",
+      "----\n",
+      "500 / ...\n",
+      "500 / 1480\n",
+      "1000 / 1480\n",
+      "1480 / 1480\n",
+      "===\n",
+      "Records extracted: 1480\n"
+     ]
+    }
+   ],
+   "source": [
+    "#@title Select a journal from the dropdown\n",
+    "#@markdown If the journal isn't there, you can try type in the exact name instead.\n",
+    "\n",
+    "journal_title = \"Nature Genetics\" #@param ['Nature', 'Nature Communications', 'Nature Biotechnology', 'Nature Medicine', 'Nature Genetics', 'Nature Neuroscience', 'Nature Structural & Molecular Biology', 'Nature Methods', 'Nature Cell Biology', 'Nature Immunology', 'Nature Reviews Drug Discovery', 'Nature Materials', 'Nature Physics', 'Nature Reviews Neuroscience', 'Nature Nanotechnology', 'Nature Reviews Genetics', 'Nature Reviews Urology', 'Nature Reviews Molecular Cell Biology', 'Nature Precedings', 'Nature Reviews Cancer', 'Nature Photonics', 'Nature Reviews Immunology', 'Nature Reviews Cardiology', 'Nature Reviews Gastroenterology & Hepatology', 'Nature Reviews Clinical Oncology', 'Nature Reviews Endocrinology', 'Nature Reviews Neurology', 'Nature Chemical Biology', 'Nature Reviews Microbiology', 'Nature Geoscience', 'Nature Reviews Rheumatology', 'Nature Climate Change', 'Nature Reviews Nephrology', 'Nature Chemistry', 'Nature Digest', 'Nature Protocols', 'Nature Middle East', 'Nature India', 'Nature China', 'Nature Plants', 'Nature Microbiology', 'Nature Ecology & Evolution', 'Nature Astronomy', 'Nature Energy', 'Nature Human Behaviour', 'AfCS-Nature Molecule Pages', 'Human Nature', 'Nature Reviews Disease Primers', 'Nature Biomedical Engineering', 'Nature Reports Stem Cells', 'Nature Reviews Materials', 'Nature Sustainability', 'Nature Catalysis', 'Nature Electronics', 'Nature Reviews Chemistry', 'Nature Metabolism', 'Nature Reviews Physics', 'Nature Machine Intelligence', 'NCI Nature Pathway Interaction Database', 'Nature Reports: Climate Change'] {allow-input: true}\n",
+    "start_year = 2015  #@param {type: \"number\"}\n",
+    "#@markdown ---\n",
+    "\n",
+    "# PS \n",
+    "# To get titles from the API one can do this:\n",
+    "# > %dsldf search publications where journal.title~\"Nature\" and publisher=\"Springer Nature\" return journal limit 100\n",
+    "# > \", \".join([f\"'{x}'\" for x in list(dsl_last_results.title)]) \n",
+    "#\n",
+    "\n",
+    "q_template = \"\"\"search publications where \n",
+    "    journal.title=\"{}\" and \n",
+    "    year>={} \n",
+    "    return publications[basics+altmetric+times_cited]\"\"\"\n",
+    "q = q_template.format(journal_title, start_year)\n",
+    "print(\"DSL Query:\\n----\\n\", q, \"\\n----\")\n",
+    "pubs = dsl.query_iterative(q.format(journal_title, start_year), limit=500)\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "FFT3DayHo6Dy"
+   },
+   "source": [
+    "Save the data as a CSV file in case we want to reuse it later"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 1946
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 3101,
+     "status": "ok",
+     "timestamp": 1590004329997,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GiYfmLTPbeMuYDDrETLbTVXTXnfVr9f7eBtkmR73A=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "xnwSEydio6Dy",
+    "outputId": "6cde27d6-8c9c-4b5c-8544-7f3871ea390d"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>altmetric</th>\n",
+       "      <th>title</th>\n",
+       "      <th>year</th>\n",
+       "      <th>pages</th>\n",
+       "      <th>type</th>\n",
+       "      <th>times_cited</th>\n",
+       "      <th>author_affiliations</th>\n",
+       "      <th>id</th>\n",
+       "      <th>journal.id</th>\n",
+       "      <th>journal.title</th>\n",
+       "      <th>volume</th>\n",
+       "      <th>issue</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>1.0</td>\n",
+       "      <td>Publisher Correction: Comprehensive analysis o...</td>\n",
+       "      <td>2020</td>\n",
+       "      <td>1-1</td>\n",
+       "      <td>article</td>\n",
+       "      <td>0</td>\n",
+       "      <td>[[{'first_name': 'Isidro', 'last_name': 'Corté...</td>\n",
+       "      <td>pub.1127548497</td>\n",
+       "      <td>jour.1103138</td>\n",
+       "      <td>Nature Genetics</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>14.0</td>\n",
+       "      <td>Uncoupling histone H3K4 trimethylation from de...</td>\n",
+       "      <td>2020</td>\n",
+       "      <td>1-11</td>\n",
+       "      <td>article</td>\n",
+       "      <td>0</td>\n",
+       "      <td>[[{'first_name': 'Delphine', 'last_name': 'Dou...</td>\n",
+       "      <td>pub.1127504415</td>\n",
+       "      <td>jour.1103138</td>\n",
+       "      <td>Nature Genetics</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>38.0</td>\n",
+       "      <td>Evaluating two different models of peanut’s or...</td>\n",
+       "      <td>2020</td>\n",
+       "      <td>1-3</td>\n",
+       "      <td>article</td>\n",
+       "      <td>1</td>\n",
+       "      <td>[[{'first_name': 'David J.', 'last_name': 'Ber...</td>\n",
+       "      <td>pub.1127499311</td>\n",
+       "      <td>jour.1103138</td>\n",
+       "      <td>Nature Genetics</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>3.0</td>\n",
+       "      <td>Reply to: Evaluating two different models of p...</td>\n",
+       "      <td>2020</td>\n",
+       "      <td>1-4</td>\n",
+       "      <td>article</td>\n",
+       "      <td>1</td>\n",
+       "      <td>[[{'first_name': 'Weijian', 'last_name': 'Zhua...</td>\n",
+       "      <td>pub.1127503074</td>\n",
+       "      <td>jour.1103138</td>\n",
+       "      <td>Nature Genetics</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>195.0</td>\n",
+       "      <td>Genetic identification of cell types underlyin...</td>\n",
+       "      <td>2020</td>\n",
+       "      <td>482-493</td>\n",
+       "      <td>article</td>\n",
+       "      <td>1</td>\n",
+       "      <td>[[{'first_name': 'Julien', 'last_name': 'Bryoi...</td>\n",
+       "      <td>pub.1127148454</td>\n",
+       "      <td>jour.1103138</td>\n",
+       "      <td>Nature Genetics</td>\n",
+       "      <td>52</td>\n",
+       "      <td>5</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td>193.0</td>\n",
+       "      <td>Genome-wide association meta-analyses combinin...</td>\n",
+       "      <td>2020</td>\n",
+       "      <td>494-504</td>\n",
+       "      <td>article</td>\n",
+       "      <td>1</td>\n",
+       "      <td>[[{'first_name': 'Maria Teresa', 'last_name': ...</td>\n",
+       "      <td>pub.1127145284</td>\n",
+       "      <td>jour.1103138</td>\n",
+       "      <td>Nature Genetics</td>\n",
+       "      <td>52</td>\n",
+       "      <td>5</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>6</th>\n",
+       "      <td>10.0</td>\n",
+       "      <td>Elevated sorbitol underlies a heritable neurop...</td>\n",
+       "      <td>2020</td>\n",
+       "      <td>469-470</td>\n",
+       "      <td>article</td>\n",
+       "      <td>0</td>\n",
+       "      <td>[[{'first_name': 'Eva', 'last_name': 'Morava',...</td>\n",
+       "      <td>pub.1127348606</td>\n",
+       "      <td>jour.1103138</td>\n",
+       "      <td>Nature Genetics</td>\n",
+       "      <td>52</td>\n",
+       "      <td>5</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>7</th>\n",
+       "      <td>12.0</td>\n",
+       "      <td>Spt5-mediated enhancer transcription directly ...</td>\n",
+       "      <td>2020</td>\n",
+       "      <td>505-515</td>\n",
+       "      <td>article</td>\n",
+       "      <td>1</td>\n",
+       "      <td>[[{'first_name': 'Johanna', 'last_name': 'Fitz...</td>\n",
+       "      <td>pub.1126151817</td>\n",
+       "      <td>jour.1103138</td>\n",
+       "      <td>Nature Genetics</td>\n",
+       "      <td>52</td>\n",
+       "      <td>5</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>8</th>\n",
+       "      <td>241.0</td>\n",
+       "      <td>Identifying genetic variants underlying phenot...</td>\n",
+       "      <td>2020</td>\n",
+       "      <td>534-540</td>\n",
+       "      <td>article</td>\n",
+       "      <td>2</td>\n",
+       "      <td>[[{'first_name': 'Yoav', 'last_name': 'Voichek...</td>\n",
+       "      <td>pub.1126635876</td>\n",
+       "      <td>jour.1103138</td>\n",
+       "      <td>Nature Genetics</td>\n",
+       "      <td>52</td>\n",
+       "      <td>5</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>9</th>\n",
+       "      <td>3.0</td>\n",
+       "      <td>Enhancer–promoter interactions and transcription</td>\n",
+       "      <td>2020</td>\n",
+       "      <td>470-471</td>\n",
+       "      <td>article</td>\n",
+       "      <td>0</td>\n",
+       "      <td>[[{'first_name': 'Douglas R.', 'last_name': 'H...</td>\n",
+       "      <td>pub.1127392559</td>\n",
+       "      <td>jour.1103138</td>\n",
+       "      <td>Nature Genetics</td>\n",
+       "      <td>52</td>\n",
+       "      <td>5</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   altmetric                                              title  year  \\\n",
+       "0        1.0  Publisher Correction: Comprehensive analysis o...  2020   \n",
+       "1       14.0  Uncoupling histone H3K4 trimethylation from de...  2020   \n",
+       "2       38.0  Evaluating two different models of peanut’s or...  2020   \n",
+       "3        3.0  Reply to: Evaluating two different models of p...  2020   \n",
+       "4      195.0  Genetic identification of cell types underlyin...  2020   \n",
+       "5      193.0  Genome-wide association meta-analyses combinin...  2020   \n",
+       "6       10.0  Elevated sorbitol underlies a heritable neurop...  2020   \n",
+       "7       12.0  Spt5-mediated enhancer transcription directly ...  2020   \n",
+       "8      241.0  Identifying genetic variants underlying phenot...  2020   \n",
+       "9        3.0   Enhancer–promoter interactions and transcription  2020   \n",
+       "\n",
+       "     pages     type  times_cited  \\\n",
+       "0      1-1  article            0   \n",
+       "1     1-11  article            0   \n",
+       "2      1-3  article            1   \n",
+       "3      1-4  article            1   \n",
+       "4  482-493  article            1   \n",
+       "5  494-504  article            1   \n",
+       "6  469-470  article            0   \n",
+       "7  505-515  article            1   \n",
+       "8  534-540  article            2   \n",
+       "9  470-471  article            0   \n",
+       "\n",
+       "                                 author_affiliations              id  \\\n",
+       "0  [[{'first_name': 'Isidro', 'last_name': 'Corté...  pub.1127548497   \n",
+       "1  [[{'first_name': 'Delphine', 'last_name': 'Dou...  pub.1127504415   \n",
+       "2  [[{'first_name': 'David J.', 'last_name': 'Ber...  pub.1127499311   \n",
+       "3  [[{'first_name': 'Weijian', 'last_name': 'Zhua...  pub.1127503074   \n",
+       "4  [[{'first_name': 'Julien', 'last_name': 'Bryoi...  pub.1127148454   \n",
+       "5  [[{'first_name': 'Maria Teresa', 'last_name': ...  pub.1127145284   \n",
+       "6  [[{'first_name': 'Eva', 'last_name': 'Morava',...  pub.1127348606   \n",
+       "7  [[{'first_name': 'Johanna', 'last_name': 'Fitz...  pub.1126151817   \n",
+       "8  [[{'first_name': 'Yoav', 'last_name': 'Voichek...  pub.1126635876   \n",
+       "9  [[{'first_name': 'Douglas R.', 'last_name': 'H...  pub.1127392559   \n",
+       "\n",
+       "     journal.id    journal.title volume issue  \n",
+       "0  jour.1103138  Nature Genetics    NaN   NaN  \n",
+       "1  jour.1103138  Nature Genetics    NaN   NaN  \n",
+       "2  jour.1103138  Nature Genetics    NaN   NaN  \n",
+       "3  jour.1103138  Nature Genetics    NaN   NaN  \n",
+       "4  jour.1103138  Nature Genetics     52     5  \n",
+       "5  jour.1103138  Nature Genetics     52     5  \n",
+       "6  jour.1103138  Nature Genetics     52     5  \n",
+       "7  jour.1103138  Nature Genetics     52     5  \n",
+       "8  jour.1103138  Nature Genetics     52     5  \n",
+       "9  jour.1103138  Nature Genetics     52     5  "
+      ]
+     },
+     "execution_count": 3,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "dfpubs = pubs.as_dataframe()\n",
+    "save(dfpubs,\"1_publications.csv\")\n",
+    "# preview the publications \n",
+    "dfpubs.head(10)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "aJSz9ltEo6D0"
+   },
+   "source": [
+    "Extract the authors data "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 1194
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 5007,
+     "status": "ok",
+     "timestamp": 1590004331909,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GiYfmLTPbeMuYDDrETLbTVXTXnfVr9f7eBtkmR73A=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "ihjtFg1pUofn",
+    "outputId": "9eb0aec0-8a28-4e07-c847-1b140a5a7919"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>first_name</th>\n",
+       "      <th>last_name</th>\n",
+       "      <th>initials</th>\n",
+       "      <th>corresponding</th>\n",
+       "      <th>orcid</th>\n",
+       "      <th>current_organization_id</th>\n",
+       "      <th>researcher_id</th>\n",
+       "      <th>affiliations</th>\n",
+       "      <th>is_bogus</th>\n",
+       "      <th>pub_id</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>Isidro</td>\n",
+       "      <td>Cortés-Ciriano</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>[{'id': 'grid.38142.3c', 'name': 'Harvard Univ...</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>pub.1127548497</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>Jake June-Koo</td>\n",
+       "      <td>Lee</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>[{'id': 'grid.38142.3c', 'name': 'Harvard Univ...</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>pub.1127548497</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>Ruibin</td>\n",
+       "      <td>Xi</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>[{'id': 'grid.11135.37', 'name': 'Peking Unive...</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>pub.1127548497</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>Dhawal</td>\n",
+       "      <td>Jain</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>[{'id': 'grid.38142.3c', 'name': 'Harvard Univ...</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>pub.1127548497</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>Youngsook L.</td>\n",
+       "      <td>Jung</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>[{'id': 'grid.38142.3c', 'name': 'Harvard Univ...</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>pub.1127548497</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td>Lixing</td>\n",
+       "      <td>Yang</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>[{'name': 'Ben May Department for Cancer Resea...</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>pub.1127548497</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>6</th>\n",
+       "      <td>Dmitry</td>\n",
+       "      <td>Gordenin</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>[{'id': 'grid.280664.e', 'name': 'National Ins...</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>pub.1127548497</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>7</th>\n",
+       "      <td>Leszek J.</td>\n",
+       "      <td>Klimczak</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>[{'id': 'grid.280664.e', 'name': 'National Ins...</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>pub.1127548497</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>8</th>\n",
+       "      <td>Cheng-Zhong</td>\n",
+       "      <td>Zhang</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>[{'id': 'grid.38142.3c', 'name': 'Harvard Univ...</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>pub.1127548497</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>9</th>\n",
+       "      <td>David S.</td>\n",
+       "      <td>Pellman</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>[{'id': 'grid.65499.37', 'name': 'Dana-Farber ...</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>pub.1127548497</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "      first_name       last_name initials corresponding orcid  \\\n",
+       "0         Isidro  Cortés-Ciriano                                \n",
+       "1  Jake June-Koo             Lee                                \n",
+       "2         Ruibin              Xi                                \n",
+       "3         Dhawal            Jain                                \n",
+       "4   Youngsook L.            Jung                                \n",
+       "5         Lixing            Yang                                \n",
+       "6         Dmitry        Gordenin                                \n",
+       "7      Leszek J.        Klimczak                                \n",
+       "8    Cheng-Zhong           Zhang                                \n",
+       "9       David S.         Pellman                                \n",
+       "\n",
+       "  current_organization_id researcher_id  \\\n",
+       "0                                         \n",
+       "1                                         \n",
+       "2                                         \n",
+       "3                                         \n",
+       "4                                         \n",
+       "5                                         \n",
+       "6                                         \n",
+       "7                                         \n",
+       "8                                         \n",
+       "9                                         \n",
+       "\n",
+       "                                        affiliations is_bogus          pub_id  \n",
+       "0  [{'id': 'grid.38142.3c', 'name': 'Harvard Univ...      NaN  pub.1127548497  \n",
+       "1  [{'id': 'grid.38142.3c', 'name': 'Harvard Univ...      NaN  pub.1127548497  \n",
+       "2  [{'id': 'grid.11135.37', 'name': 'Peking Unive...      NaN  pub.1127548497  \n",
+       "3  [{'id': 'grid.38142.3c', 'name': 'Harvard Univ...      NaN  pub.1127548497  \n",
+       "4  [{'id': 'grid.38142.3c', 'name': 'Harvard Univ...      NaN  pub.1127548497  \n",
+       "5  [{'name': 'Ben May Department for Cancer Resea...      NaN  pub.1127548497  \n",
+       "6  [{'id': 'grid.280664.e', 'name': 'National Ins...      NaN  pub.1127548497  \n",
+       "7  [{'id': 'grid.280664.e', 'name': 'National Ins...      NaN  pub.1127548497  \n",
+       "8  [{'id': 'grid.38142.3c', 'name': 'Harvard Univ...      NaN  pub.1127548497  \n",
+       "9  [{'id': 'grid.65499.37', 'name': 'Dana-Farber ...      NaN  pub.1127548497  "
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# preview the authors data \n",
+    "authors = pubs.as_dataframe_authors()\n",
+    "save(authors,\"1_publications_authors.csv\")\n",
+    "authors.head(10)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "QLkrxzT2o6D3"
+   },
+   "source": [
+    "Extract the affiliations data "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 681
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 8888,
+     "status": "ok",
+     "timestamp": 1590004335794,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GiYfmLTPbeMuYDDrETLbTVXTXnfVr9f7eBtkmR73A=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "SsT078tTuhvX",
+    "outputId": "e0a4e40d-b009-4f0c-a907-4e1623c13a93"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>aff_id</th>\n",
+       "      <th>aff_name</th>\n",
+       "      <th>aff_city</th>\n",
+       "      <th>aff_city_id</th>\n",
+       "      <th>aff_country</th>\n",
+       "      <th>aff_country_code</th>\n",
+       "      <th>aff_state</th>\n",
+       "      <th>aff_state_code</th>\n",
+       "      <th>pub_id</th>\n",
+       "      <th>researcher_id</th>\n",
+       "      <th>first_name</th>\n",
+       "      <th>last_name</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>grid.38142.3c</td>\n",
+       "      <td>Harvard University</td>\n",
+       "      <td>Cambridge</td>\n",
+       "      <td>4.93197e+06</td>\n",
+       "      <td>United States</td>\n",
+       "      <td>US</td>\n",
+       "      <td>Massachusetts</td>\n",
+       "      <td>US-MA</td>\n",
+       "      <td>pub.1127548497</td>\n",
+       "      <td></td>\n",
+       "      <td>Isidro</td>\n",
+       "      <td>Cortés-Ciriano</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td></td>\n",
+       "      <td>Ludwig Center at Harvard, Boston, MA, USA</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>pub.1127548497</td>\n",
+       "      <td></td>\n",
+       "      <td>Isidro</td>\n",
+       "      <td>Cortés-Ciriano</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>grid.5335.0</td>\n",
+       "      <td>University of Cambridge</td>\n",
+       "      <td>Cambridge</td>\n",
+       "      <td>2.65394e+06</td>\n",
+       "      <td>United Kingdom</td>\n",
+       "      <td>GB</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>pub.1127548497</td>\n",
+       "      <td></td>\n",
+       "      <td>Isidro</td>\n",
+       "      <td>Cortés-Ciriano</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>grid.225360.0</td>\n",
+       "      <td>European Bioinformatics Institute</td>\n",
+       "      <td>Cambridge</td>\n",
+       "      <td>2.65394e+06</td>\n",
+       "      <td>United Kingdom</td>\n",
+       "      <td>GB</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>pub.1127548497</td>\n",
+       "      <td></td>\n",
+       "      <td>Isidro</td>\n",
+       "      <td>Cortés-Ciriano</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>grid.38142.3c</td>\n",
+       "      <td>Harvard University</td>\n",
+       "      <td>Cambridge</td>\n",
+       "      <td>4.93197e+06</td>\n",
+       "      <td>United States</td>\n",
+       "      <td>US</td>\n",
+       "      <td>Massachusetts</td>\n",
+       "      <td>US-MA</td>\n",
+       "      <td>pub.1127548497</td>\n",
+       "      <td></td>\n",
+       "      <td>Jake June-Koo</td>\n",
+       "      <td>Lee</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td></td>\n",
+       "      <td>Ludwig Center at Harvard, Boston, MA, USA</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>pub.1127548497</td>\n",
+       "      <td></td>\n",
+       "      <td>Jake June-Koo</td>\n",
+       "      <td>Lee</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>6</th>\n",
+       "      <td>grid.11135.37</td>\n",
+       "      <td>Peking University</td>\n",
+       "      <td>Beijing</td>\n",
+       "      <td>1.81667e+06</td>\n",
+       "      <td>China</td>\n",
+       "      <td>CN</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>pub.1127548497</td>\n",
+       "      <td></td>\n",
+       "      <td>Ruibin</td>\n",
+       "      <td>Xi</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>7</th>\n",
+       "      <td>grid.38142.3c</td>\n",
+       "      <td>Harvard University</td>\n",
+       "      <td>Cambridge</td>\n",
+       "      <td>4.93197e+06</td>\n",
+       "      <td>United States</td>\n",
+       "      <td>US</td>\n",
+       "      <td>Massachusetts</td>\n",
+       "      <td>US-MA</td>\n",
+       "      <td>pub.1127548497</td>\n",
+       "      <td></td>\n",
+       "      <td>Dhawal</td>\n",
+       "      <td>Jain</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>8</th>\n",
+       "      <td>grid.38142.3c</td>\n",
+       "      <td>Harvard University</td>\n",
+       "      <td>Cambridge</td>\n",
+       "      <td>4.93197e+06</td>\n",
+       "      <td>United States</td>\n",
+       "      <td>US</td>\n",
+       "      <td>Massachusetts</td>\n",
+       "      <td>US-MA</td>\n",
+       "      <td>pub.1127548497</td>\n",
+       "      <td></td>\n",
+       "      <td>Youngsook L.</td>\n",
+       "      <td>Jung</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>9</th>\n",
+       "      <td></td>\n",
+       "      <td>Ben May Department for Cancer Research, Univer...</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>pub.1127548497</td>\n",
+       "      <td></td>\n",
+       "      <td>Lixing</td>\n",
+       "      <td>Yang</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "          aff_id                                           aff_name  \\\n",
+       "0  grid.38142.3c                                 Harvard University   \n",
+       "1                         Ludwig Center at Harvard, Boston, MA, USA   \n",
+       "2    grid.5335.0                            University of Cambridge   \n",
+       "3  grid.225360.0                  European Bioinformatics Institute   \n",
+       "4  grid.38142.3c                                 Harvard University   \n",
+       "5                         Ludwig Center at Harvard, Boston, MA, USA   \n",
+       "6  grid.11135.37                                  Peking University   \n",
+       "7  grid.38142.3c                                 Harvard University   \n",
+       "8  grid.38142.3c                                 Harvard University   \n",
+       "9                 Ben May Department for Cancer Research, Univer...   \n",
+       "\n",
+       "    aff_city  aff_city_id     aff_country aff_country_code      aff_state  \\\n",
+       "0  Cambridge  4.93197e+06   United States               US  Massachusetts   \n",
+       "1                                                                           \n",
+       "2  Cambridge  2.65394e+06  United Kingdom               GB                  \n",
+       "3  Cambridge  2.65394e+06  United Kingdom               GB                  \n",
+       "4  Cambridge  4.93197e+06   United States               US  Massachusetts   \n",
+       "5                                                                           \n",
+       "6    Beijing  1.81667e+06           China               CN                  \n",
+       "7  Cambridge  4.93197e+06   United States               US  Massachusetts   \n",
+       "8  Cambridge  4.93197e+06   United States               US  Massachusetts   \n",
+       "9                                                                           \n",
+       "\n",
+       "  aff_state_code          pub_id researcher_id     first_name       last_name  \n",
+       "0          US-MA  pub.1127548497                       Isidro  Cortés-Ciriano  \n",
+       "1                 pub.1127548497                       Isidro  Cortés-Ciriano  \n",
+       "2                 pub.1127548497                       Isidro  Cortés-Ciriano  \n",
+       "3                 pub.1127548497                       Isidro  Cortés-Ciriano  \n",
+       "4          US-MA  pub.1127548497                Jake June-Koo             Lee  \n",
+       "5                 pub.1127548497                Jake June-Koo             Lee  \n",
+       "6                 pub.1127548497                       Ruibin              Xi  \n",
+       "7          US-MA  pub.1127548497                       Dhawal            Jain  \n",
+       "8          US-MA  pub.1127548497                 Youngsook L.            Jung  \n",
+       "9                 pub.1127548497                       Lixing            Yang  "
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "affiliations = pubs.as_dataframe_authors_affiliations()\n",
+    "save(affiliations,\"1_publications_affiliations.csv\")\n",
+    "affiliations.head(10)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "8Tri9qhoCYH3"
+   },
+   "source": [
+    "## Some stats about authors\n",
+    "\n",
+    "* count how many authors in total \n",
+    "* count how many authors have a researcher ID\n",
+    "* count how many unique researchers IDs we have in total"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 542
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 9231,
+     "status": "ok",
+     "timestamp": 1590004336142,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GiYfmLTPbeMuYDDrETLbTVXTXnfVr9f7eBtkmR73A=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "4k5V31MFRmdH",
+    "outputId": "fa7662e9-f7fd-4df4-b119-9bee723ceb8f"
+   },
+   "outputs": [
+    {
+     "data": {
+      "application/vnd.plotly.v1+json": {
+       "config": {
+        "plotlyServerURL": "https://plot.ly"
+       },
+       "data": [
+        {
+         "alignmentgroup": "True",
+         "hovertemplate": "measure=%{x}<br>count=%{y}<extra></extra>",
+         "legendgroup": "",
+         "marker": {
+          "color": "#636efa"
+         },
+         "name": "",
+         "offsetgroup": "",
+         "orientation": "v",
+         "showlegend": false,
+         "textposition": "auto",
+         "type": "bar",
+         "x": [
+          "Authors in total (non unique)",
+          "Authors with a researcher ID",
+          "Authors with a researcher ID (unique)"
+         ],
+         "xaxis": "x",
+         "y": [
+          43153,
+          33377,
+          18524
+         ],
+         "yaxis": "y"
+        }
+       ],
+       "layout": {
+        "autosize": true,
+        "barmode": "relative",
+        "legend": {
+         "tracegroupgap": 0
+        },
+        "template": {
+         "data": {
+          "bar": [
+           {
+            "error_x": {
+             "color": "#2a3f5f"
+            },
+            "error_y": {
+             "color": "#2a3f5f"
+            },
+            "marker": {
+             "line": {
+              "color": "#E5ECF6",
+              "width": 0.5
+             }
+            },
+            "type": "bar"
+           }
+          ],
+          "barpolar": [
+           {
+            "marker": {
+             "line": {
+              "color": "#E5ECF6",
+              "width": 0.5
+             }
+            },
+            "type": "barpolar"
+           }
+          ],
+          "carpet": [
+           {
+            "aaxis": {
+             "endlinecolor": "#2a3f5f",
+             "gridcolor": "white",
+             "linecolor": "white",
+             "minorgridcolor": "white",
+             "startlinecolor": "#2a3f5f"
+            },
+            "baxis": {
+             "endlinecolor": "#2a3f5f",
+             "gridcolor": "white",
+             "linecolor": "white",
+             "minorgridcolor": "white",
+             "startlinecolor": "#2a3f5f"
+            },
+            "type": "carpet"
+           }
+          ],
+          "choropleth": [
+           {
+            "colorbar": {
+             "outlinewidth": 0,
+             "ticks": ""
+            },
+            "type": "choropleth"
+           }
+          ],
+          "contour": [
+           {
+            "colorbar": {
+             "outlinewidth": 0,
+             "ticks": ""
+            },
+            "colorscale": [
+             [
+              0,
+              "#0d0887"
+             ],
+             [
+              0.1111111111111111,
+              "#46039f"
+             ],
+             [
+              0.2222222222222222,
+              "#7201a8"
+             ],
+             [
+              0.3333333333333333,
+              "#9c179e"
+             ],
+             [
+              0.4444444444444444,
+              "#bd3786"
+             ],
+             [
+              0.5555555555555556,
+              "#d8576b"
+             ],
+             [
+              0.6666666666666666,
+              "#ed7953"
+             ],
+             [
+              0.7777777777777778,
+              "#fb9f3a"
+             ],
+             [
+              0.8888888888888888,
+              "#fdca26"
+             ],
+             [
+              1,
+              "#f0f921"
+             ]
+            ],
+            "type": "contour"
+           }
+          ],
+          "contourcarpet": [
+           {
+            "colorbar": {
+             "outlinewidth": 0,
+             "ticks": ""
+            },
+            "type": "contourcarpet"
+           }
+          ],
+          "heatmap": [
+           {
+            "colorbar": {
+             "outlinewidth": 0,
+             "ticks": ""
+            },
+            "colorscale": [
+             [
+              0,
+              "#0d0887"
+             ],
+             [
+              0.1111111111111111,
+              "#46039f"
+             ],
+             [
+              0.2222222222222222,
+              "#7201a8"
+             ],
+             [
+              0.3333333333333333,
+              "#9c179e"
+             ],
+             [
+              0.4444444444444444,
+              "#bd3786"
+             ],
+             [
+              0.5555555555555556,
+              "#d8576b"
+             ],
+             [
+              0.6666666666666666,
+              "#ed7953"
+             ],
+             [
+              0.7777777777777778,
+              "#fb9f3a"
+             ],
+             [
+              0.8888888888888888,
+              "#fdca26"
+             ],
+             [
+              1,
+              "#f0f921"
+             ]
+            ],
+            "type": "heatmap"
+           }
+          ],
+          "heatmapgl": [
+           {
+            "colorbar": {
+             "outlinewidth": 0,
+             "ticks": ""
+            },
+            "colorscale": [
+             [
+              0,
+              "#0d0887"
+             ],
+             [
+              0.1111111111111111,
+              "#46039f"
+             ],
+             [
+              0.2222222222222222,
+              "#7201a8"
+             ],
+             [
+              0.3333333333333333,
+              "#9c179e"
+             ],
+             [
+              0.4444444444444444,
+              "#bd3786"
+             ],
+             [
+              0.5555555555555556,
+              "#d8576b"
+             ],
+             [
+              0.6666666666666666,
+              "#ed7953"
+             ],
+             [
+              0.7777777777777778,
+              "#fb9f3a"
+             ],
+             [
+              0.8888888888888888,
+              "#fdca26"
+             ],
+             [
+              1,
+              "#f0f921"
+             ]
+            ],
+            "type": "heatmapgl"
+           }
+          ],
+          "histogram": [
+           {
+            "marker": {
+             "colorbar": {
+              "outlinewidth": 0,
+              "ticks": ""
+             }
+            },
+            "type": "histogram"
+           }
+          ],
+          "histogram2d": [
+           {
+            "colorbar": {
+             "outlinewidth": 0,
+             "ticks": ""
+            },
+            "colorscale": [
+             [
+              0,
+              "#0d0887"
+             ],
+             [
+              0.1111111111111111,
+              "#46039f"
+             ],
+             [
+              0.2222222222222222,
+              "#7201a8"
+             ],
+             [
+              0.3333333333333333,
+              "#9c179e"
+             ],
+             [
+              0.4444444444444444,
+              "#bd3786"
+             ],
+             [
+              0.5555555555555556,
+              "#d8576b"
+             ],
+             [
+              0.6666666666666666,
+              "#ed7953"
+             ],
+             [
+              0.7777777777777778,
+              "#fb9f3a"
+             ],
+             [
+              0.8888888888888888,
+              "#fdca26"
+             ],
+             [
+              1,
+              "#f0f921"
+             ]
+            ],
+            "type": "histogram2d"
+           }
+          ],
+          "histogram2dcontour": [
+           {
+            "colorbar": {
+             "outlinewidth": 0,
+             "ticks": ""
+            },
+            "colorscale": [
+             [
+              0,
+              "#0d0887"
+             ],
+             [
+              0.1111111111111111,
+              "#46039f"
+             ],
+             [
+              0.2222222222222222,
+              "#7201a8"
+             ],
+             [
+              0.3333333333333333,
+              "#9c179e"
+             ],
+             [
+              0.4444444444444444,
+              "#bd3786"
+             ],
+             [
+              0.5555555555555556,
+              "#d8576b"
+             ],
+             [
+              0.6666666666666666,
+              "#ed7953"
+             ],
+             [
+              0.7777777777777778,
+              "#fb9f3a"
+             ],
+             [
+              0.8888888888888888,
+              "#fdca26"
+             ],
+             [
+              1,
+              "#f0f921"
+             ]
+            ],
+            "type": "histogram2dcontour"
+           }
+          ],
+          "mesh3d": [
+           {
+            "colorbar": {
+             "outlinewidth": 0,
+             "ticks": ""
+            },
+            "type": "mesh3d"
+           }
+          ],
+          "parcoords": [
+           {
+            "line": {
+             "colorbar": {
+              "outlinewidth": 0,
+              "ticks": ""
+             }
+            },
+            "type": "parcoords"
+           }
+          ],
+          "pie": [
+           {
+            "automargin": true,
+            "type": "pie"
+           }
+          ],
+          "scatter": [
+           {
+            "marker": {
+             "colorbar": {
+              "outlinewidth": 0,
+              "ticks": ""
+             }
+            },
+            "type": "scatter"
+           }
+          ],
+          "scatter3d": [
+           {
+            "line": {
+             "colorbar": {
+              "outlinewidth": 0,
+              "ticks": ""
+             }
+            },
+            "marker": {
+             "colorbar": {
+              "outlinewidth": 0,
+              "ticks": ""
+             }
+            },
+            "type": "scatter3d"
+           }
+          ],
+          "scattercarpet": [
+           {
+            "marker": {
+             "colorbar": {
+              "outlinewidth": 0,
+              "ticks": ""
+             }
+            },
+            "type": "scattercarpet"
+           }
+          ],
+          "scattergeo": [
+           {
+            "marker": {
+             "colorbar": {
+              "outlinewidth": 0,
+              "ticks": ""
+             }
+            },
+            "type": "scattergeo"
+           }
+          ],
+          "scattergl": [
+           {
+            "marker": {
+             "colorbar": {
+              "outlinewidth": 0,
+              "ticks": ""
+             }
+            },
+            "type": "scattergl"
+           }
+          ],
+          "scattermapbox": [
+           {
+            "marker": {
+             "colorbar": {
+              "outlinewidth": 0,
+              "ticks": ""
+             }
+            },
+            "type": "scattermapbox"
+           }
+          ],
+          "scatterpolar": [
+           {
+            "marker": {
+             "colorbar": {
+              "outlinewidth": 0,
+              "ticks": ""
+             }
+            },
+            "type": "scatterpolar"
+           }
+          ],
+          "scatterpolargl": [
+           {
+            "marker": {
+             "colorbar": {
+              "outlinewidth": 0,
+              "ticks": ""
+             }
+            },
+            "type": "scatterpolargl"
+           }
+          ],
+          "scatterternary": [
+           {
+            "marker": {
+             "colorbar": {
+              "outlinewidth": 0,
+              "ticks": ""
+             }
+            },
+            "type": "scatterternary"
+           }
+          ],
+          "surface": [
+           {
+            "colorbar": {
+             "outlinewidth": 0,
+             "ticks": ""
+            },
+            "colorscale": [
+             [
+              0,
+              "#0d0887"
+             ],
+             [
+              0.1111111111111111,
+              "#46039f"
+             ],
+             [
+              0.2222222222222222,
+              "#7201a8"
+             ],
+             [
+              0.3333333333333333,
+              "#9c179e"
+             ],
+             [
+              0.4444444444444444,
+              "#bd3786"
+             ],
+             [
+              0.5555555555555556,
+              "#d8576b"
+             ],
+             [
+              0.6666666666666666,
+              "#ed7953"
+             ],
+             [
+              0.7777777777777778,
+              "#fb9f3a"
+             ],
+             [
+              0.8888888888888888,
+              "#fdca26"
+             ],
+             [
+              1,
+              "#f0f921"
+             ]
+            ],
+            "type": "surface"
+           }
+          ],
+          "table": [
+           {
+            "cells": {
+             "fill": {
+              "color": "#EBF0F8"
+             },
+             "line": {
+              "color": "white"
+             }
+            },
+            "header": {
+             "fill": {
+              "color": "#C8D4E3"
+             },
+             "line": {
+              "color": "white"
+             }
+            },
+            "type": "table"
+           }
+          ]
+         },
+         "layout": {
+          "annotationdefaults": {
+           "arrowcolor": "#2a3f5f",
+           "arrowhead": 0,
+           "arrowwidth": 1
+          },
+          "coloraxis": {
+           "colorbar": {
+            "outlinewidth": 0,
+            "ticks": ""
+           }
+          },
+          "colorscale": {
+           "diverging": [
+            [
+             0,
+             "#8e0152"
+            ],
+            [
+             0.1,
+             "#c51b7d"
+            ],
+            [
+             0.2,
+             "#de77ae"
+            ],
+            [
+             0.3,
+             "#f1b6da"
+            ],
+            [
+             0.4,
+             "#fde0ef"
+            ],
+            [
+             0.5,
+             "#f7f7f7"
+            ],
+            [
+             0.6,
+             "#e6f5d0"
+            ],
+            [
+             0.7,
+             "#b8e186"
+            ],
+            [
+             0.8,
+             "#7fbc41"
+            ],
+            [
+             0.9,
+             "#4d9221"
+            ],
+            [
+             1,
+             "#276419"
+            ]
+           ],
+           "sequential": [
+            [
+             0,
+             "#0d0887"
+            ],
+            [
+             0.1111111111111111,
+             "#46039f"
+            ],
+            [
+             0.2222222222222222,
+             "#7201a8"
+            ],
+            [
+             0.3333333333333333,
+             "#9c179e"
+            ],
+            [
+             0.4444444444444444,
+             "#bd3786"
+            ],
+            [
+             0.5555555555555556,
+             "#d8576b"
+            ],
+            [
+             0.6666666666666666,
+             "#ed7953"
+            ],
+            [
+             0.7777777777777778,
+             "#fb9f3a"
+            ],
+            [
+             0.8888888888888888,
+             "#fdca26"
+            ],
+            [
+             1,
+             "#f0f921"
+            ]
+           ],
+           "sequentialminus": [
+            [
+             0,
+             "#0d0887"
+            ],
+            [
+             0.1111111111111111,
+             "#46039f"
+            ],
+            [
+             0.2222222222222222,
+             "#7201a8"
+            ],
+            [
+             0.3333333333333333,
+             "#9c179e"
+            ],
+            [
+             0.4444444444444444,
+             "#bd3786"
+            ],
+            [
+             0.5555555555555556,
+             "#d8576b"
+            ],
+            [
+             0.6666666666666666,
+             "#ed7953"
+            ],
+            [
+             0.7777777777777778,
+             "#fb9f3a"
+            ],
+            [
+             0.8888888888888888,
+             "#fdca26"
+            ],
+            [
+             1,
+             "#f0f921"
+            ]
+           ]
+          },
+          "colorway": [
+           "#636efa",
+           "#EF553B",
+           "#00cc96",
+           "#ab63fa",
+           "#FFA15A",
+           "#19d3f3",
+           "#FF6692",
+           "#B6E880",
+           "#FF97FF",
+           "#FECB52"
+          ],
+          "font": {
+           "color": "#2a3f5f"
+          },
+          "geo": {
+           "bgcolor": "white",
+           "lakecolor": "white",
+           "landcolor": "#E5ECF6",
+           "showlakes": true,
+           "showland": true,
+           "subunitcolor": "white"
+          },
+          "hoverlabel": {
+           "align": "left"
+          },
+          "hovermode": "closest",
+          "mapbox": {
+           "style": "light"
+          },
+          "paper_bgcolor": "white",
+          "plot_bgcolor": "#E5ECF6",
+          "polar": {
+           "angularaxis": {
+            "gridcolor": "white",
+            "linecolor": "white",
+            "ticks": ""
+           },
+           "bgcolor": "#E5ECF6",
+           "radialaxis": {
+            "gridcolor": "white",
+            "linecolor": "white",
+            "ticks": ""
+           }
+          },
+          "scene": {
+           "xaxis": {
+            "backgroundcolor": "#E5ECF6",
+            "gridcolor": "white",
+            "gridwidth": 2,
+            "linecolor": "white",
+            "showbackground": true,
+            "ticks": "",
+            "zerolinecolor": "white"
+           },
+           "yaxis": {
+            "backgroundcolor": "#E5ECF6",
+            "gridcolor": "white",
+            "gridwidth": 2,
+            "linecolor": "white",
+            "showbackground": true,
+            "ticks": "",
+            "zerolinecolor": "white"
+           },
+           "zaxis": {
+            "backgroundcolor": "#E5ECF6",
+            "gridcolor": "white",
+            "gridwidth": 2,
+            "linecolor": "white",
+            "showbackground": true,
+            "ticks": "",
+            "zerolinecolor": "white"
+           }
+          },
+          "shapedefaults": {
+           "line": {
+            "color": "#2a3f5f"
+           }
+          },
+          "ternary": {
+           "aaxis": {
+            "gridcolor": "white",
+            "linecolor": "white",
+            "ticks": ""
+           },
+           "baxis": {
+            "gridcolor": "white",
+            "linecolor": "white",
+            "ticks": ""
+           },
+           "bgcolor": "#E5ECF6",
+           "caxis": {
+            "gridcolor": "white",
+            "linecolor": "white",
+            "ticks": ""
+           }
+          },
+          "title": {
+           "x": 0.05
+          },
+          "xaxis": {
+           "automargin": true,
+           "gridcolor": "white",
+           "linecolor": "white",
+           "ticks": "",
+           "title": {
+            "standoff": 15
+           },
+           "zerolinecolor": "white",
+           "zerolinewidth": 2
+          },
+          "yaxis": {
+           "automargin": true,
+           "gridcolor": "white",
+           "linecolor": "white",
+           "ticks": "",
+           "title": {
+            "standoff": 15
+           },
+           "zerolinecolor": "white",
+           "zerolinewidth": 2
+          }
+         }
+        },
+        "title": {
+         "text": "Author stats for Nature Genetics (from 2015)"
+        },
+        "xaxis": {
+         "anchor": "y",
+         "autorange": true,
+         "domain": [
+          0,
+          1
+         ],
+         "range": [
+          -0.5,
+          2.5
+         ],
+         "title": {
+          "text": "measure"
+         },
+         "type": "category"
+        },
+        "yaxis": {
+         "anchor": "x",
+         "autorange": true,
+         "domain": [
+          0,
+          1
+         ],
+         "range": [
+          0,
+          45424.21052631579
+         ],
+         "title": {
+          "text": "count"
+         },
+         "type": "linear"
+        }
+       }
+      },
+      "image/png": "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",
+      "text/html": [
+       "<div>\n",
+       "        \n",
+       "        \n",
+       "            <div id=\"8c68a23d-779d-4609-9919-27e3e981a544\" class=\"plotly-graph-div\" style=\"height:525px; width:100%;\"></div>\n",
+       "            <script type=\"text/javascript\">\n",
+       "                require([\"plotly\"], function(Plotly) {\n",
+       "                    window.PLOTLYENV=window.PLOTLYENV || {};\n",
+       "                    \n",
+       "                if (document.getElementById(\"8c68a23d-779d-4609-9919-27e3e981a544\")) {\n",
+       "                    Plotly.newPlot(\n",
+       "                        '8c68a23d-779d-4609-9919-27e3e981a544',\n",
+       "                        [{\"alignmentgroup\": \"True\", \"hovertemplate\": \"measure=%{x}<br>count=%{y}<extra></extra>\", \"legendgroup\": \"\", \"marker\": {\"color\": \"#636efa\"}, \"name\": \"\", \"offsetgroup\": \"\", \"orientation\": \"v\", \"showlegend\": false, \"textposition\": \"auto\", \"type\": \"bar\", \"x\": [\"Authors in total (non unique)\", \"Authors with a researcher ID\", \"Authors with a researcher ID (unique)\"], \"xaxis\": \"x\", \"y\": [43153, 33377, 18524], \"yaxis\": \"y\"}],\n",
+       "                        {\"barmode\": \"relative\", \"legend\": {\"tracegroupgap\": 0}, \"template\": {\"data\": {\"bar\": [{\"error_x\": {\"color\": \"#2a3f5f\"}, \"error_y\": {\"color\": \"#2a3f5f\"}, \"marker\": {\"line\": {\"color\": \"#E5ECF6\", \"width\": 0.5}}, \"type\": \"bar\"}], \"barpolar\": [{\"marker\": {\"line\": {\"color\": \"#E5ECF6\", \"width\": 0.5}}, \"type\": \"barpolar\"}], \"carpet\": [{\"aaxis\": {\"endlinecolor\": \"#2a3f5f\", \"gridcolor\": \"white\", \"linecolor\": \"white\", \"minorgridcolor\": \"white\", \"startlinecolor\": \"#2a3f5f\"}, \"baxis\": {\"endlinecolor\": \"#2a3f5f\", \"gridcolor\": \"white\", \"linecolor\": \"white\", \"minorgridcolor\": \"white\", \"startlinecolor\": \"#2a3f5f\"}, \"type\": \"carpet\"}], \"choropleth\": [{\"colorbar\": {\"outlinewidth\": 0, \"ticks\": \"\"}, \"type\": \"choropleth\"}], \"contour\": [{\"colorbar\": {\"outlinewidth\": 0, \"ticks\": \"\"}, \"colorscale\": [[0.0, \"#0d0887\"], [0.1111111111111111, \"#46039f\"], [0.2222222222222222, \"#7201a8\"], [0.3333333333333333, \"#9c179e\"], [0.4444444444444444, \"#bd3786\"], [0.5555555555555556, \"#d8576b\"], [0.6666666666666666, \"#ed7953\"], [0.7777777777777778, \"#fb9f3a\"], [0.8888888888888888, \"#fdca26\"], [1.0, \"#f0f921\"]], \"type\": \"contour\"}], \"contourcarpet\": [{\"colorbar\": {\"outlinewidth\": 0, \"ticks\": \"\"}, \"type\": \"contourcarpet\"}], \"heatmap\": [{\"colorbar\": {\"outlinewidth\": 0, \"ticks\": \"\"}, \"colorscale\": [[0.0, \"#0d0887\"], [0.1111111111111111, \"#46039f\"], [0.2222222222222222, \"#7201a8\"], [0.3333333333333333, \"#9c179e\"], [0.4444444444444444, \"#bd3786\"], [0.5555555555555556, \"#d8576b\"], [0.6666666666666666, \"#ed7953\"], [0.7777777777777778, \"#fb9f3a\"], [0.8888888888888888, \"#fdca26\"], [1.0, \"#f0f921\"]], \"type\": \"heatmap\"}], \"heatmapgl\": [{\"colorbar\": {\"outlinewidth\": 0, \"ticks\": \"\"}, \"colorscale\": [[0.0, \"#0d0887\"], [0.1111111111111111, \"#46039f\"], [0.2222222222222222, \"#7201a8\"], [0.3333333333333333, \"#9c179e\"], [0.4444444444444444, \"#bd3786\"], [0.5555555555555556, \"#d8576b\"], [0.6666666666666666, \"#ed7953\"], [0.7777777777777778, \"#fb9f3a\"], [0.8888888888888888, \"#fdca26\"], [1.0, \"#f0f921\"]], \"type\": \"heatmapgl\"}], \"histogram\": [{\"marker\": {\"colorbar\": {\"outlinewidth\": 0, \"ticks\": \"\"}}, \"type\": \"histogram\"}], \"histogram2d\": [{\"colorbar\": {\"outlinewidth\": 0, \"ticks\": \"\"}, \"colorscale\": [[0.0, \"#0d0887\"], [0.1111111111111111, \"#46039f\"], [0.2222222222222222, \"#7201a8\"], [0.3333333333333333, \"#9c179e\"], [0.4444444444444444, \"#bd3786\"], [0.5555555555555556, \"#d8576b\"], [0.6666666666666666, \"#ed7953\"], [0.7777777777777778, \"#fb9f3a\"], [0.8888888888888888, \"#fdca26\"], [1.0, \"#f0f921\"]], \"type\": \"histogram2d\"}], \"histogram2dcontour\": [{\"colorbar\": {\"outlinewidth\": 0, \"ticks\": \"\"}, \"colorscale\": [[0.0, \"#0d0887\"], [0.1111111111111111, \"#46039f\"], [0.2222222222222222, \"#7201a8\"], [0.3333333333333333, \"#9c179e\"], [0.4444444444444444, \"#bd3786\"], [0.5555555555555556, \"#d8576b\"], [0.6666666666666666, \"#ed7953\"], [0.7777777777777778, \"#fb9f3a\"], [0.8888888888888888, \"#fdca26\"], [1.0, \"#f0f921\"]], \"type\": \"histogram2dcontour\"}], \"mesh3d\": [{\"colorbar\": {\"outlinewidth\": 0, \"ticks\": \"\"}, \"type\": \"mesh3d\"}], \"parcoords\": [{\"line\": {\"colorbar\": {\"outlinewidth\": 0, \"ticks\": \"\"}}, \"type\": \"parcoords\"}], \"pie\": [{\"automargin\": true, \"type\": \"pie\"}], \"scatter\": [{\"marker\": {\"colorbar\": {\"outlinewidth\": 0, \"ticks\": \"\"}}, \"type\": \"scatter\"}], \"scatter3d\": [{\"line\": {\"colorbar\": {\"outlinewidth\": 0, \"ticks\": \"\"}}, \"marker\": {\"colorbar\": {\"outlinewidth\": 0, \"ticks\": \"\"}}, \"type\": \"scatter3d\"}], \"scattercarpet\": [{\"marker\": {\"colorbar\": {\"outlinewidth\": 0, \"ticks\": \"\"}}, \"type\": \"scattercarpet\"}], \"scattergeo\": [{\"marker\": {\"colorbar\": {\"outlinewidth\": 0, \"ticks\": \"\"}}, \"type\": \"scattergeo\"}], \"scattergl\": [{\"marker\": {\"colorbar\": {\"outlinewidth\": 0, \"ticks\": \"\"}}, \"type\": \"scattergl\"}], \"scattermapbox\": [{\"marker\": {\"colorbar\": {\"outlinewidth\": 0, \"ticks\": \"\"}}, \"type\": \"scattermapbox\"}], \"scatterpolar\": [{\"marker\": {\"colorbar\": {\"outlinewidth\": 0, \"ticks\": \"\"}}, \"type\": \"scatterpolar\"}], \"scatterpolargl\": [{\"marker\": {\"colorbar\": {\"outlinewidth\": 0, \"ticks\": \"\"}}, \"type\": \"scatterpolargl\"}], \"scatterternary\": [{\"marker\": {\"colorbar\": {\"outlinewidth\": 0, \"ticks\": \"\"}}, \"type\": \"scatterternary\"}], \"surface\": [{\"colorbar\": {\"outlinewidth\": 0, \"ticks\": \"\"}, \"colorscale\": [[0.0, \"#0d0887\"], [0.1111111111111111, \"#46039f\"], [0.2222222222222222, \"#7201a8\"], [0.3333333333333333, \"#9c179e\"], [0.4444444444444444, \"#bd3786\"], [0.5555555555555556, \"#d8576b\"], [0.6666666666666666, \"#ed7953\"], [0.7777777777777778, \"#fb9f3a\"], [0.8888888888888888, \"#fdca26\"], [1.0, \"#f0f921\"]], \"type\": \"surface\"}], \"table\": [{\"cells\": {\"fill\": {\"color\": \"#EBF0F8\"}, \"line\": {\"color\": \"white\"}}, \"header\": {\"fill\": {\"color\": \"#C8D4E3\"}, \"line\": {\"color\": \"white\"}}, \"type\": \"table\"}]}, \"layout\": {\"annotationdefaults\": {\"arrowcolor\": \"#2a3f5f\", \"arrowhead\": 0, \"arrowwidth\": 1}, \"coloraxis\": {\"colorbar\": {\"outlinewidth\": 0, \"ticks\": \"\"}}, \"colorscale\": {\"diverging\": [[0, \"#8e0152\"], [0.1, \"#c51b7d\"], [0.2, \"#de77ae\"], [0.3, \"#f1b6da\"], [0.4, \"#fde0ef\"], [0.5, \"#f7f7f7\"], [0.6, \"#e6f5d0\"], [0.7, \"#b8e186\"], [0.8, \"#7fbc41\"], [0.9, \"#4d9221\"], [1, \"#276419\"]], \"sequential\": [[0.0, \"#0d0887\"], [0.1111111111111111, \"#46039f\"], [0.2222222222222222, \"#7201a8\"], [0.3333333333333333, \"#9c179e\"], [0.4444444444444444, \"#bd3786\"], [0.5555555555555556, \"#d8576b\"], [0.6666666666666666, \"#ed7953\"], [0.7777777777777778, \"#fb9f3a\"], [0.8888888888888888, \"#fdca26\"], [1.0, \"#f0f921\"]], \"sequentialminus\": [[0.0, \"#0d0887\"], [0.1111111111111111, \"#46039f\"], [0.2222222222222222, \"#7201a8\"], [0.3333333333333333, \"#9c179e\"], [0.4444444444444444, \"#bd3786\"], [0.5555555555555556, \"#d8576b\"], [0.6666666666666666, \"#ed7953\"], [0.7777777777777778, \"#fb9f3a\"], [0.8888888888888888, \"#fdca26\"], [1.0, \"#f0f921\"]]}, \"colorway\": [\"#636efa\", \"#EF553B\", \"#00cc96\", \"#ab63fa\", \"#FFA15A\", \"#19d3f3\", \"#FF6692\", \"#B6E880\", \"#FF97FF\", \"#FECB52\"], \"font\": {\"color\": \"#2a3f5f\"}, \"geo\": {\"bgcolor\": \"white\", \"lakecolor\": \"white\", \"landcolor\": \"#E5ECF6\", \"showlakes\": true, \"showland\": true, \"subunitcolor\": \"white\"}, \"hoverlabel\": {\"align\": \"left\"}, \"hovermode\": \"closest\", \"mapbox\": {\"style\": \"light\"}, \"paper_bgcolor\": \"white\", \"plot_bgcolor\": \"#E5ECF6\", \"polar\": {\"angularaxis\": {\"gridcolor\": \"white\", \"linecolor\": \"white\", \"ticks\": \"\"}, \"bgcolor\": \"#E5ECF6\", \"radialaxis\": {\"gridcolor\": \"white\", \"linecolor\": \"white\", \"ticks\": \"\"}}, \"scene\": {\"xaxis\": {\"backgroundcolor\": \"#E5ECF6\", \"gridcolor\": \"white\", \"gridwidth\": 2, \"linecolor\": \"white\", \"showbackground\": true, \"ticks\": \"\", \"zerolinecolor\": \"white\"}, \"yaxis\": {\"backgroundcolor\": \"#E5ECF6\", \"gridcolor\": \"white\", \"gridwidth\": 2, \"linecolor\": \"white\", \"showbackground\": true, \"ticks\": \"\", \"zerolinecolor\": \"white\"}, \"zaxis\": {\"backgroundcolor\": \"#E5ECF6\", \"gridcolor\": \"white\", \"gridwidth\": 2, \"linecolor\": \"white\", \"showbackground\": true, \"ticks\": \"\", \"zerolinecolor\": \"white\"}}, \"shapedefaults\": {\"line\": {\"color\": \"#2a3f5f\"}}, \"ternary\": {\"aaxis\": {\"gridcolor\": \"white\", \"linecolor\": \"white\", \"ticks\": \"\"}, \"baxis\": {\"gridcolor\": \"white\", \"linecolor\": \"white\", \"ticks\": \"\"}, \"bgcolor\": \"#E5ECF6\", \"caxis\": {\"gridcolor\": \"white\", \"linecolor\": \"white\", \"ticks\": \"\"}}, \"title\": {\"x\": 0.05}, \"xaxis\": {\"automargin\": true, \"gridcolor\": \"white\", \"linecolor\": \"white\", \"ticks\": \"\", \"title\": {\"standoff\": 15}, \"zerolinecolor\": \"white\", \"zerolinewidth\": 2}, \"yaxis\": {\"automargin\": true, \"gridcolor\": \"white\", \"linecolor\": \"white\", \"ticks\": \"\", \"title\": {\"standoff\": 15}, \"zerolinecolor\": \"white\", \"zerolinewidth\": 2}}}, \"title\": {\"text\": \"Author stats for Nature Genetics (from 2015)\"}, \"xaxis\": {\"anchor\": \"y\", \"domain\": [0.0, 1.0], \"title\": {\"text\": \"measure\"}}, \"yaxis\": {\"anchor\": \"x\", \"domain\": [0.0, 1.0], \"title\": {\"text\": \"count\"}}},\n",
+       "                        {\"responsive\": true}\n",
+       "                    ).then(function(){\n",
+       "                            \n",
+       "var gd = document.getElementById('8c68a23d-779d-4609-9919-27e3e981a544');\n",
+       "var x = new MutationObserver(function (mutations, observer) {{\n",
+       "        var display = window.getComputedStyle(gd).display;\n",
+       "        if (!display || display === 'none') {{\n",
+       "            console.log([gd, 'removed!']);\n",
+       "            Plotly.purge(gd);\n",
+       "            observer.disconnect();\n",
+       "        }}\n",
+       "}});\n",
+       "\n",
+       "// Listen for the removal of the full notebook cells\n",
+       "var notebookContainer = gd.closest('#notebook-container');\n",
+       "if (notebookContainer) {{\n",
+       "    x.observe(notebookContainer, {childList: true});\n",
+       "}}\n",
+       "\n",
+       "// Listen for the clearing of the current output cell\n",
+       "var outputEl = gd.closest('.output');\n",
+       "if (outputEl) {{\n",
+       "    x.observe(outputEl, {childList: true});\n",
+       "}}\n",
+       "\n",
+       "                        })\n",
+       "                };\n",
+       "                });\n",
+       "            </script>\n",
+       "        </div>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "researchers = authors.query(\"researcher_id!=''\")\n",
+    "#\n",
+    "df = pd.DataFrame({\n",
+    "    'measure' : ['Authors in total (non unique)', 'Authors with a researcher ID', 'Authors with a researcher ID (unique)'],\n",
+    "    'count' : [len(authors), len(researchers), researchers['researcher_id'].nunique()],\n",
+    "})\n",
+    "px.bar(df, x=\"measure\", y=\"count\", title=f\"Author stats for {journal_title} (from {start_year})\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {},
+    "colab_type": "code",
+    "id": "bs2a6hzBRmdM"
+   },
+   "outputs": [],
+   "source": [
+    "# save the researchers data to a file\n",
+    "save(researchers, \"1_authors_with_researchers_id.csv\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "fJuPwNoORmdN"
+   },
+   "source": [
+    "## A quick look at authors *without* a Dimensions Researcher ID\n",
+    "\n",
+    "We're not going to try to disambiguate them here, but still it's good to have a quick look at them... \n",
+    "\n",
+    "Looks like the most common surname is `Wang`, while the most common first name is an empty value"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 172
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 9573,
+     "status": "ok",
+     "timestamp": 1590004336490,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GiYfmLTPbeMuYDDrETLbTVXTXnfVr9f7eBtkmR73A=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "Zh-u7ZN4RmdO",
+    "outputId": "4ab12b2a-dabc-4cf8-f64d-9e85e0e6e086"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>first_name</th>\n",
+       "      <th>last_name</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>count</th>\n",
+       "      <td>9776</td>\n",
+       "      <td>9776</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>unique</th>\n",
+       "      <td>4280</td>\n",
+       "      <td>4183</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>top</th>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>freq</th>\n",
+       "      <td>560</td>\n",
+       "      <td>408</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "       first_name last_name\n",
+       "count        9776      9776\n",
+       "unique       4280      4183\n",
+       "top                        \n",
+       "freq          560       408"
+      ]
+     },
+     "execution_count": 8,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "authors_without_id = authors.query(\"researcher_id==''\")\n",
+    "authors_without_id[['first_name', 'last_name']].describe()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "17_9q8y1RmdP"
+   },
+   "source": [
+    "Top Ten surnames seem all Chinese.. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 204
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 9567,
+     "status": "ok",
+     "timestamp": 1590004336491,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GiYfmLTPbeMuYDDrETLbTVXTXnfVr9f7eBtkmR73A=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "IO6R4sRARmdQ",
+    "outputId": "9adfea21-5f69-4698-a8b9-e6b9fb2c3e61"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "         408\n",
+       "Wang     183\n",
+       "Li       148\n",
+       "Zhang    148\n",
+       "Liu      128\n",
+       "Chen     108\n",
+       "Yang      71\n",
+       "Zhao      63\n",
+       "Lee       57\n",
+       "Kim       50\n",
+       "Name: last_name, dtype: int64"
+      ]
+     },
+     "execution_count": 9,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "authors_without_id['last_name'].value_counts()[:10]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "ivhKZPLsRmdS"
+   },
+   "source": [
+    "### Any common patterns? \n",
+    "\n",
+    "If we try to group the data by name+surname we can see some interesting patterns \n",
+    "\n",
+    "* some entries are things which are not persons (presumably the results of bad source data in Dimensions, eg from the publisher) \n",
+    "* there are some apparently meaningful name+surname combinations with a lot of hits\n",
+    "* not many Chinese names in the top ones \n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 901
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 9563,
+     "status": "ok",
+     "timestamp": 1590004336491,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GiYfmLTPbeMuYDDrETLbTVXTXnfVr9f7eBtkmR73A=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "VCkNdlWgRmdS",
+    "outputId": "2ec4715d-0dc6-442c-a38a-6e9ef19344b6"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "first_name    last_name            \n",
+       "                                       408\n",
+       "Jaakko        Tuomilehto                13\n",
+       "Wei           Zhao                      12\n",
+       "James G.      Wilson                    12\n",
+       "James P.      Cook                      11\n",
+       "Olle          Melander                  11\n",
+       "Qiong         Yang                      10\n",
+       "Jie           Huang                     10\n",
+       "Brooke        LaFlamme                  10\n",
+       "Jouke-Jan     Hottenga                  10\n",
+       "Kari          Stefansson                 9\n",
+       "Andre         Franke                     9\n",
+       "Ying          Wu                         9\n",
+       "Andrew P.     Morris                     9\n",
+       "Tõnu          Esko                       9\n",
+       "Najaf         Amin                       9\n",
+       "Daniela       Toniolo                    9\n",
+       "Nicholas G.   Martin                     9\n",
+       "Aarno         Palotie                    9\n",
+       "Grant W.      Montgomery                 9\n",
+       "Joanna M. M.  Howson                     9\n",
+       "Wolfgang      Lieb                       9\n",
+       "Lars          Lind                       9\n",
+       "Ganesh        Chauhan                    8\n",
+       "Charles       Kooperberg                 8\n",
+       "David         Ellinghaus                 8\n",
+       "André G.      Uitterlinden               8\n",
+       "Yongmei       Liu                        8\n",
+       "Peter         Vollenweider               8\n",
+       "Manuel        Mattheisen                 8\n",
+       "Weihua        Zhang                      8\n",
+       "Albert V.     Smith                      8\n",
+       "Peter         Almgren                    8\n",
+       "Albert        Hofman                     8\n",
+       "Matthias W    Beckmann                   7\n",
+       "Jose C.       Florez                     7\n",
+       "Andres        Metspalu                   7\n",
+       "Leslie A.     Lange                      7\n",
+       "Jie Jin       Wang                       7\n",
+       "Jin           Li                         7\n",
+       "Patrick F.    Sullivan                   7\n",
+       "Yii-Der Ida   Chen                       6\n",
+       "Frank         Kee                        6\n",
+       "Cornelia M.   van Duijn                  6\n",
+       "Jonathan      Beesley                    6\n",
+       "James J       Lee                        6\n",
+       "              23andMe Research Team      6\n",
+       "Rajesh        Rawal                      6\n",
+       "Jing Hua      Zhao                       6\n",
+       "Scott D.      Gordon                     6\n",
+       "dtype: int64"
+      ]
+     },
+     "execution_count": 10,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "test = authors_without_id.groupby([\"first_name\", \"last_name\"]).size()\n",
+    "test.sort_values(ascending=False, inplace=True)\n",
+    "test.head(50)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "dqxFegeLRmdW"
+   },
+   "source": [
+    "### Creating an export for manual curation\n",
+    "\n",
+    "For the next tasks, we will focus on the disambiguated authors as the Researcher ID links will let us carry out useful analyses.\n",
+    "\n",
+    "Still, we can **save the authors with missing IDs** results and try to do some manual disambiguation later. To this end, adding a simple google-search URL can help in making sense of these data quickly."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 508
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 9890,
+     "status": "ok",
+     "timestamp": 1590004336822,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GiYfmLTPbeMuYDDrETLbTVXTXnfVr9f7eBtkmR73A=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "cC__pj51RmdW",
+    "outputId": "da9b33b0-1cf5-4a3c-9d5e-4c5a95b3fa28"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>name</th>\n",
+       "      <th>surname</th>\n",
+       "      <th>frequency</th>\n",
+       "      <th>search_url</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>408</td>\n",
+       "      <td></td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>Jaakko</td>\n",
+       "      <td>Tuomilehto</td>\n",
+       "      <td>13</td>\n",
+       "      <td>https://www.google.com/search?q=Jaakko+Tuomilehto</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>Wei</td>\n",
+       "      <td>Zhao</td>\n",
+       "      <td>12</td>\n",
+       "      <td>https://www.google.com/search?q=Wei+Zhao</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>James G.</td>\n",
+       "      <td>Wilson</td>\n",
+       "      <td>12</td>\n",
+       "      <td>https://www.google.com/search?q=James%20G.+Wilson</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>James P.</td>\n",
+       "      <td>Cook</td>\n",
+       "      <td>11</td>\n",
+       "      <td>https://www.google.com/search?q=James%20P.+Cook</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td>Olle</td>\n",
+       "      <td>Melander</td>\n",
+       "      <td>11</td>\n",
+       "      <td>https://www.google.com/search?q=Olle+Melander</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>6</th>\n",
+       "      <td>Qiong</td>\n",
+       "      <td>Yang</td>\n",
+       "      <td>10</td>\n",
+       "      <td>https://www.google.com/search?q=Qiong+Yang</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>7</th>\n",
+       "      <td>Jie</td>\n",
+       "      <td>Huang</td>\n",
+       "      <td>10</td>\n",
+       "      <td>https://www.google.com/search?q=Jie+Huang</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>8</th>\n",
+       "      <td>Brooke</td>\n",
+       "      <td>LaFlamme</td>\n",
+       "      <td>10</td>\n",
+       "      <td>https://www.google.com/search?q=Brooke+LaFlamme</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>9</th>\n",
+       "      <td>Jouke-Jan</td>\n",
+       "      <td>Hottenga</td>\n",
+       "      <td>10</td>\n",
+       "      <td>https://www.google.com/search?q=Jouke-Jan+Hott...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>10</th>\n",
+       "      <td>Kari</td>\n",
+       "      <td>Stefansson</td>\n",
+       "      <td>9</td>\n",
+       "      <td>https://www.google.com/search?q=Kari+Stefansson</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>11</th>\n",
+       "      <td>Andre</td>\n",
+       "      <td>Franke</td>\n",
+       "      <td>9</td>\n",
+       "      <td>https://www.google.com/search?q=Andre+Franke</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>12</th>\n",
+       "      <td>Ying</td>\n",
+       "      <td>Wu</td>\n",
+       "      <td>9</td>\n",
+       "      <td>https://www.google.com/search?q=Ying+Wu</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>13</th>\n",
+       "      <td>Andrew P.</td>\n",
+       "      <td>Morris</td>\n",
+       "      <td>9</td>\n",
+       "      <td>https://www.google.com/search?q=Andrew%20P.+Mo...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>14</th>\n",
+       "      <td>Tõnu</td>\n",
+       "      <td>Esko</td>\n",
+       "      <td>9</td>\n",
+       "      <td>https://www.google.com/search?q=T%C3%B5nu+Esko</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>15</th>\n",
+       "      <td>Najaf</td>\n",
+       "      <td>Amin</td>\n",
+       "      <td>9</td>\n",
+       "      <td>https://www.google.com/search?q=Najaf+Amin</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>16</th>\n",
+       "      <td>Daniela</td>\n",
+       "      <td>Toniolo</td>\n",
+       "      <td>9</td>\n",
+       "      <td>https://www.google.com/search?q=Daniela+Toniolo</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>17</th>\n",
+       "      <td>Nicholas G.</td>\n",
+       "      <td>Martin</td>\n",
+       "      <td>9</td>\n",
+       "      <td>https://www.google.com/search?q=Nicholas%20G.+...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>18</th>\n",
+       "      <td>Aarno</td>\n",
+       "      <td>Palotie</td>\n",
+       "      <td>9</td>\n",
+       "      <td>https://www.google.com/search?q=Aarno+Palotie</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>19</th>\n",
+       "      <td>Grant W.</td>\n",
+       "      <td>Montgomery</td>\n",
+       "      <td>9</td>\n",
+       "      <td>https://www.google.com/search?q=Grant%20W.+Mon...</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "           name     surname  frequency  \\\n",
+       "0                                  408   \n",
+       "1        Jaakko  Tuomilehto         13   \n",
+       "2           Wei        Zhao         12   \n",
+       "3      James G.      Wilson         12   \n",
+       "4      James P.        Cook         11   \n",
+       "5          Olle    Melander         11   \n",
+       "6         Qiong        Yang         10   \n",
+       "7           Jie       Huang         10   \n",
+       "8        Brooke    LaFlamme         10   \n",
+       "9     Jouke-Jan    Hottenga         10   \n",
+       "10         Kari  Stefansson          9   \n",
+       "11        Andre      Franke          9   \n",
+       "12         Ying          Wu          9   \n",
+       "13    Andrew P.      Morris          9   \n",
+       "14         Tõnu        Esko          9   \n",
+       "15        Najaf        Amin          9   \n",
+       "16      Daniela     Toniolo          9   \n",
+       "17  Nicholas G.      Martin          9   \n",
+       "18        Aarno     Palotie          9   \n",
+       "19     Grant W.  Montgomery          9   \n",
+       "\n",
+       "                                           search_url  \n",
+       "0                                                      \n",
+       "1   https://www.google.com/search?q=Jaakko+Tuomilehto  \n",
+       "2            https://www.google.com/search?q=Wei+Zhao  \n",
+       "3   https://www.google.com/search?q=James%20G.+Wilson  \n",
+       "4     https://www.google.com/search?q=James%20P.+Cook  \n",
+       "5       https://www.google.com/search?q=Olle+Melander  \n",
+       "6          https://www.google.com/search?q=Qiong+Yang  \n",
+       "7           https://www.google.com/search?q=Jie+Huang  \n",
+       "8     https://www.google.com/search?q=Brooke+LaFlamme  \n",
+       "9   https://www.google.com/search?q=Jouke-Jan+Hott...  \n",
+       "10    https://www.google.com/search?q=Kari+Stefansson  \n",
+       "11       https://www.google.com/search?q=Andre+Franke  \n",
+       "12            https://www.google.com/search?q=Ying+Wu  \n",
+       "13  https://www.google.com/search?q=Andrew%20P.+Mo...  \n",
+       "14     https://www.google.com/search?q=T%C3%B5nu+Esko  \n",
+       "15         https://www.google.com/search?q=Najaf+Amin  \n",
+       "16    https://www.google.com/search?q=Daniela+Toniolo  \n",
+       "17  https://www.google.com/search?q=Nicholas%20G.+...  \n",
+       "18      https://www.google.com/search?q=Aarno+Palotie  \n",
+       "19  https://www.google.com/search?q=Grant%20W.+Mon...  "
+      ]
+     },
+     "execution_count": 11,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "from urllib.parse import quote\n",
+    "\n",
+    "out = []\n",
+    "for index, value in test.items():\n",
+    "    # compose a simple URL of the form 'https://www.google.com/search?q=tonu+esko'\n",
+    "    if index[0] or index[1]:\n",
+    "        n, s = quote(index[0]), quote(index[1])\n",
+    "        url = f\"https://www.google.com/search?q={n}+{s}\"\n",
+    "    else:\n",
+    "        url = \"\"\n",
+    "    d = {'name': index[0] , 'surname' : index[1] , 'frequency' : value , 'search_url' : url }\n",
+    "    out.append(d)\n",
+    "\n",
+    "authors_follow_up = pd.DataFrame.from_dict(out)\n",
+    "# set order of columns\n",
+    "authors_follow_up = authors_follow_up[['name', 'surname', 'frequency', 'search_url']]\n",
+    "\n",
+    "authors_follow_up.head(20)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {},
+    "colab_type": "code",
+    "id": "xQFQTOPOWm_T"
+   },
+   "outputs": [],
+   "source": [
+    "# save the data\n",
+    "save(authors_follow_up, \"1_authors_without_researchers_id.csv\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "Y9cYfZJZRmdY"
+   },
+   "source": [
+    "That's it! \n",
+    "\n",
+    "Now let's go and open this in [Google Sheets](https://docs.google.com/spreadsheets/)..."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 34
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 9303,
+     "status": "ok",
+     "timestamp": 1590004531476,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GiYfmLTPbeMuYDDrETLbTVXTXnfVr9f7eBtkmR73A=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "pt8y3YXAo6EM",
+    "outputId": "18b6b189-f5f3-4290-ed40-662184d36525"
+   },
+   "outputs": [],
+   "source": [
+    "# for colab users: download everything\n",
+    "if COLAB_ENV:\n",
+    "    from google.colab import auth\n",
+    "    auth.authenticate_user()\n",
+    "\n",
+    "    import gspread\n",
+    "    from gspread_dataframe import get_as_dataframe, set_with_dataframe\n",
+    "    from oauth2client.client import GoogleCredentials\n",
+    "\n",
+    "    gc = gspread.authorize(GoogleCredentials.get_application_default())\n",
+    "\n",
+    "    title = 'Authors_without_IDs'\n",
+    "    sh = gc.create(title)\n",
+    "    worksheet = gc.open(title).sheet1\n",
+    "    set_with_dataframe(worksheet, authors_follow_up)\n",
+    "    spreadsheet_url = \"https://docs.google.com/spreadsheets/d/%s\" % sh.id\n",
+    "    print(spreadsheet_url)"
+   ]
+  }
+ ],
+ "metadata": {
+  "colab": {
+   "collapsed_sections": [],
+   "name": "Journal-Profile-1-Gathering-data.ipynb",
+   "provenance": [],
+   "toc_visible": true
+  },
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.4"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

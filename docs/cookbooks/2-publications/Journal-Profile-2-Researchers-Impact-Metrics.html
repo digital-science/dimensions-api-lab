@@ -1,0 +1,1719 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Journal Profiling Part 2: Impact Metrics &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Journal Profiling Part 3: Funding" href="Journal-Profile-3-Funding-of-Researchers.html" />
+    <link rel="prev" title="Journal Profiling Part 1: Getting the Data" href="Journal-Profile-1-Gathering-data.html" />
+    
+
+   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149959808-1"></script>
+   <!-- <script src="_static/js/custom.js"></script> -->
+
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> DSL
+          
+
+          
+            
+            <img src="../../_static/dimensions-logo@2x.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+
+   <p class="">
+      <h3 id="cookbooks_title">API COOKBOOKS</h3>
+   </p>
+
+
+   
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/0-Verifying-your-connection.html">Verifying Your API Connection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/0-Verifying-your-connection.html#Technical-prerequisites">Technical prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/0-Verifying-your-connection.html#Connecting-to-the-API">Connecting to the API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/0-Verifying-your-connection.html#Troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html">The Dimcli Python library: Installation and Querying</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Authentication">Authentication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#More-secure-method:-storing-a-private-credentials-file">More secure method: storing a private credentials file</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Querying">Querying</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Simple-Querying">Simple Querying</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Iterative-querying-(loops)">Iterative querying (loops)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Command-line-interface">Command line interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Running-the-CLI">Running the CLI</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html">The Dimcli Python library: Working with Pandas Dataframes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#1.-General-method-to-transform-JSON-query-results-into-a-dataframe">1. General method to transform JSON query results into a dataframe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#2.-Dataframe-Methods-for-‘Publications’-queries">2. Dataframe Methods for ‘Publications’ queries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#Extracting-authors:-as_dataframe_authors">Extracting authors: <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#Extracting-Affiliations:-as_dataframe_authors_affiliations">Extracting Affiliations: <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors_affiliations</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#3.-Dataframe-Methods-for-‘Grants’-queries">3. Dataframe Methods for ‘Grants’ queries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#Extracting-Funders:-as_dataframe_funders">Extracting Funders: <code class="docutils literal notranslate"><span class="pre">as_dataframe_funders</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#Extracting-investigators:-as_dataframe_investigators">Extracting investigators: <code class="docutils literal notranslate"><span class="pre">as_dataframe_investigators</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#4.-Dataframe-Methods-for-‘Concepts’-queries">4. Dataframe Methods for ‘Concepts’ queries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#Extracting-Concepts:-as_dataframe_concepts">Extracting Concepts: <code class="docutils literal notranslate"><span class="pre">as_dataframe_concepts</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#Which-concepts-metrics-should-you-use?">Which concepts metrics should you use?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html">The Dimcli Python library: Magic Commands</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#Dimcli-‘magic’-commands">Dimcli ‘magic’ commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#Tip:-Accessing-data-returned-by-magic-queries">Tip: Accessing data returned by magic queries</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#1.-Simple-queries-with-%dsl-or-%%dsl">1. Simple queries with <code class="docutils literal notranslate"><span class="pre">%dsl</span></code> or <code class="docutils literal notranslate"><span class="pre">%%dsl</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#2.-Loop-queries-with-%dslloop-or-%%dslloop">2. Loop queries with <code class="docutils literal notranslate"><span class="pre">%dslloop</span></code> or <code class="docutils literal notranslate"><span class="pre">%%dslloop</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#3.-Returning-dataframes:-%dsldf-and-%%dsldf">3. Returning dataframes: <code class="docutils literal notranslate"><span class="pre">%dsldf</span></code> and <code class="docutils literal notranslate"><span class="pre">%%dsldf</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#4.-Looped-dataframe-queries:-%dslloopdf-and-%%dslloopdf">4. Looped dataframe queries: <code class="docutils literal notranslate"><span class="pre">%dslloopdf</span></code> and <code class="docutils literal notranslate"><span class="pre">%%dslloopdf</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#5.-Getting-API-schema-documentation-with-%dsldocs">5. Getting API schema documentation with <code class="docutils literal notranslate"><span class="pre">%dsldocs</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html">Exploring The Dimensions Search Language (DSL) - Quick Intro</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Prerequisites">Prerequisites</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#What-the-query-statistics-refer-to">What the query statistics refer to</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Working-with-fields">Working with fields</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Control-the-fields-you-return">Control the fields you return</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Make-a-mistake,-and-the-DSL-will-tell-you-what-fields-that-you-could-have-used">Make a mistake, and the DSL will tell you what fields that you could have used</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Get-all-fields">Get all fields</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Full-text-search">Full text search</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#A-simple-author-search">A simple author search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#..or-search-for-a-researcher-by-a-specific-id">..or search for a researcher by a specific id</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Sources-VS-Facets">Sources VS Facets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#You-can-paginate-through-source-results-up-to-50000-rows">You can paginate through <em>source</em> results up to 50000 rows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#You-can-return-max-1000-facet-rows">You can return max 1000 <code class="docutils literal notranslate"><span class="pre">facet</span></code> rows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Just-make-a-mistake,-and-you-will-ge-the-complete-list-of-available-facets">Just make a mistake, and you will ge the complete list of available facets</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html">Exploring The Dimensions Search Language (DSL) - Deep Dive</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#What-is-the-Dimensions-Search-Language?">What is the Dimensions Search Language?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#Sections-Index">Sections Index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#1.-Basic-query-structure">1. Basic query structure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#search-source"><code class="docutils literal notranslate"><span class="pre">search</span> <span class="pre">source</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#return-result-(source-or-facet)"><code class="docutils literal notranslate"><span class="pre">return</span></code> result (source or facet)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#2.-Full-text-Searching">2. Full-text Searching</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#2.1-in-[search-index]">2.1 <code class="docutils literal notranslate"><span class="pre">in</span> <span class="pre">[search</span> <span class="pre">index]</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#2.2-for-&quot;search-term&quot;">2.2 <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">&quot;search</span> <span class="pre">term&quot;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#2.3-Boolean-Operators">2.3 Boolean Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#2.4-Wildcard-Searches">2.4 Wildcard Searches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#2.5-Proximity-Searches">2.5 Proximity Searches</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#3.-Field-Searching">3. Field Searching</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#3.1-where">3.1 <code class="docutils literal notranslate"><span class="pre">where</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#3.2-in">3.2 <code class="docutils literal notranslate"><span class="pre">in</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#3.3-count---filter-function">3.3 <code class="docutils literal notranslate"><span class="pre">count</span></code> - filter function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#3.4-Filter-Operators">3.4 Filter Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#3.5-Partial-string-matching-with-~">3.5 Partial string matching with <code class="docutils literal notranslate"><span class="pre">~</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#3.6-Emptiness-filters-is-empty">3.6 Emptiness filters <code class="docutils literal notranslate"><span class="pre">is</span> <span class="pre">empty</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#4.-Searching-for-Researchers">4. Searching for Researchers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#4.1-Exact-name-searches">4.1 Exact name searches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#4.2-Fuzzy-Searches">4.2 Fuzzy Searches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#4.3-Using-the-disambiguated-Researchers-database">4.3 Using the disambiguated Researchers database</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.-Returning-results">5. Returning results</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.1-Returning-Multiple-Sources">5.1 Returning Multiple Sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.2-Returning-Specific-Fields">5.2 Returning Specific Fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.3-Returning-Facets">5.3 Returning Facets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.4-What-the-query-statistics-refer-to---sources-VS-facets">5.4 What the query statistics refer to - sources VS facets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.5-Paginating-Results">5.5 Paginating Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.6-Sorting-Results">5.6 Sorting Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#6.-Aggregations">6. Aggregations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html">Working with lists in the Dimensions API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#Prerequisites:-Installing-the-Dimensions-Library-and-Logging-in">Prerequisites: Installing the Dimensions Library and Logging in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#1.-How-do-we-use-lists-in-the-Dimensions-API?">1. How do we use lists in the Dimensions API?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#2.-What-are-all-the-things-that-we-can-make-lists-of-in-the-Dimensions-API?">2. What are all the things that we can make lists of in the Dimensions API?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#What-are-the-internal-Entities-that-we-might-put-in-a-list?">What are the internal Entities that we might put in a list?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#What-about-lists-of-ids?">What about lists of ids?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#What-are-the-external-entities-that-we-can-put-in-a-list?">What are the external entities that we can put in a list?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#3.-Making-a-list-from-the-results-of-a-query">3. Making a list from the results of a query</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#Putting-both-parts-of-this-example-together">Putting both parts of this example together</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#Doing-something-useful:-Get-all-the-publications-that-cite-my-publications">Doing something useful: Get all the publications that cite my publications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#5.-How-Long-can-lists-get?">5. How Long can lists get?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#This-won’t-work">This won’t work</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#This-will">This will</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#What-if-I-need-a-very-long-list?">What if I need a very long list?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#6.-What-if-I-want-to-get-the-researchers-associated-with-the-publications-the-cite-my-institution?">6. What if I want to get the researchers associated with the publications the cite my institution?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#7.-What-if-I-want-to-get-all-the-researchers-associated-with-the-publications-that-cite-my-institution?">7. What if I want to get <em>all</em> the researchers associated with the publications that cite my institution?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#8.-..and-it-we-want-details-about-our-researchers,-we-can-put-our-list-of-researchers-into-the-researcher-API">8. ..and it we want details about our researchers, we can put our list of researchers into the researcher API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#9.-Patents-example-(patents--&gt;-publications)">9. Patents example (patents -&gt; publications)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#10.-Clinical-Trials-(clinical-trials--&gt;-publications)">10. Clinical Trials (clinical trials -&gt; publications)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#11.-Grants-(publications--&gt;-grants)">11. Grants (publications -&gt; grants)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#Why-didn’t-I-use-resulting_publication_ids-?">Why didn’t I use resulting_publication_ids ?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Publications</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="General-statistics.html">General Publication Statistics about a Research Organization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Load-libraries-and-log-in">Load libraries and log in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Choose-a-Research-Organization">Choose a Research Organization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Publications-output-by-year">Publications output by year</a></li>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Publications-most-cited-in-last-2-years">Publications most cited in last 2 years</a></li>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Publications-most-cited---all-time">Publications most cited - all time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Publications-most-cited-:-which-research-areas?">Publications most cited : which research areas?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Publications-most-cited-:-which-journals?">Publications most cited : which journals?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Top-Funders-(by-aggregated-funding-amount)">Top Funders (by aggregated funding amount)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Top-funders-split-by-country-of-the-funder">Top funders split by country of the funder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Correlation-between-No-of-Publications-VS-Funding">Correlation between No of Publications VS Funding</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Citation-Analysis.html">Citation Analysis: an Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Citation-Analysis.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Citation-Analysis.html#Method-A:-getting-citations-for-one-publication-at-a-time">Method A: getting citations for one publication at a time</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Citation-Analysis.html#Comments-about-this-method">Comments about this method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Citation-Analysis.html#Method-B:-Getting-citations-for-multiple-publications-via-a-single-query">Method B: Getting citations for multiple publications via a single query</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Citation-Analysis.html#Creating-a-second-level-citations-network">Creating a second-level citations network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Citation-Analysis.html#Building-a-Simple-Dataviz">Building a Simple Dataviz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Citation-Analysis.html#Final-considerations">Final considerations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Citation-Analysis.html#Querying-for-more-than-1000-results">Querying for more than 1000 results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Citation-Analysis.html#Querying-for-more-than-50K-results">Querying for more than 50K results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Citation-Analysis.html#Dealing-with-highly-cited-publications">Dealing with highly cited publications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Citation-Analysis.html#Pre-checking-citations-counts">Pre-checking citations counts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html">Citation Analysis: Journals Citing a Research Organization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html#1.-Prerequisites">1. Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html#2.-Choose-a-Research-Organization">2. Choose a Research Organization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html#3.-Building-a-Publications-Baseset">3. Building a Publications Baseset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html#4.-Extracting-Publications-Citing-the-Baseset">4. Extracting Publications Citing the Baseset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html#5.-Journal-Analysis">5. Journal Analysis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html#Number-of-Unique-journals">Number of Unique journals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html#Most-frequent-journals">Most frequent journals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html#Top-100-journals-chart">Top 100 journals chart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html#Top-20-journals-by-year-chart">Top 20 journals by year chart</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Simple-topic-analysis.html">Topic Modeling Analysis for a Set of Publications: Basic Workflow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Simple-topic-analysis.html#Load-libraries-and-log-in">Load libraries and log in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Simple-topic-analysis.html#Choose-a-Research-Organization">Choose a Research Organization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Simple-topic-analysis.html#3.-Extracting-most-relevant-concepts-from-publications">3. Extracting most relevant concepts from publications</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Simple-topic-analysis.html#Top-concepts:-a-first-look">Top concepts: a first look</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Simple-topic-analysis.html#Segmenting-concepts-by-year">Segmenting concepts by year</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Journal-Profile-1-Gathering-data.html">Journal Profiling Part 1: Getting the Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-1-Gathering-data.html#Prerequisites:-Installing-the-Dimensions-Library-and-Logging-in">Prerequisites: Installing the Dimensions Library and Logging in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-1-Gathering-data.html#Selecting-a-Journal-and-Extracting-All-Publications-Metadata">Selecting a Journal and Extracting All Publications Metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-1-Gathering-data.html#Some-stats-about-authors">Some stats about authors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-1-Gathering-data.html#A-quick-look-at-authors-without-a-Dimensions-Researcher-ID">A quick look at authors <em>without</em> a Dimensions Researcher ID</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Journal-Profile-1-Gathering-data.html#Any-common-patterns?">Any common patterns?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Journal-Profile-1-Gathering-data.html#Creating-an-export-for-manual-curation">Creating an export for manual curation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Journal Profiling Part 2: Impact Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Prerequisites:-Installing-the-Dimensions-Library-and-Logging-in">Prerequisites: Installing the Dimensions Library and Logging in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Measuring-the-Impact-of-Researchers-within-a-Journal">Measuring the Impact of Researchers within a Journal</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Load-the-publications-and-authors-data-previously-saved">Load the publications and authors data previously saved</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Isolate-the-Researchers-data-(=-authors-with-an-ID)">Isolate the Researchers data (= authors with an ID)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Enrich-the-data-with-Impact-Statistics">Enrich the data with Impact Statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Couple-of-Dataviz">Couple of Dataviz</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html">Journal Profiling Part 3: Funding</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#Prerequisites:-Installing-the-Dimensions-Library-and-Logging-in">Prerequisites: Installing the Dimensions Library and Logging in</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#Load-previously-saved-researchers-data">Load previously saved researchers data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#Adding-another-impact-measure:-funding">Adding another impact measure: funding</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#We’ll-have-to-do-it-in-two-steps">We’ll have to do it in two steps</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#Next:-full-data-for-step-1">Next: full data for step 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#Next:-full-data-for-step-2">Next: full data for step 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#Finally:-let’s-merge-the-new-data-into-the-‘researchers-impact’-table">Finally: let’s merge the new data into the ‘researchers-impact’ table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#Couple-of-Dataviz">Couple of Dataviz</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Journal-Profile-4-Institutions.html">Journal Profiling Part 4: Institutions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Prerequisites:-Installing-the-Dimensions-Library-and-Logging-in">Prerequisites: Installing the Dimensions Library and Logging in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Institutions-Contributing-to-a-Journal">Institutions Contributing to a Journal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Basic-stats-about-affiliations">Basic stats about affiliations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Enriching-the-unique-affiliations-(GRIDs-list)-with-pubs-count-and-authors-count">Enriching the unique affiliations (GRIDs list) with pubs count and authors count</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Couple-of-Dataviz">Couple of Dataviz</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Journal-Profile-5-Competitive-Analysis.html">Journal Profiling Part 5: Competing Journals Analysis</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-5-Competitive-Analysis.html#Prerequisites:-Installing-the-Dimensions-Library-and-Logging-in">Prerequisites: Installing the Dimensions Library and Logging in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-5-Competitive-Analysis.html#Competing-Journals">Competing Journals</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Journal-Profile-5-Competitive-Analysis.html#First-let’s-reload-the-data-obtained-in-previous-steps">First let’s reload the data obtained in previous steps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Journal-Profile-5-Competitive-Analysis.html#What-the-query-looks-like">What the query looks like</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-5-Competitive-Analysis.html#Extracting-all-publications/journals-information">Extracting all publications/journals information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-5-Competitive-Analysis.html#Visualizations">Visualizations</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Clinical Trials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.html">Clinical Trials by Volume of Publications</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.html#Load-libraries-and-log-in">Load libraries and log in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.html#Query-for-Clinical-Trials">Query for Clinical Trials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.html#Counting-publications-per-clinical-trial">Counting publications per clinical trial</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Patents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../5-patents/1-introducing-patents.html">The Patents API: Features Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-introducing-patents.html#1.-Sample-Patents-Queries">1. Sample Patents Queries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Searching-patents-by-keyword">Searching patents by keyword</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Searching-using-fielded-search">Searching using fielded search</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Searching-using-dates">Searching using dates</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Extracting-cited-publications-via-publication_ids">Extracting cited publications via <code class="docutils literal notranslate"><span class="pre">publication_ids</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Extracting-cited-patents-via-reference_ids">Extracting cited patents via <code class="docutils literal notranslate"><span class="pre">reference_ids</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Aggregating-results-using-facets">Aggregating results using facets</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Top-assignees">Top assignees</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Top-researchers">Top researchers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Top-FOR-categories">Top FOR categories</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-introducing-patents.html#2.-A-closer-look-at-Patents-statistics">2. A closer look at Patents statistics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Counting-records-per-each-field">Counting records per each field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Creating-a-bar-chart">Creating a bar chart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Counting-the-yearly-distribution-of-field/records-data">Counting the yearly distribution of field/records data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Creating-a-line-chart">Creating a line chart</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Where-to-find-out-more">Where to find out more</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html">Measuring the Innovation Impact of an Organization using Patents Citations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#1.-Choosing-a-GRID-Research-Organization">1. Choosing a GRID Research Organization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#2.-Extracting-Publications-Data">2. Extracting Publications Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#Quick-look-at-publications-statistics">Quick look at publications statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#What-are-the-main-subject-areas?">What are the main subject areas?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#3.-Extracting-Patents-linked-to-Publications">3. Extracting Patents linked to Publications</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#Enriching-publications-with-patents-citations-metrics">Enriching publications with patents citations metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#4.-Patents-Data-Analysis">4. Patents Data Analysis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#How-many-patents-per-year?">How many patents per year?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#Who-is-filing-the-patents?">Who is filing the patents?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#What-are-the-publications-most-frequenlty-referenced-in-patents?">What are the publications most frequenlty referenced in patents?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#What-are-the-main-subject-areas-of-referenced-publications?">What are the main subject areas of referenced publications?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#Is-there-a-correlation-between-publication-citations-and-patents-citations?">Is there a correlation between publication citations and patents citations?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#Where-to-go-from-here">Where to go from here</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Datasets</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html">The Datasets API: Features Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#1.-Sample-Dataset-Queries">1. Sample Dataset Queries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Searching-datasets-by-keyword">Searching datasets by keyword</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Returning-associated-grants-and-publication-data">Returning associated grants and publication data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Searching-using-fielded-search">Searching using fielded search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Extracting-related-funding-via-grants">Extracting related funding via grants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Aggregating-results-using-facets">Aggregating results using facets</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Top-funders">Top funders</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Top-research-organizations">Top research organizations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Top-contributors">Top contributors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#2.-A-closer-look-at-Datasets-statistics">2. A closer look at Datasets statistics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Counting-records-per-each-field">Counting records per each field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Creating-a-bar-chart">Creating a bar chart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Counting-the-yearly-distribution-of-field/records-data">Counting the yearly distribution of field/records data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Creating-a-line-chart">Creating a line chart</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Where-to-find-out-more">Where to find out more</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Researchers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html">Calculating the H-index of a researcher</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html#Background">Background</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html#Prerequisites">Prerequisites</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html#Selecting-a-researcher">Selecting a researcher</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html#The-H-Index-function">The H-Index function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html#Getting-citations-data-from-Dimensions">Getting citations data from Dimensions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html#Wrapping-things-up">Wrapping things up</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html">Extracting researchers based on affiliations and publications history</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Background:-understanding-the-data-model">Background: understanding the data model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Methodology:-two-options-available">Methodology: two options available</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Approach-1.-From-publications-to-researchers">Approach 1. From publications to researchers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Researchers-affiliated-to-the-GRID-ID-at-the-time-of-writing">Researchers affiliated to the GRID-ID <strong>at the time of writing</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Researchers-affiliated-to-the-GRIDID-at-the-time-of-speaking-ie-now">Researchers affiliated to the GRIDID <strong>at the time of speaking</strong> ie now</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Approach-2.-From-researchers-to-publications">Approach 2. From researchers to publications</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Researchers-affiliated-to-the-GRID-ID-at-the-time-of-writing">Researchers affiliated to the GRID-ID <strong>at the time of writing</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Researchers-affiliated-to-the-GRIDID-at-the-time-of-speaking-ie-now">Researchers affiliated to the GRIDID <strong>at the time of speaking</strong> ie now</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Conclusions">Conclusions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Why-are-the-total-counts-different?">Why are the total counts different?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#So-which-method-should-I-choose?">So which method should I choose?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Organizations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../8-organizations/1-GRID-preview.html">The Organizations API: Features Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#1.-Matching-affiliation-data-to-GRID-IDs-using-extract_affiliations">1. Matching affiliation data to GRID IDs using <code class="docutils literal notranslate"><span class="pre">extract_affiliations</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#2.-Searching-GRID-organizations">2. Searching GRID organizations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Full-text-search">Full-text search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Fielded-search">Fielded search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Returning-facets">Returning facets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#3.-A-closer-look-at-the-organizations-data-statistics">3. A closer look at the organizations data statistics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Let’s-visualize-the-data-with-plotly">Let’s visualize the data with plotly</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Where-to-find-out-more">Where to find out more</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html">Identifying the Industry Collaborators of an Academic Institution</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#1.-Selecting-an-academic-institution">1. Selecting an academic institution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#2.-Extracting-publications-from-industry-collaborations">2. Extracting publications from industry collaborations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#3.-Analyses">3. Analyses</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#3.1-Count-of-Publications-per-year-from-Industry-Collaborations">3.1 Count of Publications per year from Industry Collaborations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#3.2-Citations-from-Industry-Collaboration">3.2 Citations from Industry Collaboration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#3.3-Top-Industry-Collaborators">3.3 Top Industry Collaborators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#3.4-Countries-of-Industry-Collaborators">3.4 Countries of Industry Collaborators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#3.5-Putting-Countries-and-Collaborators-together">3.5 Putting Countries and Collaborators together</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html">Building an Organizations Collaboration Network Diagram</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#1.-Prerequisites:-load-libraries-and-log-in">1. Prerequisites: load libraries and log in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#2.-Choose-an-Organization-and-a-keyword-(topic)">2. Choose an Organization and a keyword (topic)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#3.-Building-a-one-degree-network-of-collaborating-institutions">3. Building a one-degree network of collaborating institutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#4.-Building-a-network-of-any-size">4. Building a network of any size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#5.-Visualizing-the-network">5. Visualizing the network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#6.-Addendum:-showing-only-‘Government’-collaborators">6. Addendum: showing only ‘Government’ collaborators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#7.-Conclusions">7. Conclusions</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+
+
+   <div id="sidebar_github" style="margin-top: 12px;">
+   <h3>Github Source</h3>
+
+      <div style="margin: 10px 20px;">
+      
+         <iframe src="https://ghbtns.com/github-btn.html?user=digital-science&repo=dimensions-api-lab&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+
+         <iframe src="https://ghbtns.com/github-btn.html?user=digital-science&repo=dimensions-api-lab&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe> 
+      
+      </div>
+
+   </div>
+
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">DSL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+
+    
+
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 5ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js'></script>
+<script>require=requirejs;</script><a class="reference external image-reference" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/cookbooks/2-publications/Journal-Profile-2-Researchers-Impact-Metrics.ipynb"><img alt="../../_images/badge-colab.svg" src="../../_images/badge-colab.svg" /></a>
+<a class="reference external image-reference" href="https://github.com/digital-science/dimensions-api-lab/blob/master/cookbooks/2-publications/Journal-Profile-2-Researchers-Impact-Metrics.ipynb"><img alt="../../_images/badge-github-custom.svg" src="../../_images/badge-github-custom.svg" /></a>
+<hr class="docutils" />
+<div class="section" id="Journal-Profiling-Part-2:-Impact-Metrics">
+<h1>Journal Profiling Part 2: Impact Metrics<a class="headerlink" href="#Journal-Profiling-Part-2:-Impact-Metrics" title="Permalink to this headline">¶</a></h1>
+<p>This Python notebook shows how to use the <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> to extract <a class="reference external" href="https://docs.dimensions.ai/dsl/datasource-publications.html">publications data</a> for a specific journal, as well its authors and affiliations.</p>
+<p>This tutorial is the second of a series that uses the data extracted in order to generate a ‘journal profile’ report. See the <a class="reference external" href="https://api-lab.dimensions.ai/">API Lab homepage</a> for the other tutorials in this series.</p>
+<p>In this notebook we are going to:</p>
+<ul class="simple">
+<li><p>Load the researchers data previously extracted</p></li>
+<li><p>Enrich it by building a dataset focusing on their impact in terms of no of papers, citations etc..</p></li>
+<li><p>Visualize the results with plotly to have a quick overview of the results</p></li>
+</ul>
+<div class="section" id="Prerequisites:-Installing-the-Dimensions-Library-and-Logging-in">
+<h2>Prerequisites: Installing the Dimensions Library and Logging in<a class="headerlink" href="#Prerequisites:-Installing-the-Dimensions-Library-and-Logging-in" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+
+<span></span><span class="c1"># @markdown # Get the API library and login</span>
+<span class="c1"># @markdown Click the &#39;play&#39; button on the left (or shift+enter) after entering your API credentials</span>
+
+<span class="n">username</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1">#@param {type: &quot;string&quot;}</span>
+<span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1">#@param {type: &quot;string&quot;}</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;https://app.dimensions.ai&quot;</span> <span class="c1">#@param {type: &quot;string&quot;}</span>
+
+
+<span class="o">!</span>pip install dimcli plotly tqdm -U --quiet
+<span class="kn">import</span> <span class="nn">dimcli</span>
+<span class="kn">from</span> <span class="nn">dimcli.shortcuts</span> <span class="k">import</span> <span class="o">*</span>
+<span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">)</span>
+<span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
+
+<span class="c1">#</span>
+<span class="c1"># load common libraries</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pandas.io.json</span> <span class="k">import</span> <span class="n">json_normalize</span>
+<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="k">import</span> <span class="n">tqdm</span> <span class="k">as</span> <span class="n">progress</span>
+
+<span class="c1">#</span>
+<span class="c1"># charts libs</span>
+<span class="c1"># import plotly_express as px</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+  <span class="c1"># make js dependecies local / needed by html exports</span>
+  <span class="kn">from</span> <span class="nn">plotly.offline</span> <span class="k">import</span> <span class="n">init_notebook_mode</span>
+  <span class="n">init_notebook_mode</span><span class="p">(</span><span class="n">connected</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="c1"># create output data folder</span>
+<span class="n">FOLDER_NAME</span> <span class="o">=</span> <span class="s2">&quot;journal-profile-data&quot;</span>
+<span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">FOLDER_NAME</span><span class="p">)):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">FOLDER_NAME</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="n">filename_dot_csv</span><span class="p">):</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">FOLDER_NAME</span><span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="n">filename_dot_csv</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+DimCli v0.6.8.1 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (method: dsl.ini file)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<script type="text/javascript">
+window.PlotlyConfig = {MathJaxConfig: 'local'};
+if (window.MathJax) {MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+if (typeof require !== 'undefined') {
+require.undef("plotly");
+requirejs.config({
+    paths: {
+        'plotly': ['https://cdn.plot.ly/plotly-latest.min']
+    }
+});
+require(['plotly'], function(Plotly) {
+    window._Plotly = Plotly;
+});
+}
+</script></div>
+</div>
+</div>
+<div class="section" id="Measuring-the-Impact-of-Researchers-within-a-Journal">
+<h2>Measuring the Impact of Researchers within a Journal<a class="headerlink" href="#Measuring-the-Impact-of-Researchers-within-a-Journal" title="Permalink to this headline">¶</a></h2>
+<p>Goal: from the list of authors and publications we previously extracted, we want to create a new dataset focused on <strong>researchers</strong> with the following information: * number of papers * citations median * altmetric median * last publication year</p>
+<p>This data will allow to determine the ‘impact’ of a researcher within the journal.</p>
+<div class="section" id="Load-the-publications-and-authors-data-previously-saved">
+<h3>Load the publications and authors data previously saved<a class="headerlink" href="#Load-the-publications-and-authors-data-previously-saved" title="Permalink to this headline">¶</a></h3>
+<p><strong>NOTE</strong> If you are using Google Colab or don’t have the data available, just grab it <a class="reference external" href="https://github.com/digital-science/dimensions-api-lab/tree/master/cookbooks/2-publications/journal-profile-data">here</a> and make sure they’re saved in a folder called <code class="docutils literal notranslate"><span class="pre">journal-profile-data</span></code> where this notebook is.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">dfpubs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">FOLDER_NAME</span><span class="o">+</span><span class="s2">&quot;/1_publications.csv&quot;</span><span class="p">)</span>
+<span class="n">authors</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">FOLDER_NAME</span><span class="o">+</span><span class="s2">&quot;/1_publications_authors.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># replace empty values with 0 so to allow bulk calculations</span>
+<span class="n">dfpubs</span> <span class="o">=</span> <span class="n">dfpubs</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">authors</span> <span class="o">=</span> <span class="n">authors</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Isolate-the-Researchers-data-(=-authors-with-an-ID)">
+<h3>Isolate the Researchers data (= authors with an ID)<a class="headerlink" href="#Isolate-the-Researchers-data-(=-authors-with-an-ID)" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">researchers</span> <span class="o">=</span> <span class="n">authors</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;researcher_id!=0&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Researchers total:&quot;</span><span class="p">,</span>  <span class="nb">len</span><span class="p">(</span><span class="n">researchers</span><span class="p">))</span>
+<span class="n">researchers</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Researchers total: 33377
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>initials</th>
+      <th>corresponding</th>
+      <th>orcid</th>
+      <th>current_organization_id</th>
+      <th>researcher_id</th>
+      <th>affiliations</th>
+      <th>is_bogus</th>
+      <th>pub_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>48</th>
+      <td>Julien</td>
+      <td>Bryois</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>['0000-0002-4747-2166']</td>
+      <td>grid.4714.6</td>
+      <td>ur.0666011146.86</td>
+      <td>[{'id': 'grid.4714.6', 'name': 'Karolinska Ins...</td>
+      <td>0</td>
+      <td>pub.1127148454</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>Nathan G.</td>
+      <td>Skene</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>['0000-0002-6807-3180']</td>
+      <td>grid.4714.6</td>
+      <td>ur.0720776104.57</td>
+      <td>[{'id': 'grid.4714.6', 'name': 'Karolinska Ins...</td>
+      <td>0</td>
+      <td>pub.1127148454</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>Hunna J.</td>
+      <td>Watson</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>['0000-0001-8405-381X']</td>
+      <td>grid.10698.36</td>
+      <td>ur.01330130651.90</td>
+      <td>[{'id': 'grid.10698.36', 'name': 'University o...</td>
+      <td>0</td>
+      <td>pub.1127148454</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>Zijing</td>
+      <td>Liu</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>grid.7445.2</td>
+      <td>ur.016105221567.82</td>
+      <td>[{'id': 'grid.7445.2', 'name': 'Imperial Colle...</td>
+      <td>0</td>
+      <td>pub.1127148454</td>
+    </tr>
+    <tr>
+      <th>57</th>
+      <td>Leo</td>
+      <td>Brueggeman</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>['0000-0002-3586-3442']</td>
+      <td>grid.214572.7</td>
+      <td>ur.01254266166.55</td>
+      <td>[{'id': 'grid.214572.7', 'name': 'University o...</td>
+      <td>0</td>
+      <td>pub.1127148454</td>
+    </tr>
+    <tr>
+      <th>58</th>
+      <td>Gerome</td>
+      <td>Breen</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>['0000-0003-2053-1792']</td>
+      <td>grid.13097.3c</td>
+      <td>ur.0654201533.32</td>
+      <td>[{'id': 'grid.13097.3c', 'name': "King's Colle...</td>
+      <td>0</td>
+      <td>pub.1127148454</td>
+    </tr>
+    <tr>
+      <th>59</th>
+      <td>Cynthia M.</td>
+      <td>Bulik</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>['0000-0001-7772-3264']</td>
+      <td>grid.10698.36</td>
+      <td>ur.01104743131.27</td>
+      <td>[{'id': 'grid.4714.6', 'name': 'Karolinska Ins...</td>
+      <td>0</td>
+      <td>pub.1127148454</td>
+    </tr>
+    <tr>
+      <th>60</th>
+      <td>Ernest</td>
+      <td>Arenas</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>['0000-0003-0197-6577']</td>
+      <td>grid.4714.6</td>
+      <td>ur.0611665665.63</td>
+      <td>[{'id': 'grid.4714.6', 'name': 'Karolinska Ins...</td>
+      <td>0</td>
+      <td>pub.1127148454</td>
+    </tr>
+    <tr>
+      <th>61</th>
+      <td>Jens</td>
+      <td>Hjerling-Leffler</td>
+      <td>0.0</td>
+      <td>True</td>
+      <td>['0000-0002-4539-1776']</td>
+      <td>grid.4714.6</td>
+      <td>ur.01014226210.16</td>
+      <td>[{'id': 'grid.4714.6', 'name': 'Karolinska Ins...</td>
+      <td>0</td>
+      <td>pub.1127148454</td>
+    </tr>
+    <tr>
+      <th>62</th>
+      <td>Patrick F.</td>
+      <td>Sullivan</td>
+      <td>0.0</td>
+      <td>True</td>
+      <td>['0000-0002-6619-873X']</td>
+      <td>grid.10698.36</td>
+      <td>ur.015012714437.80</td>
+      <td>[{'id': 'grid.4714.6', 'name': 'Karolinska Ins...</td>
+      <td>0</td>
+      <td>pub.1127148454</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Enrich-the-data-with-Impact-Statistics">
+<h3>Enrich the data with Impact Statistics<a class="headerlink" href="#Enrich-the-data-with-Impact-Statistics" title="Permalink to this headline">¶</a></h3>
+<p>First, let’s pivot on the researcher ID field to eliminate duplicates and count them</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">researchers_impact</span> <span class="o">=</span> <span class="n">researchers</span><span class="p">[[</span><span class="s1">&#39;researcher_id&#39;</span><span class="p">,</span> <span class="s1">&#39;pub_id&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;researcher_id&#39;</span><span class="p">,</span> <span class="n">as_index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pub_id&#39;</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">researchers_impact</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pub_id&quot;</span><span class="p">:</span> <span class="s2">&quot;pubs&quot;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">researchers_impact</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>researcher_id</th>
+      <th>pubs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ur.0723426172.10</td>
+      <td>62</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ur.01277776417.51</td>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ur.01247426430.47</td>
+      <td>33</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ur.01313145634.66</td>
+      <td>32</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>ur.01317433110.75</td>
+      <td>32</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>ur.0641525362.39</td>
+      <td>31</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>ur.01264737414.70</td>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>ur.014377465057.81</td>
+      <td>28</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>ur.0637651205.48</td>
+      <td>28</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>ur.01220453202.22</td>
+      <td>27</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Second, for each researcher ID we can query all of his/her publications so to calculate the following metrics:</p>
+<ul class="simple">
+<li><p>citations median</p></li>
+<li><p>altmetric median</p></li>
+<li><p>last publication year</p></li>
+</ul>
+<p>Also, we add a new field with the Dimensions URL of the researcher, as it can be handy later on to open up its profile page online.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+
+<span></span><span class="k">def</span> <span class="nf">get_name_surname</span><span class="p">(</span><span class="n">researcher_id</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    eg</span>
+<span class="sd">    &gt;&gt;&gt; get_name_surname(&quot;ur.0723426172.10&quot;)</span>
+<span class="sd">    &#39;Kari Stefansson&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;researcher_id==&#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">researcher_id</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">researchers</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)[</span><span class="s1">&#39;first_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">researchers</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)[</span><span class="s1">&#39;last_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{x}</span><span class="s2"> </span><span class="si">{y}</span><span class="s2">&quot;</span>
+
+
+<span class="c1"># def dimensions_url(researcher_id):</span>
+<span class="c1">#     return f&quot;https://app.dimensions.ai/discover/publication?and_facet_researcher={researcher_id}&quot;</span>
+
+<span class="n">fullnames</span><span class="p">,</span> <span class="n">citations</span><span class="p">,</span> <span class="n">altmetric</span><span class="p">,</span> <span class="n">last_year</span><span class="p">,</span> <span class="n">urls</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">progress</span><span class="p">(</span><span class="n">researchers_impact</span><span class="o">.</span><span class="n">iterrows</span><span class="p">(),</span> <span class="n">total</span><span class="o">=</span><span class="n">researchers_impact</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;researcher_id==&#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;researcher_id&#39;</span><span class="p">]</span>
+    <span class="n">pub_ids</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">researchers</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)[</span><span class="s1">&#39;pub_id&#39;</span><span class="p">])</span>
+    <span class="n">fullnames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_name_surname</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;researcher_id&#39;</span><span class="p">]))</span>
+    <span class="n">citations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dfpubs</span><span class="p">[</span><span class="n">dfpubs</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">pub_ids</span><span class="p">)][</span><span class="s1">&#39;times_cited&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+    <span class="n">altmetric</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dfpubs</span><span class="p">[</span><span class="n">dfpubs</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">pub_ids</span><span class="p">)][</span><span class="s1">&#39;altmetric&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+    <span class="n">last_year</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dfpubs</span><span class="p">[</span><span class="n">dfpubs</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">pub_ids</span><span class="p">)][</span><span class="s1">&#39;year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+    <span class="n">urls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dimensions_url</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;researcher_id&#39;</span><span class="p">]))</span>
+
+<span class="n">researchers_impact</span><span class="p">[</span><span class="s1">&#39;full_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fullnames</span>
+<span class="n">researchers_impact</span><span class="p">[</span><span class="s1">&#39;citations_mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">citations</span>
+<span class="n">researchers_impact</span><span class="p">[</span><span class="s1">&#39;altmetric_mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">altmetric</span>
+<span class="n">researchers_impact</span><span class="p">[</span><span class="s1">&#39;last_pub_year&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">last_year</span>
+<span class="n">researchers_impact</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">urls</span>
+<span class="c1"># finally..</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Researchers total:&quot;</span><span class="p">,</span>  <span class="nb">len</span><span class="p">(</span><span class="n">researchers_impact</span><span class="p">))</span>
+<span class="n">researchers_impact</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "8225d298991c4bc189fabd6deec3be7e", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+Researchers total: 18524
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>researcher_id</th>
+      <th>pubs</th>
+      <th>full_name</th>
+      <th>citations_mean</th>
+      <th>altmetric_mean</th>
+      <th>last_pub_year</th>
+      <th>url</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ur.0723426172.10</td>
+      <td>62</td>
+      <td>Kari Stefansson</td>
+      <td>107.516129</td>
+      <td>229.129032</td>
+      <td>2020</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ur.01277776417.51</td>
+      <td>45</td>
+      <td>Unnur Thorsteinsdottir</td>
+      <td>81.000000</td>
+      <td>159.555556</td>
+      <td>2019</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ur.01247426430.47</td>
+      <td>33</td>
+      <td>Gudmar Thorleifsson</td>
+      <td>80.818182</td>
+      <td>170.424242</td>
+      <td>2019</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ur.01313145634.66</td>
+      <td>32</td>
+      <td>Andres Metspalu</td>
+      <td>170.562500</td>
+      <td>362.875000</td>
+      <td>2019</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>ur.01317433110.75</td>
+      <td>32</td>
+      <td>Caroline Hayward</td>
+      <td>136.843750</td>
+      <td>298.468750</td>
+      <td>2020</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>ur.0641525362.39</td>
+      <td>31</td>
+      <td>Gonçalo R Abecasis</td>
+      <td>126.548387</td>
+      <td>144.290323</td>
+      <td>2019</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>ur.01264737414.70</td>
+      <td>30</td>
+      <td>Tõnu Esko</td>
+      <td>153.133333</td>
+      <td>346.000000</td>
+      <td>2020</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>ur.014377465057.81</td>
+      <td>28</td>
+      <td>Benjamin M. Neale</td>
+      <td>247.250000</td>
+      <td>178.392857</td>
+      <td>2020</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>ur.0637651205.48</td>
+      <td>28</td>
+      <td>Daniel F Gudbjartsson</td>
+      <td>73.250000</td>
+      <td>151.964286</td>
+      <td>2019</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>ur.01220453202.22</td>
+      <td>27</td>
+      <td>Eleftheria Zeggini</td>
+      <td>74.222222</td>
+      <td>207.962963</td>
+      <td>2019</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Save the data</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">save</span><span class="p">(</span><span class="n">researchers_impact</span><span class="p">,</span> <span class="s2">&quot;2_researchers_impact_metrics.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="Couple-of-Dataviz">
+<h2>Couple of Dataviz<a class="headerlink" href="#Couple-of-Dataviz" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">top100</span> <span class="o">=</span> <span class="n">researchers_impact</span><span class="p">[:</span><span class="mi">100</span><span class="p">]</span>
+<span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">top100</span><span class="p">,</span>
+           <span class="n">x</span><span class="o">=</span><span class="s2">&quot;full_name&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;pubs&quot;</span><span class="p">,</span>
+           <span class="n">hover_name</span><span class="o">=</span><span class="s2">&quot;full_name&quot;</span><span class="p">,</span>
+           <span class="n">hover_data</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;citations_mean&#39;</span><span class="p">,</span> <span class="s1">&#39;altmetric_mean&#39;</span><span class="p">],</span>
+           <span class="n">marginal_y</span><span class="o">=</span><span class="s2">&quot;histogram&quot;</span><span class="p">,</span>
+           <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Researchers Impact - top 100&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+
+
+            <div id="f981fd67-e3c7-4ad8-9bd2-7772002e4143" class="plotly-graph-div" style="height:525px; width:100%;"></div>
+            <script type="text/javascript">
+                require(["plotly"], function(Plotly) {
+                    window.PLOTLYENV=window.PLOTLYENV || {};
+
+                if (document.getElementById("f981fd67-e3c7-4ad8-9bd2-7772002e4143")) {
+                    Plotly.newPlot(
+                        'f981fd67-e3c7-4ad8-9bd2-7772002e4143',
+                        [{"customdata": [[107.51612903225806, 229.1290322580645], [81.0, 159.55555555555554], [80.81818181818181, 170.42424242424244], [170.5625, 362.875], [136.84375, 298.46875], [126.54838709677419, 144.29032258064515], [153.13333333333333, 346.0], [247.25, 178.39285714285714], [73.25, 151.96428571428572], [74.22222222222223, 207.96296296296296], [96.14814814814815, 263.037037037037], [90.07692307692308, 325.5], [161.57692307692307, 209.73076923076923], [122.07692307692308, 261.84615384615387], [96.04, 169.4], [100.12, 305.48], [98.68, 173.4], [83.0, 242.96], [118.8, 241.44], [102.72, 217.96], [106.48, 152.56], [261.0869565217391, 85.21739130434783], [103.3913043478261, 162.7391304347826], [93.04347826086956, 147.1304347826087], [104.30434782608695, 209.1304347826087], [116.54545454545455, 313.90909090909093], [79.68181818181819, 175.4090909090909], [134.95454545454547, 286.22727272727275], [90.27272727272727, 171.13636363636363], [106.95454545454545, 259.1363636363636], [136.61904761904762, 362.95238095238096], [81.57142857142857, 162.9047619047619], [99.0952380952381, 164.71428571428572], [66.9047619047619, 159.38095238095238], [285.85714285714283, 164.47619047619048], [107.9047619047619, 279.7142857142857], [105.42857142857143, 254.8095238095238], [71.0952380952381, 191.9047619047619], [88.57142857142857, 174.61904761904762], [85.7, 227.65], [162.15, 318.4], [102.7, 139.3], [170.15, 441.25], [204.8, 366.9], [83.15, 261.4], [113.05, 192.8], [83.9, 176.5], [129.05263157894737, 291.2631578947368], [217.57894736842104, 349.05263157894734], [119.73684210526316, 253.94736842105263], [97.26315789473684, 151.47368421052633], [97.05263157894737, 175.6315789473684], [88.33333333333333, 154.27777777777777], [84.88888888888889, 242.94444444444446], [81.11111111111111, 218.27777777777777], [119.22222222222223, 140.5], [77.94444444444444, 178.27777777777777], [137.11111111111111, 337.5], [97.66666666666667, 165.27777777777777], [80.05555555555556, 136.33333333333334], [135.33333333333334, 100.0], [316.94444444444446, 187.38888888888889], [45.23529411764706, 150.35294117647058], [96.94117647058823, 191.41176470588235], [71.41176470588235, 168.58823529411765], [77.11764705882354, 240.35294117647058], [87.17647058823529, 171.7058823529412], [57.76470588235294, 217.8235294117647], [125.11764705882354, 296.3529411764706], [109.75, 189.0625], [49.0, 116.6875], [79.1875, 277.75], [132.375, 257.75], [75.75, 289.8125], [72.6875, 163.6875], [197.6875, 371.75], [163.75, 344.5625], [179.8125, 484.5], [109.8125, 224.5625], [142.5625, 368.375], [95.25, 233.75], [60.5, 180.0625], [84.1875, 133.0625], [95.3125, 220.375], [191.3125, 405.625], [285.25, 377.125], [112.4375, 162.4375], [150.9375, 506.9375], [127.2, 260.26666666666665], [381.4, 154.93333333333334], [91.93333333333334, 210.93333333333334], [91.06666666666666, 167.93333333333334], [106.53333333333333, 193.8], [64.26666666666667, 274.73333333333335], [87.0, 235.73333333333332], [50.93333333333333, 234.8], [68.06666666666666, 167.2], [85.53333333333333, 143.06666666666666], [183.86666666666667, 284.3333333333333], [142.86666666666667, 191.6]], "hovertemplate": "<b>%{hovertext}</b><br><br>full_name=%{x}<br>pubs=%{y}<br>citations_mean=%{customdata[0]}<br>altmetric_mean=%{customdata[1]}<extra></extra>", "hovertext": ["Kari Stefansson", "Unnur Thorsteinsdottir", "Gudmar Thorleifsson", "Andres Metspalu", "Caroline Hayward", "Gon\u00e7alo R Abecasis", "T\u00f5nu Esko", "Benjamin M. Neale", "Daniel F Gudbjartsson", "Eleftheria Zeggini", "Claudia Langenberg", "M. Arfan Ikram", "Lude Franke", "Daniel I. Chasman", "Jerome I. Rotter", "Nicholas J. Wareham", "Eric Boerwinkle", "Douglas F. Easton", "Terho Lehtim\u00e4ki", "Vilmundur Gudnason", "Erik Ingelsson", "Alkes L. Price", "Mark I. McCarthy", "Ruth J. F. Loos", "Sekar Kathiresan", "Andr\u00e9 G. Uitterlinden", "Anubha Mahajan", "Reedik M\u00e4gi", "John Danesh", "Olli T. Raitakari", "Cornelia M. van Duijn", "Kent D. Taylor", "Bruce M. Psaty", "Adam S. Butterworth", "Po-Ru Loh", "Paul M. Ridker", "Marjo-Riitta Jarvelin", "Tamara B. Harris", "Jaspal S. Kooner", "Ozren Polasek", "Dorret I Boomsma", "Markku Laakso", "David A Hinds", "Peter M. Visscher", "George Dedoussis", "Christian Gieger", "Patrick Sulem", "Ian J. Deary", "John R B Perry", "Veikko Salomaa", "Nilesh J Samani", "Cecilia M. Lindgren", "Erwin P. Bottinger", "Igor Rudan", "Robert A Scott", "Michael Boehnke", "Sandosh Padmanabhan", "Tune H Pers", "Martina M\u00fcller-Nurasyid", "Yoichiro Kamatani", "Michiaki Kubo", "Hilary K. Finucane", "Paolo Gasparini", "Danish Saleheen", "Gisli Masson", "Alison M Dunning", "Karen L. Mohlke", "Veronique Vitart", "Jian\u2019an Luan", "John C. Chambers", "Ingileif Jonsdottir", "Joe Dennis", "Albert V Smith", "Dennis O. Mook-Kanamori", "Evangelos Evangelou", "Nancy L Pedersen", "Patrik K E Magnusson", "Lili Milani", "Mika K\u00e4h\u00f6nen", "Albert Hofman", "Augustine Kong", "Leo-Pekka Lyytik\u00e4inen", "Oscar H. Franco", "Stephen J Chanock", "Grant W Montgomery", "Jian Yang", "Annette Peters", "Sarah E. Medland", "Lenore J. Launer", "Mark J Daly", "B\u00f8rge G. Nordestgaard", "Stella Trompet", "Joshua C. Bis", "Paul D P Pharoah", "Fernando Rivadeneira", "Antonietta Robino", "Paul Elliott", "Louise V Wain", "Michael C. O\u2019Donovan", "Ole A. Andreassen"], "legendgroup": "", "marker": {"color": "#636efa", "symbol": "circle"}, "mode": "markers", "name": "", "showlegend": false, "type": "scatter", "x": ["Kari Stefansson", "Unnur Thorsteinsdottir", "Gudmar Thorleifsson", "Andres Metspalu", "Caroline Hayward", "Gon\u00e7alo R Abecasis", "T\u00f5nu Esko", "Benjamin M. Neale", "Daniel F Gudbjartsson", "Eleftheria Zeggini", "Claudia Langenberg", "M. Arfan Ikram", "Lude Franke", "Daniel I. Chasman", "Jerome I. Rotter", "Nicholas J. Wareham", "Eric Boerwinkle", "Douglas F. Easton", "Terho Lehtim\u00e4ki", "Vilmundur Gudnason", "Erik Ingelsson", "Alkes L. Price", "Mark I. McCarthy", "Ruth J. F. Loos", "Sekar Kathiresan", "Andr\u00e9 G. Uitterlinden", "Anubha Mahajan", "Reedik M\u00e4gi", "John Danesh", "Olli T. Raitakari", "Cornelia M. van Duijn", "Kent D. Taylor", "Bruce M. Psaty", "Adam S. Butterworth", "Po-Ru Loh", "Paul M. Ridker", "Marjo-Riitta Jarvelin", "Tamara B. Harris", "Jaspal S. Kooner", "Ozren Polasek", "Dorret I Boomsma", "Markku Laakso", "David A Hinds", "Peter M. Visscher", "George Dedoussis", "Christian Gieger", "Patrick Sulem", "Ian J. Deary", "John R B Perry", "Veikko Salomaa", "Nilesh J Samani", "Cecilia M. Lindgren", "Erwin P. Bottinger", "Igor Rudan", "Robert A Scott", "Michael Boehnke", "Sandosh Padmanabhan", "Tune H Pers", "Martina M\u00fcller-Nurasyid", "Yoichiro Kamatani", "Michiaki Kubo", "Hilary K. Finucane", "Paolo Gasparini", "Danish Saleheen", "Gisli Masson", "Alison M Dunning", "Karen L. Mohlke", "Veronique Vitart", "Jian\u2019an Luan", "John C. Chambers", "Ingileif Jonsdottir", "Joe Dennis", "Albert V Smith", "Dennis O. Mook-Kanamori", "Evangelos Evangelou", "Nancy L Pedersen", "Patrik K E Magnusson", "Lili Milani", "Mika K\u00e4h\u00f6nen", "Albert Hofman", "Augustine Kong", "Leo-Pekka Lyytik\u00e4inen", "Oscar H. Franco", "Stephen J Chanock", "Grant W Montgomery", "Jian Yang", "Annette Peters", "Sarah E. Medland", "Lenore J. Launer", "Mark J Daly", "B\u00f8rge G. Nordestgaard", "Stella Trompet", "Joshua C. Bis", "Paul D P Pharoah", "Fernando Rivadeneira", "Antonietta Robino", "Paul Elliott", "Louise V Wain", "Michael C. O\u2019Donovan", "Ole A. Andreassen"], "xaxis": "x", "y": [62, 45, 33, 32, 32, 31, 30, 28, 28, 27, 27, 26, 26, 26, 25, 25, 25, 25, 25, 25, 25, 23, 23, 23, 23, 22, 22, 22, 22, 22, 21, 21, 21, 21, 21, 21, 21, 21, 21, 20, 20, 20, 20, 20, 20, 20, 20, 19, 19, 19, 19, 19, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 17, 17, 17, 17, 17, 17, 17, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15], "yaxis": "y"}, {"alignmentgroup": "True", "bingroup": "y", "hovertemplate": "pubs=%{y}<br>count=%{x}<extra></extra>", "legendgroup": "", "marker": {"color": "#636efa"}, "name": "", "offsetgroup": "", "opacity": 0.5, "showlegend": false, "type": "histogram", "xaxis": "x2", "y": [62, 45, 33, 32, 32, 31, 30, 28, 28, 27, 27, 26, 26, 26, 25, 25, 25, 25, 25, 25, 25, 23, 23, 23, 23, 22, 22, 22, 22, 22, 21, 21, 21, 21, 21, 21, 21, 21, 21, 20, 20, 20, 20, 20, 20, 20, 20, 19, 19, 19, 19, 19, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 17, 17, 17, 17, 17, 17, 17, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15], "yaxis": "y2"}],
+                        {"barmode": "overlay", "legend": {"tracegroupgap": 0}, "template": {"data": {"bar": [{"error_x": {"color": "#2a3f5f"}, "error_y": {"color": "#2a3f5f"}, "marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "bar"}], "barpolar": [{"marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "barpolar"}], "carpet": [{"aaxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "baxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "type": "carpet"}], "choropleth": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "choropleth"}], "contour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "contour"}], "contourcarpet": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "contourcarpet"}], "heatmap": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmap"}], "heatmapgl": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmapgl"}], "histogram": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "histogram"}], "histogram2d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2d"}], "histogram2dcontour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2dcontour"}], "mesh3d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "mesh3d"}], "parcoords": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "parcoords"}], "pie": [{"automargin": true, "type": "pie"}], "scatter": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter"}], "scatter3d": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter3d"}], "scattercarpet": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattercarpet"}], "scattergeo": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergeo"}], "scattergl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergl"}], "scattermapbox": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattermapbox"}], "scatterpolar": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolar"}], "scatterpolargl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolargl"}], "scatterternary": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterternary"}], "surface": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "surface"}], "table": [{"cells": {"fill": {"color": "#EBF0F8"}, "line": {"color": "white"}}, "header": {"fill": {"color": "#C8D4E3"}, "line": {"color": "white"}}, "type": "table"}]}, "layout": {"annotationdefaults": {"arrowcolor": "#2a3f5f", "arrowhead": 0, "arrowwidth": 1}, "coloraxis": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "colorscale": {"diverging": [[0, "#8e0152"], [0.1, "#c51b7d"], [0.2, "#de77ae"], [0.3, "#f1b6da"], [0.4, "#fde0ef"], [0.5, "#f7f7f7"], [0.6, "#e6f5d0"], [0.7, "#b8e186"], [0.8, "#7fbc41"], [0.9, "#4d9221"], [1, "#276419"]], "sequential": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "sequentialminus": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]]}, "colorway": ["#636efa", "#EF553B", "#00cc96", "#ab63fa", "#FFA15A", "#19d3f3", "#FF6692", "#B6E880", "#FF97FF", "#FECB52"], "font": {"color": "#2a3f5f"}, "geo": {"bgcolor": "white", "lakecolor": "white", "landcolor": "#E5ECF6", "showlakes": true, "showland": true, "subunitcolor": "white"}, "hoverlabel": {"align": "left"}, "hovermode": "closest", "mapbox": {"style": "light"}, "paper_bgcolor": "white", "plot_bgcolor": "#E5ECF6", "polar": {"angularaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "radialaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "scene": {"xaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "yaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "zaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}}, "shapedefaults": {"line": {"color": "#2a3f5f"}}, "ternary": {"aaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "baxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "caxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "title": {"x": 0.05}, "xaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}, "yaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}}}, "title": {"text": "Researchers Impact - top 100"}, "xaxis": {"anchor": "y", "domain": [0.0, 0.7363], "title": {"text": "full_name"}}, "xaxis2": {"anchor": "y2", "domain": [0.7413, 1.0], "matches": "x2", "showgrid": true, "showline": false, "showticklabels": false, "ticks": ""}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": "pubs"}}, "yaxis2": {"anchor": "x2", "domain": [0.0, 1.0], "matches": "y", "showgrid": true, "showticklabels": false}},
+                        {"responsive": true}
+                    ).then(function(){
+
+var gd = document.getElementById('f981fd67-e3c7-4ad8-9bd2-7772002e4143');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })
+                };
+                });
+            </script>
+        </div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">top100</span><span class="p">,</span>
+           <span class="n">x</span><span class="o">=</span><span class="s2">&quot;citations_mean&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;altmetric_mean&quot;</span><span class="p">,</span>
+           <span class="n">hover_name</span><span class="o">=</span><span class="s2">&quot;full_name&quot;</span><span class="p">,</span>
+           <span class="n">hover_data</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pubs&#39;</span><span class="p">,</span> <span class="s1">&#39;citations_mean&#39;</span><span class="p">,</span> <span class="s1">&#39;altmetric_mean&#39;</span><span class="p">],</span>
+           <span class="n">color</span><span class="o">=</span><span class="s2">&quot;pubs&quot;</span><span class="p">,</span>
+           <span class="n">size</span><span class="o">=</span><span class="s2">&quot;pubs&quot;</span><span class="p">,</span>
+           <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Researchers Impact (citations vs pubs)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+
+
+            <div id="a814dd69-2d4d-4479-a0c7-b1e8478f3065" class="plotly-graph-div" style="height:525px; width:100%;"></div>
+            <script type="text/javascript">
+                require(["plotly"], function(Plotly) {
+                    window.PLOTLYENV=window.PLOTLYENV || {};
+
+                if (document.getElementById("a814dd69-2d4d-4479-a0c7-b1e8478f3065")) {
+                    Plotly.newPlot(
+                        'a814dd69-2d4d-4479-a0c7-b1e8478f3065',
+                        [{"customdata": [[62.0, 107.51612903225806, 229.1290322580645], [45.0, 81.0, 159.55555555555554], [33.0, 80.81818181818181, 170.42424242424244], [32.0, 170.5625, 362.875], [32.0, 136.84375, 298.46875], [31.0, 126.54838709677419, 144.29032258064515], [30.0, 153.13333333333333, 346.0], [28.0, 247.25, 178.39285714285714], [28.0, 73.25, 151.96428571428572], [27.0, 74.22222222222223, 207.96296296296296], [27.0, 96.14814814814815, 263.037037037037], [26.0, 90.07692307692308, 325.5], [26.0, 161.57692307692307, 209.73076923076923], [26.0, 122.07692307692308, 261.84615384615387], [25.0, 96.04, 169.4], [25.0, 100.12, 305.48], [25.0, 98.68, 173.4], [25.0, 83.0, 242.96], [25.0, 118.8, 241.44], [25.0, 102.72, 217.96], [25.0, 106.48, 152.56], [23.0, 261.0869565217391, 85.21739130434783], [23.0, 103.3913043478261, 162.7391304347826], [23.0, 93.04347826086956, 147.1304347826087], [23.0, 104.30434782608695, 209.1304347826087], [22.0, 116.54545454545455, 313.90909090909093], [22.0, 79.68181818181819, 175.4090909090909], [22.0, 134.95454545454547, 286.22727272727275], [22.0, 90.27272727272727, 171.13636363636363], [22.0, 106.95454545454545, 259.1363636363636], [21.0, 136.61904761904762, 362.95238095238096], [21.0, 81.57142857142857, 162.9047619047619], [21.0, 99.0952380952381, 164.71428571428572], [21.0, 66.9047619047619, 159.38095238095238], [21.0, 285.85714285714283, 164.47619047619048], [21.0, 107.9047619047619, 279.7142857142857], [21.0, 105.42857142857143, 254.8095238095238], [21.0, 71.0952380952381, 191.9047619047619], [21.0, 88.57142857142857, 174.61904761904762], [20.0, 85.7, 227.65], [20.0, 162.15, 318.4], [20.0, 102.7, 139.3], [20.0, 170.15, 441.25], [20.0, 204.8, 366.9], [20.0, 83.15, 261.4], [20.0, 113.05, 192.8], [20.0, 83.9, 176.5], [19.0, 129.05263157894737, 291.2631578947368], [19.0, 217.57894736842104, 349.05263157894734], [19.0, 119.73684210526316, 253.94736842105263], [19.0, 97.26315789473684, 151.47368421052633], [19.0, 97.05263157894737, 175.6315789473684], [18.0, 88.33333333333333, 154.27777777777777], [18.0, 84.88888888888889, 242.94444444444446], [18.0, 81.11111111111111, 218.27777777777777], [18.0, 119.22222222222223, 140.5], [18.0, 77.94444444444444, 178.27777777777777], [18.0, 137.11111111111111, 337.5], [18.0, 97.66666666666667, 165.27777777777777], [18.0, 80.05555555555556, 136.33333333333334], [18.0, 135.33333333333334, 100.0], [18.0, 316.94444444444446, 187.38888888888889], [17.0, 45.23529411764706, 150.35294117647058], [17.0, 96.94117647058823, 191.41176470588235], [17.0, 71.41176470588235, 168.58823529411765], [17.0, 77.11764705882354, 240.35294117647058], [17.0, 87.17647058823529, 171.7058823529412], [17.0, 57.76470588235294, 217.8235294117647], [17.0, 125.11764705882354, 296.3529411764706], [16.0, 109.75, 189.0625], [16.0, 49.0, 116.6875], [16.0, 79.1875, 277.75], [16.0, 132.375, 257.75], [16.0, 75.75, 289.8125], [16.0, 72.6875, 163.6875], [16.0, 197.6875, 371.75], [16.0, 163.75, 344.5625], [16.0, 179.8125, 484.5], [16.0, 109.8125, 224.5625], [16.0, 142.5625, 368.375], [16.0, 95.25, 233.75], [16.0, 60.5, 180.0625], [16.0, 84.1875, 133.0625], [16.0, 95.3125, 220.375], [16.0, 191.3125, 405.625], [16.0, 285.25, 377.125], [16.0, 112.4375, 162.4375], [16.0, 150.9375, 506.9375], [15.0, 127.2, 260.26666666666665], [15.0, 381.4, 154.93333333333334], [15.0, 91.93333333333334, 210.93333333333334], [15.0, 91.06666666666666, 167.93333333333334], [15.0, 106.53333333333333, 193.8], [15.0, 64.26666666666667, 274.73333333333335], [15.0, 87.0, 235.73333333333332], [15.0, 50.93333333333333, 234.8], [15.0, 68.06666666666666, 167.2], [15.0, 85.53333333333333, 143.06666666666666], [15.0, 183.86666666666667, 284.3333333333333], [15.0, 142.86666666666667, 191.6]], "hovertemplate": "<b>%{hovertext}</b><br><br>citations_mean=%{customdata[1]}<br>altmetric_mean=%{customdata[2]}<br>pubs=%{marker.color}<extra></extra>", "hovertext": ["Kari Stefansson", "Unnur Thorsteinsdottir", "Gudmar Thorleifsson", "Andres Metspalu", "Caroline Hayward", "Gon\u00e7alo R Abecasis", "T\u00f5nu Esko", "Benjamin M. Neale", "Daniel F Gudbjartsson", "Eleftheria Zeggini", "Claudia Langenberg", "M. Arfan Ikram", "Lude Franke", "Daniel I. Chasman", "Jerome I. Rotter", "Nicholas J. Wareham", "Eric Boerwinkle", "Douglas F. Easton", "Terho Lehtim\u00e4ki", "Vilmundur Gudnason", "Erik Ingelsson", "Alkes L. Price", "Mark I. McCarthy", "Ruth J. F. Loos", "Sekar Kathiresan", "Andr\u00e9 G. Uitterlinden", "Anubha Mahajan", "Reedik M\u00e4gi", "John Danesh", "Olli T. Raitakari", "Cornelia M. van Duijn", "Kent D. Taylor", "Bruce M. Psaty", "Adam S. Butterworth", "Po-Ru Loh", "Paul M. Ridker", "Marjo-Riitta Jarvelin", "Tamara B. Harris", "Jaspal S. Kooner", "Ozren Polasek", "Dorret I Boomsma", "Markku Laakso", "David A Hinds", "Peter M. Visscher", "George Dedoussis", "Christian Gieger", "Patrick Sulem", "Ian J. Deary", "John R B Perry", "Veikko Salomaa", "Nilesh J Samani", "Cecilia M. Lindgren", "Erwin P. Bottinger", "Igor Rudan", "Robert A Scott", "Michael Boehnke", "Sandosh Padmanabhan", "Tune H Pers", "Martina M\u00fcller-Nurasyid", "Yoichiro Kamatani", "Michiaki Kubo", "Hilary K. Finucane", "Paolo Gasparini", "Danish Saleheen", "Gisli Masson", "Alison M Dunning", "Karen L. Mohlke", "Veronique Vitart", "Jian\u2019an Luan", "John C. Chambers", "Ingileif Jonsdottir", "Joe Dennis", "Albert V Smith", "Dennis O. Mook-Kanamori", "Evangelos Evangelou", "Nancy L Pedersen", "Patrik K E Magnusson", "Lili Milani", "Mika K\u00e4h\u00f6nen", "Albert Hofman", "Augustine Kong", "Leo-Pekka Lyytik\u00e4inen", "Oscar H. Franco", "Stephen J Chanock", "Grant W Montgomery", "Jian Yang", "Annette Peters", "Sarah E. Medland", "Lenore J. Launer", "Mark J Daly", "B\u00f8rge G. Nordestgaard", "Stella Trompet", "Joshua C. Bis", "Paul D P Pharoah", "Fernando Rivadeneira", "Antonietta Robino", "Paul Elliott", "Louise V Wain", "Michael C. O\u2019Donovan", "Ole A. Andreassen"], "legendgroup": "", "marker": {"color": [62, 45, 33, 32, 32, 31, 30, 28, 28, 27, 27, 26, 26, 26, 25, 25, 25, 25, 25, 25, 25, 23, 23, 23, 23, 22, 22, 22, 22, 22, 21, 21, 21, 21, 21, 21, 21, 21, 21, 20, 20, 20, 20, 20, 20, 20, 20, 19, 19, 19, 19, 19, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 17, 17, 17, 17, 17, 17, 17, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15], "coloraxis": "coloraxis", "size": [62, 45, 33, 32, 32, 31, 30, 28, 28, 27, 27, 26, 26, 26, 25, 25, 25, 25, 25, 25, 25, 23, 23, 23, 23, 22, 22, 22, 22, 22, 21, 21, 21, 21, 21, 21, 21, 21, 21, 20, 20, 20, 20, 20, 20, 20, 20, 19, 19, 19, 19, 19, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 17, 17, 17, 17, 17, 17, 17, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15], "sizemode": "area", "sizeref": 0.155, "symbol": "circle"}, "mode": "markers", "name": "", "showlegend": false, "type": "scatter", "x": [107.51612903225806, 81.0, 80.81818181818181, 170.5625, 136.84375, 126.54838709677419, 153.13333333333333, 247.25, 73.25, 74.22222222222223, 96.14814814814815, 90.07692307692308, 161.57692307692307, 122.07692307692308, 96.04, 100.12, 98.68, 83.0, 118.8, 102.72, 106.48, 261.0869565217391, 103.3913043478261, 93.04347826086956, 104.30434782608695, 116.54545454545455, 79.68181818181819, 134.95454545454547, 90.27272727272727, 106.95454545454545, 136.61904761904762, 81.57142857142857, 99.0952380952381, 66.9047619047619, 285.85714285714283, 107.9047619047619, 105.42857142857143, 71.0952380952381, 88.57142857142857, 85.7, 162.15, 102.7, 170.15, 204.8, 83.15, 113.05, 83.9, 129.05263157894737, 217.57894736842104, 119.73684210526316, 97.26315789473684, 97.05263157894737, 88.33333333333333, 84.88888888888889, 81.11111111111111, 119.22222222222223, 77.94444444444444, 137.11111111111111, 97.66666666666667, 80.05555555555556, 135.33333333333334, 316.94444444444446, 45.23529411764706, 96.94117647058823, 71.41176470588235, 77.11764705882354, 87.17647058823529, 57.76470588235294, 125.11764705882354, 109.75, 49.0, 79.1875, 132.375, 75.75, 72.6875, 197.6875, 163.75, 179.8125, 109.8125, 142.5625, 95.25, 60.5, 84.1875, 95.3125, 191.3125, 285.25, 112.4375, 150.9375, 127.2, 381.4, 91.93333333333334, 91.06666666666666, 106.53333333333333, 64.26666666666667, 87.0, 50.93333333333333, 68.06666666666666, 85.53333333333333, 183.86666666666667, 142.86666666666667], "xaxis": "x", "y": [229.1290322580645, 159.55555555555554, 170.42424242424244, 362.875, 298.46875, 144.29032258064515, 346.0, 178.39285714285714, 151.96428571428572, 207.96296296296296, 263.037037037037, 325.5, 209.73076923076923, 261.84615384615387, 169.4, 305.48, 173.4, 242.96, 241.44, 217.96, 152.56, 85.21739130434783, 162.7391304347826, 147.1304347826087, 209.1304347826087, 313.90909090909093, 175.4090909090909, 286.22727272727275, 171.13636363636363, 259.1363636363636, 362.95238095238096, 162.9047619047619, 164.71428571428572, 159.38095238095238, 164.47619047619048, 279.7142857142857, 254.8095238095238, 191.9047619047619, 174.61904761904762, 227.65, 318.4, 139.3, 441.25, 366.9, 261.4, 192.8, 176.5, 291.2631578947368, 349.05263157894734, 253.94736842105263, 151.47368421052633, 175.6315789473684, 154.27777777777777, 242.94444444444446, 218.27777777777777, 140.5, 178.27777777777777, 337.5, 165.27777777777777, 136.33333333333334, 100.0, 187.38888888888889, 150.35294117647058, 191.41176470588235, 168.58823529411765, 240.35294117647058, 171.7058823529412, 217.8235294117647, 296.3529411764706, 189.0625, 116.6875, 277.75, 257.75, 289.8125, 163.6875, 371.75, 344.5625, 484.5, 224.5625, 368.375, 233.75, 180.0625, 133.0625, 220.375, 405.625, 377.125, 162.4375, 506.9375, 260.26666666666665, 154.93333333333334, 210.93333333333334, 167.93333333333334, 193.8, 274.73333333333335, 235.73333333333332, 234.8, 167.2, 143.06666666666666, 284.3333333333333, 191.6], "yaxis": "y"}],
+                        {"coloraxis": {"colorbar": {"title": {"text": "pubs"}}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]]}, "legend": {"itemsizing": "constant", "tracegroupgap": 0}, "template": {"data": {"bar": [{"error_x": {"color": "#2a3f5f"}, "error_y": {"color": "#2a3f5f"}, "marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "bar"}], "barpolar": [{"marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "barpolar"}], "carpet": [{"aaxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "baxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "type": "carpet"}], "choropleth": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "choropleth"}], "contour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "contour"}], "contourcarpet": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "contourcarpet"}], "heatmap": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmap"}], "heatmapgl": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmapgl"}], "histogram": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "histogram"}], "histogram2d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2d"}], "histogram2dcontour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2dcontour"}], "mesh3d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "mesh3d"}], "parcoords": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "parcoords"}], "pie": [{"automargin": true, "type": "pie"}], "scatter": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter"}], "scatter3d": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter3d"}], "scattercarpet": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattercarpet"}], "scattergeo": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergeo"}], "scattergl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergl"}], "scattermapbox": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattermapbox"}], "scatterpolar": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolar"}], "scatterpolargl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolargl"}], "scatterternary": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterternary"}], "surface": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "surface"}], "table": [{"cells": {"fill": {"color": "#EBF0F8"}, "line": {"color": "white"}}, "header": {"fill": {"color": "#C8D4E3"}, "line": {"color": "white"}}, "type": "table"}]}, "layout": {"annotationdefaults": {"arrowcolor": "#2a3f5f", "arrowhead": 0, "arrowwidth": 1}, "coloraxis": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "colorscale": {"diverging": [[0, "#8e0152"], [0.1, "#c51b7d"], [0.2, "#de77ae"], [0.3, "#f1b6da"], [0.4, "#fde0ef"], [0.5, "#f7f7f7"], [0.6, "#e6f5d0"], [0.7, "#b8e186"], [0.8, "#7fbc41"], [0.9, "#4d9221"], [1, "#276419"]], "sequential": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "sequentialminus": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]]}, "colorway": ["#636efa", "#EF553B", "#00cc96", "#ab63fa", "#FFA15A", "#19d3f3", "#FF6692", "#B6E880", "#FF97FF", "#FECB52"], "font": {"color": "#2a3f5f"}, "geo": {"bgcolor": "white", "lakecolor": "white", "landcolor": "#E5ECF6", "showlakes": true, "showland": true, "subunitcolor": "white"}, "hoverlabel": {"align": "left"}, "hovermode": "closest", "mapbox": {"style": "light"}, "paper_bgcolor": "white", "plot_bgcolor": "#E5ECF6", "polar": {"angularaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "radialaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "scene": {"xaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "yaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "zaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}}, "shapedefaults": {"line": {"color": "#2a3f5f"}}, "ternary": {"aaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "baxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "caxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "title": {"x": 0.05}, "xaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}, "yaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}}}, "title": {"text": "Researchers Impact (citations vs pubs)"}, "xaxis": {"anchor": "y", "domain": [0.0, 1.0], "title": {"text": "citations_mean"}}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": "altmetric_mean"}}},
+                        {"responsive": true}
+                    ).then(function(){
+
+var gd = document.getElementById('a814dd69-2d4d-4479-a0c7-b1e8478f3065');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })
+                };
+                });
+            </script>
+        </div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">top100</span><span class="p">,</span>
+           <span class="n">x</span><span class="o">=</span><span class="s2">&quot;citations_mean&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;altmetric_mean&quot;</span><span class="p">,</span>
+           <span class="n">hover_name</span><span class="o">=</span><span class="s2">&quot;full_name&quot;</span><span class="p">,</span>
+           <span class="n">hover_data</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pubs&#39;</span><span class="p">,</span> <span class="s1">&#39;citations_mean&#39;</span><span class="p">,</span> <span class="s1">&#39;altmetric_mean&#39;</span><span class="p">],</span>
+           <span class="n">color</span><span class="o">=</span><span class="s2">&quot;pubs&quot;</span><span class="p">,</span>
+           <span class="n">size</span><span class="o">=</span><span class="s2">&quot;pubs&quot;</span><span class="p">,</span>
+           <span class="n">facet_col</span><span class="o">=</span><span class="s2">&quot;last_pub_year&quot;</span><span class="p">,</span>
+           <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Researchers Impact (citations vs pubs) by last publication year&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+
+
+            <div id="080a789a-e3bb-4b5c-8e2d-b3597224241b" class="plotly-graph-div" style="height:525px; width:100%;"></div>
+            <script type="text/javascript">
+                require(["plotly"], function(Plotly) {
+                    window.PLOTLYENV=window.PLOTLYENV || {};
+
+                if (document.getElementById("080a789a-e3bb-4b5c-8e2d-b3597224241b")) {
+                    Plotly.newPlot(
+                        '080a789a-e3bb-4b5c-8e2d-b3597224241b',
+                        [{"customdata": [[62.0, 107.51612903225806, 229.1290322580645], [32.0, 136.84375, 298.46875], [30.0, 153.13333333333333, 346.0], [28.0, 247.25, 178.39285714285714], [25.0, 96.04, 169.4], [25.0, 83.0, 242.96], [23.0, 261.0869565217391, 85.21739130434783], [21.0, 81.57142857142857, 162.9047619047619], [21.0, 285.85714285714283, 164.47619047619048], [19.0, 97.26315789473684, 151.47368421052633], [17.0, 77.11764705882354, 240.35294117647058], [17.0, 57.76470588235294, 217.8235294117647], [16.0, 79.1875, 277.75], [16.0, 72.6875, 163.6875], [16.0, 197.6875, 371.75], [16.0, 95.3125, 220.375], [15.0, 64.26666666666667, 274.73333333333335], [15.0, 142.86666666666667, 191.6]], "hovertemplate": "<b>%{hovertext}</b><br><br>last_pub_year=2020<br>citations_mean=%{customdata[1]}<br>altmetric_mean=%{customdata[2]}<br>pubs=%{marker.color}<extra></extra>", "hovertext": ["Kari Stefansson", "Caroline Hayward", "T\u00f5nu Esko", "Benjamin M. Neale", "Jerome I. Rotter", "Douglas F. Easton", "Alkes L. Price", "Kent D. Taylor", "Po-Ru Loh", "Nilesh J Samani", "Alison M Dunning", "Veronique Vitart", "Joe Dennis", "Evangelos Evangelou", "Nancy L Pedersen", "Stephen J Chanock", "Paul D P Pharoah", "Ole A. Andreassen"], "legendgroup": "", "marker": {"color": [62, 32, 30, 28, 25, 25, 23, 21, 21, 19, 17, 17, 16, 16, 16, 16, 15, 15], "coloraxis": "coloraxis", "size": [62, 32, 30, 28, 25, 25, 23, 21, 21, 19, 17, 17, 16, 16, 16, 16, 15, 15], "sizemode": "area", "sizeref": 0.155, "symbol": "circle"}, "mode": "markers", "name": "", "showlegend": false, "type": "scatter", "x": [107.51612903225806, 136.84375, 153.13333333333333, 247.25, 96.04, 83.0, 261.0869565217391, 81.57142857142857, 285.85714285714283, 97.26315789473684, 77.11764705882354, 57.76470588235294, 79.1875, 72.6875, 197.6875, 95.3125, 64.26666666666667, 142.86666666666667], "xaxis": "x", "y": [229.1290322580645, 298.46875, 346.0, 178.39285714285714, 169.4, 242.96, 85.21739130434783, 162.9047619047619, 164.47619047619048, 151.47368421052633, 240.35294117647058, 217.8235294117647, 277.75, 163.6875, 371.75, 220.375, 274.73333333333335, 191.6], "yaxis": "y"}, {"customdata": [[45.0, 81.0, 159.55555555555554], [33.0, 80.81818181818181, 170.42424242424244], [32.0, 170.5625, 362.875], [31.0, 126.54838709677419, 144.29032258064515], [28.0, 73.25, 151.96428571428572], [27.0, 74.22222222222223, 207.96296296296296], [27.0, 96.14814814814815, 263.037037037037], [26.0, 90.07692307692308, 325.5], [26.0, 161.57692307692307, 209.73076923076923], [26.0, 122.07692307692308, 261.84615384615387], [25.0, 100.12, 305.48], [25.0, 98.68, 173.4], [25.0, 118.8, 241.44], [25.0, 102.72, 217.96], [25.0, 106.48, 152.56], [23.0, 103.3913043478261, 162.7391304347826], [23.0, 93.04347826086956, 147.1304347826087], [23.0, 104.30434782608695, 209.1304347826087], [22.0, 116.54545454545455, 313.90909090909093], [22.0, 79.68181818181819, 175.4090909090909], [22.0, 134.95454545454547, 286.22727272727275], [22.0, 90.27272727272727, 171.13636363636363], [22.0, 106.95454545454545, 259.1363636363636], [21.0, 136.61904761904762, 362.95238095238096], [21.0, 99.0952380952381, 164.71428571428572], [21.0, 66.9047619047619, 159.38095238095238], [21.0, 107.9047619047619, 279.7142857142857], [21.0, 105.42857142857143, 254.8095238095238], [21.0, 71.0952380952381, 191.9047619047619], [21.0, 88.57142857142857, 174.61904761904762], [20.0, 85.7, 227.65], [20.0, 162.15, 318.4], [20.0, 102.7, 139.3], [20.0, 170.15, 441.25], [20.0, 204.8, 366.9], [20.0, 83.15, 261.4], [20.0, 113.05, 192.8], [20.0, 83.9, 176.5], [19.0, 129.05263157894737, 291.2631578947368], [19.0, 217.57894736842104, 349.05263157894734], [19.0, 119.73684210526316, 253.94736842105263], [19.0, 97.05263157894737, 175.6315789473684], [18.0, 88.33333333333333, 154.27777777777777], [18.0, 84.88888888888889, 242.94444444444446], [18.0, 81.11111111111111, 218.27777777777777], [18.0, 119.22222222222223, 140.5], [18.0, 77.94444444444444, 178.27777777777777], [18.0, 137.11111111111111, 337.5], [18.0, 97.66666666666667, 165.27777777777777], [18.0, 80.05555555555556, 136.33333333333334], [18.0, 135.33333333333334, 100.0], [18.0, 316.94444444444446, 187.38888888888889], [17.0, 45.23529411764706, 150.35294117647058], [17.0, 96.94117647058823, 191.41176470588235], [17.0, 71.41176470588235, 168.58823529411765], [17.0, 87.17647058823529, 171.7058823529412], [17.0, 125.11764705882354, 296.3529411764706], [16.0, 109.75, 189.0625], [16.0, 49.0, 116.6875], [16.0, 75.75, 289.8125], [16.0, 163.75, 344.5625], [16.0, 179.8125, 484.5], [16.0, 109.8125, 224.5625], [16.0, 142.5625, 368.375], [16.0, 60.5, 180.0625], [16.0, 84.1875, 133.0625], [16.0, 285.25, 377.125], [16.0, 112.4375, 162.4375], [16.0, 150.9375, 506.9375], [15.0, 127.2, 260.26666666666665], [15.0, 381.4, 154.93333333333334], [15.0, 91.93333333333334, 210.93333333333334], [15.0, 91.06666666666666, 167.93333333333334], [15.0, 106.53333333333333, 193.8], [15.0, 87.0, 235.73333333333332], [15.0, 50.93333333333333, 234.8], [15.0, 68.06666666666666, 167.2], [15.0, 85.53333333333333, 143.06666666666666], [15.0, 183.86666666666667, 284.3333333333333]], "hovertemplate": "<b>%{hovertext}</b><br><br>last_pub_year=2019<br>citations_mean=%{customdata[1]}<br>altmetric_mean=%{customdata[2]}<br>pubs=%{marker.color}<extra></extra>", "hovertext": ["Unnur Thorsteinsdottir", "Gudmar Thorleifsson", "Andres Metspalu", "Gon\u00e7alo R Abecasis", "Daniel F Gudbjartsson", "Eleftheria Zeggini", "Claudia Langenberg", "M. Arfan Ikram", "Lude Franke", "Daniel I. Chasman", "Nicholas J. Wareham", "Eric Boerwinkle", "Terho Lehtim\u00e4ki", "Vilmundur Gudnason", "Erik Ingelsson", "Mark I. McCarthy", "Ruth J. F. Loos", "Sekar Kathiresan", "Andr\u00e9 G. Uitterlinden", "Anubha Mahajan", "Reedik M\u00e4gi", "John Danesh", "Olli T. Raitakari", "Cornelia M. van Duijn", "Bruce M. Psaty", "Adam S. Butterworth", "Paul M. Ridker", "Marjo-Riitta Jarvelin", "Tamara B. Harris", "Jaspal S. Kooner", "Ozren Polasek", "Dorret I Boomsma", "Markku Laakso", "David A Hinds", "Peter M. Visscher", "George Dedoussis", "Christian Gieger", "Patrick Sulem", "Ian J. Deary", "John R B Perry", "Veikko Salomaa", "Cecilia M. Lindgren", "Erwin P. Bottinger", "Igor Rudan", "Robert A Scott", "Michael Boehnke", "Sandosh Padmanabhan", "Tune H Pers", "Martina M\u00fcller-Nurasyid", "Yoichiro Kamatani", "Michiaki Kubo", "Hilary K. Finucane", "Paolo Gasparini", "Danish Saleheen", "Gisli Masson", "Karen L. Mohlke", "Jian\u2019an Luan", "John C. Chambers", "Ingileif Jonsdottir", "Dennis O. Mook-Kanamori", "Patrik K E Magnusson", "Lili Milani", "Mika K\u00e4h\u00f6nen", "Albert Hofman", "Leo-Pekka Lyytik\u00e4inen", "Oscar H. Franco", "Jian Yang", "Annette Peters", "Sarah E. Medland", "Lenore J. Launer", "Mark J Daly", "B\u00f8rge G. Nordestgaard", "Stella Trompet", "Joshua C. Bis", "Fernando Rivadeneira", "Antonietta Robino", "Paul Elliott", "Louise V Wain", "Michael C. O\u2019Donovan"], "legendgroup": "", "marker": {"color": [45, 33, 32, 31, 28, 27, 27, 26, 26, 26, 25, 25, 25, 25, 25, 23, 23, 23, 22, 22, 22, 22, 22, 21, 21, 21, 21, 21, 21, 21, 20, 20, 20, 20, 20, 20, 20, 20, 19, 19, 19, 19, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 17, 17, 17, 17, 17, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15], "coloraxis": "coloraxis", "size": [45, 33, 32, 31, 28, 27, 27, 26, 26, 26, 25, 25, 25, 25, 25, 23, 23, 23, 22, 22, 22, 22, 22, 21, 21, 21, 21, 21, 21, 21, 20, 20, 20, 20, 20, 20, 20, 20, 19, 19, 19, 19, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 17, 17, 17, 17, 17, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15], "sizemode": "area", "sizeref": 0.155, "symbol": "circle"}, "mode": "markers", "name": "", "showlegend": false, "type": "scatter", "x": [81.0, 80.81818181818181, 170.5625, 126.54838709677419, 73.25, 74.22222222222223, 96.14814814814815, 90.07692307692308, 161.57692307692307, 122.07692307692308, 100.12, 98.68, 118.8, 102.72, 106.48, 103.3913043478261, 93.04347826086956, 104.30434782608695, 116.54545454545455, 79.68181818181819, 134.95454545454547, 90.27272727272727, 106.95454545454545, 136.61904761904762, 99.0952380952381, 66.9047619047619, 107.9047619047619, 105.42857142857143, 71.0952380952381, 88.57142857142857, 85.7, 162.15, 102.7, 170.15, 204.8, 83.15, 113.05, 83.9, 129.05263157894737, 217.57894736842104, 119.73684210526316, 97.05263157894737, 88.33333333333333, 84.88888888888889, 81.11111111111111, 119.22222222222223, 77.94444444444444, 137.11111111111111, 97.66666666666667, 80.05555555555556, 135.33333333333334, 316.94444444444446, 45.23529411764706, 96.94117647058823, 71.41176470588235, 87.17647058823529, 125.11764705882354, 109.75, 49.0, 75.75, 163.75, 179.8125, 109.8125, 142.5625, 60.5, 84.1875, 285.25, 112.4375, 150.9375, 127.2, 381.4, 91.93333333333334, 91.06666666666666, 106.53333333333333, 87.0, 50.93333333333333, 68.06666666666666, 85.53333333333333, 183.86666666666667], "xaxis": "x2", "y": [159.55555555555554, 170.42424242424244, 362.875, 144.29032258064515, 151.96428571428572, 207.96296296296296, 263.037037037037, 325.5, 209.73076923076923, 261.84615384615387, 305.48, 173.4, 241.44, 217.96, 152.56, 162.7391304347826, 147.1304347826087, 209.1304347826087, 313.90909090909093, 175.4090909090909, 286.22727272727275, 171.13636363636363, 259.1363636363636, 362.95238095238096, 164.71428571428572, 159.38095238095238, 279.7142857142857, 254.8095238095238, 191.9047619047619, 174.61904761904762, 227.65, 318.4, 139.3, 441.25, 366.9, 261.4, 192.8, 176.5, 291.2631578947368, 349.05263157894734, 253.94736842105263, 175.6315789473684, 154.27777777777777, 242.94444444444446, 218.27777777777777, 140.5, 178.27777777777777, 337.5, 165.27777777777777, 136.33333333333334, 100.0, 187.38888888888889, 150.35294117647058, 191.41176470588235, 168.58823529411765, 171.7058823529412, 296.3529411764706, 189.0625, 116.6875, 289.8125, 344.5625, 484.5, 224.5625, 368.375, 180.0625, 133.0625, 377.125, 162.4375, 506.9375, 260.26666666666665, 154.93333333333334, 210.93333333333334, 167.93333333333334, 193.8, 235.73333333333332, 234.8, 167.2, 143.06666666666666, 284.3333333333333], "yaxis": "y2"}, {"customdata": [[16.0, 132.375, 257.75], [16.0, 95.25, 233.75], [16.0, 191.3125, 405.625]], "hovertemplate": "<b>%{hovertext}</b><br><br>last_pub_year=2018<br>citations_mean=%{customdata[1]}<br>altmetric_mean=%{customdata[2]}<br>pubs=%{marker.color}<extra></extra>", "hovertext": ["Albert V Smith", "Augustine Kong", "Grant W Montgomery"], "legendgroup": "", "marker": {"color": [16, 16, 16], "coloraxis": "coloraxis", "size": [16, 16, 16], "sizemode": "area", "sizeref": 0.155, "symbol": "circle"}, "mode": "markers", "name": "", "showlegend": false, "type": "scatter", "x": [132.375, 95.25, 191.3125], "xaxis": "x3", "y": [257.75, 233.75, 405.625], "yaxis": "y3"}],
+                        {"annotations": [{"font": {}, "showarrow": false, "text": "last_pub_year=2020", "x": 0.15999999999999998, "xanchor": "center", "xref": "paper", "y": 1.0, "yanchor": "bottom", "yref": "paper"}, {"font": {}, "showarrow": false, "text": "last_pub_year=2019", "x": 0.49999999999999994, "xanchor": "center", "xref": "paper", "y": 1.0, "yanchor": "bottom", "yref": "paper"}, {"font": {}, "showarrow": false, "text": "last_pub_year=2018", "x": 0.8399999999999999, "xanchor": "center", "xref": "paper", "y": 1.0, "yanchor": "bottom", "yref": "paper"}], "coloraxis": {"colorbar": {"title": {"text": "pubs"}}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]]}, "legend": {"itemsizing": "constant", "tracegroupgap": 0}, "template": {"data": {"bar": [{"error_x": {"color": "#2a3f5f"}, "error_y": {"color": "#2a3f5f"}, "marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "bar"}], "barpolar": [{"marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "barpolar"}], "carpet": [{"aaxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "baxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "type": "carpet"}], "choropleth": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "choropleth"}], "contour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "contour"}], "contourcarpet": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "contourcarpet"}], "heatmap": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmap"}], "heatmapgl": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmapgl"}], "histogram": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "histogram"}], "histogram2d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2d"}], "histogram2dcontour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2dcontour"}], "mesh3d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "mesh3d"}], "parcoords": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "parcoords"}], "pie": [{"automargin": true, "type": "pie"}], "scatter": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter"}], "scatter3d": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter3d"}], "scattercarpet": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattercarpet"}], "scattergeo": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergeo"}], "scattergl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergl"}], "scattermapbox": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattermapbox"}], "scatterpolar": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolar"}], "scatterpolargl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolargl"}], "scatterternary": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterternary"}], "surface": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "surface"}], "table": [{"cells": {"fill": {"color": "#EBF0F8"}, "line": {"color": "white"}}, "header": {"fill": {"color": "#C8D4E3"}, "line": {"color": "white"}}, "type": "table"}]}, "layout": {"annotationdefaults": {"arrowcolor": "#2a3f5f", "arrowhead": 0, "arrowwidth": 1}, "coloraxis": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "colorscale": {"diverging": [[0, "#8e0152"], [0.1, "#c51b7d"], [0.2, "#de77ae"], [0.3, "#f1b6da"], [0.4, "#fde0ef"], [0.5, "#f7f7f7"], [0.6, "#e6f5d0"], [0.7, "#b8e186"], [0.8, "#7fbc41"], [0.9, "#4d9221"], [1, "#276419"]], "sequential": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "sequentialminus": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]]}, "colorway": ["#636efa", "#EF553B", "#00cc96", "#ab63fa", "#FFA15A", "#19d3f3", "#FF6692", "#B6E880", "#FF97FF", "#FECB52"], "font": {"color": "#2a3f5f"}, "geo": {"bgcolor": "white", "lakecolor": "white", "landcolor": "#E5ECF6", "showlakes": true, "showland": true, "subunitcolor": "white"}, "hoverlabel": {"align": "left"}, "hovermode": "closest", "mapbox": {"style": "light"}, "paper_bgcolor": "white", "plot_bgcolor": "#E5ECF6", "polar": {"angularaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "radialaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "scene": {"xaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "yaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "zaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}}, "shapedefaults": {"line": {"color": "#2a3f5f"}}, "ternary": {"aaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "baxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "caxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "title": {"x": 0.05}, "xaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}, "yaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}}}, "title": {"text": "Researchers Impact (citations vs pubs) by last publication year"}, "xaxis": {"anchor": "y", "domain": [0.0, 0.31999999999999995], "title": {"text": "citations_mean"}}, "xaxis2": {"anchor": "y2", "domain": [0.33999999999999997, 0.6599999999999999], "matches": "x", "title": {"text": "citations_mean"}}, "xaxis3": {"anchor": "y3", "domain": [0.6799999999999999, 0.9999999999999999], "matches": "x", "title": {"text": "citations_mean"}}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": "altmetric_mean"}}, "yaxis2": {"anchor": "x2", "domain": [0.0, 1.0], "matches": "y", "showticklabels": false}, "yaxis3": {"anchor": "x3", "domain": [0.0, 1.0], "matches": "y", "showticklabels": false}},
+                        {"responsive": true}
+                    ).then(function(){
+
+var gd = document.getElementById('080a789a-e3bb-4b5c-8e2d-b3597224241b');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })
+                };
+                });
+            </script>
+        </div></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> allows to carry out sophisticated research data analytics tasks like the ones described on this website. Check out also the associated <a class="reference external" href="https://github.com/digital-science/dimensions-api-lab">Github repository</a> for examples, the source code of these tutorials and much more.</p>
+</div>
+<a class="reference external image-reference" href="https://www.dimensions.ai/dimensions-apis/"><img alt="../../_images/badge-dimensions-api.svg" src="../../_images/badge-dimensions-api.svg" /></a>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+    <p>© Copyright 2020 Digital Science & Research Solutions, Inc. All Rights Reserved | <a href="https://www.dimensions.ai/">About us</a> · <a href="https://www.dimensions.ai/privacy/">Privacy policy</a> · <a href="https://www.dimensions.ai/website-terms/">Legal terms</a></p>
+     
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+    
+
+    <!-- Adds target=_blank to external links -->
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('a[href^="http://"], a[href^="https://"]').not('a[class*=internal]').attr('target', '_blank');
+    });
+  </script>
+  
+
+
+</body>
+</html>
