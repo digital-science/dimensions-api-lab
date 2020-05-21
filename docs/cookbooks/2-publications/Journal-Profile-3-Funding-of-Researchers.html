@@ -358,7 +358,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Journal-Profile-4-Institutions.html">Journal Profiling Part 4: Institutions</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Prerequisites:-Installing-the-Dimensions-Library-and-Logging-in">Prerequisites: Installing the Dimensions Library and Logging in</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Institutions-Contributing-to-a-Journal">Institutions Contributing to a Journal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Institutions-Contributing-to-a-Journal">Institutions Contributing to a Journal</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Load-previously-saved-affiliations-data">Load previously saved affiliations data</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Basic-stats-about-affiliations">Basic stats about affiliations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Enriching-the-unique-affiliations-(GRIDs-list)-with-pubs-count-and-authors-count">Enriching the unique affiliations (GRIDs list) with pubs count and authors count</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Couple-of-Dataviz">Couple of Dataviz</a></li>
@@ -931,7 +934,8 @@ require(['plotly'], function(Plotly) {
 </div>
 <div class="section" id="Load-previously-saved-researchers-data">
 <h3>Load previously saved researchers data<a class="headerlink" href="#Load-previously-saved-researchers-data" title="Permalink to this headline">¶</a></h3>
-<p><strong>NOTE</strong> If you are using Google Colab or don’t have the data available, just grab it <a class="reference external" href="https://github.com/digital-science/dimensions-api-lab/tree/master/cookbooks/2-publications/journal-profile-data">here</a> and make sure they’re saved in a folder called <code class="docutils literal notranslate"><span class="pre">journal-profile-data</span></code> where this notebook is.</p>
+<p><strong>NOTE</strong> If you are using Google Colab or don’t have the data available, just do the following: * open up the ‘Files’ panel in Google Colab and create a new folder <code class="docutils literal notranslate"><span class="pre">journal-profile-data</span></code> * grab this <a class="reference external" href="https://github.com/digital-science/dimensions-api-lab/tree/master/cookbooks/2-publications/journal-profile-data.zip">file</a>, unzip it, open the enclosed folder and upload the file called <code class="docutils literal notranslate"><span class="pre">2_researchers_impact_metrics.csv</span></code> to Google Colab (‘Upload’ menu or also by dragging then inside the
+panel window) * move the file inside the <code class="docutils literal notranslate"><span class="pre">journal-profile-data</span></code> folder you just created</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
@@ -1067,7 +1071,10 @@ require(['plotly'], function(Plotly) {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%</span><span class="k">dsldf</span> search researchers where id in [&quot;ur.0723426172.10&quot;, &quot;ur.01277776417.51&quot;] return researchers[id+last_grant_year+total_grants]
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
+search researchers
+    where id in [&quot;ur.0723426172.10&quot;, &quot;ur.01277776417.51&quot;]
+return researchers[id+last_grant_year+total_grants]
 </pre></div>
 </div>
 </div>
@@ -1133,7 +1140,10 @@ Returned Researchers: 2 (total = 2)
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%</span><span class="k">dsldf</span> search grants where researchers.id in [&quot;ur.0723426172.10&quot;, &quot;ur.01277776417.51&quot;] return researchers[id] aggregate funding
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
+search grants
+    where researchers.id in [&quot;ur.0723426172.10&quot;, &quot;ur.01277776417.51&quot;]
+return researchers[id] aggregate funding
 </pre></div>
 </div>
 </div>
@@ -1276,7 +1286,9 @@ Returned Researchers: 13
 <span class="n">VERBOSE</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="c1">#</span>
 <span class="c1">#</span>
-<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search researchers where id in </span><span class="si">{}</span><span class="s2"> return researchers[id+last_grant_year+total_grants] limit 1000&quot;&quot;&quot;</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search researchers</span>
+<span class="s2">                where id in </span><span class="si">{}</span><span class="s2"></span>
+<span class="s2">            return researchers[id+last_grant_year+total_grants] limit 1000&quot;&quot;&quot;</span>
 <span class="c1">#</span>
 <span class="c1">#</span>
 <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1428,7 +1440,10 @@ Researchers returned:  2000
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%</span><span class="k">dsldf</span> search grants where researchers.id in [&quot;ur.0723426172.10&quot;, &quot;ur.01277776417.51&quot;] return researchers[id] aggregate funding
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
+search grants
+    where researchers.id in [&quot;ur.0723426172.10&quot;, &quot;ur.01277776417.51&quot;]
+return researchers[id] aggregate funding
 </pre></div>
 </div>
 </div>
@@ -1562,7 +1577,9 @@ Returned Researchers: 13
 
 <span class="c1">#</span>
 <span class="c1">#</span>
-<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search grants where researchers.id in </span><span class="si">{}</span><span class="s2"> return researchers[id] aggregate funding limit 1000&quot;&quot;&quot;</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search grants</span>
+<span class="s2">            where researchers.id in </span><span class="si">{}</span><span class="s2"></span>
+<span class="s2">           return researchers[id] aggregate funding limit 1000&quot;&quot;&quot;</span>
 <span class="c1">#</span>
 <span class="c1">#</span>
 <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>

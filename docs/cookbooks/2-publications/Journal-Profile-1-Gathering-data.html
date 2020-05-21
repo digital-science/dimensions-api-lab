@@ -358,7 +358,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Journal-Profile-4-Institutions.html">Journal Profiling Part 4: Institutions</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Prerequisites:-Installing-the-Dimensions-Library-and-Logging-in">Prerequisites: Installing the Dimensions Library and Logging in</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Institutions-Contributing-to-a-Journal">Institutions Contributing to a Journal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Institutions-Contributing-to-a-Journal">Institutions Contributing to a Journal</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Load-previously-saved-affiliations-data">Load previously saved affiliations data</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Basic-stats-about-affiliations">Basic stats about affiliations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Enriching-the-unique-affiliations-(GRIDs-list)-with-pubs-count-and-authors-count">Enriching the unique affiliations (GRIDs list) with pubs count and authors count</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Couple-of-Dataviz">Couple of Dataviz</a></li>
@@ -1721,7 +1724,7 @@ if (outputEl) {{
 </table>
 </div></div>
 </div>
-<p>Top Ten surnames seem all Chinese..</p>
+<p>Top ten ‘ambiguous’ surnames seem to be all Asian.. it’s a rather known problem!</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
@@ -1756,112 +1759,21 @@ Name: last_name, dtype: int64
 <ul class="simple">
 <li><p>some entries are things which are not persons (presumably the results of bad source data in Dimensions, eg from the publisher)</p></li>
 <li><p>there are some apparently meaningful name+surname combinations with a lot of hits</p></li>
-<li><p>not many Chinese names in the top ones</p></li>
+<li><p>not many Asian names in the top ones</p></li>
 </ul>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">test</span> <span class="o">=</span> <span class="n">authors_without_id</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;first_name&quot;</span><span class="p">,</span> <span class="s2">&quot;last_name&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
-<span class="n">test</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">test</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span></span><span class="n">authors_without_id</span> <span class="o">=</span> <span class="n">authors_without_id</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;first_name&quot;</span><span class="p">,</span> <span class="s2">&quot;last_name&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;frequency&quot;</span><span class="p">})</span>
+<span class="n">authors_without_id</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;frequency&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">authors_without_id</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
-</pre></div>
-</div>
-<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>first_name    last_name
-                                       408
-Jaakko        Tuomilehto                13
-Wei           Zhao                      12
-James G.      Wilson                    12
-James P.      Cook                      11
-Olle          Melander                  11
-Qiong         Yang                      10
-Jie           Huang                     10
-Brooke        LaFlamme                  10
-Jouke-Jan     Hottenga                  10
-Kari          Stefansson                 9
-Andre         Franke                     9
-Ying          Wu                         9
-Andrew P.     Morris                     9
-Tõnu          Esko                       9
-Najaf         Amin                       9
-Daniela       Toniolo                    9
-Nicholas G.   Martin                     9
-Aarno         Palotie                    9
-Grant W.      Montgomery                 9
-Joanna M. M.  Howson                     9
-Wolfgang      Lieb                       9
-Lars          Lind                       9
-Ganesh        Chauhan                    8
-Charles       Kooperberg                 8
-David         Ellinghaus                 8
-André G.      Uitterlinden               8
-Yongmei       Liu                        8
-Peter         Vollenweider               8
-Manuel        Mattheisen                 8
-Weihua        Zhang                      8
-Albert V.     Smith                      8
-Peter         Almgren                    8
-Albert        Hofman                     8
-Matthias W    Beckmann                   7
-Jose C.       Florez                     7
-Andres        Metspalu                   7
-Leslie A.     Lange                      7
-Jie Jin       Wang                       7
-Jin           Li                         7
-Patrick F.    Sullivan                   7
-Yii-Der Ida   Chen                       6
-Frank         Kee                        6
-Cornelia M.   van Duijn                  6
-Jonathan      Beesley                    6
-James J       Lee                        6
-              23andMe Research Team      6
-Rajesh        Rawal                      6
-Jing Hua      Zhao                       6
-Scott D.      Gordon                     6
-dtype: int64
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="Creating-an-export-for-manual-curation">
-<h3>Creating an export for manual curation<a class="headerlink" href="#Creating-an-export-for-manual-curation" title="Permalink to this headline">¶</a></h3>
-<p>For the next tasks, we will focus on the disambiguated authors as the Researcher ID links will let us carry out useful analyses.</p>
-<p>Still, we can <strong>save the authors with missing IDs</strong> results and try to do some manual disambiguation later. To this end, adding a simple google-search URL can help in making sense of these data quickly.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="k">import</span> <span class="n">quote</span>
-
-<span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">test</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="c1"># compose a simple URL of the form &#39;https://www.google.com/search?q=tonu+esko&#39;</span>
-    <span class="k">if</span> <span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">or</span> <span class="n">index</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
-        <span class="n">n</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="n">quote</span><span class="p">(</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">quote</span><span class="p">(</span><span class="n">index</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;https://www.google.com/search?q=</span><span class="si">{n}</span><span class="s2">+</span><span class="si">{s}</span><span class="s2">&quot;</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">,</span> <span class="s1">&#39;surname&#39;</span> <span class="p">:</span> <span class="n">index</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">,</span> <span class="s1">&#39;frequency&#39;</span> <span class="p">:</span> <span class="n">value</span> <span class="p">,</span> <span class="s1">&#39;search_url&#39;</span> <span class="p">:</span> <span class="n">url</span> <span class="p">}</span>
-    <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-
-<span class="n">authors_follow_up</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
-<span class="c1"># set order of columns</span>
-<span class="n">authors_follow_up</span> <span class="o">=</span> <span class="n">authors_follow_up</span><span class="p">[[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;surname&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="s1">&#39;search_url&#39;</span><span class="p">]]</span>
-
-<span class="n">authors_follow_up</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1883,8 +1795,179 @@ dtype: int64
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>name</th>
-      <th>surname</th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>frequency</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td></td>
+      <td></td>
+      <td>408</td>
+    </tr>
+    <tr>
+      <th>2427</th>
+      <td>Jaakko</td>
+      <td>Tuomilehto</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>6090</th>
+      <td>Wei</td>
+      <td>Zhao</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>2513</th>
+      <td>James G.</td>
+      <td>Wilson</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>2529</th>
+      <td>James P.</td>
+      <td>Cook</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>4570</th>
+      <td>Olle</td>
+      <td>Melander</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>805</th>
+      <td>Brooke</td>
+      <td>LaFlamme</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>3093</th>
+      <td>Jouke-Jan</td>
+      <td>Hottenga</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>2772</th>
+      <td>Jie</td>
+      <td>Huang</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>4885</th>
+      <td>Qiong</td>
+      <td>Yang</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>1313</th>
+      <td>Daniela</td>
+      <td>Toniolo</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>91</th>
+      <td>Aarno</td>
+      <td>Palotie</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>3475</th>
+      <td>Lars</td>
+      <td>Lind</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>3247</th>
+      <td>Kari</td>
+      <td>Stefansson</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>322</th>
+      <td>Andre</td>
+      <td>Franke</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>4406</th>
+      <td>Najaf</td>
+      <td>Amin</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>6441</th>
+      <td>Ying</td>
+      <td>Wu</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>409</th>
+      <td>Andrew P.</td>
+      <td>Morris</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>5962</th>
+      <td>Tõnu</td>
+      <td>Esko</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>4478</th>
+      <td>Nicholas G.</td>
+      <td>Martin</td>
+      <td>9</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Creating-an-export-for-manual-curation">
+<h3>Creating an export for manual curation<a class="headerlink" href="#Creating-an-export-for-manual-curation" title="Permalink to this headline">¶</a></h3>
+<p>For the next tasks, we will focus on the disambiguated authors as the Researcher ID links will let us carry out useful analyses.</p>
+<p>Still, we can <strong>save the authors with missing IDs</strong> results and try to do some manual disambiguation later. To this end, adding a simple google-search URL can help in making sense of these data quickly.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">dimcli.shortcuts</span> <span class="k">import</span> <span class="n">google_url</span>
+
+<span class="n">authors_without_id</span><span class="p">[</span><span class="s1">&#39;search_url&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">authors_without_id</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">google_url</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;first_name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;last_name&#39;</span><span class="p">]</span> <span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">authors_without_id</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first_name</th>
+      <th>last_name</th>
       <th>frequency</th>
       <th>search_url</th>
     </tr>
@@ -1895,152 +1978,152 @@ dtype: int64
       <td></td>
       <td></td>
       <td>408</td>
-      <td></td>
+      <td>https://www.google.com/search?q=%20</td>
     </tr>
     <tr>
-      <th>1</th>
+      <th>2427</th>
       <td>Jaakko</td>
       <td>Tuomilehto</td>
       <td>13</td>
-      <td>https://www.google.com/search?q=Jaakko+Tuomilehto</td>
+      <td>https://www.google.com/search?q=Jaakko%20Tuomi...</td>
     </tr>
     <tr>
-      <th>2</th>
+      <th>6090</th>
       <td>Wei</td>
       <td>Zhao</td>
       <td>12</td>
-      <td>https://www.google.com/search?q=Wei+Zhao</td>
+      <td>https://www.google.com/search?q=Wei%20Zhao</td>
     </tr>
     <tr>
-      <th>3</th>
+      <th>2513</th>
       <td>James G.</td>
       <td>Wilson</td>
       <td>12</td>
-      <td>https://www.google.com/search?q=James%20G.+Wilson</td>
+      <td>https://www.google.com/search?q=James%20G.%20W...</td>
     </tr>
     <tr>
-      <th>4</th>
+      <th>2529</th>
       <td>James P.</td>
       <td>Cook</td>
       <td>11</td>
-      <td>https://www.google.com/search?q=James%20P.+Cook</td>
+      <td>https://www.google.com/search?q=James%20P.%20Cook</td>
     </tr>
     <tr>
-      <th>5</th>
+      <th>4570</th>
       <td>Olle</td>
       <td>Melander</td>
       <td>11</td>
-      <td>https://www.google.com/search?q=Olle+Melander</td>
+      <td>https://www.google.com/search?q=Olle%20Melander</td>
     </tr>
     <tr>
-      <th>6</th>
-      <td>Qiong</td>
-      <td>Yang</td>
-      <td>10</td>
-      <td>https://www.google.com/search?q=Qiong+Yang</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>Jie</td>
-      <td>Huang</td>
-      <td>10</td>
-      <td>https://www.google.com/search?q=Jie+Huang</td>
-    </tr>
-    <tr>
-      <th>8</th>
+      <th>805</th>
       <td>Brooke</td>
       <td>LaFlamme</td>
       <td>10</td>
-      <td>https://www.google.com/search?q=Brooke+LaFlamme</td>
+      <td>https://www.google.com/search?q=Brooke%20LaFlamme</td>
     </tr>
     <tr>
-      <th>9</th>
+      <th>3093</th>
       <td>Jouke-Jan</td>
       <td>Hottenga</td>
       <td>10</td>
-      <td>https://www.google.com/search?q=Jouke-Jan+Hott...</td>
+      <td>https://www.google.com/search?q=Jouke-Jan%20Ho...</td>
     </tr>
     <tr>
-      <th>10</th>
-      <td>Kari</td>
-      <td>Stefansson</td>
-      <td>9</td>
-      <td>https://www.google.com/search?q=Kari+Stefansson</td>
+      <th>2772</th>
+      <td>Jie</td>
+      <td>Huang</td>
+      <td>10</td>
+      <td>https://www.google.com/search?q=Jie%20Huang</td>
     </tr>
     <tr>
-      <th>11</th>
-      <td>Andre</td>
-      <td>Franke</td>
-      <td>9</td>
-      <td>https://www.google.com/search?q=Andre+Franke</td>
+      <th>4885</th>
+      <td>Qiong</td>
+      <td>Yang</td>
+      <td>10</td>
+      <td>https://www.google.com/search?q=Qiong%20Yang</td>
     </tr>
     <tr>
-      <th>12</th>
-      <td>Ying</td>
-      <td>Wu</td>
-      <td>9</td>
-      <td>https://www.google.com/search?q=Ying+Wu</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>Andrew P.</td>
-      <td>Morris</td>
-      <td>9</td>
-      <td>https://www.google.com/search?q=Andrew%20P.+Mo...</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>Tõnu</td>
-      <td>Esko</td>
-      <td>9</td>
-      <td>https://www.google.com/search?q=T%C3%B5nu+Esko</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>Najaf</td>
-      <td>Amin</td>
-      <td>9</td>
-      <td>https://www.google.com/search?q=Najaf+Amin</td>
-    </tr>
-    <tr>
-      <th>16</th>
+      <th>1313</th>
       <td>Daniela</td>
       <td>Toniolo</td>
       <td>9</td>
-      <td>https://www.google.com/search?q=Daniela+Toniolo</td>
+      <td>https://www.google.com/search?q=Daniela%20Toniolo</td>
     </tr>
     <tr>
-      <th>17</th>
-      <td>Nicholas G.</td>
-      <td>Martin</td>
-      <td>9</td>
-      <td>https://www.google.com/search?q=Nicholas%20G.+...</td>
-    </tr>
-    <tr>
-      <th>18</th>
+      <th>91</th>
       <td>Aarno</td>
       <td>Palotie</td>
       <td>9</td>
-      <td>https://www.google.com/search?q=Aarno+Palotie</td>
+      <td>https://www.google.com/search?q=Aarno%20Palotie</td>
     </tr>
     <tr>
-      <th>19</th>
-      <td>Grant W.</td>
-      <td>Montgomery</td>
+      <th>3475</th>
+      <td>Lars</td>
+      <td>Lind</td>
       <td>9</td>
-      <td>https://www.google.com/search?q=Grant%20W.+Mon...</td>
+      <td>https://www.google.com/search?q=Lars%20Lind</td>
+    </tr>
+    <tr>
+      <th>3247</th>
+      <td>Kari</td>
+      <td>Stefansson</td>
+      <td>9</td>
+      <td>https://www.google.com/search?q=Kari%20Stefansson</td>
+    </tr>
+    <tr>
+      <th>322</th>
+      <td>Andre</td>
+      <td>Franke</td>
+      <td>9</td>
+      <td>https://www.google.com/search?q=Andre%20Franke</td>
+    </tr>
+    <tr>
+      <th>4406</th>
+      <td>Najaf</td>
+      <td>Amin</td>
+      <td>9</td>
+      <td>https://www.google.com/search?q=Najaf%20Amin</td>
+    </tr>
+    <tr>
+      <th>6441</th>
+      <td>Ying</td>
+      <td>Wu</td>
+      <td>9</td>
+      <td>https://www.google.com/search?q=Ying%20Wu</td>
+    </tr>
+    <tr>
+      <th>409</th>
+      <td>Andrew P.</td>
+      <td>Morris</td>
+      <td>9</td>
+      <td>https://www.google.com/search?q=Andrew%20P.%20...</td>
+    </tr>
+    <tr>
+      <th>5962</th>
+      <td>Tõnu</td>
+      <td>Esko</td>
+      <td>9</td>
+      <td>https://www.google.com/search?q=T%C3%B5nu%20Esko</td>
+    </tr>
+    <tr>
+      <th>4478</th>
+      <td>Nicholas G.</td>
+      <td>Martin</td>
+      <td>9</td>
+      <td>https://www.google.com/search?q=Nicholas%20G.%...</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># save the data</span>
-<span class="n">save</span><span class="p">(</span><span class="n">authors_follow_up</span><span class="p">,</span> <span class="s2">&quot;1_authors_without_researchers_id.csv&quot;</span><span class="p">)</span>
+<span class="n">save</span><span class="p">(</span><span class="n">authors_without_id</span><span class="p">,</span> <span class="s2">&quot;1_authors_without_researchers_id.csv&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2065,7 +2148,7 @@ dtype: int64
     <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Authors_without_IDs&#39;</span>
     <span class="n">sh</span> <span class="o">=</span> <span class="n">gc</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
     <span class="n">worksheet</span> <span class="o">=</span> <span class="n">gc</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="o">.</span><span class="n">sheet1</span>
-    <span class="n">set_with_dataframe</span><span class="p">(</span><span class="n">worksheet</span><span class="p">,</span> <span class="n">authors_follow_up</span><span class="p">)</span>
+    <span class="n">set_with_dataframe</span><span class="p">(</span><span class="n">worksheet</span><span class="p">,</span> <span class="n">authors_without_id</span><span class="p">)</span>
     <span class="n">spreadsheet_url</span> <span class="o">=</span> <span class="s2">&quot;https://docs.google.com/spreadsheets/d/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">sh</span><span class="o">.</span><span class="n">id</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">spreadsheet_url</span><span class="p">)</span>
 </pre></div>

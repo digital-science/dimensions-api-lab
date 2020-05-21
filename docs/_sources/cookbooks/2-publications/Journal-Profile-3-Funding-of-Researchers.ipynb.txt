@@ -126,7 +126,10 @@
    "source": [
     "### Load previously saved researchers data \n",
     "\n",
-    "**NOTE** If you are using Google Colab or don't have the data available, just grab it [here](https://github.com/digital-science/dimensions-api-lab/tree/master/cookbooks/2-publications/journal-profile-data) and make sure they're saved in a folder called `journal-profile-data` where this notebook is. "
+    "**NOTE** If you are using Google Colab or don't have the data available, just do the following: \n",
+    "* open up the 'Files' panel in Google Colab and create a new folder `journal-profile-data`\n",
+    "* grab this [file](https://github.com/digital-science/dimensions-api-lab/tree/master/cookbooks/2-publications/journal-profile-data.zip), unzip it, open the enclosed folder and upload the file called `2_researchers_impact_metrics.csv` to Google Colab ('Upload' menu or also by dragging then inside the panel window)\n",
+    "* move the file inside the `journal-profile-data` folder you just created "
    ]
   },
   {
@@ -417,7 +420,10 @@
     }
    ],
    "source": [
-    "%dsldf search researchers where id in [\"ur.0723426172.10\", \"ur.01277776417.51\"] return researchers[id+last_grant_year+total_grants]"
+    "%%dsldf  \n",
+    "search researchers \n",
+    "    where id in [\"ur.0723426172.10\", \"ur.01277776417.51\"] \n",
+    "return researchers[id+last_grant_year+total_grants]"
    ]
   },
   {
@@ -597,7 +603,10 @@
     }
    ],
    "source": [
-    "%dsldf search grants where researchers.id in [\"ur.0723426172.10\", \"ur.01277776417.51\"] return researchers[id] aggregate funding"
+    "%%dsldf \n",
+    "search grants \n",
+    "    where researchers.id in [\"ur.0723426172.10\", \"ur.01277776417.51\"] \n",
+    "return researchers[id] aggregate funding"
    ]
   },
   {
@@ -698,7 +707,9 @@
     "VERBOSE = False\n",
     "#\n",
     "#\n",
-    "query = \"\"\"search researchers where id in {} return researchers[id+last_grant_year+total_grants] limit 1000\"\"\"\n",
+    "query = \"\"\"search researchers \n",
+    "                where id in {} \n",
+    "            return researchers[id+last_grant_year+total_grants] limit 1000\"\"\"\n",
     "#\n",
     "#\n",
     "out = []\n",
@@ -1027,7 +1038,10 @@
     }
    ],
    "source": [
-    "%dsldf search grants where researchers.id in [\"ur.0723426172.10\", \"ur.01277776417.51\"] return researchers[id] aggregate funding"
+    "%%dsldf  \n",
+    "search grants \n",
+    "    where researchers.id in [\"ur.0723426172.10\", \"ur.01277776417.51\"] \n",
+    "return researchers[id] aggregate funding"
    ]
   },
   {
@@ -1083,7 +1097,9 @@
     "\n",
     "#\n",
     "#\n",
-    "query = \"\"\"search grants where researchers.id in {} return researchers[id] aggregate funding limit 1000\"\"\"\n",
+    "query = \"\"\"search grants \n",
+    "            where researchers.id in {} \n",
+    "           return researchers[id] aggregate funding limit 1000\"\"\"\n",
     "#\n",
     "#\n",
     "out = []\n",
@@ -3855,8 +3871,8 @@
           1
          ],
          "range": [
-          -7.500488603228144,
-          105.577186170969
+          -7.392649157869238,
+          105.5191187773142
          ],
          "title": {
           "text": "full_name"
@@ -7693,8 +7709,8 @@
           0.7363
          ],
          "range": [
-          -15.61012417384836,
-          213.10957376142312
+          -15.363150207606905,
+          212.94396795931766
          ],
          "title": {
           "text": "full_name"
@@ -7726,8 +7742,8 @@
           1
          ],
          "range": [
-          2022.3042266738432,
-          2027.6214718791248
+          2022.249769940503,
+          2027.6673842039436
          ],
          "title": {
           "text": "last_grant_year"
@@ -7743,8 +7759,8 @@
          ],
          "matches": "y",
          "range": [
-          2022.3042266738432,
-          2027.6214718791248
+          2022.249769940503,
+          2027.6673842039436
          ],
          "showgrid": true,
          "showticklabels": false,
@@ -11514,8 +11530,8 @@
           0.18400000000000002
          ],
          "range": [
-          -5.982985302059694,
-          199.20722435632902
+          -5.737675190305207,
+          199.2017199857716
          ],
          "title": {
           "text": "full_name"
@@ -11531,8 +11547,8 @@
          ],
          "matches": "x",
          "range": [
-          -5.982985302059694,
-          199.20722435632902
+          -5.737675190305207,
+          199.2017199857716
          ],
          "title": {
           "text": "full_name"
@@ -11548,8 +11564,8 @@
          ],
          "matches": "x",
          "range": [
-          -5.982985302059694,
-          199.20722435632902
+          -5.737675190305207,
+          199.2017199857716
          ],
          "title": {
           "text": "full_name"
@@ -11565,8 +11581,8 @@
          ],
          "matches": "x",
          "range": [
-          -5.982985302059694,
-          199.20722435632902
+          -5.737675190305207,
+          199.2017199857716
          ],
          "title": {
           "text": "full_name"
@@ -11582,8 +11598,8 @@
          ],
          "matches": "x",
          "range": [
-          -5.982985302059694,
-          199.20722435632902
+          -5.737675190305207,
+          199.2017199857716
          ],
          "title": {
           "text": "full_name"
@@ -11598,8 +11614,8 @@
           1
          ],
          "range": [
-          2022.4281196982827,
-          2027.5941470154357
+          2022.451430582897,
+          2027.5693516612075
          ],
          "title": {
           "text": "last_grant_year"
@@ -11615,8 +11631,8 @@
          ],
          "matches": "y",
          "range": [
-          2022.4281196982827,
-          2027.5941470154357
+          2022.451430582897,
+          2027.5693516612075
          ],
          "showticklabels": false,
          "type": "linear"
@@ -11630,8 +11646,8 @@
          ],
          "matches": "y",
          "range": [
-          2022.4281196982827,
-          2027.5941470154357
+          2022.451430582897,
+          2027.5693516612075
          ],
          "showticklabels": false,
          "type": "linear"
@@ -11645,8 +11661,8 @@
          ],
          "matches": "y",
          "range": [
-          2022.4281196982827,
-          2027.5941470154357
+          2022.451430582897,
+          2027.5693516612075
          ],
          "showticklabels": false,
          "type": "linear"
@@ -11660,8 +11676,8 @@
          ],
          "matches": "y",
          "range": [
-          2022.4281196982827,
-          2027.5941470154357
+          2022.451430582897,
+          2027.5693516612075
          ],
          "showticklabels": false,
          "type": "linear"
