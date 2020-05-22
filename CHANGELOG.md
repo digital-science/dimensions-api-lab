@@ -3,12 +3,12 @@
 ### 2020-05-20
 
 New notebooks:
-* [Working with lists in the Dimensions API](https://api-lab.dimensions.ai/cookbooks/1-getting-started/6-Working-with-lists.ipynb)
-* [Journal Profiling Part 1: Getting the Data](https://api-lab.dimensions.ai/cookbooks/2-publications/Journal-Profile-1-Gathering-data.ipynb)
-* [Journal Profiling Part 2: Impact Metrics](https://api-lab.dimensions.ai/cookbooks/2-publications/Journal-Profile-2-Researchers-Impact-Metrics.ipynb)
-* [Journal Profiling Part 3: Funding](https://api-lab.dimensions.ai/cookbooks/2-publications/Journal-Profile-3-Funding-of-Researchers.ipynb)
-* [Journal Profiling Part 4: Institutions](https://api-lab.dimensions.ai/cookbooks/2-publications/Journal-Profile-4-Institutions.ipynb)
-* [Journal Profiling Part 5: Competing Journals Analysis](https://api-lab.dimensions.ai/cookbooks/2-publications/Journal-Profile-5-Competitive-Analysis.ipynb)
+* [Working with lists in the Dimensions API](https://api-lab.dimensions.ai/cookbooks/1-getting-started/6-Working-with-lists.html)
+* [Journal Profiling Part 1: Getting the Data](https://api-lab.dimensions.ai/cookbooks/2-publications/Journal-Profile-1-Gathering-data.html)
+* [Journal Profiling Part 2: Impact Metrics](https://api-lab.dimensions.ai/cookbooks/2-publications/Journal-Profile-2-Researchers-Impact-Metrics.html)
+* [Journal Profiling Part 3: Funding](https://api-lab.dimensions.ai/cookbooks/2-publications/Journal-Profile-3-Funding-of-Researchers.html)
+* [Journal Profiling Part 4: Institutions](https://api-lab.dimensions.ai/cookbooks/2-publications/Journal-Profile-4-Institutions.html)
+* [Journal Profiling Part 5: Competing Journals Analysis](https://api-lab.dimensions.ai/cookbooks/2-publications/Journal-Profile-5-Competitive-Analysis.html)
 
 
 ### 2020-05-07
