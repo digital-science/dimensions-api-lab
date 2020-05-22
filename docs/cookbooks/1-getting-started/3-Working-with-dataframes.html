@@ -251,7 +251,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="6-Working-with-lists.html#6.-What-if-I-want-to-get-the-researchers-associated-with-the-publications-the-cite-my-institution?">6. What if I want to get the researchers associated with the publications the cite my institution?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="6-Working-with-lists.html#7.-What-if-I-want-to-get-all-the-researchers-associated-with-the-publications-that-cite-my-institution?">7. What if I want to get <em>all</em> the researchers associated with the publications that cite my institution?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="6-Working-with-lists.html#8.-..and-it-we-want-details-about-our-researchers,-we-can-put-our-list-of-researchers-into-the-researcher-API">8. ..and it we want details about our researchers, we can put our list of researchers into the researcher API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6-Working-with-lists.html#8.-..and-if-we-want-details-about-our-researchers,-we-can-put-our-list-of-researchers-into-the-researcher-API">8. ..and if we want details about our researchers, we can put our list of researchers into the researcher API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="6-Working-with-lists.html#9.-Patents-example-(patents--&gt;-publications)">9. Patents example (patents -&gt; publications)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="6-Working-with-lists.html#10.-Clinical-Trials-(clinical-trials--&gt;-publications)">10. Clinical Trials (clinical trials -&gt; publications)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="6-Working-with-lists.html#11.-Grants-(publications--&gt;-grants)">11. Grants (publications -&gt; grants)</a><ul>
@@ -850,7 +850,7 @@ div.rendered_html tbody tr:hover {
 <div><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/">pandas</a> is a popular software library written for the Python programming language for data manipulation and analysis.</p>
 </div></blockquote>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -875,14 +875,16 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-DimCli v0.6.6.4 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (method: dsl.ini file)
+Dimcli - Dimensions API Client (v0.6.9)
+Connected to endpoint: https://app.dimensions.ai - DSL version: 1.24
+Method: dsl.ini file
 </pre></div></div>
 </div>
 <div class="section" id="1.-General-method-to-transform-JSON-query-results-into-a-dataframe">
 <h2>1. General method to transform JSON query results into a dataframe<a class="headerlink" href="#1.-General-method-to-transform-JSON-query-results-into-a-dataframe" title="Permalink to this headline">¶</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">Dataset.as_dataframe</span></code> method allows to quickly turn any query results into a dataframe.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">DslDataset.as_dataframe</span></code> method allows to quickly turn any query results into a dataframe.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -899,11 +901,11 @@ DimCli v0.6.6.4 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (me
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 1000 (total = 425758)
+Returned Publications: 1000 (total = 425229)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -913,7 +915,7 @@ Returned Publications: 1000 (total = 425758)
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -935,14 +937,14 @@ Returned Publications: 1000 (total = 425758)
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>title</th>
+      <th>author_affiliations</th>
       <th>volume</th>
       <th>issue</th>
+      <th>pages</th>
       <th>type</th>
-      <th>author_affiliations</th>
       <th>year</th>
       <th>id</th>
-      <th>title</th>
-      <th>pages</th>
       <th>journal.id</th>
       <th>journal.title</th>
     </tr>
@@ -950,133 +952,133 @@ Returned Publications: 1000 (total = 425758)
   <tbody>
     <tr>
       <th>0</th>
+      <td>The chemistry of two-dimensional layered trans...</td>
+      <td>[[{'first_name': 'Manish', 'last_name': 'Chhow...</td>
       <td>5</td>
       <td>4</td>
+      <td>263-275</td>
       <td>article</td>
-      <td>[[{'first_name': 'Manish', 'last_name': 'Chhow...</td>
       <td>2013</td>
       <td>pub.1050119463</td>
-      <td>The chemistry of two-dimensional layered trans...</td>
-      <td>263-275</td>
       <td>jour.1041224</td>
       <td>Nature Chemistry</td>
     </tr>
     <tr>
       <th>1</th>
+      <td>Van der Waals heterostructures</td>
+      <td>[[{'first_name': 'A. K.', 'last_name': 'Geim',...</td>
       <td>499</td>
       <td>7459</td>
+      <td>419-425</td>
       <td>article</td>
-      <td>[[{'first_name': 'A. K.', 'last_name': 'Geim',...</td>
       <td>2013</td>
       <td>pub.1024857999</td>
-      <td>Van der Waals heterostructures</td>
-      <td>419-425</td>
       <td>jour.1018957</td>
       <td>Nature</td>
     </tr>
     <tr>
       <th>2</th>
+      <td>Interface engineering of highly efficient pero...</td>
+      <td>[[{'first_name': 'Huanping', 'last_name': 'Zho...</td>
       <td>345</td>
       <td>6196</td>
+      <td>542-546</td>
       <td>article</td>
-      <td>[[{'first_name': 'Huanping', 'last_name': 'Zho...</td>
       <td>2014</td>
       <td>pub.1004394295</td>
-      <td>Interface engineering of highly efficient pero...</td>
-      <td>542-546</td>
       <td>jour.1346339</td>
       <td>Science</td>
     </tr>
     <tr>
       <th>3</th>
+      <td>Black phosphorus field-effect transistors</td>
+      <td>[[{'first_name': 'Likai', 'last_name': 'Li', '...</td>
       <td>9</td>
       <td>5</td>
+      <td>372-377</td>
       <td>article</td>
-      <td>[[{'first_name': 'Likai', 'last_name': 'Li', '...</td>
       <td>2014</td>
       <td>pub.1032956475</td>
-      <td>Black phosphorus field-effect transistors</td>
-      <td>372-377</td>
       <td>jour.1037429</td>
       <td>Nature Nanotechnology</td>
     </tr>
     <tr>
       <th>4</th>
+      <td>The Li-ion rechargeable battery: a perspective.</td>
+      <td>[[{'first_name': 'John B.', 'last_name': 'Good...</td>
       <td>135</td>
       <td>4</td>
+      <td>1167-76</td>
       <td>article</td>
-      <td>[[{'first_name': 'John B.', 'last_name': 'Good...</td>
       <td>2013</td>
       <td>pub.1019126274</td>
-      <td>The Li-ion rechargeable battery: a perspective.</td>
-      <td>1167-76</td>
       <td>jour.1081898</td>
       <td>Journal of the American Chemical Society</td>
     </tr>
     <tr>
       <th>5</th>
+      <td>Nanoenergy, Nanotechnology Applied for Energy ...</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>book</td>
-      <td>NaN</td>
       <td>2013</td>
       <td>pub.1031762191</td>
-      <td>Nanoenergy, Nanotechnology Applied for Energy ...</td>
-      <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>40</td>
-      <td>10</td>
-      <td>article</td>
-      <td>[[{'first_name': 'C.', 'last_name': 'Patrignan...</td>
-      <td>2016</td>
-      <td>pub.1059158429</td>
-      <td>Review of Particle Physics</td>
-      <td>100001</td>
-      <td>jour.1327822</td>
-      <td>Chinese Physics C</td>
-    </tr>
-    <tr>
-      <th>7</th>
+      <td>Phosphorene: an unexplored 2D semiconductor wi...</td>
+      <td>[[{'first_name': 'Han', 'last_name': 'Liu', 'i...</td>
       <td>8</td>
       <td>4</td>
+      <td>4033-41</td>
       <td>article</td>
-      <td>[[{'first_name': 'Han', 'last_name': 'Liu', 'i...</td>
       <td>2014</td>
       <td>pub.1009826879</td>
-      <td>Phosphorene: an unexplored 2D semiconductor wi...</td>
-      <td>4033-41</td>
       <td>jour.1038917</td>
       <td>ACS Nano</td>
     </tr>
     <tr>
-      <th>8</th>
+      <th>7</th>
+      <td>Raman spectroscopy as a versatile tool for stu...</td>
+      <td>[[{'first_name': 'Andrea C.', 'last_name': 'Fe...</td>
       <td>8</td>
       <td>4</td>
+      <td>235-246</td>
       <td>article</td>
-      <td>[[{'first_name': 'Andrea C.', 'last_name': 'Fe...</td>
       <td>2013</td>
       <td>pub.1015305822</td>
-      <td>Raman spectroscopy as a versatile tool for stu...</td>
-      <td>235-246</td>
       <td>jour.1037429</td>
       <td>Nature Nanotechnology</td>
     </tr>
     <tr>
-      <th>9</th>
+      <th>8</th>
+      <td>Carbon Nanotubes: Present and Future Commercia...</td>
+      <td>[[{'first_name': 'Michael F. L.', 'last_name':...</td>
       <td>339</td>
       <td>6119</td>
+      <td>535-539</td>
       <td>article</td>
-      <td>[[{'first_name': 'Michael F. L.', 'last_name':...</td>
       <td>2013</td>
       <td>pub.1007405937</td>
-      <td>Carbon Nanotubes: Present and Future Commercia...</td>
-      <td>535-539</td>
       <td>jour.1346339</td>
       <td>Science</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>The emergence of perovskite solar cells</td>
+      <td>[[{'first_name': 'Martin A.', 'last_name': 'Gr...</td>
+      <td>8</td>
+      <td>7</td>
+      <td>506-514</td>
+      <td>article</td>
+      <td>2014</td>
+      <td>pub.1045181228</td>
+      <td>jour.1037430</td>
+      <td>Nature Photonics</td>
     </tr>
   </tbody>
 </table>
@@ -1084,7 +1086,7 @@ Returned Publications: 1000 (total = 425758)
 </div>
 <p>Pandas dataframes offer a myriad of utilities for inspecting data. Check out the <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/getting_started/10min.html">official docs</a> or google a <a class="reference external" href="https://www.google.com/search?q=pandas+tutorial">pandas tutorial</a> to lean more about it.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1094,7 +1096,7 @@ Returned Publications: 1000 (total = 425758)
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -1103,7 +1105,7 @@ Returned Publications: 1000 (total = 425758)
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1113,22 +1115,23 @@ Returned Publications: 1000 (total = 425758)
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>2013    332
-2014    306
-2015    212
-2016     97
-2017     45
-2018      8
+<span></span>2013    324
+2014    299
+2015    210
+2016    105
+2017     50
+2018     11
+2019      1
 Name: year, dtype: int64
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1138,7 +1141,7 @@ Name: year, dtype: int64
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -1161,7 +1164,7 @@ Name: type, dtype: int64
 </div></blockquote>
 <p>This methods allows to quickly extract that data and return a dataframe with <strong>one row per author</strong>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1171,7 +1174,7 @@ Name: type, dtype: int64
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1271,7 +1274,7 @@ Name: type, dtype: int64
 </div>
 <p>Using the authors dataframe, we can easily get the top ten values for <code class="docutils literal notranslate"><span class="pre">current_organization_id</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1289,7 +1292,7 @@ Name: type, dtype: int64
 <p>The <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors_affiliations</span></code> method allows to quickly extract that affiliations data and return a dataframe with <strong>one row per affiliation</strong>.</p>
 <p>This can be useful e.g. if one wants to count research organizations at <em>the time of writing</em> (as opposed to <code class="docutils literal notranslate"><span class="pre">current_organization_id</span></code>, which is the <em>most recent organization</em> of a researcher).</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1299,7 +1302,7 @@ Name: type, dtype: int64
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1416,7 +1419,7 @@ Name: type, dtype: int64
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1425,7 +1428,7 @@ Name: type, dtype: int64
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1464,33 +1467,33 @@ Name: type, dtype: int64
   <tbody>
     <tr>
       <th>count</th>
-      <td>7768</td>
-      <td>7768</td>
-      <td>7768</td>
-      <td>7768</td>
-      <td>7768</td>
-      <td>7768</td>
-      <td>7768</td>
-      <td>7768</td>
-      <td>7768</td>
-      <td>7768</td>
-      <td>7768</td>
-      <td>7768</td>
+      <td>7810</td>
+      <td>7810</td>
+      <td>7810</td>
+      <td>7810</td>
+      <td>7810</td>
+      <td>7810</td>
+      <td>7810</td>
+      <td>7810</td>
+      <td>7810</td>
+      <td>7810</td>
+      <td>7810</td>
+      <td>7810</td>
     </tr>
     <tr>
       <th>unique</th>
-      <td>710</td>
-      <td>1059</td>
-      <td>430</td>
-      <td>432</td>
+      <td>727</td>
+      <td>1078</td>
+      <td>446</td>
+      <td>448</td>
       <td>51</td>
       <td>51</td>
       <td>53</td>
       <td>53</td>
-      <td>984</td>
-      <td>4306</td>
-      <td>3439</td>
-      <td>2021</td>
+      <td>985</td>
+      <td>4363</td>
+      <td>3500</td>
+      <td>2097</td>
     </tr>
     <tr>
       <th>top</th>
@@ -1509,18 +1512,18 @@ Name: type, dtype: int64
     </tr>
     <tr>
       <th>freq</th>
+      <td>989</td>
+      <td>242</td>
+      <td>989</td>
       <td>995</td>
-      <td>261</td>
-      <td>995</td>
-      <td>1001</td>
-      <td>2127</td>
-      <td>2127</td>
-      <td>5343</td>
-      <td>5343</td>
+      <td>2162</td>
+      <td>2162</td>
+      <td>5350</td>
+      <td>5350</td>
       <td>108</td>
-      <td>173</td>
-      <td>71</td>
-      <td>324</td>
+      <td>185</td>
+      <td>72</td>
+      <td>325</td>
     </tr>
   </tbody>
 </table>
@@ -1528,7 +1531,7 @@ Name: type, dtype: int64
 </div>
 <p>Let’s get the top ten values for <code class="docutils literal notranslate"><span class="pre">aff_id</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1538,7 +1541,7 @@ Name: type, dtype: int64
 </div>
 <p>Another example: we can now easily analyze the data by country too.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1555,7 +1558,7 @@ Name: type, dtype: int64
 <p>Grant funders authors are usually returned by the Dimensions API inside a nested JSON object in the <code class="docutils literal notranslate"><span class="pre">funders</span></code> sub-key.</p>
 <p>This methods allows to quickly extract that data and return a dataframe with <strong>one row per funder</strong>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1570,11 +1573,11 @@ Name: type, dtype: int64
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Grants: 1000 (total = 10714)
+Returned Grants: 1000 (total = 11076)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1583,7 +1586,7 @@ Returned Grants: 1000 (total = 10714)
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1606,14 +1609,14 @@ Returned Grants: 1000 (total = 10714)
     <tr style="text-align: right;">
       <th></th>
       <th>id</th>
-      <th>longitude</th>
-      <th>latitude</th>
-      <th>country_name</th>
-      <th>acronym</th>
-      <th>name</th>
       <th>linkout</th>
-      <th>city_name</th>
+      <th>name</th>
+      <th>country_name</th>
       <th>types</th>
+      <th>longitude</th>
+      <th>city_name</th>
+      <th>latitude</th>
+      <th>acronym</th>
       <th>state_name</th>
       <th>grant_id</th>
       <th>grant_title</th>
@@ -1625,14 +1628,14 @@ Returned Grants: 1000 (total = 10714)
     <tr>
       <th>0</th>
       <td>grid.270680.b</td>
-      <td>4.363670</td>
-      <td>50.851650</td>
-      <td>Belgium</td>
-      <td>EC</td>
-      <td>European Commission</td>
       <td>[http://ec.europa.eu/index_en.htm]</td>
-      <td>Brussels</td>
+      <td>European Commission</td>
+      <td>Belgium</td>
       <td>[Government]</td>
+      <td>4.363670</td>
+      <td>Brussels</td>
+      <td>50.851650</td>
+      <td>EC</td>
       <td>NaN</td>
       <td>grant.8964341</td>
       <td>mAlaRIa Sex dEtermination</td>
@@ -1641,15 +1644,66 @@ Returned Grants: 1000 (total = 10714)
     </tr>
     <tr>
       <th>1</th>
+      <td>grid.419681.3</td>
+      <td>[http://www.niaid.nih.gov/Pages/default.aspx]</td>
+      <td>National Institute of Allergy and Infectious D...</td>
+      <td>United States</td>
+      <td>[Facility]</td>
+      <td>-77.111830</td>
+      <td>Bethesda</td>
+      <td>39.066647</td>
+      <td>NIAID</td>
+      <td>Maryland</td>
+      <td>grant.9018944</td>
+      <td>Establishment of the New York University Vacci...</td>
+      <td>2020-04-10</td>
+      <td>2026-11-30</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>grid.419681.3</td>
+      <td>[http://www.niaid.nih.gov/Pages/default.aspx]</td>
+      <td>National Institute of Allergy and Infectious D...</td>
+      <td>United States</td>
+      <td>[Facility]</td>
+      <td>-77.111830</td>
+      <td>Bethesda</td>
+      <td>39.066647</td>
+      <td>NIAID</td>
+      <td>Maryland</td>
+      <td>grant.9020234</td>
+      <td>Antigen discovery for transmission-blocking va...</td>
+      <td>2020-04-06</td>
+      <td>2025-03-31</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>grid.419681.3</td>
+      <td>[http://www.niaid.nih.gov/Pages/default.aspx]</td>
+      <td>National Institute of Allergy and Infectious D...</td>
+      <td>United States</td>
+      <td>[Facility]</td>
+      <td>-77.111830</td>
+      <td>Bethesda</td>
+      <td>39.066647</td>
+      <td>NIAID</td>
+      <td>Maryland</td>
+      <td>grant.9020279</td>
+      <td>Repurposing kinase inhibitor chemotypes as ant...</td>
+      <td>2020-04-03</td>
+      <td>2025-03-31</td>
+    </tr>
+    <tr>
+      <th>4</th>
       <td>grid.270680.b</td>
-      <td>4.363670</td>
-      <td>50.851650</td>
-      <td>Belgium</td>
-      <td>EC</td>
-      <td>European Commission</td>
       <td>[http://ec.europa.eu/index_en.htm]</td>
-      <td>Brussels</td>
+      <td>European Commission</td>
+      <td>Belgium</td>
       <td>[Government]</td>
+      <td>4.363670</td>
+      <td>Brussels</td>
+      <td>50.851650</td>
+      <td>EC</td>
       <td>NaN</td>
       <td>grant.8585457</td>
       <td>Estimating the Prevalence of AntiMicrobial Res...</td>
@@ -1657,140 +1711,89 @@ Returned Grants: 1000 (total = 10714)
       <td>2022-03-31</td>
     </tr>
     <tr>
-      <th>2</th>
+      <th>5</th>
+      <td>grid.420089.7</td>
+      <td>[http://www.nichd.nih.gov/Pages/index.aspx]</td>
+      <td>National Institute of Child Health and Human D...</td>
+      <td>United States</td>
+      <td>[Facility]</td>
+      <td>-77.100420</td>
+      <td>Bethesda</td>
+      <td>39.001095</td>
+      <td>NICHD</td>
+      <td>Maryland</td>
+      <td>grant.9018783</td>
+      <td>Physiological Functions of Female Reproductive...</td>
+      <td>2020-04-01</td>
+      <td>2025-03-31</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>grid.419681.3</td>
+      <td>[http://www.niaid.nih.gov/Pages/default.aspx]</td>
+      <td>National Institute of Allergy and Infectious D...</td>
+      <td>United States</td>
+      <td>[Facility]</td>
+      <td>-77.111830</td>
+      <td>Bethesda</td>
+      <td>39.066647</td>
+      <td>NIAID</td>
+      <td>Maryland</td>
+      <td>grant.9019363</td>
+      <td>Determining the mechanism of antibody-mediated...</td>
+      <td>2020-04-01</td>
+      <td>2022-03-31</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>grid.419681.3</td>
+      <td>[http://www.niaid.nih.gov/Pages/default.aspx]</td>
+      <td>National Institute of Allergy and Infectious D...</td>
+      <td>United States</td>
+      <td>[Facility]</td>
+      <td>-77.111830</td>
+      <td>Bethesda</td>
+      <td>39.066647</td>
+      <td>NIAID</td>
+      <td>Maryland</td>
+      <td>grant.9019371</td>
+      <td>Computational models of naturally acquired imm...</td>
+      <td>2020-04-01</td>
+      <td>2025-03-31</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>grid.280785.0</td>
+      <td>[http://www.nigms.nih.gov/Pages/default.aspx]</td>
+      <td>National Institute of General Medical Sciences</td>
+      <td>United States</td>
+      <td>[Facility]</td>
+      <td>-77.099380</td>
+      <td>Bethesda</td>
+      <td>38.997833</td>
+      <td>NIGMS</td>
+      <td>Maryland</td>
+      <td>grant.9018600</td>
+      <td>A Biomedical Mass Spectrometry Resource: Ongoi...</td>
+      <td>2020-04-01</td>
+      <td>2023-03-31</td>
+    </tr>
+    <tr>
+      <th>9</th>
       <td>grid.425888.b</td>
-      <td>7.432395</td>
-      <td>46.949230</td>
-      <td>Switzerland</td>
-      <td>SNF</td>
-      <td>Swiss National Science Foundation</td>
       <td>[http://www.snf.ch/en]</td>
-      <td>Bern</td>
+      <td>Swiss National Science Foundation</td>
+      <td>Switzerland</td>
       <td>[Government]</td>
+      <td>7.432395</td>
+      <td>Bern</td>
+      <td>46.949230</td>
+      <td>SNF</td>
       <td>NaN</td>
       <td>grant.8968483</td>
       <td>Adressing concerns over gene drive based malar...</td>
       <td>2020-04-01</td>
       <td>2020-06-30</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>grid.421091.f</td>
-      <td>-1.784602</td>
-      <td>51.567093</td>
-      <td>United Kingdom</td>
-      <td>EPSRC</td>
-      <td>Engineering and Physical Sciences Research Cou...</td>
-      <td>[https://www.epsrc.ac.uk/]</td>
-      <td>Swindon</td>
-      <td>[Government]</td>
-      <td>England</td>
-      <td>grant.8856896</td>
-      <td>EQATA: Equitable access to Quality Antibiotic ...</td>
-      <td>2020-03-31</td>
-      <td>2022-03-30</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>grid.421091.f</td>
-      <td>-1.784602</td>
-      <td>51.567093</td>
-      <td>United Kingdom</td>
-      <td>EPSRC</td>
-      <td>Engineering and Physical Sciences Research Cou...</td>
-      <td>[https://www.epsrc.ac.uk/]</td>
-      <td>Swindon</td>
-      <td>[Government]</td>
-      <td>England</td>
-      <td>grant.8857053</td>
-      <td>Patient-centric supramolecular formulations of...</td>
-      <td>2020-03-31</td>
-      <td>2022-03-30</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>grid.421091.f</td>
-      <td>-1.784602</td>
-      <td>51.567093</td>
-      <td>United Kingdom</td>
-      <td>EPSRC</td>
-      <td>Engineering and Physical Sciences Research Cou...</td>
-      <td>[https://www.epsrc.ac.uk/]</td>
-      <td>Swindon</td>
-      <td>[Government]</td>
-      <td>England</td>
-      <td>grant.8558055</td>
-      <td>UK-Africa Postgraduate Advanced Study Institut...</td>
-      <td>2020-03-31</td>
-      <td>2021-03-30</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>grid.25111.36</td>
-      <td>16.352383</td>
-      <td>48.219303</td>
-      <td>Austria</td>
-      <td>FWF</td>
-      <td>FWF Austrian Science Fund</td>
-      <td>[https://www.fwf.ac.at/en/]</td>
-      <td>Vienna</td>
-      <td>[Nonprofit]</td>
-      <td>NaN</td>
-      <td>grant.8966928</td>
-      <td>Further insights into the pathogenesis of avia...</td>
-      <td>2020-03-09</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>grid.452896.4</td>
-      <td>4.359973</td>
-      <td>50.856167</td>
-      <td>Belgium</td>
-      <td>ERC</td>
-      <td>European Research Council</td>
-      <td>[http://erc.europa.eu/]</td>
-      <td>Brussels</td>
-      <td>[Government]</td>
-      <td>NaN</td>
-      <td>grant.8709736</td>
-      <td>Toxin-antidote selfish elements in animals: fr...</td>
-      <td>2020-03-01</td>
-      <td>2025-02-28</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>grid.425888.b</td>
-      <td>7.432395</td>
-      <td>46.949230</td>
-      <td>Switzerland</td>
-      <td>SNF</td>
-      <td>Swiss National Science Foundation</td>
-      <td>[http://www.snf.ch/en]</td>
-      <td>Bern</td>
-      <td>[Government]</td>
-      <td>NaN</td>
-      <td>grant.8968024</td>
-      <td>Multichannel confocal microscope with fluoresc...</td>
-      <td>2020-03-01</td>
-      <td>2021-02-28</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>grid.426413.6</td>
-      <td>-1.784473</td>
-      <td>51.567112</td>
-      <td>United Kingdom</td>
-      <td>AHRC</td>
-      <td>Arts and Humanities Research Council</td>
-      <td>[http://www.ahrc.ac.uk/]</td>
-      <td>Swindon</td>
-      <td>[Government]</td>
-      <td>NaN</td>
-      <td>grant.8856186</td>
-      <td>Life-Saving Lullabies: Reducing adolescent mat...</td>
-      <td>2020-02-21</td>
-      <td>2021-02-20</td>
     </tr>
   </tbody>
 </table>
@@ -1805,7 +1808,7 @@ Returned Grants: 1000 (total = 10714)
 <div><p>NOTE: <code class="docutils literal notranslate"><span class="pre">investigator_details</span></code> are not returned by default in a grants query hence one must specify this in the query results</p>
 </div></blockquote>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1820,14 +1823,14 @@ Returned Grants: 1000 (total = 10714)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Grants: 1000 (total = 10714)
+Returned Grants: 1000 (total = 11076)
 WARNINGS [2]
-Field &#39;project_num&#39; is deprecated in favor of grant_number. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
 Field &#39;title_language&#39; is deprecated in favor of language_title. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
+Field &#39;project_num&#39; is deprecated in favor of grant_number. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1836,7 +1839,7 @@ Field &#39;title_language&#39; is deprecated in favor of language_title. Please 
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1858,11 +1861,11 @@ Field &#39;title_language&#39; is deprecated in favor of language_title. Please 
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>first_name</th>
-      <th>id</th>
       <th>affiliations</th>
+      <th>first_name</th>
       <th>last_name</th>
       <th>role</th>
+      <th>id</th>
       <th>middle_name</th>
       <th>grant_id</th>
       <th>grant_title</th>
@@ -1873,133 +1876,133 @@ Field &#39;title_language&#39; is deprecated in favor of language_title. Please 
   <tbody>
     <tr>
       <th>0</th>
-      <td>Marie-Valentine</td>
-      <td>None</td>
-      <td>[{'city': None, 'city_id': '2659994', 'country...</td>
-      <td>Florin</td>
+      <td>[{'state': 'NY', 'state_code': 'US-NY', 'city'...</td>
+      <td>MARK JOSEPH</td>
+      <td>MULLIGAN</td>
       <td>PI</td>
       <td>None</td>
-      <td>grant.8968483</td>
-      <td>Adressing concerns over gene drive based malar...</td>
-      <td>2020-04-01</td>
-      <td>2020-06-30</td>
+      <td>None</td>
+      <td>grant.9018944</td>
+      <td>Establishment of the New York University Vacci...</td>
+      <td>2020-04-10</td>
+      <td>2026-11-30</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Gordon</td>
-      <td>None</td>
-      <td>[{'state_code': None, 'city': None, 'city_id':...</td>
-      <td>Florence</td>
+      <td>[{'state': '', 'state_code': None, 'city': 'SH...</td>
+      <td>YAMING</td>
+      <td>CAO</td>
       <td>PI</td>
-      <td>John</td>
-      <td>grant.8856896</td>
-      <td>EQATA: Equitable access to Quality Antibiotic ...</td>
-      <td>2020-03-31</td>
-      <td>2022-03-30</td>
+      <td>None</td>
+      <td>None</td>
+      <td>grant.9020234</td>
+      <td>Antigen discovery for transmission-blocking va...</td>
+      <td>2020-04-06</td>
+      <td>2025-03-31</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>Thomas</td>
+      <td>[{'state': '', 'state_code': None, 'city': 'RO...</td>
+      <td>KELLY</td>
+      <td>CHIBALE</td>
+      <td>PI</td>
       <td>None</td>
-      <td>NaN</td>
-      <td>Dzeha</td>
-      <td>Co-PI</td>
-      <td></td>
-      <td>grant.8856896</td>
-      <td>EQATA: Equitable access to Quality Antibiotic ...</td>
-      <td>2020-03-31</td>
-      <td>2022-03-30</td>
+      <td>None</td>
+      <td>grant.9020279</td>
+      <td>Repurposing kinase inhibitor chemotypes as ant...</td>
+      <td>2020-04-03</td>
+      <td>2025-03-31</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>Paul</td>
-      <td>None</td>
       <td>NaN</td>
-      <td>Kazyoba</td>
+      <td>WILLIAM</td>
+      <td>ZUERCHER</td>
       <td>Co-PI</td>
-      <td>Erasto</td>
-      <td>grant.8856896</td>
-      <td>EQATA: Equitable access to Quality Antibiotic ...</td>
-      <td>2020-03-31</td>
-      <td>2022-03-30</td>
+      <td>None</td>
+      <td>None</td>
+      <td>grant.9020279</td>
+      <td>Repurposing kinase inhibitor chemotypes as ant...</td>
+      <td>2020-04-03</td>
+      <td>2025-03-31</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>Rebecca</td>
-      <td>None</td>
-      <td>[{'state_code': None, 'city': None, 'city_id':...</td>
-      <td>Goss</td>
+      <td>NaN</td>
+      <td>LORI</td>
+      <td>FERRINS</td>
       <td>Co-PI</td>
-      <td>Jane</td>
-      <td>grant.8856896</td>
-      <td>EQATA: Equitable access to Quality Antibiotic ...</td>
-      <td>2020-03-31</td>
-      <td>2022-03-30</td>
+      <td>None</td>
+      <td>None</td>
+      <td>grant.9020279</td>
+      <td>Repurposing kinase inhibitor chemotypes as ant...</td>
+      <td>2020-04-03</td>
+      <td>2025-03-31</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>Hong</td>
+      <td>[{'state': 'CT', 'state_code': 'US-CT', 'city'...</td>
+      <td>JIANJUN</td>
+      <td>SUN</td>
+      <td>PI</td>
       <td>None</td>
-      <td>NaN</td>
-      <td>Gao</td>
-      <td>Co-PI</td>
-      <td></td>
-      <td>grant.8856896</td>
-      <td>EQATA: Equitable access to Quality Antibiotic ...</td>
-      <td>2020-03-31</td>
-      <td>2022-03-30</td>
+      <td>None</td>
+      <td>grant.9018783</td>
+      <td>Physiological Functions of Female Reproductive...</td>
+      <td>2020-04-01</td>
+      <td>2025-03-31</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>Matthias</td>
+      <td>[{'state': 'MN', 'state_code': 'US-MN', 'city'...</td>
+      <td>GEOFFREY T</td>
+      <td>HART</td>
+      <td>PI</td>
       <td>None</td>
-      <td>NaN</td>
-      <td>Agbo</td>
-      <td>Co-PI</td>
-      <td>Onyebuchi</td>
-      <td>grant.8856896</td>
-      <td>EQATA: Equitable access to Quality Antibiotic ...</td>
-      <td>2020-03-31</td>
-      <td>2022-03-30</td>
+      <td>None</td>
+      <td>grant.9019363</td>
+      <td>Determining the mechanism of antibody-mediated...</td>
+      <td>2020-04-01</td>
+      <td>2022-03-31</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>Stephen</td>
+      <td>[{'state': 'CA', 'state_code': 'US-CA', 'city'...</td>
+      <td>BRYAN R</td>
+      <td>GREENHOUSE</td>
+      <td>PI</td>
       <td>None</td>
-      <td>[{'state_code': None, 'city': None, 'city_id':...</td>
-      <td>Gillespie</td>
-      <td>Co-PI</td>
-      <td>Henry</td>
-      <td>grant.8856896</td>
-      <td>EQATA: Equitable access to Quality Antibiotic ...</td>
-      <td>2020-03-31</td>
-      <td>2022-03-30</td>
+      <td>None</td>
+      <td>grant.9019371</td>
+      <td>Computational models of naturally acquired imm...</td>
+      <td>2020-04-01</td>
+      <td>2025-03-31</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>Patrick</td>
+      <td>NaN</td>
+      <td>ATUL J.</td>
+      <td>BUTTE</td>
+      <td>Co-PI</td>
       <td>None</td>
-      <td>[{'state_code': None, 'city': None, 'city_id':...</td>
-      <td>Steel</td>
-      <td>PI</td>
-      <td></td>
-      <td>grant.8857053</td>
-      <td>Patient-centric supramolecular formulations of...</td>
-      <td>2020-03-31</td>
-      <td>2022-03-30</td>
+      <td>None</td>
+      <td>grant.9019371</td>
+      <td>Computational models of naturally acquired imm...</td>
+      <td>2020-04-01</td>
+      <td>2025-03-31</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>Sundar</td>
-      <td>None</td>
       <td>NaN</td>
-      <td>Shyam</td>
+      <td>PRASANNA</td>
+      <td>JAGANNATHAN</td>
       <td>Co-PI</td>
-      <td></td>
-      <td>grant.8857053</td>
-      <td>Patient-centric supramolecular formulations of...</td>
-      <td>2020-03-31</td>
-      <td>2022-03-30</td>
+      <td>None</td>
+      <td>None</td>
+      <td>grant.9019371</td>
+      <td>Computational models of naturally acquired imm...</td>
+      <td>2020-04-01</td>
+      <td>2025-03-31</td>
     </tr>
   </tbody>
 </table>
@@ -2032,7 +2035,7 @@ Field &#39;title_language&#39; is deprecated in favor of language_title. Please 
 </ol>
 <p>By sorting and segmenting concepts using these parameters, it is possible to fine-tune the concept extraction algorithm, so to make more suitable for the application at hand.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -2049,11 +2052,11 @@ Field &#39;title_language&#39; is deprecated in favor of language_title. Please 
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 100 (total = 101989)
+Returned Publications: 100 (total = 101412)
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -2075,11 +2078,11 @@ Returned Publications: 100 (total = 101989)
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>year</th>
       <th>id</th>
       <th>title</th>
-      <th>concept</th>
+      <th>year</th>
       <th>concepts_count</th>
+      <th>concept</th>
       <th>score</th>
       <th>frequency</th>
       <th>score_avg</th>
@@ -2088,58 +2091,58 @@ Returned Publications: 100 (total = 101989)
   <tbody>
     <tr>
       <th>0</th>
+      <td>pub.1120769344</td>
+      <td>Reliability issues of lead-free solder joints ...</td>
       <td>2019</td>
-      <td>pub.1122259223</td>
-      <td>Surface Modification of Water Purification Mem...</td>
-      <td>method</td>
-      <td>54</td>
+      <td>37</td>
+      <td>electronic products</td>
       <td>1.000</td>
-      <td>23</td>
-      <td>0.574</td>
+      <td>1</td>
+      <td>1.000</td>
     </tr>
     <tr>
       <th>1</th>
+      <td>pub.1120769344</td>
+      <td>Reliability issues of lead-free solder joints ...</td>
       <td>2019</td>
-      <td>pub.1122259223</td>
-      <td>Surface Modification of Water Purification Mem...</td>
-      <td>water supply</td>
-      <td>54</td>
-      <td>0.981</td>
-      <td>1</td>
-      <td>0.981</td>
+      <td>37</td>
+      <td>products</td>
+      <td>0.973</td>
+      <td>3</td>
+      <td>0.755</td>
     </tr>
     <tr>
       <th>2</th>
+      <td>pub.1120769344</td>
+      <td>Reliability issues of lead-free solder joints ...</td>
       <td>2019</td>
-      <td>pub.1122259223</td>
-      <td>Surface Modification of Water Purification Mem...</td>
-      <td>cycle</td>
-      <td>54</td>
-      <td>0.963</td>
+      <td>37</td>
+      <td>miniaturization</td>
+      <td>0.946</td>
       <td>1</td>
-      <td>0.963</td>
+      <td>0.946</td>
     </tr>
     <tr>
       <th>3</th>
+      <td>pub.1120769344</td>
+      <td>Reliability issues of lead-free solder joints ...</td>
       <td>2019</td>
-      <td>pub.1122259223</td>
-      <td>Surface Modification of Water Purification Mem...</td>
-      <td>desalination</td>
-      <td>54</td>
-      <td>0.944</td>
+      <td>37</td>
+      <td>high integration</td>
+      <td>0.919</td>
       <td>1</td>
-      <td>0.944</td>
+      <td>0.919</td>
     </tr>
     <tr>
       <th>4</th>
+      <td>pub.1120769344</td>
+      <td>Reliability issues of lead-free solder joints ...</td>
       <td>2019</td>
-      <td>pub.1122259223</td>
-      <td>Surface Modification of Water Purification Mem...</td>
-      <td>water reuse</td>
-      <td>54</td>
-      <td>0.926</td>
-      <td>1</td>
-      <td>0.926</td>
+      <td>37</td>
+      <td>integration</td>
+      <td>0.892</td>
+      <td>4</td>
+      <td>0.539</td>
     </tr>
   </tbody>
 </table>
@@ -2147,7 +2150,7 @@ Returned Publications: 100 (total = 101989)
 </div>
 <p><strong>E.g. Sorting by score_avg</strong> permits to highlight concepts that are important throughout the dataset.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -2156,7 +2159,7 @@ Returned Publications: 100 (total = 101989)
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -2165,7 +2168,7 @@ Returned Publications: 100 (total = 101989)
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -2187,11 +2190,11 @@ Returned Publications: 100 (total = 101989)
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>year</th>
       <th>id</th>
       <th>title</th>
-      <th>concept</th>
+      <th>year</th>
       <th>concepts_count</th>
+      <th>concept</th>
       <th>score</th>
       <th>frequency</th>
       <th>score_avg</th>
@@ -2199,56 +2202,56 @@ Returned Publications: 100 (total = 101989)
   </thead>
   <tbody>
     <tr>
-      <th>2837</th>
+      <th>0</th>
+      <td>pub.1120769344</td>
+      <td>Reliability issues of lead-free solder joints ...</td>
       <td>2019</td>
-      <td>pub.1123776488</td>
-      <td>Potency of Bacillus subtilis and Lysinibacillu...</td>
-      <td>leaf blight disease</td>
-      <td>41</td>
+      <td>37</td>
+      <td>electronic products</td>
       <td>1.000</td>
       <td>1</td>
       <td>1.000</td>
     </tr>
     <tr>
-      <th>3264</th>
+      <th>939</th>
+      <td>pub.1126259617</td>
+      <td>Intravenous delivery of enzalutamide based on ...</td>
       <td>2019</td>
-      <td>pub.1122232849</td>
-      <td>Development and Validation of HPTLC and Green ...</td>
-      <td>sensitive chromatographic method</td>
-      <td>47</td>
+      <td>43</td>
+      <td>background</td>
       <td>1.000</td>
       <td>1</td>
       <td>1.000</td>
     </tr>
     <tr>
-      <th>103</th>
+      <th>526</th>
+      <td>pub.1122086607</td>
+      <td>Metal-organic framework-coated magnetite nanop...</td>
       <td>2019</td>
-      <td>pub.1123010291</td>
-      <td>Chitosan for Sensors and Electrochemical Appli...</td>
-      <td>use of chitosan</td>
-      <td>35</td>
+      <td>52</td>
+      <td>tumor treatment</td>
       <td>1.000</td>
       <td>1</td>
       <td>1.000</td>
     </tr>
     <tr>
-      <th>2308</th>
+      <th>3056</th>
+      <td>pub.1121964614</td>
+      <td>Electronic and optoelectronic applications of ...</td>
       <td>2019</td>
-      <td>pub.1123011734</td>
-      <td>Chitosan‐Based Drug Delivery Systems</td>
-      <td>drug delivery systems</td>
-      <td>42</td>
+      <td>48</td>
+      <td>isolation of graphene</td>
       <td>1.000</td>
       <td>1</td>
       <td>1.000</td>
     </tr>
     <tr>
-      <th>549</th>
+      <th>2962</th>
+      <td>pub.1123924921</td>
+      <td>Phenolic Resin Foam Composites Reinforced by A...</td>
       <td>2019</td>
-      <td>pub.1112217617</td>
-      <td>MEMS vibrational energy harvesters</td>
-      <td>fundamental mechanisms</td>
-      <td>38</td>
+      <td>57</td>
+      <td>phenolic foam composites</td>
       <td>1.000</td>
       <td>1</td>
       <td>1.000</td>
@@ -2265,68 +2268,68 @@ Returned Publications: 100 (total = 101989)
       <td>...</td>
     </tr>
     <tr>
-      <th>862</th>
-      <td>2019</td>
-      <td>pub.1123764869</td>
-      <td>Design of Monovalent Ion Selective Membranes f...</td>
-      <td>selective membranes</td>
-      <td>60</td>
-      <td>0.017</td>
-      <td>1</td>
-      <td>0.017</td>
-    </tr>
-    <tr>
-      <th>2527</th>
-      <td>2019</td>
+      <th>1186</th>
       <td>pub.1123764790</td>
       <td>Enhancement of HDO Activity of MoP/SiO2 Cataly...</td>
+      <td>2019</td>
+      <td>61</td>
       <td>alumina</td>
-      <td>61</td>
       <td>0.016</td>
       <td>1</td>
       <td>0.016</td>
     </tr>
     <tr>
-      <th>3911</th>
+      <th>155</th>
+      <td>pub.1123764898</td>
+      <td>All-Waste Hybrid Composites with Waste Silicon...</td>
       <td>2019</td>
-      <td>pub.1123469635</td>
-      <td>Inkjet-Printed Imbedded Graphene Nanoplatelet/...</td>
-      <td>photodetection</td>
-      <td>61</td>
-      <td>0.016</td>
-      <td>1</td>
-      <td>0.016</td>
-    </tr>
-    <tr>
-      <th>802</th>
-      <td>2019</td>
-      <td>pub.1123764781</td>
-      <td>Microstructure, Wettability, Corrosion Resista...</td>
-      <td>incorporation content</td>
-      <td>67</td>
+      <td>66</td>
+      <td>module</td>
       <td>0.015</td>
       <td>1</td>
       <td>0.015</td>
     </tr>
     <tr>
-      <th>3131</th>
+      <th>1958</th>
+      <td>pub.1123764888</td>
+      <td>Nitrogen-Doped Porous Carbon Derived from Biom...</td>
       <td>2019</td>
+      <td>66</td>
+      <td>evolution</td>
+      <td>0.015</td>
+      <td>1</td>
+      <td>0.015</td>
+    </tr>
+    <tr>
+      <th>2554</th>
       <td>pub.1122803664</td>
       <td>Tetrahedral amorphous carbon prepared filter c...</td>
-      <td>LEDs</td>
+      <td>2019</td>
       <td>71</td>
+      <td>LEDs</td>
+      <td>0.014</td>
+      <td>1</td>
+      <td>0.014</td>
+    </tr>
+    <tr>
+      <th>331</th>
+      <td>pub.1126734256</td>
+      <td>Integration of tracking sensor technology into...</td>
+      <td>2019</td>
+      <td>73</td>
+      <td>sensor technology</td>
       <td>0.014</td>
       <td>1</td>
       <td>0.014</td>
     </tr>
   </tbody>
 </table>
-<p>2558 rows × 8 columns</p>
+<p>2563 rows × 8 columns</p>
 </div></div>
 </div>
 <p><strong>E.g. Sorting by frequency</strong> highlights concepts that are shared by many documents, but are not necessarily having a high score.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -2335,7 +2338,7 @@ Returned Publications: 100 (total = 101989)
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -2357,11 +2360,11 @@ Returned Publications: 100 (total = 101989)
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>year</th>
       <th>id</th>
       <th>title</th>
-      <th>concept</th>
+      <th>year</th>
       <th>concepts_count</th>
+      <th>concept</th>
       <th>score</th>
       <th>frequency</th>
       <th>score_avg</th>
@@ -2369,59 +2372,59 @@ Returned Publications: 100 (total = 101989)
   </thead>
   <tbody>
     <tr>
-      <th>119</th>
+      <th>165</th>
+      <td>pub.1110196431</td>
+      <td>Tuning phonon transport spectrum for better th...</td>
       <td>2019</td>
-      <td>pub.1123010291</td>
-      <td>Chitosan for Sensors and Electrochemical Appli...</td>
+      <td>53</td>
       <td>properties</td>
-      <td>35</td>
-      <td>0.543</td>
-      <td>35</td>
-      <td>0.627</td>
+      <td>0.830</td>
+      <td>37</td>
+      <td>0.678</td>
     </tr>
     <tr>
-      <th>114</th>
+      <th>85</th>
+      <td>pub.1123764889</td>
+      <td>Smart Non-Woven Fiber Mats with Light-Induced ...</td>
       <td>2019</td>
-      <td>pub.1123010291</td>
-      <td>Chitosan for Sensors and Electrochemical Appli...</td>
-      <td>materials</td>
-      <td>35</td>
-      <td>0.686</td>
-      <td>33</td>
-      <td>0.583</td>
-    </tr>
-    <tr>
-      <th>107</th>
-      <td>2019</td>
-      <td>pub.1123010291</td>
-      <td>Chitosan for Sensors and Electrochemical Appli...</td>
+      <td>51</td>
       <td>applications</td>
-      <td>35</td>
-      <td>0.886</td>
-      <td>32</td>
-      <td>0.439</td>
+      <td>0.059</td>
+      <td>36</td>
+      <td>0.404</td>
     </tr>
     <tr>
-      <th>128</th>
+      <th>83</th>
+      <td>pub.1123764889</td>
+      <td>Smart Non-Woven Fiber Mats with Light-Induced ...</td>
       <td>2019</td>
-      <td>pub.1123010291</td>
-      <td>Chitosan for Sensors and Electrochemical Appli...</td>
-      <td>effect</td>
+      <td>51</td>
+      <td>materials</td>
+      <td>0.098</td>
       <td>35</td>
-      <td>0.286</td>
-      <td>24</td>
-      <td>0.562</td>
+      <td>0.570</td>
     </tr>
     <tr>
-      <th>0</th>
+      <th>215</th>
+      <td>pub.1117611535</td>
+      <td>Spectrum adapted the expectation-maximization ...</td>
       <td>2019</td>
-      <td>pub.1122259223</td>
-      <td>Surface Modification of Water Purification Mem...</td>
+      <td>28</td>
       <td>method</td>
-      <td>54</td>
-      <td>1.000</td>
-      <td>23</td>
-      <td>0.574</td>
+      <td>0.786</td>
+      <td>24</td>
+      <td>0.533</td>
+    </tr>
+    <tr>
+      <th>74</th>
+      <td>pub.1123764889</td>
+      <td>Smart Non-Woven Fiber Mats with Light-Induced ...</td>
+      <td>2019</td>
+      <td>51</td>
+      <td>performance</td>
+      <td>0.275</td>
+      <td>21</td>
+      <td>0.393</td>
     </tr>
     <tr>
       <th>...</th>
@@ -2435,63 +2438,63 @@ Returned Publications: 100 (total = 101989)
       <td>...</td>
     </tr>
     <tr>
-      <th>1316</th>
+      <th>1248</th>
+      <td>pub.1123754647</td>
+      <td>Nanolayer Film on Poly(Styrene/Ethylene Glycol...</td>
       <td>2019</td>
-      <td>pub.1124185006</td>
-      <td>Topological Descriptor of 2-Dimensional Silico...</td>
-      <td>silicon carbon</td>
-      <td>18</td>
-      <td>0.111</td>
+      <td>66</td>
+      <td>PSS</td>
+      <td>0.076</td>
       <td>1</td>
-      <td>0.111</td>
+      <td>0.076</td>
     </tr>
     <tr>
-      <th>1315</th>
+      <th>1246</th>
+      <td>pub.1123754647</td>
+      <td>Nanolayer Film on Poly(Styrene/Ethylene Glycol...</td>
       <td>2019</td>
-      <td>pub.1124185006</td>
-      <td>Topological Descriptor of 2-Dimensional Silico...</td>
-      <td>topological descriptors</td>
-      <td>18</td>
+      <td>66</td>
+      <td>polyelectrolyte solutions</td>
+      <td>0.106</td>
+      <td>1</td>
+      <td>0.106</td>
+    </tr>
+    <tr>
+      <th>1243</th>
+      <td>pub.1123754647</td>
+      <td>Nanolayer Film on Poly(Styrene/Ethylene Glycol...</td>
+      <td>2019</td>
+      <td>66</td>
+      <td>multilayers</td>
+      <td>0.152</td>
+      <td>1</td>
+      <td>0.152</td>
+    </tr>
+    <tr>
+      <th>1242</th>
+      <td>pub.1123754647</td>
+      <td>Nanolayer Film on Poly(Styrene/Ethylene Glycol...</td>
+      <td>2019</td>
+      <td>66</td>
+      <td>polyelectrolyte multilayers</td>
       <td>0.167</td>
       <td>1</td>
       <td>0.167</td>
     </tr>
     <tr>
-      <th>1312</th>
+      <th>3929</th>
+      <td>pub.1123764881</td>
+      <td>Fe-Loaded MOF-545(Fe): Peroxidase-Like Activit...</td>
       <td>2019</td>
-      <td>pub.1124185006</td>
-      <td>Topological Descriptor of 2-Dimensional Silico...</td>
-      <td>Si2C3</td>
-      <td>18</td>
-      <td>0.333</td>
+      <td>52</td>
+      <td>removal of dyes</td>
+      <td>0.019</td>
       <td>1</td>
-      <td>0.333</td>
-    </tr>
-    <tr>
-      <th>1311</th>
-      <td>2019</td>
-      <td>pub.1124185006</td>
-      <td>Topological Descriptor of 2-Dimensional Silico...</td>
-      <td>descriptors</td>
-      <td>18</td>
-      <td>0.389</td>
-      <td>1</td>
-      <td>0.389</td>
-    </tr>
-    <tr>
-      <th>3911</th>
-      <td>2019</td>
-      <td>pub.1123469635</td>
-      <td>Inkjet-Printed Imbedded Graphene Nanoplatelet/...</td>
-      <td>photodetection</td>
-      <td>61</td>
-      <td>0.016</td>
-      <td>1</td>
-      <td>0.016</td>
+      <td>0.019</td>
     </tr>
   </tbody>
 </table>
-<p>2558 rows × 8 columns</p>
+<p>2563 rows × 8 columns</p>
 </div></div>
 </div>
 <div class="section" id="Which-concepts-metrics-should-you-use?">
