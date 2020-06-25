@@ -42,7 +42,7 @@
   <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="General Publication Statistics about a Research Organization" href="../2-publications/General-statistics.html" />
+    <link rel="next" title="Working with concepts in the Dimensions API" href="7-Working-with-concepts.html" />
     <link rel="prev" title="Exploring The Dimensions Search Language (DSL) - Deep Dive" href="5-Deep-dive-DSL-language.html" />
     
 
@@ -129,6 +129,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="3-Working-with-dataframes.html">The Dimcli Python library: Working with Pandas Dataframes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="3-Working-with-dataframes.html#Prerequisites">Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="3-Working-with-dataframes.html#1.-General-method-to-transform-JSON-query-results-into-a-dataframe">1. General method to transform JSON query results into a dataframe</a></li>
 <li class="toctree-l2"><a class="reference internal" href="3-Working-with-dataframes.html#2.-Dataframe-Methods-for-‘Publications’-queries">2. Dataframe Methods for ‘Publications’ queries</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="3-Working-with-dataframes.html#Extracting-authors:-as_dataframe_authors">Extracting authors: <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors</span></code></a></li>
@@ -141,10 +142,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="3-Working-with-dataframes.html#4.-Dataframe-Methods-for-‘Concepts’-queries">4. Dataframe Methods for ‘Concepts’ queries</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="3-Working-with-dataframes.html#Extracting-Concepts:-as_dataframe_concepts">Extracting Concepts: <code class="docutils literal notranslate"><span class="pre">as_dataframe_concepts</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="3-Working-with-dataframes.html#Which-concepts-metrics-should-you-use?">Which concepts metrics should you use?</a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="3-Working-with-dataframes.html#Extracting-Concepts:-as_dataframe_concepts">Extracting Concepts: <code class="docutils literal notranslate"><span class="pre">as_dataframe_concepts</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="3-Working-with-dataframes.html#Conclusions">Conclusions</a></li>
@@ -259,6 +257,37 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="7-Working-with-concepts.html">Working with <em>concepts</em> in the Dimensions API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="7-Working-with-concepts.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7-Working-with-concepts.html#1.-Background:-What-are-Dimensions-concepts?">1. Background: What are Dimensions <code class="docutils literal notranslate"><span class="pre">concepts</span></code>?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="7-Working-with-concepts.html#Extracting-Concepts-with-Dimcli:-the-as_dataframe_concepts-method">Extracting Concepts with Dimcli: the <code class="docutils literal notranslate"><span class="pre">as_dataframe_concepts</span></code> method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="7-Working-with-concepts.html#2.-Data-acquisition:-querying-publications-all-the-associated-concepts">2. Data acquisition: querying publications all the associated concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7-Working-with-concepts.html#3.-Basic-statistics-about-Publications-/-Concepts">3. Basic statistics about Publications / Concepts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="7-Working-with-concepts.html#3.1-Documents-With-concepts-VS-Without">3.1 Documents With concepts VS Without</a></li>
+<li class="toctree-l3"><a class="reference internal" href="7-Working-with-concepts.html#3.2-Yearly-breakdown-of-Documents-With-concepts-VS-Without">3.2 Yearly breakdown of Documents With concepts VS Without</a></li>
+<li class="toctree-l3"><a class="reference internal" href="7-Working-with-concepts.html#3.3-Extracting-concepts">3.3 Extracting concepts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="7-Working-with-concepts.html#3.4-Concepts-frequency">3.4 Concepts frequency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="7-Working-with-concepts.html#3.5-Yearly-breakdown:-unique-VS-repeated-concepts">3.5 Yearly breakdown: unique VS repeated concepts</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="7-Working-with-concepts.html#4.-How-to-extract-interesting-concepts">4. How to extract interesting concepts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="7-Working-with-concepts.html#4.1-[Method-1]-prefiltering-by-score_avg-and-sorting-by-frequency">4.1 [Method 1] prefiltering by <code class="docutils literal notranslate"><span class="pre">score_avg</span></code> and sorting by <code class="docutils literal notranslate"><span class="pre">frequency</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="7-Working-with-concepts.html#4.2-[Method-2]-prefiltering-by-frequency-and-sorting-by-score_avg">4.2 [Method 2] prefiltering by <code class="docutils literal notranslate"><span class="pre">frequency</span></code> and sorting by <code class="docutils literal notranslate"><span class="pre">score_avg</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="7-Working-with-concepts.html#5.-Analyses-By-Year">5. Analyses By Year</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="7-Working-with-concepts.html#5.1-Adding-year-based-metrics-to-the-concepts-dataframe">5.1 Adding year-based metrics to the concepts dataframe</a></li>
+<li class="toctree-l3"><a class="reference internal" href="7-Working-with-concepts.html#5.2-Charting-the-variation:-multi-year-visualization">5.2 Charting the variation: multi-year visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="7-Working-with-concepts.html#6.-Conclusion">6. Conclusion</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="7-Working-with-concepts.html#Where-to-go-from-here">Where to go from here</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
