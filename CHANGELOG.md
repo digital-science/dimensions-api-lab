@@ -3,6 +3,12 @@
 
 ### 2020-06-25
 
+Updates:
+* [Topic Modeling Analysis for a Set of Publications: Basic Workflow](https://api-lab.dimensions.ai/cookbooks/2-publications/Simple-topic-analysis.html)
+
+
+### 2020-06-25
+
 New notebooks:
 * [Working with concepts in the Dimensions API](https://api-lab.dimensions.ai/cookbooks/1-getting-started/6-Working-with-concepts.html)
 
