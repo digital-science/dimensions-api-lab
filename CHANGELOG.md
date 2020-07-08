@@ -1,6 +1,12 @@
 # Changelog - Dimensions API Lab 
 
 
+### 2020-07-08
+
+New notebooks:
+* [Expert Identification with the Dimensions API - An Introduction](https://api-lab.dimensions.ai/cookbooks/7-researchers/Experts-search-introduction.html)
+
+
 ### 2020-06-25
 
 Updates:
@@ -10,7 +16,7 @@ Updates:
 ### 2020-06-25
 
 New notebooks:
-* [Working with concepts in the Dimensions API](https://api-lab.dimensions.ai/cookbooks/1-getting-started/6-Working-with-concepts.html)
+* [Working with concepts in the Dimensions API](https://api-lab.dimensions.ai/cookbooks/1-getting-started/7-Working-with-concepts.html)
 
 Updates:
 * [The Dimcli Python library: Working with Pandas Dataframes](https://api-lab.dimensions.ai/cookbooks/1-getting-started/3-Working-with-dataframes.html)

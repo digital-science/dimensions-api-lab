@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Calculating the H-index of a researcher &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
+  <title>Expert Identification with the Dimensions API - An Introduction &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
   
 
   
@@ -42,8 +42,8 @@
   <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Extracting researchers based on affiliations and publications history" href="Researchers-Search-tips-V2.html" />
-    <link rel="prev" title="The Datasets API: Features Overview" href="../9-datasets/1-introducing-datasets.html" />
+    <link rel="next" title="The Organizations API: Features Overview" href="../8-organizations/1-GRID-preview.html" />
+    <link rel="prev" title="Extracting researchers based on affiliations and publications history" href="Researchers-Search-tips-V2.html" />
     
 
    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149959808-1"></script>
@@ -508,13 +508,13 @@
 </ul>
 <p class="caption"><span class="caption-text">Researchers</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Calculating the H-index of a researcher</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#Background">Background</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Prerequisites">Prerequisites</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#Selecting-a-researcher">Selecting a researcher</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#The-H-Index-function">The H-Index function</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Getting-citations-data-from-Dimensions">Getting citations data from Dimensions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Wrapping-things-up">Wrapping things up</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Calculating-the-H-Index-of-a-researcher.html">Calculating the H-index of a researcher</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Calculating-the-H-Index-of-a-researcher.html#Background">Background</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Calculating-the-H-Index-of-a-researcher.html#Prerequisites">Prerequisites</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Calculating-the-H-Index-of-a-researcher.html#Selecting-a-researcher">Selecting a researcher</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Calculating-the-H-Index-of-a-researcher.html#The-H-Index-function">The H-Index function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Calculating-the-H-Index-of-a-researcher.html#Getting-citations-data-from-Dimensions">Getting citations data from Dimensions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Calculating-the-H-Index-of-a-researcher.html#Wrapping-things-up">Wrapping things up</a></li>
 </ul>
 </li>
 </ul>
@@ -539,17 +539,17 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Experts-search-introduction.html">Expert Identification with the Dimensions API - An Introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Experts-search-introduction.html#Prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Experts-search-introduction.html#Step-1:-Concept-Extraction">Step 1: Concept Extraction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Experts-search-introduction.html#Step-2:-Expert-Identification">Step 2: Expert Identification</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="Experts-search-introduction.html#Example-1.-Most-Basic-Query-using-concepts">Example 1. Most Basic Query using <code class="docutils literal notranslate"><span class="pre">concepts</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="Experts-search-introduction.html#Example-2.-Query-with-OR-connectors">Example 2. Query with <code class="docutils literal notranslate"><span class="pre">OR</span></code> connectors</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Experts-search-introduction.html#Example-3.-Query-with-where-filters">Example 3. Query with <code class="docutils literal notranslate"><span class="pre">where</span></code> filters</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Experts-search-introduction.html#Example-4.-Adding-Overlap-Annotations-(eg-for-conflict-of-interests-checks)">Example 4. Adding Overlap Annotations (eg for conflict of interests checks)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Experts-search-introduction.html#Example-5.-Query-with-MUST/NOT-Operators">Example 5. Query with MUST/NOT Operators</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Experts-search-introduction.html#Example-6.-MUST-together-with-AND/OR">Example 6. MUST together with AND/OR</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Experts-search-introduction.html#Example-7.-Wildcard-searches">Example 7. Wildcard searches</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Expert Identification with the Dimensions API - An Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Step-1:-Concept-Extraction">Step 1: Concept Extraction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Step-2:-Expert-Identification">Step 2: Expert Identification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Example-1.-Most-Basic-Query-using-concepts">Example 1. Most Basic Query using <code class="docutils literal notranslate"><span class="pre">concepts</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Example-2.-Query-with-OR-connectors">Example 2. Query with <code class="docutils literal notranslate"><span class="pre">OR</span></code> connectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Example-3.-Query-with-where-filters">Example 3. Query with <code class="docutils literal notranslate"><span class="pre">where</span></code> filters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Example-4.-Adding-Overlap-Annotations-(eg-for-conflict-of-interests-checks)">Example 4. Adding Overlap Annotations (eg for conflict of interests checks)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Example-5.-Query-with-MUST/NOT-Operators">Example 5. Query with MUST/NOT Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Example-6.-MUST-together-with-AND/OR">Example 6. MUST together with AND/OR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Example-7.-Wildcard-searches">Example 7. Wildcard searches</a></li>
 </ul>
 </li>
 </ul>
@@ -890,119 +890,42 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js'></script>
-<script>require=requirejs;</script><a class="reference external image-reference" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/cookbooks/7-researchers/Calculating-the-H-Index-of-a-researcher.ipynb"><img alt="../../_images/badge-colab.svg" src="../../_images/badge-colab.svg" /></a>
-<a class="reference external image-reference" href="https://github.com/digital-science/dimensions-api-lab/blob/master/cookbooks/7-researchers/Calculating-the-H-Index-of-a-researcher.ipynb"><img alt="../../_images/badge-github-custom.svg" src="../../_images/badge-github-custom.svg" /></a>
+<script>require=requirejs;</script><a class="reference external image-reference" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/cookbooks/7-researchers/Experts-search-introduction.ipynb"><img alt="../../_images/badge-colab.svg" src="../../_images/badge-colab.svg" /></a>
+<a class="reference external image-reference" href="https://github.com/digital-science/dimensions-api-lab/blob/master/cookbooks/7-researchers/Experts-search-introduction.ipynb"><img alt="../../_images/badge-github-custom.svg" src="../../_images/badge-github-custom.svg" /></a>
 <hr class="docutils" />
-<div class="section" id="Calculating-the-H-index-of-a-researcher">
-<h1>Calculating the H-index of a researcher<a class="headerlink" href="#Calculating-the-H-index-of-a-researcher" title="Permalink to this headline">¶</a></h1>
-<p>This notebook shows how to use Python and the <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> to calculate the H-index of a researcher.</p>
-<div class="section" id="Background">
-<h2>Background<a class="headerlink" href="#Background" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><p>The <a class="reference external" href="https://en.wikipedia.org/wiki/H-index">h-index</a> is an author-level metric that attempts to measure both the productivity and citation impact of the publications of a scientist or scholar. The index is based on the set of the scientist’s most cited papers and the number of citations that they have received in other publications.</p>
-</div></blockquote>
-<p>A more precise definition:</p>
-<blockquote>
-<div><p>The h-index is defined as the maximum value of h such that the given author/journal has published h papers that have each been cited at least h times.</p>
-</div></blockquote>
-<p>How to calculate it:</p>
-<blockquote>
-<div><p>Formally, if f is the function that corresponds to the number of citations for each publication, we compute the h-index as follows. First we order the values of f from the largest to the lowest value. Then, we look for the last position in which f is greater than or equal to the position (we call h this position). For example, if we have a researcher with 5 publications A, B, C, D, and E with 10, 8, 5, 4, and 3 citations, respectively, the h-index is equal to 4 because the 4th publication has
-4 citations and the 5th has only 3. In contrast, if the same publications have 25, 8, 5, 3, and 3 citations, then the index is 3 because the fourth paper has only 3 citations (<a class="reference external" href="https://en.wikipedia.org/wiki/H-index">wikipedia</a>)</p>
-</div></blockquote>
-</div>
+<div class="section" id="Expert-Identification-with-the-Dimensions-API---An-Introduction">
+<h1>Expert Identification with the Dimensions API - An Introduction<a class="headerlink" href="#Expert-Identification-with-the-Dimensions-API---An-Introduction" title="Permalink to this headline">¶</a></h1>
+<p>This notebook shows to use the new <a class="reference external" href="https://docs.dimensions.ai/dsl/expert-identification.html">expert identification</a> feature of Dimensions’ Analytics API.</p>
+<p>The expert Identification workflow consists of two steps.</p>
+<p>In the first step, the user extracts concepts from an abstract. The user can review and modify the list of extracted concepts and then feed it into the actual expert identification workflow.</p>
 <div class="section" id="Prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<p>This notebook assumes you have installed the <a class="reference external" href="https://pypi.org/project/dimcli/">Dimcli</a> library and are familiar with the <em>Getting Started</em> tutorial.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># @markdown Click the &#39;play&#39; button on the left (or shift+enter) after entering your API credentials</span>
+<span></span><span class="o">!</span>pip install dimcli --quiet
 
-<span class="n">username</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1">#@param {type: &quot;string&quot;}</span>
-<span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1">#@param {type: &quot;string&quot;}</span>
-<span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;https://app.dimensions.ai&quot;</span>
-
-<span class="o">!</span>pip install dimcli -U --quiet
-
-<span class="c1"># import all libraries and login</span>
 <span class="kn">import</span> <span class="nn">dimcli</span>
 <span class="kn">from</span> <span class="nn">dimcli.shortcuts</span> <span class="k">import</span> <span class="o">*</span>
-<span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">)</span>
-<span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
-
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="Selecting-a-researcher">
-<h3>Selecting a researcher<a class="headerlink" href="#Selecting-a-researcher" title="Permalink to this headline">¶</a></h3>
-<p>Let’s take a researcher ID eg <a class="reference external" href="https://app.dimensions.ai/discover/publication?and_facet_researcher=ur.01357111535.49">Michael Boutros ur.01357111535.49</a> and save its ID into a variable that can be referenced later.</p>
-<blockquote>
-<div><p>Try modifying the researcher ID below to get different results!</p>
-</div></blockquote>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">RESEARCHER</span> <span class="o">=</span> <span class="s2">&quot;ur.01357111535.49&quot;</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="The-H-Index-function">
-<h3>The H-Index function<a class="headerlink" href="#The-H-Index-function" title="Permalink to this headline">¶</a></h3>
-<p>The h-Index function takes a list of citations and outputs the h-index value as explained above:</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="k">def</span> <span class="nf">the_H_function</span><span class="p">(</span><span class="n">sorted_citations_list</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;from a list of integers [n1, n2 ..] representing publications citations,</span>
-<span class="sd">    return the max list-position which is &gt;= integer</span>
 
-<span class="sd">    eg</span>
-<span class="sd">    &gt;&gt;&gt; the_H_function([10, 8, 5, 4, 3]) =&gt; 4</span>
-<span class="sd">    &gt;&gt;&gt; the_H_function([25, 8, 5, 3, 3]) =&gt; 3</span>
-<span class="sd">    &gt;&gt;&gt; the_H_function([1000, 20]) =&gt; 2</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">sorted_citations_list</span> <span class="ow">and</span> <span class="n">sorted_citations_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">n</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">the_H_function</span><span class="p">(</span><span class="n">sorted_citations_list</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span>
-</pre></div>
-</div>
-</div>
-<p>The H-index function is generic and can take any list of numbers representing publication citations.</p>
-</div>
-<div class="section" id="Getting-citations-data-from-Dimensions">
-<h3>Getting citations data from Dimensions<a class="headerlink" href="#Getting-citations-data-from-Dimensions" title="Permalink to this headline">¶</a></h3>
-<p>In order to pass some real-world data to the H-Index function, we can easily use the Dimensions API to extract all publication citations for a researcher, like this:</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="k">def</span> <span class="nf">get_pubs_citations</span><span class="p">(</span><span class="n">researcher_id</span><span class="p">):</span>
-    <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search publications where researchers.id = &quot;</span><span class="si">{}</span><span class="s2">&quot; return publications[times_cited] sort by times_cited limit 1000&quot;&quot;&quot;</span>
-    <span class="n">pubs</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">researcher_id</span><span class="p">))</span>
-    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">pubs</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="s1">&#39;times_cited&#39;</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="Wrapping-things-up">
-<h3>Wrapping things up<a class="headerlink" href="#Wrapping-things-up" title="Permalink to this headline">¶</a></h3>
-<p>Finally, we combine the two functions to calculate the H-Index for a specific researcher:</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;H_index is:&quot;</span><span class="p">,</span> <span class="n">the_H_function</span><span class="p">(</span><span class="n">get_pubs_citations</span><span class="p">(</span><span class="n">RESEARCHER</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">Logging in..&quot;</span><span class="p">)</span>
+<span class="c1"># https://github.com/digital-science/dimcli#authentication</span>
+<span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;https://app.dimensions.ai&quot;</span>
+<span class="k">if</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+  <span class="kn">import</span> <span class="nn">getpass</span>
+  <span class="n">USERNAME</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;Username: &#39;</span><span class="p">)</span>
+  <span class="n">PASSWORD</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;Password: &#39;</span><span class="p">)</span>
+  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">USERNAME</span><span class="p">,</span> <span class="n">PASSWORD</span><span class="p">,</span> <span class="n">ENDPOINT</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="n">USERNAME</span><span class="p">,</span> <span class="n">PASSWORD</span>  <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
+  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">USERNAME</span><span class="p">,</span> <span class="n">PASSWORD</span><span class="p">,</span> <span class="n">ENDPOINT</span><span class="p">)</span>
+<span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1011,8 +934,1930 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-H_index is: 53
+==
+Logging in..
+Dimcli - Dimensions API Client (v0.7.2)
+Connected to: https://app.dimensions.ai - DSL v1.26
+Method: dsl.ini file
 </pre></div></div>
+</div>
+</div>
+<div class="section" id="Step-1:-Concept-Extraction">
+<h2>Step 1: Concept Extraction<a class="headerlink" href="#Step-1:-Concept-Extraction" title="Permalink to this headline">¶</a></h2>
+<p>Extracting concepts is implemented using following syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">extract_concepts</span><span class="p">(</span><span class="s2">&quot;publication abstract&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This query will return a list of extracted concepts, ordered by weight, in descending order. For example:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">abstract</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;We describe monocrystalline graphitic films, which are a few atoms thick but are nonetheless stable under ambient conditions,</span>
+<span class="s2">metallic, and of remarkably high quality. The films are found to be a two-dimensional semimetal with a tiny overlap between</span>
+<span class="s2">valence and conductance bands, and they exhibit a strong ambipolar electric field effect such that electrons and</span>
+<span class="s2">holes in concentrations up to 10 per square centimeter and with room-temperature mobilities of approximately 10,000 square</span>
+<span class="s2">centimeters per volt-second can be induced by applying gate voltage.</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">abstract</span> <span class="o">=</span> <span class="n">abstract</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;&quot;&quot;extract_concepts(&quot;</span><span class="si">{abstract}</span><span class="s2">&quot;)&quot;&quot;&quot;</span><span class="p">)</span>
+<span class="n">CONCEPTS</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="s1">&#39;extracted_concepts&#39;</span><span class="p">]</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">CONCEPTS</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ambipolar electric field effect</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>two-dimensional semimetal</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>room-temperature mobility</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>electric field effects</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>field effects</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>graphitic films</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>gate voltage</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>conductance band</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>square centimeter</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>films</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>electrons</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>semimetals</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>ambient conditions</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>atoms</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>holes</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>centimeters</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>metallic</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>voltage</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>band</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>high quality</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>valence</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>mobility</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>overlap</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>effect</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>conditions</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>concentration</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>quality</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>monocrystalline graphitic films</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>tiny overlap</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>strong ambipolar electric field effect</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Step-2:-Expert-Identification">
+<h2>Step 2: Expert Identification<a class="headerlink" href="#Step-2:-Expert-Identification" title="Permalink to this headline">¶</a></h2>
+<p>Extracted concepts, from step one, can be used in a <code class="docutils literal notranslate"><span class="pre">identify</span> <span class="pre">experts</span></code> queries, for example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">identify</span> <span class="n">experts</span> <span class="kn">from</span> <span class="nn">concepts</span> <span class="s2">&quot;+malaria OR </span><span class="se">\&quot;</span><span class="s2">effective malaria vaccine</span><span class="se">\&quot;</span><span class="s2"> OR </span><span class="se">\&quot;</span><span class="s2">effective prevention</span><span class="se">\&quot;</span><span class="s2">&quot;</span>
+      <span class="n">using</span> <span class="n">publications</span>
+      <span class="n">where</span> <span class="n">research_org_countries</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">empty</span>
+          <span class="ow">and</span> <span class="n">year</span> <span class="o">&gt;=</span> <span class="mi">2013</span>
+<span class="k">return</span> <span class="n">experts</span><span class="p">[</span><span class="n">basics</span><span class="p">]</span>
+      <span class="n">limit</span> <span class="mi">20</span> <span class="n">skip</span> <span class="mi">0</span>
+      <span class="n">annotate</span> <span class="n">organizational</span><span class="p">,</span> <span class="n">coauthorship</span> <span class="n">overlap</span>
+          <span class="k">with</span> <span class="p">[</span><span class="s2">&quot;ur.016204724721.35&quot;</span><span class="p">,</span> <span class="s2">&quot;ur.012127355561.32&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Returned experts are ordered by their <strong>relevance</strong>.</p>
+<p><strong>Important things to remember</strong>:</p>
+<ol class="arabic simple">
+<li><p>Experts identification can be executed on <code class="docutils literal notranslate"><span class="pre">publications</span></code> only at the moment (<code class="docutils literal notranslate"><span class="pre">grants</span></code> source will be added in the future).</p>
+<ul class="simple">
+<li><p>the phrase <code class="docutils literal notranslate"><span class="pre">using</span> <span class="pre">publications</span></code> may be omitted, as the <code class="docutils literal notranslate"><span class="pre">publications</span></code> source is used by default.</p></li>
+<li><p>For maximum compatibility with the expert identification workflow in the Dimensions UI, it is recommended to use the <strong>two basic filters</strong> shown in the example above, specifically <code class="docutils literal notranslate"><span class="pre">research_org_countries</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">empty</span> <span class="pre">and</span> <span class="pre">year</span> <span class="pre">&gt;=</span> <span class="pre">2013</span></code>.</p></li>
+</ul>
+</li>
+<li><p>When multiple concepts are provided, these are transformed automatically into an <code class="docutils literal notranslate"><span class="pre">AND</span></code> query. To match any of the concepts, one should then explicitly add <code class="docutils literal notranslate"><span class="pre">OR</span></code> connectors.</p></li>
+<li><p>It is possible to specify <code class="docutils literal notranslate"><span class="pre">where-filters</span></code> but that’s not required. Fields available for filtering are exactly the same as the ones in standard <code class="docutils literal notranslate"><span class="pre">search</span></code> expressions.</p></li>
+<li><p>Similarly, the <code class="docutils literal notranslate"><span class="pre">paging-phrase</span></code> is optional. By default, the top 20 experts get returned - using limit/skip it is possible up to a maximum of 200.</p></li>
+<li><p>Annotating results with organizational and/or coauthorship overlap will produce another JSON object for each identified expert. This object has two parts.</p>
+<ul class="simple">
+<li><p>The <strong>Organizational</strong> overlap is defined as a boolean value that is true if the expert and the researchers from the query have the same current research organization.</p></li>
+<li><p>The <strong>Coauthorship</strong> conflict is defined as the number documents the expert has coauthored with any of the researchers provided in the query, in the last three years.</p></li>
+</ul>
+</li>
+</ol>
+<div class="section" id="Example-1.-Most-Basic-Query-using-concepts">
+<h3>Example 1. Most Basic Query using <code class="docutils literal notranslate"><span class="pre">concepts</span></code><a class="headerlink" href="#Example-1.-Most-Basic-Query-using-concepts" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">some_concepts</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">CONCEPTS</span><span class="p">[:</span><span class="mi">15</span><span class="p">]])</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        identify experts</span>
+<span class="s2">            from concepts &quot;{dsl_escape(some_concepts)}&quot;</span>
+<span class="s2">        return experts</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Query:</span><span class="se">\n</span><span class="s2">======&quot;</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
+
+<span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Query:
+======
+        identify experts
+            from concepts &#34;\&#34;ambipolar electric field effect\&#34; \&#34;two-dimensional semimetal\&#34; \&#34;room-temperature mobility\&#34; \&#34;electric field effects\&#34; \&#34;field effects\&#34; \&#34;graphitic films\&#34; \&#34;gate voltage\&#34; \&#34;conductance band\&#34; \&#34;square centimeter\&#34; \&#34;films\&#34; \&#34;electrons\&#34; \&#34;semimetals\&#34; \&#34;ambient conditions\&#34; \&#34;atoms\&#34; \&#34;holes\&#34;&#34;
+        return experts
+
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>score</th>
+      <th>research_orgs</th>
+      <th>last_name</th>
+      <th>first_name</th>
+      <th>docs_found</th>
+      <th>orcid_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ur.011033016243.08</td>
+      <td>7.87576</td>
+      <td>[grid.4886.2, grid.424048.e, grid.425037.7, gr...</td>
+      <td>Firsov</td>
+      <td>Anatoly A</td>
+      <td>1</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ur.01146544531.57</td>
+      <td>7.87576</td>
+      <td>[grid.5379.8]</td>
+      <td>Jiang</td>
+      <td>Da</td>
+      <td>1</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ur.011535264111.51</td>
+      <td>7.87576</td>
+      <td>[grid.4886.2, grid.5379.8, grid.5254.6, grid.5...</td>
+      <td>Dubonos</td>
+      <td>Sergey V</td>
+      <td>1</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ur.01207120103.29</td>
+      <td>7.87576</td>
+      <td>[grid.5379.8, grid.425037.7, grid.116068.8, gr...</td>
+      <td>Novoselov</td>
+      <td>Konstantin Sergeevich</td>
+      <td>1</td>
+      <td>[0000-0003-4972-5371]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>ur.0657076451.24</td>
+      <td>7.87576</td>
+      <td>[grid.8547.e, grid.5386.8, grid.184769.5, grid...</td>
+      <td>Zhang</td>
+      <td>Yuanbo</td>
+      <td>1</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>ur.0721730631.45</td>
+      <td>7.87576</td>
+      <td>[grid.7340.0, grid.5254.6, grid.418975.6, grid...</td>
+      <td>Geim</td>
+      <td>Andre Konstantin</td>
+      <td>1</td>
+      <td>[0000-0003-2861-8331]</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>ur.07423561367.62</td>
+      <td>7.87576</td>
+      <td>[grid.4886.2, grid.425081.a, grid.28171.3d, gr...</td>
+      <td>Morozov</td>
+      <td>Sergey V</td>
+      <td>1</td>
+      <td>[0000-0003-3075-7787]</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>ur.0767105504.29</td>
+      <td>7.87576</td>
+      <td>[grid.4886.2, grid.7340.0, grid.5337.2, grid.4...</td>
+      <td>Grigorieva</td>
+      <td>Irina V</td>
+      <td>1</td>
+      <td>[0000-0001-5991-7778]</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Example-2.-Query-with-OR-connectors">
+<h3>Example 2. Query with <code class="docutils literal notranslate"><span class="pre">OR</span></code> connectors<a class="headerlink" href="#Example-2.-Query-with-OR-connectors" title="Permalink to this headline">¶</a></h3>
+<p>Note: this time we return all experts fields by using the syntax <code class="docutils literal notranslate"><span class="pre">experts[all]</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">some_concepts</span> <span class="o">=</span> <span class="s2">&quot; OR &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">CONCEPTS</span><span class="p">[:</span><span class="mi">15</span><span class="p">]])</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        identify experts</span>
+<span class="s2">            from concepts &quot;{dsl_escape(some_concepts)}&quot;</span>
+<span class="s2">        return experts[all]</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Query:</span><span class="se">\n</span><span class="s2">======&quot;</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
+
+<span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Query:
+======
+        identify experts
+            from concepts &#34;\&#34;ambipolar electric field effect\&#34; OR \&#34;two-dimensional semimetal\&#34; OR \&#34;room-temperature mobility\&#34; OR \&#34;electric field effects\&#34; OR \&#34;field effects\&#34; OR \&#34;graphitic films\&#34; OR \&#34;gate voltage\&#34; OR \&#34;conductance band\&#34; OR \&#34;square centimeter\&#34; OR \&#34;films\&#34; OR \&#34;electrons\&#34; OR \&#34;semimetals\&#34; OR \&#34;ambient conditions\&#34; OR \&#34;atoms\&#34; OR \&#34;holes\&#34;&#34;
+        return experts[all]
+
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>score</th>
+      <th>research_orgs</th>
+      <th>orcid_id</th>
+      <th>total_grants</th>
+      <th>last_grant_year</th>
+      <th>obsolete</th>
+      <th>last_name</th>
+      <th>total_publications</th>
+      <th>first_publication_year</th>
+      <th>last_publication_year</th>
+      <th>current_research_org</th>
+      <th>first_name</th>
+      <th>first_grant_year</th>
+      <th>docs_found</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ur.01207120103.29</td>
+      <td>8.406035</td>
+      <td>[grid.5379.8, grid.425037.7, grid.116068.8, gr...</td>
+      <td>[0000-0003-4972-5371]</td>
+      <td>11</td>
+      <td>2023.0</td>
+      <td>0</td>
+      <td>Novoselov</td>
+      <td>590</td>
+      <td>1997</td>
+      <td>2020</td>
+      <td>grid.5379.8</td>
+      <td>Konstantin Sergeevich</td>
+      <td>2006.0</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ur.0721730631.45</td>
+      <td>8.406035</td>
+      <td>[grid.7340.0, grid.5254.6, grid.418975.6, grid...</td>
+      <td>[0000-0003-2861-8331]</td>
+      <td>10</td>
+      <td>2024.0</td>
+      <td>0</td>
+      <td>Geim</td>
+      <td>582</td>
+      <td>1991</td>
+      <td>2020</td>
+      <td>grid.5379.8</td>
+      <td>Andre Konstantin</td>
+      <td>2006.0</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ur.07423561367.62</td>
+      <td>8.406035</td>
+      <td>[grid.4886.2, grid.425081.a, grid.28171.3d, gr...</td>
+      <td>[0000-0003-3075-7787]</td>
+      <td>6</td>
+      <td>2021.0</td>
+      <td>0</td>
+      <td>Morozov</td>
+      <td>269</td>
+      <td>1990</td>
+      <td>2020</td>
+      <td>grid.425081.a</td>
+      <td>Sergey V</td>
+      <td>2013.0</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ur.0657076451.24</td>
+      <td>8.355439</td>
+      <td>[grid.8547.e, grid.5386.8, grid.184769.5, grid...</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>Zhang</td>
+      <td>74</td>
+      <td>2004</td>
+      <td>2019</td>
+      <td>grid.8547.e</td>
+      <td>Yuanbo</td>
+      <td>NaN</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>ur.011033016243.08</td>
+      <td>8.081146</td>
+      <td>[grid.4886.2, grid.424048.e, grid.425037.7, gr...</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>Firsov</td>
+      <td>25</td>
+      <td>2003</td>
+      <td>2018</td>
+      <td>grid.424048.e</td>
+      <td>Anatoly A</td>
+      <td>NaN</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>ur.01146544531.57</td>
+      <td>8.081146</td>
+      <td>[grid.5379.8]</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>Jiang</td>
+      <td>11</td>
+      <td>2004</td>
+      <td>2008</td>
+      <td>grid.5379.8</td>
+      <td>Da</td>
+      <td>NaN</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>ur.011535264111.51</td>
+      <td>7.875760</td>
+      <td>[grid.4886.2, grid.5379.8, grid.5254.6, grid.5...</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>Dubonos</td>
+      <td>81</td>
+      <td>1990</td>
+      <td>2009</td>
+      <td>grid.425037.7</td>
+      <td>Sergey V</td>
+      <td>NaN</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>ur.0767105504.29</td>
+      <td>7.875760</td>
+      <td>[grid.4886.2, grid.7340.0, grid.5337.2, grid.4...</td>
+      <td>[0000-0001-5991-7778]</td>
+      <td>4</td>
+      <td>2021.0</td>
+      <td>0</td>
+      <td>Grigorieva</td>
+      <td>158</td>
+      <td>1989</td>
+      <td>2020</td>
+      <td>grid.5379.8</td>
+      <td>Irina V</td>
+      <td>2007.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>ur.011513332561.53</td>
+      <td>5.697777</td>
+      <td>[grid.39158.36, grid.260539.b, grid.69566.3a]</td>
+      <td>NaN</td>
+      <td>23</td>
+      <td>2011.0</td>
+      <td>0</td>
+      <td>Ohta</td>
+      <td>208</td>
+      <td>1976</td>
+      <td>2020</td>
+      <td>grid.260539.b</td>
+      <td>Nobuhiro</td>
+      <td>1987.0</td>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>ur.01055006635.53</td>
+      <td>3.264948</td>
+      <td>[grid.450314.7, grid.4605.7, grid.7727.5, grid...</td>
+      <td>NaN</td>
+      <td>12</td>
+      <td>2011.0</td>
+      <td>0</td>
+      <td>Kvon</td>
+      <td>326</td>
+      <td>1983</td>
+      <td>2020</td>
+      <td>grid.4605.7</td>
+      <td>Ze Don</td>
+      <td>1993.0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>ur.013312524031.58</td>
+      <td>3.022535</td>
+      <td>[grid.443127.7, grid.420030.5, grid.419396.0, ...</td>
+      <td>NaN</td>
+      <td>28</td>
+      <td>2003.0</td>
+      <td>0</td>
+      <td>Yamazaki</td>
+      <td>258</td>
+      <td>1966</td>
+      <td>2013</td>
+      <td>grid.39158.36</td>
+      <td>Iwao</td>
+      <td>1984.0</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>ur.01203703171.12</td>
+      <td>2.642304</td>
+      <td>[grid.26999.3d, grid.69566.3a, grid.472717.0, ...</td>
+      <td>[0000-0002-6631-5131]</td>
+      <td>11</td>
+      <td>2022.0</td>
+      <td>0</td>
+      <td>Chiba</td>
+      <td>208</td>
+      <td>2000</td>
+      <td>2020</td>
+      <td>grid.136593.b</td>
+      <td>Daichi</td>
+      <td>2009.0</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>ur.0740560235.48</td>
+      <td>2.564912</td>
+      <td>[grid.4886.2, grid.15276.37, grid.11899.38, gr...</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>Olshanetsky</td>
+      <td>91</td>
+      <td>1989</td>
+      <td>2020</td>
+      <td>grid.450314.7</td>
+      <td>Eugene</td>
+      <td>NaN</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>ur.01034030721.03</td>
+      <td>2.516857</td>
+      <td>[grid.5338.d, grid.116068.8, grid.21941.3f, gr...</td>
+      <td>[0000-0001-8217-8213]</td>
+      <td>7</td>
+      <td>2023.0</td>
+      <td>0</td>
+      <td>Jarillo-Herrero</td>
+      <td>233</td>
+      <td>2000</td>
+      <td>2020</td>
+      <td>grid.116068.8</td>
+      <td>Pablo</td>
+      <td>2009.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>ur.01340766601.27</td>
+      <td>1.758987</td>
+      <td>[grid.469490.6, grid.432790.b, grid.431860.8, ...</td>
+      <td>NaN</td>
+      <td>6</td>
+      <td>2009.0</td>
+      <td>0</td>
+      <td>Venkatesan</td>
+      <td>777</td>
+      <td>1975</td>
+      <td>2020</td>
+      <td>grid.4280.e</td>
+      <td>Thirumalai Venky</td>
+      <td>1984.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>ur.011775522057.45</td>
+      <td>1.718926</td>
+      <td>[grid.448924.7, grid.450314.7, grid.4605.7, gr...</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>Mikhailov</td>
+      <td>222</td>
+      <td>1995</td>
+      <td>2020</td>
+      <td>grid.450314.7</td>
+      <td>Nikolay N</td>
+      <td>NaN</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>ur.01024676171.26</td>
+      <td>1.649508</td>
+      <td>[grid.5801.c, grid.481554.9, grid.410387.9, gr...</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>Bednorz</td>
+      <td>129</td>
+      <td>1976</td>
+      <td>2017</td>
+      <td>grid.410387.9</td>
+      <td>Johannes Georg</td>
+      <td>NaN</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>ur.01267137567.67</td>
+      <td>1.649508</td>
+      <td>[grid.410387.9, grid.7307.3, grid.10392.39, gr...</td>
+      <td>[0000-0001-6331-2640]</td>
+      <td>7</td>
+      <td>2020.0</td>
+      <td>0</td>
+      <td>Mannhart</td>
+      <td>358</td>
+      <td>1986</td>
+      <td>2020</td>
+      <td>grid.419552.e</td>
+      <td>Jochen D</td>
+      <td>1990.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>ur.07376375471.82</td>
+      <td>1.637159</td>
+      <td>[grid.4886.2, grid.4605.7, grid.7727.5, grid.4...</td>
+      <td>NaN</td>
+      <td>2</td>
+      <td>2019.0</td>
+      <td>0</td>
+      <td>Kozlov</td>
+      <td>52</td>
+      <td>2007</td>
+      <td>2020</td>
+      <td>grid.450314.7</td>
+      <td>Dmitriy A</td>
+      <td>2014.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>ur.07410612715.77</td>
+      <td>1.631930</td>
+      <td>[grid.24434.35, grid.39158.36, grid.20515.33, ...</td>
+      <td>[0000-0002-9982-141X]</td>
+      <td>15</td>
+      <td>2008.0</td>
+      <td>0</td>
+      <td>Nishimura</td>
+      <td>173</td>
+      <td>1987</td>
+      <td>2020</td>
+      <td>grid.20515.33</td>
+      <td>Yoshinobu</td>
+      <td>1989.0</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Example-3.-Query-with-where-filters">
+<h3>Example 3. Query with <code class="docutils literal notranslate"><span class="pre">where</span></code> filters<a class="headerlink" href="#Example-3.-Query-with-where-filters" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">some_concepts</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">CONCEPTS</span><span class="p">[:</span><span class="mi">10</span><span class="p">]])</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;identify experts</span>
+<span class="s2">            from concepts &quot;{dsl_escape(some_concepts)}&quot;</span>
+<span class="s2">            using publications</span>
+<span class="s2">            where research_org_countries is not empty</span>
+<span class="s2">              and year &gt;= 2000</span>
+<span class="s2">              and times_cited &gt; 100</span>
+<span class="s2">        return experts</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Query:</span><span class="se">\n</span><span class="s2">======&quot;</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
+
+<span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Query:
+====== identify experts
+            from concepts &#34;\&#34;ambipolar electric field effect\&#34; \&#34;two-dimensional semimetal\&#34; \&#34;room-temperature mobility\&#34; \&#34;electric field effects\&#34; \&#34;field effects\&#34; \&#34;graphitic films\&#34; \&#34;gate voltage\&#34; \&#34;conductance band\&#34; \&#34;square centimeter\&#34; \&#34;films\&#34;&#34;
+            using publications
+            where research_org_countries is not empty
+              and year &gt;= 2000
+              and times_cited &gt; 100
+        return experts
+
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>score</th>
+      <th>first_name</th>
+      <th>research_orgs</th>
+      <th>last_name</th>
+      <th>docs_found</th>
+      <th>orcid_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ur.011033016243.08</td>
+      <td>7.383875</td>
+      <td>Anatoly A</td>
+      <td>[grid.4886.2, grid.424048.e, grid.425037.7, gr...</td>
+      <td>Firsov</td>
+      <td>1</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ur.01146544531.57</td>
+      <td>7.383875</td>
+      <td>Da</td>
+      <td>[grid.5379.8]</td>
+      <td>Jiang</td>
+      <td>1</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ur.011535264111.51</td>
+      <td>7.383875</td>
+      <td>Sergey V</td>
+      <td>[grid.4886.2, grid.5379.8, grid.5254.6, grid.5...</td>
+      <td>Dubonos</td>
+      <td>1</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ur.01207120103.29</td>
+      <td>7.383875</td>
+      <td>Konstantin Sergeevich</td>
+      <td>[grid.5379.8, grid.425037.7, grid.116068.8, gr...</td>
+      <td>Novoselov</td>
+      <td>1</td>
+      <td>[0000-0003-4972-5371]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>ur.0657076451.24</td>
+      <td>7.383875</td>
+      <td>Yuanbo</td>
+      <td>[grid.8547.e, grid.5386.8, grid.184769.5, grid...</td>
+      <td>Zhang</td>
+      <td>1</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>ur.0721730631.45</td>
+      <td>7.383875</td>
+      <td>Andre Konstantin</td>
+      <td>[grid.7340.0, grid.5254.6, grid.418975.6, grid...</td>
+      <td>Geim</td>
+      <td>1</td>
+      <td>[0000-0003-2861-8331]</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>ur.07423561367.62</td>
+      <td>7.383875</td>
+      <td>Sergey V</td>
+      <td>[grid.4886.2, grid.425081.a, grid.28171.3d, gr...</td>
+      <td>Morozov</td>
+      <td>1</td>
+      <td>[0000-0003-3075-7787]</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>ur.0767105504.29</td>
+      <td>7.383875</td>
+      <td>Irina V</td>
+      <td>[grid.4886.2, grid.7340.0, grid.5337.2, grid.4...</td>
+      <td>Grigorieva</td>
+      <td>1</td>
+      <td>[0000-0001-5991-7778]</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Example-4.-Adding-Overlap-Annotations-(eg-for-conflict-of-interests-checks)">
+<h3>Example 4. Adding Overlap Annotations (eg for conflict of interests checks)<a class="headerlink" href="#Example-4.-Adding-Overlap-Annotations-(eg-for-conflict-of-interests-checks)" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">overlap_researchers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ur.011535264111.51&quot;</span><span class="p">,</span> <span class="s2">&quot;ur.011033016243.08&quot;</span><span class="p">,</span> <span class="s2">&quot;ur.01207120103.29&quot;</span><span class="p">]</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        identify experts</span>
+<span class="s2">            from concepts &quot;{dsl_escape(some_concepts)}&quot;</span>
+<span class="s2">            using publications</span>
+<span class="s2">            where research_org_countries is not empty</span>
+<span class="s2">              and year &gt;= 2000</span>
+<span class="s2">        return experts</span>
+<span class="s2">            annotate coauthorship, organizational overlap</span>
+<span class="s2">            with {json.dumps(overlap_researchers)}</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Query:</span><span class="se">\n</span><span class="s2">======&quot;</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
+
+<span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Query:
+======
+        identify experts
+            from concepts &#34;\&#34;ambipolar electric field effect\&#34; \&#34;two-dimensional semimetal\&#34; \&#34;room-temperature mobility\&#34; \&#34;electric field effects\&#34; \&#34;field effects\&#34; \&#34;graphitic films\&#34; \&#34;gate voltage\&#34; \&#34;conductance band\&#34; \&#34;square centimeter\&#34; \&#34;films\&#34;&#34;
+            using publications
+            where research_org_countries is not empty
+              and year &gt;= 2000
+        return experts
+            annotate coauthorship, organizational overlap
+            with [&#34;ur.011535264111.51&#34;, &#34;ur.011033016243.08&#34;, &#34;ur.01207120103.29&#34;]
+
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>score</th>
+      <th>first_name</th>
+      <th>research_orgs</th>
+      <th>last_name</th>
+      <th>docs_found</th>
+      <th>overlap.coauthorship</th>
+      <th>overlap.organizational</th>
+      <th>orcid_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ur.011033016243.08</td>
+      <td>7.382478</td>
+      <td>Anatoly A</td>
+      <td>[grid.4886.2, grid.424048.e, grid.425037.7, gr...</td>
+      <td>Firsov</td>
+      <td>1</td>
+      <td>3</td>
+      <td>True</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ur.01146544531.57</td>
+      <td>7.382478</td>
+      <td>Da</td>
+      <td>[grid.5379.8]</td>
+      <td>Jiang</td>
+      <td>1</td>
+      <td>0</td>
+      <td>True</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ur.011535264111.51</td>
+      <td>7.382478</td>
+      <td>Sergey V</td>
+      <td>[grid.4886.2, grid.5379.8, grid.5254.6, grid.5...</td>
+      <td>Dubonos</td>
+      <td>1</td>
+      <td>0</td>
+      <td>True</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ur.01207120103.29</td>
+      <td>7.382478</td>
+      <td>Konstantin Sergeevich</td>
+      <td>[grid.5379.8, grid.425037.7, grid.116068.8, gr...</td>
+      <td>Novoselov</td>
+      <td>1</td>
+      <td>153</td>
+      <td>True</td>
+      <td>[0000-0003-4972-5371]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>ur.0657076451.24</td>
+      <td>7.382478</td>
+      <td>Yuanbo</td>
+      <td>[grid.8547.e, grid.5386.8, grid.184769.5, grid...</td>
+      <td>Zhang</td>
+      <td>1</td>
+      <td>0</td>
+      <td>False</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>ur.0721730631.45</td>
+      <td>7.382478</td>
+      <td>Andre Konstantin</td>
+      <td>[grid.7340.0, grid.5254.6, grid.418975.6, grid...</td>
+      <td>Geim</td>
+      <td>1</td>
+      <td>38</td>
+      <td>True</td>
+      <td>[0000-0003-2861-8331]</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>ur.07423561367.62</td>
+      <td>7.382478</td>
+      <td>Sergey V</td>
+      <td>[grid.4886.2, grid.425081.a, grid.28171.3d, gr...</td>
+      <td>Morozov</td>
+      <td>1</td>
+      <td>6</td>
+      <td>False</td>
+      <td>[0000-0003-3075-7787]</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>ur.0767105504.29</td>
+      <td>7.382478</td>
+      <td>Irina V</td>
+      <td>[grid.4886.2, grid.7340.0, grid.5337.2, grid.4...</td>
+      <td>Grigorieva</td>
+      <td>1</td>
+      <td>6</td>
+      <td>True</td>
+      <td>[0000-0001-5991-7778]</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Example-5.-Query-with-MUST/NOT-Operators">
+<h3>Example 5. Query with MUST/NOT Operators<a class="headerlink" href="#Example-5.-Query-with-MUST/NOT-Operators" title="Permalink to this headline">¶</a></h3>
+<p>By default, the string containing a list of concepts is interpreted as a sequence of <code class="docutils literal notranslate"><span class="pre">AND</span></code> clauses. That is, the query tries to match the highest number of concepts without any preference.</p>
+<p>It is possible to specify MUST/NOT rules with concepts by passing them via a string and using the <code class="docutils literal notranslate"><span class="pre">+</span></code> and <code class="docutils literal notranslate"><span class="pre">-</span></code> operators.</p>
+<p>Note: please remember that concepts phrases (= concepts that are composed by more than one word) need to be wrapped using quotes, and the quotes need to be escaped with a <code class="docutils literal notranslate"><span class="pre">\</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">concepts</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    +&quot;ambipolar electric field effect&quot;</span>
+<span class="s2">    -&quot;graphitic films&quot;</span>
+<span class="s2">    +&quot;films&quot;</span>
+<span class="s2">    &quot;electric field effects&quot;</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">identify experts</span>
+<span class="s2">    from concepts &quot;{dsl_escape(concepts)}&quot;</span>
+<span class="s2">    using publications</span>
+<span class="s2">return experts</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Query:</span><span class="se">\n</span><span class="s2">======&quot;</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
+
+<span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
+
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Query:
+======
+identify experts
+    from concepts &#34;
+    +\&#34;ambipolar electric field effect\&#34;
+    -\&#34;graphitic films\&#34;
+    +\&#34;films\&#34;
+    \&#34;electric field effects\&#34;
+    &#34;
+    using publications
+return experts
+
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>score</th>
+      <th>research_orgs</th>
+      <th>last_name</th>
+      <th>first_name</th>
+      <th>docs_found</th>
+      <th>orcid_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ur.01005576245.93</td>
+      <td>3.480071</td>
+      <td>[grid.6520.1, grid.121334.6]</td>
+      <td>Henrard</td>
+      <td>Luc</td>
+      <td>1</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ur.01251242035.86</td>
+      <td>3.480071</td>
+      <td>[grid.6520.1, grid.121334.6, grid.12082.39, gr...</td>
+      <td>Latil</td>
+      <td>Sylvain</td>
+      <td>1</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ur.01000623240.81</td>
+      <td>2.589067</td>
+      <td>[grid.164295.d]</td>
+      <td>Syers</td>
+      <td>Paul</td>
+      <td>1</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ur.01046736440.46</td>
+      <td>2.589067</td>
+      <td>[grid.266100.3, grid.410443.6, grid.250008.f, ...</td>
+      <td>Butch</td>
+      <td>Nicholas Patrick</td>
+      <td>1</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>ur.01060352233.12</td>
+      <td>2.589067</td>
+      <td>[grid.266100.3, grid.440050.5, grid.410443.6, ...</td>
+      <td>Paglione</td>
+      <td>John-Pierre</td>
+      <td>1</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>ur.01200656557.13</td>
+      <td>2.589067</td>
+      <td>[grid.47840.3f, grid.499241.3, grid.184769.5, ...</td>
+      <td>Fuhrer</td>
+      <td>Michael Sears</td>
+      <td>1</td>
+      <td>[0000-0001-6183-2773]</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>ur.01205352017.54</td>
+      <td>2.589067</td>
+      <td>[grid.31501.36, grid.164295.d, grid.35541.36, ...</td>
+      <td>Kim</td>
+      <td>Dohun</td>
+      <td>1</td>
+      <td>[0000-0001-9687-2089]</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>ur.01025667341.62</td>
+      <td>2.061342</td>
+      <td>[grid.263856.c, grid.78837.33, grid.35043.31, ...</td>
+      <td>Sysoev</td>
+      <td>Victor V</td>
+      <td>1</td>
+      <td>[0000-0002-0372-1802]</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>ur.01245543252.06</td>
+      <td>2.061342</td>
+      <td>[grid.14476.30, grid.24434.35]</td>
+      <td>Shekhirev</td>
+      <td>Mikhail A</td>
+      <td>1</td>
+      <td>[0000-0002-8381-1276]</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>ur.01276657166.76</td>
+      <td>2.061342</td>
+      <td>[grid.426324.5, grid.10420.37, grid.24434.35, ...</td>
+      <td>Lipatov</td>
+      <td>Alexey</td>
+      <td>1</td>
+      <td>[0000-0001-5043-1616]</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>ur.013212454037.49</td>
+      <td>2.061342</td>
+      <td>[grid.78837.33]</td>
+      <td>Lashkov</td>
+      <td>Andrey V</td>
+      <td>1</td>
+      <td>[0000-0001-6794-8523]</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>ur.016560200577.43</td>
+      <td>2.061342</td>
+      <td>[grid.24434.35]</td>
+      <td>Vorobeva</td>
+      <td>Nataliia S</td>
+      <td>1</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>ur.0646414360.09</td>
+      <td>2.061342</td>
+      <td>[grid.35043.31, grid.24434.35, grid.170430.1, ...</td>
+      <td>Sinitskii</td>
+      <td>Alexander S</td>
+      <td>1</td>
+      <td>[0000-0002-8688-3451]</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Example-6.-MUST-together-with-AND/OR">
+<h3>Example 6. MUST together with AND/OR<a class="headerlink" href="#Example-6.-MUST-together-with-AND/OR" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">concepts</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    (+&quot;ambipolar electric field effect&quot; -&quot;graphitic films&quot;) OR</span>
+<span class="s2">    (+&quot;films&quot; -&quot;electric field effects&quot;)</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">identify experts</span>
+<span class="s2">    from concepts &quot;{dsl_escape(concepts)}&quot;</span>
+<span class="s2">    using publications</span>
+<span class="s2">return experts</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Query:</span><span class="se">\n</span><span class="s2">======&quot;</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
+
+<span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
+
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Query:
+======
+identify experts
+    from concepts &#34;
+    (+\&#34;ambipolar electric field effect\&#34; -\&#34;graphitic films\&#34;) OR
+    (+\&#34;films\&#34; -\&#34;electric field effects\&#34;)
+    &#34;
+    using publications
+return experts
+
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>score</th>
+      <th>first_name</th>
+      <th>research_orgs</th>
+      <th>last_name</th>
+      <th>docs_found</th>
+      <th>orcid_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ur.014516430466.88</td>
+      <td>10.359314</td>
+      <td>Ledford C</td>
+      <td>[grid.411377.7]</td>
+      <td>Carter</td>
+      <td>18</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ur.01034030721.03</td>
+      <td>3.576317</td>
+      <td>Pablo</td>
+      <td>[grid.5338.d, grid.116068.8, grid.21941.3f, gr...</td>
+      <td>Jarillo-Herrero</td>
+      <td>3</td>
+      <td>[0000-0001-8217-8213]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ur.010122277451.23</td>
+      <td>3.499347</td>
+      <td>Alberta</td>
+      <td>NaN</td>
+      <td>Meyer</td>
+      <td>4</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ur.012760700525.87</td>
+      <td>3.499347</td>
+      <td>Esther</td>
+      <td>NaN</td>
+      <td>Aschemeyer</td>
+      <td>4</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>ur.011313310557.79</td>
+      <td>2.884011</td>
+      <td>Erwin Randolph</td>
+      <td>[grid.26009.3d]</td>
+      <td>Parson</td>
+      <td>5</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>ur.011224625507.86</td>
+      <td>2.798074</td>
+      <td>W</td>
+      <td>[grid.461804.f]</td>
+      <td>Feneberg</td>
+      <td>1</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>ur.015134442047.63</td>
+      <td>2.798074</td>
+      <td>Manfred A</td>
+      <td>[grid.16463.36]</td>
+      <td>Hellberg</td>
+      <td>1</td>
+      <td>[0000-0003-0785-8125]</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>ur.01150036175.42</td>
+      <td>2.434489</td>
+      <td>Peng</td>
+      <td>[grid.59025.3b]</td>
+      <td>Ren</td>
+      <td>2</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>ur.013275477227.26</td>
+      <td>2.434489</td>
+      <td>Lan</td>
+      <td>[grid.17635.36, grid.59025.3b, grid.451303.0, ...</td>
+      <td>Wang</td>
+      <td>2</td>
+      <td>[0000-0001-7124-2718]</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>ur.056250446.77</td>
+      <td>2.434489</td>
+      <td>Azat</td>
+      <td>[grid.59025.3b]</td>
+      <td>Sulaev</td>
+      <td>2</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>ur.0624630056.98</td>
+      <td>2.434489</td>
+      <td>Shun-Qing</td>
+      <td>[grid.8547.e, grid.450298.2, grid.194645.b, gr...</td>
+      <td>Shen</td>
+      <td>2</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>ur.0756673070.05</td>
+      <td>2.434489</td>
+      <td>Bin</td>
+      <td>[grid.59025.3b]</td>
+      <td>Xia</td>
+      <td>2</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>ur.01003543541.78</td>
+      <td>2.370124</td>
+      <td>Shlomo</td>
+      <td>[grid.12136.37, grid.13992.30, grid.133342.4, ...</td>
+      <td>Efrima</td>
+      <td>3</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>ur.015146652071.00</td>
+      <td>2.370124</td>
+      <td>D</td>
+      <td>[grid.13992.30, grid.7489.2]</td>
+      <td>Yogev</td>
+      <td>3</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>ur.012476642650.51</td>
+      <td>2.251025</td>
+      <td>B Ruby</td>
+      <td>[grid.205975.c]</td>
+      <td>Rich</td>
+      <td>3</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>ur.01022425321.95</td>
+      <td>2.067556</td>
+      <td>Andrey A</td>
+      <td>[grid.35043.31, grid.7491.b, grid.4764.1, grid...</td>
+      <td>Turchanin</td>
+      <td>2</td>
+      <td>[0000-0003-2388-1042]</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>ur.01161437031.05</td>
+      <td>2.067556</td>
+      <td>Joachim</td>
+      <td>[grid.5719.a, grid.419534.e, grid.4372.2, grid...</td>
+      <td>Mayer</td>
+      <td>2</td>
+      <td>[0000-0003-3292-5342]</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>ur.01163755245.41</td>
+      <td>2.067556</td>
+      <td>Konstantin B</td>
+      <td>[grid.4886.2, grid.457334.2, grid.411233.6, gr...</td>
+      <td>Efetov</td>
+      <td>2</td>
+      <td>[0000-0003-2245-1366]</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>ur.01172120354.34</td>
+      <td>2.067556</td>
+      <td>Armin</td>
+      <td>[grid.7491.b, grid.7700.0, grid.414703.5, grid...</td>
+      <td>Gölzhäuser</td>
+      <td>2</td>
+      <td>[0000-0002-0838-9028]</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>ur.0704114136.03</td>
+      <td>2.067556</td>
+      <td>Thomas</td>
+      <td>[grid.10392.39, grid.4764.1, grid.7491.b]</td>
+      <td>Weimann</td>
+      <td>2</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Example-7.-Wildcard-searches">
+<h3>Example 7. Wildcard searches<a class="headerlink" href="#Example-7.-Wildcard-searches" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">concepts</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;temperat* &quot;ray diffraction&quot; -magnet* &quot;&quot;&quot;</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">identify experts</span>
+<span class="s2">    from concepts &quot;{dsl_escape(concepts)}&quot;</span>
+<span class="s2">    using publications</span>
+<span class="s2">return experts</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Query:</span><span class="se">\n</span><span class="s2">======&quot;</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
+
+<span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Query:
+======
+identify experts
+    from concepts &#34;temperat* \&#34;ray diffraction\&#34; -magnet* &#34;
+    using publications
+return experts
+
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>score</th>
+      <th>research_orgs</th>
+      <th>last_name</th>
+      <th>first_name</th>
+      <th>docs_found</th>
+      <th>orcid_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ur.010752560241.92</td>
+      <td>9.023557</td>
+      <td>[grid.494717.8, grid.411717.5, grid.5399.6, gr...</td>
+      <td>Buscail</td>
+      <td>Henri</td>
+      <td>4</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ur.016151106345.71</td>
+      <td>8.850567</td>
+      <td>[grid.461616.2]</td>
+      <td>Kolarik</td>
+      <td>Vladislav</td>
+      <td>4</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ur.012006337013.67</td>
+      <td>8.245036</td>
+      <td>[grid.461616.2]</td>
+      <td>Engel</td>
+      <td>Walter</td>
+      <td>4</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ur.01264404625.74</td>
+      <td>8.127706</td>
+      <td>[grid.425759.8, grid.415877.8, grid.465435.5, ...</td>
+      <td>Boldyreva</td>
+      <td>Elena V</td>
+      <td>4</td>
+      <td>[0000-0002-1401-2438]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>ur.01356350415.50</td>
+      <td>8.127706</td>
+      <td>[grid.415877.8, grid.4605.7, grid.418421.a, gr...</td>
+      <td>Zakharov</td>
+      <td>Boris A</td>
+      <td>4</td>
+      <td>[0000-0002-3520-632X]</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>ur.07650346631.13</td>
+      <td>7.050485</td>
+      <td>[grid.4444.0, grid.462844.8, grid.424133.3, gr...</td>
+      <td>Itié</td>
+      <td>Jean-Paul</td>
+      <td>3</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>ur.011274203435.25</td>
+      <td>6.858861</td>
+      <td>[grid.27736.37, grid.418094.0]</td>
+      <td>Kocharyan</td>
+      <td>Vahan</td>
+      <td>3</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>ur.015270341551.59</td>
+      <td>6.810949</td>
+      <td>[grid.494717.8, grid.5399.6]</td>
+      <td>Caudron</td>
+      <td>Eric</td>
+      <td>3</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>ur.012153454351.77</td>
+      <td>6.641345</td>
+      <td>[grid.461616.2, grid.466709.a]</td>
+      <td>Juez-Lorenzo</td>
+      <td>Maria Del Mar</td>
+      <td>3</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>ur.011235502761.97</td>
+      <td>6.217678</td>
+      <td>NaN</td>
+      <td>Triviño</td>
+      <td>F</td>
+      <td>3</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>ur.012267521017.15</td>
+      <td>6.217678</td>
+      <td>NaN</td>
+      <td>Vázquez</td>
+      <td>T</td>
+      <td>3</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>ur.012630443761.25</td>
+      <td>6.217678</td>
+      <td>NaN</td>
+      <td>Ruiz De Gauna</td>
+      <td>A</td>
+      <td>3</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>ur.012352473245.95</td>
+      <td>6.180346</td>
+      <td>[grid.47894.36, grid.168010.e, grid.299175.1, ...</td>
+      <td>Qadri</td>
+      <td>Syed B</td>
+      <td>3</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>ur.013352205311.74</td>
+      <td>6.088813</td>
+      <td>[grid.412761.7]</td>
+      <td>Ustinova</td>
+      <td>I S</td>
+      <td>3</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>ur.0654202176.07</td>
+      <td>6.088813</td>
+      <td>[grid.4886.2, grid.465372.1]</td>
+      <td>Kadyrova</td>
+      <td>Nadezda I</td>
+      <td>3</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>ur.012077537127.36</td>
+      <td>6.035814</td>
+      <td>[grid.461616.2, grid.4561.6, grid.4886.2]</td>
+      <td>Eisenreich</td>
+      <td>Norbert</td>
+      <td>3</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>ur.01015306115.93</td>
+      <td>5.794733</td>
+      <td>[grid.418421.a, grid.4605.7, grid.435414.3]</td>
+      <td>Losev</td>
+      <td>Evgeniy A</td>
+      <td>3</td>
+      <td>[0000-0003-1743-4166]</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>ur.014146743075.39</td>
+      <td>5.561709</td>
+      <td>[grid.4795.f, grid.463879.7, grid.411840.8, gr...</td>
+      <td>Hagenmuller</td>
+      <td>Paul</td>
+      <td>3</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>ur.015400602443.87</td>
+      <td>5.309069</td>
+      <td>[grid.423902.e, grid.435347.2]</td>
+      <td>Guseinov</td>
+      <td>G G</td>
+      <td>3</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>ur.012651704451.05</td>
+      <td>5.108303</td>
+      <td>[grid.32197.3e, grid.136593.b]</td>
+      <td>Oguni</td>
+      <td>Masaharu</td>
+      <td>2</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
 </div>
 </div>
 </div>
