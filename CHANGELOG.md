@@ -1,5 +1,11 @@
 # Changelog - Dimensions API Lab 
 
+### 2020-07-28
+
+Updates:
+
+* [Searching GRID organizations](https://api-lab.dimensions.ai/cookbooks/8-organizations/1-GRID-preview.html)
+
 
 ### 2020-07-08
 
