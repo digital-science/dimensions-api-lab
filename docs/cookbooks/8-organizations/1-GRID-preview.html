@@ -566,6 +566,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#Full-text-search">Full-text search</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#Fielded-search">Fielded search</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#Returning-facets">Returning facets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Returning-organizations-facets-from-publications">Returning organizations facets from publications</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#3.-A-closer-look-at-the-organizations-data-statistics">3. A closer look at the organizations data statistics</a><ul>
@@ -935,7 +936,7 @@ div.rendered_html tbody tr:hover {
 <p>Organizations data in Dimensions is based on <a class="reference external" href="https://grid.ac/">GRID</a> - the Global Research Identifiers Database.</p>
 <p>The topics covered in this notebook are:</p>
 <ul class="simple">
-<li><p>How to align your affiliation data with GRID/Dimensions using the API <a class="reference external" href="https://docs.dimensions.ai/dsl/1.21.0-preview/functions.html#function-extract-affiliations">disambiguation service</a></p></li>
+<li><p>How to align your affiliation data with GRID/Dimensions using the API <a class="reference external" href="https://docs.dimensions.ai/dsl/functions.html#function-extract-affiliations">disambiguation service</a></p></li>
 <li><p>How to retrieve organizations metadata using the <a class="reference external" href="https://docs.dimensions.ai/dsl/datasource-organizations.html">search fields</a> available</p></li>
 <li><p>How to use the <a class="reference external" href="https://docs.dimensions.ai/dsl/data-sources.html#metadata-api">schema API</a> to obtain some statistics about the Organizations data available</p></li>
 </ul>
@@ -1014,7 +1015,7 @@ Method: dsl.ini file
 </div>
 <div class="section" id="1.-Matching-affiliation-data-to-GRID-IDs-using-extract_affiliations">
 <h2>1. Matching affiliation data to GRID IDs using <code class="docutils literal notranslate"><span class="pre">extract_affiliations</span></code><a class="headerlink" href="#1.-Matching-affiliation-data-to-GRID-IDs-using-extract_affiliations" title="Permalink to this headline">¶</a></h2>
-<p>The API function <code class="docutils literal notranslate"><span class="pre">extract_affiliations</span></code> (<a class="reference external" href="https://docs.dimensions.ai/dsl/1.21.0-preview/functions.html#function-extract-affiliations">docs</a>) can be used to enrich private datasets including non-disambiguated organizations data with Dimensions IDs, so to then take advantage of the wealth of linked data available in Dimensions.</p>
+<p>The API function <code class="docutils literal notranslate"><span class="pre">extract_affiliations</span></code> (<a class="reference external" href="https://docs.dimensions.ai/dsl/functions.html#function-extract-affiliations">docs</a>) can be used to enrich private datasets including non-disambiguated organizations data with Dimensions IDs, so to then take advantage of the wealth of linked data available in Dimensions.</p>
 <p>For example, let’s assume our dataset has four columns (<em>affiliation name</em>, <em>city</em>, <em>state</em> and <em>country</em>) - any of which can be empty of course. Like this:</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
@@ -1113,7 +1114,7 @@ Method: dsl.ini file
 </pre></div></div>
 </div>
 <blockquote>
-<div><p>NOTE: the above commands also support <strong>bulk querying</strong> e.g. to save up API queries - check out the <a class="reference external" href="https://docs.dimensions.ai/dsl/1.21.0-preview/functions.html#function-extract-affiliations">docs</a> for more info.</p>
+<div><p>NOTE: the above commands also support <strong>bulk querying</strong> e.g. to save up API queries - check out the <a class="reference external" href="https://docs.dimensions.ai/dsl/functions.html#function-extract-affiliations">docs</a> for more info.</p>
 </div></blockquote>
 </div>
 <div class="section" id="2.-Searching-GRID-organizations">
@@ -2096,6 +2097,211 @@ Returned Types: 8
   </tbody>
 </table>
 </div></div>
+</div>
+</div>
+<div class="section" id="Returning-organizations-facets-from-publications">
+<h3>Returning organizations facets from publications<a class="headerlink" href="#Returning-organizations-facets-from-publications" title="Permalink to this headline">¶</a></h3>
+<p>The GRID organization data is used thoughout Dimensions.</p>
+<p>So, for example, one can do a publications search and return organizations as a facet. This allows to take advantage of GRID metadata - e.g. latiture and longitude - in order to quickly build a geograpical visualization.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">search publications for &quot;coronavirus OR covid-19&quot;</span>
+<span class="s2">    where year &gt; 2019</span>
+<span class="s2">return research_orgs[basics] limit 50</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">dslquery</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Returned Research_orgs: 50
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>count</th>
+      <th>state_name</th>
+      <th>country_name</th>
+      <th>types</th>
+      <th>linkout</th>
+      <th>longitude</th>
+      <th>latitude</th>
+      <th>name</th>
+      <th>city_name</th>
+      <th>acronym</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>grid.38142.3c</td>
+      <td>936</td>
+      <td>Massachusetts</td>
+      <td>United States</td>
+      <td>[Education]</td>
+      <td>[http://www.harvard.edu/]</td>
+      <td>-71.11665</td>
+      <td>42.377052</td>
+      <td>Harvard University</td>
+      <td>Cambridge</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>grid.4991.5</td>
+      <td>749</td>
+      <td>Oxfordshire</td>
+      <td>United Kingdom</td>
+      <td>[Education]</td>
+      <td>[http://www.ox.ac.uk/]</td>
+      <td>-1.25401</td>
+      <td>51.753437</td>
+      <td>University of Oxford</td>
+      <td>Oxford</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>grid.33199.31</td>
+      <td>725</td>
+      <td>NaN</td>
+      <td>China</td>
+      <td>[Education]</td>
+      <td>[http://english.hust.edu.cn/]</td>
+      <td>114.41474</td>
+      <td>30.508183</td>
+      <td>Huazhong University of Science and Technology</td>
+      <td>Wuhan</td>
+      <td>HUST</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>grid.17063.33</td>
+      <td>681</td>
+      <td>Ontario</td>
+      <td>Canada</td>
+      <td>[Education]</td>
+      <td>[http://www.utoronto.ca/]</td>
+      <td>-79.39500</td>
+      <td>43.661667</td>
+      <td>University of Toronto</td>
+      <td>Toronto</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>grid.21107.35</td>
+      <td>677</td>
+      <td>Maryland</td>
+      <td>United States</td>
+      <td>[Education]</td>
+      <td>[https://www.jhu.edu/]</td>
+      <td>-76.62028</td>
+      <td>39.328888</td>
+      <td>Johns Hopkins University</td>
+      <td>Baltimore</td>
+      <td>JHU</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter_geo</span><span class="p">(</span><span class="n">df</span><span class="p">,</span>
+                     <span class="n">lat</span><span class="o">=</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="n">lon</span><span class="o">=</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span>
+                     <span class="n">color</span><span class="o">=</span><span class="s2">&quot;country_name&quot;</span><span class="p">,</span>
+                     <span class="n">size</span><span class="o">=</span><span class="s2">&quot;count&quot;</span><span class="p">,</span>
+                     <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;natural earth&quot;</span><span class="p">,</span>
+                     <span class="n">hover_name</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">,</span>
+                     <span class="n">hover_data</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;city_name&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;types&#39;</span><span class="p">]</span>
+                     <span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+
+
+            <div id="ee629c70-3034-417c-bbbd-054b0e835996" class="plotly-graph-div" style="height:525px; width:100%;"></div>
+            <script type="text/javascript">
+                require(["plotly"], function(Plotly) {
+                    window.PLOTLYENV=window.PLOTLYENV || {};
+
+                if (document.getElementById("ee629c70-3034-417c-bbbd-054b0e835996")) {
+                    Plotly.newPlot(
+                        'ee629c70-3034-417c-bbbd-054b0e835996',
+                        [{"customdata": [["Cambridge", "grid.38142.3c", ["Education"]], ["Baltimore", "grid.21107.35", ["Education"]], ["Stanford", "grid.168010.e", ["Education"]], ["Seattle", "grid.34477.33", ["Education"]], ["Philadelphia", "grid.25879.31", ["Education"]], ["New York", "grid.21729.3f", ["Education"]], ["Ann Arbor", "grid.214458.e", ["Education"]], ["New Haven", "grid.47100.32", ["Education"]], ["San Francisco", "grid.266102.1", ["Education"]], ["New York", "grid.59734.3c", ["Education"]], ["Boston", "grid.32224.35", ["Healthcare"]], ["Ithaca", "grid.5386.8", ["Education"]], ["Atlanta", "grid.189967.8", ["Education"]], ["Los Angeles", "grid.19006.3e", ["Education"]], ["Rochester", "grid.66875.3a", ["Healthcare"]], ["New York", "grid.137628.9", ["Education"]], ["San Diego", "grid.266100.3", ["Education"]], ["Durham", "grid.26009.3d", ["Education"]]], "geo": "geo", "hovertemplate": "<b>%{hovertext}</b><br><br>country_name=United States<br>count=%{marker.size}<br>latitude=%{lat}<br>longitude=%{lon}<br>city_name=%{customdata[0]}<br>id=%{customdata[1]}<br>types=%{customdata[2]}<extra></extra>", "hovertext": ["Harvard University", "Johns Hopkins University", "Stanford University", "University of Washington", "University of Pennsylvania", "Columbia University", "University of Michigan", "Yale University", "University of California, San Francisco", "Icahn School of Medicine at Mount Sinai", "Massachusetts General Hospital", "Cornell University", "Emory University", "University of California, Los Angeles", "Mayo Clinic", "New York University", "University of California, San Diego", "Duke University"], "lat": [42.377052, 39.328888, 37.43, 47.655537, 39.952457, 40.8076, 42.278305, 41.302094, 37.7628, 40.789085, 42.362804, 42.44851, 33.792786, 34.072224, 44.02407, 40.73, 32.881, 36.003147], "legendgroup": "United States", "lon": [-71.11665, -76.62028, -122.17, -122.30353, -75.19322, -73.96239, -83.73822, -72.93066, -122.45767, -73.95311, -71.068634, -76.47862, -84.32401, -118.4441, -92.46631, -73.995, -117.238, -78.926895], "marker": {"color": "#636efa", "size": [936, 677, 514, 497, 478, 474, 453, 425, 423, 416, 384, 374, 359, 339, 306, 296, 287, 256], "sizemode": "area", "sizeref": 2.34}, "name": "United States", "showlegend": true, "type": "scattergeo"}, {"customdata": [["Oxford", "grid.4991.5", ["Education"]], ["London", "grid.83440.3b", ["Education"]], ["London", "grid.7445.2", ["Education"]], ["London", "grid.13097.3c", ["Education"]], ["Cambridge", "grid.5335.0", ["Education"]], ["London", "grid.8991.9", ["Education"]], ["Edinburgh", "grid.4305.2", ["Education"]]], "geo": "geo", "hovertemplate": "<b>%{hovertext}</b><br><br>country_name=United Kingdom<br>count=%{marker.size}<br>latitude=%{lat}<br>longitude=%{lon}<br>city_name=%{customdata[0]}<br>id=%{customdata[1]}<br>types=%{customdata[2]}<extra></extra>", "hovertext": ["University of Oxford", "University College London", "Imperial College London", "King's College London", "University of Cambridge", "London School of Hygiene & Tropical Medicine", "University of Edinburgh"], "lat": [51.753437, 51.52447, 51.4986, 51.511417, 52.204453, 51.5209, 55.944897], "legendgroup": "United Kingdom", "lon": [-1.2540097, -0.1339817, -0.175478, -0.116727, 0.114908, -0.1307, -3.189284], "marker": {"color": "#EF553B", "size": [749, 645, 518, 468, 387, 351, 253], "sizemode": "area", "sizeref": 2.34}, "name": "United Kingdom", "showlegend": true, "type": "scattergeo"}, {"customdata": [["Wuhan", "grid.33199.31", ["Education"]], ["Hangzhou", "grid.13402.34", ["Education"]], ["Hong Kong", "grid.194645.b", ["Education"]], ["Beijing", "grid.24696.3f", ["Education"]], ["Shanghai", "grid.16821.3c", ["Education"]], ["Wuhan", "grid.49470.3e", ["Education"]], ["Guangzhou", "grid.12981.33", ["Education"]], ["Wuhan", "grid.412632.0", ["Healthcare"]], ["Wuhan", "grid.413247.7", ["Healthcare"]], ["Shanghai", "grid.8547.e", ["Education"]], ["Beijing", "grid.506261.6", ["Education"]]], "geo": "geo", "hovertemplate": "<b>%{hovertext}</b><br><br>country_name=China<br>count=%{marker.size}<br>latitude=%{lat}<br>longitude=%{lon}<br>city_name=%{customdata[0]}<br>id=%{customdata[1]}<br>types=%{customdata[2]}<extra></extra>", "hovertext": ["Huazhong University of Science and Technology", "Zhejiang University", "University of Hong Kong", "Capital Medical University", "Shanghai Jiao Tong University", "Wuhan University", "Sun Yat-sen University", "Renmin Hospital of Wuhan University", "Zhongnan Hospital of Wuhan University", "Fudan University", "Chinese Academy of Medical Sciences & Peking Union Medical College"], "lat": [30.508183, 30.263878, 22.283287, 39.865433, 31.201267, 30.536316, 23.0962, 30.536203, 30.554094, 31.297712, 39.91149], "legendgroup": "China", "lon": [114.41474, 120.12342, 114.13708, 116.35284, 121.43278, 114.36431, 113.29806, 114.29828, 114.35368, 121.50361, 116.41479], "marker": {"color": "#00cc96", "size": [725, 419, 401, 369, 353, 319, 290, 273, 266, 265, 261], "sizemode": "area", "sizeref": 2.34}, "name": "China", "showlegend": true, "type": "scattergeo"}, {"customdata": [["Toronto", "grid.17063.33", ["Education"]], ["Vancouver", "grid.17091.3e", ["Education"]]], "geo": "geo", "hovertemplate": "<b>%{hovertext}</b><br><br>country_name=Canada<br>count=%{marker.size}<br>latitude=%{lat}<br>longitude=%{lon}<br>city_name=%{customdata[0]}<br>id=%{customdata[1]}<br>types=%{customdata[2]}<extra></extra>", "hovertext": ["University of Toronto", "University of British Columbia"], "lat": [43.661667, 49.260674], "legendgroup": "Canada", "lon": [-79.395, -123.24608], "marker": {"color": "#ab63fa", "size": [681, 363], "sizemode": "area", "sizeref": 2.34}, "name": "Canada", "showlegend": true, "type": "scattergeo"}, {"customdata": [["Milan", "grid.4708.b", ["Education"]], ["Rome", "grid.7841.a", ["Education"]], ["Padova", "grid.5608.b", ["Education"]], ["Naples", "grid.4691.a", ["Education"]]], "geo": "geo", "hovertemplate": "<b>%{hovertext}</b><br><br>country_name=Italy<br>count=%{marker.size}<br>latitude=%{lat}<br>longitude=%{lon}<br>city_name=%{customdata[0]}<br>id=%{customdata[1]}<br>types=%{customdata[2]}<extra></extra>", "hovertext": ["University of Milan", "Sapienza University of Rome", "University of Padua", "University of Naples Federico II"], "lat": [45.46099, 41.90384, 45.406387, 40.84722], "legendgroup": "Italy", "lon": [9.194592, 12.514438, 11.877446, 14.256944], "marker": {"color": "#FFA15A", "size": [525, 458, 293, 290], "sizemode": "area", "sizeref": 2.34}, "name": "Italy", "showlegend": true, "type": "scattergeo"}, {"customdata": [["Singapore", "grid.4280.e", ["Education"]]], "geo": "geo", "hovertemplate": "<b>%{hovertext}</b><br><br>country_name=Singapore<br>count=%{marker.size}<br>latitude=%{lat}<br>longitude=%{lon}<br>city_name=%{customdata[0]}<br>id=%{customdata[1]}<br>types=%{customdata[2]}<extra></extra>", "hovertext": ["National University of Singapore"], "lat": [1.295556], "legendgroup": "Singapore", "lon": [103.776665], "marker": {"color": "#19d3f3", "size": [402], "sizemode": "area", "sizeref": 2.34}, "name": "Singapore", "showlegend": true, "type": "scattergeo"}, {"customdata": [["S\u00e3o Paulo", "grid.11899.38", ["Education"]]], "geo": "geo", "hovertemplate": "<b>%{hovertext}</b><br><br>country_name=Brazil<br>count=%{marker.size}<br>latitude=%{lat}<br>longitude=%{lon}<br>city_name=%{customdata[0]}<br>id=%{customdata[1]}<br>types=%{customdata[2]}<extra></extra>", "hovertext": ["University of S\u00e3o Paulo"], "lat": [-23.563051], "legendgroup": "Brazil", "lon": [-46.730103], "marker": {"color": "#FF6692", "size": [395], "sizemode": "area", "sizeref": 2.34}, "name": "Brazil", "showlegend": true, "type": "scattergeo"}, {"customdata": [["Sydney", "grid.1013.3", ["Education"]], ["Melbourne", "grid.1008.9", ["Education"]], ["Melbourne", "grid.1002.3", ["Education"]], ["Sydney", "grid.1005.4", ["Education"]]], "geo": "geo", "hovertemplate": "<b>%{hovertext}</b><br><br>country_name=Australia<br>count=%{marker.size}<br>latitude=%{lat}<br>longitude=%{lon}<br>city_name=%{customdata[0]}<br>id=%{customdata[1]}<br>types=%{customdata[2]}<extra></extra>", "hovertext": ["University of Sydney", "University of Melbourne", "Monash University", "UNSW Sydney"], "lat": [-33.88858, -37.797115, -37.9083, -33.917732], "legendgroup": "Australia", "lon": [151.1873, 144.95998, 145.138, 151.23096], "marker": {"color": "#B6E880", "size": [334, 324, 266, 264], "sizemode": "area", "sizeref": 2.34}, "name": "Australia", "showlegend": true, "type": "scattergeo"}, {"customdata": [["New Delhi", "grid.413618.9", ["Education"]]], "geo": "geo", "hovertemplate": "<b>%{hovertext}</b><br><br>country_name=India<br>count=%{marker.size}<br>latitude=%{lat}<br>longitude=%{lon}<br>city_name=%{customdata[0]}<br>id=%{customdata[1]}<br>types=%{customdata[2]}<extra></extra>", "hovertext": ["All India Institute of Medical Sciences"], "lat": [28.585018], "legendgroup": "India", "lon": [77.20922], "marker": {"color": "#FF97FF", "size": [322], "sizemode": "area", "sizeref": 2.34}, "name": "India", "showlegend": true, "type": "scattergeo"}, {"customdata": [["Tehran", "grid.411705.6", ["Education"]]], "geo": "geo", "hovertemplate": "<b>%{hovertext}</b><br><br>country_name=Iran<br>count=%{marker.size}<br>latitude=%{lat}<br>longitude=%{lon}<br>city_name=%{customdata[0]}<br>id=%{customdata[1]}<br>types=%{customdata[2]}<extra></extra>", "hovertext": ["Tehran University of Medical Sciences"], "lat": [35.748272], "legendgroup": "Iran", "lon": [51.38122], "marker": {"color": "#FECB52", "size": [301], "sizemode": "area", "sizeref": 2.34}, "name": "Iran", "showlegend": true, "type": "scattergeo"}],
+                        {"geo": {"center": {}, "domain": {"x": [0.0, 1.0], "y": [0.0, 1.0]}, "projection": {"type": "natural earth"}}, "legend": {"itemsizing": "constant", "title": {"text": "country_name"}, "tracegroupgap": 0}, "margin": {"t": 60}, "template": {"data": {"bar": [{"error_x": {"color": "#2a3f5f"}, "error_y": {"color": "#2a3f5f"}, "marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "bar"}], "barpolar": [{"marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "barpolar"}], "carpet": [{"aaxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "baxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "type": "carpet"}], "choropleth": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "choropleth"}], "contour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "contour"}], "contourcarpet": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "contourcarpet"}], "heatmap": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmap"}], "heatmapgl": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmapgl"}], "histogram": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "histogram"}], "histogram2d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2d"}], "histogram2dcontour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2dcontour"}], "mesh3d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "mesh3d"}], "parcoords": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "parcoords"}], "pie": [{"automargin": true, "type": "pie"}], "scatter": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter"}], "scatter3d": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter3d"}], "scattercarpet": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattercarpet"}], "scattergeo": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergeo"}], "scattergl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergl"}], "scattermapbox": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattermapbox"}], "scatterpolar": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolar"}], "scatterpolargl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolargl"}], "scatterternary": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterternary"}], "surface": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "surface"}], "table": [{"cells": {"fill": {"color": "#EBF0F8"}, "line": {"color": "white"}}, "header": {"fill": {"color": "#C8D4E3"}, "line": {"color": "white"}}, "type": "table"}]}, "layout": {"annotationdefaults": {"arrowcolor": "#2a3f5f", "arrowhead": 0, "arrowwidth": 1}, "coloraxis": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "colorscale": {"diverging": [[0, "#8e0152"], [0.1, "#c51b7d"], [0.2, "#de77ae"], [0.3, "#f1b6da"], [0.4, "#fde0ef"], [0.5, "#f7f7f7"], [0.6, "#e6f5d0"], [0.7, "#b8e186"], [0.8, "#7fbc41"], [0.9, "#4d9221"], [1, "#276419"]], "sequential": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "sequentialminus": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]]}, "colorway": ["#636efa", "#EF553B", "#00cc96", "#ab63fa", "#FFA15A", "#19d3f3", "#FF6692", "#B6E880", "#FF97FF", "#FECB52"], "font": {"color": "#2a3f5f"}, "geo": {"bgcolor": "white", "lakecolor": "white", "landcolor": "#E5ECF6", "showlakes": true, "showland": true, "subunitcolor": "white"}, "hoverlabel": {"align": "left"}, "hovermode": "closest", "mapbox": {"style": "light"}, "paper_bgcolor": "white", "plot_bgcolor": "#E5ECF6", "polar": {"angularaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "radialaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "scene": {"xaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "yaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "zaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}}, "shapedefaults": {"line": {"color": "#2a3f5f"}}, "ternary": {"aaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "baxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "caxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "title": {"x": 0.05}, "xaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}, "yaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}}}},
+                        {"responsive": true}
+                    ).then(function(){
+
+var gd = document.getElementById('ee629c70-3034-417c-bbbd-054b0e835996');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })
+                };
+                });
+            </script>
+        </div></div>
 </div>
 </div>
 </div>
