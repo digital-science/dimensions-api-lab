@@ -1,5 +1,16 @@
 # Changelog - Dimensions API Lab 
 
+### 2020-08-05
+
+New notebooks:
+* [Building a concepts co-occurence network](https://api-lab.dimensions.ai/cookbooks/2-publications/Concepts-network-graph.html)
+
+Updates:
+
+* [Topic Modeling Analysis for a Set of Publications: Basic Workflow](https://api-lab.dimensions.ai/cookbooks/2-publications/Simple-topic-analysis.html)
+* [Working with concepts in the Dimensions API](https://api-lab.dimensions.ai/cookbooks/1-getting-started/7-Working-with-concepts.html)
+
+
 ### 2020-07-28
 
 Updates:
