@@ -598,13 +598,13 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Building an Organizations Collaboration Network Diagram</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#1.-Prerequisites:-load-libraries-and-log-in">1. Prerequisites: load libraries and log in</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#2.-Choose-an-Organization-and-a-keyword-(topic)">2. Choose an Organization and a keyword (topic)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#3.-Building-a-one-degree-network-of-collaborating-institutions">3. Building a one-degree network of collaborating institutions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#4.-Building-a-network-of-any-size">4. Building a network of any size</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#5.-Visualizing-the-network">5. Visualizing the network</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#6.-Addendum:-showing-only-‘Government’-collaborators">6. Addendum: showing only ‘Government’ collaborators</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#7.-Conclusions">7. Conclusions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#1.-Choose-an-Organization-and-a-keyword-(topic)">1. Choose an Organization and a keyword (topic)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#2.-Building-a-one-degree-network-of-collaborating-institutions">2. Building a one-degree network of collaborating institutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#3.-Building-a-network-of-any-size">3. Building a network of any size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#4.-Visualizing-the-network">4. Visualizing the network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#5.-Addendum:-showing-only-‘Government’-collaborators">5. Addendum: showing only ‘Government’ collaborators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Conclusions">Conclusions</a></li>
 </ul>
 </li>
 </ul>
@@ -943,58 +943,51 @@ div.rendered_html tbody tr:hover {
 <p>Starting from a <strong>research organization</strong>, we will extract information about other organizations that collaborated with it, based on shared publications data.</p>
 <p>In order to make the analysis more focused, we are going to select also a <strong>topic</strong> and a <strong>time-frame</strong>. By appying these extra constraints we will reduce the number of shared publications data and also make the overall extraction faster.</p>
 <p>At the end of the tutorial we will generate a ‘collaborations network diagram’. The diagram nodes represent the organizations working together, while the edges represent the number of publications they have in common. An example of the resulting network diagram <a class="reference external" href="http://api-sample-data.dimensions.ai/dataviz-exports/3-Organizations-Collaboration-Network/network_2_levels_grid.412125.1.html">can be seen here</a>.</p>
-<div class="section" id="1.-Prerequisites:-load-libraries-and-log-in">
-<h2>1. Prerequisites: load libraries and log in<a class="headerlink" href="#1.-Prerequisites:-load-libraries-and-log-in" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
 <p>Please install the latest versions of these libraries to run this notebook.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># @markdown # Get the API library and login</span>
-<span class="c1"># @markdown Click the &#39;play&#39; button on the left (or shift+enter) after entering your API credentials</span>
+<span></span><span class="o">!</span>pip install dimcli plotly tqdm pyvis -U --quiet
 
-<span class="n">username</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1">#@param {type: &quot;string&quot;}</span>
-<span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1">#@param {type: &quot;string&quot;}</span>
-<span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;https://app.dimensions.ai&quot;</span> <span class="c1">#@param {type: &quot;string&quot;}</span>
-
-
-<span class="o">!</span>pip install dimcli plotly tqdm pyvis -U --quiet
+<span class="c1">#</span>
+<span class="c1"># load libraries</span>
 <span class="kn">import</span> <span class="nn">dimcli</span>
 <span class="kn">from</span> <span class="nn">dimcli.shortcuts</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">)</span>
-<span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
-
-<span class="c1">#</span>
-<span class="c1"># load common libraries</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">pandas.io.json</span> <span class="kn">import</span> <span class="n">json_normalize</span>
 <span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span> <span class="k">as</span> <span class="n">progress</span>
-<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
-
-<span class="c1">#</span>
-<span class="c1"># charts libs</span>
-<span class="c1"># import plotly_express as px</span>
-<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>  <span class="c1"># plotly&gt;=4.8.1</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
   <span class="c1"># make js dependecies local / needed by html exports</span>
   <span class="kn">from</span> <span class="nn">plotly.offline</span> <span class="kn">import</span> <span class="n">init_notebook_mode</span>
   <span class="n">init_notebook_mode</span><span class="p">(</span><span class="n">connected</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1">#</span>
+<span class="c1"># API log in</span>
+<span class="c1"># https://github.com/digital-science/dimcli#authentication</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">Logging in..&quot;</span><span class="p">)</span>
+<span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;https://app.dimensions.ai&quot;</span>
+<span class="k">if</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+  <span class="kn">import</span> <span class="nn">getpass</span>
+  <span class="n">USERNAME</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;Username: &#39;</span><span class="p">)</span>
+  <span class="n">PASSWORD</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;Password: &#39;</span><span class="p">)</span>
+  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">USERNAME</span><span class="p">,</span> <span class="n">PASSWORD</span><span class="p">,</span> <span class="n">ENDPOINT</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="n">USERNAME</span><span class="p">,</span> <span class="n">PASSWORD</span>  <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
+  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">USERNAME</span><span class="p">,</span> <span class="n">PASSWORD</span><span class="p">,</span> <span class="n">ENDPOINT</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="c1"># dimcli API query proxy</span>
+<span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-DimCli v0.6.6.5 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (method: dsl.ini file)
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1014,15 +1007,27 @@ require(['plotly'], function(Plotly) {
 }
 </script></div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
 </div>
-<div class="section" id="2.-Choose-an-Organization-and-a-keyword-(topic)">
-<h2>2. Choose an Organization and a keyword (topic)<a class="headerlink" href="#2.-Choose-an-Organization-and-a-keyword-(topic)" title="Permalink to this headline">¶</a></h2>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+==
+Logging in..
+Dimcli - Dimensions API Client (v0.7.3)
+Connected to: https://app.dimensions.ai - DSL v1.26
+Method: dsl.ini file
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="1.-Choose-an-Organization-and-a-keyword-(topic)">
+<h2>1. Choose an Organization and a keyword (topic)<a class="headerlink" href="#1.-Choose-an-Organization-and-a-keyword-(topic)" title="Permalink to this headline">¶</a></h2>
 <p>For the purpose of this exercise, we will use <a class="reference external" href="https://grid.ac/institutes/grid.412125.1">grid.412125.1</a> (King Abdulaziz University, Saudi Arabia).</p>
 <blockquote>
 <div><p>You can try using a different GRID ID to see how results change, e.g. by <a class="reference external" href="https://grid.ac/institutes">browsing for another GRID organization</a>.</p>
 </div></blockquote>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[59]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1073,43 +1078,45 @@ Time period: 2000 to 2016</div>
 Topic: "nanotechnology" <br /><br /></div>
 </div>
 </div>
-<div class="section" id="3.-Building-a-one-degree-network-of-collaborating-institutions">
-<h2>3. Building a one-degree network of collaborating institutions<a class="headerlink" href="#3.-Building-a-one-degree-network-of-collaborating-institutions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="2.-Building-a-one-degree-network-of-collaborating-institutions">
+<h2>2. Building a one-degree network of collaborating institutions<a class="headerlink" href="#2.-Building-a-one-degree-network-of-collaborating-institutions" title="Permalink to this headline">¶</a></h2>
 <p>We can use the <a class="reference external" href="https://docs.dimensions.ai/dsl/data-sources.html#publications">publications API</a> to find the top 10 collaborating institutions based on the parameters above, via a single query.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">get_collaborators</span></code> function below fills out a templated query with the relevant bits and runs it. Then it transforms the results into a pandas dataframe, which will make it easier to process the data later on.</p>
-<p>A couple of things to note:</p>
-<ul class="simple">
-<li><p>The resulting dataframe contains two extra columns: a) <code class="docutils literal notranslate"><span class="pre">id_from</span></code>, which is the ‘seed’ institution we start from; b) <code class="docutils literal notranslate"><span class="pre">level</span></code>, an optional parameter representing the network depth of the query (we’ll see later how it is used with recursive querying).</p></li>
-<li><p>The query returns 11 records - that’s because the first one is normally the seed GRID (due to internal collaborations) which we will omit from the results.</p></li>
-<li><p>Lastly, it’s important to note that one could easily more constraints to the query e.g. research areas via FOR codes, or setting a threshold based on citation counts. The possibilities are endless!</p></li>
-</ul>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search publications </span><span class="si">{}</span><span class="s2"></span>
-<span class="s2">               where year in [</span><span class="si">{}</span><span class="s2">:</span><span class="si">{}</span><span class="s2">]</span>
-<span class="s2">               and research_orgs.id=&quot;</span><span class="si">{}</span><span class="s2">&quot;</span>
-<span class="s2">            return research_orgs limit 11&quot;&quot;&quot;</span>
+<span></span><span class="n">query_template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search publications </span><span class="si">{}</span><span class="s2"></span>
+<span class="s2">                   where year in [</span><span class="si">{}</span><span class="s2">:</span><span class="si">{}</span><span class="s2">]</span>
+<span class="s2">                   and research_orgs.id=&quot;</span><span class="si">{}</span><span class="s2">&quot;</span>
+<span class="s2">                return research_orgs limit 11&quot;&quot;&quot;</span>
 
 <span class="k">def</span> <span class="nf">get_collaborators</span><span class="p">(</span><span class="n">orgid</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">printquery</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">TOPIC</span><span class="p">:</span>
         <span class="n">TOPIC_CLAUSE</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;for &quot;</span><span class="si">{</span><span class="n">TOPIC</span><span class="si">}</span><span class="s2">&quot; &quot;&quot;&quot;</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">TOPIC_CLAUSE</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-    <span class="n">searchstring</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">TOPIC_CLAUSE</span><span class="p">,</span> <span class="n">YEAR_START</span><span class="p">,</span> <span class="n">YEAR_END</span><span class="p">,</span> <span class="n">orgid</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">printquery</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">searchstring</span><span class="p">)</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">searchstring</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
+    <span class="c1"># fill in the blanks in the query_template</span>
+    <span class="n">query_full</span> <span class="o">=</span> <span class="n">query_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">TOPIC_CLAUSE</span><span class="p">,</span> <span class="n">YEAR_START</span><span class="p">,</span> <span class="n">YEAR_END</span><span class="p">,</span> <span class="n">orgid</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">printquery</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">query_full</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query_full</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
+    <span class="c1"># add extra columns</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;id_from&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">orgid</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">level</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">df</span>
 </pre></div>
 </div>
 </div>
+<p>Note:</p>
+<ul class="simple">
+<li><p><strong>Extra columns</strong>. The resulting dataframe contains two extra columns: a) <code class="docutils literal notranslate"><span class="pre">id_from</span></code>, which is the ‘seed’ institution we start from; b) <code class="docutils literal notranslate"><span class="pre">level</span></code>, an optional parameter representing the network depth of the query (we’ll see later how it is used with recursive querying).</p></li>
+<li><p><strong>Self-collaboration</strong>. The query returns 11 records - that’s because the first one is normally the seed GRID (due to internal collaborations) which we will omit from the results.</p></li>
+<li><p><strong>Custom changes</strong>. Lastly, it’s important to remember that this step can be easily customised by changing the <code class="docutils literal notranslate"><span class="pre">query_template</span></code> sttructure. For example, we could focus on specific research areas (using FOR codes), or set a threshold based on citation counts. The possibilities are endless!</p></li>
+</ul>
 <p>For example, let’s try it out with our GRID ID:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[61]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1123,13 +1130,13 @@ Topic: "nanotechnology" <br /><br /></div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 search publications for &#34;nanotechnology&#34;
-               where year in [2000:2016]
-               and research_orgs.id=&#34;grid.412125.1&#34;
-            return research_orgs limit 11
+                   where year in [2000:2016]
+                   and research_orgs.id=&#34;grid.412125.1&#34;
+                return research_orgs limit 11
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[61]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1153,14 +1160,14 @@ search publications for &#34;nanotechnology&#34;
       <th></th>
       <th>id</th>
       <th>count</th>
-      <th>types</th>
-      <th>acronym</th>
-      <th>longitude</th>
-      <th>country_name</th>
-      <th>name</th>
-      <th>city_name</th>
-      <th>linkout</th>
       <th>latitude</th>
+      <th>longitude</th>
+      <th>linkout</th>
+      <th>acronym</th>
+      <th>city_name</th>
+      <th>name</th>
+      <th>types</th>
+      <th>country_name</th>
       <th>state_name</th>
       <th>id_from</th>
       <th>level</th>
@@ -1170,15 +1177,15 @@ search publications for &#34;nanotechnology&#34;
     <tr>
       <th>0</th>
       <td>grid.412125.1</td>
-      <td>1186</td>
-      <td>[Education]</td>
-      <td>KAU</td>
-      <td>39.250280</td>
-      <td>Saudi Arabia</td>
-      <td>King Abdulaziz University</td>
-      <td>Jeddah</td>
-      <td>[http://www.kau.edu.sa/home_english.aspx]</td>
+      <td>1180</td>
       <td>21.493889</td>
+      <td>39.250280</td>
+      <td>[http://www.kau.edu.sa/home_english.aspx]</td>
+      <td>KAU</td>
+      <td>Jeddah</td>
+      <td>King Abdulaziz University</td>
+      <td>[Education]</td>
+      <td>Saudi Arabia</td>
       <td>NaN</td>
       <td>grid.412125.1</td>
       <td>1</td>
@@ -1186,15 +1193,15 @@ search publications for &#34;nanotechnology&#34;
     <tr>
       <th>1</th>
       <td>grid.261112.7</td>
-      <td>84</td>
-      <td>[Education]</td>
-      <td>NU</td>
-      <td>-71.089180</td>
-      <td>United States</td>
-      <td>Northeastern University</td>
-      <td>Boston</td>
-      <td>[http://www.northeastern.edu/]</td>
+      <td>85</td>
       <td>42.339830</td>
+      <td>-71.089180</td>
+      <td>[http://www.northeastern.edu/]</td>
+      <td>NU</td>
+      <td>Boston</td>
+      <td>Northeastern University</td>
+      <td>[Education]</td>
+      <td>United States</td>
       <td>Massachusetts</td>
       <td>grid.412125.1</td>
       <td>1</td>
@@ -1202,15 +1209,15 @@ search publications for &#34;nanotechnology&#34;
     <tr>
       <th>2</th>
       <td>grid.116068.8</td>
-      <td>62</td>
-      <td>[Education]</td>
-      <td>MIT</td>
-      <td>-71.092110</td>
-      <td>United States</td>
-      <td>Massachusetts Institute of Technology</td>
-      <td>Cambridge</td>
-      <td>[http://web.mit.edu/]</td>
+      <td>61</td>
       <td>42.359820</td>
+      <td>-71.092110</td>
+      <td>[http://web.mit.edu/]</td>
+      <td>MIT</td>
+      <td>Cambridge</td>
+      <td>Massachusetts Institute of Technology</td>
+      <td>[Education]</td>
+      <td>United States</td>
       <td>Massachusetts</td>
       <td>grid.412125.1</td>
       <td>1</td>
@@ -1218,15 +1225,15 @@ search publications for &#34;nanotechnology&#34;
     <tr>
       <th>3</th>
       <td>grid.38142.3c</td>
-      <td>60</td>
-      <td>[Education]</td>
-      <td>NaN</td>
-      <td>-71.116650</td>
-      <td>United States</td>
-      <td>Harvard University</td>
-      <td>Cambridge</td>
-      <td>[http://www.harvard.edu/]</td>
+      <td>59</td>
       <td>42.377052</td>
+      <td>-71.116650</td>
+      <td>[http://www.harvard.edu/]</td>
+      <td>NaN</td>
+      <td>Cambridge</td>
+      <td>Harvard University</td>
+      <td>[Education]</td>
+      <td>United States</td>
       <td>Massachusetts</td>
       <td>grid.412125.1</td>
       <td>1</td>
@@ -1235,14 +1242,14 @@ search publications for &#34;nanotechnology&#34;
       <th>4</th>
       <td>grid.412621.2</td>
       <td>40</td>
-      <td>[Education]</td>
-      <td>QAU</td>
-      <td>73.138885</td>
-      <td>Pakistan</td>
-      <td>Quaid-i-Azam University</td>
-      <td>Islamabad</td>
-      <td>[http://www.qau.edu.pk/]</td>
       <td>33.747223</td>
+      <td>73.138885</td>
+      <td>[http://www.qau.edu.pk/]</td>
+      <td>QAU</td>
+      <td>Islamabad</td>
+      <td>Quaid-i-Azam University</td>
+      <td>[Education]</td>
+      <td>Pakistan</td>
       <td>NaN</td>
       <td>grid.412125.1</td>
       <td>1</td>
@@ -1251,14 +1258,14 @@ search publications for &#34;nanotechnology&#34;
       <th>5</th>
       <td>grid.411340.3</td>
       <td>39</td>
-      <td>[Education]</td>
-      <td>AMU</td>
-      <td>78.077850</td>
-      <td>India</td>
-      <td>Aligarh Muslim University</td>
-      <td>Aligarh</td>
-      <td>[http://www.amu.ac.in/]</td>
       <td>27.917370</td>
+      <td>78.077850</td>
+      <td>[http://www.amu.ac.in/]</td>
+      <td>AMU</td>
+      <td>Aligarh</td>
+      <td>Aligarh Muslim University</td>
+      <td>[Education]</td>
+      <td>India</td>
       <td>Uttar Pradesh</td>
       <td>grid.412125.1</td>
       <td>1</td>
@@ -1267,14 +1274,14 @@ search publications for &#34;nanotechnology&#34;
       <th>6</th>
       <td>grid.56302.32</td>
       <td>36</td>
-      <td>[Education]</td>
-      <td>KSU</td>
-      <td>46.645840</td>
-      <td>Saudi Arabia</td>
-      <td>King Saud University</td>
-      <td>Riyadh</td>
-      <td>[http://ksu.edu.sa/en/]</td>
       <td>24.723982</td>
+      <td>46.645840</td>
+      <td>[http://ksu.edu.sa/en/]</td>
+      <td>KSU</td>
+      <td>Riyadh</td>
+      <td>King Saud University</td>
+      <td>[Education]</td>
+      <td>Saudi Arabia</td>
       <td>NaN</td>
       <td>grid.412125.1</td>
       <td>1</td>
@@ -1283,14 +1290,14 @@ search publications for &#34;nanotechnology&#34;
       <th>7</th>
       <td>grid.33003.33</td>
       <td>35</td>
-      <td>[Education]</td>
-      <td>NaN</td>
-      <td>32.275000</td>
-      <td>Egypt</td>
-      <td>Suez Canal University</td>
-      <td>Ismailia</td>
-      <td>[http://scuegypt.edu.eg/ar/]</td>
       <td>30.622778</td>
+      <td>32.275000</td>
+      <td>[http://scuegypt.edu.eg/ar/]</td>
+      <td>NaN</td>
+      <td>Ismailia</td>
+      <td>Suez Canal University</td>
+      <td>[Education]</td>
+      <td>Egypt</td>
       <td>NaN</td>
       <td>grid.412125.1</td>
       <td>1</td>
@@ -1298,15 +1305,15 @@ search publications for &#34;nanotechnology&#34;
     <tr>
       <th>8</th>
       <td>grid.411818.5</td>
-      <td>34</td>
-      <td>[Education]</td>
-      <td>NaN</td>
-      <td>77.280150</td>
-      <td>India</td>
-      <td>National Islamic University</td>
-      <td>New Delhi</td>
-      <td>[http://jmi.ac.in/]</td>
+      <td>35</td>
       <td>28.561607</td>
+      <td>77.280150</td>
+      <td>[http://jmi.ac.in/]</td>
+      <td>NaN</td>
+      <td>New Delhi</td>
+      <td>National Islamic University</td>
+      <td>[Education]</td>
+      <td>India</td>
       <td>NaN</td>
       <td>grid.412125.1</td>
       <td>1</td>
@@ -1315,14 +1322,14 @@ search publications for &#34;nanotechnology&#34;
       <th>9</th>
       <td>grid.411320.5</td>
       <td>33</td>
-      <td>[Education]</td>
-      <td>NaN</td>
-      <td>39.202843</td>
-      <td>Turkey</td>
-      <td>Fırat University</td>
-      <td>Elâzığ</td>
-      <td>[https://yeni.firat.edu.tr/]</td>
       <td>38.679900</td>
+      <td>39.202843</td>
+      <td>[https://yeni.firat.edu.tr/]</td>
+      <td>NaN</td>
+      <td>Elâzığ</td>
+      <td>Fırat University</td>
+      <td>[Education]</td>
+      <td>Turkey</td>
       <td>NaN</td>
       <td>grid.412125.1</td>
       <td>1</td>
@@ -1331,14 +1338,14 @@ search publications for &#34;nanotechnology&#34;
       <th>10</th>
       <td>grid.412144.6</td>
       <td>31</td>
-      <td>[Education]</td>
-      <td>KKU</td>
-      <td>42.559700</td>
-      <td>Saudi Arabia</td>
-      <td>King Khalid University</td>
-      <td>Abhā</td>
-      <td>[http://www.kku.edu.sa/]</td>
       <td>18.249500</td>
+      <td>42.559700</td>
+      <td>[http://www.kku.edu.sa/]</td>
+      <td>KKU</td>
+      <td>Abhā</td>
+      <td>King Khalid University</td>
+      <td>[Education]</td>
+      <td>Saudi Arabia</td>
       <td>NaN</td>
       <td>grid.412125.1</td>
       <td>1</td>
@@ -1348,42 +1355,47 @@ search publications for &#34;nanotechnology&#34;
 </div></div>
 </div>
 </div>
-<div class="section" id="4.-Building-a-network-of-any-size">
-<h2>4. Building a network of any size<a class="headerlink" href="#4.-Building-a-network-of-any-size" title="Permalink to this headline">¶</a></h2>
-<p>What if we want to retrieve the collaborators of the collaborators?</p>
-<p>In other words, what if we want to generate a larger network, which includes the institutions linked to the collaborating institutions of King Abdulaziz University? If we think of our collaboration data as a <a class="reference external" href="https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)">graph structure</a> with nodes and edges, we can see that the <code class="docutils literal notranslate"><span class="pre">get_collaborators</span></code> function defined above is limited. That’s because it allows to obtain only the objects directly linked to the ‘seed’ GRID. Instead, we want to run
-the same analysis for any GRID ID in our results, <strong>iteratively</strong>, so to generate an N-degrees network where N is chosen by us.</p>
-<p>To this purpose, we can set up a <a class="reference external" href="https://en.wikipedia.org/wiki/Recursion_(computer_science)">recursive</a> function. This function essentially repeats the <code class="docutils literal notranslate"><span class="pre">get_collaborators</span></code> function as many times as needed. A few key points to note: * The <code class="docutils literal notranslate"><span class="pre">maxlevel</span></code> parameter determines how big our network should be (1 = neighbours only, 2 = collaborators of neighbours,e tc..) * We pause 1 second after each iteration to avoid hitting the normal Analytics API quota (~30 requests per minute) * The
-function can generate lots of data! E.g. calling this function with <code class="docutils literal notranslate"><span class="pre">maxlevel=5</span></code> will lead to 10k queries! (note: you can get a rough estimate of the queries via the formula <em>10 to the power of maxlevel-1</em>. That’s because 10 is the number of orgs we extract per iteration, and maxlevel is the number or iterations, minus the first one which generates no extra queries).</p>
+<div class="section" id="3.-Building-a-network-of-any-size">
+<h2>3. Building a network of any size<a class="headerlink" href="#3.-Building-a-network-of-any-size" title="Permalink to this headline">¶</a></h2>
+<p>What if we want to retrieve the collaborators of the collaborators? In other words, what if we want to generate a larger network?</p>
+<p>If we think of our collaboration data as a <a class="reference external" href="https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)">graph structure</a> with nodes and edges, we can see that the <code class="docutils literal notranslate"><span class="pre">get_collaborators</span></code> function defined above is limited. That’s because it allows to obtain only the objects <em>directly</em> linked to the ‘seed’ GRID organization.</p>
+<p>We would like to run the same collaborators-extraction step <strong>iteratively</strong> for any GRID ID in our results, so to generate an N-degrees network where N is chosen by us.</p>
+<p>To this purpose, we can set up a <a class="reference external" href="https://en.wikipedia.org/wiki/Recursion_(computer_science)">recursive</a> function. This function essentially repeats the <code class="docutils literal notranslate"><span class="pre">get_collaborators</span></code> function as many times as needed. Here’s what it looks like:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[62]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="k">def</span> <span class="nf">looper</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">maxlevel</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">thislevel</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span></span><span class="k">def</span> <span class="nf">recursive_network</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">maxlevel</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">thislevel</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="s2">&quot;Recursive function for building an organization collaboration network&quot;</span>
-    <span class="n">collaborators</span> <span class="o">=</span> <span class="n">get_collaborators</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">thislevel</span><span class="p">)</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">get_collaborators</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">thislevel</span><span class="p">)</span>
     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--&quot;</span> <span class="o">*</span> <span class="n">thislevel</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="s2">&quot; :: level =&quot;</span><span class="p">,</span> <span class="n">thislevel</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">thislevel</span> <span class="o">&lt;</span> <span class="n">maxlevel</span><span class="p">:</span>
-        <span class="c1"># first remove the originating grid</span>
-        <span class="n">gridslist</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">collaborators</span><span class="p">[</span><span class="n">collaborators</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">GRIDID</span><span class="p">][</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
-        <span class="n">extra_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">looper</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">maxlevel</span><span class="p">,</span> <span class="n">thislevel</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">gridslist</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">collaborators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">extra_data</span><span class="p">)</span>
+        <span class="c1"># remove the originating grid-id</span>
+        <span class="n">gridslist</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">GRIDID</span><span class="p">][</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+        <span class="n">next_level_results</span> <span class="o">=</span> <span class="p">[</span><span class="n">recursive_network</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">maxlevel</span><span class="p">,</span> <span class="n">thislevel</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">gridslist</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">next_level_results</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="c1"># finally</span>
-        <span class="k">return</span> <span class="n">collaborators</span>
+        <span class="k">return</span> <span class="n">results</span>
 </pre></div>
 </div>
 </div>
+<p>A few key points to note:</p>
+<ul class="simple">
+<li><p><strong>Recursion depth</strong>. The <code class="docutils literal notranslate"><span class="pre">maxlevel</span></code> parameter determines how big our network should be (1 = neighbours only, 2 = collaborators of neighbours,e tc..)</p></li>
+<li><p><strong>API quota</strong>. We pause 1 second after each iteration to avoid hitting the normal Analytics API quota (~30 requests per minute)</p></li>
+<li><p><strong>Data size</strong>. The function can generate lots of data! E.g. calling this function with <code class="docutils literal notranslate"><span class="pre">maxlevel=5</span></code> will lead to 10k queries! (note: you can get a rough estimate of the queries via the formula <em>10 to the power of maxlevel-1</em>. That’s because 10 is the number of orgs we extract per iteration, and maxlevel is the number or iterations, minus the first one which generates no extra queries).</p></li>
+</ul>
 <p>Let’s try this out.</p>
 <p>We can construct a 2-degrees collaboration network starting from King Abdulaziz University. We are extracting 10 organizations per node so our network will have ~100 nodes at the end!</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[63]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">collaborators</span> <span class="o">=</span> <span class="n">looper</span><span class="p">(</span><span class="n">GRIDID</span><span class="p">,</span> <span class="n">maxlevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span></span><span class="n">collaborators</span> <span class="o">=</span> <span class="n">recursive_network</span><span class="p">(</span><span class="n">GRIDID</span><span class="p">,</span> <span class="n">maxlevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="c1"># change column order for readability purposes</span>
 <span class="n">collaborators</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;id_to&quot;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">collaborators</span> <span class="o">=</span> <span class="n">collaborators</span><span class="p">[[</span><span class="s1">&#39;id_from&#39;</span><span class="p">,</span> <span class="s1">&#39;id_to&#39;</span><span class="p">,</span> <span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;acronym&#39;</span><span class="p">,</span> <span class="s1">&#39;city_name&#39;</span><span class="p">,</span> <span class="s1">&#39;state_name&#39;</span><span class="p">,</span> <span class="s1">&#39;country_name&#39;</span><span class="p">,</span> <span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="s1">&#39;longitude&#39;</span><span class="p">,</span> <span class="s1">&#39;linkout&#39;</span><span class="p">,</span>  <span class="s1">&#39;types&#39;</span> <span class="p">]]</span>
@@ -1410,7 +1422,7 @@ function can generate lots of data! E.g. calling this function with <code class=
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[63]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1453,7 +1465,7 @@ function can generate lots of data! E.g. calling this function with <code class=
       <td>grid.412125.1</td>
       <td>grid.412125.1</td>
       <td>1</td>
-      <td>1186</td>
+      <td>1180</td>
       <td>King Abdulaziz University</td>
       <td>KAU</td>
       <td>Jeddah</td>
@@ -1469,7 +1481,7 @@ function can generate lots of data! E.g. calling this function with <code class=
       <td>grid.412125.1</td>
       <td>grid.261112.7</td>
       <td>1</td>
-      <td>84</td>
+      <td>85</td>
       <td>Northeastern University</td>
       <td>NU</td>
       <td>Boston</td>
@@ -1485,7 +1497,7 @@ function can generate lots of data! E.g. calling this function with <code class=
       <td>grid.412125.1</td>
       <td>grid.116068.8</td>
       <td>1</td>
-      <td>62</td>
+      <td>61</td>
       <td>Massachusetts Institute of Technology</td>
       <td>MIT</td>
       <td>Cambridge</td>
@@ -1501,7 +1513,7 @@ function can generate lots of data! E.g. calling this function with <code class=
       <td>grid.412125.1</td>
       <td>grid.38142.3c</td>
       <td>1</td>
-      <td>60</td>
+      <td>59</td>
       <td>Harvard University</td>
       <td>NaN</td>
       <td>Cambridge</td>
@@ -1533,19 +1545,23 @@ function can generate lots of data! E.g. calling this function with <code class=
 </div></div>
 </div>
 </div>
-<div class="section" id="5.-Visualizing-the-network">
-<h2>5. Visualizing the network<a class="headerlink" href="#5.-Visualizing-the-network" title="Permalink to this headline">¶</a></h2>
-<p>In order to get an overview of the network data we can build a visualization using the <a class="reference external" href="https://pyvis.readthedocs.io/en/latest/tutorial.html">pyvis</a> library. In particular, in order to quickly identify the key players in the network, we can build a visualization where the size of the nodes is proportional to the proximity to our ‘seed’ organization, and the strenght of the collaboration is proportional to the size of the edges (= how many publications two orgs have in common).</p>
-<p>A custom version of pyvis is already included in <a class="reference external" href="https://github.com/digital-science/dimcli/blob/master/dimcli/core/extras.py">dimcli.core.extras</a> and is called <code class="docutils literal notranslate"><span class="pre">NetworkViz</span></code> (note: this custom version only fixes a bug that prevents pyvis graphs to be displayed online with Google Colab).</p>
-<p>This is what the code below does:</p>
+<div class="section" id="4.-Visualizing-the-network">
+<h2>4. Visualizing the network<a class="headerlink" href="#4.-Visualizing-the-network" title="Permalink to this headline">¶</a></h2>
+<p>In order to get an overview of the network data we can visualize it using the Python <a class="reference external" href="https://pyvis.readthedocs.io/en/latest/tutorial.html">pyvis</a> library. A custom version of pyvis is already included in <a class="reference external" href="https://github.com/digital-science/dimcli/blob/master/dimcli/core/extras.py">dimcli.core.extras</a> and is called <code class="docutils literal notranslate"><span class="pre">NetworkViz</span></code> (note: this custom version only fixes a bug that prevents pyvis graphs to be displayed online with Google Colab).</p>
+<p>Network visualizations can be very complex, but to begin with we can focus on representing two key aspects:</p>
 <ul class="simple">
-<li><p>After creating a <code class="docutils literal notranslate"><span class="pre">NetworkViz</span></code> object, we fill it in with the <code class="docutils literal notranslate"><span class="pre">add_node</span></code> and <code class="docutils literal notranslate"><span class="pre">add_edge</span></code> method. The full list of attributes for nodes and edges are described in <a class="reference external" href="https://pyvis.readthedocs.io/en/latest/tutorial.html">pyvis</a>.</p></li>
-<li><p>We generate colors for the chart, using the built-in <a class="reference external" href="https://plot.ly/python/builtin-colorscales/">plotly color scales</a>. Try changing them!</p></li>
-<li><p>The <code class="docutils literal notranslate"><span class="pre">repulsion</span></code> parameter is set to 300, but for bigger charts you may want to increase that..</p></li>
-<li><p>Tip: by experimenting with the way node sizes/colors are generated to the underlying data, it is possible to highlight different dimensions eg <em>countries</em> or <em>types</em> of the organizations.</p></li>
+<li><p><strong>Core collaborators</strong>. The size of the nodes should be proportional to the proximity to our ‘seed’ organization. This will make it easier to quickly identify the key players in the network</p></li>
+<li><p><strong>Number of publications</strong>. The strenght of the collaboration should be proportional to the size of the edges (= how many publications two orgs have in common)</p></li>
+</ul>
+<p>In a nutshell, this is what the code below does:</p>
+<ul class="simple">
+<li><p>After creating a <code class="docutils literal notranslate"><span class="pre">NetworkViz</span></code> object, we add nodes and edges from our dataset using the <code class="docutils literal notranslate"><span class="pre">add_node</span></code> and <code class="docutils literal notranslate"><span class="pre">add_edge</span></code> method.</p></li>
+<li><p>The Network <code class="docutils literal notranslate"><span class="pre">repulsion</span></code> parameter is set to 300, but for bigger charts you may want to increase that.</p></li>
+<li><p>Nodes and edges in pyvis can have a number of attributes. The full list of attributes can be found in the <a class="reference external" href="https://pyvis.readthedocs.io/en/latest/tutorial.html">pyvis documentation</a>.</p></li>
+<li><p>In order to have some nice colors, we take advantage of the built-in <a class="reference external" href="https://plot.ly/python/builtin-colorscales/">plotly color scales</a>. Try changing them!</p></li>
 </ul>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[64]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1564,7 +1580,11 @@ function can generate lots of data! E.g. calling this function with <code class=
     <span class="n">g</span><span class="o">.</span><span class="n">toggle_hide_edges_on_drag</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">g</span><span class="o">.</span><span class="n">barnes_hut</span><span class="p">()</span>
     <span class="n">g</span><span class="o">.</span><span class="n">repulsion</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
-    <span class="c1"># g.show_buttons() # in html-standalone mode, this command show viz controls</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">heading</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Collaboration network for &#39;</span><span class="si">{</span><span class="n">GRIDID</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">gridname</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+    <span class="c1"># reuse plotly color palette</span>
+    <span class="n">palette</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">diverging</span><span class="o">.</span><span class="n">Temps</span>
+    <span class="c1"># g.show_buttons() # in html-standalone mode, this command shows viz controls</span>
+
 
     <span class="c1">#</span>
     <span class="c1"># create nodes and edges</span>
@@ -1575,8 +1595,6 @@ function can generate lots of data! E.g. calling this function with <code class=
     <span class="c1"># remove internal collaborations stats</span>
     <span class="n">edges</span> <span class="o">=</span> <span class="n">collaborator_df</span><span class="p">[(</span><span class="n">collaborator_df</span><span class="p">[</span><span class="s1">&#39;id_to&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">collaborator_df</span><span class="p">[</span><span class="s1">&#39;id_from&#39;</span><span class="p">])]</span>
 
-    <span class="c1"># reuse plotly color palette</span>
-    <span class="n">palette</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">diverging</span><span class="o">.</span><span class="n">Temps</span>
 
     <span class="c1">#</span>
     <span class="c1"># add nodes</span>
@@ -1607,12 +1625,12 @@ function can generate lots of data! E.g. calling this function with <code class=
             <span class="n">shape</span> <span class="o">=</span> <span class="s2">&quot;dot&quot;</span><span class="p">,</span>
         <span class="p">)</span>
 
-    <span class="c1"># store the max value for normalization operations later</span>
-    <span class="n">edges_maxcount</span> <span class="o">=</span> <span class="n">edges</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
 
     <span class="c1">#</span>
     <span class="c1"># add edges</span>
     <span class="c1">#</span>
+
+    <span class="n">edges_maxcount</span> <span class="o">=</span> <span class="n">edges</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
 
     <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">edges</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
       <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;id_from&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;id_to&#39;</span><span class="p">],</span>
@@ -1630,14 +1648,16 @@ function can generate lots of data! E.g. calling this function with <code class=
 
     <span class="k">return</span> <span class="n">g</span>
 
-<span class="c1"># run the function</span>
+<span class="c1">#</span>
+<span class="c1"># finall, run the viz builder</span>
+<span class="c1">#</span>
 <span class="n">g</span> <span class="o">=</span> <span class="n">build_visualization</span><span class="p">(</span><span class="n">collaborators</span><span class="p">)</span>
 <span class="n">g</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;network_</span><span class="si">{</span><span class="n">GRIDID</span><span class="si">}</span><span class="s2">.html&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[64]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1650,11 +1670,12 @@ function can generate lots of data! E.g. calling this function with <code class=
 ></iframe></div>
 </div>
 </div>
-<div class="section" id="6.-Addendum:-showing-only-‘Government’-collaborators">
-<h2>6. Addendum: showing only ‘Government’ collaborators<a class="headerlink" href="#6.-Addendum:-showing-only-‘Government’-collaborators" title="Permalink to this headline">¶</a></h2>
-<p>What if we want to show a collaboration network only for a specific GRID organization type? A simple facet query will show us what types are available:</p>
+<div class="section" id="5.-Addendum:-showing-only-‘Government’-collaborators">
+<h2>5. Addendum: showing only ‘Government’ collaborators<a class="headerlink" href="#5.-Addendum:-showing-only-‘Government’-collaborators" title="Permalink to this headline">¶</a></h2>
+<p>What if we want to show a collaboration network focusing only on ‘government’ organizations?</p>
+<p>That’s pretty easy to do, since the GRID database includes information about <strong>organization types</strong>. We can easily see what types are available using the API and a <code class="docutils literal notranslate"><span class="pre">facet</span></code> query:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[65]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1667,11 +1688,12 @@ function can generate lots of data! E.g. calling this function with <code class=
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Types: 13
+Returned Types: 8
+Time: 0.4796102046966553s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[65]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1701,84 +1723,56 @@ Returned Types: 13
     <tr>
       <th>0</th>
       <td>Company</td>
-      <td>27922</td>
+      <td>27940</td>
     </tr>
     <tr>
       <th>1</th>
       <td>Education</td>
-      <td>19431</td>
+      <td>19564</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>Healthcare</td>
-      <td>12370</td>
+      <td>Nonprofit</td>
+      <td>12498</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>Nonprofit</td>
-      <td>11991</td>
+      <td>Healthcare</td>
+      <td>12433</td>
     </tr>
     <tr>
       <th>4</th>
       <td>Facility</td>
-      <td>8420</td>
+      <td>8539</td>
     </tr>
     <tr>
       <th>5</th>
       <td>Other</td>
-      <td>7832</td>
+      <td>7861</td>
     </tr>
     <tr>
       <th>6</th>
       <td>Government</td>
-      <td>5694</td>
+      <td>5732</td>
     </tr>
     <tr>
       <th>7</th>
       <td>Archive</td>
-      <td>2699</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>Education,Company</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>Education,Facility</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>Education,Healthcare</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>Archive,Nonprofit</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>Education,Other</td>
-      <td>1</td>
+      <td>2716</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
-<p>Now we can pick one of those types and prefilter the results of the <code class="docutils literal notranslate"><span class="pre">get_collaborators</span></code> function above.</p>
-<p>In order to do this we can modify the API query so that</p>
+<p>The steps are the following:</p>
 <ul class="simple">
-<li><p>organizations with the selected type are included: <code class="docutils literal notranslate"><span class="pre">research_orgs.types</span> <span class="pre">in</span> <span class="pre">[&quot;{}&quot;]</span></code></p></li>
-<li><p>more results get returned: <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">research_orgs</span> <span class="pre">limit</span> <span class="pre">50</span></code> to ensure we still have enough results after removing the ones that don’t have the chosen ‘type’</p></li>
+<li><p><strong>New query filter</strong>. We rewrite the <code class="docutils literal notranslate"><span class="pre">get_collaborators</span></code> function we created in section 2 above, so that the API query includes a filter for organizations with the selected type only: <code class="docutils literal notranslate"><span class="pre">..</span> <span class="pre">and</span> <span class="pre">research_orgs.types</span> <span class="pre">in</span> <span class="pre">[&quot;Government&quot;]...</span></code></p></li>
+<li><p><strong>Get more results</strong>. We increase the number of results returned: <code class="docutils literal notranslate"><span class="pre">..return</span> <span class="pre">research_orgs</span> <span class="pre">limit</span> <span class="pre">50</span></code>. This is to ensure we still have enough results after removing the ones that don’t have the chosen ‘type’</p></li>
+<li><p><strong>Remove unwanted data</strong>. The new query filter <code class="docutils literal notranslate"><span class="pre">research_orgs.types</span> <span class="pre">in</span> <span class="pre">[&quot;{}&quot;]</span></code> will return also publications with multiple authors/affiliations, even though only one of them has the desired ‘type’. So an extra step is required and this is achieved via the <code class="docutils literal notranslate"><span class="pre">keep_type</span></code> function below. This function simply filters out all unwanted organizations data after they’re retrieved from the API.</p></li>
 </ul>
-<p><strong>One final step</strong></p>
-<p>The query by itself is not enough to get what we want though, because the filter <code class="docutils literal notranslate"><span class="pre">research_orgs.types</span> <span class="pre">in</span> <span class="pre">[&quot;{}&quot;]</span></code> will return also publications with multiple authors/affiliations, even though only one of them has the desired ‘type’.</p>
-<p>So an extra step is required and this is achieved via the <code class="docutils literal notranslate"><span class="pre">keep_type</span></code> function below. This function simply filters out all unwanted organizations data after they’re retrieved from the API.</p>
-<p>That’s it! Run the cell below to generata a new visualization.</p>
+<p>That’s it! Run the cell below to generate a new visualization showing only “Government” collaborators. Or try changing the value of <code class="docutils literal notranslate"><span class="pre">GRID_TYPE</span></code> to see different results.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[66]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1792,7 +1786,7 @@ Returned Types: 13
 <span class="s2">               and research_orgs.types in [&quot;</span><span class="si">{}</span><span class="s2">&quot;]</span>
 <span class="s2">            return research_orgs limit 50&quot;&quot;&quot;</span>
 
-<span class="k">def</span> <span class="nf">keep_type</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">a_type</span><span class="p">,</span> <span class="n">orgid</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">keep_only_type</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">a_type</span><span class="p">,</span> <span class="n">orgid</span><span class="p">):</span>
     <span class="n">clean_list</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">research_orgs</span><span class="p">:</span>
         <span class="c1"># include also originating GRID to ensure chart is complete</span>
@@ -1801,30 +1795,35 @@ Returned Types: 13
     <span class="n">data</span><span class="o">.</span><span class="n">json</span><span class="p">[</span><span class="s1">&#39;research_orgs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">clean_list</span>
     <span class="k">return</span> <span class="n">data</span>
 
+
 <span class="k">def</span> <span class="nf">get_collaborators</span><span class="p">(</span><span class="n">orgid</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">printquery</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="s2">&quot;New version that filters using org types as well&quot;</span>
     <span class="k">if</span> <span class="n">TOPIC</span><span class="p">:</span>
         <span class="n">TOPIC_CLAUSE</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;for &quot;</span><span class="si">{</span><span class="n">TOPIC</span><span class="si">}</span><span class="s2">&quot; &quot;&quot;&quot;</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">TOPIC_CLAUSE</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-    <span class="n">searchstring</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">TOPIC_CLAUSE</span><span class="p">,</span> <span class="n">YEAR_START</span><span class="p">,</span> <span class="n">YEAR_END</span><span class="p">,</span> <span class="n">orgid</span><span class="p">,</span> <span class="n">GRID_TYPE</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">printquery</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">searchstring</span><span class="p">)</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">searchstring</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="c1"># new bit for including only types we want</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">keep_type</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;Government&quot;</span><span class="p">,</span> <span class="n">orgid</span><span class="p">)</span>
+    <span class="c1"># include also the GRID_TYPE</span>
+    <span class="n">query_full</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">TOPIC_CLAUSE</span><span class="p">,</span> <span class="n">YEAR_START</span><span class="p">,</span> <span class="n">YEAR_END</span><span class="p">,</span> <span class="n">orgid</span><span class="p">,</span> <span class="n">GRID_TYPE</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">printquery</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">query_full</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query_full</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="c1"># remove results with unwanted types</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">keep_only_type</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;Government&quot;</span><span class="p">,</span> <span class="n">orgid</span><span class="p">)</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;id_from&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">orgid</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">level</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">df</span>
 
 
+<span class="c1">#</span>
 <span class="c1"># RUN THE RECURSIVE QUERY (same code as above)</span>
-
-<span class="n">collaborators</span> <span class="o">=</span> <span class="n">looper</span><span class="p">(</span><span class="n">GRIDID</span><span class="p">,</span> <span class="n">maxlevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="n">collaborators</span> <span class="o">=</span> <span class="n">recursive_network</span><span class="p">(</span><span class="n">GRIDID</span><span class="p">,</span> <span class="n">maxlevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">collaborators</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;id_to&quot;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">collaborators</span> <span class="o">=</span> <span class="n">collaborators</span><span class="p">[[</span><span class="s1">&#39;id_from&#39;</span><span class="p">,</span> <span class="s1">&#39;id_to&#39;</span><span class="p">,</span> <span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;acronym&#39;</span><span class="p">,</span> <span class="s1">&#39;city_name&#39;</span><span class="p">,</span> <span class="s1">&#39;country_name&#39;</span><span class="p">,</span> <span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="s1">&#39;longitude&#39;</span><span class="p">,</span> <span class="s1">&#39;linkout&#39;</span><span class="p">,</span>  <span class="s1">&#39;types&#39;</span> <span class="p">]]</span>
 
+<span class="c1">#</span>
 <span class="c1"># BUILD VIZ</span>
-
+<span class="c1">#</span>
 <span class="n">g</span> <span class="o">=</span> <span class="n">build_visualization</span><span class="p">(</span><span class="n">collaborators</span><span class="p">)</span>
 <span class="n">g</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;network_</span><span class="si">{</span><span class="n">GRIDID</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">GRID_TYPE</span><span class="si">}</span><span class="s2">.html&quot;</span><span class="p">)</span>
 
@@ -1847,7 +1846,7 @@ Returned Types: 13
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[66]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1860,8 +1859,8 @@ Returned Types: 13
 ></iframe></div>
 </div>
 </div>
-<div class="section" id="7.-Conclusions">
-<h2>7. Conclusions<a class="headerlink" href="#7.-Conclusions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Conclusions">
+<h2>Conclusions<a class="headerlink" href="#Conclusions" title="Permalink to this headline">¶</a></h2>
 <p>In this tutorial we have demonstrated how to generate an organization ‘collaborations network diagram’ using the Dimensions API. Starting from a research organization, we extracted information about other collaborating organizations, based on shared publications data, a topic and a time-frame.</p>
 <p>An example of the resulting network diagram <a class="reference external" href="http://api-sample-data.dimensions.ai/dataviz-exports/3-Organizations-Collaboration-Network/network_2_levels_grid.412125.1.html">can be seen here</a>.</p>
 <p>Here’s some ideas for further experimentation:</p>

@@ -1,5 +1,13 @@
 # Changelog - Dimensions API Lab 
 
+
+### 2020-08-13
+
+Updates:
+
+* [Building an Organizations Collaboration Network](https://api-lab.dimensions.ai/cookbooks/8-organizations/3-Organizations-Collaboration-Network.html)
+
+
 ### 2020-08-05
 
 New notebooks:
