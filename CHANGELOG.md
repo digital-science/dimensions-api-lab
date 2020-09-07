@@ -1,6 +1,14 @@
 # Changelog - Dimensions API Lab 
 
 
+### 2020-09-07
+
+Updates:
+
+* All notebooks have been updated so that they use `getpass` in order to get API log in credentials
+* Updated all notebooks using `px.histogram` in order to fix a bug with the histogram function
+
+
 ### 2020-08-13
 
 Updates:

@@ -302,7 +302,7 @@
 <p class="caption"><span class="caption-text">Publications</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="General-statistics.html">General Publication Statistics about a Research Organization</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Load-libraries-and-log-in">Load libraries and log in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Prerequisites">Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Choose-a-Research-Organization">Choose a Research Organization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Publications-output-by-year">Publications output by year</a></li>
 <li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Publications-most-cited-in-last-2-years">Publications most cited in last 2 years</a></li>
@@ -347,7 +347,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Journal-Profile-1-Gathering-data.html">Journal Profiling Part 1: Getting the Data</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-1-Gathering-data.html#Prerequisites:-Installing-the-Dimensions-Library-and-Logging-in">Prerequisites: Installing the Dimensions Library and Logging in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-1-Gathering-data.html#Prerequisites">Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Journal-Profile-1-Gathering-data.html#Selecting-a-Journal-and-Extracting-All-Publications-Metadata">Selecting a Journal and Extracting All Publications Metadata</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Journal-Profile-1-Gathering-data.html#Some-stats-about-authors">Some stats about authors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Journal-Profile-1-Gathering-data.html#A-quick-look-at-authors-without-a-Dimensions-Researcher-ID">A quick look at authors <em>without</em> a Dimensions Researcher ID</a><ul>
@@ -358,7 +358,7 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Journal Profiling Part 2: Impact Metrics</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#Prerequisites:-Installing-the-Dimensions-Library-and-Logging-in">Prerequisites: Installing the Dimensions Library and Logging in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Prerequisites">Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Measuring-the-Impact-of-Researchers-within-a-Journal">Measuring the Impact of Researchers within a Journal</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#Load-the-publications-and-authors-data-previously-saved">Load the publications and authors data previously saved</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#Isolate-the-Researchers-data-(=-authors-with-an-ID)">Isolate the Researchers data (= authors with an ID)</a></li>
@@ -948,66 +948,44 @@ div.rendered_html tbody tr:hover {
 <li><p>Enrich it by building a dataset focusing on their impact in terms of no of papers, citations etc..</p></li>
 <li><p>Visualize the results with plotly to have a quick overview of the results</p></li>
 </ul>
-<div class="section" id="Prerequisites:-Installing-the-Dimensions-Library-and-Logging-in">
-<h2>Prerequisites: Installing the Dimensions Library and Logging in<a class="headerlink" href="#Prerequisites:-Installing-the-Dimensions-Library-and-Logging-in" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>This notebook assumes you have installed the <a class="reference external" href="https://pypi.org/project/dimcli/">Dimcli</a> library and are familiar with the <em>Getting Started</em> tutorial.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span>pip install dimcli plotly tqdm -U --quiet
 
-<span></span><span class="c1"># @markdown # Get the API library and login</span>
-<span class="c1"># @markdown Click the &#39;play&#39; button on the left (or shift+enter) after entering your API credentials</span>
-
-<span class="n">username</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1">#@param {type: &quot;string&quot;}</span>
-<span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1">#@param {type: &quot;string&quot;}</span>
-<span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;https://app.dimensions.ai&quot;</span> <span class="c1">#@param {type: &quot;string&quot;}</span>
-
-
-<span class="o">!</span>pip install dimcli plotly tqdm -U --quiet
 <span class="kn">import</span> <span class="nn">dimcli</span>
 <span class="kn">from</span> <span class="nn">dimcli.shortcuts</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">)</span>
-<span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
-
-<span class="c1">#</span>
-<span class="c1"># load common libraries</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">pandas.io.json</span> <span class="kn">import</span> <span class="n">json_normalize</span>
-<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span> <span class="k">as</span> <span class="n">progress</span>
-
-<span class="c1">#</span>
-<span class="c1"># charts libs</span>
-<span class="c1"># import plotly_express as px</span>
 <span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
   <span class="c1"># make js dependecies local / needed by html exports</span>
   <span class="kn">from</span> <span class="nn">plotly.offline</span> <span class="kn">import</span> <span class="n">init_notebook_mode</span>
   <span class="n">init_notebook_mode</span><span class="p">(</span><span class="n">connected</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="c1">#</span>
-<span class="c1"># create output data folder</span>
-<span class="n">FOLDER_NAME</span> <span class="o">=</span> <span class="s2">&quot;journal-profile-data&quot;</span>
-<span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">FOLDER_NAME</span><span class="p">)):</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">FOLDER_NAME</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="n">filename_dot_csv</span><span class="p">):</span>
-    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">FOLDER_NAME</span><span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="n">filename_dot_csv</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">Logging in..&quot;</span><span class="p">)</span>
+<span class="c1"># https://github.com/digital-science/dimcli#authentication</span>
+<span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;https://app.dimensions.ai&quot;</span>
+<span class="k">if</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+  <span class="kn">import</span> <span class="nn">getpass</span>
+  <span class="n">USERNAME</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;Username: &#39;</span><span class="p">)</span>
+  <span class="n">PASSWORD</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;Password: &#39;</span><span class="p">)</span>
+  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">USERNAME</span><span class="p">,</span> <span class="n">PASSWORD</span><span class="p">,</span> <span class="n">ENDPOINT</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="n">USERNAME</span><span class="p">,</span> <span class="n">PASSWORD</span>  <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
+  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">USERNAME</span><span class="p">,</span> <span class="n">PASSWORD</span><span class="p">,</span> <span class="n">ENDPOINT</span><span class="p">)</span>
+<span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-DimCli v0.6.8.1 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (method: dsl.ini file)
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1027,6 +1005,34 @@ require(['plotly'], function(Plotly) {
 }
 </script></div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+==
+Logging in..
+Dimcli - Dimensions API Client (v0.7.4.2)
+Connected to: https://app.dimensions.ai - DSL v1.27
+Method: dsl.ini file
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># create output data folder</span>
+<span class="n">FOLDER_NAME</span> <span class="o">=</span> <span class="s2">&quot;journal-profile-data&quot;</span>
+<span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">FOLDER_NAME</span><span class="p">)):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">FOLDER_NAME</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="n">filename_dot_csv</span><span class="p">):</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">FOLDER_NAME</span><span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="n">filename_dot_csv</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="Measuring-the-Impact-of-Researchers-within-a-Journal">
 <h2>Measuring the Impact of Researchers within a Journal<a class="headerlink" href="#Measuring-the-Impact-of-Researchers-within-a-Journal" title="Permalink to this headline">¶</a></h2>
@@ -1037,7 +1043,7 @@ require(['plotly'], function(Plotly) {
 <p><strong>NOTE</strong> If you are using Google Colab or don’t have the data available, just do the following: 1. open up the ‘Files’ panel in Google Colab and create a new folder <code class="docutils literal notranslate"><span class="pre">journal-profile-data</span></code> 2. grab this <a class="reference external" href="https://github.com/digital-science/dimensions-api-lab/tree/master/cookbooks/2-publications/journal-profile-data.zip">file</a>, unzip it, open the enclosed folder and upload the files called <code class="docutils literal notranslate"><span class="pre">1_publications.csv</span></code> and <code class="docutils literal notranslate"><span class="pre">1_publications_authors.csv</span></code> to Google Colab (‘Upload’ menu or also by
 dragging then inside the panel window) 3. move the files inside the <code class="docutils literal notranslate"><span class="pre">journal-profile-data</span></code> folder you just created</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1047,7 +1053,7 @@ dragging then inside the panel window) 3. move the files inside the <code class=
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1060,8 +1066,8 @@ dragging then inside the panel window) 3. move the files inside the <code class=
 </div>
 <div class="section" id="Isolate-the-Researchers-data-(=-authors-with-an-ID)">
 <h3>Isolate the Researchers data (= authors with an ID)<a class="headerlink" href="#Isolate-the-Researchers-data-(=-authors-with-an-ID)" title="Permalink to this headline">¶</a></h3>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1071,190 +1077,12 @@ dragging then inside the panel window) 3. move the files inside the <code class=
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Researchers total: 33377
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>first_name</th>
-      <th>last_name</th>
-      <th>initials</th>
-      <th>corresponding</th>
-      <th>orcid</th>
-      <th>current_organization_id</th>
-      <th>researcher_id</th>
-      <th>affiliations</th>
-      <th>is_bogus</th>
-      <th>pub_id</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>48</th>
-      <td>Julien</td>
-      <td>Bryois</td>
-      <td>0.0</td>
-      <td>0</td>
-      <td>['0000-0002-4747-2166']</td>
-      <td>grid.4714.6</td>
-      <td>ur.0666011146.86</td>
-      <td>[{'id': 'grid.4714.6', 'name': 'Karolinska Ins...</td>
-      <td>0</td>
-      <td>pub.1127148454</td>
-    </tr>
-    <tr>
-      <th>49</th>
-      <td>Nathan G.</td>
-      <td>Skene</td>
-      <td>0.0</td>
-      <td>0</td>
-      <td>['0000-0002-6807-3180']</td>
-      <td>grid.4714.6</td>
-      <td>ur.0720776104.57</td>
-      <td>[{'id': 'grid.4714.6', 'name': 'Karolinska Ins...</td>
-      <td>0</td>
-      <td>pub.1127148454</td>
-    </tr>
-    <tr>
-      <th>52</th>
-      <td>Hunna J.</td>
-      <td>Watson</td>
-      <td>0.0</td>
-      <td>0</td>
-      <td>['0000-0001-8405-381X']</td>
-      <td>grid.10698.36</td>
-      <td>ur.01330130651.90</td>
-      <td>[{'id': 'grid.10698.36', 'name': 'University o...</td>
-      <td>0</td>
-      <td>pub.1127148454</td>
-    </tr>
-    <tr>
-      <th>53</th>
-      <td>Zijing</td>
-      <td>Liu</td>
-      <td>0.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>grid.7445.2</td>
-      <td>ur.016105221567.82</td>
-      <td>[{'id': 'grid.7445.2', 'name': 'Imperial Colle...</td>
-      <td>0</td>
-      <td>pub.1127148454</td>
-    </tr>
-    <tr>
-      <th>57</th>
-      <td>Leo</td>
-      <td>Brueggeman</td>
-      <td>0.0</td>
-      <td>0</td>
-      <td>['0000-0002-3586-3442']</td>
-      <td>grid.214572.7</td>
-      <td>ur.01254266166.55</td>
-      <td>[{'id': 'grid.214572.7', 'name': 'University o...</td>
-      <td>0</td>
-      <td>pub.1127148454</td>
-    </tr>
-    <tr>
-      <th>58</th>
-      <td>Gerome</td>
-      <td>Breen</td>
-      <td>0.0</td>
-      <td>0</td>
-      <td>['0000-0003-2053-1792']</td>
-      <td>grid.13097.3c</td>
-      <td>ur.0654201533.32</td>
-      <td>[{'id': 'grid.13097.3c', 'name': "King's Colle...</td>
-      <td>0</td>
-      <td>pub.1127148454</td>
-    </tr>
-    <tr>
-      <th>59</th>
-      <td>Cynthia M.</td>
-      <td>Bulik</td>
-      <td>0.0</td>
-      <td>0</td>
-      <td>['0000-0001-7772-3264']</td>
-      <td>grid.10698.36</td>
-      <td>ur.01104743131.27</td>
-      <td>[{'id': 'grid.4714.6', 'name': 'Karolinska Ins...</td>
-      <td>0</td>
-      <td>pub.1127148454</td>
-    </tr>
-    <tr>
-      <th>60</th>
-      <td>Ernest</td>
-      <td>Arenas</td>
-      <td>0.0</td>
-      <td>0</td>
-      <td>['0000-0003-0197-6577']</td>
-      <td>grid.4714.6</td>
-      <td>ur.0611665665.63</td>
-      <td>[{'id': 'grid.4714.6', 'name': 'Karolinska Ins...</td>
-      <td>0</td>
-      <td>pub.1127148454</td>
-    </tr>
-    <tr>
-      <th>61</th>
-      <td>Jens</td>
-      <td>Hjerling-Leffler</td>
-      <td>0.0</td>
-      <td>True</td>
-      <td>['0000-0002-4539-1776']</td>
-      <td>grid.4714.6</td>
-      <td>ur.01014226210.16</td>
-      <td>[{'id': 'grid.4714.6', 'name': 'Karolinska Ins...</td>
-      <td>0</td>
-      <td>pub.1127148454</td>
-    </tr>
-    <tr>
-      <th>62</th>
-      <td>Patrick F.</td>
-      <td>Sullivan</td>
-      <td>0.0</td>
-      <td>True</td>
-      <td>['0000-0002-6619-873X']</td>
-      <td>grid.10698.36</td>
-      <td>ur.015012714437.80</td>
-      <td>[{'id': 'grid.4714.6', 'name': 'Karolinska Ins...</td>
-      <td>0</td>
-      <td>pub.1127148454</td>
-    </tr>
-  </tbody>
-</table>
-</div></div>
-</div>
 </div>
 <div class="section" id="Enrich-the-data-with-Impact-Statistics">
 <h3>Enrich the data with Impact Statistics<a class="headerlink" href="#Enrich-the-data-with-Impact-Statistics" title="Permalink to this headline">¶</a></h3>
 <p>First, let’s pivot on the researcher ID field to eliminate duplicates and count them</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1264,88 +1092,6 @@ Researchers total: 33377
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>researcher_id</th>
-      <th>pubs</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>ur.0723426172.10</td>
-      <td>62</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>ur.01277776417.51</td>
-      <td>45</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>ur.01247426430.47</td>
-      <td>33</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>ur.01313145634.66</td>
-      <td>32</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>ur.01317433110.75</td>
-      <td>32</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>ur.0641525362.39</td>
-      <td>31</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>ur.01264737414.70</td>
-      <td>30</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>ur.014377465057.81</td>
-      <td>28</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>ur.0637651205.48</td>
-      <td>28</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>ur.01220453202.22</td>
-      <td>27</td>
-    </tr>
-  </tbody>
-</table>
-</div></div>
-</div>
 <p>Second, for each researcher ID we can query all of his/her publications so to calculate the following metrics:</p>
 <ul class="simple">
 <li><p>citations median</p></li>
@@ -1353,8 +1099,8 @@ Researchers total: 33377
 <li><p>last publication year</p></li>
 </ul>
 <p>Also, we add a new field with the Dimensions URL of the researcher, as it can be handy later on to open up its profile page online.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1396,161 +1142,9 @@ Researchers total: 33377
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "8225d298991c4bc189fabd6deec3be7e", "version_major": 2, "version_minor": 0}</script></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-
-Researchers total: 18524
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>researcher_id</th>
-      <th>pubs</th>
-      <th>full_name</th>
-      <th>citations_mean</th>
-      <th>altmetric_mean</th>
-      <th>last_pub_year</th>
-      <th>url</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>ur.0723426172.10</td>
-      <td>62</td>
-      <td>Kari Stefansson</td>
-      <td>107.516129</td>
-      <td>229.129032</td>
-      <td>2020</td>
-      <td>https://app.dimensions.ai/discover/publication...</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>ur.01277776417.51</td>
-      <td>45</td>
-      <td>Unnur Thorsteinsdottir</td>
-      <td>81.000000</td>
-      <td>159.555556</td>
-      <td>2019</td>
-      <td>https://app.dimensions.ai/discover/publication...</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>ur.01247426430.47</td>
-      <td>33</td>
-      <td>Gudmar Thorleifsson</td>
-      <td>80.818182</td>
-      <td>170.424242</td>
-      <td>2019</td>
-      <td>https://app.dimensions.ai/discover/publication...</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>ur.01313145634.66</td>
-      <td>32</td>
-      <td>Andres Metspalu</td>
-      <td>170.562500</td>
-      <td>362.875000</td>
-      <td>2019</td>
-      <td>https://app.dimensions.ai/discover/publication...</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>ur.01317433110.75</td>
-      <td>32</td>
-      <td>Caroline Hayward</td>
-      <td>136.843750</td>
-      <td>298.468750</td>
-      <td>2020</td>
-      <td>https://app.dimensions.ai/discover/publication...</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>ur.0641525362.39</td>
-      <td>31</td>
-      <td>Gonçalo R Abecasis</td>
-      <td>126.548387</td>
-      <td>144.290323</td>
-      <td>2019</td>
-      <td>https://app.dimensions.ai/discover/publication...</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>ur.01264737414.70</td>
-      <td>30</td>
-      <td>Tõnu Esko</td>
-      <td>153.133333</td>
-      <td>346.000000</td>
-      <td>2020</td>
-      <td>https://app.dimensions.ai/discover/publication...</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>ur.014377465057.81</td>
-      <td>28</td>
-      <td>Benjamin M. Neale</td>
-      <td>247.250000</td>
-      <td>178.392857</td>
-      <td>2020</td>
-      <td>https://app.dimensions.ai/discover/publication...</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>ur.0637651205.48</td>
-      <td>28</td>
-      <td>Daniel F Gudbjartsson</td>
-      <td>73.250000</td>
-      <td>151.964286</td>
-      <td>2019</td>
-      <td>https://app.dimensions.ai/discover/publication...</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>ur.01220453202.22</td>
-      <td>27</td>
-      <td>Eleftheria Zeggini</td>
-      <td>74.222222</td>
-      <td>207.962963</td>
-      <td>2019</td>
-      <td>https://app.dimensions.ai/discover/publication...</td>
-    </tr>
-  </tbody>
-</table>
-</div></div>
-</div>
 <p>Save the data</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1562,8 +1156,8 @@ Researchers total: 18524
 </div>
 <div class="section" id="Couple-of-Dataviz">
 <h2>Couple of Dataviz<a class="headerlink" href="#Couple-of-Dataviz" title="Permalink to this headline">¶</a></h2>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1577,56 +1171,8 @@ Researchers total: 18524
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-
-
-            <div id="f981fd67-e3c7-4ad8-9bd2-7772002e4143" class="plotly-graph-div" style="height:525px; width:100%;"></div>
-            <script type="text/javascript">
-                require(["plotly"], function(Plotly) {
-                    window.PLOTLYENV=window.PLOTLYENV || {};
-
-                if (document.getElementById("f981fd67-e3c7-4ad8-9bd2-7772002e4143")) {
-                    Plotly.newPlot(
-                        'f981fd67-e3c7-4ad8-9bd2-7772002e4143',
-                        [{"customdata": [[107.51612903225806, 229.1290322580645], [81.0, 159.55555555555554], [80.81818181818181, 170.42424242424244], [170.5625, 362.875], [136.84375, 298.46875], [126.54838709677419, 144.29032258064515], [153.13333333333333, 346.0], [247.25, 178.39285714285714], [73.25, 151.96428571428572], [74.22222222222223, 207.96296296296296], [96.14814814814815, 263.037037037037], [90.07692307692308, 325.5], [161.57692307692307, 209.73076923076923], [122.07692307692308, 261.84615384615387], [96.04, 169.4], [100.12, 305.48], [98.68, 173.4], [83.0, 242.96], [118.8, 241.44], [102.72, 217.96], [106.48, 152.56], [261.0869565217391, 85.21739130434783], [103.3913043478261, 162.7391304347826], [93.04347826086956, 147.1304347826087], [104.30434782608695, 209.1304347826087], [116.54545454545455, 313.90909090909093], [79.68181818181819, 175.4090909090909], [134.95454545454547, 286.22727272727275], [90.27272727272727, 171.13636363636363], [106.95454545454545, 259.1363636363636], [136.61904761904762, 362.95238095238096], [81.57142857142857, 162.9047619047619], [99.0952380952381, 164.71428571428572], [66.9047619047619, 159.38095238095238], [285.85714285714283, 164.47619047619048], [107.9047619047619, 279.7142857142857], [105.42857142857143, 254.8095238095238], [71.0952380952381, 191.9047619047619], [88.57142857142857, 174.61904761904762], [85.7, 227.65], [162.15, 318.4], [102.7, 139.3], [170.15, 441.25], [204.8, 366.9], [83.15, 261.4], [113.05, 192.8], [83.9, 176.5], [129.05263157894737, 291.2631578947368], [217.57894736842104, 349.05263157894734], [119.73684210526316, 253.94736842105263], [97.26315789473684, 151.47368421052633], [97.05263157894737, 175.6315789473684], [88.33333333333333, 154.27777777777777], [84.88888888888889, 242.94444444444446], [81.11111111111111, 218.27777777777777], [119.22222222222223, 140.5], [77.94444444444444, 178.27777777777777], [137.11111111111111, 337.5], [97.66666666666667, 165.27777777777777], [80.05555555555556, 136.33333333333334], [135.33333333333334, 100.0], [316.94444444444446, 187.38888888888889], [45.23529411764706, 150.35294117647058], [96.94117647058823, 191.41176470588235], [71.41176470588235, 168.58823529411765], [77.11764705882354, 240.35294117647058], [87.17647058823529, 171.7058823529412], [57.76470588235294, 217.8235294117647], [125.11764705882354, 296.3529411764706], [109.75, 189.0625], [49.0, 116.6875], [79.1875, 277.75], [132.375, 257.75], [75.75, 289.8125], [72.6875, 163.6875], [197.6875, 371.75], [163.75, 344.5625], [179.8125, 484.5], [109.8125, 224.5625], [142.5625, 368.375], [95.25, 233.75], [60.5, 180.0625], [84.1875, 133.0625], [95.3125, 220.375], [191.3125, 405.625], [285.25, 377.125], [112.4375, 162.4375], [150.9375, 506.9375], [127.2, 260.26666666666665], [381.4, 154.93333333333334], [91.93333333333334, 210.93333333333334], [91.06666666666666, 167.93333333333334], [106.53333333333333, 193.8], [64.26666666666667, 274.73333333333335], [87.0, 235.73333333333332], [50.93333333333333, 234.8], [68.06666666666666, 167.2], [85.53333333333333, 143.06666666666666], [183.86666666666667, 284.3333333333333], [142.86666666666667, 191.6]], "hovertemplate": "<b>%{hovertext}</b><br><br>full_name=%{x}<br>pubs=%{y}<br>citations_mean=%{customdata[0]}<br>altmetric_mean=%{customdata[1]}<extra></extra>", "hovertext": ["Kari Stefansson", "Unnur Thorsteinsdottir", "Gudmar Thorleifsson", "Andres Metspalu", "Caroline Hayward", "Gon\u00e7alo R Abecasis", "T\u00f5nu Esko", "Benjamin M. Neale", "Daniel F Gudbjartsson", "Eleftheria Zeggini", "Claudia Langenberg", "M. Arfan Ikram", "Lude Franke", "Daniel I. Chasman", "Jerome I. Rotter", "Nicholas J. Wareham", "Eric Boerwinkle", "Douglas F. Easton", "Terho Lehtim\u00e4ki", "Vilmundur Gudnason", "Erik Ingelsson", "Alkes L. Price", "Mark I. McCarthy", "Ruth J. F. Loos", "Sekar Kathiresan", "Andr\u00e9 G. Uitterlinden", "Anubha Mahajan", "Reedik M\u00e4gi", "John Danesh", "Olli T. Raitakari", "Cornelia M. van Duijn", "Kent D. Taylor", "Bruce M. Psaty", "Adam S. Butterworth", "Po-Ru Loh", "Paul M. Ridker", "Marjo-Riitta Jarvelin", "Tamara B. Harris", "Jaspal S. Kooner", "Ozren Polasek", "Dorret I Boomsma", "Markku Laakso", "David A Hinds", "Peter M. Visscher", "George Dedoussis", "Christian Gieger", "Patrick Sulem", "Ian J. Deary", "John R B Perry", "Veikko Salomaa", "Nilesh J Samani", "Cecilia M. Lindgren", "Erwin P. Bottinger", "Igor Rudan", "Robert A Scott", "Michael Boehnke", "Sandosh Padmanabhan", "Tune H Pers", "Martina M\u00fcller-Nurasyid", "Yoichiro Kamatani", "Michiaki Kubo", "Hilary K. Finucane", "Paolo Gasparini", "Danish Saleheen", "Gisli Masson", "Alison M Dunning", "Karen L. Mohlke", "Veronique Vitart", "Jian\u2019an Luan", "John C. Chambers", "Ingileif Jonsdottir", "Joe Dennis", "Albert V Smith", "Dennis O. Mook-Kanamori", "Evangelos Evangelou", "Nancy L Pedersen", "Patrik K E Magnusson", "Lili Milani", "Mika K\u00e4h\u00f6nen", "Albert Hofman", "Augustine Kong", "Leo-Pekka Lyytik\u00e4inen", "Oscar H. Franco", "Stephen J Chanock", "Grant W Montgomery", "Jian Yang", "Annette Peters", "Sarah E. Medland", "Lenore J. Launer", "Mark J Daly", "B\u00f8rge G. Nordestgaard", "Stella Trompet", "Joshua C. Bis", "Paul D P Pharoah", "Fernando Rivadeneira", "Antonietta Robino", "Paul Elliott", "Louise V Wain", "Michael C. O\u2019Donovan", "Ole A. Andreassen"], "legendgroup": "", "marker": {"color": "#636efa", "symbol": "circle"}, "mode": "markers", "name": "", "showlegend": false, "type": "scatter", "x": ["Kari Stefansson", "Unnur Thorsteinsdottir", "Gudmar Thorleifsson", "Andres Metspalu", "Caroline Hayward", "Gon\u00e7alo R Abecasis", "T\u00f5nu Esko", "Benjamin M. Neale", "Daniel F Gudbjartsson", "Eleftheria Zeggini", "Claudia Langenberg", "M. Arfan Ikram", "Lude Franke", "Daniel I. Chasman", "Jerome I. Rotter", "Nicholas J. Wareham", "Eric Boerwinkle", "Douglas F. Easton", "Terho Lehtim\u00e4ki", "Vilmundur Gudnason", "Erik Ingelsson", "Alkes L. Price", "Mark I. McCarthy", "Ruth J. F. Loos", "Sekar Kathiresan", "Andr\u00e9 G. Uitterlinden", "Anubha Mahajan", "Reedik M\u00e4gi", "John Danesh", "Olli T. Raitakari", "Cornelia M. van Duijn", "Kent D. Taylor", "Bruce M. Psaty", "Adam S. Butterworth", "Po-Ru Loh", "Paul M. Ridker", "Marjo-Riitta Jarvelin", "Tamara B. Harris", "Jaspal S. Kooner", "Ozren Polasek", "Dorret I Boomsma", "Markku Laakso", "David A Hinds", "Peter M. Visscher", "George Dedoussis", "Christian Gieger", "Patrick Sulem", "Ian J. Deary", "John R B Perry", "Veikko Salomaa", "Nilesh J Samani", "Cecilia M. Lindgren", "Erwin P. Bottinger", "Igor Rudan", "Robert A Scott", "Michael Boehnke", "Sandosh Padmanabhan", "Tune H Pers", "Martina M\u00fcller-Nurasyid", "Yoichiro Kamatani", "Michiaki Kubo", "Hilary K. Finucane", "Paolo Gasparini", "Danish Saleheen", "Gisli Masson", "Alison M Dunning", "Karen L. Mohlke", "Veronique Vitart", "Jian\u2019an Luan", "John C. Chambers", "Ingileif Jonsdottir", "Joe Dennis", "Albert V Smith", "Dennis O. Mook-Kanamori", "Evangelos Evangelou", "Nancy L Pedersen", "Patrik K E Magnusson", "Lili Milani", "Mika K\u00e4h\u00f6nen", "Albert Hofman", "Augustine Kong", "Leo-Pekka Lyytik\u00e4inen", "Oscar H. Franco", "Stephen J Chanock", "Grant W Montgomery", "Jian Yang", "Annette Peters", "Sarah E. Medland", "Lenore J. Launer", "Mark J Daly", "B\u00f8rge G. Nordestgaard", "Stella Trompet", "Joshua C. Bis", "Paul D P Pharoah", "Fernando Rivadeneira", "Antonietta Robino", "Paul Elliott", "Louise V Wain", "Michael C. O\u2019Donovan", "Ole A. Andreassen"], "xaxis": "x", "y": [62, 45, 33, 32, 32, 31, 30, 28, 28, 27, 27, 26, 26, 26, 25, 25, 25, 25, 25, 25, 25, 23, 23, 23, 23, 22, 22, 22, 22, 22, 21, 21, 21, 21, 21, 21, 21, 21, 21, 20, 20, 20, 20, 20, 20, 20, 20, 19, 19, 19, 19, 19, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 17, 17, 17, 17, 17, 17, 17, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15], "yaxis": "y"}, {"alignmentgroup": "True", "bingroup": "y", "hovertemplate": "pubs=%{y}<br>count=%{x}<extra></extra>", "legendgroup": "", "marker": {"color": "#636efa"}, "name": "", "offsetgroup": "", "opacity": 0.5, "showlegend": false, "type": "histogram", "xaxis": "x2", "y": [62, 45, 33, 32, 32, 31, 30, 28, 28, 27, 27, 26, 26, 26, 25, 25, 25, 25, 25, 25, 25, 23, 23, 23, 23, 22, 22, 22, 22, 22, 21, 21, 21, 21, 21, 21, 21, 21, 21, 20, 20, 20, 20, 20, 20, 20, 20, 19, 19, 19, 19, 19, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 17, 17, 17, 17, 17, 17, 17, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15], "yaxis": "y2"}],
-                        {"barmode": "overlay", "legend": {"tracegroupgap": 0}, "template": {"data": {"bar": [{"error_x": {"color": "#2a3f5f"}, "error_y": {"color": "#2a3f5f"}, "marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "bar"}], "barpolar": [{"marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "barpolar"}], "carpet": [{"aaxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "baxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "type": "carpet"}], "choropleth": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "choropleth"}], "contour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "contour"}], "contourcarpet": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "contourcarpet"}], "heatmap": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmap"}], "heatmapgl": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmapgl"}], "histogram": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "histogram"}], "histogram2d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2d"}], "histogram2dcontour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2dcontour"}], "mesh3d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "mesh3d"}], "parcoords": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "parcoords"}], "pie": [{"automargin": true, "type": "pie"}], "scatter": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter"}], "scatter3d": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter3d"}], "scattercarpet": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattercarpet"}], "scattergeo": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergeo"}], "scattergl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergl"}], "scattermapbox": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattermapbox"}], "scatterpolar": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolar"}], "scatterpolargl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolargl"}], "scatterternary": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterternary"}], "surface": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "surface"}], "table": [{"cells": {"fill": {"color": "#EBF0F8"}, "line": {"color": "white"}}, "header": {"fill": {"color": "#C8D4E3"}, "line": {"color": "white"}}, "type": "table"}]}, "layout": {"annotationdefaults": {"arrowcolor": "#2a3f5f", "arrowhead": 0, "arrowwidth": 1}, "coloraxis": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "colorscale": {"diverging": [[0, "#8e0152"], [0.1, "#c51b7d"], [0.2, "#de77ae"], [0.3, "#f1b6da"], [0.4, "#fde0ef"], [0.5, "#f7f7f7"], [0.6, "#e6f5d0"], [0.7, "#b8e186"], [0.8, "#7fbc41"], [0.9, "#4d9221"], [1, "#276419"]], "sequential": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "sequentialminus": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]]}, "colorway": ["#636efa", "#EF553B", "#00cc96", "#ab63fa", "#FFA15A", "#19d3f3", "#FF6692", "#B6E880", "#FF97FF", "#FECB52"], "font": {"color": "#2a3f5f"}, "geo": {"bgcolor": "white", "lakecolor": "white", "landcolor": "#E5ECF6", "showlakes": true, "showland": true, "subunitcolor": "white"}, "hoverlabel": {"align": "left"}, "hovermode": "closest", "mapbox": {"style": "light"}, "paper_bgcolor": "white", "plot_bgcolor": "#E5ECF6", "polar": {"angularaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "radialaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "scene": {"xaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "yaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "zaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}}, "shapedefaults": {"line": {"color": "#2a3f5f"}}, "ternary": {"aaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "baxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "caxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "title": {"x": 0.05}, "xaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}, "yaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}}}, "title": {"text": "Researchers Impact - top 100"}, "xaxis": {"anchor": "y", "domain": [0.0, 0.7363], "title": {"text": "full_name"}}, "xaxis2": {"anchor": "y2", "domain": [0.7413, 1.0], "matches": "x2", "showgrid": true, "showline": false, "showticklabels": false, "ticks": ""}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": "pubs"}}, "yaxis2": {"anchor": "x2", "domain": [0.0, 1.0], "matches": "y", "showgrid": true, "showticklabels": false}},
-                        {"responsive": true}
-                    ).then(function(){
-
-var gd = document.getElementById('f981fd67-e3c7-4ad8-9bd2-7772002e4143');
-var x = new MutationObserver(function (mutations, observer) {{
-        var display = window.getComputedStyle(gd).display;
-        if (!display || display === 'none') {{
-            console.log([gd, 'removed!']);
-            Plotly.purge(gd);
-            observer.disconnect();
-        }}
-}});
-
-// Listen for the removal of the full notebook cells
-var notebookContainer = gd.closest('#notebook-container');
-if (notebookContainer) {{
-    x.observe(notebookContainer, {childList: true});
-}}
-
-// Listen for the clearing of the current output cell
-var outputEl = gd.closest('.output');
-if (outputEl) {{
-    x.observe(outputEl, {childList: true});
-}}
-
-                        })
-                };
-                });
-            </script>
-        </div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1640,56 +1186,8 @@ if (outputEl) {{
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-
-
-            <div id="a814dd69-2d4d-4479-a0c7-b1e8478f3065" class="plotly-graph-div" style="height:525px; width:100%;"></div>
-            <script type="text/javascript">
-                require(["plotly"], function(Plotly) {
-                    window.PLOTLYENV=window.PLOTLYENV || {};
-
-                if (document.getElementById("a814dd69-2d4d-4479-a0c7-b1e8478f3065")) {
-                    Plotly.newPlot(
-                        'a814dd69-2d4d-4479-a0c7-b1e8478f3065',
-                        [{"customdata": [[62.0, 107.51612903225806, 229.1290322580645], [45.0, 81.0, 159.55555555555554], [33.0, 80.81818181818181, 170.42424242424244], [32.0, 170.5625, 362.875], [32.0, 136.84375, 298.46875], [31.0, 126.54838709677419, 144.29032258064515], [30.0, 153.13333333333333, 346.0], [28.0, 247.25, 178.39285714285714], [28.0, 73.25, 151.96428571428572], [27.0, 74.22222222222223, 207.96296296296296], [27.0, 96.14814814814815, 263.037037037037], [26.0, 90.07692307692308, 325.5], [26.0, 161.57692307692307, 209.73076923076923], [26.0, 122.07692307692308, 261.84615384615387], [25.0, 96.04, 169.4], [25.0, 100.12, 305.48], [25.0, 98.68, 173.4], [25.0, 83.0, 242.96], [25.0, 118.8, 241.44], [25.0, 102.72, 217.96], [25.0, 106.48, 152.56], [23.0, 261.0869565217391, 85.21739130434783], [23.0, 103.3913043478261, 162.7391304347826], [23.0, 93.04347826086956, 147.1304347826087], [23.0, 104.30434782608695, 209.1304347826087], [22.0, 116.54545454545455, 313.90909090909093], [22.0, 79.68181818181819, 175.4090909090909], [22.0, 134.95454545454547, 286.22727272727275], [22.0, 90.27272727272727, 171.13636363636363], [22.0, 106.95454545454545, 259.1363636363636], [21.0, 136.61904761904762, 362.95238095238096], [21.0, 81.57142857142857, 162.9047619047619], [21.0, 99.0952380952381, 164.71428571428572], [21.0, 66.9047619047619, 159.38095238095238], [21.0, 285.85714285714283, 164.47619047619048], [21.0, 107.9047619047619, 279.7142857142857], [21.0, 105.42857142857143, 254.8095238095238], [21.0, 71.0952380952381, 191.9047619047619], [21.0, 88.57142857142857, 174.61904761904762], [20.0, 85.7, 227.65], [20.0, 162.15, 318.4], [20.0, 102.7, 139.3], [20.0, 170.15, 441.25], [20.0, 204.8, 366.9], [20.0, 83.15, 261.4], [20.0, 113.05, 192.8], [20.0, 83.9, 176.5], [19.0, 129.05263157894737, 291.2631578947368], [19.0, 217.57894736842104, 349.05263157894734], [19.0, 119.73684210526316, 253.94736842105263], [19.0, 97.26315789473684, 151.47368421052633], [19.0, 97.05263157894737, 175.6315789473684], [18.0, 88.33333333333333, 154.27777777777777], [18.0, 84.88888888888889, 242.94444444444446], [18.0, 81.11111111111111, 218.27777777777777], [18.0, 119.22222222222223, 140.5], [18.0, 77.94444444444444, 178.27777777777777], [18.0, 137.11111111111111, 337.5], [18.0, 97.66666666666667, 165.27777777777777], [18.0, 80.05555555555556, 136.33333333333334], [18.0, 135.33333333333334, 100.0], [18.0, 316.94444444444446, 187.38888888888889], [17.0, 45.23529411764706, 150.35294117647058], [17.0, 96.94117647058823, 191.41176470588235], [17.0, 71.41176470588235, 168.58823529411765], [17.0, 77.11764705882354, 240.35294117647058], [17.0, 87.17647058823529, 171.7058823529412], [17.0, 57.76470588235294, 217.8235294117647], [17.0, 125.11764705882354, 296.3529411764706], [16.0, 109.75, 189.0625], [16.0, 49.0, 116.6875], [16.0, 79.1875, 277.75], [16.0, 132.375, 257.75], [16.0, 75.75, 289.8125], [16.0, 72.6875, 163.6875], [16.0, 197.6875, 371.75], [16.0, 163.75, 344.5625], [16.0, 179.8125, 484.5], [16.0, 109.8125, 224.5625], [16.0, 142.5625, 368.375], [16.0, 95.25, 233.75], [16.0, 60.5, 180.0625], [16.0, 84.1875, 133.0625], [16.0, 95.3125, 220.375], [16.0, 191.3125, 405.625], [16.0, 285.25, 377.125], [16.0, 112.4375, 162.4375], [16.0, 150.9375, 506.9375], [15.0, 127.2, 260.26666666666665], [15.0, 381.4, 154.93333333333334], [15.0, 91.93333333333334, 210.93333333333334], [15.0, 91.06666666666666, 167.93333333333334], [15.0, 106.53333333333333, 193.8], [15.0, 64.26666666666667, 274.73333333333335], [15.0, 87.0, 235.73333333333332], [15.0, 50.93333333333333, 234.8], [15.0, 68.06666666666666, 167.2], [15.0, 85.53333333333333, 143.06666666666666], [15.0, 183.86666666666667, 284.3333333333333], [15.0, 142.86666666666667, 191.6]], "hovertemplate": "<b>%{hovertext}</b><br><br>citations_mean=%{customdata[1]}<br>altmetric_mean=%{customdata[2]}<br>pubs=%{marker.color}<extra></extra>", "hovertext": ["Kari Stefansson", "Unnur Thorsteinsdottir", "Gudmar Thorleifsson", "Andres Metspalu", "Caroline Hayward", "Gon\u00e7alo R Abecasis", "T\u00f5nu Esko", "Benjamin M. Neale", "Daniel F Gudbjartsson", "Eleftheria Zeggini", "Claudia Langenberg", "M. Arfan Ikram", "Lude Franke", "Daniel I. Chasman", "Jerome I. Rotter", "Nicholas J. Wareham", "Eric Boerwinkle", "Douglas F. Easton", "Terho Lehtim\u00e4ki", "Vilmundur Gudnason", "Erik Ingelsson", "Alkes L. Price", "Mark I. McCarthy", "Ruth J. F. Loos", "Sekar Kathiresan", "Andr\u00e9 G. Uitterlinden", "Anubha Mahajan", "Reedik M\u00e4gi", "John Danesh", "Olli T. Raitakari", "Cornelia M. van Duijn", "Kent D. Taylor", "Bruce M. Psaty", "Adam S. Butterworth", "Po-Ru Loh", "Paul M. Ridker", "Marjo-Riitta Jarvelin", "Tamara B. Harris", "Jaspal S. Kooner", "Ozren Polasek", "Dorret I Boomsma", "Markku Laakso", "David A Hinds", "Peter M. Visscher", "George Dedoussis", "Christian Gieger", "Patrick Sulem", "Ian J. Deary", "John R B Perry", "Veikko Salomaa", "Nilesh J Samani", "Cecilia M. Lindgren", "Erwin P. Bottinger", "Igor Rudan", "Robert A Scott", "Michael Boehnke", "Sandosh Padmanabhan", "Tune H Pers", "Martina M\u00fcller-Nurasyid", "Yoichiro Kamatani", "Michiaki Kubo", "Hilary K. Finucane", "Paolo Gasparini", "Danish Saleheen", "Gisli Masson", "Alison M Dunning", "Karen L. Mohlke", "Veronique Vitart", "Jian\u2019an Luan", "John C. Chambers", "Ingileif Jonsdottir", "Joe Dennis", "Albert V Smith", "Dennis O. Mook-Kanamori", "Evangelos Evangelou", "Nancy L Pedersen", "Patrik K E Magnusson", "Lili Milani", "Mika K\u00e4h\u00f6nen", "Albert Hofman", "Augustine Kong", "Leo-Pekka Lyytik\u00e4inen", "Oscar H. Franco", "Stephen J Chanock", "Grant W Montgomery", "Jian Yang", "Annette Peters", "Sarah E. Medland", "Lenore J. Launer", "Mark J Daly", "B\u00f8rge G. Nordestgaard", "Stella Trompet", "Joshua C. Bis", "Paul D P Pharoah", "Fernando Rivadeneira", "Antonietta Robino", "Paul Elliott", "Louise V Wain", "Michael C. O\u2019Donovan", "Ole A. Andreassen"], "legendgroup": "", "marker": {"color": [62, 45, 33, 32, 32, 31, 30, 28, 28, 27, 27, 26, 26, 26, 25, 25, 25, 25, 25, 25, 25, 23, 23, 23, 23, 22, 22, 22, 22, 22, 21, 21, 21, 21, 21, 21, 21, 21, 21, 20, 20, 20, 20, 20, 20, 20, 20, 19, 19, 19, 19, 19, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 17, 17, 17, 17, 17, 17, 17, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15], "coloraxis": "coloraxis", "size": [62, 45, 33, 32, 32, 31, 30, 28, 28, 27, 27, 26, 26, 26, 25, 25, 25, 25, 25, 25, 25, 23, 23, 23, 23, 22, 22, 22, 22, 22, 21, 21, 21, 21, 21, 21, 21, 21, 21, 20, 20, 20, 20, 20, 20, 20, 20, 19, 19, 19, 19, 19, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 17, 17, 17, 17, 17, 17, 17, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15], "sizemode": "area", "sizeref": 0.155, "symbol": "circle"}, "mode": "markers", "name": "", "showlegend": false, "type": "scatter", "x": [107.51612903225806, 81.0, 80.81818181818181, 170.5625, 136.84375, 126.54838709677419, 153.13333333333333, 247.25, 73.25, 74.22222222222223, 96.14814814814815, 90.07692307692308, 161.57692307692307, 122.07692307692308, 96.04, 100.12, 98.68, 83.0, 118.8, 102.72, 106.48, 261.0869565217391, 103.3913043478261, 93.04347826086956, 104.30434782608695, 116.54545454545455, 79.68181818181819, 134.95454545454547, 90.27272727272727, 106.95454545454545, 136.61904761904762, 81.57142857142857, 99.0952380952381, 66.9047619047619, 285.85714285714283, 107.9047619047619, 105.42857142857143, 71.0952380952381, 88.57142857142857, 85.7, 162.15, 102.7, 170.15, 204.8, 83.15, 113.05, 83.9, 129.05263157894737, 217.57894736842104, 119.73684210526316, 97.26315789473684, 97.05263157894737, 88.33333333333333, 84.88888888888889, 81.11111111111111, 119.22222222222223, 77.94444444444444, 137.11111111111111, 97.66666666666667, 80.05555555555556, 135.33333333333334, 316.94444444444446, 45.23529411764706, 96.94117647058823, 71.41176470588235, 77.11764705882354, 87.17647058823529, 57.76470588235294, 125.11764705882354, 109.75, 49.0, 79.1875, 132.375, 75.75, 72.6875, 197.6875, 163.75, 179.8125, 109.8125, 142.5625, 95.25, 60.5, 84.1875, 95.3125, 191.3125, 285.25, 112.4375, 150.9375, 127.2, 381.4, 91.93333333333334, 91.06666666666666, 106.53333333333333, 64.26666666666667, 87.0, 50.93333333333333, 68.06666666666666, 85.53333333333333, 183.86666666666667, 142.86666666666667], "xaxis": "x", "y": [229.1290322580645, 159.55555555555554, 170.42424242424244, 362.875, 298.46875, 144.29032258064515, 346.0, 178.39285714285714, 151.96428571428572, 207.96296296296296, 263.037037037037, 325.5, 209.73076923076923, 261.84615384615387, 169.4, 305.48, 173.4, 242.96, 241.44, 217.96, 152.56, 85.21739130434783, 162.7391304347826, 147.1304347826087, 209.1304347826087, 313.90909090909093, 175.4090909090909, 286.22727272727275, 171.13636363636363, 259.1363636363636, 362.95238095238096, 162.9047619047619, 164.71428571428572, 159.38095238095238, 164.47619047619048, 279.7142857142857, 254.8095238095238, 191.9047619047619, 174.61904761904762, 227.65, 318.4, 139.3, 441.25, 366.9, 261.4, 192.8, 176.5, 291.2631578947368, 349.05263157894734, 253.94736842105263, 151.47368421052633, 175.6315789473684, 154.27777777777777, 242.94444444444446, 218.27777777777777, 140.5, 178.27777777777777, 337.5, 165.27777777777777, 136.33333333333334, 100.0, 187.38888888888889, 150.35294117647058, 191.41176470588235, 168.58823529411765, 240.35294117647058, 171.7058823529412, 217.8235294117647, 296.3529411764706, 189.0625, 116.6875, 277.75, 257.75, 289.8125, 163.6875, 371.75, 344.5625, 484.5, 224.5625, 368.375, 233.75, 180.0625, 133.0625, 220.375, 405.625, 377.125, 162.4375, 506.9375, 260.26666666666665, 154.93333333333334, 210.93333333333334, 167.93333333333334, 193.8, 274.73333333333335, 235.73333333333332, 234.8, 167.2, 143.06666666666666, 284.3333333333333, 191.6], "yaxis": "y"}],
-                        {"coloraxis": {"colorbar": {"title": {"text": "pubs"}}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]]}, "legend": {"itemsizing": "constant", "tracegroupgap": 0}, "template": {"data": {"bar": [{"error_x": {"color": "#2a3f5f"}, "error_y": {"color": "#2a3f5f"}, "marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "bar"}], "barpolar": [{"marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "barpolar"}], "carpet": [{"aaxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "baxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "type": "carpet"}], "choropleth": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "choropleth"}], "contour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "contour"}], "contourcarpet": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "contourcarpet"}], "heatmap": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmap"}], "heatmapgl": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmapgl"}], "histogram": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "histogram"}], "histogram2d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2d"}], "histogram2dcontour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2dcontour"}], "mesh3d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "mesh3d"}], "parcoords": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "parcoords"}], "pie": [{"automargin": true, "type": "pie"}], "scatter": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter"}], "scatter3d": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter3d"}], "scattercarpet": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattercarpet"}], "scattergeo": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergeo"}], "scattergl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergl"}], "scattermapbox": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattermapbox"}], "scatterpolar": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolar"}], "scatterpolargl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolargl"}], "scatterternary": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterternary"}], "surface": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "surface"}], "table": [{"cells": {"fill": {"color": "#EBF0F8"}, "line": {"color": "white"}}, "header": {"fill": {"color": "#C8D4E3"}, "line": {"color": "white"}}, "type": "table"}]}, "layout": {"annotationdefaults": {"arrowcolor": "#2a3f5f", "arrowhead": 0, "arrowwidth": 1}, "coloraxis": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "colorscale": {"diverging": [[0, "#8e0152"], [0.1, "#c51b7d"], [0.2, "#de77ae"], [0.3, "#f1b6da"], [0.4, "#fde0ef"], [0.5, "#f7f7f7"], [0.6, "#e6f5d0"], [0.7, "#b8e186"], [0.8, "#7fbc41"], [0.9, "#4d9221"], [1, "#276419"]], "sequential": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "sequentialminus": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]]}, "colorway": ["#636efa", "#EF553B", "#00cc96", "#ab63fa", "#FFA15A", "#19d3f3", "#FF6692", "#B6E880", "#FF97FF", "#FECB52"], "font": {"color": "#2a3f5f"}, "geo": {"bgcolor": "white", "lakecolor": "white", "landcolor": "#E5ECF6", "showlakes": true, "showland": true, "subunitcolor": "white"}, "hoverlabel": {"align": "left"}, "hovermode": "closest", "mapbox": {"style": "light"}, "paper_bgcolor": "white", "plot_bgcolor": "#E5ECF6", "polar": {"angularaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "radialaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "scene": {"xaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "yaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "zaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}}, "shapedefaults": {"line": {"color": "#2a3f5f"}}, "ternary": {"aaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "baxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "caxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "title": {"x": 0.05}, "xaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}, "yaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}}}, "title": {"text": "Researchers Impact (citations vs pubs)"}, "xaxis": {"anchor": "y", "domain": [0.0, 1.0], "title": {"text": "citations_mean"}}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": "altmetric_mean"}}},
-                        {"responsive": true}
-                    ).then(function(){
-
-var gd = document.getElementById('a814dd69-2d4d-4479-a0c7-b1e8478f3065');
-var x = new MutationObserver(function (mutations, observer) {{
-        var display = window.getComputedStyle(gd).display;
-        if (!display || display === 'none') {{
-            console.log([gd, 'removed!']);
-            Plotly.purge(gd);
-            observer.disconnect();
-        }}
-}});
-
-// Listen for the removal of the full notebook cells
-var notebookContainer = gd.closest('#notebook-container');
-if (notebookContainer) {{
-    x.observe(notebookContainer, {childList: true});
-}}
-
-// Listen for the clearing of the current output cell
-var outputEl = gd.closest('.output');
-if (outputEl) {{
-    x.observe(outputEl, {childList: true});
-}}
-
-                        })
-                };
-                });
-            </script>
-        </div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1703,54 +1201,6 @@ if (outputEl) {{
            <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Researchers Impact (citations vs pubs) by last publication year&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-
-
-            <div id="080a789a-e3bb-4b5c-8e2d-b3597224241b" class="plotly-graph-div" style="height:525px; width:100%;"></div>
-            <script type="text/javascript">
-                require(["plotly"], function(Plotly) {
-                    window.PLOTLYENV=window.PLOTLYENV || {};
-
-                if (document.getElementById("080a789a-e3bb-4b5c-8e2d-b3597224241b")) {
-                    Plotly.newPlot(
-                        '080a789a-e3bb-4b5c-8e2d-b3597224241b',
-                        [{"customdata": [[62.0, 107.51612903225806, 229.1290322580645], [32.0, 136.84375, 298.46875], [30.0, 153.13333333333333, 346.0], [28.0, 247.25, 178.39285714285714], [25.0, 96.04, 169.4], [25.0, 83.0, 242.96], [23.0, 261.0869565217391, 85.21739130434783], [21.0, 81.57142857142857, 162.9047619047619], [21.0, 285.85714285714283, 164.47619047619048], [19.0, 97.26315789473684, 151.47368421052633], [17.0, 77.11764705882354, 240.35294117647058], [17.0, 57.76470588235294, 217.8235294117647], [16.0, 79.1875, 277.75], [16.0, 72.6875, 163.6875], [16.0, 197.6875, 371.75], [16.0, 95.3125, 220.375], [15.0, 64.26666666666667, 274.73333333333335], [15.0, 142.86666666666667, 191.6]], "hovertemplate": "<b>%{hovertext}</b><br><br>last_pub_year=2020<br>citations_mean=%{customdata[1]}<br>altmetric_mean=%{customdata[2]}<br>pubs=%{marker.color}<extra></extra>", "hovertext": ["Kari Stefansson", "Caroline Hayward", "T\u00f5nu Esko", "Benjamin M. Neale", "Jerome I. Rotter", "Douglas F. Easton", "Alkes L. Price", "Kent D. Taylor", "Po-Ru Loh", "Nilesh J Samani", "Alison M Dunning", "Veronique Vitart", "Joe Dennis", "Evangelos Evangelou", "Nancy L Pedersen", "Stephen J Chanock", "Paul D P Pharoah", "Ole A. Andreassen"], "legendgroup": "", "marker": {"color": [62, 32, 30, 28, 25, 25, 23, 21, 21, 19, 17, 17, 16, 16, 16, 16, 15, 15], "coloraxis": "coloraxis", "size": [62, 32, 30, 28, 25, 25, 23, 21, 21, 19, 17, 17, 16, 16, 16, 16, 15, 15], "sizemode": "area", "sizeref": 0.155, "symbol": "circle"}, "mode": "markers", "name": "", "showlegend": false, "type": "scatter", "x": [107.51612903225806, 136.84375, 153.13333333333333, 247.25, 96.04, 83.0, 261.0869565217391, 81.57142857142857, 285.85714285714283, 97.26315789473684, 77.11764705882354, 57.76470588235294, 79.1875, 72.6875, 197.6875, 95.3125, 64.26666666666667, 142.86666666666667], "xaxis": "x", "y": [229.1290322580645, 298.46875, 346.0, 178.39285714285714, 169.4, 242.96, 85.21739130434783, 162.9047619047619, 164.47619047619048, 151.47368421052633, 240.35294117647058, 217.8235294117647, 277.75, 163.6875, 371.75, 220.375, 274.73333333333335, 191.6], "yaxis": "y"}, {"customdata": [[45.0, 81.0, 159.55555555555554], [33.0, 80.81818181818181, 170.42424242424244], [32.0, 170.5625, 362.875], [31.0, 126.54838709677419, 144.29032258064515], [28.0, 73.25, 151.96428571428572], [27.0, 74.22222222222223, 207.96296296296296], [27.0, 96.14814814814815, 263.037037037037], [26.0, 90.07692307692308, 325.5], [26.0, 161.57692307692307, 209.73076923076923], [26.0, 122.07692307692308, 261.84615384615387], [25.0, 100.12, 305.48], [25.0, 98.68, 173.4], [25.0, 118.8, 241.44], [25.0, 102.72, 217.96], [25.0, 106.48, 152.56], [23.0, 103.3913043478261, 162.7391304347826], [23.0, 93.04347826086956, 147.1304347826087], [23.0, 104.30434782608695, 209.1304347826087], [22.0, 116.54545454545455, 313.90909090909093], [22.0, 79.68181818181819, 175.4090909090909], [22.0, 134.95454545454547, 286.22727272727275], [22.0, 90.27272727272727, 171.13636363636363], [22.0, 106.95454545454545, 259.1363636363636], [21.0, 136.61904761904762, 362.95238095238096], [21.0, 99.0952380952381, 164.71428571428572], [21.0, 66.9047619047619, 159.38095238095238], [21.0, 107.9047619047619, 279.7142857142857], [21.0, 105.42857142857143, 254.8095238095238], [21.0, 71.0952380952381, 191.9047619047619], [21.0, 88.57142857142857, 174.61904761904762], [20.0, 85.7, 227.65], [20.0, 162.15, 318.4], [20.0, 102.7, 139.3], [20.0, 170.15, 441.25], [20.0, 204.8, 366.9], [20.0, 83.15, 261.4], [20.0, 113.05, 192.8], [20.0, 83.9, 176.5], [19.0, 129.05263157894737, 291.2631578947368], [19.0, 217.57894736842104, 349.05263157894734], [19.0, 119.73684210526316, 253.94736842105263], [19.0, 97.05263157894737, 175.6315789473684], [18.0, 88.33333333333333, 154.27777777777777], [18.0, 84.88888888888889, 242.94444444444446], [18.0, 81.11111111111111, 218.27777777777777], [18.0, 119.22222222222223, 140.5], [18.0, 77.94444444444444, 178.27777777777777], [18.0, 137.11111111111111, 337.5], [18.0, 97.66666666666667, 165.27777777777777], [18.0, 80.05555555555556, 136.33333333333334], [18.0, 135.33333333333334, 100.0], [18.0, 316.94444444444446, 187.38888888888889], [17.0, 45.23529411764706, 150.35294117647058], [17.0, 96.94117647058823, 191.41176470588235], [17.0, 71.41176470588235, 168.58823529411765], [17.0, 87.17647058823529, 171.7058823529412], [17.0, 125.11764705882354, 296.3529411764706], [16.0, 109.75, 189.0625], [16.0, 49.0, 116.6875], [16.0, 75.75, 289.8125], [16.0, 163.75, 344.5625], [16.0, 179.8125, 484.5], [16.0, 109.8125, 224.5625], [16.0, 142.5625, 368.375], [16.0, 60.5, 180.0625], [16.0, 84.1875, 133.0625], [16.0, 285.25, 377.125], [16.0, 112.4375, 162.4375], [16.0, 150.9375, 506.9375], [15.0, 127.2, 260.26666666666665], [15.0, 381.4, 154.93333333333334], [15.0, 91.93333333333334, 210.93333333333334], [15.0, 91.06666666666666, 167.93333333333334], [15.0, 106.53333333333333, 193.8], [15.0, 87.0, 235.73333333333332], [15.0, 50.93333333333333, 234.8], [15.0, 68.06666666666666, 167.2], [15.0, 85.53333333333333, 143.06666666666666], [15.0, 183.86666666666667, 284.3333333333333]], "hovertemplate": "<b>%{hovertext}</b><br><br>last_pub_year=2019<br>citations_mean=%{customdata[1]}<br>altmetric_mean=%{customdata[2]}<br>pubs=%{marker.color}<extra></extra>", "hovertext": ["Unnur Thorsteinsdottir", "Gudmar Thorleifsson", "Andres Metspalu", "Gon\u00e7alo R Abecasis", "Daniel F Gudbjartsson", "Eleftheria Zeggini", "Claudia Langenberg", "M. Arfan Ikram", "Lude Franke", "Daniel I. Chasman", "Nicholas J. Wareham", "Eric Boerwinkle", "Terho Lehtim\u00e4ki", "Vilmundur Gudnason", "Erik Ingelsson", "Mark I. McCarthy", "Ruth J. F. Loos", "Sekar Kathiresan", "Andr\u00e9 G. Uitterlinden", "Anubha Mahajan", "Reedik M\u00e4gi", "John Danesh", "Olli T. Raitakari", "Cornelia M. van Duijn", "Bruce M. Psaty", "Adam S. Butterworth", "Paul M. Ridker", "Marjo-Riitta Jarvelin", "Tamara B. Harris", "Jaspal S. Kooner", "Ozren Polasek", "Dorret I Boomsma", "Markku Laakso", "David A Hinds", "Peter M. Visscher", "George Dedoussis", "Christian Gieger", "Patrick Sulem", "Ian J. Deary", "John R B Perry", "Veikko Salomaa", "Cecilia M. Lindgren", "Erwin P. Bottinger", "Igor Rudan", "Robert A Scott", "Michael Boehnke", "Sandosh Padmanabhan", "Tune H Pers", "Martina M\u00fcller-Nurasyid", "Yoichiro Kamatani", "Michiaki Kubo", "Hilary K. Finucane", "Paolo Gasparini", "Danish Saleheen", "Gisli Masson", "Karen L. Mohlke", "Jian\u2019an Luan", "John C. Chambers", "Ingileif Jonsdottir", "Dennis O. Mook-Kanamori", "Patrik K E Magnusson", "Lili Milani", "Mika K\u00e4h\u00f6nen", "Albert Hofman", "Leo-Pekka Lyytik\u00e4inen", "Oscar H. Franco", "Jian Yang", "Annette Peters", "Sarah E. Medland", "Lenore J. Launer", "Mark J Daly", "B\u00f8rge G. Nordestgaard", "Stella Trompet", "Joshua C. Bis", "Fernando Rivadeneira", "Antonietta Robino", "Paul Elliott", "Louise V Wain", "Michael C. O\u2019Donovan"], "legendgroup": "", "marker": {"color": [45, 33, 32, 31, 28, 27, 27, 26, 26, 26, 25, 25, 25, 25, 25, 23, 23, 23, 22, 22, 22, 22, 22, 21, 21, 21, 21, 21, 21, 21, 20, 20, 20, 20, 20, 20, 20, 20, 19, 19, 19, 19, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 17, 17, 17, 17, 17, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15], "coloraxis": "coloraxis", "size": [45, 33, 32, 31, 28, 27, 27, 26, 26, 26, 25, 25, 25, 25, 25, 23, 23, 23, 22, 22, 22, 22, 22, 21, 21, 21, 21, 21, 21, 21, 20, 20, 20, 20, 20, 20, 20, 20, 19, 19, 19, 19, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 17, 17, 17, 17, 17, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15], "sizemode": "area", "sizeref": 0.155, "symbol": "circle"}, "mode": "markers", "name": "", "showlegend": false, "type": "scatter", "x": [81.0, 80.81818181818181, 170.5625, 126.54838709677419, 73.25, 74.22222222222223, 96.14814814814815, 90.07692307692308, 161.57692307692307, 122.07692307692308, 100.12, 98.68, 118.8, 102.72, 106.48, 103.3913043478261, 93.04347826086956, 104.30434782608695, 116.54545454545455, 79.68181818181819, 134.95454545454547, 90.27272727272727, 106.95454545454545, 136.61904761904762, 99.0952380952381, 66.9047619047619, 107.9047619047619, 105.42857142857143, 71.0952380952381, 88.57142857142857, 85.7, 162.15, 102.7, 170.15, 204.8, 83.15, 113.05, 83.9, 129.05263157894737, 217.57894736842104, 119.73684210526316, 97.05263157894737, 88.33333333333333, 84.88888888888889, 81.11111111111111, 119.22222222222223, 77.94444444444444, 137.11111111111111, 97.66666666666667, 80.05555555555556, 135.33333333333334, 316.94444444444446, 45.23529411764706, 96.94117647058823, 71.41176470588235, 87.17647058823529, 125.11764705882354, 109.75, 49.0, 75.75, 163.75, 179.8125, 109.8125, 142.5625, 60.5, 84.1875, 285.25, 112.4375, 150.9375, 127.2, 381.4, 91.93333333333334, 91.06666666666666, 106.53333333333333, 87.0, 50.93333333333333, 68.06666666666666, 85.53333333333333, 183.86666666666667], "xaxis": "x2", "y": [159.55555555555554, 170.42424242424244, 362.875, 144.29032258064515, 151.96428571428572, 207.96296296296296, 263.037037037037, 325.5, 209.73076923076923, 261.84615384615387, 305.48, 173.4, 241.44, 217.96, 152.56, 162.7391304347826, 147.1304347826087, 209.1304347826087, 313.90909090909093, 175.4090909090909, 286.22727272727275, 171.13636363636363, 259.1363636363636, 362.95238095238096, 164.71428571428572, 159.38095238095238, 279.7142857142857, 254.8095238095238, 191.9047619047619, 174.61904761904762, 227.65, 318.4, 139.3, 441.25, 366.9, 261.4, 192.8, 176.5, 291.2631578947368, 349.05263157894734, 253.94736842105263, 175.6315789473684, 154.27777777777777, 242.94444444444446, 218.27777777777777, 140.5, 178.27777777777777, 337.5, 165.27777777777777, 136.33333333333334, 100.0, 187.38888888888889, 150.35294117647058, 191.41176470588235, 168.58823529411765, 171.7058823529412, 296.3529411764706, 189.0625, 116.6875, 289.8125, 344.5625, 484.5, 224.5625, 368.375, 180.0625, 133.0625, 377.125, 162.4375, 506.9375, 260.26666666666665, 154.93333333333334, 210.93333333333334, 167.93333333333334, 193.8, 235.73333333333332, 234.8, 167.2, 143.06666666666666, 284.3333333333333], "yaxis": "y2"}, {"customdata": [[16.0, 132.375, 257.75], [16.0, 95.25, 233.75], [16.0, 191.3125, 405.625]], "hovertemplate": "<b>%{hovertext}</b><br><br>last_pub_year=2018<br>citations_mean=%{customdata[1]}<br>altmetric_mean=%{customdata[2]}<br>pubs=%{marker.color}<extra></extra>", "hovertext": ["Albert V Smith", "Augustine Kong", "Grant W Montgomery"], "legendgroup": "", "marker": {"color": [16, 16, 16], "coloraxis": "coloraxis", "size": [16, 16, 16], "sizemode": "area", "sizeref": 0.155, "symbol": "circle"}, "mode": "markers", "name": "", "showlegend": false, "type": "scatter", "x": [132.375, 95.25, 191.3125], "xaxis": "x3", "y": [257.75, 233.75, 405.625], "yaxis": "y3"}],
-                        {"annotations": [{"font": {}, "showarrow": false, "text": "last_pub_year=2020", "x": 0.15999999999999998, "xanchor": "center", "xref": "paper", "y": 1.0, "yanchor": "bottom", "yref": "paper"}, {"font": {}, "showarrow": false, "text": "last_pub_year=2019", "x": 0.49999999999999994, "xanchor": "center", "xref": "paper", "y": 1.0, "yanchor": "bottom", "yref": "paper"}, {"font": {}, "showarrow": false, "text": "last_pub_year=2018", "x": 0.8399999999999999, "xanchor": "center", "xref": "paper", "y": 1.0, "yanchor": "bottom", "yref": "paper"}], "coloraxis": {"colorbar": {"title": {"text": "pubs"}}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]]}, "legend": {"itemsizing": "constant", "tracegroupgap": 0}, "template": {"data": {"bar": [{"error_x": {"color": "#2a3f5f"}, "error_y": {"color": "#2a3f5f"}, "marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "bar"}], "barpolar": [{"marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "barpolar"}], "carpet": [{"aaxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "baxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "type": "carpet"}], "choropleth": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "choropleth"}], "contour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "contour"}], "contourcarpet": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "contourcarpet"}], "heatmap": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmap"}], "heatmapgl": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmapgl"}], "histogram": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "histogram"}], "histogram2d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2d"}], "histogram2dcontour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2dcontour"}], "mesh3d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "mesh3d"}], "parcoords": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "parcoords"}], "pie": [{"automargin": true, "type": "pie"}], "scatter": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter"}], "scatter3d": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter3d"}], "scattercarpet": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattercarpet"}], "scattergeo": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergeo"}], "scattergl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergl"}], "scattermapbox": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattermapbox"}], "scatterpolar": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolar"}], "scatterpolargl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolargl"}], "scatterternary": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterternary"}], "surface": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "surface"}], "table": [{"cells": {"fill": {"color": "#EBF0F8"}, "line": {"color": "white"}}, "header": {"fill": {"color": "#C8D4E3"}, "line": {"color": "white"}}, "type": "table"}]}, "layout": {"annotationdefaults": {"arrowcolor": "#2a3f5f", "arrowhead": 0, "arrowwidth": 1}, "coloraxis": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "colorscale": {"diverging": [[0, "#8e0152"], [0.1, "#c51b7d"], [0.2, "#de77ae"], [0.3, "#f1b6da"], [0.4, "#fde0ef"], [0.5, "#f7f7f7"], [0.6, "#e6f5d0"], [0.7, "#b8e186"], [0.8, "#7fbc41"], [0.9, "#4d9221"], [1, "#276419"]], "sequential": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "sequentialminus": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]]}, "colorway": ["#636efa", "#EF553B", "#00cc96", "#ab63fa", "#FFA15A", "#19d3f3", "#FF6692", "#B6E880", "#FF97FF", "#FECB52"], "font": {"color": "#2a3f5f"}, "geo": {"bgcolor": "white", "lakecolor": "white", "landcolor": "#E5ECF6", "showlakes": true, "showland": true, "subunitcolor": "white"}, "hoverlabel": {"align": "left"}, "hovermode": "closest", "mapbox": {"style": "light"}, "paper_bgcolor": "white", "plot_bgcolor": "#E5ECF6", "polar": {"angularaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "radialaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "scene": {"xaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "yaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "zaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}}, "shapedefaults": {"line": {"color": "#2a3f5f"}}, "ternary": {"aaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "baxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "caxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "title": {"x": 0.05}, "xaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}, "yaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}}}, "title": {"text": "Researchers Impact (citations vs pubs) by last publication year"}, "xaxis": {"anchor": "y", "domain": [0.0, 0.31999999999999995], "title": {"text": "citations_mean"}}, "xaxis2": {"anchor": "y2", "domain": [0.33999999999999997, 0.6599999999999999], "matches": "x", "title": {"text": "citations_mean"}}, "xaxis3": {"anchor": "y3", "domain": [0.6799999999999999, 0.9999999999999999], "matches": "x", "title": {"text": "citations_mean"}}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": "altmetric_mean"}}, "yaxis2": {"anchor": "x2", "domain": [0.0, 1.0], "matches": "y", "showticklabels": false}, "yaxis3": {"anchor": "x3", "domain": [0.0, 1.0], "matches": "y", "showticklabels": false}},
-                        {"responsive": true}
-                    ).then(function(){
-
-var gd = document.getElementById('080a789a-e3bb-4b5c-8e2d-b3597224241b');
-var x = new MutationObserver(function (mutations, observer) {{
-        var display = window.getComputedStyle(gd).display;
-        if (!display || display === 'none') {{
-            console.log([gd, 'removed!']);
-            Plotly.purge(gd);
-            observer.disconnect();
-        }}
-}});
-
-// Listen for the removal of the full notebook cells
-var notebookContainer = gd.closest('#notebook-container');
-if (notebookContainer) {{
-    x.observe(notebookContainer, {childList: true});
-}}
-
-// Listen for the clearing of the current output cell
-var outputEl = gd.closest('.output');
-if (outputEl) {{
-    x.observe(outputEl, {childList: true});
-}}
-
-                        })
-                };
-                });
-            </script>
-        </div></div>
 </div>
 </div>
 </div>
