@@ -26,35 +26,54 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "Collapsed": "false"
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "hMaQlB7DG8Vw"
    },
    "source": [
-    "#### Prerequisites"
+    "## Prerequisites\n",
+    "\n",
+    "This notebook assumes you have installed the [Dimcli](https://pypi.org/project/dimcli/) library and are familiar with the *Getting Started* tutorial.\n"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 3,
    "metadata": {
     "Collapsed": "false"
    },
-   "outputs": [],
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "==\n",
+      "Logging in..\n",
+      "\u001b[2mDimcli - Dimensions API Client (v0.7.4.2)\u001b[0m\n",
+      "\u001b[2mConnected to: https://app.dimensions.ai - DSL v1.27\u001b[0m\n",
+      "\u001b[2mMethod: dsl.ini file\u001b[0m\n"
+     ]
+    }
+   ],
    "source": [
-    "# @markdown Click the 'play' button on the left (or shift+enter) after entering your API credentials\n",
+    "!pip install dimcli -U --quiet \n",
     "\n",
-    "username = \"\" #@param {type: \"string\"}\n",
-    "password = \"\" #@param {type: \"string\"}\n",
-    "endpoint = \"https://app.dimensions.ai\"\n",
-    "\n",
-    "!pip install dimcli -U --quiet\n",
-    "\n",
-    "# import all libraries and login\n",
     "import dimcli\n",
-    "from dimcli.shortcuts import *\n",
-    "dimcli.login(username, password, endpoint)\n",
-    "dsl = dimcli.Dsl()\n",
+    "import pandas as pd\n",
+    "import sys\n",
     "\n",
-    "import pandas as pd"
+    "print(\"==\\nLogging in..\")\n",
+    "# https://github.com/digital-science/dimcli#authentication\n",
+    "ENDPOINT = \"https://app.dimensions.ai\"\n",
+    "if 'google.colab' in sys.modules:\n",
+    "  import getpass\n",
+    "  USERNAME = getpass.getpass(prompt='Username: ')\n",
+    "  PASSWORD = getpass.getpass(prompt='Password: ')    \n",
+    "  dimcli.login(USERNAME, PASSWORD, ENDPOINT)\n",
+    "else:\n",
+    "  USERNAME, PASSWORD  = \"\", \"\"\n",
+    "  dimcli.login(USERNAME, PASSWORD, ENDPOINT)\n",
+    "dsl = dimcli.Dsl()"
    ]
   },
   {
@@ -63,7 +82,7 @@
     "Collapsed": "false"
    },
    "source": [
-    "### Selecting a researcher\n",
+    "## Selecting a researcher\n",
     "\n",
     "Let's take a researcher ID eg [Michael Boutros ur.01357111535.49](https://app.dimensions.ai/discover/publication?and_facet_researcher=ur.01357111535.49) and save its ID into a variable that can be referenced later.\n",
     "\n",
@@ -72,7 +91,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 6,
+   "execution_count": 5,
    "metadata": {
     "Collapsed": "false"
    },
@@ -87,7 +106,7 @@
     "Collapsed": "false"
    },
    "source": [
-    "### The H-Index function "
+    "## The H-Index function "
    ]
   },
   {
@@ -101,7 +120,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 7,
+   "execution_count": 6,
    "metadata": {
     "Collapsed": "false"
    },
@@ -137,7 +156,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 8,
+   "execution_count": 7,
    "metadata": {
     "Collapsed": "false"
    },
@@ -162,7 +181,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 9,
+   "execution_count": 8,
    "metadata": {
     "Collapsed": "false"
    },
@@ -171,12 +190,37 @@
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "H_index is: 53\n"
+      "Returned Publications: 258 (total = 258)\n",
+      "\u001b[2mTime: 0.53s\u001b[0m\n",
+      "H_index is: 58\n"
      ]
     }
    ],
    "source": [
     "print(\"H_index is:\", the_H_function(get_pubs_citations(RESEARCHER)))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "VsEa7X3EsPYH"
+   },
+   "source": [
+    "## Where to find out more\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "L61eXqqVLpVl"
+   },
+   "source": [
+    "Please have a look at the [official documentation on searching for researchers](https://docs.dimensions.ai/dsl/language.html#searching-for-researchers) for more information on this topic."
    ]
   }
  ],
@@ -196,7 +240,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.7.4"
+   "version": "3.8.5"
   }
  },
  "nbformat": 4,
