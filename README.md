@@ -36,8 +36,8 @@ If you are already familiar with Python and Jupyter, then you probably know what
 
 There are two main folders:
 
-* The [cookbooks](https://github.com/digital-science/dsl_lab_dev/tree/master/cookbooks) folder contains the **latest version** of notebooks providing reusable, simple solutions to common scholarly analytics problems. The notebooks in this folder are regularly tested and kept up to date. If any of these do not work, please [open an issue](https://github.com/digital-science/dimensions-api-lab/issues/new) to let us know. 
-* The [archive](https://github.com/digital-science/dsl_lab_dev/tree/master/archive) folder contains **historical copies** of notebooks used for workshops and tutorials. Most often, these are customized versions of the generic notebook templates (in the `cookbooks` folder), adapted for a specific institution or audience. Please note that the notebooks in this folder are simply *archived* for future reference and **not maintained** afterwards. So use the materials in the `cookbooks` folder for up to date examples and reusable templates.
+* The [cookbooks](https://github.com/digital-science/dimensions-api-lab/tree/master/cookbooks) folder contains the **latest version** of notebooks providing reusable, simple solutions to common scholarly analytics problems. The notebooks in this folder are regularly tested and kept up to date. If any of these do not work, please [open an issue](https://github.com/digital-science/dimensions-api-lab/issues/new) to let us know. 
+* The [archive](https://github.com/digital-science/dimensions-api-lab/tree/master/archive) folder contains **historical copies** of notebooks used for workshops and tutorials. Most often, these are customized versions of the generic notebook templates (in the `cookbooks` folder), adapted for a specific institution or audience. Please note that the notebooks in this folder are simply *archived* for future reference and **not maintained** afterwards. So use the materials in the `cookbooks` folder for up to date examples and reusable templates.
 
 
 ### Using Binder 

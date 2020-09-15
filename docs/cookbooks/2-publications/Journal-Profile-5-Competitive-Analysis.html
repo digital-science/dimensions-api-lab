@@ -370,7 +370,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html">Journal Profiling Part 3: Funding</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#Prerequisites:-Installing-the-Dimensions-Library-and-Logging-in">Prerequisites: Installing the Dimensions Library and Logging in</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#Prerequisites">Prerequisites</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#Load-previously-saved-researchers-data">Load previously saved researchers data</a></li>
 </ul>
 </li>
@@ -385,7 +385,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Journal-Profile-4-Institutions.html">Journal Profiling Part 4: Institutions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Prerequisites:-Installing-the-Dimensions-Library-and-Logging-in">Prerequisites: Installing the Dimensions Library and Logging in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Prerequisites">Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Institutions-Contributing-to-a-Journal">Institutions Contributing to a Journal</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Load-previously-saved-affiliations-data">Load previously saved affiliations data</a></li>
 </ul>
@@ -396,7 +396,7 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Journal Profiling Part 5: Competing Journals Analysis</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#Prerequisites:-Installing-the-Dimensions-Library-and-Logging-in">Prerequisites: Installing the Dimensions Library and Logging in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Prerequisites">Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Competing-Journals">Competing Journals</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#First-let’s-reload-the-data-obtained-in-previous-steps">First let’s reload the data obtained in previous steps</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#What-the-query-looks-like">What the query looks like</a></li>
@@ -429,7 +429,7 @@
 <p class="caption"><span class="caption-text">Clinical Trials</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.html">Clinical Trials by Volume of Publications</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.html#Load-libraries-and-log-in">Load libraries and log in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.html#Prerequisites">Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.html#Query-for-Clinical-Trials">Query for Clinical Trials</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.html#Counting-publications-per-clinical-trial">Counting publications per clinical trial</a></li>
 </ul>
@@ -945,66 +945,44 @@ div.rendered_html tbody tr:hover {
 <li><p>Use this new publications dataset to determine which are the most frequent journals the researchers have also published in</p></li>
 <li><p>Build some visualizations in order to have a quick overview of the results</p></li>
 </ul>
-<div class="section" id="Prerequisites:-Installing-the-Dimensions-Library-and-Logging-in">
-<h2>Prerequisites: Installing the Dimensions Library and Logging in<a class="headerlink" href="#Prerequisites:-Installing-the-Dimensions-Library-and-Logging-in" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>This notebook assumes you have installed the <a class="reference external" href="https://pypi.org/project/dimcli/">Dimcli</a> library and are familiar with the <em>Getting Started</em> tutorial.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># @markdown # Get the API library and login</span>
-<span class="c1"># @markdown Click the &#39;play&#39; button on the left (or shift+enter) after entering your API credentials</span>
+<span></span><span class="o">!</span>pip install dimcli plotly tqdm -U --quiet
 
-<span class="n">username</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1">#@param {type: &quot;string&quot;}</span>
-<span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1">#@param {type: &quot;string&quot;}</span>
-<span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;https://app.dimensions.ai&quot;</span> <span class="c1">#@param {type: &quot;string&quot;}</span>
-
-
-<span class="o">!</span>pip install dimcli plotly tqdm -U --quiet
 <span class="kn">import</span> <span class="nn">dimcli</span>
 <span class="kn">from</span> <span class="nn">dimcli.shortcuts</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">)</span>
-<span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
-
-<span class="c1">#</span>
-<span class="c1"># load common libraries</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">pandas.io.json</span> <span class="kn">import</span> <span class="n">json_normalize</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">json</span>
 <span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span> <span class="k">as</span> <span class="n">progress</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">json</span>
-
-<span class="c1">#</span>
-<span class="c1"># charts libs</span>
-<span class="c1"># import plotly_express as px</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">from</span> <span class="nn">plotly.offline</span> <span class="kn">import</span> <span class="n">plot</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
   <span class="c1"># make js dependecies local / needed by html exports</span>
   <span class="kn">from</span> <span class="nn">plotly.offline</span> <span class="kn">import</span> <span class="n">init_notebook_mode</span>
   <span class="n">init_notebook_mode</span><span class="p">(</span><span class="n">connected</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="c1">#</span>
-<span class="c1"># create output data folder</span>
-<span class="n">FOLDER_NAME</span> <span class="o">=</span> <span class="s2">&quot;journal-profile-data&quot;</span>
-<span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">FOLDER_NAME</span><span class="p">)):</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">FOLDER_NAME</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="n">filename_dot_csv</span><span class="p">):</span>
-    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">FOLDER_NAME</span><span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="n">filename_dot_csv</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">Logging in..&quot;</span><span class="p">)</span>
+<span class="c1"># https://github.com/digital-science/dimcli#authentication</span>
+<span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;https://app.dimensions.ai&quot;</span>
+<span class="k">if</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+  <span class="kn">import</span> <span class="nn">getpass</span>
+  <span class="n">USERNAME</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;Username: &#39;</span><span class="p">)</span>
+  <span class="n">PASSWORD</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;Password: &#39;</span><span class="p">)</span>
+  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">USERNAME</span><span class="p">,</span> <span class="n">PASSWORD</span><span class="p">,</span> <span class="n">ENDPOINT</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="n">USERNAME</span><span class="p">,</span> <span class="n">PASSWORD</span>  <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
+  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">USERNAME</span><span class="p">,</span> <span class="n">PASSWORD</span><span class="p">,</span> <span class="n">ENDPOINT</span><span class="p">)</span>
+<span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Dimcli - Dimensions API Client (v0.6.9)
-Connected to endpoint: https://app.dimensions.ai - DSL version: 1.24
-Method: dsl.ini file
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1024,6 +1002,34 @@ require(['plotly'], function(Plotly) {
 }
 </script></div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+==
+Logging in..
+Dimcli - Dimensions API Client (v0.7.4.2)
+Connected to: https://app.dimensions.ai - DSL v1.27
+Method: dsl.ini file
+</pre></div></div>
+</div>
+<p>Finally, let’s set up a folder to store the data we are going to extract:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># create output data folder</span>
+<span class="n">FOLDER_NAME</span> <span class="o">=</span> <span class="s2">&quot;journal-profile-data&quot;</span>
+<span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">FOLDER_NAME</span><span class="p">)):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">FOLDER_NAME</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="n">filename_dot_csv</span><span class="p">):</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">FOLDER_NAME</span><span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="n">filename_dot_csv</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="Competing-Journals">
 <h2>Competing Journals<a class="headerlink" href="#Competing-Journals" title="Permalink to this headline">¶</a></h2>
@@ -1038,7 +1044,7 @@ require(['plotly'], function(Plotly) {
 <p><strong>NOTE</strong> If you are using Google Colab or don’t have the data available, just do the following: * open up the ‘Files’ panel in Google Colab and create a new folder <code class="docutils literal notranslate"><span class="pre">journal-profile-data</span></code> * grab this <a class="reference external" href="https://github.com/digital-science/dimensions-api-lab/tree/master/cookbooks/2-publications/journal-profile-data.zip">file</a>, unzip it, open the enclosed folder and upload the file called <code class="docutils literal notranslate"><span class="pre">2_researchers_impact_metrics.csv</span></code> to Google Colab (‘Upload’ menu or also by dragging then inside the
 panel window) * move the file inside the <code class="docutils literal notranslate"><span class="pre">journal-profile-data</span></code> folder you just created</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1055,11 +1061,11 @@ panel window) * move the file inside the <code class="docutils literal notransla
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Total researchers: 18524
+Total researchers: 19565
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1094,10 +1100,10 @@ Total researchers: 18524
     <tr>
       <th>0</th>
       <td>ur.0723426172.10</td>
-      <td>62</td>
+      <td>63</td>
       <td>Kari Stefansson</td>
-      <td>107.516129</td>
-      <td>229.129032</td>
+      <td>129.555556</td>
+      <td>229.603175</td>
       <td>2020</td>
       <td>https://app.dimensions.ai/discover/publication...</td>
     </tr>
@@ -1106,38 +1112,38 @@ Total researchers: 18524
       <td>ur.01277776417.51</td>
       <td>45</td>
       <td>Unnur Thorsteinsdottir</td>
-      <td>81.000000</td>
-      <td>159.555556</td>
+      <td>93.088889</td>
+      <td>160.622222</td>
       <td>2019</td>
       <td>https://app.dimensions.ai/discover/publication...</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>ur.01247426430.47</td>
-      <td>33</td>
-      <td>Gudmar Thorleifsson</td>
-      <td>80.818182</td>
-      <td>170.424242</td>
-      <td>2019</td>
+      <td>ur.0641525362.39</td>
+      <td>35</td>
+      <td>Gonçalo R Abecasis</td>
+      <td>134.257143</td>
+      <td>138.514286</td>
+      <td>2020</td>
       <td>https://app.dimensions.ai/discover/publication...</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>ur.01313145634.66</td>
-      <td>32</td>
-      <td>Andres Metspalu</td>
-      <td>170.562500</td>
-      <td>362.875000</td>
+      <td>ur.01247426430.47</td>
+      <td>33</td>
+      <td>Gudmar Thorleifsson</td>
+      <td>94.121212</td>
+      <td>171.878788</td>
       <td>2019</td>
       <td>https://app.dimensions.ai/discover/publication...</td>
     </tr>
     <tr>
       <th>4</th>
       <td>ur.01317433110.75</td>
-      <td>32</td>
+      <td>33</td>
       <td>Caroline Hayward</td>
-      <td>136.843750</td>
-      <td>298.468750</td>
+      <td>157.333333</td>
+      <td>296.212121</td>
       <td>2020</td>
       <td>https://app.dimensions.ai/discover/publication...</td>
     </tr>
@@ -1146,7 +1152,7 @@ Total researchers: 18524
 </div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1163,7 +1169,7 @@ Total researchers: 18524
 <p>This approach may take some time (as we’re potentially retrieving a lot of publications data), but it will lead to precise results.</p>
 <p>The query template to use looks like this (for a couple of researchers only):</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1180,11 +1186,12 @@ return publications[id+journal] limit 10
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 10 (total = 152)
+Returned Publications: 10 (total = 161)
+Time: 0.94s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1220,57 +1227,57 @@ Returned Publications: 10 (total = 152)
     </tr>
     <tr>
       <th>1</th>
-      <td>pub.1123951767</td>
-      <td>jour.1043282</td>
-      <td>Nature Communications</td>
-    </tr>
-    <tr>
-      <th>2</th>
       <td>pub.1124191534</td>
       <td>jour.1043282</td>
       <td>Nature Communications</td>
     </tr>
     <tr>
+      <th>2</th>
+      <td>pub.1123951767</td>
+      <td>jour.1043282</td>
+      <td>Nature Communications</td>
+    </tr>
+    <tr>
       <th>3</th>
+      <td>pub.1127766109</td>
+      <td>jour.1043282</td>
+      <td>Nature Communications</td>
+    </tr>
+    <tr>
+      <th>4</th>
       <td>pub.1125690142</td>
       <td>jour.1300829</td>
       <td>Communications Biology</td>
     </tr>
     <tr>
-      <th>4</th>
-      <td>pub.1123991588</td>
-      <td>jour.1017738</td>
-      <td>The Journal of Clinical Endocrinology &amp; Metabo...</td>
-    </tr>
-    <tr>
       <th>5</th>
-      <td>pub.1126880860</td>
-      <td>jour.1018957</td>
-      <td>Nature</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>pub.1126666840</td>
+      <td>pub.1130504374</td>
       <td>jour.1014075</td>
       <td>New England Journal of Medicine</td>
     </tr>
     <tr>
+      <th>6</th>
+      <td>pub.1128712754</td>
+      <td>jour.1018957</td>
+      <td>Nature</td>
+    </tr>
+    <tr>
       <th>7</th>
-      <td>pub.1126013973</td>
-      <td>jour.1369542</td>
-      <td>medRxiv</td>
+      <td>pub.1130096425</td>
+      <td>jour.1040791</td>
+      <td>Circulation Genomic and Precision Medicine</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>pub.1122751600</td>
-      <td>jour.1053069</td>
-      <td>JAMA Cardiology</td>
+      <td>pub.1130077601</td>
+      <td>jour.1014075</td>
+      <td>New England Journal of Medicine</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>pub.1123159327</td>
-      <td>jour.1034974</td>
-      <td>PLOS Genetics</td>
+      <td>pub.1128316340</td>
+      <td>jour.1091325</td>
+      <td>European Heart Journal</td>
     </tr>
   </tbody>
 </table>
@@ -1282,12 +1289,12 @@ Returned Publications: 10 (total = 152)
 <h2>Extracting all publications/journals information<a class="headerlink" href="#Extracting-all-publications/journals-information" title="Permalink to this headline">¶</a></h2>
 <p>This part may take some time to run (depending on how many years back one wants to go) so you may want to get a coffee while you wait..</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1">#</span>
-<span class="n">journal_id</span> <span class="o">=</span> <span class="s2">&quot;jour.1103138&quot;</span> <span class="c1"># Nature genetics</span>
+<span class="n">journal_id</span> <span class="o">=</span> <span class="s2">&quot;jour.1103138&quot;</span> <span class="c1"># = Nature Genetics</span>
 <span class="n">start_year</span> <span class="o">=</span> <span class="mi">2018</span>
 
 <span class="c1"># our list of researchers</span>
@@ -1302,12 +1309,12 @@ Returned Publications: 10 (total = 152)
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 
-<span></span><span class="n">VERBOSE</span> <span class="o">=</span> <span class="kc">False</span>
+<span></span><span class="n">VERBOSE</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="n">RESEARCHER_ITERATOR_NO</span> <span class="o">=</span> <span class="mi">400</span>
 
 <span class="n">pubs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span>
@@ -1327,18 +1334,105 @@ Returned Publications: 10 (total = 152)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "f083bb48744a43a6bb4ee8092b316c2d", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "71095873dba3446a982023b0a60f3218", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
+Starting iteration with limit=1000 skip=0 ...
+0-1000 / 15127 (1.67s)
+1000-2000 / 15127 (1.73s)
+2000-3000 / 15127 (1.01s)
+3000-4000 / 15127 (1.52s)
+4000-5000 / 15127 (1.53s)
+5000-6000 / 15127 (1.76s)
+6000-7000 / 15127 (0.95s)
+7000-8000 / 15127 (0.95s)
+8000-9000 / 15127 (1.58s)
+9000-10000 / 15127 (0.86s)
+10000-11000 / 15127 (1.57s)
+11000-12000 / 15127 (1.56s)
+12000-13000 / 15127 (1.98s)
+13000-14000 / 15127 (0.94s)
+14000-15000 / 15127 (0.97s)
+15000-15127 / 15127 (1.17s)
+===
+Records extracted: 15127
+Starting iteration with limit=1000 skip=0 ...
+0-1000 / 13961 (0.92s)
+1000-2000 / 13961 (1.04s)
+2000-3000 / 13961 (0.96s)
+3000-4000 / 13961 (0.85s)
+4000-5000 / 13961 (0.86s)
+5000-6000 / 13961 (0.98s)
+6000-7000 / 13961 (0.92s)
+7000-8000 / 13961 (0.96s)
+8000-9000 / 13961 (0.86s)
+9000-10000 / 13961 (1.50s)
+10000-11000 / 13961 (1.73s)
+11000-12000 / 13961 (1.05s)
+12000-13000 / 13961 (1.57s)
+13000-13961 / 13961 (1.06s)
+===
+Records extracted: 13961
+Starting iteration with limit=1000 skip=0 ...
+0-1000 / 13285 (1.56s)
+1000-2000 / 13285 (0.95s)
+2000-3000 / 13285 (0.94s)
+3000-4000 / 13285 (0.97s)
+4000-5000 / 13285 (1.48s)
+5000-6000 / 13285 (1.66s)
+6000-7000 / 13285 (0.95s)
+7000-8000 / 13285 (0.91s)
+8000-9000 / 13285 (2.01s)
+9000-10000 / 13285 (0.84s)
+10000-11000 / 13285 (1.53s)
+11000-12000 / 13285 (2.03s)
+12000-13000 / 13285 (1.44s)
+13000-13285 / 13285 (1.57s)
+===
+Records extracted: 13285
+Starting iteration with limit=1000 skip=0 ...
+0-1000 / 14285 (2.17s)
+1000-2000 / 14285 (3.39s)
+2000-3000 / 14285 (2.15s)
+3000-4000 / 14285 (1.82s)
+4000-5000 / 14285 (2.10s)
+5000-6000 / 14285 (1.56s)
+6000-7000 / 14285 (1.74s)
+7000-8000 / 14285 (1.87s)
+8000-9000 / 14285 (1.67s)
+9000-10000 / 14285 (1.57s)
+10000-11000 / 14285 (1.67s)
+11000-12000 / 14285 (1.74s)
+12000-13000 / 14285 (1.73s)
+13000-14000 / 14285 (1.93s)
+14000-14285 / 14285 (1.61s)
+===
+Records extracted: 14285
+Starting iteration with limit=1000 skip=0 ...
+0-1000 / 12741 (2.33s)
+1000-2000 / 12741 (2.16s)
+2000-3000 / 12741 (1.54s)
+3000-4000 / 12741 (2.81s)
+4000-5000 / 12741 (1.64s)
+5000-6000 / 12741 (1.67s)
+6000-7000 / 12741 (1.46s)
+7000-8000 / 12741 (1.90s)
+8000-9000 / 12741 (1.45s)
+9000-10000 / 12741 (1.65s)
+10000-11000 / 12741 (1.89s)
+11000-12000 / 12741 (1.57s)
+12000-12741 / 12741 (1.78s)
+===
+Records extracted: 12741
 
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1350,7 +1444,7 @@ Returned Publications: 10 (total = 152)
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1372,8 +1466,8 @@ Returned Publications: 10 (total = 152)
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>year</th>
       <th>id</th>
+      <th>year</th>
       <th>journal.id</th>
       <th>journal.title</th>
     </tr>
@@ -1381,38 +1475,38 @@ Returned Publications: 10 (total = 152)
   <tbody>
     <tr>
       <th>0</th>
+      <td>pub.1124795380</td>
       <td>2020</td>
-      <td>pub.1125901483</td>
-      <td>jour.1300829</td>
-      <td>Communications Biology</td>
+      <td>jour.1045059</td>
+      <td>European Journal of Psychotraumatology</td>
     </tr>
     <tr>
       <th>1</th>
+      <td>pub.1130479619</td>
       <td>2020</td>
-      <td>pub.1124911680</td>
-      <td>jour.1045271</td>
-      <td>Translational Psychiatry</td>
+      <td>jour.1041075</td>
+      <td>Global Health Action</td>
     </tr>
     <tr>
       <th>2</th>
+      <td>pub.1125404225</td>
       <td>2020</td>
-      <td>pub.1124913376</td>
-      <td>jour.1045271</td>
-      <td>Translational Psychiatry</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>2020</td>
-      <td>pub.1124430484</td>
       <td>jour.1045337</td>
       <td>Scientific Reports</td>
     </tr>
     <tr>
-      <th>4</th>
+      <th>3</th>
+      <td>pub.1125109477</td>
       <td>2020</td>
-      <td>pub.1125709453</td>
-      <td>jour.1040124</td>
-      <td>Genome Medicine</td>
+      <td>jour.1023439</td>
+      <td>Genome Biology</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>pub.1127505679</td>
+      <td>2020</td>
+      <td>jour.1043282</td>
+      <td>Nature Communications</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1422,48 +1516,48 @@ Returned Publications: 10 (total = 152)
       <td>...</td>
     </tr>
     <tr>
-      <th>13015</th>
+      <th>15122</th>
+      <td>pub.1100301829</td>
       <td>2018</td>
-      <td>pub.1105370805</td>
-      <td>jour.1276748</td>
-      <td>SSRN Electronic Journal</td>
+      <td>jour.1048149</td>
+      <td>European Thyroid Journal</td>
     </tr>
     <tr>
-      <th>13016</th>
+      <th>15123</th>
+      <td>pub.1111681430</td>
       <td>2018</td>
-      <td>pub.1100301815</td>
-      <td>jour.1011111</td>
-      <td>European Surgical Research</td>
+      <td>jour.1011409</td>
+      <td>Human Heredity</td>
     </tr>
     <tr>
-      <th>13017</th>
+      <th>15124</th>
+      <td>pub.1101241166</td>
       <td>2018</td>
-      <td>pub.1111836929</td>
-      <td>jour.1284430</td>
-      <td>Wellcome Open Research</td>
+      <td>jour.1049794</td>
+      <td>Oncology Research and Treatment</td>
     </tr>
     <tr>
-      <th>13018</th>
-      <td>2018</td>
-      <td>pub.1107813889</td>
-      <td>jour.1276748</td>
-      <td>SSRN Electronic Journal</td>
-    </tr>
-    <tr>
-      <th>13019</th>
-      <td>2018</td>
+      <th>15125</th>
       <td>pub.1101248219</td>
+      <td>2018</td>
       <td>jour.1100504</td>
       <td>Dementia and Geriatric Cognitive Disorders</td>
     </tr>
+    <tr>
+      <th>15126</th>
+      <td>pub.1109951444</td>
+      <td>2018</td>
+      <td>jour.1276748</td>
+      <td>SSRN Electronic Journal</td>
+    </tr>
   </tbody>
 </table>
-<p>13017 rows × 4 columns</p>
+<p>15111 rows × 4 columns</p>
 </div></div>
 </div>
 <p>Now we can create a journals-only dataset that includes counts per year, and grant total.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1501,7 +1595,7 @@ Done
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1532,84 +1626,84 @@ Done
   </thead>
   <tbody>
     <tr>
-      <th>7941</th>
+      <th>9998</th>
       <td>2018</td>
       <td>jour.1293558</td>
       <td>bioRxiv</td>
-      <td>1101</td>
-      <td>446</td>
+      <td>1341</td>
+      <td>486</td>
     </tr>
     <tr>
-      <th>2231</th>
+      <th>4226</th>
       <td>2019</td>
       <td>jour.1293558</td>
       <td>bioRxiv</td>
-      <td>1101</td>
-      <td>535</td>
+      <td>1341</td>
+      <td>583</td>
     </tr>
     <tr>
-      <th>248</th>
+      <th>409</th>
       <td>2020</td>
       <td>jour.1293558</td>
       <td>bioRxiv</td>
-      <td>1101</td>
-      <td>120</td>
+      <td>1341</td>
+      <td>272</td>
     </tr>
     <tr>
-      <th>2411</th>
+      <th>4406</th>
       <td>2019</td>
       <td>jour.1101548</td>
       <td>European Neuropsychopharmacology</td>
-      <td>472</td>
-      <td>460</td>
+      <td>480</td>
+      <td>465</td>
     </tr>
     <tr>
-      <th>1647</th>
+      <th>1009</th>
       <td>2020</td>
       <td>jour.1101548</td>
       <td>European Neuropsychopharmacology</td>
-      <td>472</td>
-      <td>4</td>
+      <td>480</td>
+      <td>7</td>
     </tr>
     <tr>
-      <th>9412</th>
+      <th>11482</th>
       <td>2018</td>
       <td>jour.1101548</td>
       <td>European Neuropsychopharmacology</td>
-      <td>472</td>
+      <td>480</td>
       <td>8</td>
     </tr>
     <tr>
-      <th>8094</th>
-      <td>2018</td>
-      <td>jour.1043282</td>
-      <td>Nature Communications</td>
-      <td>305</td>
-      <td>122</td>
-    </tr>
-    <tr>
-      <th>2421</th>
+      <th>4420</th>
       <td>2019</td>
       <td>jour.1043282</td>
       <td>Nature Communications</td>
-      <td>305</td>
-      <td>128</td>
+      <td>353</td>
+      <td>136</td>
     </tr>
     <tr>
-      <th>5</th>
+      <th>10151</th>
+      <td>2018</td>
+      <td>jour.1043282</td>
+      <td>Nature Communications</td>
+      <td>353</td>
+      <td>123</td>
+    </tr>
+    <tr>
+      <th>4</th>
       <td>2020</td>
       <td>jour.1043282</td>
       <td>Nature Communications</td>
-      <td>305</td>
-      <td>55</td>
+      <td>353</td>
+      <td>94</td>
     </tr>
     <tr>
-      <th>8095</th>
-      <td>2018</td>
-      <td>jour.1045337</td>
-      <td>Scientific Reports</td>
-      <td>226</td>
-      <td>110</td>
+      <th>386</th>
+      <td>2020</td>
+      <td>jour.1369542</td>
+      <td>medRxiv</td>
+      <td>318</td>
+      <td>252</td>
     </tr>
   </tbody>
 </table>
@@ -1619,7 +1713,7 @@ Done
 <div class="section" id="Visualizations">
 <h2>Visualizations<a class="headerlink" href="#Visualizations" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1640,23 +1734,9 @@ Done
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div>
+<div>                            <div id="756b4c82-c632-437d-beeb-4a028ffbc3a8" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("756b4c82-c632-437d-beeb-4a028ffbc3a8")) {                    Plotly.newPlot(                        "756b4c82-c632-437d-beeb-4a028ffbc3a8",                        [{"alignmentgroup": "True", "customdata": [["jour.1293558", "bioRxiv", 1341], ["jour.1293558", "bioRxiv", 1341], ["jour.1293558", "bioRxiv", 1341], ["jour.1101548", "European Neuropsychopharmacology", 480], ["jour.1101548", "European Neuropsychopharmacology", 480], ["jour.1101548", "European Neuropsychopharmacology", 480], ["jour.1043282", "Nature Communications", 353], ["jour.1043282", "Nature Communications", 353], ["jour.1043282", "Nature Communications", 353], ["jour.1369542", "medRxiv", 318], ["jour.1369542", "medRxiv", 318], ["jour.1045337", "Scientific Reports", 256], ["jour.1045337", "Scientific Reports", 256], ["jour.1045337", "Scientific Reports", 256], ["jour.1037553", "PLoS ONE", 196], ["jour.1037553", "PLoS ONE", 196], ["jour.1037553", "PLoS ONE", 196], ["jour.1091325", "European Heart Journal", 170], ["jour.1091325", "European Heart Journal", 170], ["jour.1091325", "European Heart Journal", 170], ["jour.1358156", "International Journal of Cancer", 162], ["jour.1358156", "International Journal of Cancer", 162], ["jour.1358156", "International Journal of Cancer", 162], ["jour.1009570", "Circulation", 141], ["jour.1009570", "Circulation", 141], ["jour.1009570", "Circulation", 141], ["jour.1034467", "Alzheimer's & Dementia", 139], ["jour.1034467", "Alzheimer's & Dementia", 139], ["jour.1034467", "Alzheimer's & Dementia", 139], ["jour.1012129", "Biological Psychiatry", 129], ["jour.1017423", "Diabetes", 129], ["jour.1012129", "Biological Psychiatry", 129], ["jour.1012129", "Biological Psychiatry", 129], ["jour.1017423", "Diabetes", 129], ["jour.1017423", "Diabetes", 129], ["jour.1115540", "Molecular Psychiatry", 128], ["jour.1115540", "Molecular Psychiatry", 128], ["jour.1115540", "Molecular Psychiatry", 128], ["jour.1312191", "Journal of Clinical Oncology", 120], ["jour.1312191", "Journal of Clinical Oncology", 120], ["jour.1312191", "Journal of Clinical Oncology", 120], ["jour.1093746", "Journal of the American College of Cardiology", 119], ["jour.1093746", "Journal of the American College of Cardiology", 119], ["jour.1093746", "Journal of the American College of Cardiology", 119], ["jour.1087544", "International Journal of Epidemiology", 112], ["jour.1087544", "International Journal of Epidemiology", 112], ["jour.1087544", "International Journal of Epidemiology", 112], ["jour.1103682", "Osteoarthritis and Cartilage", 107], ["jour.1103682", "Osteoarthritis and Cartilage", 107], ["jour.1103682", "Osteoarthritis and Cartilage", 107], ["jour.1017012", "American Journal of Human Genetics", 104], ["jour.1017012", "American Journal of Human Genetics", 104], ["jour.1017012", "American Journal of Human Genetics", 104], ["jour.1101916", "Cancer Epidemiology Biomarkers & Prevention", 101], ["jour.1101916", "Cancer Epidemiology Biomarkers & Prevention", 101], ["jour.1101916", "Cancer Epidemiology Biomarkers & Prevention", 101], ["jour.1102504", "Human Molecular Genetics", 97], ["jour.1102504", "Human Molecular Genetics", 97], ["jour.1102504", "Human Molecular Genetics", 97], ["jour.1276748", "SSRN Electronic Journal", 95], ["jour.1276748", "SSRN Electronic Journal", 95], ["jour.1276748", "SSRN Electronic Journal", 95], ["jour.1045271", "Translational Psychiatry", 92], ["jour.1045271", "Translational Psychiatry", 92], ["jour.1045271", "Translational Psychiatry", 92], ["jour.1018957", "Nature", 87], ["jour.1018957", "Nature", 87], ["jour.1018957", "Nature", 87], ["jour.1013420", "Atherosclerosis", 85], ["jour.1013420", "Atherosclerosis", 85], ["jour.1013420", "Atherosclerosis", 85], ["jour.1380788", "Research Square", 84], ["jour.1380788", "Research Square", 84], ["jour.1103715", "Diabetes Care", 82], ["jour.1103715", "Diabetes Care", 82], ["jour.1017738", "The Journal of Clinical Endocrinology & Metabolism", 82], ["jour.1103715", "Diabetes Care", 82], ["jour.1017738", "The Journal of Clinical Endocrinology & Metabolism", 82], ["jour.1017738", "The Journal of Clinical Endocrinology & Metabolism", 82], ["jour.1001482", "Diabetologia", 78], ["jour.1001482", "Diabetologia", 78], ["jour.1001482", "Diabetologia", 78], ["jour.1054214", "Psychological Medicine", 74], ["jour.1054214", "Psychological Medicine", 74], ["jour.1054214", "Psychological Medicine", 74], ["jour.1046624", "Journal of the American Heart Association", 72], ["jour.1046624", "Journal of the American Heart Association", 72], ["jour.1046624", "Journal of the American Heart Association", 72], ["jour.1019114", "Cell", 69], ["jour.1019114", "Cell", 69], ["jour.1019114", "Cell", 69], ["jour.1085025", "Blood", 67], ["jour.1100417", "Annals of Oncology", 67], ["jour.1085025", "Blood", 67], ["jour.1100417", "Annals of Oncology", 67], ["jour.1085025", "Blood", 67], ["jour.1100417", "Annals of Oncology", 67], ["jour.1044693", "BMJ Open", 65], ["jour.1044693", "BMJ Open", 65], ["jour.1044693", "BMJ Open", 65]], "hovertemplate": "<b>%{hovertext}</b><br><br>journal.title=%{customdata[1]}<br>total_year=%{y}<br>journal.id=%{customdata[0]}<br>total=%{customdata[2]}<br>year=%{marker.color}<extra></extra>", "hovertext": ["bioRxiv", "bioRxiv", "bioRxiv", "European Neuropsychopharmacology", "European Neuropsychopharmacology", "European Neuropsychopharmacology", "Nature Communications", "Nature Communications", "Nature Communications", "medRxiv", "medRxiv", "Scientific Reports", "Scientific Reports", "Scientific Reports", "PLoS ONE", "PLoS ONE", "PLoS ONE", "European Heart Journal", "European Heart Journal", "European Heart Journal", "International Journal of Cancer", "International Journal of Cancer", "International Journal of Cancer", "Circulation", "Circulation", "Circulation", "Alzheimer's & Dementia", "Alzheimer's & Dementia", "Alzheimer's & Dementia", "Biological Psychiatry", "Diabetes", "Biological Psychiatry", "Biological Psychiatry", "Diabetes", "Diabetes", "Molecular Psychiatry", "Molecular Psychiatry", "Molecular Psychiatry", "Journal of Clinical Oncology", "Journal of Clinical Oncology", "Journal of Clinical Oncology", "Journal of the American College of Cardiology", "Journal of the American College of Cardiology", "Journal of the American College of Cardiology", "International Journal of Epidemiology", "International Journal of Epidemiology", "International Journal of Epidemiology", "Osteoarthritis and Cartilage", "Osteoarthritis and Cartilage", "Osteoarthritis and Cartilage", "American Journal of Human Genetics", "American Journal of Human Genetics", "American Journal of Human Genetics", "Cancer Epidemiology Biomarkers & Prevention", "Cancer Epidemiology Biomarkers & Prevention", "Cancer Epidemiology Biomarkers & Prevention", "Human Molecular Genetics", "Human Molecular Genetics", "Human Molecular Genetics", "SSRN Electronic Journal", "SSRN Electronic Journal", "SSRN Electronic Journal", "Translational Psychiatry", "Translational Psychiatry", "Translational Psychiatry", "Nature", "Nature", "Nature", "Atherosclerosis", "Atherosclerosis", "Atherosclerosis", "Research Square", "Research Square", "Diabetes Care", "Diabetes Care", "The Journal of Clinical Endocrinology & Metabolism", "Diabetes Care", "The Journal of Clinical Endocrinology & Metabolism", "The Journal of Clinical Endocrinology & Metabolism", "Diabetologia", "Diabetologia", "Diabetologia", "Psychological Medicine", "Psychological Medicine", "Psychological Medicine", "Journal of the American Heart Association", "Journal of the American Heart Association", "Journal of the American Heart Association", "Cell", "Cell", "Cell", "Blood", "Annals of Oncology", "Blood", "Annals of Oncology", "Blood", "Annals of Oncology", "BMJ Open", "BMJ Open", "BMJ Open"], "legendgroup": "", "marker": {"color": [2018, 2019, 2020, 2019, 2020, 2018, 2019, 2018, 2020, 2020, 2019, 2019, 2018, 2020, 2019, 2020, 2018, 2020, 2019, 2018, 2019, 2020, 2018, 2020, 2018, 2019, 2018, 2019, 2020, 2018, 2020, 2019, 2020, 2018, 2019, 2019, 2020, 2018, 2018, 2020, 2019, 2018, 2019, 2020, 2019, 2018, 2020, 2020, 2018, 2019, 2018, 2020, 2019, 2018, 2020, 2019, 2019, 2020, 2018, 2020, 2019, 2018, 2020, 2018, 2019, 2019, 2018, 2020, 2018, 2019, 2020, 2020, 2019, 2020, 2018, 2020, 2019, 2019, 2018, 2019, 2020, 2018, 2019, 2018, 2020, 2020, 2018, 2019, 2019, 2020, 2018, 2019, 2020, 2020, 2019, 2018, 2018, 2020, 2019, 2018], "coloraxis": "coloraxis"}, "name": "", "offsetgroup": "", "orientation": "v", "showlegend": false, "textposition": "auto", "type": "bar", "x": ["bioRxiv", "bioRxiv", "bioRxiv", "European Neuropsychopharmacology", "European Neuropsychopharmacology", "European Neuropsychopharmacology", "Nature Communications", "Nature Communications", "Nature Communications", "medRxiv", "medRxiv", "Scientific Reports", "Scientific Reports", "Scientific Reports", "PLoS ONE", "PLoS ONE", "PLoS ONE", "European Heart Journal", "European Heart Journal", "European Heart Journal", "International Journal of Cancer", "International Journal of Cancer", "International Journal of Cancer", "Circulation", "Circulation", "Circulation", "Alzheimer's & Dementia", "Alzheimer's & Dementia", "Alzheimer's & Dementia", "Biological Psychiatry", "Diabetes", "Biological Psychiatry", "Biological Psychiatry", "Diabetes", "Diabetes", "Molecular Psychiatry", "Molecular Psychiatry", "Molecular Psychiatry", "Journal of Clinical Oncology", "Journal of Clinical Oncology", "Journal of Clinical Oncology", "Journal of the American College of Cardiology", "Journal of the American College of Cardiology", "Journal of the American College of Cardiology", "International Journal of Epidemiology", "International Journal of Epidemiology", "International Journal of Epidemiology", "Osteoarthritis and Cartilage", "Osteoarthritis and Cartilage", "Osteoarthritis and Cartilage", "American Journal of Human Genetics", "American Journal of Human Genetics", "American Journal of Human Genetics", "Cancer Epidemiology Biomarkers & Prevention", "Cancer Epidemiology Biomarkers & Prevention", "Cancer Epidemiology Biomarkers & Prevention", "Human Molecular Genetics", "Human Molecular Genetics", "Human Molecular Genetics", "SSRN Electronic Journal", "SSRN Electronic Journal", "SSRN Electronic Journal", "Translational Psychiatry", "Translational Psychiatry", "Translational Psychiatry", "Nature", "Nature", "Nature", "Atherosclerosis", "Atherosclerosis", "Atherosclerosis", "Research Square", "Research Square", "Diabetes Care", "Diabetes Care", "The Journal of Clinical Endocrinology & Metabolism", "Diabetes Care", "The Journal of Clinical Endocrinology & Metabolism", "The Journal of Clinical Endocrinology & Metabolism", "Diabetologia", "Diabetologia", "Diabetologia", "Psychological Medicine", "Psychological Medicine", "Psychological Medicine", "Journal of the American Heart Association", "Journal of the American Heart Association", "Journal of the American Heart Association", "Cell", "Cell", "Cell", "Blood", "Annals of Oncology", "Blood", "Annals of Oncology", "Blood", "Annals of Oncology", "BMJ Open", "BMJ Open", "BMJ Open"], "xaxis": "x", "y": [486, 583, 272, 465, 7, 8, 136, 123, 94, 252, 66, 81, 111, 64, 64, 38, 94, 23, 67, 80, 42, 62, 58, 51, 26, 64, 66, 62, 11, 50, 39, 39, 40, 39, 51, 47, 36, 45, 58, 21, 41, 31, 52, 36, 41, 34, 37, 33, 41, 33, 32, 28, 44, 29, 46, 26, 38, 19, 40, 31, 37, 27, 25, 31, 36, 25, 25, 37, 35, 34, 16, 62, 22, 26, 27, 32, 29, 24, 26, 27, 19, 32, 26, 22, 26, 25, 24, 23, 30, 15, 24, 30, 9, 5, 34, 32, 24, 15, 27, 23], "yaxis": "y"}],                        {"barmode": "relative", "coloraxis": {"colorbar": {"title": {"text": "year"}}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]]}, "legend": {"tracegroupgap": 0}, "template": {"data": {"bar": [{"error_x": {"color": "#2a3f5f"}, "error_y": {"color": "#2a3f5f"}, "marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "bar"}], "barpolar": [{"marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "barpolar"}], "carpet": [{"aaxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "baxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "type": "carpet"}], "choropleth": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "choropleth"}], "contour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "contour"}], "contourcarpet": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "contourcarpet"}], "heatmap": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmap"}], "heatmapgl": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmapgl"}], "histogram": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "histogram"}], "histogram2d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2d"}], "histogram2dcontour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2dcontour"}], "mesh3d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "mesh3d"}], "parcoords": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "parcoords"}], "pie": [{"automargin": true, "type": "pie"}], "scatter": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter"}], "scatter3d": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter3d"}], "scattercarpet": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattercarpet"}], "scattergeo": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergeo"}], "scattergl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergl"}], "scattermapbox": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattermapbox"}], "scatterpolar": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolar"}], "scatterpolargl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolargl"}], "scatterternary": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterternary"}], "surface": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "surface"}], "table": [{"cells": {"fill": {"color": "#EBF0F8"}, "line": {"color": "white"}}, "header": {"fill": {"color": "#C8D4E3"}, "line": {"color": "white"}}, "type": "table"}]}, "layout": {"annotationdefaults": {"arrowcolor": "#2a3f5f", "arrowhead": 0, "arrowwidth": 1}, "coloraxis": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "colorscale": {"diverging": [[0, "#8e0152"], [0.1, "#c51b7d"], [0.2, "#de77ae"], [0.3, "#f1b6da"], [0.4, "#fde0ef"], [0.5, "#f7f7f7"], [0.6, "#e6f5d0"], [0.7, "#b8e186"], [0.8, "#7fbc41"], [0.9, "#4d9221"], [1, "#276419"]], "sequential": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "sequentialminus": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]]}, "colorway": ["#636efa", "#EF553B", "#00cc96", "#ab63fa", "#FFA15A", "#19d3f3", "#FF6692", "#B6E880", "#FF97FF", "#FECB52"], "font": {"color": "#2a3f5f"}, "geo": {"bgcolor": "white", "lakecolor": "white", "landcolor": "#E5ECF6", "showlakes": true, "showland": true, "subunitcolor": "white"}, "hoverlabel": {"align": "left"}, "hovermode": "closest", "mapbox": {"style": "light"}, "paper_bgcolor": "white", "plot_bgcolor": "#E5ECF6", "polar": {"angularaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "radialaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "scene": {"xaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "yaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "zaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}}, "shapedefaults": {"line": {"color": "#2a3f5f"}}, "ternary": {"aaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "baxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "caxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "title": {"x": 0.05}, "xaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}, "yaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}}}, "title": {"text": "Top 100 competitors for jour.1103138 (based on publications data from 2018)"}, "xaxis": {"anchor": "y", "domain": [0.0, 1.0], "title": {"text": "journal.title"}}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": "total_year"}}},                        {"responsive": true}                    ).then(function(){
 
-
-            <div id="a5f77fdc-44f1-4aea-9bee-acb865b626f4" class="plotly-graph-div" style="height:525px; width:100%;"></div>
-            <script type="text/javascript">
-                require(["plotly"], function(Plotly) {
-                    window.PLOTLYENV=window.PLOTLYENV || {};
-
-                if (document.getElementById("a5f77fdc-44f1-4aea-9bee-acb865b626f4")) {
-                    Plotly.newPlot(
-                        'a5f77fdc-44f1-4aea-9bee-acb865b626f4',
-                        [{"alignmentgroup": "True", "customdata": [["jour.1293558", "bioRxiv", 1101], ["jour.1293558", "bioRxiv", 1101], ["jour.1293558", "bioRxiv", 1101], ["jour.1101548", "European Neuropsychopharmacology", 472], ["jour.1101548", "European Neuropsychopharmacology", 472], ["jour.1101548", "European Neuropsychopharmacology", 472], ["jour.1043282", "Nature Communications", 305], ["jour.1043282", "Nature Communications", 305], ["jour.1043282", "Nature Communications", 305], ["jour.1045337", "Scientific Reports", 226], ["jour.1045337", "Scientific Reports", 226], ["jour.1045337", "Scientific Reports", 226], ["jour.1037553", "PLoS ONE", 186], ["jour.1037553", "PLoS ONE", 186], ["jour.1037553", "PLoS ONE", 186], ["jour.1034467", "Alzheimer's & Dementia", 176], ["jour.1034467", "Alzheimer's & Dementia", 176], ["jour.1034467", "Alzheimer's & Dementia", 176], ["jour.1091325", "European Heart Journal", 166], ["jour.1091325", "European Heart Journal", 166], ["jour.1091325", "European Heart Journal", 166], ["jour.1369542", "medRxiv", 156], ["jour.1369542", "medRxiv", 156], ["jour.1358156", "International Journal of Cancer", 150], ["jour.1358156", "International Journal of Cancer", 150], ["jour.1358156", "International Journal of Cancer", 150], ["jour.1009570", "Circulation", 140], ["jour.1009570", "Circulation", 140], ["jour.1009570", "Circulation", 140], ["jour.1012129", "Biological Psychiatry", 122], ["jour.1012129", "Biological Psychiatry", 122], ["jour.1115540", "Molecular Psychiatry", 122], ["jour.1012129", "Biological Psychiatry", 122], ["jour.1115540", "Molecular Psychiatry", 122], ["jour.1115540", "Molecular Psychiatry", 122], ["jour.1093746", "Journal of the American College of Cardiology", 112], ["jour.1093746", "Journal of the American College of Cardiology", 112], ["jour.1093746", "Journal of the American College of Cardiology", 112], ["jour.1103682", "Osteoarthritis and Cartilage", 108], ["jour.1103682", "Osteoarthritis and Cartilage", 108], ["jour.1103682", "Osteoarthritis and Cartilage", 108], ["jour.1312191", "Journal of Clinical Oncology", 100], ["jour.1312191", "Journal of Clinical Oncology", 100], ["jour.1312191", "Journal of Clinical Oncology", 100], ["jour.1017423", "Diabetes", 99], ["jour.1017423", "Diabetes", 99], ["jour.1017423", "Diabetes", 99], ["jour.1087544", "International Journal of Epidemiology", 94], ["jour.1087544", "International Journal of Epidemiology", 94], ["jour.1087544", "International Journal of Epidemiology", 94], ["jour.1017012", "American Journal of Human Genetics", 90], ["jour.1013420", "Atherosclerosis", 90], ["jour.1017012", "American Journal of Human Genetics", 90], ["jour.1017012", "American Journal of Human Genetics", 90], ["jour.1013420", "Atherosclerosis", 90], ["jour.1013420", "Atherosclerosis", 90], ["jour.1102504", "Human Molecular Genetics", 87], ["jour.1102504", "Human Molecular Genetics", 87], ["jour.1102504", "Human Molecular Genetics", 87], ["jour.1101916", "Cancer Epidemiology Biomarkers & Prevention", 85], ["jour.1101916", "Cancer Epidemiology Biomarkers & Prevention", 85], ["jour.1101916", "Cancer Epidemiology Biomarkers & Prevention", 85], ["jour.1045271", "Translational Psychiatry", 80], ["jour.1045271", "Translational Psychiatry", 80], ["jour.1045271", "Translational Psychiatry", 80], ["jour.1276748", "SSRN Electronic Journal", 75], ["jour.1276748", "SSRN Electronic Journal", 75], ["jour.1276748", "SSRN Electronic Journal", 75], ["jour.1001482", "Diabetologia", 74], ["jour.1001482", "Diabetologia", 74], ["jour.1001482", "Diabetologia", 74], ["jour.1103715", "Diabetes Care", 72], ["jour.1103715", "Diabetes Care", 72], ["jour.1103715", "Diabetes Care", 72], ["jour.1017738", "The Journal of Clinical Endocrinology & Metabolism", 71], ["jour.1017738", "The Journal of Clinical Endocrinology & Metabolism", 71], ["jour.1017738", "The Journal of Clinical Endocrinology & Metabolism", 71], ["jour.1046624", "Journal of the American Heart Association", 64], ["jour.1085025", "Blood", 64], ["jour.1046624", "Journal of the American Heart Association", 64], ["jour.1085025", "Blood", 64], ["jour.1046624", "Journal of the American Heart Association", 64], ["jour.1085025", "Blood", 64], ["jour.1054214", "Psychological Medicine", 62], ["jour.1054214", "Psychological Medicine", 62], ["jour.1054214", "Psychological Medicine", 62], ["jour.1100417", "Annals of Oncology", 61], ["jour.1100417", "Annals of Oncology", 61], ["jour.1100417", "Annals of Oncology", 61], ["jour.1095636", "European Journal of Epidemiology", 60], ["jour.1095636", "European Journal of Epidemiology", 60], ["jour.1095636", "European Journal of Epidemiology", 60], ["jour.1103410", "European Journal of Human Genetics", 56], ["jour.1044693", "BMJ Open", 56], ["jour.1103410", "European Journal of Human Genetics", 56], ["jour.1044693", "BMJ Open", 56], ["jour.1103410", "European Journal of Human Genetics", 56], ["jour.1044693", "BMJ Open", 56], ["jour.1358108", "Journal of the National Cancer Institute", 55], ["jour.1018957", "Nature", 55]], "hovertemplate": "<b>%{hovertext}</b><br><br>journal.title=%{customdata[1]}<br>total_year=%{y}<br>journal.id=%{customdata[0]}<br>total=%{customdata[2]}<br>year=%{marker.color}<extra></extra>", "hovertext": ["bioRxiv", "bioRxiv", "bioRxiv", "European Neuropsychopharmacology", "European Neuropsychopharmacology", "European Neuropsychopharmacology", "Nature Communications", "Nature Communications", "Nature Communications", "Scientific Reports", "Scientific Reports", "Scientific Reports", "PLoS ONE", "PLoS ONE", "PLoS ONE", "Alzheimer's & Dementia", "Alzheimer's & Dementia", "Alzheimer's & Dementia", "European Heart Journal", "European Heart Journal", "European Heart Journal", "medRxiv", "medRxiv", "International Journal of Cancer", "International Journal of Cancer", "International Journal of Cancer", "Circulation", "Circulation", "Circulation", "Biological Psychiatry", "Biological Psychiatry", "Molecular Psychiatry", "Biological Psychiatry", "Molecular Psychiatry", "Molecular Psychiatry", "Journal of the American College of Cardiology", "Journal of the American College of Cardiology", "Journal of the American College of Cardiology", "Osteoarthritis and Cartilage", "Osteoarthritis and Cartilage", "Osteoarthritis and Cartilage", "Journal of Clinical Oncology", "Journal of Clinical Oncology", "Journal of Clinical Oncology", "Diabetes", "Diabetes", "Diabetes", "International Journal of Epidemiology", "International Journal of Epidemiology", "International Journal of Epidemiology", "American Journal of Human Genetics", "Atherosclerosis", "American Journal of Human Genetics", "American Journal of Human Genetics", "Atherosclerosis", "Atherosclerosis", "Human Molecular Genetics", "Human Molecular Genetics", "Human Molecular Genetics", "Cancer Epidemiology Biomarkers & Prevention", "Cancer Epidemiology Biomarkers & Prevention", "Cancer Epidemiology Biomarkers & Prevention", "Translational Psychiatry", "Translational Psychiatry", "Translational Psychiatry", "SSRN Electronic Journal", "SSRN Electronic Journal", "SSRN Electronic Journal", "Diabetologia", "Diabetologia", "Diabetologia", "Diabetes Care", "Diabetes Care", "Diabetes Care", "The Journal of Clinical Endocrinology & Metabolism", "The Journal of Clinical Endocrinology & Metabolism", "The Journal of Clinical Endocrinology & Metabolism", "Journal of the American Heart Association", "Blood", "Journal of the American Heart Association", "Blood", "Journal of the American Heart Association", "Blood", "Psychological Medicine", "Psychological Medicine", "Psychological Medicine", "Annals of Oncology", "Annals of Oncology", "Annals of Oncology", "European Journal of Epidemiology", "European Journal of Epidemiology", "European Journal of Epidemiology", "European Journal of Human Genetics", "BMJ Open", "European Journal of Human Genetics", "BMJ Open", "European Journal of Human Genetics", "BMJ Open", "Journal of the National Cancer Institute", "Nature"], "legendgroup": "", "marker": {"color": [2018, 2019, 2020, 2019, 2020, 2018, 2018, 2019, 2020, 2018, 2019, 2020, 2020, 2018, 2019, 2019, 2020, 2018, 2019, 2020, 2018, 2020, 2019, 2019, 2020, 2018, 2018, 2019, 2020, 2018, 2019, 2019, 2020, 2020, 2018, 2019, 2018, 2020, 2018, 2019, 2020, 2020, 2019, 2018, 2018, 2020, 2019, 2018, 2019, 2020, 2020, 2018, 2018, 2019, 2019, 2020, 2018, 2020, 2019, 2020, 2018, 2019, 2019, 2020, 2018, 2019, 2020, 2018, 2018, 2020, 2019, 2020, 2019, 2018, 2018, 2020, 2019, 2020, 2020, 2019, 2019, 2018, 2018, 2020, 2018, 2019, 2019, 2018, 2020, 2020, 2018, 2019, 2018, 2019, 2019, 2020, 2020, 2018, 2018, 2020], "coloraxis": "coloraxis"}, "name": "", "offsetgroup": "", "orientation": "v", "showlegend": false, "textposition": "auto", "type": "bar", "x": ["bioRxiv", "bioRxiv", "bioRxiv", "European Neuropsychopharmacology", "European Neuropsychopharmacology", "European Neuropsychopharmacology", "Nature Communications", "Nature Communications", "Nature Communications", "Scientific Reports", "Scientific Reports", "Scientific Reports", "PLoS ONE", "PLoS ONE", "PLoS ONE", "Alzheimer's & Dementia", "Alzheimer's & Dementia", "Alzheimer's & Dementia", "European Heart Journal", "European Heart Journal", "European Heart Journal", "medRxiv", "medRxiv", "International Journal of Cancer", "International Journal of Cancer", "International Journal of Cancer", "Circulation", "Circulation", "Circulation", "Biological Psychiatry", "Biological Psychiatry", "Molecular Psychiatry", "Biological Psychiatry", "Molecular Psychiatry", "Molecular Psychiatry", "Journal of the American College of Cardiology", "Journal of the American College of Cardiology", "Journal of the American College of Cardiology", "Osteoarthritis and Cartilage", "Osteoarthritis and Cartilage", "Osteoarthritis and Cartilage", "Journal of Clinical Oncology", "Journal of Clinical Oncology", "Journal of Clinical Oncology", "Diabetes", "Diabetes", "Diabetes", "International Journal of Epidemiology", "International Journal of Epidemiology", "International Journal of Epidemiology", "American Journal of Human Genetics", "Atherosclerosis", "American Journal of Human Genetics", "American Journal of Human Genetics", "Atherosclerosis", "Atherosclerosis", "Human Molecular Genetics", "Human Molecular Genetics", "Human Molecular Genetics", "Cancer Epidemiology Biomarkers & Prevention", "Cancer Epidemiology Biomarkers & Prevention", "Cancer Epidemiology Biomarkers & Prevention", "Translational Psychiatry", "Translational Psychiatry", "Translational Psychiatry", "SSRN Electronic Journal", "SSRN Electronic Journal", "SSRN Electronic Journal", "Diabetologia", "Diabetologia", "Diabetologia", "Diabetes Care", "Diabetes Care", "Diabetes Care", "The Journal of Clinical Endocrinology & Metabolism", "The Journal of Clinical Endocrinology & Metabolism", "The Journal of Clinical Endocrinology & Metabolism", "Journal of the American Heart Association", "Blood", "Journal of the American Heart Association", "Blood", "Journal of the American Heart Association", "Blood", "Psychological Medicine", "Psychological Medicine", "Psychological Medicine", "Annals of Oncology", "Annals of Oncology", "Annals of Oncology", "European Journal of Epidemiology", "European Journal of Epidemiology", "European Journal of Epidemiology", "European Journal of Human Genetics", "BMJ Open", "European Journal of Human Genetics", "BMJ Open", "European Journal of Human Genetics", "BMJ Open", "Journal of the National Cancer Institute", "Nature"], "xaxis": "x", "y": [446, 535, 120, 460, 4, 8, 122, 128, 55, 110, 88, 28, 27, 94, 65, 90, 4, 82, 70, 15, 81, 100, 56, 46, 46, 58, 27, 67, 46, 52, 40, 52, 30, 17, 53, 51, 30, 31, 42, 35, 31, 6, 37, 57, 40, 8, 51, 32, 41, 21, 13, 37, 31, 46, 40, 13, 39, 8, 40, 27, 32, 26, 36, 12, 32, 37, 10, 28, 34, 12, 28, 17, 29, 26, 25, 22, 24, 13, 4, 25, 29, 26, 31, 12, 22, 28, 33, 26, 2, 13, 22, 25, 18, 25, 22, 8, 16, 23, 13, 14], "yaxis": "y"}],
-                        {"barmode": "relative", "coloraxis": {"colorbar": {"title": {"text": "year"}}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]]}, "legend": {"tracegroupgap": 0}, "template": {"data": {"bar": [{"error_x": {"color": "#2a3f5f"}, "error_y": {"color": "#2a3f5f"}, "marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "bar"}], "barpolar": [{"marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "barpolar"}], "carpet": [{"aaxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "baxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "type": "carpet"}], "choropleth": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "choropleth"}], "contour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "contour"}], "contourcarpet": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "contourcarpet"}], "heatmap": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmap"}], "heatmapgl": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmapgl"}], "histogram": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "histogram"}], "histogram2d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2d"}], "histogram2dcontour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2dcontour"}], "mesh3d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "mesh3d"}], "parcoords": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "parcoords"}], "pie": [{"automargin": true, "type": "pie"}], "scatter": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter"}], "scatter3d": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter3d"}], "scattercarpet": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattercarpet"}], "scattergeo": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergeo"}], "scattergl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergl"}], "scattermapbox": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattermapbox"}], "scatterpolar": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolar"}], "scatterpolargl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolargl"}], "scatterternary": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterternary"}], "surface": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "surface"}], "table": [{"cells": {"fill": {"color": "#EBF0F8"}, "line": {"color": "white"}}, "header": {"fill": {"color": "#C8D4E3"}, "line": {"color": "white"}}, "type": "table"}]}, "layout": {"annotationdefaults": {"arrowcolor": "#2a3f5f", "arrowhead": 0, "arrowwidth": 1}, "coloraxis": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "colorscale": {"diverging": [[0, "#8e0152"], [0.1, "#c51b7d"], [0.2, "#de77ae"], [0.3, "#f1b6da"], [0.4, "#fde0ef"], [0.5, "#f7f7f7"], [0.6, "#e6f5d0"], [0.7, "#b8e186"], [0.8, "#7fbc41"], [0.9, "#4d9221"], [1, "#276419"]], "sequential": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "sequentialminus": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]]}, "colorway": ["#636efa", "#EF553B", "#00cc96", "#ab63fa", "#FFA15A", "#19d3f3", "#FF6692", "#B6E880", "#FF97FF", "#FECB52"], "font": {"color": "#2a3f5f"}, "geo": {"bgcolor": "white", "lakecolor": "white", "landcolor": "#E5ECF6", "showlakes": true, "showland": true, "subunitcolor": "white"}, "hoverlabel": {"align": "left"}, "hovermode": "closest", "mapbox": {"style": "light"}, "paper_bgcolor": "white", "plot_bgcolor": "#E5ECF6", "polar": {"angularaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "radialaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "scene": {"xaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "yaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "zaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}}, "shapedefaults": {"line": {"color": "#2a3f5f"}}, "ternary": {"aaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "baxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "caxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "title": {"x": 0.05}, "xaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}, "yaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}}}, "title": {"text": "Top 100 competitors for jour.1103138 (based on publications data from 2018)"}, "xaxis": {"anchor": "y", "domain": [0.0, 1.0], "title": {"text": "journal.title"}}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": "total_year"}}},
-                        {"responsive": true}
-                    ).then(function(){
-
-var gd = document.getElementById('a5f77fdc-44f1-4aea-9bee-acb865b626f4');
+var gd = document.getElementById('756b4c82-c632-437d-beeb-4a028ffbc3a8');
 var x = new MutationObserver(function (mutations, observer) {{
         var display = window.getComputedStyle(gd).display;
         if (!display || display === 'none') {{
@@ -1678,14 +1758,10 @@ if (outputEl) {{
     x.observe(outputEl, {childList: true});
 }}
 
-                        })
-                };
-                });
-            </script>
-        </div></div>
+                        })                };                });            </script>        </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1707,23 +1783,9 @@ if (outputEl) {{
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div>
+<div>                            <div id="e7edb4f6-0f95-43b2-a00d-6d1a935e2e54" class="plotly-graph-div" style="height:900px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("e7edb4f6-0f95-43b2-a00d-6d1a935e2e54")) {                    Plotly.newPlot(                        "e7edb4f6-0f95-43b2-a00d-6d1a935e2e54",                        [{"alignmentgroup": "True", "customdata": [["jour.1293558", "bioRxiv", 1341], ["jour.1101548", "European Neuropsychopharmacology", 480], ["jour.1043282", "Nature Communications", 353], ["jour.1045337", "Scientific Reports", 256], ["jour.1037553", "PLoS ONE", 196], ["jour.1091325", "European Heart Journal", 170], ["jour.1358156", "International Journal of Cancer", 162], ["jour.1009570", "Circulation", 141], ["jour.1034467", "Alzheimer's & Dementia", 139], ["jour.1012129", "Biological Psychiatry", 129], ["jour.1017423", "Diabetes", 129], ["jour.1115540", "Molecular Psychiatry", 128], ["jour.1312191", "Journal of Clinical Oncology", 120], ["jour.1093746", "Journal of the American College of Cardiology", 119], ["jour.1087544", "International Journal of Epidemiology", 112], ["jour.1103682", "Osteoarthritis and Cartilage", 107], ["jour.1017012", "American Journal of Human Genetics", 104], ["jour.1101916", "Cancer Epidemiology Biomarkers & Prevention", 101], ["jour.1102504", "Human Molecular Genetics", 97], ["jour.1276748", "SSRN Electronic Journal", 95], ["jour.1045271", "Translational Psychiatry", 92], ["jour.1018957", "Nature", 87], ["jour.1013420", "Atherosclerosis", 85], ["jour.1103715", "Diabetes Care", 82], ["jour.1017738", "The Journal of Clinical Endocrinology & Metabolism", 82], ["jour.1001482", "Diabetologia", 78], ["jour.1054214", "Psychological Medicine", 74], ["jour.1046624", "Journal of the American Heart Association", 72], ["jour.1019114", "Cell", 69], ["jour.1085025", "Blood", 67], ["jour.1100417", "Annals of Oncology", 67], ["jour.1044693", "BMJ Open", 65], ["jour.1095636", "European Journal of Epidemiology", 62], ["jour.1103410", "European Journal of Human Genetics", 62], ["jour.1358108", "Journal of the National Cancer Institute", 59], ["jour.1040791", "Circulation Genomic and Precision Medicine", 59], ["jour.1017122", "Geburtshilfe und Frauenheilkunde", 56], ["jour.1042723", "Nutrients", 56], ["jour.1017616", "Gastroenterology", 55], ["jour.1034974", "PLOS Genetics", 54], ["jour.1297397", "Twin Research and Human Genetics", 53], ["jour.1094974", "Genetic Epidemiology", 53], ["jour.1284430", "Wellcome Open Research", 51], ["jour.1017790", "American Journal of Clinical Nutrition", 50], ["jour.1137590", "Senologie - Zeitschrift f\u00fcr Mammadiagnostik und -therapie", 50], ["jour.1119411", "Genetics in Medicine", 50], ["jour.1013236", "Schizophrenia Bulletin", 49], ["jour.1034427", "PLoS Medicine", 48], ["jour.1346339", "Science", 47], ["jour.1035838", "International Journal of Obesity", 46], ["jour.1345383", "Bioinformatics", 46], ["jour.1018238", "Neurology", 46], ["jour.1092777", "Breast Cancer Research and Treatment", 45], ["jour.1017377", "The BMJ", 45], ["jour.1113743", "The Journals of Gerontology Series A", 43], ["jour.1113716", "Nature Medicine", 43], ["jour.1017082", "British Journal of Cancer", 42], ["jour.1042271", "Clinical Epigenetics", 42], ["jour.1089762", "Journal of Affective Disorders", 41], ["jour.1017081", "Heart", 40], ["jour.1321825", "JAMA Network Open", 40], ["jour.1090493", "American Journal of Epidemiology", 39], ["jour.1017226", "Annals of the Rheumatic Diseases", 39], ["jour.1013101", "Stroke", 39]], "hovertemplate": "<b>%{hovertext}</b><br><br>year=%{marker.color}<br>journal.title=%{customdata[1]}<br>total_year=%{y}<br>journal.id=%{customdata[0]}<br>total=%{customdata[2]}<extra></extra>", "hovertext": ["bioRxiv", "European Neuropsychopharmacology", "Nature Communications", "Scientific Reports", "PLoS ONE", "European Heart Journal", "International Journal of Cancer", "Circulation", "Alzheimer's & Dementia", "Biological Psychiatry", "Diabetes", "Molecular Psychiatry", "Journal of Clinical Oncology", "Journal of the American College of Cardiology", "International Journal of Epidemiology", "Osteoarthritis and Cartilage", "American Journal of Human Genetics", "Cancer Epidemiology Biomarkers & Prevention", "Human Molecular Genetics", "SSRN Electronic Journal", "Translational Psychiatry", "Nature", "Atherosclerosis", "Diabetes Care", "The Journal of Clinical Endocrinology & Metabolism", "Diabetologia", "Psychological Medicine", "Journal of the American Heart Association", "Cell", "Blood", "Annals of Oncology", "BMJ Open", "European Journal of Epidemiology", "European Journal of Human Genetics", "Journal of the National Cancer Institute", "Circulation Genomic and Precision Medicine", "Geburtshilfe und Frauenheilkunde", "Nutrients", "Gastroenterology", "PLOS Genetics", "Twin Research and Human Genetics", "Genetic Epidemiology", "Wellcome Open Research", "American Journal of Clinical Nutrition", "Senologie - Zeitschrift f\u00fcr Mammadiagnostik und -therapie", "Genetics in Medicine", "Schizophrenia Bulletin", "PLoS Medicine", "Science", "International Journal of Obesity", "Bioinformatics", "Neurology", "Breast Cancer Research and Treatment", "The BMJ", "The Journals of Gerontology Series A", "Nature Medicine", "British Journal of Cancer", "Clinical Epigenetics", "Journal of Affective Disorders", "Heart", "JAMA Network Open", "American Journal of Epidemiology", "Annals of the Rheumatic Diseases", "Stroke"], "legendgroup": "", "marker": {"color": [2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018], "coloraxis": "coloraxis"}, "name": "", "offsetgroup": "", "orientation": "v", "showlegend": false, "textposition": "auto", "type": "bar", "x": ["bioRxiv", "European Neuropsychopharmacology", "Nature Communications", "Scientific Reports", "PLoS ONE", "European Heart Journal", "International Journal of Cancer", "Circulation", "Alzheimer's & Dementia", "Biological Psychiatry", "Diabetes", "Molecular Psychiatry", "Journal of Clinical Oncology", "Journal of the American College of Cardiology", "International Journal of Epidemiology", "Osteoarthritis and Cartilage", "American Journal of Human Genetics", "Cancer Epidemiology Biomarkers & Prevention", "Human Molecular Genetics", "SSRN Electronic Journal", "Translational Psychiatry", "Nature", "Atherosclerosis", "Diabetes Care", "The Journal of Clinical Endocrinology & Metabolism", "Diabetologia", "Psychological Medicine", "Journal of the American Heart Association", "Cell", "Blood", "Annals of Oncology", "BMJ Open", "European Journal of Epidemiology", "European Journal of Human Genetics", "Journal of the National Cancer Institute", "Circulation Genomic and Precision Medicine", "Geburtshilfe und Frauenheilkunde", "Nutrients", "Gastroenterology", "PLOS Genetics", "Twin Research and Human Genetics", "Genetic Epidemiology", "Wellcome Open Research", "American Journal of Clinical Nutrition", "Senologie - Zeitschrift f\u00fcr Mammadiagnostik und -therapie", "Genetics in Medicine", "Schizophrenia Bulletin", "PLoS Medicine", "Science", "International Journal of Obesity", "Bioinformatics", "Neurology", "Breast Cancer Research and Treatment", "The BMJ", "The Journals of Gerontology Series A", "Nature Medicine", "British Journal of Cancer", "Clinical Epigenetics", "Journal of Affective Disorders", "Heart", "JAMA Network Open", "American Journal of Epidemiology", "Annals of the Rheumatic Diseases", "Stroke"], "xaxis": "x3", "y": [486, 8, 123, 111, 94, 80, 58, 26, 66, 50, 39, 45, 58, 31, 34, 41, 32, 29, 40, 27, 31, 25, 35, 27, 26, 32, 22, 24, 24, 32, 24, 23, 20, 17, 13, 23, 38, 9, 19, 22, 11, 16, 21, 11, 22, 13, 21, 18, 22, 17, 11, 14, 24, 17, 10, 8, 17, 16, 14, 13, 4, 11, 17, 18], "yaxis": "y3"}, {"alignmentgroup": "True", "customdata": [["jour.1293558", "bioRxiv", 1341], ["jour.1101548", "European Neuropsychopharmacology", 480], ["jour.1043282", "Nature Communications", 353], ["jour.1369542", "medRxiv", 318], ["jour.1045337", "Scientific Reports", 256], ["jour.1037553", "PLoS ONE", 196], ["jour.1091325", "European Heart Journal", 170], ["jour.1358156", "International Journal of Cancer", 162], ["jour.1009570", "Circulation", 141], ["jour.1034467", "Alzheimer's & Dementia", 139], ["jour.1012129", "Biological Psychiatry", 129], ["jour.1017423", "Diabetes", 129], ["jour.1115540", "Molecular Psychiatry", 128], ["jour.1312191", "Journal of Clinical Oncology", 120], ["jour.1093746", "Journal of the American College of Cardiology", 119], ["jour.1087544", "International Journal of Epidemiology", 112], ["jour.1103682", "Osteoarthritis and Cartilage", 107], ["jour.1017012", "American Journal of Human Genetics", 104], ["jour.1101916", "Cancer Epidemiology Biomarkers & Prevention", 101], ["jour.1102504", "Human Molecular Genetics", 97], ["jour.1276748", "SSRN Electronic Journal", 95], ["jour.1045271", "Translational Psychiatry", 92], ["jour.1018957", "Nature", 87], ["jour.1013420", "Atherosclerosis", 85], ["jour.1380788", "Research Square", 84], ["jour.1103715", "Diabetes Care", 82], ["jour.1017738", "The Journal of Clinical Endocrinology & Metabolism", 82], ["jour.1001482", "Diabetologia", 78], ["jour.1054214", "Psychological Medicine", 74], ["jour.1046624", "Journal of the American Heart Association", 72], ["jour.1019114", "Cell", 69], ["jour.1085025", "Blood", 67], ["jour.1100417", "Annals of Oncology", 67], ["jour.1044693", "BMJ Open", 65], ["jour.1095636", "European Journal of Epidemiology", 62], ["jour.1103410", "European Journal of Human Genetics", 62], ["jour.1040791", "Circulation Genomic and Precision Medicine", 59], ["jour.1358108", "Journal of the National Cancer Institute", 59], ["jour.1042723", "Nutrients", 56], ["jour.1017122", "Geburtshilfe und Frauenheilkunde", 56], ["jour.1017616", "Gastroenterology", 55], ["jour.1034974", "PLOS Genetics", 54], ["jour.1297397", "Twin Research and Human Genetics", 53], ["jour.1094974", "Genetic Epidemiology", 53], ["jour.1284430", "Wellcome Open Research", 51], ["jour.1137590", "Senologie - Zeitschrift f\u00fcr Mammadiagnostik und -therapie", 50], ["jour.1119411", "Genetics in Medicine", 50], ["jour.1017790", "American Journal of Clinical Nutrition", 50], ["jour.1013236", "Schizophrenia Bulletin", 49], ["jour.1034427", "PLoS Medicine", 48], ["jour.1346339", "Science", 47], ["jour.1018238", "Neurology", 46], ["jour.1345383", "Bioinformatics", 46], ["jour.1035838", "International Journal of Obesity", 46], ["jour.1092777", "Breast Cancer Research and Treatment", 45], ["jour.1017377", "The BMJ", 45], ["jour.1113716", "Nature Medicine", 43], ["jour.1113743", "The Journals of Gerontology Series A", 43], ["jour.1042271", "Clinical Epigenetics", 42], ["jour.1017082", "British Journal of Cancer", 42], ["jour.1089762", "Journal of Affective Disorders", 41], ["jour.1321825", "JAMA Network Open", 40], ["jour.1017081", "Heart", 40], ["jour.1017226", "Annals of the Rheumatic Diseases", 39], ["jour.1090493", "American Journal of Epidemiology", 39], ["jour.1013101", "Stroke", 39], ["jour.1077219", "The Lancet", 38], ["jour.1094093", "Journal of Hypertension", 38]], "hovertemplate": "<b>%{hovertext}</b><br><br>year=%{marker.color}<br>journal.title=%{customdata[1]}<br>total_year=%{y}<br>journal.id=%{customdata[0]}<br>total=%{customdata[2]}<extra></extra>", "hovertext": ["bioRxiv", "European Neuropsychopharmacology", "Nature Communications", "medRxiv", "Scientific Reports", "PLoS ONE", "European Heart Journal", "International Journal of Cancer", "Circulation", "Alzheimer's & Dementia", "Biological Psychiatry", "Diabetes", "Molecular Psychiatry", "Journal of Clinical Oncology", "Journal of the American College of Cardiology", "International Journal of Epidemiology", "Osteoarthritis and Cartilage", "American Journal of Human Genetics", "Cancer Epidemiology Biomarkers & Prevention", "Human Molecular Genetics", "SSRN Electronic Journal", "Translational Psychiatry", "Nature", "Atherosclerosis", "Research Square", "Diabetes Care", "The Journal of Clinical Endocrinology & Metabolism", "Diabetologia", "Psychological Medicine", "Journal of the American Heart Association", "Cell", "Blood", "Annals of Oncology", "BMJ Open", "European Journal of Epidemiology", "European Journal of Human Genetics", "Circulation Genomic and Precision Medicine", "Journal of the National Cancer Institute", "Nutrients", "Geburtshilfe und Frauenheilkunde", "Gastroenterology", "PLOS Genetics", "Twin Research and Human Genetics", "Genetic Epidemiology", "Wellcome Open Research", "Senologie - Zeitschrift f\u00fcr Mammadiagnostik und -therapie", "Genetics in Medicine", "American Journal of Clinical Nutrition", "Schizophrenia Bulletin", "PLoS Medicine", "Science", "Neurology", "Bioinformatics", "International Journal of Obesity", "Breast Cancer Research and Treatment", "The BMJ", "Nature Medicine", "The Journals of Gerontology Series A", "Clinical Epigenetics", "British Journal of Cancer", "Journal of Affective Disorders", "JAMA Network Open", "Heart", "Annals of the Rheumatic Diseases", "American Journal of Epidemiology", "Stroke", "The Lancet", "Journal of Hypertension"], "legendgroup": "", "marker": {"color": [2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019], "coloraxis": "coloraxis"}, "name": "", "offsetgroup": "", "orientation": "v", "showlegend": false, "textposition": "auto", "type": "bar", "x": ["bioRxiv", "European Neuropsychopharmacology", "Nature Communications", "medRxiv", "Scientific Reports", "PLoS ONE", "European Heart Journal", "International Journal of Cancer", "Circulation", "Alzheimer's & Dementia", "Biological Psychiatry", "Diabetes", "Molecular Psychiatry", "Journal of Clinical Oncology", "Journal of the American College of Cardiology", "International Journal of Epidemiology", "Osteoarthritis and Cartilage", "American Journal of Human Genetics", "Cancer Epidemiology Biomarkers & Prevention", "Human Molecular Genetics", "SSRN Electronic Journal", "Translational Psychiatry", "Nature", "Atherosclerosis", "Research Square", "Diabetes Care", "The Journal of Clinical Endocrinology & Metabolism", "Diabetologia", "Psychological Medicine", "Journal of the American Heart Association", "Cell", "Blood", "Annals of Oncology", "BMJ Open", "European Journal of Epidemiology", "European Journal of Human Genetics", "Circulation Genomic and Precision Medicine", "Journal of the National Cancer Institute", "Nutrients", "Geburtshilfe und Frauenheilkunde", "Gastroenterology", "PLOS Genetics", "Twin Research and Human Genetics", "Genetic Epidemiology", "Wellcome Open Research", "Senologie - Zeitschrift f\u00fcr Mammadiagnostik und -therapie", "Genetics in Medicine", "American Journal of Clinical Nutrition", "Schizophrenia Bulletin", "PLoS Medicine", "Science", "Neurology", "Bioinformatics", "International Journal of Obesity", "Breast Cancer Research and Treatment", "The BMJ", "Nature Medicine", "The Journals of Gerontology Series A", "Clinical Epigenetics", "British Journal of Cancer", "Journal of Affective Disorders", "JAMA Network Open", "Heart", "Annals of the Rheumatic Diseases", "American Journal of Epidemiology", "Stroke", "The Lancet", "Journal of Hypertension"], "xaxis": "x2", "y": [583, 465, 136, 66, 81, 64, 67, 42, 64, 62, 39, 51, 47, 41, 52, 41, 33, 44, 26, 38, 37, 36, 25, 34, 22, 29, 24, 27, 26, 23, 30, 30, 34, 27, 21, 22, 17, 24, 28, 11, 19, 17, 23, 20, 20, 18, 19, 21, 16, 18, 17, 18, 22, 16, 15, 18, 20, 16, 15, 15, 17, 22, 20, 12, 15, 7, 11, 12], "yaxis": "y2"}, {"alignmentgroup": "True", "customdata": [["jour.1293558", "bioRxiv", 1341], ["jour.1101548", "European Neuropsychopharmacology", 480], ["jour.1043282", "Nature Communications", 353], ["jour.1369542", "medRxiv", 318], ["jour.1045337", "Scientific Reports", 256], ["jour.1037553", "PLoS ONE", 196], ["jour.1091325", "European Heart Journal", 170], ["jour.1358156", "International Journal of Cancer", 162], ["jour.1009570", "Circulation", 141], ["jour.1034467", "Alzheimer's & Dementia", 139], ["jour.1017423", "Diabetes", 129], ["jour.1012129", "Biological Psychiatry", 129], ["jour.1115540", "Molecular Psychiatry", 128], ["jour.1312191", "Journal of Clinical Oncology", 120], ["jour.1093746", "Journal of the American College of Cardiology", 119], ["jour.1087544", "International Journal of Epidemiology", 112], ["jour.1103682", "Osteoarthritis and Cartilage", 107], ["jour.1017012", "American Journal of Human Genetics", 104], ["jour.1101916", "Cancer Epidemiology Biomarkers & Prevention", 101], ["jour.1102504", "Human Molecular Genetics", 97], ["jour.1276748", "SSRN Electronic Journal", 95], ["jour.1045271", "Translational Psychiatry", 92], ["jour.1018957", "Nature", 87], ["jour.1013420", "Atherosclerosis", 85], ["jour.1380788", "Research Square", 84], ["jour.1103715", "Diabetes Care", 82], ["jour.1017738", "The Journal of Clinical Endocrinology & Metabolism", 82], ["jour.1001482", "Diabetologia", 78], ["jour.1054214", "Psychological Medicine", 74], ["jour.1046624", "Journal of the American Heart Association", 72], ["jour.1019114", "Cell", 69], ["jour.1100417", "Annals of Oncology", 67], ["jour.1085025", "Blood", 67], ["jour.1044693", "BMJ Open", 65], ["jour.1103410", "European Journal of Human Genetics", 62], ["jour.1095636", "European Journal of Epidemiology", 62], ["jour.1358108", "Journal of the National Cancer Institute", 59], ["jour.1040791", "Circulation Genomic and Precision Medicine", 59], ["jour.1042723", "Nutrients", 56], ["jour.1017122", "Geburtshilfe und Frauenheilkunde", 56], ["jour.1017616", "Gastroenterology", 55], ["jour.1034974", "PLOS Genetics", 54], ["jour.1094974", "Genetic Epidemiology", 53], ["jour.1297397", "Twin Research and Human Genetics", 53], ["jour.1284430", "Wellcome Open Research", 51], ["jour.1017790", "American Journal of Clinical Nutrition", 50], ["jour.1137590", "Senologie - Zeitschrift f\u00fcr Mammadiagnostik und -therapie", 50], ["jour.1119411", "Genetics in Medicine", 50], ["jour.1013236", "Schizophrenia Bulletin", 49], ["jour.1034427", "PLoS Medicine", 48], ["jour.1346339", "Science", 47], ["jour.1035838", "International Journal of Obesity", 46], ["jour.1345383", "Bioinformatics", 46], ["jour.1018238", "Neurology", 46], ["jour.1092777", "Breast Cancer Research and Treatment", 45], ["jour.1017377", "The BMJ", 45], ["jour.1113743", "The Journals of Gerontology Series A", 43], ["jour.1113716", "Nature Medicine", 43], ["jour.1017082", "British Journal of Cancer", 42], ["jour.1042271", "Clinical Epigenetics", 42], ["jour.1089762", "Journal of Affective Disorders", 41], ["jour.1017081", "Heart", 40], ["jour.1321825", "JAMA Network Open", 40], ["jour.1017226", "Annals of the Rheumatic Diseases", 39], ["jour.1013101", "Stroke", 39], ["jour.1090493", "American Journal of Epidemiology", 39], ["jour.1045144", "Frontiers in Genetics", 38], ["jour.1077219", "The Lancet", 38]], "hovertemplate": "<b>%{hovertext}</b><br><br>year=%{marker.color}<br>journal.title=%{customdata[1]}<br>total_year=%{y}<br>journal.id=%{customdata[0]}<br>total=%{customdata[2]}<extra></extra>", "hovertext": ["bioRxiv", "European Neuropsychopharmacology", "Nature Communications", "medRxiv", "Scientific Reports", "PLoS ONE", "European Heart Journal", "International Journal of Cancer", "Circulation", "Alzheimer's & Dementia", "Diabetes", "Biological Psychiatry", "Molecular Psychiatry", "Journal of Clinical Oncology", "Journal of the American College of Cardiology", "International Journal of Epidemiology", "Osteoarthritis and Cartilage", "American Journal of Human Genetics", "Cancer Epidemiology Biomarkers & Prevention", "Human Molecular Genetics", "SSRN Electronic Journal", "Translational Psychiatry", "Nature", "Atherosclerosis", "Research Square", "Diabetes Care", "The Journal of Clinical Endocrinology & Metabolism", "Diabetologia", "Psychological Medicine", "Journal of the American Heart Association", "Cell", "Annals of Oncology", "Blood", "BMJ Open", "European Journal of Human Genetics", "European Journal of Epidemiology", "Journal of the National Cancer Institute", "Circulation Genomic and Precision Medicine", "Nutrients", "Geburtshilfe und Frauenheilkunde", "Gastroenterology", "PLOS Genetics", "Genetic Epidemiology", "Twin Research and Human Genetics", "Wellcome Open Research", "American Journal of Clinical Nutrition", "Senologie - Zeitschrift f\u00fcr Mammadiagnostik und -therapie", "Genetics in Medicine", "Schizophrenia Bulletin", "PLoS Medicine", "Science", "International Journal of Obesity", "Bioinformatics", "Neurology", "Breast Cancer Research and Treatment", "The BMJ", "The Journals of Gerontology Series A", "Nature Medicine", "British Journal of Cancer", "Clinical Epigenetics", "Journal of Affective Disorders", "Heart", "JAMA Network Open", "Annals of the Rheumatic Diseases", "Stroke", "American Journal of Epidemiology", "Frontiers in Genetics", "The Lancet"], "legendgroup": "", "marker": {"color": [2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020], "coloraxis": "coloraxis"}, "name": "", "offsetgroup": "", "orientation": "v", "showlegend": false, "textposition": "auto", "type": "bar", "x": ["bioRxiv", "European Neuropsychopharmacology", "Nature Communications", "medRxiv", "Scientific Reports", "PLoS ONE", "European Heart Journal", "International Journal of Cancer", "Circulation", "Alzheimer's & Dementia", "Diabetes", "Biological Psychiatry", "Molecular Psychiatry", "Journal of Clinical Oncology", "Journal of the American College of Cardiology", "International Journal of Epidemiology", "Osteoarthritis and Cartilage", "American Journal of Human Genetics", "Cancer Epidemiology Biomarkers & Prevention", "Human Molecular Genetics", "SSRN Electronic Journal", "Translational Psychiatry", "Nature", "Atherosclerosis", "Research Square", "Diabetes Care", "The Journal of Clinical Endocrinology & Metabolism", "Diabetologia", "Psychological Medicine", "Journal of the American Heart Association", "Cell", "Annals of Oncology", "Blood", "BMJ Open", "European Journal of Human Genetics", "European Journal of Epidemiology", "Journal of the National Cancer Institute", "Circulation Genomic and Precision Medicine", "Nutrients", "Geburtshilfe und Frauenheilkunde", "Gastroenterology", "PLOS Genetics", "Genetic Epidemiology", "Twin Research and Human Genetics", "Wellcome Open Research", "American Journal of Clinical Nutrition", "Senologie - Zeitschrift f\u00fcr Mammadiagnostik und -therapie", "Genetics in Medicine", "Schizophrenia Bulletin", "PLoS Medicine", "Science", "International Journal of Obesity", "Bioinformatics", "Neurology", "Breast Cancer Research and Treatment", "The BMJ", "The Journals of Gerontology Series A", "Nature Medicine", "British Journal of Cancer", "Clinical Epigenetics", "Journal of Affective Disorders", "Heart", "JAMA Network Open", "Annals of the Rheumatic Diseases", "Stroke", "American Journal of Epidemiology", "Frontiers in Genetics", "The Lancet"], "xaxis": "x", "y": [272, 7, 94, 252, 64, 38, 23, 62, 51, 11, 39, 40, 36, 21, 36, 37, 33, 28, 46, 19, 31, 25, 37, 16, 62, 26, 32, 19, 26, 25, 15, 9, 5, 15, 23, 21, 22, 19, 19, 7, 17, 15, 17, 19, 10, 18, 10, 18, 12, 12, 8, 13, 13, 14, 6, 10, 17, 15, 10, 11, 10, 7, 14, 10, 14, 13, 10, 7], "yaxis": "y"}],                        {"annotations": [{"font": {}, "showarrow": false, "text": "year=2020", "textangle": 90, "x": 0.98, "xanchor": "left", "xref": "paper", "y": 0.15666666666666665, "yanchor": "middle", "yref": "paper"}, {"font": {}, "showarrow": false, "text": "year=2019", "textangle": 90, "x": 0.98, "xanchor": "left", "xref": "paper", "y": 0.4999999999999999, "yanchor": "middle", "yref": "paper"}, {"font": {}, "showarrow": false, "text": "year=2018", "textangle": 90, "x": 0.98, "xanchor": "left", "xref": "paper", "y": 0.8433333333333332, "yanchor": "middle", "yref": "paper"}], "barmode": "relative", "coloraxis": {"colorbar": {"title": {"text": "year"}}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]]}, "height": 900, "legend": {"tracegroupgap": 0}, "template": {"data": {"bar": [{"error_x": {"color": "#2a3f5f"}, "error_y": {"color": "#2a3f5f"}, "marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "bar"}], "barpolar": [{"marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "barpolar"}], "carpet": [{"aaxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "baxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "type": "carpet"}], "choropleth": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "choropleth"}], "contour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "contour"}], "contourcarpet": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "contourcarpet"}], "heatmap": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmap"}], "heatmapgl": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmapgl"}], "histogram": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "histogram"}], "histogram2d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2d"}], "histogram2dcontour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2dcontour"}], "mesh3d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "mesh3d"}], "parcoords": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "parcoords"}], "pie": [{"automargin": true, "type": "pie"}], "scatter": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter"}], "scatter3d": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter3d"}], "scattercarpet": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattercarpet"}], "scattergeo": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergeo"}], "scattergl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergl"}], "scattermapbox": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattermapbox"}], "scatterpolar": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolar"}], "scatterpolargl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolargl"}], "scatterternary": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterternary"}], "surface": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "surface"}], "table": [{"cells": {"fill": {"color": "#EBF0F8"}, "line": {"color": "white"}}, "header": {"fill": {"color": "#C8D4E3"}, "line": {"color": "white"}}, "type": "table"}]}, "layout": {"annotationdefaults": {"arrowcolor": "#2a3f5f", "arrowhead": 0, "arrowwidth": 1}, "coloraxis": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "colorscale": {"diverging": [[0, "#8e0152"], [0.1, "#c51b7d"], [0.2, "#de77ae"], [0.3, "#f1b6da"], [0.4, "#fde0ef"], [0.5, "#f7f7f7"], [0.6, "#e6f5d0"], [0.7, "#b8e186"], [0.8, "#7fbc41"], [0.9, "#4d9221"], [1, "#276419"]], "sequential": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "sequentialminus": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]]}, "colorway": ["#636efa", "#EF553B", "#00cc96", "#ab63fa", "#FFA15A", "#19d3f3", "#FF6692", "#B6E880", "#FF97FF", "#FECB52"], "font": {"color": "#2a3f5f"}, "geo": {"bgcolor": "white", "lakecolor": "white", "landcolor": "#E5ECF6", "showlakes": true, "showland": true, "subunitcolor": "white"}, "hoverlabel": {"align": "left"}, "hovermode": "closest", "mapbox": {"style": "light"}, "paper_bgcolor": "white", "plot_bgcolor": "#E5ECF6", "polar": {"angularaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "radialaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "scene": {"xaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "yaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "zaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}}, "shapedefaults": {"line": {"color": "#2a3f5f"}}, "ternary": {"aaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "baxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "caxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "title": {"x": 0.05}, "xaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}, "yaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}}}, "title": {"text": "Top 200 competitors for jour.1103138 - segmented by year"}, "xaxis": {"anchor": "y", "domain": [0.0, 0.98], "title": {"text": "journal.title"}}, "xaxis2": {"anchor": "y2", "domain": [0.0, 0.98], "matches": "x", "showticklabels": false}, "xaxis3": {"anchor": "y3", "domain": [0.0, 0.98], "matches": "x", "showticklabels": false}, "yaxis": {"anchor": "x", "domain": [0.0, 0.3133333333333333], "title": {"text": "total_year"}}, "yaxis2": {"anchor": "x2", "domain": [0.34333333333333327, 0.6566666666666665], "matches": "y", "title": {"text": "total_year"}}, "yaxis3": {"anchor": "x3", "domain": [0.6866666666666665, 0.9999999999999998], "matches": "y", "title": {"text": "total_year"}}},                        {"responsive": true}                    ).then(function(){
 
-
-            <div id="91f4016b-1fb7-475f-8312-3f7969f267d7" class="plotly-graph-div" style="height:900px; width:100%;"></div>
-            <script type="text/javascript">
-                require(["plotly"], function(Plotly) {
-                    window.PLOTLYENV=window.PLOTLYENV || {};
-
-                if (document.getElementById("91f4016b-1fb7-475f-8312-3f7969f267d7")) {
-                    Plotly.newPlot(
-                        '91f4016b-1fb7-475f-8312-3f7969f267d7',
-                        [{"alignmentgroup": "True", "customdata": [["jour.1293558", "bioRxiv", 1101], ["jour.1101548", "European Neuropsychopharmacology", 472], ["jour.1043282", "Nature Communications", 305], ["jour.1045337", "Scientific Reports", 226], ["jour.1037553", "PLoS ONE", 186], ["jour.1034467", "Alzheimer's & Dementia", 176], ["jour.1091325", "European Heart Journal", 166], ["jour.1358156", "International Journal of Cancer", 150], ["jour.1009570", "Circulation", 140], ["jour.1012129", "Biological Psychiatry", 122], ["jour.1115540", "Molecular Psychiatry", 122], ["jour.1093746", "Journal of the American College of Cardiology", 112], ["jour.1103682", "Osteoarthritis and Cartilage", 108], ["jour.1312191", "Journal of Clinical Oncology", 100], ["jour.1017423", "Diabetes", 99], ["jour.1087544", "International Journal of Epidemiology", 94], ["jour.1013420", "Atherosclerosis", 90], ["jour.1017012", "American Journal of Human Genetics", 90], ["jour.1102504", "Human Molecular Genetics", 87], ["jour.1101916", "Cancer Epidemiology Biomarkers & Prevention", 85], ["jour.1045271", "Translational Psychiatry", 80], ["jour.1276748", "SSRN Electronic Journal", 75], ["jour.1001482", "Diabetologia", 74], ["jour.1103715", "Diabetes Care", 72], ["jour.1017738", "The Journal of Clinical Endocrinology & Metabolism", 71], ["jour.1046624", "Journal of the American Heart Association", 64], ["jour.1085025", "Blood", 64], ["jour.1054214", "Psychological Medicine", 62], ["jour.1100417", "Annals of Oncology", 61], ["jour.1095636", "European Journal of Epidemiology", 60], ["jour.1103410", "European Journal of Human Genetics", 56], ["jour.1044693", "BMJ Open", 56], ["jour.1358108", "Journal of the National Cancer Institute", 55], ["jour.1018957", "Nature", 55], ["jour.1019114", "Cell", 50], ["jour.1017790", "American Journal of Clinical Nutrition", 48], ["jour.1034974", "PLOS Genetics", 48], ["jour.1017122", "Geburtshilfe und Frauenheilkunde", 47], ["jour.1017616", "Gastroenterology", 45], ["jour.1092777", "Breast Cancer Research and Treatment", 43], ["jour.1284430", "Wellcome Open Research", 43], ["jour.1119411", "Genetics in Medicine", 42], ["jour.1042723", "Nutrients", 42], ["jour.1297397", "Twin Research and Human Genetics", 41], ["jour.1013101", "Stroke", 41], ["jour.1113743", "The Journals of Gerontology Series A", 41], ["jour.1040791", "Circulation Genomic and Precision Medicine", 41], ["jour.1035838", "International Journal of Obesity", 41], ["jour.1094974", "Genetic Epidemiology", 41], ["jour.1017377", "The BMJ", 40], ["jour.1346339", "Science", 40], ["jour.1321825", "JAMA Network Open", 39], ["jour.1013236", "Schizophrenia Bulletin", 38], ["jour.1094093", "Journal of Hypertension", 38], ["jour.1137590", "Senologie - Zeitschrift f\u00fcr Mammadiagnostik und -therapie", 38], ["jour.1091979", "Neurobiology of Aging", 37], ["jour.1045144", "Frontiers in Genetics", 37], ["jour.1017082", "British Journal of Cancer", 37], ["jour.1018238", "Neurology", 37], ["jour.1089762", "Journal of Affective Disorders", 36], ["jour.1034427", "PLoS Medicine", 36], ["jour.1017081", "Heart", 36], ["jour.1042271", "Clinical Epigenetics", 36], ["jour.1313661", "International Journal of Cardiology", 35], ["jour.1284558", "Innovation in Aging", 35], ["jour.1022375", "Breast Cancer Research", 35]], "hovertemplate": "<b>%{hovertext}</b><br><br>year=%{marker.color}<br>journal.title=%{customdata[1]}<br>total_year=%{y}<br>journal.id=%{customdata[0]}<br>total=%{customdata[2]}<extra></extra>", "hovertext": ["bioRxiv", "European Neuropsychopharmacology", "Nature Communications", "Scientific Reports", "PLoS ONE", "Alzheimer's & Dementia", "European Heart Journal", "International Journal of Cancer", "Circulation", "Biological Psychiatry", "Molecular Psychiatry", "Journal of the American College of Cardiology", "Osteoarthritis and Cartilage", "Journal of Clinical Oncology", "Diabetes", "International Journal of Epidemiology", "Atherosclerosis", "American Journal of Human Genetics", "Human Molecular Genetics", "Cancer Epidemiology Biomarkers & Prevention", "Translational Psychiatry", "SSRN Electronic Journal", "Diabetologia", "Diabetes Care", "The Journal of Clinical Endocrinology & Metabolism", "Journal of the American Heart Association", "Blood", "Psychological Medicine", "Annals of Oncology", "European Journal of Epidemiology", "European Journal of Human Genetics", "BMJ Open", "Journal of the National Cancer Institute", "Nature", "Cell", "American Journal of Clinical Nutrition", "PLOS Genetics", "Geburtshilfe und Frauenheilkunde", "Gastroenterology", "Breast Cancer Research and Treatment", "Wellcome Open Research", "Genetics in Medicine", "Nutrients", "Twin Research and Human Genetics", "Stroke", "The Journals of Gerontology Series A", "Circulation Genomic and Precision Medicine", "International Journal of Obesity", "Genetic Epidemiology", "The BMJ", "Science", "JAMA Network Open", "Schizophrenia Bulletin", "Journal of Hypertension", "Senologie - Zeitschrift f\u00fcr Mammadiagnostik und -therapie", "Neurobiology of Aging", "Frontiers in Genetics", "British Journal of Cancer", "Neurology", "Journal of Affective Disorders", "PLoS Medicine", "Heart", "Clinical Epigenetics", "International Journal of Cardiology", "Innovation in Aging", "Breast Cancer Research"], "legendgroup": "", "marker": {"color": [2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018], "coloraxis": "coloraxis"}, "name": "", "offsetgroup": "", "orientation": "v", "showlegend": false, "textposition": "auto", "type": "bar", "x": ["bioRxiv", "European Neuropsychopharmacology", "Nature Communications", "Scientific Reports", "PLoS ONE", "Alzheimer's & Dementia", "European Heart Journal", "International Journal of Cancer", "Circulation", "Biological Psychiatry", "Molecular Psychiatry", "Journal of the American College of Cardiology", "Osteoarthritis and Cartilage", "Journal of Clinical Oncology", "Diabetes", "International Journal of Epidemiology", "Atherosclerosis", "American Journal of Human Genetics", "Human Molecular Genetics", "Cancer Epidemiology Biomarkers & Prevention", "Translational Psychiatry", "SSRN Electronic Journal", "Diabetologia", "Diabetes Care", "The Journal of Clinical Endocrinology & Metabolism", "Journal of the American Heart Association", "Blood", "Psychological Medicine", "Annals of Oncology", "European Journal of Epidemiology", "European Journal of Human Genetics", "BMJ Open", "Journal of the National Cancer Institute", "Nature", "Cell", "American Journal of Clinical Nutrition", "PLOS Genetics", "Geburtshilfe und Frauenheilkunde", "Gastroenterology", "Breast Cancer Research and Treatment", "Wellcome Open Research", "Genetics in Medicine", "Nutrients", "Twin Research and Human Genetics", "Stroke", "The Journals of Gerontology Series A", "Circulation Genomic and Precision Medicine", "International Journal of Obesity", "Genetic Epidemiology", "The BMJ", "Science", "JAMA Network Open", "Schizophrenia Bulletin", "Journal of Hypertension", "Senologie - Zeitschrift f\u00fcr Mammadiagnostik und -therapie", "Neurobiology of Aging", "Frontiers in Genetics", "British Journal of Cancer", "Neurology", "Journal of Affective Disorders", "PLoS Medicine", "Heart", "Clinical Epigenetics", "International Journal of Cardiology", "Innovation in Aging", "Breast Cancer Research"], "xaxis": "x3", "y": [446, 8, 122, 110, 94, 82, 81, 58, 27, 52, 53, 30, 42, 57, 40, 32, 37, 31, 39, 32, 32, 28, 34, 26, 25, 26, 31, 22, 26, 22, 18, 23, 13, 20, 21, 14, 24, 38, 19, 23, 23, 13, 11, 11, 21, 11, 22, 16, 15, 16, 21, 4, 21, 21, 22, 14, 13, 16, 14, 12, 17, 13, 16, 18, 18, 13], "yaxis": "y3"}, {"alignmentgroup": "True", "customdata": [["jour.1293558", "bioRxiv", 1101], ["jour.1101548", "European Neuropsychopharmacology", 472], ["jour.1043282", "Nature Communications", 305], ["jour.1045337", "Scientific Reports", 226], ["jour.1037553", "PLoS ONE", 186], ["jour.1034467", "Alzheimer's & Dementia", 176], ["jour.1091325", "European Heart Journal", 166], ["jour.1369542", "medRxiv", 156], ["jour.1358156", "International Journal of Cancer", 150], ["jour.1009570", "Circulation", 140], ["jour.1012129", "Biological Psychiatry", 122], ["jour.1115540", "Molecular Psychiatry", 122], ["jour.1093746", "Journal of the American College of Cardiology", 112], ["jour.1103682", "Osteoarthritis and Cartilage", 108], ["jour.1312191", "Journal of Clinical Oncology", 100], ["jour.1017423", "Diabetes", 99], ["jour.1087544", "International Journal of Epidemiology", 94], ["jour.1017012", "American Journal of Human Genetics", 90], ["jour.1013420", "Atherosclerosis", 90], ["jour.1102504", "Human Molecular Genetics", 87], ["jour.1101916", "Cancer Epidemiology Biomarkers & Prevention", 85], ["jour.1045271", "Translational Psychiatry", 80], ["jour.1276748", "SSRN Electronic Journal", 75], ["jour.1001482", "Diabetologia", 74], ["jour.1103715", "Diabetes Care", 72], ["jour.1017738", "The Journal of Clinical Endocrinology & Metabolism", 71], ["jour.1046624", "Journal of the American Heart Association", 64], ["jour.1085025", "Blood", 64], ["jour.1054214", "Psychological Medicine", 62], ["jour.1100417", "Annals of Oncology", 61], ["jour.1095636", "European Journal of Epidemiology", 60], ["jour.1044693", "BMJ Open", 56], ["jour.1103410", "European Journal of Human Genetics", 56], ["jour.1018957", "Nature", 55], ["jour.1358108", "Journal of the National Cancer Institute", 55], ["jour.1019114", "Cell", 50], ["jour.1017790", "American Journal of Clinical Nutrition", 48], ["jour.1034974", "PLOS Genetics", 48], ["jour.1017122", "Geburtshilfe und Frauenheilkunde", 47], ["jour.1017616", "Gastroenterology", 45], ["jour.1092777", "Breast Cancer Research and Treatment", 43], ["jour.1284430", "Wellcome Open Research", 43], ["jour.1042723", "Nutrients", 42], ["jour.1119411", "Genetics in Medicine", 42], ["jour.1094974", "Genetic Epidemiology", 41], ["jour.1035838", "International Journal of Obesity", 41], ["jour.1040791", "Circulation Genomic and Precision Medicine", 41], ["jour.1113743", "The Journals of Gerontology Series A", 41], ["jour.1297397", "Twin Research and Human Genetics", 41], ["jour.1013101", "Stroke", 41], ["jour.1017377", "The BMJ", 40], ["jour.1346339", "Science", 40], ["jour.1321825", "JAMA Network Open", 39], ["jour.1013236", "Schizophrenia Bulletin", 38], ["jour.1137590", "Senologie - Zeitschrift f\u00fcr Mammadiagnostik und -therapie", 38], ["jour.1094093", "Journal of Hypertension", 38], ["jour.1017082", "British Journal of Cancer", 37], ["jour.1091979", "Neurobiology of Aging", 37], ["jour.1045144", "Frontiers in Genetics", 37], ["jour.1018238", "Neurology", 37], ["jour.1034427", "PLoS Medicine", 36], ["jour.1042271", "Clinical Epigenetics", 36], ["jour.1089762", "Journal of Affective Disorders", 36], ["jour.1017081", "Heart", 36], ["jour.1313661", "International Journal of Cardiology", 35], ["jour.1097961", "Schizophrenia Research", 35], ["jour.1022375", "Breast Cancer Research", 35], ["jour.1284558", "Innovation in Aging", 35]], "hovertemplate": "<b>%{hovertext}</b><br><br>year=%{marker.color}<br>journal.title=%{customdata[1]}<br>total_year=%{y}<br>journal.id=%{customdata[0]}<br>total=%{customdata[2]}<extra></extra>", "hovertext": ["bioRxiv", "European Neuropsychopharmacology", "Nature Communications", "Scientific Reports", "PLoS ONE", "Alzheimer's & Dementia", "European Heart Journal", "medRxiv", "International Journal of Cancer", "Circulation", "Biological Psychiatry", "Molecular Psychiatry", "Journal of the American College of Cardiology", "Osteoarthritis and Cartilage", "Journal of Clinical Oncology", "Diabetes", "International Journal of Epidemiology", "American Journal of Human Genetics", "Atherosclerosis", "Human Molecular Genetics", "Cancer Epidemiology Biomarkers & Prevention", "Translational Psychiatry", "SSRN Electronic Journal", "Diabetologia", "Diabetes Care", "The Journal of Clinical Endocrinology & Metabolism", "Journal of the American Heart Association", "Blood", "Psychological Medicine", "Annals of Oncology", "European Journal of Epidemiology", "BMJ Open", "European Journal of Human Genetics", "Nature", "Journal of the National Cancer Institute", "Cell", "American Journal of Clinical Nutrition", "PLOS Genetics", "Geburtshilfe und Frauenheilkunde", "Gastroenterology", "Breast Cancer Research and Treatment", "Wellcome Open Research", "Nutrients", "Genetics in Medicine", "Genetic Epidemiology", "International Journal of Obesity", "Circulation Genomic and Precision Medicine", "The Journals of Gerontology Series A", "Twin Research and Human Genetics", "Stroke", "The BMJ", "Science", "JAMA Network Open", "Schizophrenia Bulletin", "Senologie - Zeitschrift f\u00fcr Mammadiagnostik und -therapie", "Journal of Hypertension", "British Journal of Cancer", "Neurobiology of Aging", "Frontiers in Genetics", "Neurology", "PLoS Medicine", "Clinical Epigenetics", "Journal of Affective Disorders", "Heart", "International Journal of Cardiology", "Schizophrenia Research", "Breast Cancer Research", "Innovation in Aging"], "legendgroup": "", "marker": {"color": [2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019], "coloraxis": "coloraxis"}, "name": "", "offsetgroup": "", "orientation": "v", "showlegend": false, "textposition": "auto", "type": "bar", "x": ["bioRxiv", "European Neuropsychopharmacology", "Nature Communications", "Scientific Reports", "PLoS ONE", "Alzheimer's & Dementia", "European Heart Journal", "medRxiv", "International Journal of Cancer", "Circulation", "Biological Psychiatry", "Molecular Psychiatry", "Journal of the American College of Cardiology", "Osteoarthritis and Cartilage", "Journal of Clinical Oncology", "Diabetes", "International Journal of Epidemiology", "American Journal of Human Genetics", "Atherosclerosis", "Human Molecular Genetics", "Cancer Epidemiology Biomarkers & Prevention", "Translational Psychiatry", "SSRN Electronic Journal", "Diabetologia", "Diabetes Care", "The Journal of Clinical Endocrinology & Metabolism", "Journal of the American Heart Association", "Blood", "Psychological Medicine", "Annals of Oncology", "European Journal of Epidemiology", "BMJ Open", "European Journal of Human Genetics", "Nature", "Journal of the National Cancer Institute", "Cell", "American Journal of Clinical Nutrition", "PLOS Genetics", "Geburtshilfe und Frauenheilkunde", "Gastroenterology", "Breast Cancer Research and Treatment", "Wellcome Open Research", "Nutrients", "Genetics in Medicine", "Genetic Epidemiology", "International Journal of Obesity", "Circulation Genomic and Precision Medicine", "The Journals of Gerontology Series A", "Twin Research and Human Genetics", "Stroke", "The BMJ", "Science", "JAMA Network Open", "Schizophrenia Bulletin", "Senologie - Zeitschrift f\u00fcr Mammadiagnostik und -therapie", "Journal of Hypertension", "British Journal of Cancer", "Neurobiology of Aging", "Frontiers in Genetics", "Neurology", "PLoS Medicine", "Clinical Epigenetics", "Journal of Affective Disorders", "Heart", "International Journal of Cardiology", "Schizophrenia Research", "Breast Cancer Research", "Innovation in Aging"], "xaxis": "x2", "y": [535, 460, 128, 88, 65, 90, 70, 56, 46, 67, 40, 52, 51, 35, 37, 51, 41, 46, 40, 40, 26, 36, 37, 28, 29, 24, 25, 29, 28, 33, 25, 25, 22, 21, 26, 23, 23, 15, 8, 19, 15, 17, 23, 20, 18, 18, 14, 17, 27, 10, 18, 14, 24, 16, 16, 14, 14, 18, 18, 18, 17, 16, 16, 18, 14, 15, 17, 17], "yaxis": "y2"}, {"alignmentgroup": "True", "customdata": [["jour.1293558", "bioRxiv", 1101], ["jour.1101548", "European Neuropsychopharmacology", 472], ["jour.1043282", "Nature Communications", 305], ["jour.1045337", "Scientific Reports", 226], ["jour.1037553", "PLoS ONE", 186], ["jour.1034467", "Alzheimer's & Dementia", 176], ["jour.1091325", "European Heart Journal", 166], ["jour.1369542", "medRxiv", 156], ["jour.1358156", "International Journal of Cancer", 150], ["jour.1009570", "Circulation", 140], ["jour.1012129", "Biological Psychiatry", 122], ["jour.1115540", "Molecular Psychiatry", 122], ["jour.1093746", "Journal of the American College of Cardiology", 112], ["jour.1103682", "Osteoarthritis and Cartilage", 108], ["jour.1312191", "Journal of Clinical Oncology", 100], ["jour.1017423", "Diabetes", 99], ["jour.1087544", "International Journal of Epidemiology", 94], ["jour.1017012", "American Journal of Human Genetics", 90], ["jour.1013420", "Atherosclerosis", 90], ["jour.1102504", "Human Molecular Genetics", 87], ["jour.1101916", "Cancer Epidemiology Biomarkers & Prevention", 85], ["jour.1045271", "Translational Psychiatry", 80], ["jour.1276748", "SSRN Electronic Journal", 75], ["jour.1001482", "Diabetologia", 74], ["jour.1103715", "Diabetes Care", 72], ["jour.1017738", "The Journal of Clinical Endocrinology & Metabolism", 71], ["jour.1046624", "Journal of the American Heart Association", 64], ["jour.1085025", "Blood", 64], ["jour.1054214", "Psychological Medicine", 62], ["jour.1100417", "Annals of Oncology", 61], ["jour.1095636", "European Journal of Epidemiology", 60], ["jour.1044693", "BMJ Open", 56], ["jour.1103410", "European Journal of Human Genetics", 56], ["jour.1018957", "Nature", 55], ["jour.1358108", "Journal of the National Cancer Institute", 55], ["jour.1019114", "Cell", 50], ["jour.1017790", "American Journal of Clinical Nutrition", 48], ["jour.1034974", "PLOS Genetics", 48], ["jour.1017122", "Geburtshilfe und Frauenheilkunde", 47], ["jour.1017616", "Gastroenterology", 45], ["jour.1092777", "Breast Cancer Research and Treatment", 43], ["jour.1284430", "Wellcome Open Research", 43], ["jour.1119411", "Genetics in Medicine", 42], ["jour.1042723", "Nutrients", 42], ["jour.1113743", "The Journals of Gerontology Series A", 41], ["jour.1094974", "Genetic Epidemiology", 41], ["jour.1297397", "Twin Research and Human Genetics", 41], ["jour.1035838", "International Journal of Obesity", 41], ["jour.1013101", "Stroke", 41], ["jour.1040791", "Circulation Genomic and Precision Medicine", 41], ["jour.1346339", "Science", 40], ["jour.1017377", "The BMJ", 40], ["jour.1321825", "JAMA Network Open", 39], ["jour.1094093", "Journal of Hypertension", 38], ["jour.1013236", "Schizophrenia Bulletin", 38], ["jour.1018238", "Neurology", 37], ["jour.1045144", "Frontiers in Genetics", 37], ["jour.1017082", "British Journal of Cancer", 37], ["jour.1091979", "Neurobiology of Aging", 37], ["jour.1042271", "Clinical Epigenetics", 36], ["jour.1017081", "Heart", 36], ["jour.1089762", "Journal of Affective Disorders", 36], ["jour.1034427", "PLoS Medicine", 36], ["jour.1097961", "Schizophrenia Research", 35], ["jour.1022375", "Breast Cancer Research", 35], ["jour.1313661", "International Journal of Cardiology", 35]], "hovertemplate": "<b>%{hovertext}</b><br><br>year=%{marker.color}<br>journal.title=%{customdata[1]}<br>total_year=%{y}<br>journal.id=%{customdata[0]}<br>total=%{customdata[2]}<extra></extra>", "hovertext": ["bioRxiv", "European Neuropsychopharmacology", "Nature Communications", "Scientific Reports", "PLoS ONE", "Alzheimer's & Dementia", "European Heart Journal", "medRxiv", "International Journal of Cancer", "Circulation", "Biological Psychiatry", "Molecular Psychiatry", "Journal of the American College of Cardiology", "Osteoarthritis and Cartilage", "Journal of Clinical Oncology", "Diabetes", "International Journal of Epidemiology", "American Journal of Human Genetics", "Atherosclerosis", "Human Molecular Genetics", "Cancer Epidemiology Biomarkers & Prevention", "Translational Psychiatry", "SSRN Electronic Journal", "Diabetologia", "Diabetes Care", "The Journal of Clinical Endocrinology & Metabolism", "Journal of the American Heart Association", "Blood", "Psychological Medicine", "Annals of Oncology", "European Journal of Epidemiology", "BMJ Open", "European Journal of Human Genetics", "Nature", "Journal of the National Cancer Institute", "Cell", "American Journal of Clinical Nutrition", "PLOS Genetics", "Geburtshilfe und Frauenheilkunde", "Gastroenterology", "Breast Cancer Research and Treatment", "Wellcome Open Research", "Genetics in Medicine", "Nutrients", "The Journals of Gerontology Series A", "Genetic Epidemiology", "Twin Research and Human Genetics", "International Journal of Obesity", "Stroke", "Circulation Genomic and Precision Medicine", "Science", "The BMJ", "JAMA Network Open", "Journal of Hypertension", "Schizophrenia Bulletin", "Neurology", "Frontiers in Genetics", "British Journal of Cancer", "Neurobiology of Aging", "Clinical Epigenetics", "Heart", "Journal of Affective Disorders", "PLoS Medicine", "Schizophrenia Research", "Breast Cancer Research", "International Journal of Cardiology"], "legendgroup": "", "marker": {"color": [2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020], "coloraxis": "coloraxis"}, "name": "", "offsetgroup": "", "orientation": "v", "showlegend": false, "textposition": "auto", "type": "bar", "x": ["bioRxiv", "European Neuropsychopharmacology", "Nature Communications", "Scientific Reports", "PLoS ONE", "Alzheimer's & Dementia", "European Heart Journal", "medRxiv", "International Journal of Cancer", "Circulation", "Biological Psychiatry", "Molecular Psychiatry", "Journal of the American College of Cardiology", "Osteoarthritis and Cartilage", "Journal of Clinical Oncology", "Diabetes", "International Journal of Epidemiology", "American Journal of Human Genetics", "Atherosclerosis", "Human Molecular Genetics", "Cancer Epidemiology Biomarkers & Prevention", "Translational Psychiatry", "SSRN Electronic Journal", "Diabetologia", "Diabetes Care", "The Journal of Clinical Endocrinology & Metabolism", "Journal of the American Heart Association", "Blood", "Psychological Medicine", "Annals of Oncology", "European Journal of Epidemiology", "BMJ Open", "European Journal of Human Genetics", "Nature", "Journal of the National Cancer Institute", "Cell", "American Journal of Clinical Nutrition", "PLOS Genetics", "Geburtshilfe und Frauenheilkunde", "Gastroenterology", "Breast Cancer Research and Treatment", "Wellcome Open Research", "Genetics in Medicine", "Nutrients", "The Journals of Gerontology Series A", "Genetic Epidemiology", "Twin Research and Human Genetics", "International Journal of Obesity", "Stroke", "Circulation Genomic and Precision Medicine", "Science", "The BMJ", "JAMA Network Open", "Journal of Hypertension", "Schizophrenia Bulletin", "Neurology", "Frontiers in Genetics", "British Journal of Cancer", "Neurobiology of Aging", "Clinical Epigenetics", "Heart", "Journal of Affective Disorders", "PLoS Medicine", "Schizophrenia Research", "Breast Cancer Research", "International Journal of Cardiology"], "xaxis": "x", "y": [120, 4, 55, 28, 27, 4, 15, 100, 46, 46, 30, 17, 31, 31, 6, 8, 21, 13, 13, 8, 27, 12, 10, 12, 17, 22, 13, 4, 12, 2, 13, 8, 16, 14, 16, 6, 11, 9, 1, 7, 5, 3, 9, 8, 13, 8, 3, 7, 10, 5, 5, 6, 11, 3, 1, 5, 6, 7, 5, 4, 5, 8, 2, 6, 5, 3], "yaxis": "y"}],
-                        {"annotations": [{"font": {}, "showarrow": false, "text": "year=2020", "textangle": 90, "x": 0.98, "xanchor": "left", "xref": "paper", "y": 0.15666666666666665, "yanchor": "middle", "yref": "paper"}, {"font": {}, "showarrow": false, "text": "year=2019", "textangle": 90, "x": 0.98, "xanchor": "left", "xref": "paper", "y": 0.4999999999999999, "yanchor": "middle", "yref": "paper"}, {"font": {}, "showarrow": false, "text": "year=2018", "textangle": 90, "x": 0.98, "xanchor": "left", "xref": "paper", "y": 0.8433333333333332, "yanchor": "middle", "yref": "paper"}], "barmode": "relative", "coloraxis": {"colorbar": {"title": {"text": "year"}}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]]}, "height": 900, "legend": {"tracegroupgap": 0}, "template": {"data": {"bar": [{"error_x": {"color": "#2a3f5f"}, "error_y": {"color": "#2a3f5f"}, "marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "bar"}], "barpolar": [{"marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "barpolar"}], "carpet": [{"aaxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "baxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "type": "carpet"}], "choropleth": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "choropleth"}], "contour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "contour"}], "contourcarpet": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "contourcarpet"}], "heatmap": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmap"}], "heatmapgl": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmapgl"}], "histogram": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "histogram"}], "histogram2d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2d"}], "histogram2dcontour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2dcontour"}], "mesh3d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "mesh3d"}], "parcoords": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "parcoords"}], "pie": [{"automargin": true, "type": "pie"}], "scatter": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter"}], "scatter3d": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter3d"}], "scattercarpet": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattercarpet"}], "scattergeo": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergeo"}], "scattergl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergl"}], "scattermapbox": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattermapbox"}], "scatterpolar": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolar"}], "scatterpolargl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolargl"}], "scatterternary": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterternary"}], "surface": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "surface"}], "table": [{"cells": {"fill": {"color": "#EBF0F8"}, "line": {"color": "white"}}, "header": {"fill": {"color": "#C8D4E3"}, "line": {"color": "white"}}, "type": "table"}]}, "layout": {"annotationdefaults": {"arrowcolor": "#2a3f5f", "arrowhead": 0, "arrowwidth": 1}, "coloraxis": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "colorscale": {"diverging": [[0, "#8e0152"], [0.1, "#c51b7d"], [0.2, "#de77ae"], [0.3, "#f1b6da"], [0.4, "#fde0ef"], [0.5, "#f7f7f7"], [0.6, "#e6f5d0"], [0.7, "#b8e186"], [0.8, "#7fbc41"], [0.9, "#4d9221"], [1, "#276419"]], "sequential": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "sequentialminus": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]]}, "colorway": ["#636efa", "#EF553B", "#00cc96", "#ab63fa", "#FFA15A", "#19d3f3", "#FF6692", "#B6E880", "#FF97FF", "#FECB52"], "font": {"color": "#2a3f5f"}, "geo": {"bgcolor": "white", "lakecolor": "white", "landcolor": "#E5ECF6", "showlakes": true, "showland": true, "subunitcolor": "white"}, "hoverlabel": {"align": "left"}, "hovermode": "closest", "mapbox": {"style": "light"}, "paper_bgcolor": "white", "plot_bgcolor": "#E5ECF6", "polar": {"angularaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "radialaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "scene": {"xaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "yaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "zaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}}, "shapedefaults": {"line": {"color": "#2a3f5f"}}, "ternary": {"aaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "baxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "caxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "title": {"x": 0.05}, "xaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}, "yaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}}}, "title": {"text": "Top 200 competitors for jour.1103138 - segmented by year"}, "xaxis": {"anchor": "y", "domain": [0.0, 0.98], "title": {"text": "journal.title"}}, "xaxis2": {"anchor": "y2", "domain": [0.0, 0.98], "matches": "x", "showticklabels": false}, "xaxis3": {"anchor": "y3", "domain": [0.0, 0.98], "matches": "x", "showticklabels": false}, "yaxis": {"anchor": "x", "domain": [0.0, 0.3133333333333333], "title": {"text": "total_year"}}, "yaxis2": {"anchor": "x2", "domain": [0.34333333333333327, 0.6566666666666665], "matches": "y", "title": {"text": "total_year"}}, "yaxis3": {"anchor": "x3", "domain": [0.6866666666666665, 0.9999999999999998], "matches": "y", "title": {"text": "total_year"}}},
-                        {"responsive": true}
-                    ).then(function(){
-
-var gd = document.getElementById('91f4016b-1fb7-475f-8312-3f7969f267d7');
+var gd = document.getElementById('e7edb4f6-0f95-43b2-a00d-6d1a935e2e54');
 var x = new MutationObserver(function (mutations, observer) {{
         var display = window.getComputedStyle(gd).display;
         if (!display || display === 'none') {{
@@ -1745,11 +1807,7 @@ if (outputEl) {{
     x.observe(outputEl, {childList: true});
 }}
 
-                        })
-                };
-                });
-            </script>
-        </div></div>
+                        })                };                });            </script>        </div></div>
 </div>
 <p>NOTE the European Neuropsychopharmacology journal has a massive jump in 2019 cause they <a class="reference external" href="https://www.sciencedirect.com/journal/european-neuropsychopharmacology/issues">published a lot of conference proceedings</a>! See also the journal <a class="reference external" href="https://app.dimensions.ai/analytics/publication/overview/timeline?and_facet_source_title=jour.1101548">Dimensions page</a> for comparison..</p>
 </div>

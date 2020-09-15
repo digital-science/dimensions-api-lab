@@ -370,7 +370,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html">Journal Profiling Part 3: Funding</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#Prerequisites:-Installing-the-Dimensions-Library-and-Logging-in">Prerequisites: Installing the Dimensions Library and Logging in</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#Prerequisites">Prerequisites</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#Load-previously-saved-researchers-data">Load previously saved researchers data</a></li>
 </ul>
 </li>
@@ -385,7 +385,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Journal-Profile-4-Institutions.html">Journal Profiling Part 4: Institutions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Prerequisites:-Installing-the-Dimensions-Library-and-Logging-in">Prerequisites: Installing the Dimensions Library and Logging in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Prerequisites">Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Institutions-Contributing-to-a-Journal">Institutions Contributing to a Journal</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Load-previously-saved-affiliations-data">Load previously saved affiliations data</a></li>
 </ul>
@@ -396,7 +396,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Journal-Profile-5-Competitive-Analysis.html">Journal Profiling Part 5: Competing Journals Analysis</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-5-Competitive-Analysis.html#Prerequisites:-Installing-the-Dimensions-Library-and-Logging-in">Prerequisites: Installing the Dimensions Library and Logging in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-5-Competitive-Analysis.html#Prerequisites">Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Journal-Profile-5-Competitive-Analysis.html#Competing-Journals">Competing Journals</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="Journal-Profile-5-Competitive-Analysis.html#First-let’s-reload-the-data-obtained-in-previous-steps">First let’s reload the data obtained in previous steps</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Journal-Profile-5-Competitive-Analysis.html#What-the-query-looks-like">What the query looks like</a></li>
@@ -429,7 +429,7 @@
 <p class="caption"><span class="caption-text">Clinical Trials</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.html">Clinical Trials by Volume of Publications</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.html#Load-libraries-and-log-in">Load libraries and log in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.html#Prerequisites">Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.html#Query-for-Clinical-Trials">Query for Clinical Trials</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.html#Counting-publications-per-clinical-trial">Counting publications per clinical trial</a></li>
 </ul>
@@ -1016,7 +1016,7 @@ Method: dsl.ini file
 </div>
 <p>Some helper functions to store the data we are going to extract</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1034,7 +1034,7 @@ Method: dsl.ini file
 <div class="section" id="Selecting-a-Journal-and-Extracting-All-Publications-Metadata">
 <h2>Selecting a Journal and Extracting All Publications Metadata<a class="headerlink" href="#Selecting-a-Journal-and-Extracting-All-Publications-Metadata" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1054,7 +1054,7 @@ Method: dsl.ini file
 <span class="n">q_template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search publications where</span>
 <span class="s2">    journal.title=&quot;</span><span class="si">{}</span><span class="s2">&quot; and</span>
 <span class="s2">    year&gt;=</span><span class="si">{}</span><span class="s2"></span>
-<span class="s2">    return publications[basics+altmetric+times_cited]&quot;&quot;&quot;</span>
+<span class="s2">    return publications[id+title+doi+year+authors+type+pages+journal+issue+volume+altmetric+times_cited]&quot;&quot;&quot;</span>
 <span class="n">q</span> <span class="o">=</span> <span class="n">q_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">journal_title</span><span class="p">,</span> <span class="n">start_year</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DSL Query:</span><span class="se">\n</span><span class="s2">----</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">----&quot;</span><span class="p">)</span>
 <span class="n">pubs</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query_iterative</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">journal_title</span><span class="p">,</span> <span class="n">start_year</span><span class="p">),</span> <span class="n">limit</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
@@ -1072,20 +1072,20 @@ DSL Query:
  search publications where
     journal.title=&#34;Nature Genetics&#34; and
     year&gt;=2015
-    return publications[basics+altmetric+times_cited]
+    return publications[id+title+doi+year+authors+type+pages+journal+issue+volume+altmetric+times_cited]
 ----
 Starting iteration with limit=500 skip=0 ...
-0-500 / 1541 (5.75s)
-500-1000 / 1541 (5.24s)
-1000-1500 / 1541 (3.31s)
-1500-1541 / 1541 (0.89s)
+0-500 / 1546 (6.28s)
+500-1000 / 1546 (5.77s)
+1000-1500 / 1546 (4.35s)
+1500-1546 / 1546 (1.00s)
 ===
-Records extracted: 1541
+Records extracted: 1546
 </pre></div></div>
 </div>
 <p>Save the data as a CSV file in case we want to reuse it later</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1097,7 +1097,7 @@ Records extracted: 1541
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1119,14 +1119,15 @@ Records extracted: 1541
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>id</th>
-      <th>author_affiliations</th>
-      <th>type</th>
       <th>pages</th>
-      <th>times_cited</th>
       <th>title</th>
-      <th>year</th>
+      <th>type</th>
+      <th>authors</th>
+      <th>id</th>
+      <th>doi</th>
       <th>altmetric</th>
+      <th>year</th>
+      <th>times_cited</th>
       <th>journal.id</th>
       <th>journal.title</th>
       <th>issue</th>
@@ -1136,14 +1137,15 @@ Records extracted: 1541
   <tbody>
     <tr>
       <th>0</th>
-      <td>pub.1130541833</td>
-      <td>[[{'first_name': 'Andrea', 'last_name': 'Lunar...</td>
-      <td>article</td>
       <td>1-1</td>
-      <td>0</td>
-      <td>Author Correction: A co-clinical approach iden...</td>
-      <td>2020</td>
+      <td>Author Correction: PGBD5 promotes site-specifi...</td>
+      <td>article</td>
+      <td>[{'first_name': 'Anton G.', 'last_name': 'Hens...</td>
+      <td>pub.1130757641</td>
+      <td>10.1038/s41588-020-00711-z</td>
       <td>1.0</td>
+      <td>2020</td>
+      <td>0</td>
       <td>jour.1103138</td>
       <td>Nature Genetics</td>
       <td>NaN</td>
@@ -1151,89 +1153,95 @@ Records extracted: 1541
     </tr>
     <tr>
       <th>1</th>
-      <td>pub.1129832914</td>
-      <td>[[{'first_name': 'Robert', 'last_name': 'Hänse...</td>
+      <td>1-3</td>
+      <td>Exploring the structural distribution of genet...</td>
       <td>article</td>
-      <td>878-883</td>
-      <td>1</td>
-      <td>Landscape of G-quadruplex DNA structural regio...</td>
+      <td>[{'first_name': 'Stephanie', 'last_name': 'Por...</td>
+      <td>pub.1130690640</td>
+      <td>10.1038/s41588-020-0693-3</td>
+      <td>164.0</td>
       <td>2020</td>
-      <td>167.0</td>
+      <td>1</td>
       <td>jour.1103138</td>
       <td>Nature Genetics</td>
-      <td>9</td>
-      <td>52</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>pub.1130496379</td>
-      <td>NaN</td>
+      <td>1-6</td>
+      <td>Exploring the coronavirus pandemic with the Wa...</td>
       <td>article</td>
-      <td>865-865</td>
-      <td>0</td>
-      <td>Crop genomes and beyond</td>
+      <td>[{'first_name': 'Jennifer A.', 'last_name': 'F...</td>
+      <td>pub.1130694392</td>
+      <td>10.1038/s41588-020-0697-z</td>
+      <td>18.0</td>
       <td>2020</td>
-      <td>12.0</td>
+      <td>0</td>
       <td>jour.1103138</td>
       <td>Nature Genetics</td>
-      <td>9</td>
-      <td>52</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>pub.1130496620</td>
-      <td>[[{'first_name': 'Dalen', 'last_name': 'Chan',...</td>
+      <td>1-8</td>
+      <td>The UCSC SARS-CoV-2 Genome Browser</td>
       <td>article</td>
-      <td>868-869</td>
-      <td>0</td>
-      <td>RNA post-transcriptional modification speaks t...</td>
+      <td>[{'first_name': 'Jason D.', 'last_name': 'Fern...</td>
+      <td>pub.1130696405</td>
+      <td>10.1038/s41588-020-0700-8</td>
+      <td>7.0</td>
       <td>2020</td>
-      <td>16.0</td>
+      <td>0</td>
       <td>jour.1103138</td>
       <td>Nature Genetics</td>
-      <td>9</td>
-      <td>52</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>pub.1130497175</td>
-      <td>[[{'first_name': 'Ivano', 'last_name': 'Mocavi...</td>
+      <td>1-10</td>
+      <td>Phenome-wide Mendelian randomization mapping t...</td>
       <td>article</td>
-      <td>866-867</td>
-      <td>0</td>
-      <td>RNA closing the Polycomb circle</td>
+      <td>[{'first_name': 'Jie', 'last_name': 'Zheng', '...</td>
+      <td>pub.1130642727</td>
+      <td>10.1038/s41588-020-0682-6</td>
+      <td>146.0</td>
       <td>2020</td>
-      <td>12.0</td>
+      <td>0</td>
       <td>jour.1103138</td>
       <td>Nature Genetics</td>
-      <td>9</td>
-      <td>52</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>pub.1129017794</td>
-      <td>[[{'first_name': 'Yicheng', 'last_name': 'Long...</td>
+      <td>1-1</td>
+      <td>Author Correction: A co-clinical approach iden...</td>
       <td>article</td>
-      <td>931-938</td>
-      <td>3</td>
-      <td>RNA is essential for PRC2 chromatin occupancy ...</td>
+      <td>[{'first_name': 'Andrea', 'last_name': 'Lunard...</td>
+      <td>pub.1130541833</td>
+      <td>10.1038/s41588-020-0701-7</td>
+      <td>1.0</td>
       <td>2020</td>
-      <td>224.0</td>
+      <td>0</td>
       <td>jour.1103138</td>
       <td>Nature Genetics</td>
-      <td>9</td>
-      <td>52</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>pub.1130146552</td>
-      <td>[[{'first_name': 'Wangxin', 'last_name': 'Guo'...</td>
+      <td>865-865</td>
+      <td>Crop genomes and beyond</td>
       <td>article</td>
-      <td>908-918</td>
-      <td>0</td>
-      <td>Single-cell transcriptomics identifies a disti...</td>
+      <td>NaN</td>
+      <td>pub.1130496379</td>
+      <td>10.1038/s41588-020-0691-5</td>
+      <td>12.0</td>
       <td>2020</td>
-      <td>42.0</td>
+      <td>0</td>
       <td>jour.1103138</td>
       <td>Nature Genetics</td>
       <td>9</td>
@@ -1241,14 +1249,15 @@ Records extracted: 1541
     </tr>
     <tr>
       <th>7</th>
-      <td>pub.1130293541</td>
-      <td>[[{'first_name': 'Xihao', 'last_name': 'Li', '...</td>
+      <td>878-883</td>
+      <td>Landscape of G-quadruplex DNA structural regio...</td>
       <td>article</td>
-      <td>969-983</td>
-      <td>0</td>
-      <td>Dynamic incorporation of multiple in silico fu...</td>
+      <td>[{'first_name': 'Robert', 'last_name': 'Hänsel...</td>
+      <td>pub.1129832914</td>
+      <td>10.1038/s41588-020-0672-8</td>
+      <td>167.0</td>
       <td>2020</td>
-      <td>48.0</td>
+      <td>2</td>
       <td>jour.1103138</td>
       <td>Nature Genetics</td>
       <td>9</td>
@@ -1256,14 +1265,15 @@ Records extracted: 1541
     </tr>
     <tr>
       <th>8</th>
-      <td>pub.1130003230</td>
-      <td>[[{'first_name': 'Yuan', 'last_name': 'Li', 'c...</td>
+      <td>931-938</td>
+      <td>RNA is essential for PRC2 chromatin occupancy ...</td>
       <td>article</td>
-      <td>870-877</td>
-      <td>1</td>
-      <td>N6-Methyladenosine co-transcriptionally direct...</td>
+      <td>[{'first_name': 'Yicheng', 'last_name': 'Long'...</td>
+      <td>pub.1129017794</td>
+      <td>10.1038/s41588-020-0662-x</td>
+      <td>224.0</td>
       <td>2020</td>
-      <td>35.0</td>
+      <td>4</td>
       <td>jour.1103138</td>
       <td>Nature Genetics</td>
       <td>9</td>
@@ -1271,14 +1281,15 @@ Records extracted: 1541
     </tr>
     <tr>
       <th>9</th>
-      <td>pub.1130497144</td>
-      <td>[[{'first_name': 'Giulio', 'last_name': 'Carav...</td>
+      <td>868-869</td>
+      <td>RNA post-transcriptional modification speaks t...</td>
       <td>article</td>
-      <td>898-907</td>
-      <td>0</td>
-      <td>Subclonal reconstruction of tumors by using ma...</td>
+      <td>[{'first_name': 'Dalen', 'last_name': 'Chan', ...</td>
+      <td>pub.1130496620</td>
+      <td>10.1038/s41588-020-0685-3</td>
+      <td>21.0</td>
       <td>2020</td>
-      <td>73.0</td>
+      <td>0</td>
       <td>jour.1103138</td>
       <td>Nature Genetics</td>
       <td>9</td>
@@ -1290,7 +1301,7 @@ Records extracted: 1541
 </div>
 <p>Extract the authors data</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1302,7 +1313,7 @@ Records extracted: 1541
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1328,6 +1339,8 @@ Records extracted: 1541
       <th>last_name</th>
       <th>corresponding</th>
       <th>orcid</th>
+      <th>current_organization_id</th>
+      <th>researcher_id</th>
       <th>affiliations</th>
       <th>pub_id</th>
     </tr>
@@ -1335,93 +1348,113 @@ Records extracted: 1541
   <tbody>
     <tr>
       <th>0</th>
-      <td>Andrea</td>
-      <td>Lunardi</td>
+      <td>Anton G.</td>
+      <td>Henssen</td>
       <td></td>
       <td></td>
-      <td>[{'name': 'Cancer Genetics Program, Beth Israe...</td>
-      <td>pub.1130541833</td>
+      <td></td>
+      <td></td>
+      <td>[{'id': 'grid.51462.34', 'name': 'Memorial Slo...</td>
+      <td>pub.1130757641</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Ugo</td>
-      <td>Ala</td>
+      <td>Richard</td>
+      <td>Koche</td>
       <td></td>
       <td></td>
-      <td>[{'name': 'Cancer Genetics Program, Beth Israe...</td>
-      <td>pub.1130541833</td>
+      <td></td>
+      <td></td>
+      <td>[{'id': 'grid.51462.34', 'name': 'Memorial Slo...</td>
+      <td>pub.1130757641</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>Mirjam T.</td>
-      <td>Epping</td>
+      <td>Jiali</td>
+      <td>Zhuang</td>
       <td></td>
       <td></td>
-      <td>[{'name': 'Cancer Genetics Program, Beth Israe...</td>
-      <td>pub.1130541833</td>
+      <td></td>
+      <td></td>
+      <td>[{'id': 'grid.168645.8', 'name': 'University o...</td>
+      <td>pub.1130757641</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>Leonardo</td>
-      <td>Salmena</td>
+      <td>Eileen</td>
+      <td>Jiang</td>
       <td></td>
       <td></td>
-      <td>[{'name': 'Cancer Genetics Program, Beth Israe...</td>
-      <td>pub.1130541833</td>
+      <td></td>
+      <td></td>
+      <td>[{'id': 'grid.51462.34', 'name': 'Memorial Slo...</td>
+      <td>pub.1130757641</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>John G.</td>
-      <td>Clohessy</td>
+      <td>Casie</td>
+      <td>Reed</td>
       <td></td>
       <td></td>
-      <td>[{'name': 'Cancer Genetics Program, Beth Israe...</td>
-      <td>pub.1130541833</td>
+      <td></td>
+      <td></td>
+      <td>[{'id': 'grid.51462.34', 'name': 'Memorial Slo...</td>
+      <td>pub.1130757641</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>Kaitlyn A.</td>
-      <td>Webster</td>
+      <td>Amy</td>
+      <td>Eisenberg</td>
       <td></td>
       <td></td>
-      <td>[{'name': 'Cancer Genetics Program, Beth Israe...</td>
-      <td>pub.1130541833</td>
+      <td></td>
+      <td></td>
+      <td>[{'id': 'grid.51462.34', 'name': 'Memorial Slo...</td>
+      <td>pub.1130757641</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>Guocan</td>
-      <td>Wang</td>
+      <td>Eric</td>
+      <td>Still</td>
       <td></td>
       <td></td>
-      <td>[{'name': 'Cancer Genetics Program, Beth Israe...</td>
-      <td>pub.1130541833</td>
+      <td></td>
+      <td></td>
+      <td>[{'id': 'grid.51462.34', 'name': 'Memorial Slo...</td>
+      <td>pub.1130757641</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>Roberta</td>
-      <td>Mazzucchelli</td>
+      <td>Ian C.</td>
+      <td>MacArthur</td>
       <td></td>
       <td></td>
-      <td>[{'id': 'grid.7010.6', 'name': 'Marche Polytec...</td>
-      <td>pub.1130541833</td>
+      <td></td>
+      <td></td>
+      <td>[{'id': 'grid.51462.34', 'name': 'Memorial Slo...</td>
+      <td>pub.1130757641</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>Maristella</td>
-      <td>Bianconi</td>
+      <td>Elias</td>
+      <td>Rodríguez-Fos</td>
       <td></td>
       <td></td>
-      <td>[{'id': 'grid.7010.6', 'name': 'Marche Polytec...</td>
-      <td>pub.1130541833</td>
+      <td></td>
+      <td></td>
+      <td>[{'id': 'grid.10097.3f', 'name': 'Barcelona Su...</td>
+      <td>pub.1130757641</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>Edward C.</td>
-      <td>Stack</td>
+      <td>Santiago</td>
+      <td>Gonzalez</td>
       <td></td>
       <td></td>
-      <td>[{'id': 'grid.65499.37', 'name': 'Dana-Farber ...</td>
-      <td>pub.1130541833</td>
+      <td></td>
+      <td></td>
+      <td>[{'id': 'grid.10097.3f', 'name': 'Barcelona Su...</td>
+      <td>pub.1130757641</td>
     </tr>
   </tbody>
 </table>
@@ -1429,7 +1462,7 @@ Records extracted: 1541
 </div>
 <p>Extract the affiliations data</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1440,7 +1473,7 @@ Records extracted: 1541
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1462,8 +1495,8 @@ Records extracted: 1541
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>aff_name</th>
       <th>aff_id</th>
+      <th>aff_name</th>
       <th>aff_city</th>
       <th>aff_city_id</th>
       <th>aff_country</th>
@@ -1479,153 +1512,153 @@ Records extracted: 1541
   <tbody>
     <tr>
       <th>0</th>
-      <td>Cancer Genetics Program, Beth Israel Deaconess...</td>
+      <td>grid.51462.34</td>
+      <td>Memorial Sloan Kettering Cancer Center</td>
+      <td>New York</td>
+      <td>5.12858e+06</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>New York</td>
+      <td>US-NY</td>
+      <td>pub.1130757641</td>
       <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td>pub.1130541833</td>
-      <td></td>
-      <td>Andrea</td>
-      <td>Lunardi</td>
+      <td>Anton G.</td>
+      <td>Henssen</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Cancer Genetics Program, Beth Israel Deaconess...</td>
+      <td>grid.6363.0</td>
+      <td>Charité</td>
+      <td>Berlin</td>
+      <td>2.95016e+06</td>
+      <td>Germany</td>
+      <td>DE</td>
       <td></td>
       <td></td>
+      <td>pub.1130757641</td>
       <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td>pub.1130541833</td>
-      <td></td>
-      <td>Ugo</td>
-      <td>Ala</td>
+      <td>Anton G.</td>
+      <td>Henssen</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>University of Turin</td>
-      <td>grid.7605.4</td>
-      <td>Turin</td>
-      <td>3.16552e+06</td>
-      <td>Italy</td>
-      <td>IT</td>
+      <td>grid.51462.34</td>
+      <td>Memorial Sloan Kettering Cancer Center</td>
+      <td>New York</td>
+      <td>5.12858e+06</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>New York</td>
+      <td>US-NY</td>
+      <td>pub.1130757641</td>
       <td></td>
-      <td></td>
-      <td>pub.1130541833</td>
-      <td></td>
-      <td>Ugo</td>
-      <td>Ala</td>
+      <td>Richard</td>
+      <td>Koche</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>Cancer Genetics Program, Beth Israel Deaconess...</td>
+      <td>grid.168645.8</td>
+      <td>University of Massachusetts Medical School</td>
+      <td>Worcester</td>
+      <td>4.95618e+06</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>Massachusetts</td>
+      <td>US-MA</td>
+      <td>pub.1130757641</td>
       <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td>pub.1130541833</td>
-      <td></td>
-      <td>Mirjam T.</td>
-      <td>Epping</td>
+      <td>Jiali</td>
+      <td>Zhuang</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>Cancer Genetics Program, Beth Israel Deaconess...</td>
+      <td>grid.51462.34</td>
+      <td>Memorial Sloan Kettering Cancer Center</td>
+      <td>New York</td>
+      <td>5.12858e+06</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>New York</td>
+      <td>US-NY</td>
+      <td>pub.1130757641</td>
       <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td>pub.1130541833</td>
-      <td></td>
-      <td>Leonardo</td>
-      <td>Salmena</td>
+      <td>Eileen</td>
+      <td>Jiang</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>Memorial Sloan Kettering Cancer Center</td>
       <td>grid.51462.34</td>
+      <td>Memorial Sloan Kettering Cancer Center</td>
       <td>New York</td>
       <td>5.12858e+06</td>
       <td>United States</td>
       <td>US</td>
       <td>New York</td>
       <td>US-NY</td>
-      <td>pub.1130541833</td>
+      <td>pub.1130757641</td>
       <td></td>
-      <td>Leonardo</td>
-      <td>Salmena</td>
+      <td>Casie</td>
+      <td>Reed</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>Memorial Sloan Kettering Cancer Center</td>
       <td>grid.51462.34</td>
+      <td>Memorial Sloan Kettering Cancer Center</td>
       <td>New York</td>
       <td>5.12858e+06</td>
       <td>United States</td>
       <td>US</td>
       <td>New York</td>
       <td>US-NY</td>
-      <td>pub.1130541833</td>
+      <td>pub.1130757641</td>
       <td></td>
-      <td>Leonardo</td>
-      <td>Salmena</td>
+      <td>Amy</td>
+      <td>Eisenberg</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>Cancer Genetics Program, Beth Israel Deaconess...</td>
+      <td>grid.51462.34</td>
+      <td>Memorial Sloan Kettering Cancer Center</td>
+      <td>New York</td>
+      <td>5.12858e+06</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>New York</td>
+      <td>US-NY</td>
+      <td>pub.1130757641</td>
       <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td>pub.1130541833</td>
-      <td></td>
-      <td>John G.</td>
-      <td>Clohessy</td>
+      <td>Eric</td>
+      <td>Still</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>Memorial Sloan Kettering Cancer Center</td>
       <td>grid.51462.34</td>
+      <td>Memorial Sloan Kettering Cancer Center</td>
       <td>New York</td>
       <td>5.12858e+06</td>
       <td>United States</td>
       <td>US</td>
       <td>New York</td>
       <td>US-NY</td>
-      <td>pub.1130541833</td>
+      <td>pub.1130757641</td>
       <td></td>
-      <td>John G.</td>
-      <td>Clohessy</td>
+      <td>Ian C.</td>
+      <td>MacArthur</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>Memorial Sloan Kettering Cancer Center</td>
-      <td>grid.51462.34</td>
-      <td>New York</td>
-      <td>5.12858e+06</td>
-      <td>United States</td>
-      <td>US</td>
-      <td>New York</td>
-      <td>US-NY</td>
-      <td>pub.1130541833</td>
+      <td>grid.10097.3f</td>
+      <td>Barcelona Supercomputing Center</td>
+      <td>Barcelona</td>
+      <td>3.12876e+06</td>
+      <td>Spain</td>
+      <td>ES</td>
       <td></td>
-      <td>John G.</td>
-      <td>Clohessy</td>
+      <td></td>
+      <td>pub.1130757641</td>
+      <td></td>
+      <td>Elias</td>
+      <td>Rodríguez-Fos</td>
     </tr>
   </tbody>
 </table>
@@ -1639,8 +1672,8 @@ Records extracted: 1541
 <li><p>count how many authors have a researcher ID</p></li>
 <li><p>count how many unique researchers IDs we have in total</p></li>
 </ul>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1654,8 +1687,38 @@ Records extracted: 1541
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>                            <div id="84d6a232-0769-4e73-b93f-826476b8d444" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("84d6a232-0769-4e73-b93f-826476b8d444")) {                    Plotly.newPlot(                        "84d6a232-0769-4e73-b93f-826476b8d444",                        [{"alignmentgroup": "True", "hovertemplate": "measure=%{x}<br>count=%{y}<extra></extra>", "legendgroup": "", "marker": {"color": "#636efa"}, "name": "", "offsetgroup": "", "orientation": "v", "showlegend": false, "textposition": "auto", "type": "bar", "x": ["Authors in total (non unique)", "Authors with a researcher ID", "Authors with a researcher ID (unique)"], "xaxis": "x", "y": [44531, 36138, 19565], "yaxis": "y"}],                        {"barmode": "relative", "legend": {"tracegroupgap": 0}, "template": {"data": {"bar": [{"error_x": {"color": "#2a3f5f"}, "error_y": {"color": "#2a3f5f"}, "marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "bar"}], "barpolar": [{"marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "barpolar"}], "carpet": [{"aaxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "baxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "type": "carpet"}], "choropleth": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "choropleth"}], "contour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "contour"}], "contourcarpet": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "contourcarpet"}], "heatmap": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmap"}], "heatmapgl": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmapgl"}], "histogram": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "histogram"}], "histogram2d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2d"}], "histogram2dcontour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2dcontour"}], "mesh3d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "mesh3d"}], "parcoords": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "parcoords"}], "pie": [{"automargin": true, "type": "pie"}], "scatter": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter"}], "scatter3d": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter3d"}], "scattercarpet": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattercarpet"}], "scattergeo": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergeo"}], "scattergl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergl"}], "scattermapbox": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattermapbox"}], "scatterpolar": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolar"}], "scatterpolargl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolargl"}], "scatterternary": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterternary"}], "surface": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "surface"}], "table": [{"cells": {"fill": {"color": "#EBF0F8"}, "line": {"color": "white"}}, "header": {"fill": {"color": "#C8D4E3"}, "line": {"color": "white"}}, "type": "table"}]}, "layout": {"annotationdefaults": {"arrowcolor": "#2a3f5f", "arrowhead": 0, "arrowwidth": 1}, "coloraxis": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "colorscale": {"diverging": [[0, "#8e0152"], [0.1, "#c51b7d"], [0.2, "#de77ae"], [0.3, "#f1b6da"], [0.4, "#fde0ef"], [0.5, "#f7f7f7"], [0.6, "#e6f5d0"], [0.7, "#b8e186"], [0.8, "#7fbc41"], [0.9, "#4d9221"], [1, "#276419"]], "sequential": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "sequentialminus": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]]}, "colorway": ["#636efa", "#EF553B", "#00cc96", "#ab63fa", "#FFA15A", "#19d3f3", "#FF6692", "#B6E880", "#FF97FF", "#FECB52"], "font": {"color": "#2a3f5f"}, "geo": {"bgcolor": "white", "lakecolor": "white", "landcolor": "#E5ECF6", "showlakes": true, "showland": true, "subunitcolor": "white"}, "hoverlabel": {"align": "left"}, "hovermode": "closest", "mapbox": {"style": "light"}, "paper_bgcolor": "white", "plot_bgcolor": "#E5ECF6", "polar": {"angularaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "radialaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "scene": {"xaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "yaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "zaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}}, "shapedefaults": {"line": {"color": "#2a3f5f"}}, "ternary": {"aaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "baxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "caxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "title": {"x": 0.05}, "xaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}, "yaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}}}, "title": {"text": "Author stats for Nature Genetics (from 2015)"}, "xaxis": {"anchor": "y", "domain": [0.0, 1.0], "title": {"text": "measure"}}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": "count"}}},                        {"responsive": true}                    ).then(function(){
+
+var gd = document.getElementById('84d6a232-0769-4e73-b93f-826476b8d444');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script>        </div></div>
+</div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1669,8 +1732,8 @@ Records extracted: 1541
 <h2>A quick look at authors <em>without</em> a Dimensions Researcher ID<a class="headerlink" href="#A-quick-look-at-authors-without-a-Dimensions-Researcher-ID" title="Permalink to this headline">¶</a></h2>
 <p>We’re not going to try to disambiguate them here, but still it’s good to have a quick look at them…</p>
 <p>Looks like the most common surname is <code class="docutils literal notranslate"><span class="pre">Wang</span></code>, while the most common first name is an empty value</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1679,15 +1742,86 @@ Records extracted: 1541
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first_name</th>
+      <th>last_name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>8393</td>
+      <td>8393</td>
+    </tr>
+    <tr>
+      <th>unique</th>
+      <td>3747</td>
+      <td>3561</td>
+    </tr>
+    <tr>
+      <th>top</th>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>freq</th>
+      <td>565</td>
+      <td>464</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
 <p>Top ten ‘ambiguous’ surnames seem to be all Asian.. it’s a rather known problem!</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">authors_without_id</span><span class="p">[</span><span class="s1">&#39;last_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[:</span><span class="mi">10</span><span class="p">]</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+         464
+Wang     177
+Li       145
+Zhang    143
+Liu      119
+Chen     103
+Yang      65
+Zhao      61
+Lee       55
+Kim       47
+Name: last_name, dtype: int64
+</pre></div></div>
 </div>
 <div class="section" id="Any-common-patterns?">
 <h3>Any common patterns?<a class="headerlink" href="#Any-common-patterns?" title="Permalink to this headline">¶</a></h3>
@@ -1697,8 +1831,8 @@ Records extracted: 1541
 <li><p>there are some apparently meaningful name+surname combinations with a lot of hits</p></li>
 <li><p>not many Asian names in the top ones</p></li>
 </ul>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1708,13 +1842,166 @@ Records extracted: 1541
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>frequency</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td></td>
+      <td></td>
+      <td>464</td>
+    </tr>
+    <tr>
+      <th>2074</th>
+      <td>Jaakko</td>
+      <td>Tuomilehto</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>2147</th>
+      <td>James G.</td>
+      <td>Wilson</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>5263</th>
+      <td>Wei</td>
+      <td>Zhao</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>2161</th>
+      <td>James P.</td>
+      <td>Cook</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>2385</th>
+      <td>Jie</td>
+      <td>Huang</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>3967</th>
+      <td>Olle</td>
+      <td>Melander</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>672</th>
+      <td>Brooke</td>
+      <td>LaFlamme</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>4228</th>
+      <td>Qiong</td>
+      <td>Yang</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>266</th>
+      <td>Andre</td>
+      <td>Franke</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>1123</th>
+      <td>Daniela</td>
+      <td>Toniolo</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>3010</th>
+      <td>Lars</td>
+      <td>Lind</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>5350</th>
+      <td>Wolfgang</td>
+      <td>Lieb</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>3890</th>
+      <td>Nicholas G.</td>
+      <td>Martin</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>5594</th>
+      <td>Ying</td>
+      <td>Wu</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>75</th>
+      <td>Aarno</td>
+      <td>Palotie</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>4101</th>
+      <td>Peter</td>
+      <td>Almgren</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>150</th>
+      <td>Albert</td>
+      <td>Hofman</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>5161</th>
+      <td>Tõnu</td>
+      <td>Esko</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>4128</th>
+      <td>Peter</td>
+      <td>Vollenweider</td>
+      <td>8</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
 </div>
 <div class="section" id="Creating-an-export-for-manual-curation">
 <h3>Creating an export for manual curation<a class="headerlink" href="#Creating-an-export-for-manual-curation" title="Permalink to this headline">¶</a></h3>
 <p>For the next tasks, we will focus on the disambiguated authors as the Researcher ID links will let us carry out useful analyses.</p>
 <p>Still, we can <strong>save the authors with missing IDs</strong> results and try to do some manual disambiguation later. To this end, adding a simple google-search URL can help in making sense of these data quickly.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1726,8 +2013,182 @@ Records extracted: 1541
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>frequency</th>
+      <th>search_url</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td></td>
+      <td></td>
+      <td>464</td>
+      <td>https://www.google.com/search?q=%20</td>
+    </tr>
+    <tr>
+      <th>2074</th>
+      <td>Jaakko</td>
+      <td>Tuomilehto</td>
+      <td>13</td>
+      <td>https://www.google.com/search?q=Jaakko%20Tuomi...</td>
+    </tr>
+    <tr>
+      <th>2147</th>
+      <td>James G.</td>
+      <td>Wilson</td>
+      <td>12</td>
+      <td>https://www.google.com/search?q=James%20G.%20W...</td>
+    </tr>
+    <tr>
+      <th>5263</th>
+      <td>Wei</td>
+      <td>Zhao</td>
+      <td>12</td>
+      <td>https://www.google.com/search?q=Wei%20Zhao</td>
+    </tr>
+    <tr>
+      <th>2161</th>
+      <td>James P.</td>
+      <td>Cook</td>
+      <td>11</td>
+      <td>https://www.google.com/search?q=James%20P.%20Cook</td>
+    </tr>
+    <tr>
+      <th>2385</th>
+      <td>Jie</td>
+      <td>Huang</td>
+      <td>11</td>
+      <td>https://www.google.com/search?q=Jie%20Huang</td>
+    </tr>
+    <tr>
+      <th>3967</th>
+      <td>Olle</td>
+      <td>Melander</td>
+      <td>11</td>
+      <td>https://www.google.com/search?q=Olle%20Melander</td>
+    </tr>
+    <tr>
+      <th>672</th>
+      <td>Brooke</td>
+      <td>LaFlamme</td>
+      <td>10</td>
+      <td>https://www.google.com/search?q=Brooke%20LaFlamme</td>
+    </tr>
+    <tr>
+      <th>4228</th>
+      <td>Qiong</td>
+      <td>Yang</td>
+      <td>10</td>
+      <td>https://www.google.com/search?q=Qiong%20Yang</td>
+    </tr>
+    <tr>
+      <th>266</th>
+      <td>Andre</td>
+      <td>Franke</td>
+      <td>9</td>
+      <td>https://www.google.com/search?q=Andre%20Franke</td>
+    </tr>
+    <tr>
+      <th>1123</th>
+      <td>Daniela</td>
+      <td>Toniolo</td>
+      <td>9</td>
+      <td>https://www.google.com/search?q=Daniela%20Toniolo</td>
+    </tr>
+    <tr>
+      <th>3010</th>
+      <td>Lars</td>
+      <td>Lind</td>
+      <td>9</td>
+      <td>https://www.google.com/search?q=Lars%20Lind</td>
+    </tr>
+    <tr>
+      <th>5350</th>
+      <td>Wolfgang</td>
+      <td>Lieb</td>
+      <td>9</td>
+      <td>https://www.google.com/search?q=Wolfgang%20Lieb</td>
+    </tr>
+    <tr>
+      <th>3890</th>
+      <td>Nicholas G.</td>
+      <td>Martin</td>
+      <td>9</td>
+      <td>https://www.google.com/search?q=Nicholas%20G.%...</td>
+    </tr>
+    <tr>
+      <th>5594</th>
+      <td>Ying</td>
+      <td>Wu</td>
+      <td>9</td>
+      <td>https://www.google.com/search?q=Ying%20Wu</td>
+    </tr>
+    <tr>
+      <th>75</th>
+      <td>Aarno</td>
+      <td>Palotie</td>
+      <td>8</td>
+      <td>https://www.google.com/search?q=Aarno%20Palotie</td>
+    </tr>
+    <tr>
+      <th>4101</th>
+      <td>Peter</td>
+      <td>Almgren</td>
+      <td>8</td>
+      <td>https://www.google.com/search?q=Peter%20Almgren</td>
+    </tr>
+    <tr>
+      <th>150</th>
+      <td>Albert</td>
+      <td>Hofman</td>
+      <td>8</td>
+      <td>https://www.google.com/search?q=Albert%20Hofman</td>
+    </tr>
+    <tr>
+      <th>5161</th>
+      <td>Tõnu</td>
+      <td>Esko</td>
+      <td>8</td>
+      <td>https://www.google.com/search?q=T%C3%B5nu%20Esko</td>
+    </tr>
+    <tr>
+      <th>4128</th>
+      <td>Peter</td>
+      <td>Vollenweider</td>
+      <td>8</td>
+      <td>https://www.google.com/search?q=Peter%20Vollen...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1739,7 +2200,7 @@ Records extracted: 1541
 <p>That’s it!</p>
 <p>Now let’s go and open this in <a class="reference external" href="https://docs.google.com/spreadsheets/">Google Sheets</a>…</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>

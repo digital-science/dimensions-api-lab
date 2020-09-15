@@ -1,12 +1,18 @@
 # Changelog - Dimensions API Lab 
 
 
+### 2020-09-15
+
+* Fixed broken links in README file [issue 8](https://github.com/digital-science/dimensions-api-lab/issues/8) and [issue 7](https://github.com/digital-science/dimensions-api-lab/issues/7)
+
+
 ### 2020-09-07
 
 Updates:
 
 * All notebooks have been updated so that they use `getpass` in order to get API log in credentials
 * Updated all notebooks using `px.histogram` in order to fix a bug with the histogram function
+* [Citation Analysis: an Introduction](https://api-lab.dimensions.ai/cookbooks/2-publications/Citation-Analysis.html): the resulting network graph is rendered inline 
 
 
 ### 2020-08-13
