@@ -1,0 +1,3330 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Enriching Grants part 1: Matching your grants records to Dimensions &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/js/custom.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Enriching Grants part 2: Adding Publications Information from Dimensions" href="2-Grants Enrichment Part 2 Enriching-Grants-With-Publications-Information .html" />
+    <link rel="prev" title="Building a concepts co-occurence network" href="../2-publications/Concepts-network-graph.html" />
+    
+
+   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149959808-1"></script>
+   <!-- <script src="_static/js/custom.js"></script> -->
+
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> DSL
+          
+
+          
+            
+            <img src="../../_static/dimensions-logo@2x.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+
+   <p class="">
+      <h3 id="cookbooks_title">API COOKBOOKS</h3>
+   </p>
+
+
+   
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/0-Verifying-your-connection.html">Verifying Your API Connection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/0-Verifying-your-connection.html#Technical-prerequisites">Technical prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/0-Verifying-your-connection.html#Connecting-to-the-API">Connecting to the API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/0-Verifying-your-connection.html#Troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html">The Dimcli Python library: Installation and Querying</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Authentication">Authentication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#More-secure-method:-storing-a-private-credentials-file">More secure method: storing a private credentials file</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Querying">Querying</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Simple-Querying">Simple Querying</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Iterative-querying-(loops)">Iterative querying (loops)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Command-line-interface">Command line interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Running-the-CLI">Running the CLI</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html">The Dimcli Python library: Working with Pandas Dataframes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#1.-General-method-to-transform-JSON-query-results-into-a-dataframe">1. General method to transform JSON query results into a dataframe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#2.-Dataframe-Methods-for-‘Publications’-queries">2. Dataframe Methods for ‘Publications’ queries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#Extracting-authors:-as_dataframe_authors">Extracting authors: <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#Extracting-Affiliations:-as_dataframe_authors_affiliations">Extracting Affiliations: <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors_affiliations</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#3.-Dataframe-Methods-for-‘Grants’-queries">3. Dataframe Methods for ‘Grants’ queries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#Extracting-Funders:-as_dataframe_funders">Extracting Funders: <code class="docutils literal notranslate"><span class="pre">as_dataframe_funders</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#Extracting-investigators:-as_dataframe_investigators">Extracting investigators: <code class="docutils literal notranslate"><span class="pre">as_dataframe_investigators</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#4.-Dataframe-Methods-for-‘Concepts’-queries">4. Dataframe Methods for ‘Concepts’ queries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#Extracting-Concepts:-as_dataframe_concepts">Extracting Concepts: <code class="docutils literal notranslate"><span class="pre">as_dataframe_concepts</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html">The Dimcli Python library: Magic Commands</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#id1">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#Dimcli-‘magic’-commands">Dimcli ‘magic’ commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#Tip:-Accessing-data-returned-by-magic-queries">Tip: Accessing data returned by magic queries</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#1.-Simple-queries-with-%dsl-or-%%dsl">1. Simple queries with <code class="docutils literal notranslate"><span class="pre">%dsl</span></code> or <code class="docutils literal notranslate"><span class="pre">%%dsl</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#2.-Loop-queries-with-%dslloop-or-%%dslloop">2. Loop queries with <code class="docutils literal notranslate"><span class="pre">%dslloop</span></code> or <code class="docutils literal notranslate"><span class="pre">%%dslloop</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#3.-Returning-dataframes:-%dsldf-and-%%dsldf">3. Returning dataframes: <code class="docutils literal notranslate"><span class="pre">%dsldf</span></code> and <code class="docutils literal notranslate"><span class="pre">%%dsldf</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#4.-Looped-dataframe-queries:-%dslloopdf-and-%%dslloopdf">4. Looped dataframe queries: <code class="docutils literal notranslate"><span class="pre">%dslloopdf</span></code> and <code class="docutils literal notranslate"><span class="pre">%%dslloopdf</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#5.-Getting-API-schema-documentation-with-%dsldocs">5. Getting API schema documentation with <code class="docutils literal notranslate"><span class="pre">%dsldocs</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html">Exploring The Dimensions Search Language (DSL) - Quick Intro</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Prerequisites">Prerequisites</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#What-the-query-statistics-refer-to">What the query statistics refer to</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Working-with-fields">Working with fields</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Control-the-fields-you-return">Control the fields you return</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Make-a-mistake,-and-the-DSL-will-tell-you-what-fields-that-you-could-have-used">Make a mistake, and the DSL will tell you what fields that you could have used</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Get-all-fields">Get all fields</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Full-text-search">Full text search</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#A-simple-author-search">A simple author search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#..or-search-for-a-researcher-by-a-specific-id">..or search for a researcher by a specific id</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Sources-VS-Facets">Sources VS Facets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#You-can-paginate-through-source-results-up-to-50000-rows">You can paginate through <em>source</em> results up to 50000 rows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#You-can-return-max-1000-facet-rows">You can return max 1000 <code class="docutils literal notranslate"><span class="pre">facet</span></code> rows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Just-make-a-mistake,-and-you-will-ge-the-complete-list-of-available-facets">Just make a mistake, and you will ge the complete list of available facets</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html">Exploring The Dimensions Search Language (DSL) - Deep Dive</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#What-is-the-Dimensions-Search-Language?">What is the Dimensions Search Language?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#Sections-Index">Sections Index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#1.-Basic-query-structure">1. Basic query structure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#search-source"><code class="docutils literal notranslate"><span class="pre">search</span> <span class="pre">source</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#return-result-(source-or-facet)"><code class="docutils literal notranslate"><span class="pre">return</span></code> result (source or facet)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#2.-Full-text-Searching">2. Full-text Searching</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#2.1-in-[search-index]">2.1 <code class="docutils literal notranslate"><span class="pre">in</span> <span class="pre">[search</span> <span class="pre">index]</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#2.2-for-&quot;search-term&quot;">2.2 <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">&quot;search</span> <span class="pre">term&quot;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#2.3-Boolean-Operators">2.3 Boolean Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#2.4-Wildcard-Searches">2.4 Wildcard Searches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#2.5-Proximity-Searches">2.5 Proximity Searches</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#3.-Field-Searching">3. Field Searching</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#3.1-where">3.1 <code class="docutils literal notranslate"><span class="pre">where</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#3.2-in">3.2 <code class="docutils literal notranslate"><span class="pre">in</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#3.3-count---filter-function">3.3 <code class="docutils literal notranslate"><span class="pre">count</span></code> - filter function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#3.4-Filter-Operators">3.4 Filter Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#3.5-Partial-string-matching-with-~">3.5 Partial string matching with <code class="docutils literal notranslate"><span class="pre">~</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#3.6-Emptiness-filters-is-empty">3.6 Emptiness filters <code class="docutils literal notranslate"><span class="pre">is</span> <span class="pre">empty</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#4.-Searching-for-Researchers">4. Searching for Researchers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#4.1-Exact-name-searches">4.1 Exact name searches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#4.2-Fuzzy-Searches">4.2 Fuzzy Searches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#4.3-Using-the-disambiguated-Researchers-database">4.3 Using the disambiguated Researchers database</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.-Returning-results">5. Returning results</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.1-Returning-Multiple-Sources">5.1 Returning Multiple Sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.2-Returning-Specific-Fields">5.2 Returning Specific Fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.3-Returning-Facets">5.3 Returning Facets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.4-What-the-query-statistics-refer-to---sources-VS-facets">5.4 What the query statistics refer to - sources VS facets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.5-Paginating-Results">5.5 Paginating Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.6-Sorting-Results">5.6 Sorting Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#6.-Aggregations">6. Aggregations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html">Working with lists in the Dimensions API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#1.-How-do-we-use-lists-in-the-Dimensions-API?">1. How do we use lists in the Dimensions API?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#2.-What-are-all-the-things-that-we-can-make-lists-of-in-the-Dimensions-API?">2. What are all the things that we can make lists of in the Dimensions API?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#What-are-the-internal-Entities-that-we-might-put-in-a-list?">What are the internal Entities that we might put in a list?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#What-about-lists-of-ids?">What about lists of ids?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#What-are-the-external-entities-that-we-can-put-in-a-list?">What are the external entities that we can put in a list?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#3.-Making-a-list-from-the-results-of-a-query">3. Making a list from the results of a query</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#Putting-both-parts-of-this-example-together">Putting both parts of this example together</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#Doing-something-useful:-Get-all-the-publications-that-cite-my-publications">Doing something useful: Get all the publications that cite my publications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#5.-How-Long-can-lists-get?">5. How Long can lists get?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#This-won’t-work">This won’t work</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#This-will">This will</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#What-if-I-need-a-very-long-list?">What if I need a very long list?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#6.-What-if-I-want-to-get-the-researchers-associated-with-the-publications-the-cite-my-institution?">6. What if I want to get the researchers associated with the publications the cite my institution?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#7.-What-if-I-want-to-get-all-the-researchers-associated-with-the-publications-that-cite-my-institution?">7. What if I want to get <em>all</em> the researchers associated with the publications that cite my institution?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#8.-..and-if-we-want-details-about-our-researchers,-we-can-put-our-list-of-researchers-into-the-researcher-API">8. ..and if we want details about our researchers, we can put our list of researchers into the researcher API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#9.-Patents-example-(patents--&gt;-publications)">9. Patents example (patents -&gt; publications)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#10.-Clinical-Trials-(clinical-trials--&gt;-publications)">10. Clinical Trials (clinical trials -&gt; publications)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#11.-Grants-(publications--&gt;-grants)">11. Grants (publications -&gt; grants)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#Why-didn’t-I-use-resulting_publication_ids-?">Why didn’t I use resulting_publication_ids ?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html">Working with <em>concepts</em> in the Dimensions API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#1.-Background:-What-are-concepts?">1. Background: What are <code class="docutils literal notranslate"><span class="pre">concepts</span></code>?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#1.1-From-concepts-to-dataframes:-Dimcli’s-as_dataframe_concepts-method">1.1 From concepts to dataframes: Dimcli’s <code class="docutils literal notranslate"><span class="pre">as_dataframe_concepts</span></code> method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#1.2-Extracting-concepts-from-any-text">1.2 Extracting concepts from any text</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#2.-Data-acquisition:-retrieving-publications-and-all-their-associated-concepts">2. Data acquisition: retrieving publications and all their associated concepts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#2.1-Processing-concept-data">2.1 Processing concept data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#3.-Exploring-our-dataset:-basic-statistics-about-Publications-/-Concepts">3. Exploring our dataset: basic statistics about Publications / Concepts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#3.1-Documents-With-concepts-VS-Without">3.1 Documents With concepts VS Without</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#3.2-Yearly-breakdown-of-Documents-With-concepts-VS-Without">3.2 Yearly breakdown of Documents With concepts VS Without</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#3.3-Concepts-frequency">3.3 Concepts frequency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#3.4-Distribution-of-Concepts-Frequency">3.4 Distribution of Concepts Frequency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#3.5-Yearly-breakdown:-unique-VS-repeated-concepts">3.5 Yearly breakdown: unique VS repeated concepts</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#4.-Isolating-‘interesting’-concepts-using-frequency-and-score_avg">4. Isolating ‘interesting’ concepts using <code class="docutils literal notranslate"><span class="pre">frequency</span></code> and <code class="docutils literal notranslate"><span class="pre">score_avg</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#4.1-The-problem:-frequent-concepts-are-not-that-interesting!">4.1 The problem: frequent concepts are not <em>that</em> interesting!</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#4.2-Solution-1:-prefiltering-by-score_avg-and-sorting-by-frequency">4.2 Solution 1: prefiltering by <code class="docutils literal notranslate"><span class="pre">score_avg</span></code> and sorting by <code class="docutils literal notranslate"><span class="pre">frequency</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#4.3-Solution-2:-prefiltering-by-frequency-and-sorting-by-score_avg">4.3 Solution 2: prefiltering by <code class="docutils literal notranslate"><span class="pre">frequency</span></code> and sorting by <code class="docutils literal notranslate"><span class="pre">score_avg</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#5.-Analyses-By-Year">5. Analyses By Year</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#5.1-Adding-year-based-metrics-to-the-concepts-dataframe">5.1 Adding year-based metrics to the concepts dataframe</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#5.2-Charting-the-variation:-multi-year-visualization">5.2 Charting the variation: multi-year visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#6.-Conclusion">6. Conclusion</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#The-main-takeaways">The main takeaways</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#What-next">What next</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Publications</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../2-publications/General-statistics.html">General Publication Statistics about a Research Organization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/General-statistics.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/General-statistics.html#Choose-a-Research-Organization">Choose a Research Organization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/General-statistics.html#Publications-output-by-year">Publications output by year</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/General-statistics.html#Publications-most-cited-in-last-2-years">Publications most cited in last 2 years</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/General-statistics.html#Publications-most-cited---all-time">Publications most cited - all time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/General-statistics.html#Publications-most-cited-:-which-research-areas?">Publications most cited : which research areas?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/General-statistics.html#Publications-most-cited-:-which-journals?">Publications most cited : which journals?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/General-statistics.html#Top-Funders-(by-aggregated-funding-amount)">Top Funders (by aggregated funding amount)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/General-statistics.html#Top-funders-split-by-country-of-the-funder">Top funders split by country of the funder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/General-statistics.html#Correlation-between-No-of-Publications-VS-Funding">Correlation between No of Publications VS Funding</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2-publications/Citation-Analysis.html">Citation Analysis: an Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Method-A:-getting-citations-for-one-publication-at-a-time">Method A: getting citations for one publication at a time</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Comments-about-this-method">Comments about this method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Method-B:-Getting-citations-for-multiple-publications-via-a-single-query">Method B: Getting citations for multiple publications via a single query</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Creating-a-second-level-citations-network">Creating a second-level citations network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Building-a-Simple-Dataviz">Building a Simple Dataviz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Final-considerations">Final considerations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Querying-for-more-than-1000-results">Querying for more than 1000 results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Querying-for-more-than-50K-results">Querying for more than 50K results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Dealing-with-highly-cited-publications">Dealing with highly cited publications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Pre-checking-citations-counts">Pre-checking citations counts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Citing-My-Organization.html">Citation Analysis: Journals Citing a Research Organization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Citing-My-Organization.html#1.-Prerequisites">1. Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Citing-My-Organization.html#2.-Choose-a-Research-Organization">2. Choose a Research Organization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Citing-My-Organization.html#3.-Building-a-Publications-Baseset">3. Building a Publications Baseset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Citing-My-Organization.html#4.-Extracting-Publications-Citing-the-Baseset">4. Extracting Publications Citing the Baseset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Citing-My-Organization.html#5.-Journal-Analysis">5. Journal Analysis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Citing-My-Organization.html#Number-of-Unique-journals">Number of Unique journals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Citing-My-Organization.html#Most-frequent-journals">Most frequent journals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Citing-My-Organization.html#Top-100-journals-chart">Top 100 journals chart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Citing-My-Organization.html#Top-20-journals-by-year-chart">Top 20 journals by year chart</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html">Journal Profiling Part 1: Getting the Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Selecting-a-Journal-and-Extracting-All-Publications-Metadata">Selecting a Journal and Extracting All Publications Metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Some-stats-about-authors">Some stats about authors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#A-quick-look-at-authors-without-a-Dimensions-Researcher-ID">A quick look at authors <em>without</em> a Dimensions Researcher ID</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Any-common-patterns?">Any common patterns?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Creating-an-export-for-manual-curation">Creating an export for manual curation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2-publications/Journal-Profile-2-Researchers-Impact-Metrics.html">Journal Profiling Part 2: Impact Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-2-Researchers-Impact-Metrics.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-2-Researchers-Impact-Metrics.html#Measuring-the-Impact-of-Researchers-within-a-Journal">Measuring the Impact of Researchers within a Journal</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-2-Researchers-Impact-Metrics.html#Load-the-publications-and-authors-data-previously-saved">Load the publications and authors data previously saved</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-2-Researchers-Impact-Metrics.html#Isolate-the-Researchers-data-(=-authors-with-an-ID)">Isolate the Researchers data (= authors with an ID)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-2-Researchers-Impact-Metrics.html#Enrich-the-data-with-Impact-Statistics">Enrich the data with Impact Statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-2-Researchers-Impact-Metrics.html#Couple-of-Dataviz">Couple of Dataviz</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2-publications/Journal-Profile-3-Funding-of-Researchers.html">Journal Profiling Part 3: Funding</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-3-Funding-of-Researchers.html#Prerequisites">Prerequisites</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-3-Funding-of-Researchers.html#Load-previously-saved-researchers-data">Load previously saved researchers data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-3-Funding-of-Researchers.html#Adding-another-impact-measure:-funding">Adding another impact measure: funding</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-3-Funding-of-Researchers.html#We’ll-have-to-do-it-in-two-steps">We’ll have to do it in two steps</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-3-Funding-of-Researchers.html#Next:-full-data-for-step-1">Next: full data for step 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-3-Funding-of-Researchers.html#Next:-full-data-for-step-2">Next: full data for step 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-3-Funding-of-Researchers.html#Finally:-let’s-merge-the-new-data-into-the-‘researchers-impact’-table">Finally: let’s merge the new data into the ‘researchers-impact’ table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-3-Funding-of-Researchers.html#Couple-of-Dataviz">Couple of Dataviz</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2-publications/Journal-Profile-4-Institutions.html">Journal Profiling Part 4: Institutions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-4-Institutions.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-4-Institutions.html#Institutions-Contributing-to-a-Journal">Institutions Contributing to a Journal</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-4-Institutions.html#Load-previously-saved-affiliations-data">Load previously saved affiliations data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-4-Institutions.html#Basic-stats-about-affiliations">Basic stats about affiliations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-4-Institutions.html#Enriching-the-unique-affiliations-(GRIDs-list)-with-pubs-count-and-authors-count">Enriching the unique affiliations (GRIDs list) with pubs count and authors count</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-4-Institutions.html#Couple-of-Dataviz">Couple of Dataviz</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2-publications/Journal-Profile-5-Competitive-Analysis.html">Journal Profiling Part 5: Competing Journals Analysis</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-5-Competitive-Analysis.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-5-Competitive-Analysis.html#Competing-Journals">Competing Journals</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-5-Competitive-Analysis.html#First-let’s-reload-the-data-obtained-in-previous-steps">First let’s reload the data obtained in previous steps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-5-Competitive-Analysis.html#What-the-query-looks-like">What the query looks like</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-5-Competitive-Analysis.html#Extracting-all-publications/journals-information">Extracting all publications/journals information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-5-Competitive-Analysis.html#Visualizations">Visualizations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2-publications/Simple-topic-analysis.html">Topic Modeling Analysis for a Set of Publications: Basic Workflow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Simple-topic-analysis.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Simple-topic-analysis.html#1.-Creating-a-Dataset:-e.g. Publications-from-a-Research-Organization">1. Creating a Dataset: e.g. Publications from a Research Organization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Simple-topic-analysis.html#2.-Concepts:-exploratory-analysis">2. Concepts: exploratory analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Simple-topic-analysis.html#3.-Building-a-word-cloud-visualization">3. Building a word-cloud visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Simple-topic-analysis.html#4.-Trend-analysis---‘emerging’-new-topics-each-year">4. Trend analysis - ‘emerging’ new topics each year</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Simple-topic-analysis.html#5.-Trend-Analysis:-topics-growth">5. Trend Analysis: topics growth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Simple-topic-analysis.html#6.-Trend-analysis:-growth-distribution-based-on-selected-years">6. Trend analysis: growth distribution based on selected years</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Simple-topic-analysis.html#7.-Conclusion">7. Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2-publications/Concepts-network-graph.html">Building a concepts co-occurence network</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Concepts-network-graph.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Concepts-network-graph.html#Step-1:-Creating-a-dataset">Step 1: Creating a dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Concepts-network-graph.html#Step-2:-Building-a-concepts-co-occurrence-network">Step 2: Building a concepts co-occurrence network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Concepts-network-graph.html#Step-3:-Visualizing-the-network">Step 3: Visualizing the network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Concepts-network-graph.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Grants</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Enriching Grants part 1: Matching your grants records to Dimensions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#A-sample-grants-list">A sample grants list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Loading-the-sample-grants-data">Loading the sample grants data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Matching-grants-data">Matching grants data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#A)-Matching-grants-when-we-have-a-grant-number">A) Matching grants when we have a grant number</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#B)-What-if-we-don’t-have-a-grant-number?">B) What if we don’t have a grant number?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Back-to-our-grants-list">Back to our grants list</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Enriching-the-original-list">Enriching the original list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Save-the-data">Save the data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="2-Grants Enrichment Part 2 Enriching-Grants-With-Publications-Information .html">Enriching Grants part 2: Adding Publications Information from Dimensions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="2-Grants Enrichment Part 2 Enriching-Grants-With-Publications-Information .html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2-Grants Enrichment Part 2 Enriching-Grants-With-Publications-Information .html#Reusing-the-sample-grants-data-from-part-1">Reusing the sample grants data from part-1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2-Grants Enrichment Part 2 Enriching-Grants-With-Publications-Information .html#Extracting-linked-Publications-data-from-Dimensions">Extracting linked Publications data from Dimensions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="2-Grants Enrichment Part 2 Enriching-Grants-With-Publications-Information .html#Building-a-looped-extraction">Building a looped extraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2-Grants Enrichment Part 2 Enriching-Grants-With-Publications-Information .html#Final-step:-grouping-publications-by-grant">Final step: grouping publications by grant</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="2-Grants Enrichment Part 2 Enriching-Grants-With-Publications-Information .html#Data-Exploration">Data Exploration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="2-Grants Enrichment Part 2 Enriching-Grants-With-Publications-Information .html#Publications-per-grant-by-year-and-funding-amount">Publications per grant by year and funding amount</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2-Grants Enrichment Part 2 Enriching-Grants-With-Publications-Information .html#Publications-per-grant-by-country">Publications per grant by country</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2-Grants Enrichment Part 2 Enriching-Grants-With-Publications-Information .html#Correlation-of-num-of-publications-to-grant-length">Correlation of num of publications to grant length</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2-Grants Enrichment Part 2 Enriching-Grants-With-Publications-Information .html#Publications-by-grant-funder">Publications by grant funder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2-Grants Enrichment Part 2 Enriching-Grants-With-Publications-Information .html#Publications-by-grant-funder-vs-funding-amount">Publications by grant funder vs funding amount</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="2-Grants Enrichment Part 2 Enriching-Grants-With-Publications-Information .html#Conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="3-Grants Enrichment Part 3-Enriching-Grants-With-Patents-and-ClinicalTrials-Information.html">Enriching Grants part 3: adding related Patents and Clinical Trials data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="3-Grants Enrichment Part 3-Enriching-Grants-With-Patents-and-ClinicalTrials-Information.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3-Grants Enrichment Part 3-Enriching-Grants-With-Patents-and-ClinicalTrials-Information.html#Reusing-the-enriched-grants-data-from-part-2">Reusing the enriched grants data from part-2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3-Grants Enrichment Part 3-Enriching-Grants-With-Patents-and-ClinicalTrials-Information.html#Extracting-linked-Patents-data">Extracting linked Patents data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3-Grants Enrichment Part 3-Enriching-Grants-With-Patents-and-ClinicalTrials-Information.html#Extracting-linked-Clinical-Trials-data">Extracting linked Clinical Trials data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3-Grants Enrichment Part 3-Enriching-Grants-With-Patents-and-ClinicalTrials-Information.html#Data-Exploration">Data Exploration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="3-Grants Enrichment Part 3-Enriching-Grants-With-Patents-and-ClinicalTrials-Information.html#How-many-linked-objects-overall?">How many linked objects overall?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3-Grants Enrichment Part 3-Enriching-Grants-With-Patents-and-ClinicalTrials-Information.html#Patents-and-Clinical-Trials-by-Year">Patents and Clinical Trials by Year</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3-Grants Enrichment Part 3-Enriching-Grants-With-Patents-and-ClinicalTrials-Information.html#Patents-and-Clinical-Trials-by-Grant-Funder">Patents and Clinical Trials by Grant Funder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3-Grants Enrichment Part 3-Enriching-Grants-With-Patents-and-ClinicalTrials-Information.html#Exploring-Correlations-between-dimensions">Exploring Correlations between dimensions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="3-Grants Enrichment Part 3-Enriching-Grants-With-Patents-and-ClinicalTrials-Information.html#Conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Clinical Trials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.html">Clinical Trials by Volume of Publications</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.html#Query-for-Clinical-Trials">Query for Clinical Trials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.html#Counting-publications-per-clinical-trial">Counting publications per clinical trial</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Patents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../5-patents/1-introducing-patents.html">The Patents API: Features Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-introducing-patents.html#1.-Sample-Patents-Queries">1. Sample Patents Queries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Searching-patents-by-keyword">Searching patents by keyword</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Searching-using-fielded-search">Searching using fielded search</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Searching-using-dates">Searching using dates</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Extracting-cited-publications-via-publication_ids">Extracting cited publications via <code class="docutils literal notranslate"><span class="pre">publication_ids</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Extracting-cited-patents-via-reference_ids">Extracting cited patents via <code class="docutils literal notranslate"><span class="pre">reference_ids</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Aggregating-results-using-facets">Aggregating results using facets</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Top-assignees">Top assignees</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Top-researchers">Top researchers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Top-FOR-categories">Top FOR categories</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-introducing-patents.html#2.-A-closer-look-at-Patents-statistics">2. A closer look at Patents statistics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Counting-records-per-each-field">Counting records per each field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Creating-a-bar-chart">Creating a bar chart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Counting-the-yearly-distribution-of-field/records-data">Counting the yearly distribution of field/records data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Creating-a-line-chart">Creating a line chart</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-introducing-patents.html#Where-to-find-out-more">Where to find out more</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html">Measuring the Innovation Impact of an Organization using Patents Citations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#1.-Choosing-a-GRID-Research-Organization">1. Choosing a GRID Research Organization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#2.-Extracting-Publications-Data">2. Extracting Publications Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#Quick-look-at-publications-statistics">Quick look at publications statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#What-are-the-main-subject-areas?">What are the main subject areas?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#3.-Extracting-Patents-linked-to-Publications">3. Extracting Patents linked to Publications</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#Enriching-publications-with-patents-citations-metrics">Enriching publications with patents citations metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#4.-Patents-Data-Analysis">4. Patents Data Analysis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#How-many-patents-per-year?">How many patents per year?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#Who-is-filing-the-patents?">Who is filing the patents?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#What-are-the-publications-most-frequenlty-referenced-in-patents?">What are the publications most frequenlty referenced in patents?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#What-are-the-main-subject-areas-of-referenced-publications?">What are the main subject areas of referenced publications?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#Is-there-a-correlation-between-publication-citations-and-patents-citations?">Is there a correlation between publication citations and patents citations?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#Where-to-go-from-here">Where to go from here</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Datasets</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html">The Datasets API: Features Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#1.-Sample-Dataset-Queries">1. Sample Dataset Queries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Searching-datasets-by-keyword">Searching datasets by keyword</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Returning-associated-grants-and-publication-data">Returning associated grants and publication data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Searching-using-fielded-search">Searching using fielded search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Extracting-related-funding-via-grants">Extracting related funding via grants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Aggregating-results-using-facets">Aggregating results using facets</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Top-funders">Top funders</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Top-research-organizations">Top research organizations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Top-contributors">Top contributors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#2.-A-closer-look-at-Datasets-statistics">2. A closer look at Datasets statistics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Counting-records-per-each-field">Counting records per each field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Creating-a-bar-chart">Creating a bar chart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Counting-the-yearly-distribution-of-field/records-data">Counting the yearly distribution of field/records data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Creating-a-line-chart">Creating a line chart</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Where-to-find-out-more">Where to find out more</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Researchers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html">Calculating the H-index of a researcher</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html#Background">Background</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html#Selecting-a-researcher">Selecting a researcher</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html#The-H-Index-function">The H-Index function</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html#Getting-citations-data-from-Dimensions">Getting citations data from Dimensions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html#Wrapping-things-up">Wrapping things up</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html#Where-to-find-out-more">Where to find out more</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html">Extracting researchers based on affiliations and publications history</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Prerequisites">Prerequisites</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Select-an-organization-ID">Select an organization ID</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Background:-understanding-the-data-model">Background: understanding the data model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Methodology:-two-options-available">Methodology: two options available</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Approach-1.-From-publications-to-researchers">Approach 1. From publications to researchers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Approach-2.-From-researchers-to-publications">Approach 2. From researchers to publications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html">Expert Identification with the Dimensions API - An Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Step-1:-Concept-Extraction">Step 1: Concept Extraction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Step-2:-Expert-Identification">Step 2: Expert Identification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-1.-Most-Basic-Query-using-concepts">Example 1. Most Basic Query using <code class="docutils literal notranslate"><span class="pre">concepts</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-2.-Query-with-OR-connectors">Example 2. Query with <code class="docutils literal notranslate"><span class="pre">OR</span></code> connectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-3.-Query-with-where-filters">Example 3. Query with <code class="docutils literal notranslate"><span class="pre">where</span></code> filters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-4.-Adding-Overlap-Annotations-(eg-for-conflict-of-interests-checks)">Example 4. Adding Overlap Annotations (eg for conflict of interests checks)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-5.-Query-with-MUST/NOT-Operators">Example 5. Query with MUST/NOT Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-6.-MUST-together-with-AND/OR">Example 6. MUST together with AND/OR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-7.-Wildcard-searches">Example 7. Wildcard searches</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Organizations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../8-organizations/1-GRID-preview.html">The Organizations API: Features Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#1.-Matching-affiliation-data-to-GRID-IDs-using-extract_affiliations">1. Matching affiliation data to GRID IDs using <code class="docutils literal notranslate"><span class="pre">extract_affiliations</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#2.-Searching-GRID-organizations">2. Searching GRID organizations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Full-text-search">Full-text search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Fielded-search">Fielded search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Returning-facets">Returning facets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Returning-organizations-facets-from-publications">Returning organizations facets from publications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#3.-A-closer-look-at-the-organizations-data-statistics">3. A closer look at the organizations data statistics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Let’s-visualize-the-data-with-plotly">Let’s visualize the data with plotly</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Where-to-find-out-more">Where to find out more</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html">Identifying the Industry Collaborators of an Academic Institution</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#1.-Selecting-an-academic-institution">1. Selecting an academic institution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#2.-Extracting-publications-from-industry-collaborations">2. Extracting publications from industry collaborations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#3.-Analyses">3. Analyses</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#3.1-Count-of-Publications-per-year-from-Industry-Collaborations">3.1 Count of Publications per year from Industry Collaborations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#3.2-Citations-from-Industry-Collaboration">3.2 Citations from Industry Collaboration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#3.3-Top-Industry-Collaborators">3.3 Top Industry Collaborators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#3.4-Countries-of-Industry-Collaborators">3.4 Countries of Industry Collaborators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#3.5-Putting-Countries-and-Collaborators-together">3.5 Putting Countries and Collaborators together</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html">Building an Organizations Collaboration Network Diagram</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#1.-Choose-an-Organization-and-a-keyword-(topic)">1. Choose an Organization and a keyword (topic)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#2.-Building-a-one-degree-network-of-collaborating-institutions">2. Building a one-degree network of collaborating institutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#3.-Building-a-network-of-any-size">3. Building a network of any size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#4.-Visualizing-the-network">4. Visualizing the network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#5.-Addendum:-showing-only-‘Government’-collaborators">5. Addendum: showing only ‘Government’ collaborators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+
+
+   <div id="sidebar_github" style="margin-top: 12px;">
+   <h3>Github Source</h3>
+
+      <div style="margin: 10px 20px;">
+      
+         <iframe src="https://ghbtns.com/github-btn.html?user=digital-science&repo=dimensions-api-lab&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+
+         <iframe src="https://ghbtns.com/github-btn.html?user=digital-science&repo=dimensions-api-lab&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe> 
+      
+      </div>
+
+   </div>
+
+
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">DSL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+
+    
+
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container,
+div.nbinput.container div.prompt,
+div.nbinput.container div.input_area,
+div.nbinput.container div[class*=highlight],
+div.nbinput.container div[class*=highlight] pre,
+div.nboutput.container,
+div.nboutput.container div.prompt,
+div.nboutput.container div.output_area,
+div.nboutput.container div[class*=highlight],
+div.nboutput.container div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js'></script>
+<script>require=requirejs;</script><a class="reference external image-reference" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/cookbooks/3-grants/1-GrantsEnrichmentPart1MatchingYourGrantsRecordstoDimensions.ipynb"><img alt="../../_images/badge-colab.svg" src="../../_images/badge-colab.svg" /></a>
+<a class="reference external image-reference" href="https://github.com/digital-science/dimensions-api-lab/blob/master/cookbooks/3-grants/1-GrantsEnrichmentPart1MatchingYourGrantsRecordstoDimensions.ipynb"><img alt="../../_images/badge-github-custom.svg" src="../../_images/badge-github-custom.svg" /></a>
+<hr class="docutils" />
+<div class="section" id="Enriching-Grants-part-1:-Matching-your-grants-records-to-Dimensions">
+<h1>Enriching Grants part 1: Matching your grants records to Dimensions<a class="headerlink" href="#Enriching-Grants-part-1:-Matching-your-grants-records-to-Dimensions" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial we are going to <strong>match</strong> a sample local grants datasets to Dimensions.</p>
+<p>By <em>matching</em> we mean discovering the unique <strong>Dimensions identifier</strong> for these grants, so that we can then use the IDs to extract from Dimensions more related objects (eg researchers, publications, patents, clinical trials etc.. related to the grants).</p>
+<div class="section" id="A-sample-grants-list">
+<h2>A sample grants list<a class="headerlink" href="#A-sample-grants-list" title="Permalink to this headline">¶</a></h2>
+<p>Our starting point is a <a class="reference external" href="http://api-sample-data.dimensions.ai/data/vaccines-grants-sample-part-0.csv">sample list of completed grants on the topic of vaccines</a>, which contains common fields such as title, funder, grant/project ID, funding amount etc..</p>
+<p>We will show below how to enrich this dataset with Dimensions IDs.</p>
+</div>
+<div class="section" id="Prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>This notebook assumes you have installed the <a class="reference external" href="https://pypi.org/project/dimcli/">Dimcli</a> library and are familiar with the <em>Getting Started</em> tutorial.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span>pip install dimcli tqdm -U --quiet
+
+<span class="kn">import</span> <span class="nn">dimcli</span>
+<span class="kn">from</span> <span class="nn">dimcli.shortcuts</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">Logging in..&quot;</span><span class="p">)</span>
+<span class="c1"># https://github.com/digital-science/dimcli#authentication</span>
+<span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;https://app.dimensions.ai&quot;</span>
+<span class="k">if</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+  <span class="kn">import</span> <span class="nn">getpass</span>
+  <span class="n">USERNAME</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;Username: &#39;</span><span class="p">)</span>
+  <span class="n">PASSWORD</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;Password: &#39;</span><span class="p">)</span>
+  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">USERNAME</span><span class="p">,</span> <span class="n">PASSWORD</span><span class="p">,</span> <span class="n">ENDPOINT</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="n">USERNAME</span><span class="p">,</span> <span class="n">PASSWORD</span>  <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
+  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">USERNAME</span><span class="p">,</span> <span class="n">PASSWORD</span><span class="p">,</span> <span class="n">ENDPOINT</span><span class="p">)</span>
+<span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+==
+Logging in..
+Dimcli - Dimensions API Client (v0.7.5)
+Connected to: https://app.dimensions.ai - DSL v1.28
+Method: dsl.ini file
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Loading-the-sample-grants-data">
+<h2>Loading the sample grants data<a class="headerlink" href="#Loading-the-sample-grants-data" title="Permalink to this headline">¶</a></h2>
+<p>First we are going to load the sample dataset <a class="reference external" href="http://api-sample-data.dimensions.ai/data/vaccines-grants-sample-part-0.csv">“vaccines-grants-sample-part-0.csv”</a>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">grants_source</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;http://api-sample-data.dimensions.ai/data/vaccines-grants-sample-part-0.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Now we can preview the contents of the file.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">grants_source</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Grant Number</th>
+      <th>Title</th>
+      <th>Funding Amount in USD</th>
+      <th>Start Year</th>
+      <th>End Year</th>
+      <th>Funder</th>
+      <th>Funder Country</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>30410203277</td>
+      <td>疫苗－整体方案</td>
+      <td>1208.0</td>
+      <td>2004</td>
+      <td>2004</td>
+      <td>National Natural Science Foundation of China</td>
+      <td>China</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>620792</td>
+      <td>Engineering Inhalable Vaccines</td>
+      <td>26956.0</td>
+      <td>2017</td>
+      <td>2018</td>
+      <td>Natural Sciences and Engineering Research Council</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>599115</td>
+      <td>Engineering Inhalable Vaccines</td>
+      <td>26403.0</td>
+      <td>2016</td>
+      <td>2017</td>
+      <td>Natural Sciences and Engineering Research Council</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>251564</td>
+      <td>HIV Vaccine research</td>
+      <td>442366.0</td>
+      <td>2003</td>
+      <td>2007</td>
+      <td>National Health and Medical Research Council</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>334174</td>
+      <td>HIV Vaccine Development</td>
+      <td>236067.0</td>
+      <td>2005</td>
+      <td>2009</td>
+      <td>National Health and Medical Research Council</td>
+      <td>Australia</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Matching-grants-data">
+<h2>Matching grants data<a class="headerlink" href="#Matching-grants-data" title="Permalink to this headline">¶</a></h2>
+<p>The are two possible situations to consider.</p>
+<div class="section" id="A)-Matching-grants-when-we-have-a-grant-number">
+<h3>A) Matching grants when we have a grant number<a class="headerlink" href="#A)-Matching-grants-when-we-have-a-grant-number" title="Permalink to this headline">¶</a></h3>
+<p>The Dimensions API includes a <cite>special function ``extract_grants`</cite> &lt;<a class="reference external" href="https://docs.dimensions.ai/dsl/functions.html#function-extract-grants">https://docs.dimensions.ai/dsl/functions.html#function-extract-grants</a>&gt;`__ that makes it easier to find a grant in Dimensions, by using information such as funder name and the funder grant identifier.</p>
+<p>So one approach is the following:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;extract_grants(grant_number=&quot;30410203277&quot;,</span>
+<span class="s2">    funder_name=&quot;National Natural Science Foundation of China&quot;)&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;grant_id&#39;: &#39;grant.8172033&#39;}
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;extract_grants(grant_number=&quot;334174&quot;,</span>
+<span class="s2">    funder_name=&quot;National Health and Medical Research Council&quot;)&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;grant_id&#39;: &#39;grant.6722306&#39;}
+</pre></div></div>
+</div>
+<p>Note: this won’t work without funder name</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;extract_grants(grant_number=&quot;30410203277&quot;,</span>
+<span class="s2">    funder_name=&quot;&quot;)&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;grant_id&#39;: None}
+</pre></div></div>
+</div>
+<p>But we can pass a <a class="reference external" href="https://www.crossref.org/services/funder-registry/">fundref ID</a> if we have it (also available via <a class="reference external" href="https://grid.ac/institutes/grid.419696.5">GRID</a>)</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;extract_grants(grant_number=&quot;30410203277&quot;,</span>
+<span class="s2">    fundref=&quot;501100001809&quot;)&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;grant_id&#39;: &#39;grant.8172033&#39;}
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="B)-What-if-we-don’t-have-a-grant-number?">
+<h3>B) What if we don’t have a grant number?<a class="headerlink" href="#B)-What-if-we-don’t-have-a-grant-number?" title="Permalink to this headline">¶</a></h3>
+<p>Then the only way is to * query Dimensions using the best grants metadata we have available * if we get only one result, we just take it * if we get more than one result, we need to manually review them at a later point, or develop some sort of algorithm to sort them by relevancy so that we can take the first result</p>
+<p>Let’s take some of the grants without a number:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">grants_without_number</span> <span class="o">=</span> <span class="n">grants_source</span><span class="p">[</span><span class="n">grants_source</span><span class="p">[</span><span class="s1">&#39;Grant Number&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">grants_without_number</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Grant Number</th>
+      <th>Title</th>
+      <th>Funding Amount in USD</th>
+      <th>Start Year</th>
+      <th>End Year</th>
+      <th>Funder</th>
+      <th>Funder Country</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>38</th>
+      <td>NaN</td>
+      <td>DENGUE VACCINE DEVELOPMENT</td>
+      <td>50000.0</td>
+      <td>1985</td>
+      <td>1986</td>
+      <td>United States Department of the Army</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>79</th>
+      <td>NaN</td>
+      <td>Sterilization Vaccine for Cattle</td>
+      <td>0.0</td>
+      <td>2006</td>
+      <td>2006</td>
+      <td>Council for International Exchange of Scholars</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>80</th>
+      <td>NaN</td>
+      <td>Vaccine Production in Plants</td>
+      <td>0.0</td>
+      <td>2011</td>
+      <td>2011</td>
+      <td>Council for International Exchange of Scholars</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>81</th>
+      <td>NaN</td>
+      <td>Novel vaccine formulations against tuberculosis</td>
+      <td>295003.0</td>
+      <td>2002</td>
+      <td>2005</td>
+      <td>Canadian Institutes of Health Research</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>446</th>
+      <td>NaN</td>
+      <td>Development of recombinant TB vaccine</td>
+      <td>101459.0</td>
+      <td>1999</td>
+      <td>2003</td>
+      <td>Canadian Institutes of Health Research</td>
+      <td>Canada</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Now let’s try to find the second grant in the list above, using only its title and the funder country</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
+
+search grants
+    in title_only for &quot;Vaccine Production in Plants&quot;
+    where funder_countries.name=&quot;United States&quot;
+return grants
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Returned Grants: 1 (total = 1)
+Time: 0.64s
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>title_language</th>
+      <th>project_num</th>
+      <th>language</th>
+      <th>funding_org_name</th>
+      <th>end_date</th>
+      <th>funders</th>
+      <th>id</th>
+      <th>start_date</th>
+      <th>title</th>
+      <th>start_year</th>
+      <th>original_title</th>
+      <th>active_year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>en</td>
+      <td>N/A</td>
+      <td>en</td>
+      <td>Council for International Exchange of Scholars</td>
+      <td>2011-09-30</td>
+      <td>[{'id': 'grid.497587.0', 'city_name': 'Washing...</td>
+      <td>grant.7685445</td>
+      <td>2011-01-01</td>
+      <td>Vaccine Production in Plants</td>
+      <td>2011</td>
+      <td>Vaccine Production in Plants</td>
+      <td>[2011]</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># we&#39;re in luck! only one record found</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The Dimensions ID is: &quot;</span><span class="p">,</span> <span class="n">dsl_last_results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The Dimensions ID is:  grant.7685445
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Back-to-our-grants-list">
+<h2>Back to our grants list<a class="headerlink" href="#Back-to-our-grants-list" title="Permalink to this headline">¶</a></h2>
+<p>We can set up a loop to go through all the grants we want to get a Dimensions ID for, so that we can enrich our original dataset with those IDs. A simple approach is the following:</p>
+<ul class="simple">
+<li><p>we try to use the <code class="docutils literal notranslate"><span class="pre">extract_grants</span></code> function first</p></li>
+<li><p>second we try the <code class="docutils literal notranslate"><span class="pre">search</span></code> operation as a fall back plan</p>
+<ul>
+<li><p>if that returns more than one record, we simply take the first one (even though in real life we’d want a more sophisticated approach)</p></li>
+</ul>
+</li>
+<li><p>note: we pause a second after each query to ensure we don’t hit the max queries quota (~30 per minute)</p></li>
+</ul>
+<p>NOTE For the purpose of this exercise, you can select less that the ~1200 grants in the original list, so to speed things up.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">grants</span> <span class="o">=</span> <span class="n">grants_source</span><span class="p">[:</span><span class="mi">1200</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">grants</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Grant Number</th>
+      <th>Title</th>
+      <th>Funding Amount in USD</th>
+      <th>Start Year</th>
+      <th>End Year</th>
+      <th>Funder</th>
+      <th>Funder Country</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>30410203277</td>
+      <td>疫苗－整体方案</td>
+      <td>1208.0</td>
+      <td>2004</td>
+      <td>2004</td>
+      <td>National Natural Science Foundation of China</td>
+      <td>China</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>620792</td>
+      <td>Engineering Inhalable Vaccines</td>
+      <td>26956.0</td>
+      <td>2017</td>
+      <td>2018</td>
+      <td>Natural Sciences and Engineering Research Council</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>599115</td>
+      <td>Engineering Inhalable Vaccines</td>
+      <td>26403.0</td>
+      <td>2016</td>
+      <td>2017</td>
+      <td>Natural Sciences and Engineering Research Council</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>251564</td>
+      <td>HIV Vaccine research</td>
+      <td>442366.0</td>
+      <td>2003</td>
+      <td>2007</td>
+      <td>National Health and Medical Research Council</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>334174</td>
+      <td>HIV Vaccine Development</td>
+      <td>236067.0</td>
+      <td>2005</td>
+      <td>2009</td>
+      <td>National Health and Medical Research Council</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>910292</td>
+      <td>Dengue virus vaccine.</td>
+      <td>130890.0</td>
+      <td>1991</td>
+      <td>1993</td>
+      <td>National Health and Medical Research Council</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>578221</td>
+      <td>Engineering Inhalable Vaccines</td>
+      <td>27386.0</td>
+      <td>2015</td>
+      <td>2016</td>
+      <td>Natural Sciences and Engineering Research Council</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>IC18980360</td>
+      <td>Schistosomiasis Vaccine Network.</td>
+      <td>0.0</td>
+      <td>1998</td>
+      <td>2000</td>
+      <td>European Commission</td>
+      <td>Belgium</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>7621798</td>
+      <td>Pneumococcal Ribosomal Vaccines</td>
+      <td>46000.0</td>
+      <td>1977</td>
+      <td>1980</td>
+      <td>Directorate for Biological Sciences</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>255890</td>
+      <td>Rational vaccine design</td>
+      <td>7138.0</td>
+      <td>2003</td>
+      <td>2004</td>
+      <td>Natural Sciences and Engineering Research Council</td>
+      <td>Canada</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Setting up the loop</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># load the progress bar widget for jupyter</span>
+<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span> <span class="k">as</span> <span class="n">progressbar</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">def</span> <span class="nf">remove_punctuation</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+  <span class="kn">import</span> <span class="nn">string</span>
+  <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">maketrans</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">string</span><span class="o">.</span><span class="n">punctuation</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">find_grant_first_method</span><span class="p">(</span><span class="n">grantno</span><span class="p">,</span> <span class="n">funder</span><span class="p">):</span>
+  <span class="n">match</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;extract_grants(grant_number=&quot;</span><span class="si">{</span><span class="n">grantno</span><span class="si">}</span><span class="s2">&quot;, funder_name=&quot;</span><span class="si">{</span><span class="n">funder</span><span class="si">}</span><span class="s2">&quot;)&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span>
+  <span class="n">grant_id</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;grant_id&quot;</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">grant_id</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Found a match with method 1: &quot;</span><span class="p">,</span> <span class="n">grant_id</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">grant_id</span>
+
+<span class="k">def</span> <span class="nf">find_grant_second_method</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">country</span><span class="p">):</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;search grants in title_only for &quot;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2">&quot; where funder_countries.name=&quot;</span><span class="si">{</span><span class="n">country</span><span class="si">}</span><span class="s2">&quot; return grants&quot;&quot;&quot;</span><span class="p">)</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">res</span><span class="o">.</span><span class="n">errors</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">grants</span> <span class="ow">and</span> <span class="n">res</span><span class="o">.</span><span class="n">grants</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">):</span>
+        <span class="n">grant_id</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">grants</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== Found a match with method 2: &quot;</span><span class="p">,</span> <span class="n">grant_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">grant_id</span>
+
+
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">progressbar</span><span class="p">(</span><span class="n">grants</span><span class="o">.</span><span class="n">iterrows</span><span class="p">(),</span> <span class="n">total</span><span class="o">=</span><span class="n">grants</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+  <span class="c1"># get data from table</span>
+  <span class="n">grantno</span><span class="p">,</span> <span class="n">funder</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Grant Number&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Funder&#39;</span><span class="p">]</span>
+  <span class="c1"># try first method</span>
+  <span class="n">grant_id</span> <span class="o">=</span> <span class="n">find_grant_first_method</span><span class="p">(</span><span class="n">grantno</span><span class="p">,</span> <span class="n">funder</span><span class="p">)</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">grant_id</span><span class="p">:</span>
+    <span class="c1"># try second method</span>
+    <span class="n">title</span><span class="p">,</span> <span class="n">country</span> <span class="o">=</span> <span class="n">remove_punctuation</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Title&#39;</span><span class="p">]),</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Funder Country&#39;</span><span class="p">]</span>
+    <span class="n">grant_id</span> <span class="o">=</span> <span class="n">find_grant_second_method</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">country</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">grant_id</span><span class="p">:</span>
+      <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Failed - skipping&quot;</span><span class="p">)</span>
+  <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">grant_id</span><span class="p">)</span>
+  <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "8fcae8f90b0a436389dac1c06981ded0", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Found a match with method 1:  grant.8172033
+Found a match with method 1:  grant.7715379
+Found a match with method 1:  grant.6962629
+Found a match with method 1:  grant.6723913
+Found a match with method 1:  grant.6722306
+Found a match with method 1:  grant.6716312
+Found a match with method 1:  grant.5526688
+Found a match with method 1:  grant.3733803
+Found a match with method 1:  grant.3274273
+Found a match with method 1:  grant.2936015
+Found a match with method 1:  grant.2863615
+Found a match with method 1:  grant.2815666
+Found a match with method 1:  grant.2807651
+Found a match with method 1:  grant.2800991
+Found a match with method 1:  grant.2710461
+Found a match with method 1:  grant.2657659
+Found a match with method 1:  grant.2640369
+Found a match with method 1:  grant.2640228
+Found a match with method 1:  grant.2426045
+Found a match with method 1:  grant.2426044
+Found a match with method 1:  grant.2426039
+Found a match with method 1:  grant.2425936
+Found a match with method 1:  grant.2425935
+Found a match with method 1:  grant.2425932
+Found a match with method 1:  grant.2425010
+Found a match with method 1:  grant.2424436
+Found a match with method 1:  grant.8068979
+Found a match with method 1:  grant.7106480
+Found a match with method 1:  grant.2639983
+Found a match with method 1:  grant.2355874
+Found a match with method 1:  grant.7566903
+Found a match with method 1:  grant.7042623
+Found a match with method 1:  grant.7040393
+Found a match with method 1:  grant.6731478
+Found a match with method 1:  grant.6728996
+Found a match with method 1:  grant.6723289
+Found a match with method 1:  grant.6718929
+Found a match with method 1:  grant.6713873
+Returned Grants: 20 (total = 20)
+Time: 0.65s
+=== Found a match with method 2:  grant.8579320
+Returned Grants: 2 (total = 2)
+Time: 0.58s
+=== Found a match with method 2:  grant.4035473
+Found a match with method 1:  grant.2987461
+Found a match with method 1:  grant.2972379
+Found a match with method 1:  grant.2964974
+Found a match with method 1:  grant.2957579
+Found a match with method 1:  grant.2950584
+Found a match with method 1:  grant.2920553
+Found a match with method 1:  grant.2915638
+Found a match with method 1:  grant.2912254
+Found a match with method 1:  grant.2880945
+Found a match with method 1:  grant.2877426
+Found a match with method 1:  grant.2828580
+Found a match with method 1:  grant.2805504
+Found a match with method 1:  grant.2795214
+Found a match with method 1:  grant.2692263
+Found a match with method 1:  grant.2688631
+Found a match with method 1:  grant.2657670
+Found a match with method 1:  grant.2640366
+Found a match with method 1:  grant.2597598
+Found a match with method 1:  grant.2424826
+Found a match with method 1:  grant.2424691
+Found a match with method 1:  grant.2424653
+Found a match with method 1:  grant.2424634
+Found a match with method 1:  grant.2424633
+Found a match with method 1:  grant.2424632
+Found a match with method 1:  grant.2424631
+Found a match with method 1:  grant.2424630
+Found a match with method 1:  grant.2424629
+Found a match with method 1:  grant.2424455
+Found a match with method 1:  grant.2424372
+Found a match with method 1:  grant.2393802
+Found a match with method 1:  grant.2393756
+Found a match with method 1:  grant.7987079
+Found a match with method 1:  grant.8217971
+Found a match with method 1:  grant.8176576
+Found a match with method 1:  grant.8175344
+Found a match with method 1:  grant.8172020
+Found a match with method 1:  grant.8166566
+Found a match with method 1:  grant.7988463
+Found a match with method 1:  grant.7821014
+Returned Grants: 2 (total = 2)
+Time: 0.80s
+=== Found a match with method 2:  grant.7688859
+Returned Grants: 1 (total = 1)
+Time: 0.62s
+=== Found a match with method 2:  grant.7685445
+Returned Grants: 1 (total = 1)
+Time: 0.79s
+=== Found a match with method 2:  grant.7666696
+Returned Errors: 1
+Time: 0.60s
+1 QuerySyntaxError found
+1 ParserError found
+  * [Line 1:34] (&#39;200003&#39;) no viable alternative at input &#39;KaiserWashingtonVTEUsupplement200003&#39;
+Failed - skipping
+Found a match with method 1:  grant.8633207
+Found a match with method 1:  grant.8633389
+Found a match with method 1:  grant.8633097
+Found a match with method 1:  grant.8557183
+Found a match with method 1:  grant.8554194
+Found a match with method 1:  grant.8553708
+Found a match with method 1:  grant.8554075
+Found a match with method 1:  grant.8553908
+Found a match with method 1:  grant.8473170
+Found a match with method 1:  grant.8387795
+Found a match with method 1:  grant.8384515
+Found a match with method 1:  grant.8383668
+Found a match with method 1:  grant.7909702
+Found a match with method 1:  grant.7908868
+Found a match with method 1:  grant.7752832
+Found a match with method 1:  grant.7754464
+Found a match with method 1:  grant.7752982
+Found a match with method 1:  grant.7752239
+Found a match with method 1:  grant.7570107
+Found a match with method 1:  grant.7552760
+Found a match with method 1:  grant.7519279
+Found a match with method 1:  grant.7908654
+Found a match with method 1:  grant.7211786
+Found a match with method 1:  grant.7211819
+Found a match with method 1:  grant.7172267
+Found a match with method 1:  grant.7072290
+Found a match with method 1:  grant.7073139
+Found a match with method 1:  grant.7028511
+Found a match with method 1:  grant.7026885
+Found a match with method 1:  grant.7029428
+Found a match with method 1:  grant.6953393
+Found a match with method 1:  grant.6952716
+Found a match with method 1:  grant.6953451
+Found a match with method 1:  grant.6918902
+Found a match with method 1:  grant.6803779
+Found a match with method 1:  grant.6618975
+Found a match with method 1:  grant.6618566
+Found a match with method 1:  grant.6617517
+Found a match with method 1:  grant.6616704
+Found a match with method 1:  grant.6501723
+Found a match with method 1:  grant.6377370
+Found a match with method 1:  grant.6377835
+Found a match with method 1:  grant.5503773
+Found a match with method 1:  grant.5504846
+Found a match with method 1:  grant.5503968
+Found a match with method 1:  grant.5475490
+Found a match with method 1:  grant.5475455
+Found a match with method 1:  grant.5244126
+Found a match with method 1:  grant.5244595
+Found a match with method 1:  grant.5124204
+Found a match with method 1:  grant.5054465
+Found a match with method 1:  grant.4897681
+Found a match with method 1:  grant.4897863
+Found a match with method 1:  grant.4897922
+Found a match with method 1:  grant.4897999
+Found a match with method 1:  grant.4729155
+Found a match with method 1:  grant.4454777
+Found a match with method 1:  grant.4454801
+Found a match with method 1:  grant.4316569
+Found a match with method 1:  grant.4243510
+Found a match with method 1:  grant.4244081
+Found a match with method 1:  grant.4177200
+Found a match with method 1:  grant.4103605
+Found a match with method 1:  grant.4103659
+Found a match with method 1:  grant.4102763
+Found a match with method 1:  grant.4054900
+Found a match with method 1:  grant.3936039
+Found a match with method 1:  grant.3858813
+Found a match with method 1:  grant.3801786
+Found a match with method 1:  grant.3801873
+Found a match with method 1:  grant.3801962
+Found a match with method 1:  grant.3802322
+Found a match with method 1:  grant.3625586
+Found a match with method 1:  grant.3537186
+Found a match with method 1:  grant.3535432
+Found a match with method 1:  grant.3536099
+Found a match with method 1:  grant.3535073
+Found a match with method 1:  grant.3536471
+Found a match with method 1:  grant.3536949
+Found a match with method 1:  grant.3537031
+Found a match with method 1:  grant.3535806
+Found a match with method 1:  grant.3493683
+Found a match with method 1:  grant.3493163
+Found a match with method 1:  grant.2459965
+Found a match with method 1:  grant.2440246
+Found a match with method 1:  grant.2449124
+Found a match with method 1:  grant.2482400
+Found a match with method 1:  grant.4102133
+Found a match with method 1:  grant.2482297
+Found a match with method 1:  grant.2688187
+Found a match with method 1:  grant.2595180
+Found a match with method 1:  grant.2704745
+Found a match with method 1:  grant.2459576
+Found a match with method 1:  grant.4244457
+Found a match with method 1:  grant.2482026
+Found a match with method 1:  grant.2487364
+Found a match with method 1:  grant.2691196
+Found a match with method 1:  grant.2459603
+Found a match with method 1:  grant.2481994
+Found a match with method 1:  grant.2481879
+Found a match with method 1:  grant.2695898
+Found a match with method 1:  grant.2692269
+Found a match with method 1:  grant.2692273
+Found a match with method 1:  grant.2437148
+Found a match with method 1:  grant.2528433
+Found a match with method 1:  grant.2417946
+Found a match with method 1:  grant.2481398
+Found a match with method 1:  grant.2692276
+Found a match with method 1:  grant.2690826
+Found a match with method 1:  grant.2486959
+Found a match with method 1:  grant.2695895
+Found a match with method 1:  grant.2521249
+Found a match with method 1:  grant.2692237
+Found a match with method 1:  grant.2695923
+Found a match with method 1:  grant.2689217
+Found a match with method 1:  grant.2440235
+Found a match with method 1:  grant.2699112
+Found a match with method 1:  grant.2354594
+Found a match with method 1:  grant.2695874
+Found a match with method 1:  grant.2695875
+Found a match with method 1:  grant.2480743
+Found a match with method 1:  grant.2479129
+Found a match with method 1:  grant.2695866
+Found a match with method 1:  grant.2458536
+Found a match with method 1:  grant.2612839
+Found a match with method 1:  grant.2480550
+Found a match with method 1:  grant.2595050
+Found a match with method 1:  grant.2695854
+Found a match with method 1:  grant.2668950
+Found a match with method 1:  grant.2669408
+Found a match with method 1:  grant.2669273
+Found a match with method 1:  grant.2669252
+Found a match with method 1:  grant.2668338
+Found a match with method 1:  grant.2405732
+Found a match with method 1:  grant.2438666
+Found a match with method 1:  grant.2692241
+Found a match with method 1:  grant.2440237
+Found a match with method 1:  grant.2542406
+Found a match with method 1:  grant.2596587
+Found a match with method 1:  grant.2605071
+Found a match with method 1:  grant.2605041
+Found a match with method 1:  grant.2465669
+Found a match with method 1:  grant.2479960
+Found a match with method 1:  grant.2435850
+Found a match with method 1:  grant.2661855
+Found a match with method 1:  grant.2604859
+Found a match with method 1:  grant.2437505
+Found a match with method 1:  grant.2435348
+Found a match with method 1:  grant.2527987
+Found a match with method 1:  grant.2604950
+Found a match with method 1:  grant.2486607
+Found a match with method 1:  grant.2604757
+Found a match with method 1:  grant.2480039
+Found a match with method 1:  grant.2479498
+Found a match with method 1:  grant.2695638
+Found a match with method 1:  grant.2606994
+Found a match with method 1:  grant.2604548
+Found a match with method 1:  grant.2541233
+Found a match with method 1:  grant.2705148
+Found a match with method 1:  grant.2705159
+Found a match with method 1:  grant.2689113
+Found a match with method 1:  grant.2606936
+Found a match with method 1:  grant.2604968
+Found a match with method 1:  grant.2692215
+Found a match with method 1:  grant.2692217
+Found a match with method 1:  grant.7072727
+Found a match with method 1:  grant.2440403
+Found a match with method 1:  grant.2705137
+Found a match with method 1:  grant.2705144
+Found a match with method 1:  grant.2599609
+Found a match with method 1:  grant.2420351
+Found a match with method 1:  grant.2458098
+Found a match with method 1:  grant.5504882
+Found a match with method 1:  grant.2508355
+Found a match with method 1:  grant.2457605
+Found a match with method 1:  grant.2598957
+Found a match with method 1:  grant.2604286
+Found a match with method 1:  grant.2438714
+Found a match with method 1:  grant.2705114
+Found a match with method 1:  grant.2705125
+Found a match with method 1:  grant.2689384
+Found a match with method 1:  grant.2689390
+Found a match with method 1:  grant.2479168
+Found a match with method 1:  grant.2692202
+Found a match with method 1:  grant.2602398
+Found a match with method 1:  grant.2604551
+Found a match with method 1:  grant.2689092
+Found a match with method 1:  grant.2440219
+Found a match with method 1:  grant.2705261
+Found a match with method 1:  grant.2687793
+Found a match with method 1:  grant.2687787
+Found a match with method 1:  grant.2477898
+Found a match with method 1:  grant.2659188
+Found a match with method 1:  grant.2599095
+Found a match with method 1:  grant.2553760
+Found a match with method 1:  grant.4455400
+Found a match with method 1:  grant.2457319
+Found a match with method 1:  grant.2500994
+Found a match with method 1:  grant.2687750
+Found a match with method 1:  grant.2695778
+Found a match with method 1:  grant.2485811
+Found a match with method 1:  grant.2503734
+Found a match with method 1:  grant.2604201
+Found a match with method 1:  grant.2603843
+Found a match with method 1:  grant.2550846
+Found a match with method 1:  grant.2477864
+Found a match with method 1:  grant.2687742
+Found a match with method 1:  grant.2687738
+Found a match with method 1:  grant.2435126
+Found a match with method 1:  grant.2440212
+Found a match with method 1:  grant.2438712
+Found a match with method 1:  grant.2603257
+Found a match with method 1:  grant.2603582
+Found a match with method 1:  grant.2689337
+Found a match with method 1:  grant.2490908
+Found a match with method 1:  grant.2641176
+Found a match with method 1:  grant.2440195
+Found a match with method 1:  grant.2485745
+Found a match with method 1:  grant.2485747
+Found a match with method 1:  grant.2699292
+Found a match with method 1:  grant.2699521
+Found a match with method 1:  grant.2440199
+Found a match with method 1:  grant.2603838
+Found a match with method 1:  grant.2440200
+Found a match with method 1:  grant.2603831
+Found a match with method 1:  grant.2695741
+Found a match with method 1:  grant.2694404
+Found a match with method 1:  grant.2698983
+Found a match with method 1:  grant.2698981
+Found a match with method 1:  grant.2695759
+Found a match with method 1:  grant.2695761
+Found a match with method 1:  grant.2435110
+Found a match with method 1:  grant.2455742
+Found a match with method 1:  grant.2455853
+Found a match with method 1:  grant.2418414
+Found a match with method 1:  grant.2434755
+Found a match with method 1:  grant.2440207
+Found a match with method 1:  grant.2485242
+Found a match with method 1:  grant.2687567
+Found a match with method 1:  grant.2695737
+Found a match with method 1:  grant.2689673
+Found a match with method 1:  grant.2539155
+Found a match with method 1:  grant.2440186
+Found a match with method 1:  grant.2550162
+Found a match with method 1:  grant.2440188
+Found a match with method 1:  grant.2455438
+Found a match with method 1:  grant.2475817
+Found a match with method 1:  grant.2424052
+Found a match with method 1:  grant.2438874
+Found a match with method 1:  grant.2409959
+Found a match with method 1:  grant.2550038
+Found a match with method 1:  grant.2476088
+Found a match with method 1:  grant.2455701
+Found a match with method 1:  grant.2435776
+Found a match with method 1:  grant.2435773
+Found a match with method 1:  grant.2455566
+Found a match with method 1:  grant.2691735
+Found a match with method 1:  grant.2689988
+Found a match with method 1:  grant.2538393
+Found a match with method 1:  grant.2603357
+Found a match with method 1:  grant.2435070
+Found a match with method 1:  grant.2684418
+Found a match with method 1:  grant.2694218
+Found a match with method 1:  grant.2694221
+Found a match with method 1:  grant.2694217
+Found a match with method 1:  grant.2694225
+Found a match with method 1:  grant.2475224
+Found a match with method 1:  grant.2475203
+Found a match with method 1:  grant.2687680
+Found a match with method 1:  grant.2435058
+Found a match with method 1:  grant.2447007
+Found a match with method 1:  grant.2454586
+Found a match with method 1:  grant.2687451
+Found a match with method 1:  grant.2475134
+Found a match with method 1:  grant.2446737
+Found a match with method 1:  grant.2454889
+Found a match with method 1:  grant.2440150
+Found a match with method 1:  grant.2693681
+Found a match with method 1:  grant.2602921
+Found a match with method 1:  grant.2474417
+Found a match with method 1:  grant.2438870
+Found a match with method 1:  grant.2435718
+Found a match with method 1:  grant.2435034
+Found a match with method 1:  grant.2454445
+Found a match with method 1:  grant.2435022
+Found a match with method 1:  grant.2424955
+Found a match with method 1:  grant.2691028
+Found a match with method 1:  grant.2688806
+Found a match with method 1:  grant.2473626
+Found a match with method 1:  grant.2438867
+Found a match with method 1:  grant.2435679
+Found a match with method 1:  grant.2416431
+Found a match with method 1:  grant.2453708
+Found a match with method 1:  grant.2687417
+Found a match with method 1:  grant.2441127
+Found a match with method 1:  grant.2438866
+Found a match with method 1:  grant.2440735
+Found a match with method 1:  grant.2694198
+Found a match with method 1:  grant.2435657
+Found a match with method 1:  grant.2688755
+Found a match with method 1:  grant.2688759
+Found a match with method 1:  grant.2688662
+Found a match with method 1:  grant.2688655
+Found a match with method 1:  grant.2688664
+Found a match with method 1:  grant.2534757
+Found a match with method 1:  grant.2688632
+Found a match with method 1:  grant.2438861
+Found a match with method 1:  grant.2440137
+Found a match with method 1:  grant.2440139
+Found a match with method 1:  grant.2424041
+Found a match with method 1:  grant.2688565
+Found a match with method 1:  grant.2471259
+Found a match with method 1:  grant.2452395
+Found a match with method 1:  grant.2438859
+Found a match with method 1:  grant.2452138
+Found a match with method 1:  grant.2694140
+Found a match with method 1:  grant.2694141
+Found a match with method 1:  grant.2694169
+Found a match with method 1:  grant.2694162
+Found a match with method 1:  grant.2438858
+Found a match with method 1:  grant.2634352
+Found a match with method 1:  grant.2438852
+Found a match with method 1:  grant.2438851
+Found a match with method 1:  grant.2416545
+Found a match with method 1:  grant.2434634
+Found a match with method 1:  grant.2438847
+Found a match with method 1:  grant.2441054
+Found a match with method 1:  grant.2693347
+Found a match with method 1:  grant.2693350
+Found a match with method 1:  grant.2435461
+Found a match with method 1:  grant.2438845
+Found a match with method 1:  grant.2693310
+Found a match with method 1:  grant.2438805
+Found a match with method 1:  grant.2438813
+Found a match with method 1:  grant.2438790
+Found a match with method 1:  grant.2438835
+Found a match with method 1:  grant.2423981
+Found a match with method 1:  grant.2423956
+Found a match with method 1:  grant.2424011
+Found a match with method 1:  grant.2438836
+Found a match with method 1:  grant.2435422
+Found a match with method 1:  grant.2438826
+Found a match with method 1:  grant.2438839
+Found a match with method 1:  grant.2438818
+Found a match with method 1:  grant.2693275
+Found a match with method 1:  grant.2438791
+Found a match with method 1:  grant.2423963
+Found a match with method 1:  grant.2438789
+Found a match with method 1:  grant.2438817
+Found a match with method 1:  grant.2438833
+Found a match with method 1:  grant.2438819
+Found a match with method 1:  grant.2438800
+Found a match with method 1:  grant.2438810
+Found a match with method 1:  grant.2438793
+Found a match with method 1:  grant.2438816
+Found a match with method 1:  grant.2435375
+Found a match with method 1:  grant.2438807
+Found a match with method 1:  grant.2438796
+Found a match with method 1:  grant.2436693
+Found a match with method 1:  grant.2438809
+Found a match with method 1:  grant.2423955
+Found a match with method 1:  grant.2423961
+Found a match with method 1:  grant.2423965
+Returned Grants: 1 (total = 1)
+Time: 0.60s
+=== Found a match with method 2:  grant.7664870
+Returned Grants: 1 (total = 1)
+Time: 0.56s
+=== Found a match with method 2:  grant.7628231
+Returned Grants: 2 (total = 2)
+Time: 0.51s
+=== Found a match with method 2:  grant.7623304
+Found a match with method 1:  grant.7575791
+Found a match with method 1:  grant.7568437
+Found a match with method 1:  grant.7567590
+Returned Grants: 0
+Time: 0.66s
+Failed - skipping
+Found a match with method 1:  grant.7437133
+Found a match with method 1:  grant.7167590
+Returned Grants: 2 (total = 2)
+Time: 0.61s
+=== Found a match with method 2:  grant.7148384
+Returned Grants: 2 (total = 2)
+Time: 0.52s
+=== Found a match with method 2:  grant.7148384
+Found a match with method 1:  grant.7043734
+Found a match with method 1:  grant.7042974
+Found a match with method 1:  grant.7042624
+Found a match with method 1:  grant.7042622
+Found a match with method 1:  grant.6972056
+Found a match with method 1:  grant.6968725
+Found a match with method 1:  grant.6966722
+Found a match with method 1:  grant.6844591
+Found a match with method 1:  grant.6735165
+Found a match with method 1:  grant.6732885
+Found a match with method 1:  grant.6731341
+Found a match with method 1:  grant.6730713
+Found a match with method 1:  grant.6729465
+Found a match with method 1:  grant.6729082
+Found a match with method 1:  grant.6726453
+Found a match with method 1:  grant.6725165
+Found a match with method 1:  grant.6725082
+Found a match with method 1:  grant.6725032
+Found a match with method 1:  grant.6724834
+Found a match with method 1:  grant.6723804
+Found a match with method 1:  grant.6723056
+Found a match with method 1:  grant.6716599
+Found a match with method 1:  grant.6714669
+Found a match with method 1:  grant.6714037
+Found a match with method 1:  grant.6713255
+Found a match with method 1:  grant.6582874
+Found a match with method 1:  grant.6370857
+Found a match with method 1:  grant.6363940
+Found a match with method 1:  grant.6363488
+Found a match with method 1:  grant.6343961
+Found a match with method 1:  grant.6317005
+Found a match with method 1:  grant.6315891
+Found a match with method 1:  grant.6233441
+Returned Grants: 1 (total = 1)
+Time: 0.55s
+=== Found a match with method 2:  grant.6193400
+Found a match with method 1:  grant.6171313
+Found a match with method 1:  grant.6169577
+Found a match with method 1:  grant.5896926
+Found a match with method 1:  grant.5526642
+Found a match with method 1:  grant.5502450
+Found a match with method 1:  grant.5246711
+Found a match with method 1:  grant.5246674
+Found a match with method 1:  grant.5246626
+Found a match with method 1:  grant.5070451
+Returned Grants: 0
+Time: 0.58s
+Failed - skipping
+Found a match with method 1:  grant.4641309
+Found a match with method 1:  grant.4168271
+Found a match with method 1:  grant.3739684
+Found a match with method 1:  grant.3706272
+Found a match with method 1:  grant.3702523
+Found a match with method 1:  grant.3652600
+Found a match with method 1:  grant.3309929
+Found a match with method 1:  grant.2986898
+Found a match with method 1:  grant.2985999
+Found a match with method 1:  grant.2984549
+Found a match with method 1:  grant.2974921
+Found a match with method 1:  grant.2971636
+Found a match with method 1:  grant.2963297
+Found a match with method 1:  grant.2953859
+Found a match with method 1:  grant.2951075
+Found a match with method 1:  grant.2945193
+Found a match with method 1:  grant.2937592
+Found a match with method 1:  grant.2937042
+Found a match with method 1:  grant.2935778
+Found a match with method 1:  grant.2914065
+Found a match with method 1:  grant.2910038
+Found a match with method 1:  grant.2899455
+Found a match with method 1:  grant.2898752
+Found a match with method 1:  grant.2896132
+Found a match with method 1:  grant.2869083
+Found a match with method 1:  grant.2835164
+Found a match with method 1:  grant.2824183
+Found a match with method 1:  grant.2813726
+Found a match with method 1:  grant.2694848
+Found a match with method 1:  grant.2692184
+Found a match with method 1:  grant.2687621
+Found a match with method 1:  grant.2687368
+Found a match with method 1:  grant.2687218
+Found a match with method 1:  grant.2687093
+Found a match with method 1:  grant.2666074
+Found a match with method 1:  grant.2665915
+Found a match with method 1:  grant.2664798
+Found a match with method 1:  grant.2643578
+Found a match with method 1:  grant.2643577
+Found a match with method 1:  grant.2643549
+Found a match with method 1:  grant.2640348
+Found a match with method 1:  grant.2640344
+Found a match with method 1:  grant.2640324
+Found a match with method 1:  grant.2640316
+Found a match with method 1:  grant.2640237
+Found a match with method 1:  grant.2640236
+Found a match with method 1:  grant.2639795
+Found a match with method 1:  grant.2636315
+Found a match with method 1:  grant.2636304
+Found a match with method 1:  grant.2636298
+Found a match with method 1:  grant.2625146
+Found a match with method 1:  grant.2608574
+Found a match with method 1:  grant.2602929
+Found a match with method 1:  grant.2597635
+Found a match with method 1:  grant.2572211
+Found a match with method 1:  grant.2566750
+Found a match with method 1:  grant.2566749
+Found a match with method 1:  grant.2566740
+Found a match with method 1:  grant.2566739
+Found a match with method 1:  grant.2566738
+Found a match with method 1:  grant.2489689
+Found a match with method 1:  grant.2474868
+Found a match with method 1:  grant.2471363
+Found a match with method 1:  grant.2471277
+Found a match with method 1:  grant.2471271
+Found a match with method 1:  grant.2454716
+Found a match with method 1:  grant.2453176
+Found a match with method 1:  grant.2452868
+Found a match with method 1:  grant.2452627
+Found a match with method 1:  grant.2452157
+Found a match with method 1:  grant.2450816
+Found a match with method 1:  grant.2433676
+Found a match with method 1:  grant.2433640
+Found a match with method 1:  grant.2433628
+Found a match with method 1:  grant.2428617
+Found a match with method 1:  grant.2428003
+Found a match with method 1:  grant.2425945
+Found a match with method 1:  grant.2425777
+Found a match with method 1:  grant.2425765
+Found a match with method 1:  grant.2425738
+Found a match with method 1:  grant.2424919
+Found a match with method 1:  grant.2424708
+Found a match with method 1:  grant.2424692
+Found a match with method 1:  grant.2424627
+Found a match with method 1:  grant.2424600
+Found a match with method 1:  grant.2424554
+Found a match with method 1:  grant.2424491
+Found a match with method 1:  grant.2424469
+Found a match with method 1:  grant.2424424
+Found a match with method 1:  grant.2424340
+Found a match with method 1:  grant.2406847
+Found a match with method 1:  grant.2393916
+Found a match with method 1:  grant.2393915
+Found a match with method 1:  grant.2393914
+Found a match with method 1:  grant.2393913
+Found a match with method 1:  grant.2393912
+Found a match with method 1:  grant.2393911
+Found a match with method 1:  grant.2393910
+Found a match with method 1:  grant.2393909
+Found a match with method 1:  grant.2393908
+Found a match with method 1:  grant.2393907
+Found a match with method 1:  grant.2393906
+Found a match with method 1:  grant.2393905
+Found a match with method 1:  grant.2393904
+Found a match with method 1:  grant.2393903
+Found a match with method 1:  grant.2393902
+Found a match with method 1:  grant.2393901
+Found a match with method 1:  grant.2393900
+Found a match with method 1:  grant.2393899
+Found a match with method 1:  grant.2393898
+Found a match with method 1:  grant.2393897
+Found a match with method 1:  grant.2393896
+Found a match with method 1:  grant.2393895
+Found a match with method 1:  grant.2393893
+Found a match with method 1:  grant.2393892
+Found a match with method 1:  grant.2393891
+Found a match with method 1:  grant.2393890
+Found a match with method 1:  grant.2393889
+Found a match with method 1:  grant.2393888
+Found a match with method 1:  grant.2393887
+Found a match with method 1:  grant.2393886
+Found a match with method 1:  grant.2393885
+Found a match with method 1:  grant.2393884
+Found a match with method 1:  grant.2393883
+Found a match with method 1:  grant.2393882
+Found a match with method 1:  grant.2393881
+Found a match with method 1:  grant.2393880
+Found a match with method 1:  grant.2393879
+Found a match with method 1:  grant.2393878
+Found a match with method 1:  grant.2393877
+Found a match with method 1:  grant.2393876
+Found a match with method 1:  grant.2393875
+Found a match with method 1:  grant.2393874
+Found a match with method 1:  grant.2393873
+Found a match with method 1:  grant.2393872
+Found a match with method 1:  grant.2393871
+Found a match with method 1:  grant.2393870
+Found a match with method 1:  grant.2393869
+Found a match with method 1:  grant.2393868
+Found a match with method 1:  grant.2393867
+Found a match with method 1:  grant.2393866
+Found a match with method 1:  grant.2393865
+Found a match with method 1:  grant.2393864
+Found a match with method 1:  grant.2393863
+Found a match with method 1:  grant.2393862
+Found a match with method 1:  grant.2393861
+Found a match with method 1:  grant.2393860
+Found a match with method 1:  grant.2393859
+Found a match with method 1:  grant.2393858
+Found a match with method 1:  grant.2393857
+Found a match with method 1:  grant.2393856
+Found a match with method 1:  grant.2393855
+Found a match with method 1:  grant.2393854
+Found a match with method 1:  grant.2393853
+Found a match with method 1:  grant.2393852
+Found a match with method 1:  grant.2393844
+Found a match with method 1:  grant.2393841
+Found a match with method 1:  grant.2393821
+Found a match with method 1:  grant.2393817
+Found a match with method 1:  grant.2393814
+Found a match with method 1:  grant.2393808
+Found a match with method 1:  grant.2393804
+Found a match with method 1:  grant.2393800
+Found a match with method 1:  grant.2393799
+Found a match with method 1:  grant.2393797
+Found a match with method 1:  grant.2393795
+Found a match with method 1:  grant.2393794
+Found a match with method 1:  grant.2393790
+Found a match with method 1:  grant.2393786
+Found a match with method 1:  grant.2375051
+Found a match with method 1:  grant.2369583
+Found a match with method 1:  grant.2356619
+Returned Grants: 0
+Time: 1.09s
+Failed - skipping
+Found a match with method 1:  grant.8446709
+Found a match with method 1:  grant.8033537
+Found a match with method 1:  grant.7951286
+Found a match with method 1:  grant.7942547
+Found a match with method 1:  grant.7608089
+Returned Grants: 0
+Time: 0.62s
+Failed - skipping
+Returned Grants: 0
+Time: 0.80s
+Failed - skipping
+Returned Grants: 0
+Time: 0.56s
+Failed - skipping
+Returned Grants: 0
+Time: 0.60s
+Failed - skipping
+Found a match with method 1:  grant.7167585
+Found a match with method 1:  grant.7104247
+Found a match with method 1:  grant.7062940
+Found a match with method 1:  grant.6967906
+Found a match with method 1:  grant.6728271
+Returned Grants: 1 (total = 1)
+Time: 0.58s
+=== Found a match with method 2:  grant.6500725
+Found a match with method 1:  grant.6259132
+Found a match with method 1:  grant.5892064
+Found a match with method 1:  grant.5761631
+Found a match with method 1:  grant.5551429
+Found a match with method 1:  grant.5246672
+Found a match with method 1:  grant.5246671
+Found a match with method 1:  grant.5246586
+Found a match with method 1:  grant.5246584
+Found a match with method 1:  grant.5246583
+Found a match with method 1:  grant.5246582
+Found a match with method 1:  grant.5246581
+Found a match with method 1:  grant.4632144
+Found a match with method 1:  grant.3802932
+Found a match with method 1:  grant.2936797
+Found a match with method 1:  grant.2424522
+Found a match with method 1:  grant.6315092
+Found a match with method 1:  grant.8505364
+Found a match with method 1:  grant.8495954
+Found a match with method 1:  grant.8489605
+Found a match with method 1:  grant.8487606
+Found a match with method 1:  grant.8352947
+Found a match with method 1:  grant.8328815
+Found a match with method 1:  grant.8290380
+Found a match with method 1:  grant.8219416
+Found a match with method 1:  grant.8219108
+Found a match with method 1:  grant.8217961
+Found a match with method 1:  grant.8216804
+Found a match with method 1:  grant.8214678
+Found a match with method 1:  grant.8209272
+Found a match with method 1:  grant.8209093
+Found a match with method 1:  grant.8205967
+Found a match with method 1:  grant.8173982
+Found a match with method 1:  grant.8173409
+Found a match with method 1:  grant.8172930
+Found a match with method 1:  grant.8169476
+Found a match with method 1:  grant.8167666
+Found a match with method 1:  grant.8034776
+Found a match with method 1:  grant.8033536
+Found a match with method 1:  grant.8019012
+Found a match with method 1:  grant.8018668
+Found a match with method 1:  grant.8005184
+Found a match with method 1:  grant.8000977
+Found a match with method 1:  grant.7993576
+Found a match with method 1:  grant.7992850
+Found a match with method 1:  grant.7989648
+Found a match with method 1:  grant.7951296
+Found a match with method 1:  grant.7851731
+Found a match with method 1:  grant.7821052
+Returned Errors: 1
+Time: 0.51s
+1 QuerySyntaxError found
+1 ParserError found
+  * [Line 1:31] (&#39;09067052&#39;) no viable alternative at input &#39;CentreforNanovaccinessagsnr09067052&#39;
+Failed - skipping
+Found a match with method 1:  grant.7721825
+Found a match with method 1:  grant.7721778
+Found a match with method 1:  grant.7721598
+Found a match with method 1:  grant.7721597
+Found a match with method 1:  grant.7715670
+Found a match with method 1:  grant.7709652
+Returned Grants: 1 (total = 1)
+Time: 0.90s
+=== Found a match with method 2:  grant.7695510
+Returned Grants: 1 (total = 1)
+Time: 0.81s
+=== Found a match with method 2:  grant.7693092
+Returned Grants: 2 (total = 2)
+Time: 1.01s
+=== Found a match with method 2:  grant.7685141
+Returned Grants: 0
+Time: 0.54s
+Failed - skipping
+Returned Grants: 2 (total = 2)
+Time: 0.57s
+=== Found a match with method 2:  grant.7685141
+Returned Grants: 1 (total = 1)
+Time: 0.91s
+=== Found a match with method 2:  grant.7684827
+Returned Grants: 1 (total = 1)
+Time: 0.53s
+=== Found a match with method 2:  grant.7683420
+Found a match with method 1:  grant.7668688
+Returned Grants: 1 (total = 1)
+Time: 0.54s
+=== Found a match with method 2:  grant.7666767
+Returned Grants: 1 (total = 1)
+Time: 0.54s
+=== Found a match with method 2:  grant.7665207
+Returned Grants: 0
+Time: 0.52s
+Failed - skipping
+Returned Grants: 0
+Time: 0.53s
+Failed - skipping
+Returned Grants: 0
+Time: 0.53s
+Failed - skipping
+Returned Grants: 0
+Time: 0.53s
+Failed - skipping
+Returned Grants: 1 (total = 1)
+Time: 0.52s
+=== Found a match with method 2:  grant.7658269
+Returned Grants: 1 (total = 1)
+Time: 0.53s
+=== Found a match with method 2:  grant.7653038
+Returned Grants: 1 (total = 1)
+Time: 0.99s
+=== Found a match with method 2:  grant.7648001
+Returned Grants: 1 (total = 1)
+Time: 0.63s
+=== Found a match with method 2:  grant.7647714
+Returned Grants: 0
+Time: 0.55s
+Failed - skipping
+Returned Grants: 0
+Time: 1.02s
+Failed - skipping
+Returned Grants: 3 (total = 3)
+Time: 0.55s
+=== Found a match with method 2:  grant.4035377
+Returned Errors: 1
+Time: 0.97s
+1 QuerySyntaxError found
+1 ParserError found
+  * [Line 1:15] (&#39;1&#39;) no viable alternative at input &#39;TowardsaType1&#39;
+Failed - skipping
+Returned Grants: 1 (total = 1)
+Time: 0.53s
+=== Found a match with method 2:  grant.7628997
+Returned Grants: 1 (total = 1)
+Time: 0.58s
+=== Found a match with method 2:  grant.7628517
+Returned Grants: 1 (total = 1)
+Time: 0.53s
+=== Found a match with method 2:  grant.7624786
+Returned Grants: 1 (total = 1)
+Time: 0.53s
+=== Found a match with method 2:  grant.7623304
+Returned Grants: 1 (total = 1)
+Time: 0.53s
+=== Found a match with method 2:  grant.7622447
+Returned Grants: 0
+Time: 0.54s
+Failed - skipping
+Returned Grants: 1 (total = 1)
+Time: 0.60s
+=== Found a match with method 2:  grant.7618695
+Found a match with method 1:  grant.7608908
+Found a match with method 1:  grant.7576541
+Found a match with method 1:  grant.7575474
+Returned Grants: 1 (total = 1)
+Time: 0.66s
+=== Found a match with method 2:  grant.7550264
+Returned Grants: 1 (total = 1)
+Time: 0.95s
+=== Found a match with method 2:  grant.7550133
+Returned Grants: 0
+Time: 0.56s
+Failed - skipping
+Returned Grants: 0
+Time: 0.57s
+Failed - skipping
+Returned Grants: 0
+Time: 1.18s
+Failed - skipping
+Returned Grants: 0
+Time: 0.57s
+Failed - skipping
+Returned Grants: 0
+Time: 0.68s
+Failed - skipping
+Returned Grants: 0
+Time: 0.56s
+Failed - skipping
+Returned Grants: 0
+Time: 0.60s
+Failed - skipping
+Returned Grants: 0
+Time: 0.58s
+Failed - skipping
+Returned Grants: 0
+Time: 0.56s
+Failed - skipping
+Returned Grants: 0
+Time: 0.59s
+Failed - skipping
+Returned Grants: 0
+Time: 0.54s
+Failed - skipping
+Returned Grants: 0
+Time: 1.09s
+Failed - skipping
+Found a match with method 1:  grant.7172800
+Found a match with method 1:  grant.7164693
+Found a match with method 1:  grant.7162576
+Returned Grants: 1 (total = 1)
+Time: 0.55s
+=== Found a match with method 2:  grant.7150415
+Returned Grants: 1 (total = 1)
+Time: 0.62s
+=== Found a match with method 2:  grant.7148703
+Returned Grants: 1 (total = 1)
+Time: 1.00s
+=== Found a match with method 2:  grant.7148315
+Found a match with method 1:  grant.7043730
+Found a match with method 1:  grant.7043113
+Found a match with method 1:  grant.7042995
+Found a match with method 1:  grant.7042984
+Found a match with method 1:  grant.7042973
+Found a match with method 1:  grant.7042972
+Found a match with method 1:  grant.7040781
+Found a match with method 1:  grant.7040770
+Found a match with method 1:  grant.6973472
+Found a match with method 1:  grant.6968429
+Found a match with method 1:  grant.6964936
+Found a match with method 1:  grant.6964935
+Found a match with method 1:  grant.6964934
+Found a match with method 1:  grant.6962076
+Found a match with method 1:  grant.6860200
+Found a match with method 1:  grant.6841646
+Found a match with method 1:  grant.6733351
+Found a match with method 1:  grant.6733063
+Found a match with method 1:  grant.6732161
+Found a match with method 1:  grant.6731087
+Found a match with method 1:  grant.6730637
+Found a match with method 1:  grant.6729362
+Found a match with method 1:  grant.6728479
+Returned Grants: 1 (total = 1)
+Time: 0.55s
+=== Found a match with method 2:  grant.6727741
+Found a match with method 1:  grant.6727472
+Found a match with method 1:  grant.6727351
+Found a match with method 1:  grant.6727129
+Found a match with method 1:  grant.6726943
+Found a match with method 1:  grant.6726066
+Found a match with method 1:  grant.6724082
+Found a match with method 1:  grant.6724070
+Found a match with method 1:  grant.6722617
+Found a match with method 1:  grant.6722495
+Found a match with method 1:  grant.6719794
+Found a match with method 1:  grant.6717775
+Found a match with method 1:  grant.6716449
+Found a match with method 1:  grant.6715829
+Found a match with method 1:  grant.6715708
+Found a match with method 1:  grant.6584428
+Found a match with method 1:  grant.6584014
+Found a match with method 1:  grant.6583657
+Found a match with method 1:  grant.6582621
+Found a match with method 1:  grant.6582605
+Found a match with method 1:  grant.6582373
+Found a match with method 1:  grant.6581732
+Found a match with method 1:  grant.6581497
+Found a match with method 1:  grant.6581487
+Found a match with method 1:  grant.6581045
+Found a match with method 1:  grant.6580935
+Found a match with method 1:  grant.6580931
+Found a match with method 1:  grant.6580858
+Found a match with method 1:  grant.6373203
+Found a match with method 1:  grant.6371736
+Found a match with method 1:  grant.6371621
+Found a match with method 1:  grant.6354558
+Found a match with method 1:  grant.6352300
+Found a match with method 1:  grant.6326766
+Found a match with method 1:  grant.6322556
+Found a match with method 1:  grant.6320876
+Found a match with method 1:  grant.6315181
+Found a match with method 1:  grant.6312481
+Found a match with method 1:  grant.6312424
+Found a match with method 1:  grant.6309272
+Found a match with method 1:  grant.6300254
+Found a match with method 1:  grant.6269166
+Found a match with method 1:  grant.6265050
+Found a match with method 1:  grant.6199903
+Found a match with method 1:  grant.6184528
+Found a match with method 1:  grant.6172495
+Found a match with method 1:  grant.6168194
+Found a match with method 1:  grant.6053442
+Found a match with method 1:  grant.6035398
+Found a match with method 1:  grant.5988918
+Returned Grants: 0
+Time: 0.58s
+Failed - skipping
+Returned Grants: 0
+Time: 0.90s
+Failed - skipping
+Returned Grants: 0
+Time: 0.57s
+Failed - skipping
+Returned Errors: 1
+Time: 0.52s
+16 QuerySyntaxErrors found
+15 LexerErrors found
+  * [Line 1:32] (&#39;&#34;鶏コクシジウムのコンポーネント・ワクチンに関する基礎的研究&#34; where funder_countries.name=&#34;Japan&#34; return grants&#39;) token recognition error at: &#39;&#34;鶏コクシジウムのコンポーネント・&#39;
+  * [Line 1:49] (&#39;ワクチンに関する基礎的研究&#34; where funder_countries.name=&#34;Japan&#34; return grants&#39;) token recognition error at: &#39;ワ&#39;
+  * [Line 1:50] (&#39;クチンに関する基礎的研究&#34; where funder_countries.name=&#34;Japan&#34; return grants&#39;) token recognition error at: &#39;ク&#39;
+  * [Line 1:51] (&#39;チンに関する基礎的研究&#34; where funder_countries.name=&#34;Japan&#34; return grants&#39;) token recognition error at: &#39;チ&#39;
+  * [Line 1:52] (&#39;ンに関する基礎的研究&#34; where funder_countries.name=&#34;Japan&#34; return grants&#39;) token recognition error at: &#39;ン&#39;
+  * [Line 1:53] (&#39;に関する基礎的研究&#34; where funder_countries.name=&#34;Japan&#34; return grants&#39;) token recognition error at: &#39;に&#39;
+  * [Line 1:54] (&#39;関する基礎的研究&#34; where funder_countries.name=&#34;Japan&#34; return grants&#39;) token recognition error at: &#39;関&#39;
+  * [Line 1:55] (&#39;する基礎的研究&#34; where funder_countries.name=&#34;Japan&#34; return grants&#39;) token recognition error at: &#39;す&#39;
+  * [Line 1:56] (&#39;る基礎的研究&#34; where funder_countries.name=&#34;Japan&#34; return grants&#39;) token recognition error at: &#39;る&#39;
+  * [Line 1:57] (&#39;基礎的研究&#34; where funder_countries.name=&#34;Japan&#34; return grants&#39;) token recognition error at: &#39;基&#39;
+  * [Line 1:58] (&#39;礎的研究&#34; where funder_countries.name=&#34;Japan&#34; return grants&#39;) token recognition error at: &#39;礎&#39;
+  * [Line 1:59] (&#39;的研究&#34; where funder_countries.name=&#34;Japan&#34; return grants&#39;) token recognition error at: &#39;的&#39;
+  * [Line 1:60] (&#39;研究&#34; where funder_countries.name=&#34;Japan&#34; return grants&#39;) token recognition error at: &#39;研&#39;
+  * [Line 1:61] (&#39;究&#34; where funder_countries.name=&#34;Japan&#34; return grants&#39;) token recognition error at: &#39;究&#39;
+  * [Line 1:98] (&#39;&#34; return grants&#39;) token recognition error at: &#39;&#34; return grants&#39;
+1 ParserError found
+  * [Line 1:93] (&#39;Japan&#39;) mismatched input &#39;Japan&#39; expecting &#39;return&#39;
+Failed - skipping
+Returned Grants: 0
+Time: 0.56s
+Failed - skipping
+Found a match with method 1:  grant.5533552
+Found a match with method 1:  grant.5531348
+Found a match with method 1:  grant.5528462
+Found a match with method 1:  grant.5527258
+Found a match with method 1:  grant.5502385
+Found a match with method 1:  grant.5502275
+Found a match with method 1:  grant.5325527
+Found a match with method 1:  grant.5246712
+Found a match with method 1:  grant.5246675
+Found a match with method 1:  grant.5246655
+Found a match with method 1:  grant.5246654
+Found a match with method 1:  grant.5246653
+Found a match with method 1:  grant.5246652
+Found a match with method 1:  grant.5246651
+Found a match with method 1:  grant.5246650
+Found a match with method 1:  grant.5246628
+Found a match with method 1:  grant.5246627
+Found a match with method 1:  grant.5246625
+Found a match with method 1:  grant.5246587
+Found a match with method 1:  grant.5246557
+Found a match with method 1:  grant.5246556
+Found a match with method 1:  grant.5246416
+Found a match with method 1:  grant.5246378
+Found a match with method 1:  grant.5246376
+Found a match with method 1:  grant.5246333
+Found a match with method 1:  grant.5246326
+Found a match with method 1:  grant.5246292
+Found a match with method 1:  grant.5246291
+Found a match with method 1:  grant.5206028
+Found a match with method 1:  grant.5202152
+Found a match with method 1:  grant.5196804
+Found a match with method 1:  grant.5195740
+Found a match with method 1:  grant.5195025
+Found a match with method 1:  grant.5138636
+Found a match with method 1:  grant.5069446
+Found a match with method 1:  grant.5068098
+Found a match with method 1:  grant.5066344
+Found a match with method 1:  grant.5064871
+Returned Grants: 1 (total = 1)
+Time: 0.55s
+=== Found a match with method 2:  grant.5061881
+Returned Grants: 1 (total = 1)
+Time: 0.63s
+=== Found a match with method 2:  grant.5061466
+Returned Grants: 1 (total = 1)
+Time: 0.55s
+=== Found a match with method 2:  grant.5061185
+Returned Grants: 1 (total = 1)
+Time: 0.53s
+=== Found a match with method 2:  grant.5060853
+Returned Grants: 0
+Time: 0.57s
+Failed - skipping
+Found a match with method 1:  grant.4695298
+Found a match with method 1:  grant.4682414
+Found a match with method 1:  grant.4661480
+Found a match with method 1:  grant.4644142
+Found a match with method 1:  grant.4641075
+Found a match with method 1:  grant.4636462
+Found a match with method 1:  grant.4562339
+Found a match with method 1:  grant.4510775
+Found a match with method 1:  grant.4453044
+Returned Grants: 1 (total = 1)
+Time: 0.54s
+=== Found a match with method 2:  grant.4362089
+Found a match with method 1:  grant.4192377
+Found a match with method 1:  grant.4171416
+Found a match with method 1:  grant.4167878
+Found a match with method 1:  grant.4167438
+Found a match with method 1:  grant.4106519
+Returned Grants: 0
+Time: 0.53s
+Failed - skipping
+Returned Grants: 3 (total = 3)
+Time: 0.54s
+=== Found a match with method 2:  grant.4035377
+Returned Grants: 3 (total = 3)
+Time: 0.56s
+=== Found a match with method 2:  grant.4035377
+Found a match with method 1:  grant.3749684
+Found a match with method 1:  grant.3733024
+Found a match with method 1:  grant.3731136
+Found a match with method 1:  grant.3729873
+Found a match with method 1:  grant.3728490
+Found a match with method 1:  grant.3726127
+Found a match with method 1:  grant.3708086
+Found a match with method 1:  grant.3706490
+Found a match with method 1:  grant.3702872
+Found a match with method 1:  grant.3700936
+Found a match with method 1:  grant.3535230
+Found a match with method 1:  grant.3532347
+Found a match with method 1:  grant.3529500
+Found a match with method 1:  grant.3528280
+Found a match with method 1:  grant.3528140
+Found a match with method 1:  grant.3527854
+Found a match with method 1:  grant.3527599
+Found a match with method 1:  grant.3526938
+Found a match with method 1:  grant.3526242
+Found a match with method 1:  grant.3524632
+Found a match with method 1:  grant.2987656
+Found a match with method 1:  grant.2985050
+Found a match with method 1:  grant.2984254
+Found a match with method 1:  grant.2982723
+Found a match with method 1:  grant.2978220
+Found a match with method 1:  grant.2971136
+Found a match with method 1:  grant.2968761
+Found a match with method 1:  grant.2968075
+Found a match with method 1:  grant.2967309
+Found a match with method 1:  grant.2960882
+Found a match with method 1:  grant.2958728
+Found a match with method 1:  grant.2957327
+Returned Grants: 1 (total = 1)
+Time: 1.04s
+=== Found a match with method 2:  grant.2942407
+Found a match with method 1:  grant.2939650
+Found a match with method 1:  grant.2937046
+Found a match with method 1:  grant.2936941
+Found a match with method 1:  grant.2932210
+Found a match with method 1:  grant.2928975
+Found a match with method 1:  grant.2923314
+Found a match with method 1:  grant.2921906
+Found a match with method 1:  grant.2912514
+Found a match with method 1:  grant.2911669
+Found a match with method 1:  grant.2901085
+Found a match with method 1:  grant.2899804
+Found a match with method 1:  grant.2892553
+Found a match with method 1:  grant.2875627
+Found a match with method 1:  grant.2874597
+Found a match with method 1:  grant.2874082
+Found a match with method 1:  grant.2857726
+Found a match with method 1:  grant.2853909
+Returned Grants: 1 (total = 1)
+Time: 0.55s
+=== Found a match with method 2:  grant.2846899
+Found a match with method 1:  grant.2845378
+Found a match with method 1:  grant.2835397
+Found a match with method 1:  grant.2834880
+Found a match with method 1:  grant.2821820
+Found a match with method 1:  grant.2817654
+Found a match with method 1:  grant.2807465
+Found a match with method 1:  grant.2798941
+Found a match with method 1:  grant.2795749
+Found a match with method 1:  grant.2791038
+Found a match with method 1:  grant.2789593
+Found a match with method 1:  grant.2722085
+Found a match with method 1:  grant.2706159
+Found a match with method 1:  grant.2698714
+Found a match with method 1:  grant.2697537
+Found a match with method 1:  grant.2695257
+Found a match with method 1:  grant.2693731
+Found a match with method 1:  grant.2690783
+Found a match with method 1:  grant.2690760
+Found a match with method 1:  grant.2687365
+Found a match with method 1:  grant.2687364
+Found a match with method 1:  grant.2687357
+Found a match with method 1:  grant.2687347
+Found a match with method 1:  grant.2687156
+Found a match with method 1:  grant.2687154
+Found a match with method 1:  grant.2666046
+Found a match with method 1:  grant.2664366
+Found a match with method 1:  grant.2664365
+Found a match with method 1:  grant.2657660
+Found a match with method 1:  grant.2657656
+Found a match with method 1:  grant.2657579
+Found a match with method 1:  grant.2647175
+Found a match with method 1:  grant.2643697
+Found a match with method 1:  grant.2643565
+Found a match with method 1:  grant.2641009
+Found a match with method 1:  grant.2640640
+Found a match with method 1:  grant.2640550
+Found a match with method 1:  grant.2640356
+Found a match with method 1:  grant.2640346
+Found a match with method 1:  grant.2640336
+Found a match with method 1:  grant.2640319
+Found a match with method 1:  grant.2640315
+Found a match with method 1:  grant.2640305
+Found a match with method 1:  grant.2640255
+Found a match with method 1:  grant.2640187
+Found a match with method 1:  grant.2639832
+Found a match with method 1:  grant.2624939
+Found a match with method 1:  grant.2608583
+Found a match with method 1:  grant.2608571
+Found a match with method 1:  grant.2597656
+Found a match with method 1:  grant.2597626
+Found a match with method 1:  grant.2597599
+Found a match with method 1:  grant.2597536
+Found a match with method 1:  grant.2597279
+Found a match with method 1:  grant.2597266
+Found a match with method 1:  grant.2597222
+Found a match with method 1:  grant.2590181
+Found a match with method 1:  grant.2583049
+Found a match with method 1:  grant.2579292
+Found a match with method 1:  grant.2567035
+Found a match with method 1:  grant.2566836
+Found a match with method 1:  grant.2566752
+Found a match with method 1:  grant.2564456
+Found a match with method 1:  grant.2508306
+Found a match with method 1:  grant.2454434
+Found a match with method 1:  grant.2453161
+Found a match with method 1:  grant.2452894
+Found a match with method 1:  grant.2452879
+Found a match with method 1:  grant.2452193
+Found a match with method 1:  grant.2450320
+Found a match with method 1:  grant.2435123
+Found a match with method 1:  grant.2435096
+Found a match with method 1:  grant.2434876
+Found a match with method 1:  grant.2433623
+Found a match with method 1:  grant.2430978
+Found a match with method 1:  grant.2430831
+Found a match with method 1:  grant.2430826
+Found a match with method 1:  grant.2430821
+Found a match with method 1:  grant.2430718
+Found a match with method 1:  grant.2430614
+Found a match with method 1:  grant.2430613
+Found a match with method 1:  grant.2430542
+Found a match with method 1:  grant.2425744
+Found a match with method 1:  grant.2424990
+Found a match with method 1:  grant.2424954
+Found a match with method 1:  grant.2424953
+Found a match with method 1:  grant.2424952
+Found a match with method 1:  grant.2424951
+Found a match with method 1:  grant.2424889
+Found a match with method 1:  grant.2424801
+Found a match with method 1:  grant.2424782
+Found a match with method 1:  grant.2424743
+Found a match with method 1:  grant.2424740
+Found a match with method 1:  grant.2424712
+Found a match with method 1:  grant.2424651
+Found a match with method 1:  grant.2424636
+Found a match with method 1:  grant.2424626
+Found a match with method 1:  grant.2424597
+Found a match with method 1:  grant.2424596
+Found a match with method 1:  grant.2424595
+Found a match with method 1:  grant.2424594
+Found a match with method 1:  grant.2424592
+Found a match with method 1:  grant.2424552
+Found a match with method 1:  grant.2424540
+Found a match with method 1:  grant.2424537
+Found a match with method 1:  grant.2424536
+Found a match with method 1:  grant.2424527
+Found a match with method 1:  grant.2424526
+Found a match with method 1:  grant.2424512
+Found a match with method 1:  grant.2424487
+Found a match with method 1:  grant.2424463
+Found a match with method 1:  grant.2424448
+Found a match with method 1:  grant.2424437
+Found a match with method 1:  grant.2424431
+Found a match with method 1:  grant.2424428
+Found a match with method 1:  grant.2424403
+Found a match with method 1:  grant.2424402
+Found a match with method 1:  grant.2424401
+Found a match with method 1:  grant.2424400
+Found a match with method 1:  grant.2424360
+Found a match with method 1:  grant.2424343
+Found a match with method 1:  grant.2424333
+Found a match with method 1:  grant.2424332
+Found a match with method 1:  grant.2424330
+Found a match with method 1:  grant.2424329
+Found a match with method 1:  grant.2415704
+Found a match with method 1:  grant.2409426
+Found a match with method 1:  grant.2405500
+Found a match with method 1:  grant.2393833
+Found a match with method 1:  grant.2393831
+Found a match with method 1:  grant.2393828
+Found a match with method 1:  grant.2393822
+Found a match with method 1:  grant.2393812
+Found a match with method 1:  grant.2393810
+Found a match with method 1:  grant.2393809
+Found a match with method 1:  grant.2393798
+Found a match with method 1:  grant.2393792
+Found a match with method 1:  grant.2393788
+Found a match with method 1:  grant.2393775
+Found a match with method 1:  grant.2390878
+Found a match with method 1:  grant.2375603
+Found a match with method 1:  grant.2369988
+Found a match with method 1:  grant.2369821
+Found a match with method 1:  grant.2369813
+Found a match with method 1:  grant.2359845
+Found a match with method 1:  grant.2356296
+Found a match with method 1:  grant.2355713
+Found a match with method 1:  grant.2346752
+Found a match with method 1:  grant.2346751
+Found a match with method 1:  grant.2346748
+Found a match with method 1:  grant.2346743
+Found a match with method 1:  grant.2346629
+Found a match with method 1:  grant.2346628
+Found a match with method 1:  grant.2346595
+Found a match with method 1:  grant.2346594
+Found a match with method 1:  grant.2346582
+Found a match with method 1:  grant.2346581
+Found a match with method 1:  grant.2346548
+Found a match with method 1:  grant.2346547
+Found a match with method 1:  grant.2346527
+Found a match with method 1:  grant.2346526
+Found a match with method 1:  grant.2346510
+Found a match with method 1:  grant.2346485
+Found a match with method 1:  grant.2346484
+Found a match with method 1:  grant.2346449
+Found a match with method 1:  grant.2346448
+Found a match with method 1:  grant.100070653
+Found a match with method 1:  grant.100069317
+Found a match with method 1:  grant.7992220
+Found a match with method 1:  grant.7951289
+Found a match with method 1:  grant.7951265
+Returned Grants: 0
+Time: 0.58s
+Failed - skipping
+Returned Grants: 0
+Time: 1.07s
+Failed - skipping
+Returned Grants: 0
+Time: 1.00s
+Failed - skipping
+Returned Grants: 0
+Time: 0.98s
+Failed - skipping
+Found a match with method 1:  grant.6723340
+Found a match with method 1:  grant.6584684
+Found a match with method 1:  grant.6584355
+Found a match with method 1:  grant.6582323
+Found a match with method 1:  grant.6581899
+Found a match with method 1:  grant.6580202
+Returned Grants: 1 (total = 1)
+Time: 0.58s
+=== Found a match with method 2:  grant.6499488
+Returned Grants: 0
+Time: 0.58s
+Failed - skipping
+Found a match with method 1:  grant.5502095
+Found a match with method 1:  grant.5246360
+Found a match with method 1:  grant.5141545
+Found a match with method 1:  grant.4486180
+Found a match with method 1:  grant.3984586
+Found a match with method 1:  grant.3983756
+Found a match with method 1:  grant.3899759
+Found a match with method 1:  grant.3858644
+Found a match with method 1:  grant.3856963
+Found a match with method 1:  grant.3529314
+Found a match with method 1:  grant.2972456
+Found a match with method 1:  grant.2424690
+Found a match with method 1:  grant.100069716
+Found a match with method 1:  grant.2424837
+Found a match with method 1:  grant.8169343
+Found a match with method 1:  grant.6783638
+Found a match with method 1:  grant.6127074
+Found a match with method 1:  grant.2708529
+Found a match with method 1:  grant.8248988
+Found a match with method 1:  grant.6734414
+Found a match with method 1:  grant.4640689
+Found a match with method 1:  grant.5356862
+Found a match with method 1:  grant.6586399
+Found a match with method 1:  grant.6585096
+Found a match with method 1:  grant.6583693
+Found a match with method 1:  grant.6582991
+Found a match with method 1:  grant.6582151
+Found a match with method 1:  grant.6581800
+Found a match with method 1:  grant.3869376
+Found a match with method 1:  grant.3765762
+Found a match with method 1:  grant.2425528
+Found a match with method 1:  grant.6784476
+
+</pre></div></div>
+</div>
+<div class="section" id="Enriching-the-original-list">
+<h3>Enriching the original list<a class="headerlink" href="#Enriching-the-original-list" title="Permalink to this headline">¶</a></h3>
+<p>Finally, we can take the Dimensions ID data we extracted and add it to the original grants table as an extra column.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">grants</span><span class="p">[</span><span class="s2">&quot;Dimensions ID&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">output</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">grants</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Grant Number</th>
+      <th>Title</th>
+      <th>Funding Amount in USD</th>
+      <th>Start Year</th>
+      <th>End Year</th>
+      <th>Funder</th>
+      <th>Funder Country</th>
+      <th>Dimensions ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>30410203277</td>
+      <td>疫苗－整体方案</td>
+      <td>1208.0</td>
+      <td>2004</td>
+      <td>2004</td>
+      <td>National Natural Science Foundation of China</td>
+      <td>China</td>
+      <td>grant.8172033</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>620792</td>
+      <td>Engineering Inhalable Vaccines</td>
+      <td>26956.0</td>
+      <td>2017</td>
+      <td>2018</td>
+      <td>Natural Sciences and Engineering Research Council</td>
+      <td>Canada</td>
+      <td>grant.7715379</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>599115</td>
+      <td>Engineering Inhalable Vaccines</td>
+      <td>26403.0</td>
+      <td>2016</td>
+      <td>2017</td>
+      <td>Natural Sciences and Engineering Research Council</td>
+      <td>Canada</td>
+      <td>grant.6962629</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>251564</td>
+      <td>HIV Vaccine research</td>
+      <td>442366.0</td>
+      <td>2003</td>
+      <td>2007</td>
+      <td>National Health and Medical Research Council</td>
+      <td>Australia</td>
+      <td>grant.6723913</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>334174</td>
+      <td>HIV Vaccine Development</td>
+      <td>236067.0</td>
+      <td>2005</td>
+      <td>2009</td>
+      <td>National Health and Medical Research Council</td>
+      <td>Australia</td>
+      <td>grant.6722306</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>910292</td>
+      <td>Dengue virus vaccine.</td>
+      <td>130890.0</td>
+      <td>1991</td>
+      <td>1993</td>
+      <td>National Health and Medical Research Council</td>
+      <td>Australia</td>
+      <td>grant.6716312</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>578221</td>
+      <td>Engineering Inhalable Vaccines</td>
+      <td>27386.0</td>
+      <td>2015</td>
+      <td>2016</td>
+      <td>Natural Sciences and Engineering Research Council</td>
+      <td>Canada</td>
+      <td>grant.5526688</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>IC18980360</td>
+      <td>Schistosomiasis Vaccine Network.</td>
+      <td>0.0</td>
+      <td>1998</td>
+      <td>2000</td>
+      <td>European Commission</td>
+      <td>Belgium</td>
+      <td>grant.3733803</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>7621798</td>
+      <td>Pneumococcal Ribosomal Vaccines</td>
+      <td>46000.0</td>
+      <td>1977</td>
+      <td>1980</td>
+      <td>Directorate for Biological Sciences</td>
+      <td>United States</td>
+      <td>grant.3274273</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>255890</td>
+      <td>Rational vaccine design</td>
+      <td>7138.0</td>
+      <td>2003</td>
+      <td>2004</td>
+      <td>Natural Sciences and Engineering Research Council</td>
+      <td>Canada</td>
+      <td>grant.2936015</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Save-the-data">
+<h3>Save the data<a class="headerlink" href="#Save-the-data" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">grants</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;vaccines-grants-sample-part-1.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> allows to carry out sophisticated research data analytics tasks like the ones described on this website. Check out also the associated <a class="reference external" href="https://github.com/digital-science/dimensions-api-lab">Github repository</a> for examples, the source code of these tutorials and much more.</p>
+</div>
+<a class="reference external image-reference" href="https://www.dimensions.ai/dimensions-apis/"><img alt="../../_images/badge-dimensions-api.svg" src="../../_images/badge-dimensions-api.svg" /></a>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+    <p>© Copyright 2020 Digital Science & Research Solutions, Inc. All Rights Reserved | <a href="https://www.dimensions.ai/">About us</a> · <a href="https://www.dimensions.ai/privacy/">Privacy policy</a> · <a href="https://www.dimensions.ai/website-terms/">Legal terms</a></p>
+     
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+    
+
+    <!-- Adds target=_blank to external links -->
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('a[href^="http://"], a[href^="https://"]').not('a[class*=internal]').attr('target', '_blank');
+    });
+  </script>
+  
+
+
+</body>
+</html>

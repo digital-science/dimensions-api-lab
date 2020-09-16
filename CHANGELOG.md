@@ -5,6 +5,12 @@
 
 * Fixed broken links in README file [issue 8](https://github.com/digital-science/dimensions-api-lab/issues/8) and [issue 7](https://github.com/digital-science/dimensions-api-lab/issues/7)
 
+New notebooks:
+* [Enriching Grants part 1: Matching your grants records to Dimensions](https://api-lab.dimensions.ai/cookbooks/3-grants/1-grants-enrichment-matching-records-to-dimensions.html)
+* [Enriching Grants part 2: Adding Publications Information from Dimensions](https://api-lab.dimensions.ai/cookbooks/3-grants/2-grants-enrichment-adding-publications-information.html)
+* [Enriching Grants part 3: adding related Patents and Clinical Trials data](https://api-lab.dimensions.ai/cookbooks/3-grants/3-grants-enrichment-adding-patents-cltrials-information.html)
+
+
 
 ### 2020-09-07
 
