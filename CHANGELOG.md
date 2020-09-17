@@ -9,6 +9,7 @@ New notebooks:
 * [Enriching Grants part 1: Matching your grants records to Dimensions](https://api-lab.dimensions.ai/cookbooks/3-grants/1-grants-enrichment-matching-records-to-dimensions.html)
 * [Enriching Grants part 2: Adding Publications Information from Dimensions](https://api-lab.dimensions.ai/cookbooks/3-grants/2-grants-enrichment-adding-publications-information.html)
 * [Enriching Grants part 3: adding related Patents and Clinical Trials data](https://api-lab.dimensions.ai/cookbooks/3-grants/3-grants-enrichment-adding-patents-cltrials-information.html)
+* [Identiying emerging topics in grants by using 'concepts'](https://api-lab.dimensions.ai/cookbooks/3-grants/4-grants-topic-analysis.html)
 * [Generating a report that monitors research topics across Dimensions sources](https://api-lab.dimensions.ai/cookbooks/10-misc/1-report-content-volumes-per-year.html)
 
 
