@@ -110,6 +110,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Verifying Your API Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#Technical-prerequisites">Technical prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Connecting-to-the-API">Connecting to the API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Legacy-authentication-method">Legacy authentication method</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Troubleshooting">Troubleshooting</a></li>
 </ul>
 </li>
@@ -610,9 +611,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html">Expert Identification with the Dimensions API - An Introduction</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#At-a-glance">At a glance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Step-1:-Concept-Extraction">Step 1: Concept Extraction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Step-2:-Expert-Identification">Step 2: Expert Identification</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-1.-Most-Basic-Query-using-concepts">Example 1. Most Basic Query using <code class="docutils literal notranslate"><span class="pre">concepts</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-1.-Basic-query-using-concepts">Example 1. Basic query using <code class="docutils literal notranslate"><span class="pre">concepts</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-2.-Query-with-OR-connectors">Example 2. Query with <code class="docutils literal notranslate"><span class="pre">OR</span></code> connectors</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-3.-Query-with-where-filters">Example 3. Query with <code class="docutils literal notranslate"><span class="pre">where</span></code> filters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-4.-Adding-Overlap-Annotations-(eg-for-conflict-of-interests-checks)">Example 4. Adding Overlap Annotations (eg for conflict of interests checks)</a></li>
@@ -1041,14 +1043,13 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="section" id="Connecting-to-the-API">
 <h2>Connecting to the API<a class="headerlink" href="#Connecting-to-the-API" title="Permalink to this headline">¶</a></h2>
-<p>If you have access to the analytics API, simply fill in the parameters below with your details:</p>
+<p>If you have access to the Analytics API, simply fill in the parameters below with your details:</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">USERNAME</span> <span class="o">=</span> <span class="s1">&#39;your username&#39;</span>
-<span class="n">PASSWORD</span> <span class="o">=</span> <span class="s1">&#39;your password&#39;</span>
+<span></span><span class="n">KEY</span> <span class="o">=</span> <span class="s1">&#39;your API key&#39;</span>
 <span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s1">&#39;app.dimensions.ai&#39;</span>  <span class="c1"># eg no need to include &#39;https://&#39;</span>
 </pre></div>
 </div>
@@ -1065,10 +1066,7 @@ div.rendered_html tbody tr:hover {
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1">#   The credentials to be used</span>
 <span class="n">login</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;username&#39;</span><span class="p">:</span> <span class="n">USERNAME</span><span class="p">,</span>
-    <span class="s1">&#39;password&#39;</span><span class="p">:</span> <span class="n">PASSWORD</span><span class="p">,</span>
-    <span class="c1"># NOTE if you have an API key, comment the two lines above and uncomment the next one:</span>
-    <span class="c1"># &#39;key&#39;: &quot;your API key&quot;</span>
+    <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s2">&quot;your API key&quot;</span>
 <span class="p">}</span>
 
 <span class="c1">#   Send credentials to login url to retrieve token. Raise</span>
@@ -1103,12 +1101,31 @@ div.rendered_html tbody tr:hover {
 </pre></div></div>
 </div>
 </div>
+<div class="section" id="Legacy-authentication-method">
+<h2>Legacy authentication method<a class="headerlink" href="#Legacy-authentication-method" title="Permalink to this headline">¶</a></h2>
+<p>The snippet above uses the key authentication method, which is the primary method for most API users (see also <a class="reference external" href="https://dimensions.freshdesk.com/support/solutions/articles/23000018791">this page</a>).</p>
+<p>Some legacy users may still have to authenticate using their Dimensions <strong>username</strong> and <strong>password</strong>. If that’s the case, simply replace the beginning of the snippet above as follows:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1">#   Deprecated method if you can&#39;t have a key</span>
+
+<span class="n">login</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;username&#39;</span><span class="p">:</span> <span class="s1">&#39;your username&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;password&#39;</span><span class="p">:</span> <span class="s1">&#39;your password&#39;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="section" id="Troubleshooting">
 <h2>Troubleshooting<a class="headerlink" href="#Troubleshooting" title="Permalink to this headline">¶</a></h2>
 <p>If you get an error it may be for any of these reasons:</p>
 <ul class="simple">
 <li><p>your Dimensions credentials do not support API access</p></li>
-<li><p>you mispelled your username and/or password</p></li>
+<li><p>you mispelled your key</p></li>
 <li><p>you mispelled the endpoint URL (if unknown, you can try ‘app.dimensions.ai’)</p></li>
 <li><p>you don’t have a working internet connection</p></li>
 </ul>

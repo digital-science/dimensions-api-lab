@@ -41,30 +41,29 @@
      "text": [
       "==\n",
       "Logging in..\n",
-      "\u001b[2mDimcli - Dimensions API Client (v0.7.4.2)\u001b[0m\n",
-      "\u001b[2mConnected to: https://app.dimensions.ai - DSL v1.27\u001b[0m\n",
+      "\u001b[2mDimcli - Dimensions API Client (v0.8.2)\u001b[0m\n",
+      "\u001b[2mConnected to: https://app.dimensions.ai - DSL v1.28\u001b[0m\n",
       "\u001b[2mMethod: dsl.ini file\u001b[0m\n"
      ]
     }
    ],
    "source": [
-    "!pip install dimcli -U --quiet \n",
+    "!pip install dimcli pyvis -U --quiet \n",
     "\n",
     "import dimcli\n",
-    "from dimcli.shortcuts import *\n",
+    "from dimcli.utils import *\n",
     "import os, sys, time, json\n",
     "\n",
     "print(\"==\\nLogging in..\")\n",
-    "# https://github.com/digital-science/dimcli#authentication\n",
+    "# https://digital-science.github.io/dimcli/getting-started.html#authentication\n",
     "ENDPOINT = \"https://app.dimensions.ai\"\n",
     "if 'google.colab' in sys.modules:\n",
     "  import getpass\n",
-    "  USERNAME = getpass.getpass(prompt='Username: ')\n",
-    "  PASSWORD = getpass.getpass(prompt='Password: ')    \n",
-    "  dimcli.login(USERNAME, PASSWORD, ENDPOINT)\n",
+    "  KEY = getpass.getpass(prompt='API Key: ')  \n",
+    "  dimcli.login(KEY, ENDPOINT)\n",
     "else:\n",
-    "  USERNAME, PASSWORD  = \"\", \"\"\n",
-    "  dimcli.login(USERNAME, PASSWORD, ENDPOINT)\n",
+    "  KEY = \"\"\n",
+    "  dimcli.login(KEY, ENDPOINT)\n",
     "dsl = dimcli.Dsl()"
    ]
   },

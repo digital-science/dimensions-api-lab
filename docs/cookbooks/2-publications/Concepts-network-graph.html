@@ -110,6 +110,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../1-getting-started/0-Verifying-your-connection.html">Verifying Your API Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../1-getting-started/0-Verifying-your-connection.html#Technical-prerequisites">Technical prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../1-getting-started/0-Verifying-your-connection.html#Connecting-to-the-API">Connecting to the API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/0-Verifying-your-connection.html#Legacy-authentication-method">Legacy authentication method</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../1-getting-started/0-Verifying-your-connection.html#Troubleshooting">Troubleshooting</a></li>
 </ul>
 </li>
@@ -610,9 +611,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html">Expert Identification with the Dimensions API - An Introduction</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#At-a-glance">At a glance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Step-1:-Concept-Extraction">Step 1: Concept Extraction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Step-2:-Expert-Identification">Step 2: Expert Identification</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-1.-Most-Basic-Query-using-concepts">Example 1. Most Basic Query using <code class="docutils literal notranslate"><span class="pre">concepts</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-1.-Basic-query-using-concepts">Example 1. Basic query using <code class="docutils literal notranslate"><span class="pre">concepts</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-2.-Query-with-OR-connectors">Example 2. Query with <code class="docutils literal notranslate"><span class="pre">OR</span></code> connectors</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-3.-Query-with-where-filters">Example 3. Query with <code class="docutils literal notranslate"><span class="pre">where</span></code> filters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-4.-Adding-Overlap-Annotations-(eg-for-conflict-of-interests-checks)">Example 4. Adding Overlap Annotations (eg for conflict of interests checks)</a></li>
@@ -1019,15 +1021,15 @@ tutorial.</p>
 <h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
 <p>This notebook assumes you have installed the <a class="reference external" href="https://pypi.org/project/dimcli/">Dimcli</a> library and are familiar with the <em>Getting Started</em> tutorial. The <a class="reference external" href="https://networkx.github.io/documentation/stable/reference/introduction.html">networkx</a> and <a class="reference external" href="https://pyvis.readthedocs.io/en/latest/tutorial.html">pyvis</a> libraries are used for generating and visualizing the network, respectively.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="o">!</span>pip install dimcli plotly networkx pyvis jsonpickle  -U --quiet
 
 <span class="kn">import</span> <span class="nn">dimcli</span>
-<span class="kn">from</span> <span class="nn">dimcli.shortcuts</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">dimcli.core.extras</span> <span class="kn">import</span> <span class="n">NetworkViz</span> <span class="c1"># custom version of pyvis - colab-compatible</span>
+<span class="kn">from</span> <span class="nn">dimcli.utils</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">dimcli.utils.networkviz</span> <span class="kn">import</span> <span class="n">NetworkViz</span> <span class="c1"># custom version of pyvis - colab-compatible</span>
 
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">sys</span>
@@ -1037,16 +1039,15 @@ tutorial.</p>
 <span class="kn">import</span> <span class="nn">itertools</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">Logging in..&quot;</span><span class="p">)</span>
-<span class="c1"># https://github.com/digital-science/dimcli#authentication</span>
+<span class="c1"># https://digital-science.github.io/dimcli/getting-started.html#authentication</span>
 <span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;https://app.dimensions.ai&quot;</span>
 <span class="k">if</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
   <span class="kn">import</span> <span class="nn">getpass</span>
-  <span class="n">USERNAME</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;Username: &#39;</span><span class="p">)</span>
-  <span class="n">PASSWORD</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;Password: &#39;</span><span class="p">)</span>
-  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">USERNAME</span><span class="p">,</span> <span class="n">PASSWORD</span><span class="p">,</span> <span class="n">ENDPOINT</span><span class="p">)</span>
+  <span class="n">KEY</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;API Key: &#39;</span><span class="p">)</span>
+  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">KEY</span><span class="p">,</span> <span class="n">ENDPOINT</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
-  <span class="n">USERNAME</span><span class="p">,</span> <span class="n">PASSWORD</span>  <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
-  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">USERNAME</span><span class="p">,</span> <span class="n">PASSWORD</span><span class="p">,</span> <span class="n">ENDPOINT</span><span class="p">)</span>
+  <span class="n">KEY</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">KEY</span><span class="p">,</span> <span class="n">ENDPOINT</span><span class="p">)</span>
 <span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1058,8 +1059,8 @@ tutorial.</p>
 <div class="highlight"><pre>
 ==
 Logging in..
-Dimcli - Dimensions API Client (v0.7.4.2)
-Connected to: https://app.dimensions.ai - DSL v1.27
+Dimcli - Dimensions API Client (v0.8.2)
+Connected to: https://app.dimensions.ai - DSL v1.28
 Method: dsl.ini file
 </pre></div></div>
 </div>
@@ -1070,7 +1071,7 @@ Method: dsl.ini file
 <p>The API query below will return a list of documents including all the related concepts.</p>
 <p>Tip: try changing the query keyword in order to experiment with different results.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1097,14 +1098,14 @@ Method: dsl.ini file
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 1000 (total = 143549)
-Time: 4.57s
-Total concepts: 46176
-Concepts score average 0.37900926845114347
+Returned Publications: 1000 (total = 147455)
+Time: 9.02s
+Total concepts: 45773
+Concepts score average 0.3791607853975051
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1126,8 +1127,8 @@ Concepts score average 0.37900926845114347
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>title</th>
       <th>id</th>
+      <th>title</th>
       <th>concepts_count</th>
       <th>concept</th>
       <th>score</th>
@@ -1138,8 +1139,8 @@ Concepts score average 0.37900926845114347
   <tbody>
     <tr>
       <th>0</th>
-      <td>Building better batteries</td>
       <td>pub.1007137639</td>
+      <td>Building better batteries</td>
       <td>67</td>
       <td>materials science</td>
       <td>0.06888</td>
@@ -1148,8 +1149,8 @@ Concepts score average 0.37900926845114347
     </tr>
     <tr>
       <th>1</th>
-      <td>Building better batteries</td>
       <td>pub.1007137639</td>
+      <td>Building better batteries</td>
       <td>67</td>
       <td>new series</td>
       <td>0.06877</td>
@@ -1158,8 +1159,8 @@ Concepts score average 0.37900926845114347
     </tr>
     <tr>
       <th>2</th>
-      <td>Building better batteries</td>
       <td>pub.1007137639</td>
+      <td>Building better batteries</td>
       <td>67</td>
       <td>better batteries</td>
       <td>0.06703</td>
@@ -1168,8 +1169,8 @@ Concepts score average 0.37900926845114347
     </tr>
     <tr>
       <th>3</th>
-      <td>Building better batteries</td>
       <td>pub.1007137639</td>
+      <td>Building better batteries</td>
       <td>67</td>
       <td>batteries</td>
       <td>0.06070</td>
@@ -1178,8 +1179,8 @@ Concepts score average 0.37900926845114347
     </tr>
     <tr>
       <th>4</th>
-      <td>Building better batteries</td>
       <td>pub.1007137639</td>
+      <td>Building better batteries</td>
       <td>67</td>
       <td>Murray-Rust</td>
       <td>0.05667</td>
@@ -1201,7 +1202,7 @@ Concepts score average 0.37900926845114347
 <li><p>by keeping only nodes that, in our network, have an edge &gt; MIN WEIGHT (that is, nodes that have more connections)</p></li>
 </ul>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1270,13 +1271,13 @@ Concepts score average 0.37900926845114347
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Nodes: 177 Edges: 0
+Nodes: 178 Edges: 0
 .. adding edges from pubs cooccurrence...
-Nodes: 177 Edges: 1080
+Nodes: 178 Edges: 1202
 .. cleaning up edges with weight &lt; 2...
-Nodes: 177 Edges: 203
+Nodes: 178 Edges: 255
 .. removing isolated nodes...
-Nodes: 122 Edges: 203
+Nodes: 138 Edges: 255
 </pre></div></div>
 </div>
 </div>
@@ -1289,7 +1290,7 @@ Nodes: 122 Edges: 203
 <li><p>using <code class="docutils literal notranslate"><span class="pre">score_bucket</span></code> (see above), we can mark the higher-score concepts using a brighter color</p></li>
 </ul>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1330,7 +1331,7 @@ Nodes: 122 Edges: 203
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">

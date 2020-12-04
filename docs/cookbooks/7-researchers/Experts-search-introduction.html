@@ -110,6 +110,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../1-getting-started/0-Verifying-your-connection.html">Verifying Your API Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../1-getting-started/0-Verifying-your-connection.html#Technical-prerequisites">Technical prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../1-getting-started/0-Verifying-your-connection.html#Connecting-to-the-API">Connecting to the API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/0-Verifying-your-connection.html#Legacy-authentication-method">Legacy authentication method</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../1-getting-started/0-Verifying-your-connection.html#Troubleshooting">Troubleshooting</a></li>
 </ul>
 </li>
@@ -610,9 +611,10 @@
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Expert Identification with the Dimensions API - An Introduction</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#At-a-glance">At a glance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Step-1:-Concept-Extraction">Step 1: Concept Extraction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Step-2:-Expert-Identification">Step 2: Expert Identification</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#Example-1.-Most-Basic-Query-using-concepts">Example 1. Most Basic Query using <code class="docutils literal notranslate"><span class="pre">concepts</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Example-1.-Basic-query-using-concepts">Example 1. Basic query using <code class="docutils literal notranslate"><span class="pre">concepts</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#Example-2.-Query-with-OR-connectors">Example 2. Query with <code class="docutils literal notranslate"><span class="pre">OR</span></code> connectors</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#Example-3.-Query-with-where-filters">Example 3. Query with <code class="docutils literal notranslate"><span class="pre">where</span></code> filters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#Example-4.-Adding-Overlap-Annotations-(eg-for-conflict-of-interests-checks)">Example 4. Adding Overlap Annotations (eg for conflict of interests checks)</a></li>
@@ -1013,8 +1015,6 @@ div.rendered_html tbody tr:hover {
 <div class="section" id="Expert-Identification-with-the-Dimensions-API---An-Introduction">
 <h1>Expert Identification with the Dimensions API - An Introduction<a class="headerlink" href="#Expert-Identification-with-the-Dimensions-API---An-Introduction" title="Permalink to this headline">¶</a></h1>
 <p>This notebook shows to use the new <a class="reference external" href="https://docs.dimensions.ai/dsl/expert-identification.html">expert identification</a> feature of Dimensions’ Analytics API.</p>
-<p>The expert Identification workflow consists of two steps.</p>
-<p>In the first step, the user extracts concepts from an abstract. The user can review and modify the list of extracted concepts and then feed it into the actual expert identification workflow.</p>
 <div class="section" id="Prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
 <p>This notebook assumes you have installed the <a class="reference external" href="https://pypi.org/project/dimcli/">Dimcli</a> library and are familiar with the <em>Getting Started</em> tutorial.</p>
@@ -1026,22 +1026,22 @@ div.rendered_html tbody tr:hover {
 <span></span><span class="o">!</span>pip install dimcli --quiet
 
 <span class="kn">import</span> <span class="nn">dimcli</span>
-<span class="kn">from</span> <span class="nn">dimcli.shortcuts</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">dimcli.utils</span> <span class="kn">import</span> <span class="o">*</span>
+
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">Logging in..&quot;</span><span class="p">)</span>
-<span class="c1"># https://github.com/digital-science/dimcli#authentication</span>
+<span class="c1"># https://digital-science.github.io/dimcli/getting-started.html#authentication</span>
 <span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;https://app.dimensions.ai&quot;</span>
 <span class="k">if</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
   <span class="kn">import</span> <span class="nn">getpass</span>
-  <span class="n">USERNAME</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;Username: &#39;</span><span class="p">)</span>
-  <span class="n">PASSWORD</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;Password: &#39;</span><span class="p">)</span>
-  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">USERNAME</span><span class="p">,</span> <span class="n">PASSWORD</span><span class="p">,</span> <span class="n">ENDPOINT</span><span class="p">)</span>
+  <span class="n">KEY</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;API Key: &#39;</span><span class="p">)</span>
+  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">KEY</span><span class="p">,</span> <span class="n">ENDPOINT</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
-  <span class="n">USERNAME</span><span class="p">,</span> <span class="n">PASSWORD</span>  <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
-  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">USERNAME</span><span class="p">,</span> <span class="n">PASSWORD</span><span class="p">,</span> <span class="n">ENDPOINT</span><span class="p">)</span>
+  <span class="n">KEY</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">KEY</span><span class="p">,</span> <span class="n">ENDPOINT</span><span class="p">)</span>
 <span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1053,11 +1053,292 @@ div.rendered_html tbody tr:hover {
 <div class="highlight"><pre>
 ==
 Logging in..
-Dimcli - Dimensions API Client (v0.7.2)
-Connected to: https://app.dimensions.ai - DSL v1.26
+Dimcli - Dimensions API Client (v0.8.2)
+Connected to: https://app.dimensions.ai - DSL v1.28
 Method: dsl.ini file
 </pre></div></div>
 </div>
+</div>
+<div class="section" id="At-a-glance">
+<h2>At a glance<a class="headerlink" href="#At-a-glance" title="Permalink to this headline">¶</a></h2>
+<p>At its simplest, an expert search query looks like this:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsl</span>
+
+identify experts from concepts &quot;malaria OR \&quot;effective malaria vaccine\&quot; OR \&quot;effective prevention\&quot;&quot;
+      using publications
+      where year &gt;= 2015
+return experts[basics]
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;dimcli.DslDataset object #4405912048. Dict keys: &#39;_stats&#39;, &#39;_version&#39;, &#39;_copyright&#39;, &#39;experts&#39;&gt;
+</pre></div></div>
+</div>
+<p>The query takes a list of <strong>concepts</strong> defining the expertise you’re looking for, plus other parameters defining the pool of publications to be used, and it returns a list of researchers sorted by relevance.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dsl_last_results</span><span class="p">[</span><span class="s1">&#39;experts&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>score</th>
+      <th>orcid_id</th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>research_orgs</th>
+      <th>docs_found</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ur.01332073522.49</td>
+      <td>4.307605</td>
+      <td>[0000-0002-3396-1700]</td>
+      <td>Nicholas John</td>
+      <td>White</td>
+      <td>[grid.417815.e, grid.22072.35, grid.5335.0, gr...</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ur.01303637137.59</td>
+      <td>3.853188</td>
+      <td>[0000-0001-8300-9593]</td>
+      <td>Miriam K</td>
+      <td>Laufer</td>
+      <td>[grid.8271.c, grid.10595.38, grid.420069.9, gr...</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ur.01314633455.19</td>
+      <td>3.788729</td>
+      <td>NaN</td>
+      <td>Ritabrata</td>
+      <td>Kundu</td>
+      <td>[grid.414710.7]</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ur.01355076624.38</td>
+      <td>3.788729</td>
+      <td>NaN</td>
+      <td>Jaydeep Choudhury</td>
+      <td>Choudhury</td>
+      <td>[grid.414710.7]</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>ur.01333507624.36</td>
+      <td>3.360286</td>
+      <td>NaN</td>
+      <td>Christopher Vine</td>
+      <td>Plowe</td>
+      <td>[grid.15653.34, grid.4305.2, grid.94365.3d, gr...</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>ur.07764267264.89</td>
+      <td>3.211528</td>
+      <td>[0000-0002-7951-0745]</td>
+      <td>Francois Henri</td>
+      <td>Nosten</td>
+      <td>[grid.11586.3b, grid.4367.6, grid.412433.3, gr...</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>ur.01323510115.98</td>
+      <td>3.214206</td>
+      <td>NaN</td>
+      <td>Danielle I</td>
+      <td>Stanisic</td>
+      <td>[grid.1008.9, grid.1042.7, grid.1049.c, grid.4...</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>ur.0752141120.95</td>
+      <td>3.214206</td>
+      <td>NaN</td>
+      <td>Michael Francis</td>
+      <td>Good</td>
+      <td>[grid.1048.d, grid.417993.1, grid.1003.2, grid...</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>ur.015476113652.05</td>
+      <td>3.180696</td>
+      <td>[0000-0001-5725-9118]</td>
+      <td>Brian Mellor</td>
+      <td>Greenwood</td>
+      <td>[grid.8348.7, grid.10025.36, grid.415375.1, gr...</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>ur.016122312437.59</td>
+      <td>3.172880</td>
+      <td>NaN</td>
+      <td>Ogobara K</td>
+      <td>Doumbo</td>
+      <td>[grid.8191.1, grid.8982.b, grid.10548.38, grid...</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>ur.01225135650.70</td>
+      <td>2.805810</td>
+      <td>[0000-0002-1018-7898]</td>
+      <td>James G</td>
+      <td>Beeson</td>
+      <td>[grid.1013.3, grid.1056.2, grid.1042.7, grid.1...</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>ur.01162445502.98</td>
+      <td>2.653315</td>
+      <td>NaN</td>
+      <td>Martha</td>
+      <td>Sedegah</td>
+      <td>[grid.428999.7, grid.201075.1, grid.290496.0, ...</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>ur.01165702423.17</td>
+      <td>2.653315</td>
+      <td>NaN</td>
+      <td>Michael R</td>
+      <td>Hollingdale</td>
+      <td>[grid.417587.8, grid.265436.0, grid.8991.9, gr...</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>ur.0703623237.41</td>
+      <td>2.653315</td>
+      <td>NaN</td>
+      <td>Eileen D</td>
+      <td>Villasante</td>
+      <td>[grid.415913.b]</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>ur.01240215027.61</td>
+      <td>2.616639</td>
+      <td>NaN</td>
+      <td>Rose M</td>
+      <td>Mcgready</td>
+      <td>[grid.1005.4, grid.462844.8, grid.4991.5, grid...</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>ur.01204711510.82</td>
+      <td>2.598776</td>
+      <td>[0000-0001-9773-2192]</td>
+      <td>Alfonso Javier</td>
+      <td>Rodriguez-Morales</td>
+      <td>[grid.419226.a, grid.441853.f, grid.8171.f, gr...</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>ur.0667763776.52</td>
+      <td>2.515726</td>
+      <td>NaN</td>
+      <td>Ashley Michael</td>
+      <td>Vaughan</td>
+      <td>[grid.28046.38, grid.413019.e, grid.53964.3d, ...</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>ur.01022543462.48</td>
+      <td>2.427615</td>
+      <td>[0000-0002-0607-6941]</td>
+      <td>Paul</td>
+      <td>Garner</td>
+      <td>[grid.417153.5, grid.7445.2, grid.48004.38, gr...</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>ur.01270143765.64</td>
+      <td>2.422990</td>
+      <td>[0000-0003-4566-4030]</td>
+      <td>Joel</td>
+      <td>Tarning</td>
+      <td>[grid.8761.8, grid.501272.3, grid.413674.3, gr...</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>ur.0751102271.80</td>
+      <td>2.368244</td>
+      <td>[0000-0002-9415-1357]</td>
+      <td>Simon J</td>
+      <td>Draper</td>
+      <td>[grid.425090.a, grid.4991.5, grid.10253.35, gr...</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Often though, we start from some text and want to find experts relevant to that text (as opposed to starting from concepts).</p>
+<p>The expert identification workflow, in such a case, consists of two steps:</p>
+<ol class="arabic simple">
+<li><p>Concepts extraction from text</p></li>
+<li><p>Expert identification using concepts</p></li>
+</ol>
+<p>In the first step, the user extracts concepts from an abstract. The user can review and modify the list of extracted concepts and then feed it into the actual expert identification workflow. In the following sections we will go though these steps in details.</p>
 </div>
 <div class="section" id="Step-1:-Concept-Extraction">
 <h2>Step 1: Concept Extraction<a class="headerlink" href="#Step-1:-Concept-Extraction" title="Permalink to this headline">¶</a></h2>
@@ -1250,32 +1531,28 @@ Method: dsl.ini file
 </pre></div>
 </div>
 <p>Returned experts are ordered by their <strong>relevance</strong>.</p>
-<p><strong>Important things to remember</strong>:</p>
+<p>A few important things to remember:</p>
 <ol class="arabic simple">
-<li><p>Experts identification can be executed on <code class="docutils literal notranslate"><span class="pre">publications</span></code> only at the moment (<code class="docutils literal notranslate"><span class="pre">grants</span></code> source will be added in the future).</p>
-<ul class="simple">
-<li><p>the phrase <code class="docutils literal notranslate"><span class="pre">using</span> <span class="pre">publications</span></code> may be omitted, as the <code class="docutils literal notranslate"><span class="pre">publications</span></code> source is used by default.</p></li>
-<li><p>For maximum compatibility with the expert identification workflow in the Dimensions UI, it is recommended to use the <strong>two basic filters</strong> shown in the example above, specifically <code class="docutils literal notranslate"><span class="pre">research_org_countries</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">empty</span> <span class="pre">and</span> <span class="pre">year</span> <span class="pre">&gt;=</span> <span class="pre">2013</span></code>.</p></li>
-</ul>
-</li>
-<li><p>When multiple concepts are provided, these are transformed automatically into an <code class="docutils literal notranslate"><span class="pre">AND</span></code> query. To match any of the concepts, one should then explicitly add <code class="docutils literal notranslate"><span class="pre">OR</span></code> connectors.</p></li>
-<li><p>It is possible to specify <code class="docutils literal notranslate"><span class="pre">where-filters</span></code> but that’s not required. Fields available for filtering are exactly the same as the ones in standard <code class="docutils literal notranslate"><span class="pre">search</span></code> expressions.</p></li>
-<li><p>Similarly, the <code class="docutils literal notranslate"><span class="pre">paging-phrase</span></code> is optional. By default, the top 20 experts get returned - using limit/skip it is possible up to a maximum of 200.</p></li>
-<li><p>Annotating results with organizational and/or coauthorship overlap will produce another JSON object for each identified expert. This object has two parts.</p>
+<li><p><strong>Sources.</strong> Experts identification can use either <code class="docutils literal notranslate"><span class="pre">publications</span></code> or <code class="docutils literal notranslate"><span class="pre">grants</span></code> (when not specified, publications are used)</p></li>
+<li><p><strong>Default connector is AND</strong>. When multiple concepts are provided, these are transformed automatically into an <code class="docutils literal notranslate"><span class="pre">AND</span></code> query. To match any of the concepts, one should then explicitly add <code class="docutils literal notranslate"><span class="pre">OR</span></code> connectors.</p></li>
+<li><p><strong>Where conditions</strong>. It is possible to specify <code class="docutils literal notranslate"><span class="pre">where-filters</span></code> but that’s not required. Fields available for filtering are exactly the same as the ones in standard <code class="docutils literal notranslate"><span class="pre">search</span></code> expressions.</p></li>
+<li><p><strong>Pagination</strong>. Similarly, the <code class="docutils literal notranslate"><span class="pre">paging-phrase</span></code> is optional. By default, the top 20 experts get returned - using limit/skip it is possible up to a maximum of 200.</p></li>
+<li><p><strong>Overlap annotations</strong>. Annotating results with organizational and/or coauthorship overlap will produce another JSON object for each identified expert. This object has two parts.</p>
 <ul class="simple">
 <li><p>The <strong>Organizational</strong> overlap is defined as a boolean value that is true if the expert and the researchers from the query have the same current research organization.</p></li>
 <li><p>The <strong>Coauthorship</strong> conflict is defined as the number documents the expert has coauthored with any of the researchers provided in the query, in the last three years.</p></li>
 </ul>
 </li>
 </ol>
-<div class="section" id="Example-1.-Most-Basic-Query-using-concepts">
-<h3>Example 1. Most Basic Query using <code class="docutils literal notranslate"><span class="pre">concepts</span></code><a class="headerlink" href="#Example-1.-Most-Basic-Query-using-concepts" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="Example-1.-Basic-query-using-concepts">
+<h3>Example 1. Basic query using <code class="docutils literal notranslate"><span class="pre">concepts</span></code><a class="headerlink" href="#Example-1.-Basic-query-using-concepts" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">some_concepts</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">CONCEPTS</span><span class="p">[:</span><span class="mi">15</span><span class="p">]])</span>
+<span></span><span class="c1"># take the top 15 concepts</span>
+<span class="n">some_concepts</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">CONCEPTS</span><span class="p">[:</span><span class="mi">15</span><span class="p">]])</span>
 
 <span class="n">q</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">        identify experts</span>

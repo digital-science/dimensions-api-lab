@@ -30,7 +30,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 1,
+   "execution_count": 6,
    "metadata": {
     "Collapsed": "false",
     "colab": {
@@ -59,8 +59,8 @@
      "text": [
       "==\n",
       "Logging in..\n",
-      "\u001b[2mDimcli - Dimensions API Client (v0.7.4.2)\u001b[0m\n",
-      "\u001b[2mConnected to: https://app.dimensions.ai - DSL v1.27\u001b[0m\n",
+      "\u001b[2mDimcli - Dimensions API Client (v0.8.2)\u001b[0m\n",
+      "\u001b[2mConnected to: https://app.dimensions.ai - DSL v1.28\u001b[0m\n",
       "\u001b[2mMethod: dsl.ini file\u001b[0m\n"
      ]
     }
@@ -69,8 +69,8 @@
     "!pip install dimcli plotly networkx pyvis jsonpickle  -U --quiet\n",
     "\n",
     "import dimcli\n",
-    "from dimcli.shortcuts import *\n",
-    "from dimcli.core.extras import NetworkViz # custom version of pyvis - colab-compatible\n",
+    "from dimcli.utils import *\n",
+    "from dimcli.utils.networkviz import NetworkViz # custom version of pyvis - colab-compatible\n",
     "\n",
     "import json\n",
     "import sys\n",
@@ -80,16 +80,15 @@
     "import itertools\n",
     "\n",
     "print(\"==\\nLogging in..\")\n",
-    "# https://github.com/digital-science/dimcli#authentication\n",
+    "# https://digital-science.github.io/dimcli/getting-started.html#authentication\n",
     "ENDPOINT = \"https://app.dimensions.ai\"\n",
     "if 'google.colab' in sys.modules:\n",
     "  import getpass\n",
-    "  USERNAME = getpass.getpass(prompt='Username: ')\n",
-    "  PASSWORD = getpass.getpass(prompt='Password: ')\n",
-    "  dimcli.login(USERNAME, PASSWORD, ENDPOINT)\n",
+    "  KEY = getpass.getpass(prompt='API Key: ')  \n",
+    "  dimcli.login(KEY, ENDPOINT)\n",
     "else:\n",
-    "  USERNAME, PASSWORD  = \"\", \"\"\n",
-    "  dimcli.login(USERNAME, PASSWORD, ENDPOINT)\n",
+    "  KEY = \"\"\n",
+    "  dimcli.login(KEY, ENDPOINT)\n",
     "dsl = dimcli.Dsl()"
    ]
   },
@@ -112,7 +111,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 2,
+   "execution_count": 7,
    "metadata": {
     "Collapsed": "false",
     "colab": {},
@@ -124,10 +123,10 @@
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "Returned Publications: 1000 (total = 143549)\n",
-      "\u001b[2mTime: 4.57s\u001b[0m\n",
-      "Total concepts: 46176\n",
-      "Concepts score average 0.37900926845114347\n"
+      "Returned Publications: 1000 (total = 147455)\n",
+      "\u001b[2mTime: 9.02s\u001b[0m\n",
+      "Total concepts: 45773\n",
+      "Concepts score average 0.3791607853975051\n"
      ]
     },
     {
@@ -151,8 +150,8 @@
        "  <thead>\n",
        "    <tr style=\"text-align: right;\">\n",
        "      <th></th>\n",
-       "      <th>title</th>\n",
        "      <th>id</th>\n",
+       "      <th>title</th>\n",
        "      <th>concepts_count</th>\n",
        "      <th>concept</th>\n",
        "      <th>score</th>\n",
@@ -163,8 +162,8 @@
        "  <tbody>\n",
        "    <tr>\n",
        "      <th>0</th>\n",
-       "      <td>Building better batteries</td>\n",
        "      <td>pub.1007137639</td>\n",
+       "      <td>Building better batteries</td>\n",
        "      <td>67</td>\n",
        "      <td>materials science</td>\n",
        "      <td>0.06888</td>\n",
@@ -173,8 +172,8 @@
        "    </tr>\n",
        "    <tr>\n",
        "      <th>1</th>\n",
-       "      <td>Building better batteries</td>\n",
        "      <td>pub.1007137639</td>\n",
+       "      <td>Building better batteries</td>\n",
        "      <td>67</td>\n",
        "      <td>new series</td>\n",
        "      <td>0.06877</td>\n",
@@ -183,8 +182,8 @@
        "    </tr>\n",
        "    <tr>\n",
        "      <th>2</th>\n",
-       "      <td>Building better batteries</td>\n",
        "      <td>pub.1007137639</td>\n",
+       "      <td>Building better batteries</td>\n",
        "      <td>67</td>\n",
        "      <td>better batteries</td>\n",
        "      <td>0.06703</td>\n",
@@ -193,8 +192,8 @@
        "    </tr>\n",
        "    <tr>\n",
        "      <th>3</th>\n",
-       "      <td>Building better batteries</td>\n",
        "      <td>pub.1007137639</td>\n",
+       "      <td>Building better batteries</td>\n",
        "      <td>67</td>\n",
        "      <td>batteries</td>\n",
        "      <td>0.06070</td>\n",
@@ -203,8 +202,8 @@
        "    </tr>\n",
        "    <tr>\n",
        "      <th>4</th>\n",
-       "      <td>Building better batteries</td>\n",
        "      <td>pub.1007137639</td>\n",
+       "      <td>Building better batteries</td>\n",
        "      <td>67</td>\n",
        "      <td>Murray-Rust</td>\n",
        "      <td>0.05667</td>\n",
@@ -216,12 +215,12 @@
        "</div>"
       ],
       "text/plain": [
-       "                       title              id  concepts_count  \\\n",
-       "0  Building better batteries  pub.1007137639              67   \n",
-       "1  Building better batteries  pub.1007137639              67   \n",
-       "2  Building better batteries  pub.1007137639              67   \n",
-       "3  Building better batteries  pub.1007137639              67   \n",
-       "4  Building better batteries  pub.1007137639              67   \n",
+       "               id                      title  concepts_count  \\\n",
+       "0  pub.1007137639  Building better batteries              67   \n",
+       "1  pub.1007137639  Building better batteries              67   \n",
+       "2  pub.1007137639  Building better batteries              67   \n",
+       "3  pub.1007137639  Building better batteries              67   \n",
+       "4  pub.1007137639  Building better batteries              67   \n",
        "\n",
        "             concept    score  frequency  score_avg  \n",
        "0  materials science  0.06888          4    0.20473  \n",
@@ -231,7 +230,7 @@
        "4        Murray-Rust  0.05667          3    0.02170  "
       ]
      },
-     "execution_count": 2,
+     "execution_count": 7,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -276,7 +275,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 3,
+   "execution_count": 8,
    "metadata": {
     "Collapsed": "false",
     "colab": {},
@@ -288,13 +287,13 @@
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "Nodes: 177 Edges: 0\n",
+      "Nodes: 178 Edges: 0\n",
       ".. adding edges from pubs cooccurrence...\n",
-      "Nodes: 177 Edges: 1080\n",
+      "Nodes: 178 Edges: 1202\n",
       ".. cleaning up edges with weight < 2...\n",
-      "Nodes: 177 Edges: 203\n",
+      "Nodes: 178 Edges: 255\n",
       ".. removing isolated nodes...\n",
-      "Nodes: 122 Edges: 203\n"
+      "Nodes: 138 Edges: 255\n"
      ]
     }
    ],
@@ -385,7 +384,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 4,
+   "execution_count": 9,
    "metadata": {
     "Collapsed": "false",
     "colab": {},
@@ -407,10 +406,10 @@
        "        "
       ],
       "text/plain": [
-       "<IPython.lib.display.IFrame at 0x120bc4880>"
+       "<IPython.lib.display.IFrame at 0x125062c70>"
       ]
      },
-     "execution_count": 4,
+     "execution_count": 9,
      "metadata": {},
      "output_type": "execute_result"
     }

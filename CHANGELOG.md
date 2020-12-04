@@ -1,6 +1,21 @@
 # Changelog - Dimensions API Lab 
 
 
+### 2020-12-04
+
+Updates: 
+
+* All notebooks use the key-based API authentication method by default (see https://digital-science.github.io/dimcli/getting-started.html#authentication)
+
+
+### 2020-10-14
+
+Updates: 
+
+* [Expert Identification with the Dimensions API - An Introduction](https://api-lab.dimensions.ai/cookbooks/7-researchers/Experts-search-introduction.html) / examples improved and added mention of `grants` source
+
+
+
 ### 2020-09-15
 
 * Fixed broken links in README file [issue 8](https://github.com/digital-science/dimensions-api-lab/issues/8) and [issue 7](https://github.com/digital-science/dimensions-api-lab/issues/7)

@@ -110,6 +110,7 @@
 <li class="toctree-l1"><a class="reference internal" href="0-Verifying-your-connection.html">Verifying Your API Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="0-Verifying-your-connection.html#Technical-prerequisites">Technical prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="0-Verifying-your-connection.html#Connecting-to-the-API">Connecting to the API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="0-Verifying-your-connection.html#Legacy-authentication-method">Legacy authentication method</a></li>
 <li class="toctree-l2"><a class="reference internal" href="0-Verifying-your-connection.html#Troubleshooting">Troubleshooting</a></li>
 </ul>
 </li>
@@ -610,9 +611,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html">Expert Identification with the Dimensions API - An Introduction</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#At-a-glance">At a glance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Step-1:-Concept-Extraction">Step 1: Concept Extraction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Step-2:-Expert-Identification">Step 2: Expert Identification</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-1.-Most-Basic-Query-using-concepts">Example 1. Most Basic Query using <code class="docutils literal notranslate"><span class="pre">concepts</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-1.-Basic-query-using-concepts">Example 1. Basic query using <code class="docutils literal notranslate"><span class="pre">concepts</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-2.-Query-with-OR-connectors">Example 2. Query with <code class="docutils literal notranslate"><span class="pre">OR</span></code> connectors</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-3.-Query-with-where-filters">Example 3. Query with <code class="docutils literal notranslate"><span class="pre">where</span></code> filters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-4.-Adding-Overlap-Annotations-(eg-for-conflict-of-interests-checks)">Example 4. Adding Overlap Annotations (eg for conflict of interests checks)</a></li>
@@ -1012,7 +1014,7 @@ div.rendered_html tbody tr:hover {
 <hr class="docutils" />
 <div class="section" id="The-Dimcli-Python-library:-Installation-and-Querying">
 <h1>The Dimcli Python library: Installation and Querying<a class="headerlink" href="#The-Dimcli-Python-library:-Installation-and-Querying" title="Permalink to this headline">¶</a></h1>
-<p>The purpose of this notebook is to show how to use Dimcli. <a class="reference external" href="https://github.com/lambdamusic/dimcli">Dimcli</a> is an open source Python client for accessing the Dimensions Analytics API. It makes it easier to authenticate against the API, send queries to it and process the JSON data being returned.</p>
+<p>The purpose of this notebook is to show how to use Dimcli. <a class="reference external" href="https://digital-science.github.io/dimcli/getting-started.html">Dimcli</a> is an open source Python client for accessing the Dimensions Analytics API. It makes it easier to authenticate against the API, send queries to it and process the JSON data being returned.</p>
 <p>Dimcli includes also a command line interface (CLI) that aims at simplifying the process of learning the grammar of the Dimensions Search Language (DSL). Running <code class="docutils literal notranslate"><span class="pre">dimcli</span></code> from the terminal opens up an interactive query console with syntax autocomplete, persistent history across sessions, pretty-printing and preview of JSON results, export to HTML and CSV, and more.</p>
 <blockquote>
 <div><p>This guide assumes that you already have a Python 3 working environment and <a class="reference external" href="https://pypi.org/project/pip/">pip</a> - the python package manager - installed. For more background, see this <a class="reference external" href="https://realpython.com/installing-python/">link</a>.</p>
@@ -1042,19 +1044,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="section" id="Authentication">
 <h2>Authentication<a class="headerlink" href="#Authentication" title="Permalink to this headline">¶</a></h2>
-<p>There are <a class="reference external" href="https://github.com/digital-science/dimcli#authentication">different ways</a> to authenticate with the Dimensions API using DimCli. The easiest is passing your credentials explicilty like this:</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;dimensions-username@me.com&quot;</span><span class="p">,</span>
-             <span class="n">password</span><span class="o">=</span><span class="s2">&quot;my-secret-password&quot;</span><span class="p">,</span>
-             <span class="n">endpoint</span><span class="o">=</span><span class="s2">&quot;https://your-url.dimensions.ai&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<p>NOTE if you use a key instead of username and password to authenticate, you’d do the following:</p>
+<p>There are <a class="reference external" href="https://digital-science.github.io/dimcli/getting-started.html#authentication">different ways</a> to authenticate with the Dimensions API using DimCli. The easiest is passing your credentials explicilty like this:</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -1068,8 +1058,8 @@ div.rendered_html tbody tr:hover {
 <p>This method could be handy if you quickly want to login and cannot save a credentials file. However, this method is not ideal if you want to protect your credentials, especially within a shared environment.</p>
 <div class="section" id="More-secure-method:-storing-a-private-credentials-file">
 <h3>More secure method: storing a private credentials file<a class="headerlink" href="#More-secure-method:-storing-a-private-credentials-file" title="Permalink to this headline">¶</a></h3>
-<p>DimCli allows you to store your access credentials (e.g. email and password) in a file on your computer, so that you don’t have to type it in each time.</p>
-<p>If you have access to a terminal prompt, you can use Dimcli’s setup assistant to automatically create the API credentials file (for more info see also <a class="reference external" href="https://github.com/digital-science/dimcli#creating-a-credentials-file-using-the-helper-script-recommended">the docs</a>):</p>
+<p>DimCli allows you to store your access credentials in a file on your computer, so that you don’t have to type it in each time.</p>
+<p>If you have access to a terminal prompt, you can use Dimcli’s setup assistant to automatically create the API credentials file (for more info see also <a class="reference external" href="https://digital-science.github.io/dimcli/getting-started.html#authentication">Dimcli’s documentation</a>):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dimcli</span> <span class="o">--</span><span class="n">init</span>
 </pre></div>
 </div>
@@ -1079,15 +1069,14 @@ div.rendered_html tbody tr:hover {
 <li><p>open the file and add your credentials, making sure that</p>
 <ul>
 <li><p>the text structure is <strong>exactly</strong> the same as below (in particular, don’t change the <code class="docutils literal notranslate"><span class="pre">instance.live</span></code> directive unless you know what you’re doing!)</p></li>
-<li><p>you update the login and password fields as needed!</p></li>
+<li><p>you update the credentials fields as needed!</p></li>
 </ul>
 </li>
 </ul>
 <p>This is what the <code class="docutils literal notranslate"><span class="pre">dsl.ini</span></code> file should look like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">instance</span><span class="o">.</span><span class="n">live</span><span class="p">]</span>
 <span class="n">url</span><span class="o">=</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">app</span><span class="o">.</span><span class="n">dimensions</span><span class="o">.</span><span class="n">ai</span>
-<span class="n">login</span><span class="o">=</span><span class="n">user</span><span class="nd">@mail</span><span class="o">.</span><span class="n">com</span>
-<span class="n">password</span><span class="o">=</span><span class="n">yourpasswordhere</span>
+<span class="n">key</span><span class="o">=</span><span class="n">yourkeyhere</span>
 </pre></div>
 </div>
 <p>Then, all you have to do is:</p>
