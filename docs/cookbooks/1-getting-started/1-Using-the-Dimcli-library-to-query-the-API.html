@@ -1051,7 +1051,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">&quot;my-secret-key&quot;</span><span class="p">,</span>
-             <span class="n">endpoint</span><span class="o">=</span><span class="s2">&quot;https://your-url.dimensions.ai&quot;</span><span class="p">)</span>
+             <span class="n">endpoint</span><span class="o">=</span><span class="s2">&quot;https://app.dimensions.ai&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1080,24 +1080,14 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <p>Then, all you have to do is:</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Dimcli - Dimensions API Client (v0.6.9)
-Connected to endpoint: https://app.dimensions.ai - DSL version: 1.24
-Method: dsl.ini file
-</pre></div></div>
 </div>
 </div>
 </div>
@@ -1106,8 +1096,8 @@ Method: dsl.ini file
 <p>Dimcli provides a few handy shortcuts for querying the API.</p>
 <div class="section" id="Simple-Querying">
 <h3>Simple Querying<a class="headerlink" href="#Simple-Querying" title="Permalink to this headline">¶</a></h3>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1116,17 +1106,9 @@ Method: dsl.ini file
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Returned Publications: 20 (total = 1561596)
-</pre></div></div>
-</div>
 <p>By default, Dimcli prints out a short statement with info about the query. You can turn that off by passing the argument <code class="docutils literal notranslate"><span class="pre">verbose=False</span></code>.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1136,8 +1118,8 @@ Returned Publications: 20 (total = 1561596)
 </div>
 </div>
 <p>The raw json data is accessible via the <code class="docutils literal notranslate"><span class="pre">json</span></code> property of the resulting object.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1145,18 +1127,9 @@ Returned Publications: 20 (total = 1561596)
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-dict_keys([&#39;_stats&#39;, &#39;_version&#39;, &#39;publications&#39;])
-</pre></div></div>
-</div>
 <p>The main JSON keys of the data returned are accessible as properties</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1164,18 +1137,9 @@ dict_keys([&#39;_stats&#39;, &#39;_version&#39;, &#39;publications&#39;])
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-20
-</pre></div></div>
-</div>
 <p>The <code class="docutils literal notranslate"><span class="pre">count_batch</span></code> and <code class="docutils literal notranslate"><span class="pre">count_total</span></code> methods provide quick shortcuts to find out how many records are available:</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1183,17 +1147,9 @@ dict_keys([&#39;_stats&#39;, &#39;_version&#39;, &#39;publications&#39;])
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-We got 20 results out of 1561596
-</pre></div></div>
-</div>
 <p>If the query returns an error, the <code class="docutils literal notranslate"><span class="pre">errors</span></code> and <code class="docutils literal notranslate"><span class="pre">errors_string</span></code> methods can be handy too:</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1202,34 +1158,14 @@ We got 20 results out of 1561596
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Returned Errors: 1
-Semantic Error
-Semantic errors found:
-        Facet &#39;spaceships&#39; is not present in source &#39;publications&#39;. Available facets are: FOR,FOR_first,HRCS_HC,HRCS_RAC,RCDC,category_bra,category_for,category_hra,category_hrcs_hc,category_hrcs_rac,category_icrp_cso,category_icrp_ct,category_rcdc,category_sdg,category_ua,category_uoa,experts,funder_countries,funders,journal,journal_lists,mesh_terms,open_access_categories,pf01,publisher,research_org_cities,research_org_countries,research_org_state_codes,research_orgs,researchers,times_cited,type,year
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">errors_string</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Semantic ErrorSemantic errors found:
-        Facet &#39;spaceships&#39; is not present in source &#39;publications&#39;. Available facets are: FOR,FOR_first,HRCS_HC,HRCS_RAC,RCDC,category_bra,category_for,category_hra,category_hrcs_hc,category_hrcs_rac,category_icrp_cso,category_icrp_ct,category_rcdc,category_sdg,category_ua,category_uoa,experts,funder_countries,funders,journal,journal_lists,mesh_terms,open_access_categories,pf01,publisher,research_org_cities,research_org_countries,research_org_state_codes,research_orgs,researchers,times_cited,type,year
-</pre></div></div>
 </div>
 </div>
 <div class="section" id="Iterative-querying-(loops)">
@@ -1242,8 +1178,8 @@ Semantic ErrorSemantic errors found:
 <li><p>You can use <code class="docutils literal notranslate"><span class="pre">verbose=False</span></code> to off the notifications e.g. within a larger script with multiple steps.</p></li>
 <li><p>You can pass <code class="docutils literal notranslate"><span class="pre">limit</span> <span class="pre">=</span> <span class="pre">500</span></code> (or any other number &lt;=1000) to specify how many records to extract per iteration - which by default is 1000 (the max amount). This can be handy i.e. when a query is particularly long and so it may impact the API performance (or cause an error); in this case returning less records per iteration ensures that the API server never gets overloaded.</p></li>
 </ul>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1251,37 +1187,14 @@ Semantic ErrorSemantic errors found:
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-1000 / ...
-1000 / 3385
-2000 / 3385
-3000 / 3385
-3385 / 3385
-===
-Records extracted: 3385
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">publications</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-3385
-</pre></div></div>
 </div>
 </div>
 </div>
@@ -1327,8 +1240,8 @@ All special commands start with &#39;.&#39;
 </pre></div>
 </div>
 <p>See the video below for a quick demonstration of the query autocomplete functionalities, or please visit the <a class="reference external" href="https://github.com/digital-science/dimcli#dimcli-as-a-command-line-interface">Github repo</a> for more information.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1336,13 +1249,6 @@ All special commands start with &#39;.&#39;
 <span class="n">Image</span><span class="p">(</span><span class="n">url</span><span class="o">=</span> <span class="s2">&quot;http://api-sample-data.dimensions.ai/videos/dimcli_animated.gif&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<img src="http://api-sample-data.dimensions.ai/videos/dimcli_animated.gif" width="800"/></div>
 </div>
 </div>
 </div>
