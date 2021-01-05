@@ -1,6 +1,13 @@
 # Changelog - Dimensions API Lab 
 
 
+### 2021-01-05
+
+Updates: 
+
+* [Deep Dive into the Dimensions Search Language](https://api-lab.dimensions.ai/cookbooks/1-getting-started/5-Deep-dive-DSL-language.html)
+
+
 ### 2020-12-04
 
 Updates: 
