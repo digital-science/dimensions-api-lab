@@ -109,8 +109,8 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Verifying Your API Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#Technical-prerequisites">Technical prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Connecting-to-the-API">Connecting to the API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Legacy-authentication-method">Legacy authentication method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Connecting-to-the-API-using-a-key">Connecting to the API using a <code class="docutils literal notranslate"><span class="pre">key</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Legacy-authentication-method:-username-&amp;-password">Legacy authentication method: username &amp; password</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Troubleshooting">Troubleshooting</a></li>
 </ul>
 </li>
@@ -1049,24 +1049,20 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 </div>
-<div class="section" id="Connecting-to-the-API">
-<h2>Connecting to the API<a class="headerlink" href="#Connecting-to-the-API" title="Permalink to this headline">¶</a></h2>
-<p>If you have access to the Analytics API, simply fill in the parameters below with your details:</p>
+<div class="section" id="Connecting-to-the-API-using-a-key">
+<h2>Connecting to the API using a <code class="docutils literal notranslate"><span class="pre">key</span></code><a class="headerlink" href="#Connecting-to-the-API-using-a-key" title="Permalink to this headline">¶</a></h2>
+<p>If you have access to the Analytics API, simply get an API key from the Dimensions webapp (My Account &gt; General Settings &gt; API key and click “Create API key”) and fill in the parameters below with your details (see also <a class="reference external" href="https://dimensions.freshdesk.com/support/solutions/articles/23000018791">this page</a>).</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">KEY</span> <span class="o">=</span> <span class="s1">&#39;your API key&#39;</span>
-<span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s1">&#39;app.dimensions.ai&#39;</span>  <span class="c1"># eg no need to include &#39;https://&#39;</span>
+<span></span><span class="n">KEY</span> <span class="o">=</span> <span class="s1">&#39;your API key&#39;</span>            <span class="c1"># your private API key</span>
+<span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s1">&#39;app.dimensions.ai&#39;</span>  <span class="c1"># the Dimensions server you are using</span>
 </pre></div>
 </div>
 </div>
-<p>Try running the script below (Note: the script is also available on the <a class="reference external" href="https://docs.dimensions.ai/dsl/api.html#python-example">API official documentation</a>).</p>
-<p>If the details are correct, you should see some JSON results being returned, which looks like this</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;_stats&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;total_count&#39;</span><span class="p">:</span> <span class="mi">103121703</span><span class="p">},</span> <span class="s1">&#39;publications&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Sure 16,1 - 23,118&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;book&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;pub.1113244530&#39;</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">:</span> <span class="mi">2019</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Deutungsmacht von Zeitdiagnosen&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;book&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;pub.1113146259&#39;</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">:</span> <span class="mi">2019</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;“So You Want to Write about American Indians?” Ethical Reflections on Euro-Academia’s Research on Indigenous Cultural Narratives&#39;</span><span class="p">,</span> <span class="s1">&#39;author_affiliations&#39;</span><span class="p">:</span> <span class="o">....</span>
-</pre></div>
-</div>
+<p>Now try running the script below to verify your connection.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -1074,7 +1070,7 @@ div.rendered_html tbody tr:hover {
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1">#   The credentials to be used</span>
 <span class="n">login</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s2">&quot;your API key&quot;</span>
+    <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="n">KEY</span>
 <span class="p">}</span>
 
 <span class="c1">#   Send credentials to login url to retrieve token. Raise</span>
@@ -1108,22 +1104,47 @@ div.rendered_html tbody tr:hover {
 {&#39;_stats&#39;: {&#39;total_count&#39;: 103121703}, &#39;publications&#39;: [{&#39;title&#39;: &#39;Sure 16,1 - 23,118&#39;, &#39;type&#39;: &#39;book&#39;, &#39;id&#39;: &#39;pub.1113244530&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;Deutungsmacht von Zeitdiagnosen&#39;, &#39;type&#39;: &#39;book&#39;, &#39;id&#39;: &#39;pub.1113146259&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;“So You Want to Write about American Indians?” Ethical Reflections on Euro-Academia’s Research on Indigenous Cultural Narratives&#39;, &#39;author_affiliations&#39;: [[{&#39;first_name&#39;: &#39;Amina&#39;, &#39;last_name&#39;: &#39;Grunewald&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;&#39;, &#39;affiliations&#39;: []}]], &#39;type&#39;: &#39;chapter&#39;, &#39;id&#39;: &#39;pub.1113271690&#39;, &#39;pages&#39;: &#39;239-260&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;The Moral Nexus&#39;, &#39;author_affiliations&#39;: [[{&#39;first_name&#39;: &#39;R. Jay&#39;, &#39;last_name&#39;: &#39;Wallace&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;&#39;, &#39;affiliations&#39;: []}]], &#39;type&#39;: &#39;monograph&#39;, &#39;id&#39;: &#39;pub.1117142285&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;VC&#39;, &#39;author_affiliations&#39;: [[{&#39;first_name&#39;: &#39;Tom&#39;, &#39;last_name&#39;: &#39;Nicholas&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;&#39;, &#39;affiliations&#39;: []}]], &#39;type&#39;: &#39;monograph&#39;, &#39;id&#39;: &#39;pub.1117152054&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;Altenheim Thema Hauswirtschaft&#39;, &#39;type&#39;: &#39;monograph&#39;, &#39;id&#39;: &#39;pub.1117170089&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;Expression of a novel gene encoding protease inhibitor from metagenome of sponge in Vietnam&#39;, &#39;author_affiliations&#39;: [[{&#39;first_name&#39;: &#39;Tran Thi&#39;, &#39;last_name&#39;: &#39;Hong&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;&#39;, &#39;affiliations&#39;: []}, {&#39;first_name&#39;: &#39;Ton That Huu&#39;, &#39;last_name&#39;: &#39;Dat&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;grid.4818.5&#39;, &#39;researcher_id&#39;: &#39;ur.011501570541.62&#39;, &#39;affiliations&#39;: []}, {&#39;first_name&#39;: &#39;Nguyen Phuong&#39;, &#39;last_name&#39;: &#39;Hoa&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;&#39;, &#39;affiliations&#39;: []}, {&#39;first_name&#39;: &#39;Pham Viet&#39;, &#39;last_name&#39;: &#39;Cuong&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;&#39;, &#39;affiliations&#39;: []}, {&#39;first_name&#39;: &#39;Nguyen Thi Kim&#39;, &#39;last_name&#39;: &#39;Cuc&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;&#39;, &#39;affiliations&#39;: []}]], &#39;type&#39;: &#39;article&#39;, &#39;volume&#39;: &#39;40&#39;, &#39;issue&#39;: &#39;4&#39;, &#39;id&#39;: &#39;pub.1112252248&#39;, &#39;year&#39;: 2019, &#39;journal&#39;: {&#39;id&#39;: &#39;jour.1355760&#39;, &#39;title&#39;: &#39;ACADEMIA JOURNAL OF BIOLOGY&#39;}}, {&#39;title&#39;: &#34;Macrophage&#39;s Arsenal in the Battle against Zaire EBOLA Virus&#34;, &#39;author_affiliations&#39;: [[{&#39;first_name&#39;: &#39;Rosa&#39;, &#39;last_name&#39;: &#39;Michelino Di&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;&#39;, &#39;affiliations&#39;: []}, {&#39;first_name&#39;: &#39;Malaguarnera&#39;, &#39;last_name&#39;: &#39;Lucia&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;&#39;, &#39;affiliations&#39;: []}]], &#39;type&#39;: &#39;article&#39;, &#39;volume&#39;: &#39;2&#39;, &#39;issue&#39;: &#39;1&#39;, &#39;id&#39;: &#39;pub.1112223838&#39;, &#39;year&#39;: 2019, &#39;journal&#39;: {&#39;id&#39;: &#39;jour.1336528&#39;, &#39;title&#39;: &#39;International Journal of Tropical Diseases&#39;}}, {&#39;title&#39;: &#39;»Dieses verfluchte Land«&#39;, &#39;author_affiliations&#39;: [[{&#39;first_name&#39;: &#39;Annika&#39;, &#39;last_name&#39;: &#39;Raapke&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;&#39;, &#39;affiliations&#39;: []}]], &#39;type&#39;: &#39;monograph&#39;, &#39;id&#39;: &#39;pub.1112049851&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;Medizinische Fachlichkeit und Emotionen&#39;, &#39;author_affiliations&#39;: [[{&#39;first_name&#39;: &#39;Kerstin&#39;, &#39;last_name&#39;: &#39;Rego&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;&#39;, &#39;affiliations&#39;: []}]], &#39;type&#39;: &#39;monograph&#39;, &#39;id&#39;: &#39;pub.1112050121&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;Zusammenarbeit&#39;, &#39;type&#39;: &#39;chapter&#39;, &#39;id&#39;: &#39;pub.1112050109&#39;, &#39;pages&#39;: &#39;127-154&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;Einleitung&#39;, &#39;author_affiliations&#39;: [[{&#39;first_name&#39;: &#39;Albert&#39;, &#39;last_name&#39;: &#39;Gouaffo&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;ur.016407172041.61&#39;, &#39;affiliations&#39;: []}, {&#39;first_name&#39;: &#39;Stefanie&#39;, &#39;last_name&#39;: &#39;Michels&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;&#39;, &#39;affiliations&#39;: []}]], &#39;type&#39;: &#39;chapter&#39;, &#39;id&#39;: &#39;pub.1112049938&#39;, &#39;pages&#39;: &#39;9-28&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;Kapitel 18. Besonderheiten beim grenzüberschreitenden Unternehmenskauf&#39;, &#39;author_affiliations&#39;: [[{&#39;first_name&#39;: &#39;Christoph F.&#39;, &#39;last_name&#39;: &#39;Wetzler&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;&#39;, &#39;affiliations&#39;: []}]], &#39;type&#39;: &#39;chapter&#39;, &#39;id&#39;: &#39;pub.1111892594&#39;, &#39;pages&#39;: &#39;1401-1466&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;Kapitel 71. Wiedereinsetzung in den vorigen Stand&#39;, &#39;type&#39;: &#39;chapter&#39;, &#39;id&#39;: &#39;pub.1111892348&#39;, &#39;pages&#39;: &#39;1159-1185&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;Sachregister&#39;, &#39;type&#39;: &#39;chapter&#39;, &#39;id&#39;: &#39;pub.1111901333&#39;, &#39;pages&#39;: &#39;2645-2662&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;6. Teil: Vertrags- und Rechtsverhältnisse&#39;, &#39;type&#39;: &#39;chapter&#39;, &#39;id&#39;: &#39;pub.1111892463&#39;, &#39;pages&#39;: &#39;967-1150&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;Deutsch aus finnischer Sicht - Überblick über die sprachliche Situation in Finnland mit einer kontrastiven Betrachtung von Wort- und Wortformenstrukturen&#39;, &#39;author_affiliations&#39;: [[{&#39;first_name&#39;: &#39;Irma&#39;, &#39;last_name&#39;: &#39;Hyvärinen&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;&#39;, &#39;affiliations&#39;: []}]], &#39;type&#39;: &#39;chapter&#39;, &#39;id&#39;: &#39;pub.1111879211&#39;, &#39;pages&#39;: &#39;203-238&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;Kapitel 137. Grundzüge des Arbeitsgerichtsverfahrens&#39;, &#39;type&#39;: &#39;chapter&#39;, &#39;id&#39;: &#39;pub.1111892415&#39;, &#39;pages&#39;: &#39;3100-3104&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;Kapitel 10. Prozesskostenhilfe&#39;, &#39;type&#39;: &#39;chapter&#39;, &#39;id&#39;: &#39;pub.1111892288&#39;, &#39;pages&#39;: &#39;123-169&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;Kapitel 107. Einstweilige Anordnungen&#39;, &#39;type&#39;: &#39;chapter&#39;, &#39;id&#39;: &#39;pub.1111892385&#39;, &#39;pages&#39;: &#39;2442-2452&#39;, &#39;year&#39;: 2019}]}
 </pre></div></div>
 </div>
+<p>If the details are correct, you should see some JSON results being returned, which looks like this</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;_stats&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;total_count&#39;</span><span class="p">:</span> <span class="mi">103121703</span><span class="p">},</span> <span class="s1">&#39;publications&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Sure 16,1 - 23,118&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;book&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;pub.1113244530&#39;</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">:</span> <span class="mi">2019</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Deutungsmacht von Zeitdiagnosen&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;book&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;pub.1113146259&#39;</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">:</span> <span class="mi">2019</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;“So You Want to Write about American Indians?” Ethical Reflections on Euro-Academia’s Research on Indigenous Cultural Narratives&#39;</span><span class="p">,</span> <span class="s1">&#39;author_affiliations&#39;</span><span class="p">:</span> <span class="o">....</span>
+</pre></div>
 </div>
-<div class="section" id="Legacy-authentication-method">
-<h2>Legacy authentication method<a class="headerlink" href="#Legacy-authentication-method" title="Permalink to this headline">¶</a></h2>
-<p>The snippet above uses the key authentication method, which is the primary method for most API users (see also <a class="reference external" href="https://dimensions.freshdesk.com/support/solutions/articles/23000018791">this page</a>).</p>
-<p>Some legacy users may still have to authenticate using their Dimensions <strong>username</strong> and <strong>password</strong>. If that’s the case, simply replace the beginning of the snippet above as follows:</p>
+</div>
+<div class="section" id="Legacy-authentication-method:-username-&amp;-password">
+<h2>Legacy authentication method: username &amp; password<a class="headerlink" href="#Legacy-authentication-method:-username-&-password" title="Permalink to this headline">¶</a></h2>
+<p>Some legacy users may still have to authenticate using their Dimensions <strong>username</strong> and <strong>password</strong>.</p>
+<p>If that’s the case, simply replace the beginning of the snippet above as follows:</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1">#   Deprecated method if you can&#39;t have a key</span>
+<span></span><span class="c1">#   Deprecated method if you don&#39;t have a key</span>
 
 <span class="n">login</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;username&#39;</span><span class="p">:</span> <span class="s1">&#39;your username&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;password&#39;</span><span class="p">:</span> <span class="s1">&#39;your password&#39;</span>
+    <span class="s1">&#39;username&#39;</span><span class="p">:</span> <span class="s1">&#39;ENTER YOUR USERNAME HERE&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;password&#39;</span><span class="p">:</span> <span class="s1">&#39;ENTER YOUR PASSWORD HERE&#39;</span>
 <span class="p">}</span>
+
+<span class="c1">#   Send credentials to login url to retrieve token. Raise</span>
+<span class="c1">#   an error, if the return code indicates a problem.</span>
+<span class="c1">#   Please use the URL of the system you&#39;d like to access the API</span>
+<span class="c1">#   in the example below.</span>
+<span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;https://</span><span class="si">{</span><span class="n">ENDPOINT</span><span class="si">}</span><span class="s1">/api/auth.json&#39;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">login</span><span class="p">)</span>
+<span class="n">resp</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+
+<span class="c1">#   Create http header using the generated token.</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s2">&quot;JWT &quot;</span> <span class="o">+</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;token&#39;</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="c1">#   Execute DSL query.</span>
+<span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s1">&#39;https://</span><span class="si">{</span><span class="n">ENDPOINT</span><span class="si">}</span><span class="s1">/api/dsl.json&#39;</span><span class="p">,</span>
+    <span class="n">data</span><span class="o">=</span><span class="s1">&#39;search publications for &quot;乳がん&quot; return publications&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(),</span>
+    <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+<span class="c1">#   Display raw result</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>

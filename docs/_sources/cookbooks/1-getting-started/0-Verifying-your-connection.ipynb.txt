@@ -55,7 +55,7 @@
     "id": "04jlpszd9UBf"
    },
    "source": [
-    "### Connecting to the API "
+    "### Connecting to the API using a `key`"
    ]
   },
   {
@@ -66,7 +66,8 @@
     "id": "mnbDqQPa9UBg"
    },
    "source": [
-    "If you have access to the Analytics API, simply fill in the parameters below with your details:"
+    "If you have access to the Analytics API, simply get an API key from the Dimensions webapp (My Account > General Settings > API key and click \"Create API key\") and fill in the parameters below with your details (see also [this page](https://dimensions.freshdesk.com/support/solutions/articles/23000018791)). \n",
+    "\n"
    ]
   },
   {
@@ -80,8 +81,8 @@
    },
    "outputs": [],
    "source": [
-    "KEY = 'your API key'\n",
-    "ENDPOINT = 'app.dimensions.ai'  # eg no need to include 'https://'"
+    "KEY = 'your API key'            # your private API key\n",
+    "ENDPOINT = 'app.dimensions.ai'  # the Dimensions server you are using"
    ]
   },
   {
@@ -92,15 +93,7 @@
     "id": "dlYYoXIk9UBi"
    },
    "source": [
-    "Try running the script below (Note: the script is also available on the [API official documentation](https://docs.dimensions.ai/dsl/api.html#python-example)).\n",
-    "\n",
-    "If the details are correct, you should see some JSON results being returned, which looks like this \n",
-    "\n",
-    "```\n",
-    "{'_stats': {'total_count': 103121703}, 'publications': [{'title': 'Sure 16,1 - 23,118', 'type': 'book', 'id': 'pub.1113244530', 'year': 2019}, {'title': 'Deutungsmacht von Zeitdiagnosen', 'type': 'book', 'id': 'pub.1113146259', 'year': 2019}, {'title': '“So You Want to Write about American Indians?” Ethical Reflections on Euro-Academia’s Research on Indigenous Cultural Narratives', 'author_affiliations': ....\n",
-    "```\n",
-    "\n",
-    "> "
+    "Now try running the script below to verify your connection.\n"
    ]
   },
   {
@@ -125,7 +118,7 @@
    "source": [
     "#   The credentials to be used\n",
     "login = {\n",
-    "    'key': \"your API key\"\n",
+    "    'key': KEY\n",
     "}\n",
     "\n",
     "#   Send credentials to login url to retrieve token. Raise\n",
@@ -156,11 +149,24 @@
     "Collapsed": "false"
    },
    "source": [
-    "### Legacy authentication method\n",
+    "If the details are correct, you should see some JSON results being returned, which looks like this \n",
     "\n",
-    "The snippet above uses the key authentication method, which is the primary method for most API users (see also [this page](https://dimensions.freshdesk.com/support/solutions/articles/23000018791)).\n",
+    "```\n",
+    "{'_stats': {'total_count': 103121703}, 'publications': [{'title': 'Sure 16,1 - 23,118', 'type': 'book', 'id': 'pub.1113244530', 'year': 2019}, {'title': 'Deutungsmacht von Zeitdiagnosen', 'type': 'book', 'id': 'pub.1113146259', 'year': 2019}, {'title': '“So You Want to Write about American Indians?” Ethical Reflections on Euro-Academia’s Research on Indigenous Cultural Narratives', 'author_affiliations': ....\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "### Legacy authentication method: username & password\n",
     "\n",
-    "Some legacy users may still have to authenticate using their Dimensions **username** and **password**. If that’s the case, simply replace the beginning of the snippet above as follows:"
+    "Some legacy users may still have to authenticate using their Dimensions **username** and **password**. \n",
+    "\n",
+    "If that’s the case, simply replace the beginning of the snippet above as follows:"
    ]
   },
   {
@@ -171,12 +177,33 @@
    },
    "outputs": [],
    "source": [
-    "#   Deprecated method if you can't have a key \n",
+    "#   Deprecated method if you don't have a key \n",
     "\n",
     "login = {\n",
-    "    'username': 'your username',\n",
-    "    'password': 'your password'\n",
-    "}"
+    "    'username': 'ENTER YOUR USERNAME HERE',\n",
+    "    'password': 'ENTER YOUR PASSWORD HERE'\n",
+    "}\n",
+    "\n",
+    "#   Send credentials to login url to retrieve token. Raise\n",
+    "#   an error, if the return code indicates a problem.\n",
+    "#   Please use the URL of the system you'd like to access the API\n",
+    "#   in the example below.\n",
+    "resp = requests.post(f'https://{ENDPOINT}/api/auth.json', json=login)\n",
+    "resp.raise_for_status()\n",
+    "\n",
+    "#   Create http header using the generated token.\n",
+    "headers = {\n",
+    "    'Authorization': \"JWT \" + resp.json()['token']\n",
+    "}\n",
+    "\n",
+    "#   Execute DSL query.\n",
+    "resp = requests.post(\n",
+    "    f'https://{ENDPOINT}/api/dsl.json',\n",
+    "    data='search publications for \"乳がん\" return publications'.encode(),\n",
+    "    headers=headers)\n",
+    "\n",
+    "#   Display raw result\n",
+    "print(resp.json())"
    ]
   },
   {
