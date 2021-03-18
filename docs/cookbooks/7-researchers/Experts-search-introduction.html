@@ -620,7 +620,11 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Expert Identification with the Dimensions API - An Introduction</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#Prerequisites">Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#At-a-glance">At a glance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Step-1:-Concept-Extraction">Step 1: Concept Extraction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Step-1:-Concept-Extraction">Step 1: Concept Extraction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#What-are-concepts?">What are concepts?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Extracting-concepts-with-the-DSL">Extracting concepts with the DSL</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#Step-2:-Expert-Identification">Step 2: Expert Identification</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#Example-1.-Basic-query-using-concepts">Example 1. Basic query using <code class="docutils literal notranslate"><span class="pre">concepts</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#Example-2.-Query-with-OR-connectors">Example 2. Query with <code class="docutils literal notranslate"><span class="pre">OR</span></code> connectors</a></li>
@@ -629,6 +633,12 @@
 <li class="toctree-l3"><a class="reference internal" href="#Example-5.-Query-with-MUST/NOT-Operators">Example 5. Query with MUST/NOT Operators</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#Example-6.-MUST-together-with-AND/OR">Example 6. MUST together with AND/OR</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#Example-7.-Wildcard-searches">Example 7. Wildcard searches</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Additional-resources:-shortcut-functions-included-in-Dimcli">Additional resources: shortcut functions included in Dimcli</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#extract_concepts">extract_concepts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#identify_experts">identify_experts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Build-a-reviewers-matrix">Build a reviewers matrix</a></li>
 </ul>
 </li>
 </ul>
@@ -1022,7 +1032,7 @@ div.rendered_html tbody tr:hover {
 <hr class="docutils" />
 <div class="section" id="Expert-Identification-with-the-Dimensions-API---An-Introduction">
 <h1>Expert Identification with the Dimensions API - An Introduction<a class="headerlink" href="#Expert-Identification-with-the-Dimensions-API---An-Introduction" title="Permalink to this headline">¶</a></h1>
-<p>This notebook shows to use the new <a class="reference external" href="https://docs.dimensions.ai/dsl/expert-identification.html">expert identification</a> feature of Dimensions’ Analytics API.</p>
+<p>This notebook shows to use the <a class="reference external" href="https://docs.dimensions.ai/dsl/expert-identification.html">expert identification</a> workflow available via Dimensions Analytics API.</p>
 <div class="section" id="Prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
 <p>This notebook assumes you have installed the <a class="reference external" href="https://pypi.org/project/dimcli/">Dimcli</a> library and are familiar with the <em>Getting Started</em> tutorial.</p>
@@ -1061,8 +1071,8 @@ div.rendered_html tbody tr:hover {
 <div class="highlight"><pre>
 ==
 Logging in..
-Dimcli - Dimensions API Client (v0.8.2)
-Connected to: https://app.dimensions.ai - DSL v1.28
+Dimcli - Dimensions API Client (v0.9)
+Connected to: https://app.dimensions.ai - DSL v1.30
 Method: dsl.ini file
 </pre></div></div>
 </div>
@@ -1350,6 +1360,13 @@ return experts[basics]
 </div>
 <div class="section" id="Step-1:-Concept-Extraction">
 <h2>Step 1: Concept Extraction<a class="headerlink" href="#Step-1:-Concept-Extraction" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="What-are-concepts?">
+<h3>What are concepts?<a class="headerlink" href="#What-are-concepts?" title="Permalink to this headline">¶</a></h3>
+<p>Concepts are noun-phrases automatically extracted from a document’s abstract as well as the rest of the Dimensions database, which is used to weight their importance and relevance within the document’s field of study (see also the official documentation: <a class="reference external" href="https://docs.dimensions.ai/dsl/language.html#concepts-search-main">searching using concepts</a>).</p>
+<p>For instance, the phrases machine learning and neural network will be considered very relevant in a computer science paper, while project and study will have their relevance scores low as they are generic phrases.</p>
+</div>
+<div class="section" id="Extracting-concepts-with-the-DSL">
+<h3>Extracting concepts with the DSL<a class="headerlink" href="#Extracting-concepts-with-the-DSL" title="Permalink to this headline">¶</a></h3>
 <p>Extracting concepts is implemented using the <a class="reference external" href="https://docs.dimensions.ai/dsl/functions.html#function-extract-concepts">extract_concepts DSL function</a>. This is the syntax:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">extract_concepts</span><span class="p">(</span><span class="s2">&quot;publication abstract&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1366,9 +1383,13 @@ return experts[basics]
 <span class="s2">holes in concentrations up to 10 per square centimeter and with room-temperature mobilities of approximately 10,000 square</span>
 <span class="s2">centimeters per volt-second can be induced by applying gate voltage.</span>
 <span class="s2">&quot;&quot;&quot;</span>
+
 <span class="n">abstract</span> <span class="o">=</span> <span class="n">abstract</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+
 <span class="n">res</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;extract_concepts(&quot;</span><span class="si">{</span><span class="n">abstract</span><span class="si">}</span><span class="s2">&quot;)&quot;&quot;&quot;</span><span class="p">)</span>
+
 <span class="n">CONCEPTS</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="s1">&#39;extracted_concepts&#39;</span><span class="p">]</span>
+
 <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">CONCEPTS</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1523,6 +1544,7 @@ return experts[basics]
   </tbody>
 </table>
 </div></div>
+</div>
 </div>
 </div>
 <div class="section" id="Step-2:-Expert-Identification">
@@ -3260,6 +3282,755 @@ return experts
   </tbody>
 </table>
 </div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Additional-resources:-shortcut-functions-included-in-Dimcli">
+<h2>Additional resources: shortcut functions included in Dimcli<a class="headerlink" href="#Additional-resources:-shortcut-functions-included-in-Dimcli" title="Permalink to this headline">¶</a></h2>
+<p>Dimcli includes a number of ‘shortcut’ <a class="reference external" href="https://digital-science.github.io/dimcli/modules.html#module-dimcli.core.functions">Python functions</a> that make it easier to work with the expert identification API.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">dimcli.functions</span> <span class="kn">import</span> <span class="n">extract_concepts</span><span class="p">,</span> <span class="n">identify_experts</span><span class="p">,</span> <span class="n">build_reviewers_matrix</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="extract_concepts">
+<h3>extract_concepts<a class="headerlink" href="#extract_concepts" title="Permalink to this headline">¶</a></h3>
+<p>A Python wrapper for the DSL function extract_concept (<a class="reference external" href="https://digital-science.github.io/dimcli/modules.html#dimcli.core.functions.extract_concepts">see source</a>).</p>
+<p>Extract concepts from any text. Text input is processed and extracted concepts are returned as an array of strings ordered by their relevance</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">extract_concepts</span>
+
+We describe monocrystalline graphitic films, which are a few atoms thick but are nonetheless stable under ambient conditions,
+ metallic, and of remarkably high quality. The films are found to be a two-dimensional semimetal with a tiny overlap between
+ valence and conductance bands, and they exhibit a strong ambipolar electric field effect such that electrons and
+ holes in concentrations up to 10 per square centimeter and with room-temperature mobilities of approximately 10,000 square
+ centimeters per volt-second can be induced by applying gate voltage.
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>concept</th>
+      <th>relevance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ambipolar electric field effect</td>
+      <td>0.299</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>two-dimensional semimetal</td>
+      <td>0.293</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>room-temperature mobility</td>
+      <td>0.285</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>electric field effects</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>square centimeter</td>
+      <td>0.262</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>graphitic films</td>
+      <td>0.254</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>field effects</td>
+      <td>0.254</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>gate voltage</td>
+      <td>0.253</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>conductance band</td>
+      <td>0.234</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>films</td>
+      <td>0.213</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>electrons</td>
+      <td>0.204</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>ambient conditions</td>
+      <td>0.201</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>semimetals</td>
+      <td>0.201</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>atoms</td>
+      <td>0.195</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>holes</td>
+      <td>0.190</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>centimeters</td>
+      <td>0.187</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>voltage</td>
+      <td>0.167</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>band</td>
+      <td>0.164</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>high quality</td>
+      <td>0.163</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>valence</td>
+      <td>0.159</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>mobility</td>
+      <td>0.150</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>overlap</td>
+      <td>0.126</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>effect</td>
+      <td>0.114</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>conditions</td>
+      <td>0.104</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>concentration</td>
+      <td>0.088</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>quality</td>
+      <td>0.074</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="identify_experts">
+<h3>identify_experts<a class="headerlink" href="#identify_experts" title="Permalink to this headline">¶</a></h3>
+<p>A Python wrapper for the full expert identification workflow (<a class="reference external" href="https://digital-science.github.io/dimcli/modules.html#dimcli.core.functions.identify_experts">see source</a>).</p>
+<p>This wrapper provide a simpler version of the expert identification API. It is meant to be a convenient alternative for basic queries. For more options, it is advised to use the API directly.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">identify_experts</span>
+
+We describe monocrystalline graphitic films, which are a few atoms thick but are nonetheless stable under ambient conditions,
+ metallic, and of remarkably high quality. The films are found to be a two-dimensional semimetal with a tiny overlap between
+ valence and conductance bands, and they exhibit a strong ambipolar electric field effect such that electrons and
+ holes in concentrations up to 10 per square centimeter and with room-temperature mobilities of approximately 10,000 square
+ centimeters per volt-second can be induced by applying gate voltage.
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>score</th>
+      <th>last_publication_year</th>
+      <th>total_publications</th>
+      <th>last_grant_year</th>
+      <th>current_research_org</th>
+      <th>total_grants</th>
+      <th>research_orgs</th>
+      <th>first_grant_year</th>
+      <th>orcid_id</th>
+      <th>first_publication_year</th>
+      <th>last_name</th>
+      <th>first_name</th>
+      <th>docs_found</th>
+      <th>dimensions_url</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ur.01203703171.12</td>
+      <td>4.221575</td>
+      <td>2021</td>
+      <td>217</td>
+      <td>2023.0</td>
+      <td>grid.136593.b</td>
+      <td>12</td>
+      <td>[grid.136593.b, grid.258799.8, grid.472717.0, ...</td>
+      <td>2009.0</td>
+      <td>[0000-0002-6631-5131]</td>
+      <td>2000</td>
+      <td>Chiba</td>
+      <td>Daichi</td>
+      <td>17</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ur.01311211105.43</td>
+      <td>2.924170</td>
+      <td>2021</td>
+      <td>107</td>
+      <td>2020.0</td>
+      <td>grid.136593.b</td>
+      <td>3</td>
+      <td>[grid.257022.0, grid.258799.8, grid.136593.b, ...</td>
+      <td>2013.0</td>
+      <td>[0000-0003-4796-1776]</td>
+      <td>2008</td>
+      <td>Koyama</td>
+      <td>Tomohiro</td>
+      <td>13</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ur.01055006635.53</td>
+      <td>2.882491</td>
+      <td>2021</td>
+      <td>340</td>
+      <td>2017.0</td>
+      <td>grid.4605.7</td>
+      <td>14</td>
+      <td>[grid.415877.8, grid.4886.2, grid.4605.7, grid...</td>
+      <td>1993.0</td>
+      <td>NaN</td>
+      <td>1983</td>
+      <td>Kvon</td>
+      <td>Ze Don</td>
+      <td>11</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ur.01034030721.03</td>
+      <td>2.861368</td>
+      <td>2021</td>
+      <td>248</td>
+      <td>2023.0</td>
+      <td>grid.116068.8</td>
+      <td>7</td>
+      <td>[grid.21729.3f, grid.116068.8, grid.38142.3c, ...</td>
+      <td>2009.0</td>
+      <td>[0000-0001-8217-8213]</td>
+      <td>2000</td>
+      <td>Jarillo-Herrero</td>
+      <td>Pablo</td>
+      <td>7</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>ur.011513332561.53</td>
+      <td>2.268820</td>
+      <td>2020</td>
+      <td>213</td>
+      <td>2011.0</td>
+      <td>grid.260539.b</td>
+      <td>23</td>
+      <td>[grid.39158.36, grid.69566.3a, grid.417929.0, ...</td>
+      <td>1987.0</td>
+      <td>NaN</td>
+      <td>1976</td>
+      <td>Ohta</td>
+      <td>Nobuhiro</td>
+      <td>10</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>ur.012735754655.38</td>
+      <td>2.144676</td>
+      <td>2021</td>
+      <td>465</td>
+      <td>2023.0</td>
+      <td>grid.258799.8</td>
+      <td>26</td>
+      <td>[grid.507644.4, grid.136593.b, grid.26091.3c, ...</td>
+      <td>1995.0</td>
+      <td>NaN</td>
+      <td>1993</td>
+      <td>Ono</td>
+      <td>Teruo</td>
+      <td>9</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>ur.0740560235.48</td>
+      <td>2.100961</td>
+      <td>2020</td>
+      <td>90</td>
+      <td>NaN</td>
+      <td>grid.450314.7</td>
+      <td>0</td>
+      <td>[grid.15276.37, grid.4886.2, grid.11899.38, gr...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1989</td>
+      <td>Olshanetsky</td>
+      <td>Eugene</td>
+      <td>8</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>ur.014407221755.12</td>
+      <td>1.879059</td>
+      <td>2021</td>
+      <td>171</td>
+      <td>2022.0</td>
+      <td>grid.258799.8</td>
+      <td>8</td>
+      <td>[grid.258799.8, grid.260026.0, grid.5386.8, gr...</td>
+      <td>2011.0</td>
+      <td>[0000-0001-7071-0823]</td>
+      <td>2002</td>
+      <td>Moriyama</td>
+      <td>Takahiro</td>
+      <td>8</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>ur.013563236015.42</td>
+      <td>1.640245</td>
+      <td>2020</td>
+      <td>15</td>
+      <td>NaN</td>
+      <td>grid.258799.8</td>
+      <td>0</td>
+      <td>[grid.258799.8]</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2016</td>
+      <td>Ando</td>
+      <td>Fuyuki</td>
+      <td>7</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>ur.0765715521.02</td>
+      <td>1.569727</td>
+      <td>2021</td>
+      <td>2307</td>
+      <td>2023.0</td>
+      <td>grid.21941.3f</td>
+      <td>24</td>
+      <td>[grid.26999.3d, grid.213917.f, grid.89336.37, ...</td>
+      <td>2000.0</td>
+      <td>NaN</td>
+      <td>1989</td>
+      <td>Taniguchi</td>
+      <td>Takashi</td>
+      <td>8</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>ur.014356370677.99</td>
+      <td>1.506538</td>
+      <td>2021</td>
+      <td>255</td>
+      <td>NaN</td>
+      <td>grid.77602.34</td>
+      <td>0</td>
+      <td>[grid.4886.2, grid.450314.7, grid.423485.c, gr...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1992</td>
+      <td>Dvoretsky</td>
+      <td>Sergey A</td>
+      <td>6</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>ur.016551140015.09</td>
+      <td>1.506452</td>
+      <td>2020</td>
+      <td>19</td>
+      <td>NaN</td>
+      <td>grid.258799.8</td>
+      <td>0</td>
+      <td>[grid.32197.3e, grid.258799.8]</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2013</td>
+      <td>Yamada</td>
+      <td>Kihiro T</td>
+      <td>6</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>ur.0632644662.66</td>
+      <td>1.483708</td>
+      <td>2020</td>
+      <td>162</td>
+      <td>2021.0</td>
+      <td>grid.450314.7</td>
+      <td>7</td>
+      <td>[grid.4886.2, grid.265880.1, grid.450314.7, gr...</td>
+      <td>1996.0</td>
+      <td>NaN</td>
+      <td>1977</td>
+      <td>Chaplik</td>
+      <td>Alexander V</td>
+      <td>4</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>ur.010535542231.81</td>
+      <td>1.444431</td>
+      <td>2018</td>
+      <td>12</td>
+      <td>NaN</td>
+      <td>grid.258799.8</td>
+      <td>0</td>
+      <td>[grid.258799.8]</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2013</td>
+      <td>Kakizakai</td>
+      <td>Haruka</td>
+      <td>6</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>ur.014040516167.51</td>
+      <td>1.331730</td>
+      <td>2020</td>
+      <td>11</td>
+      <td>NaN</td>
+      <td>grid.258799.8</td>
+      <td>0</td>
+      <td>[grid.258799.8]</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2015</td>
+      <td>Mizuno</td>
+      <td>Hayato</td>
+      <td>5</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>ur.01056154103.66</td>
+      <td>1.327606</td>
+      <td>2021</td>
+      <td>190</td>
+      <td>2022.0</td>
+      <td>grid.417751.1</td>
+      <td>14</td>
+      <td>[grid.450308.a, grid.8591.5, grid.474689.0, gr...</td>
+      <td>2004.0</td>
+      <td>[0000-0003-1514-8879]</td>
+      <td>1999</td>
+      <td>Ono</td>
+      <td>Shimpei</td>
+      <td>4</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>ur.011775522057.45</td>
+      <td>1.284237</td>
+      <td>2021</td>
+      <td>245</td>
+      <td>2019.0</td>
+      <td>grid.450314.7</td>
+      <td>2</td>
+      <td>[grid.415877.8, grid.423485.c, grid.4886.2, gr...</td>
+      <td>2018.0</td>
+      <td>NaN</td>
+      <td>1995</td>
+      <td>Mikhailov</td>
+      <td>Nikolay N</td>
+      <td>4</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>ur.07376375471.82</td>
+      <td>1.205354</td>
+      <td>2021</td>
+      <td>53</td>
+      <td>2019.0</td>
+      <td>grid.450314.7</td>
+      <td>2</td>
+      <td>[grid.7727.5, grid.450314.7, grid.4886.2, grid...</td>
+      <td>2014.0</td>
+      <td>NaN</td>
+      <td>2007</td>
+      <td>Kozlov</td>
+      <td>Dmitriy A</td>
+      <td>3</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>ur.012411463367.07</td>
+      <td>1.178384</td>
+      <td>2021</td>
+      <td>217</td>
+      <td>NaN</td>
+      <td>grid.450314.7</td>
+      <td>0</td>
+      <td>[grid.415877.8, grid.450314.7, grid.4886.2, gr...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2005</td>
+      <td>Mikhailov</td>
+      <td>Nikolai N</td>
+      <td>5</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>ur.014001623651.15</td>
+      <td>1.158604</td>
+      <td>2020</td>
+      <td>62</td>
+      <td>NaN</td>
+      <td>grid.450314.7</td>
+      <td>0</td>
+      <td>[grid.4886.2, grid.450314.7, grid.423485.c, gr...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2005</td>
+      <td>Dvoretsky</td>
+      <td>Sergei A</td>
+      <td>4</td>
+      <td>https://app.dimensions.ai/discover/publication...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Build-a-reviewers-matrix">
+<h3>Build a reviewers matrix<a class="headerlink" href="#Build-a-reviewers-matrix" title="Permalink to this headline">¶</a></h3>
+<p>Generates a matrix of candidate reviewers for abstracts, using the expert identification workflow (<a class="reference external" href="https://digital-science.github.io/dimcli/modules.html#dimcli.core.functions.build_reviewers_matrix">see source</a>).</p>
+<p>If the input abstracts include identifiers, then those are used in the resulting matrix. Alternatively, a simple list of strings as input will result in a matrix where the identifiers are auto-generated from the abstracts order (first one is 1, etc..).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">abstracts</span> <span class="o">=</span> <span class="p">[</span>
+     <span class="p">{</span>
+     <span class="s1">&#39;id&#39;</span> <span class="p">:</span> <span class="s1">&#39;A1&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;text&#39;</span> <span class="p">:</span> <span class="s2">&quot;&quot;&quot;We describe monocrystalline graphitic films, which are a few atoms thick but are nonetheless stable under ambient conditions,</span>
+<span class="s2"> metallic, and of remarkably high quality. The films are found to be a two-dimensional semimetal with a tiny overlap between</span>
+<span class="s2"> valence and conductance bands, and they exhibit a strong ambipolar electric field effect such that electrons and</span>
+<span class="s2"> holes in concentrations up to 10 per square centimeter and with room-temperature mobilities of approximately 10,000 square</span>
+<span class="s2"> centimeters per volt-second can be induced by applying gate voltage.&quot;&quot;&quot;</span>
+     <span class="p">},</span>
+     <span class="p">{</span>
+     <span class="s1">&#39;id&#39;</span> <span class="p">:</span> <span class="s2">&quot;A2&quot;</span><span class="p">,</span>
+     <span class="s1">&#39;text&#39;</span> <span class="p">:</span> <span class="s2">&quot;&quot;&quot;The physicochemical properties of a molecule-metal interface, in principle, can play a significant role in tuning the electronic properties</span>
+<span class="s2"> of organic devices. In this report, we demonstrate an electrode engineering approach in a robust, reproducible molecular memristor that</span>
+<span class="s2"> enables a colossal tunability in both switching voltage (from 130 mV to 4 V i.e. &gt;2500% variation) and current (by ~6 orders of magnitude).</span>
+<span class="s2"> This provides a spectrum of device design parameters that can be “dialed-in” to create fast, scalable and ultralow energy organic</span>
+<span class="s2"> memristors optimal for applications spanning digital memory, logic circuits and brain-inspired computing.&quot;&quot;&quot;</span>
+     <span class="p">}</span>
+ <span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">candidates</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ur.01146544531.57&quot;</span><span class="p">,</span> <span class="s2">&quot;ur.011535264111.51&quot;</span><span class="p">,</span> <span class="s2">&quot;ur.0767105504.29&quot;</span><span class="p">,</span> <span class="s2">&quot;ur.011513332561.53&quot;</span><span class="p">,</span> <span class="s2">&quot;ur.01055006635.53&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">build_reviewers_matrix</span><span class="p">(</span><span class="n">abstracts</span><span class="p">,</span> <span class="n">candidates</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|██████████| 2/2 [00:07&lt;00:00,  3.57s/it]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>researcher</th>
+      <th>A1</th>
+      <th>A2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ur.01146544531.57</td>
+      <td>8.166581</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ur.011535264111.51</td>
+      <td>8.183493</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ur.0767105504.29</td>
+      <td>8.586408</td>
+      <td>2.560822</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ur.011513332561.53</td>
+      <td>12.946742</td>
+      <td>1.620928</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>ur.01055006635.53</td>
+      <td>6.877411</td>
+      <td>1.838120</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>

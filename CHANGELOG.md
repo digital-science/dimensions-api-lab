@@ -1,6 +1,13 @@
 # Changelog - Dimensions API Lab 
 
 
+### 2021-03-18
+
+Updates: 
+
+* [Expert Identification with the Dimensions API - An Introduction](https://api-lab.dimensions.ai/cookbooks/7-researchers/Experts-search-introduction.html) now includes also examples of related Dimcli functions
+
+
 ### 2021-01-05
 
 Updates: 
