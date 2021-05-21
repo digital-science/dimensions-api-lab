@@ -1144,14 +1144,14 @@ Method: dsl.ini file
 </div>
 <p>There are a few important things to keep in mind:</p>
 <ul class="simple">
-<li><p><strong>Publication Authors VS Researchers</strong>. In Dimensions, publication authors don’t necessarily have a <code class="docutils literal notranslate"><span class="pre">researcher</span></code> ID (eg because they haven’t been disambiguated yet). So a publication may have N authors (stored in JSON within the <code class="docutils literal notranslate"><span class="pre">authors</span></code> key), but only a subset of these include a <code class="docutils literal notranslate"><span class="pre">researcher_id</span></code> link. PS see also the <a class="reference external" href="https://docs.dimensions.ai/dsl/language.html#searching-for-researchers-authors">searching for researchers</a> section of the API docs for more info on this topic.</p></li>
+<li><p><strong>Publication Authors VS Researchers</strong>. In Dimensions, publication authors don’t necessarily have a <code class="docutils literal notranslate"><span class="pre">researcher</span></code> ID (eg because they haven’t been disambiguated yet). So a publication may have N authors (stored in JSON within the <code class="docutils literal notranslate"><span class="pre">authors</span></code> key), but only a subset of these include a <code class="docutils literal notranslate"><span class="pre">researcher_id</span></code> link. PS see also the searching for researchers section of the <a class="reference external" href="https://docs.dimensions.ai/dsl/language.html#searching-for-researchers">API docs</a> for more info on this topic.</p></li>
 <li><p><strong>Time of the affiliation</strong>. Researchers can be affiliated to a specific GRID organization either <em>at the time of speaking</em> (now), <strong>or</strong> <em>at the time of writing</em> (i.e. when the article was published). The DSL uses different properties to express this fact: <code class="docutils literal notranslate"><span class="pre">current_research_org</span></code> or simply <code class="docutils literal notranslate"><span class="pre">research_orgs</span></code>. For the sake of this exercise, we will look at both.</p></li>
 <li><p><strong>Denormalized fields</strong>. Both the <a class="reference external" href="https://docs.dimensions.ai/dsl/data-sources.html#publications">Publication</a> and <a class="reference external" href="https://docs.dimensions.ai/dsl/data-sources.html#researchers">Researcher</a> sources include a <code class="docutils literal notranslate"><span class="pre">research_orgs</span></code> field - both are ‘denormalized’ shortcut versions of the data you’d find via the <code class="docutils literal notranslate"><span class="pre">authors</span></code> structure in publications. However they don’t have the same meaning: for publications, the field contains the sum of all authors’ research organizations, while for
 researchers, that’s the sum of all research organizations a single individual has been affiliated to throught his career (as far as Dimensions knows, of course!).</p></li>
 </ul>
 <p>So, in the real world we often have scenarios like the following one:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1160,11 +1160,17 @@ researchers, that’s the sum of all research organizations a single individual 
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
-<div class="output_area rendered_html docutils container">
-<img src="http://api-sample-data.dimensions.ai/diagrams/data_model_researchers_publications2.v2.jpg" width="1000"/></div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-1-c6b0300accab&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>Image<span class="ansi-blue-fg">(</span>url<span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">&#34;http://api-sample-data.dimensions.ai/diagrams/data_model_researchers_publications2.v2.jpg&#34;</span><span class="ansi-blue-fg">,</span> width<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">1000</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">NameError</span>: name &#39;Image&#39; is not defined
+</pre></div></div>
 </div>
 </div>
 <div class="section" id="Methodology:-two-options-available">
