@@ -1,6 +1,13 @@
 # Changelog - Dimensions API Lab 
 
 
+
+### 2021-06-02
+
+New notebooks:
+* [Collaboration Patterns By Year (International, Domestic, Internal)](https://api-lab.dimensions.ai/cookbooks/8-organizations/4-International-collaboration-by-year.html)
+
+
 ### 2021-03-18
 
 Updates: 
