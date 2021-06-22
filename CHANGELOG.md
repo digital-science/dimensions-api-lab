@@ -1,11 +1,17 @@
 # Changelog - Dimensions API Lab 
 
 
+### 2021-06-22
+
+New notebooks:
+* [Patent publication references, for an entire patent family](https://api-lab.dimensions.ai/cookbooks/5-patents/2-Patent-Family-Citing-Publications.html)
+* [Citation Analysis: Journals Cited by a Research Organization](https://api-lab.dimensions.ai/cookbooks/2-publications/Which-Are-the-Journals-Cited-By-My-Organization.html)
+
 
 ### 2021-06-02
 
 New notebooks:
-* [Collaboration Patterns By Year (International, Domestic, Internal)](https://api-lab.dimensions.ai/cookbooks/8-organizations/4-International-collaboration-by-year.html)
+* [Collaboration Patterns By Year (International, Domestic, Internal)](https://api-lab.dimensions.ai/cookbooks/8-organizations/4-international-collaboration-by-year.html)
 
 
 ### 2021-03-18
@@ -118,7 +124,7 @@ New notebooks:
 ### 2020-05-07
 
 New notebook:
-* [The Patents API: Features Overview](https://api-lab.dimensions.ai/cookbooks/5-patents/1-introducing-patents.html)
+* [The Patents API: Features Overview](https://api-lab.dimensions.ai/cookbooks/5-patents/0-introducing-patents.html)
 
 Updates:
 * [Measuring the Innovation Impact of an Organization using Patents Citations](https://api-lab.dimensions.ai/cookbooks/5-patents/1-Patents-referencing-a-Research-Organization.html) (previous title: Extracting Patents citing Publications from a chosen Research Organization) 
