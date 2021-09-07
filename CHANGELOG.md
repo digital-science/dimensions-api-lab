@@ -1,6 +1,13 @@
 # Changelog - Dimensions API Lab 
 
 
+### 2021-09-07
+
+New notebooks:
+* [Identification of reviewers for funders: Globally and among Panels](https://api-lab.dimensions.ai/cookbooks/7-researchers/funders-reviewers-identification-globally-and-among-panels.html)
+* [Enrich text with Field of Research (FoR) codes](https://api-lab.dimensions.ai/cookbooks/10-misc/2-enrich-text-with-for-codes.html)
+* [Mapping GRID IDs to Organization Data](https://api-lab.dimensions.ai/cookbooks/8-organizations/5-mapping-grid-ids-to-organization-data.html)
+
 ### 2021-06-22
 
 New notebooks:
