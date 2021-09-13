@@ -1126,17 +1126,17 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<script src='http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js'></script>
 <script>require=requirejs;</script><a class="reference external image-reference" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/cookbooks/7-researchers/Researchers-Search-tips-V2.ipynb"><img alt="../../_images/badge-colab.svg" src="../../_images/badge-colab.svg" /></a>
 <a class="reference external image-reference" href="https://github.com/digital-science/dimensions-api-lab/blob/master/cookbooks/7-researchers/Researchers-Search-tips-V2.ipynb"><img alt="../../_images/badge-github-custom.svg" src="../../_images/badge-github-custom.svg" /></a>
 <hr class="docutils" />
 <div class="section" id="Extracting-researchers-based-on-affiliations-and-publications-history">
 <h1>Extracting researchers based on affiliations and publications history<a class="headerlink" href="#Extracting-researchers-based-on-affiliations-and-publications-history" title="Permalink to this headline">¶</a></h1>
 <p>The purpose of this notebook is to demonstrate how to extract <a class="reference external" href="https://docs.dimensions.ai/dsl/language.html#searching-for-researchers">researchers data</a> using the Dimensions API.</p>
-<p>Specifically, we will look at a concrete use case. We want to find out about all researchers based on these two criteria:</p>
+<p>Specifically, we want to find out about all researchers based on these two criteria:</p>
 <ol class="arabic simple">
-<li><p>they are or have been <strong>affiliated</strong> to a specific <strong>GRID</strong> organization</p></li>
-<li><p>they have <strong>published</strong> within a chosen <strong>time frame</strong></p></li>
+<li><p><strong>Affiliation</strong>. That is, whether they are / have been affiliated to a specific <strong>GRID</strong> organization</p></li>
+<li><p><strong>Publications</strong>. Whether they have published within a chosen <strong>time frame</strong>.</p></li>
 </ol>
 <div class="section" id="Prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
@@ -1245,9 +1245,13 @@ Method: dsl.ini file
 <p>There are a few important things to keep in mind:</p>
 <ul class="simple">
 <li><p><strong>Publication Authors VS Researchers</strong>. In Dimensions, publication authors don’t necessarily have a <code class="docutils literal notranslate"><span class="pre">researcher</span></code> ID (eg because they haven’t been disambiguated yet). So a publication may have N authors (stored in JSON within the <code class="docutils literal notranslate"><span class="pre">authors</span></code> key), but only a subset of these include a <code class="docutils literal notranslate"><span class="pre">researcher_id</span></code> link. PS see also the searching for researchers section of the <a class="reference external" href="https://docs.dimensions.ai/dsl/language.html#searching-for-researchers">API docs</a> for more info on this topic.</p></li>
-<li><p><strong>Time of the affiliation</strong>. Researchers can be affiliated to a specific GRID organization either <em>at the time of speaking</em> (now), <strong>or</strong> <em>at the time of writing</em> (i.e. when the article was published). The DSL uses different properties to express this fact: <code class="docutils literal notranslate"><span class="pre">current_research_org</span></code> or simply <code class="docutils literal notranslate"><span class="pre">research_orgs</span></code>. For the sake of this exercise, we will look at both.</p></li>
-<li><p><strong>Denormalized fields</strong>. Both the <a class="reference external" href="https://docs.dimensions.ai/dsl/data-sources.html#publications">Publication</a> and <a class="reference external" href="https://docs.dimensions.ai/dsl/data-sources.html#researchers">Researcher</a> sources include a <code class="docutils literal notranslate"><span class="pre">research_orgs</span></code> field - both are ‘denormalized’ shortcut versions of the data you’d find via the <code class="docutils literal notranslate"><span class="pre">authors</span></code> structure in publications. However they don’t have the same meaning: for publications, the field contains the sum of all authors’ research organizations, while for
-researchers, that’s the sum of all research organizations a single individual has been affiliated to throught his career (as far as Dimensions knows, of course!).</p></li>
+<li><p><strong>Time of the affiliation</strong>. Researchers can be affiliated to a specific GRID organization either <em>at the time of speaking</em> (now), <strong>or</strong> <em>at the time of writing</em> (i.e. when the article was published). The DSL uses different properties to express this fact: <code class="docutils literal notranslate"><span class="pre">current_research_org</span></code> or simply <code class="docutils literal notranslate"><span class="pre">research_orgs</span></code>.</p></li>
+<li><p><strong>Denormalized fields</strong>. Both the <a class="reference external" href="https://docs.dimensions.ai/dsl/data-sources.html#publications">Publication</a> and <a class="reference external" href="https://docs.dimensions.ai/dsl/data-sources.html#researchers">Researcher</a> sources include a <code class="docutils literal notranslate"><span class="pre">research_orgs</span></code> field. In both cases that’s a <em>denormalized</em> field ie a ‘shortcut version’ of data primarily found in the <code class="docutils literal notranslate"><span class="pre">authors</span></code> field of publications. However, although they share the same name, the two <code class="docutils literal notranslate"><span class="pre">research_orgs</span></code> fields don’t have the same meaning.</p>
+<ul>
+<li><p>In publications, <code class="docutils literal notranslate"><span class="pre">research_orgs</span></code> contains the set of all authors’ affiliations for a single article.</p></li>
+<li><p>In researchers, <code class="docutils literal notranslate"><span class="pre">research_orgs</span></code> contains the set of all research organizations a single individual has been affiliated to throughout his/her career (as far as Dimensions knows, of course!).</p></li>
+</ul>
+</li>
 </ul>
 <p>So, in the real world we often have scenarios like the following one:</p>
 <div class="nbinput docutils container">
@@ -1271,12 +1275,12 @@ researchers, that’s the sum of all research organizations a single individual 
 <h2>Methodology: two options available<a class="headerlink" href="#Methodology:-two-options-available" title="Permalink to this headline">¶</a></h2>
 <p>It turns out that there are two possible ways to extract these data, depending on whether we start our queries from Publications or from Researchers.</p>
 <ol class="arabic simple">
-<li><p><strong>Starting from the Publication source</strong>, we can first filter publications based on our constraints (eg year range [2013-2018] and research_orgs=“grid.258806.1” - but it could be any other query parameters); second, we would loop over all of these publications so to extract all relevant reasearchers using the <code class="docutils literal notranslate"><span class="pre">affiliation</span></code> data.</p></li>
-<li><p><strong>Starting from the Researcher source</strong>, we would first filter researchers based on our constraints (eg with research_orgs=“grid.258806.1”); second, we would search for publications linked to these researchers, which have been published in the time frame [2013-2018]; lastly, we extract all relevant reasearchers using the <code class="docutils literal notranslate"><span class="pre">affiliation</span></code> data.</p></li>
+<li><p><strong>Starting from the Publication source</strong>, we can first filter publications based on our constraints (eg year range <code class="docutils literal notranslate"><span class="pre">[2013-2018]</span></code> and <code class="docutils literal notranslate"><span class="pre">research_orgs=&quot;grid.258806.1&quot;</span></code> - but it could be any other query parameters); second, we would loop over all of these publications so to extract all relevant reasearchers using the <code class="docutils literal notranslate"><span class="pre">affiliation</span></code> data.</p></li>
+<li><p><strong>Starting from the Researcher source</strong>, we would first filter researchers based on our constraints (eg with <code class="docutils literal notranslate"><span class="pre">research_orgs=&quot;grid.258806.1&quot;</span></code>); second, we would search for publications linked to these researchers, which have been published in the time frame <code class="docutils literal notranslate"><span class="pre">[2013-2018]</span></code>; lastly, we extract all relevant reasearchers using the <code class="docutils literal notranslate"><span class="pre">affiliation</span></code> data.</p></li>
 </ol>
 <p>As we will find out later, both approaches are perfectly valid and return the same results.</p>
-<p>The first apporach is generally quicker as it has only two steps (the second one has threed).</p>
-<p>In real world situations though, deciding which approach is best depends on the specific query filters being used and on the impact these filters have on the overall performance/speed of the data extraction. There is no fixed rule and a bit of trial &amp; error can go a long way in helping you optimize your data extraction algorithm!</p>
+<p>The first apporach is generally quicker as it has only two steps (while the second one has three).</p>
+<p>In real-world situations though, deciding which approach is best depends on the specific query filters being used and on the impact these filters have on the overall performance/speed of the data extraction. There is no fixed rule and a bit of trial &amp; error can go a long way in helping you optimize your data extraction algorithm!</p>
 </div>
 <div class="section" id="Approach-1.-From-publications-to-researchers">
 <h2>Approach 1. From publications to researchers<a class="headerlink" href="#Approach-1.-From-publications-to-researchers" title="Permalink to this headline">¶</a></h2>
@@ -1289,14 +1293,14 @@ researchers, that’s the sum of all research organizations a single individual 
 </li>
 <li><p>Looping over publications’ authors and extracting relevant researchers</p>
 <ul class="simple">
+<li><p>if <code class="docutils literal notranslate"><span class="pre">['affiliation']['id']</span> <span class="pre">==</span> <span class="pre">&quot;grid.258806.1&quot;</span></code></p>
+<ul>
+<li><p>=&gt; <strong>that gives us the affiliations at the time of publishing</strong></p></li>
+</ul>
+</li>
 <li><p>if <code class="docutils literal notranslate"><span class="pre">['current_organization_id']</span> <span class="pre">==</span> <span class="pre">&quot;grid.258806.1&quot;</span></code></p>
 <ul>
 <li><p>=&gt; <strong>that gives us the affiliations at the time of speaking</strong></p></li>
-</ul>
-</li>
-<li><p>or if <code class="docutils literal notranslate"><span class="pre">['affiliation']['id']</span> <span class="pre">==</span> <span class="pre">&quot;grid.258806.1&quot;</span></code></p>
-<ul>
-<li><p>=&gt; <strong>that gives us the affiliations at the time of publishing</strong></p></li>
 </ul>
 </li>
 </ul>
