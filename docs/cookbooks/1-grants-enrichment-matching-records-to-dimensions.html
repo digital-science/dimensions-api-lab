@@ -1,0 +1,1618 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Enriching Grants part 1: Matching your grants records to Dimensions &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/custom.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Enriching Grants part 2: Adding Publications Information from Dimensions" href="2-grants-enrichment-adding-publications-information.html" />
+    <link rel="prev" title="Welcome to the Dimensions API Lab!" href="../index.html" />
+    
+
+   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149959808-1"></script>
+   <!-- <script src="_static/js/custom.js"></script> -->
+
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> DSL
+          
+
+          
+            
+            <img src="../_static/dimensions-logo@2x.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+
+   <p class="">
+      <h3 id="cookbooks_title">API COOKBOOKS</h3>
+   </p>
+
+
+   
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Folder</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Enriching Grants part 1: Matching your grants records to Dimensions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#A-sample-grants-list">A sample grants list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Loading-the-sample-grants-data">Loading the sample grants data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Matching-grants-data">Matching grants data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#A)-Matching-grants-when-we-have-a-grant-number">A) Matching grants when we have a grant number</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#B)-What-if-we-don’t-have-a-grant-number?">B) What if we don’t have a grant number?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Back-to-our-grants-list">Back to our grants list</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Enriching-the-original-list">Enriching the original list</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="2-grants-enrichment-adding-publications-information.html">Enriching Grants part 2: Adding Publications Information from Dimensions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="2-grants-enrichment-adding-publications-information.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2-grants-enrichment-adding-publications-information.html#Reusing-the-sample-grants-data-from-part-1">Reusing the sample grants data from part-1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2-grants-enrichment-adding-publications-information.html#Extracting-linked-Publications-data-from-Dimensions">Extracting linked Publications data from Dimensions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="2-grants-enrichment-adding-publications-information.html#Building-a-looped-extraction">Building a looped extraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2-grants-enrichment-adding-publications-information.html#Final-step:-grouping-publications-by-grant">Final step: grouping publications by grant</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="2-grants-enrichment-adding-publications-information.html#Data-Exploration">Data Exploration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="2-grants-enrichment-adding-publications-information.html#Publications-per-grant-by-year-and-funding-amount">Publications per grant by year and funding amount</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2-grants-enrichment-adding-publications-information.html#Publications-per-grant-by-country">Publications per grant by country</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2-grants-enrichment-adding-publications-information.html#Correlation-of-num-of-publications-to-grant-length">Correlation of num of publications to grant length</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2-grants-enrichment-adding-publications-information.html#Publications-by-grant-funder">Publications by grant funder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2-grants-enrichment-adding-publications-information.html#Publications-by-grant-funder-vs-funding-amount">Publications by grant funder vs funding amount</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="2-grants-enrichment-adding-publications-information.html#Conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="3-grants-enrichment-adding-patents-cltrials-information.html">Enriching Grants part 3: adding related Patents and Clinical Trials data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="3-grants-enrichment-adding-patents-cltrials-information.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3-grants-enrichment-adding-patents-cltrials-information.html#Reusing-the-enriched-grants-data-from-part-2">Reusing the enriched grants data from part-2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3-grants-enrichment-adding-patents-cltrials-information.html#Extracting-linked-Patents-data">Extracting linked Patents data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3-grants-enrichment-adding-patents-cltrials-information.html#Extracting-linked-Clinical-Trials-data">Extracting linked Clinical Trials data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3-grants-enrichment-adding-patents-cltrials-information.html#Data-Exploration">Data Exploration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="3-grants-enrichment-adding-patents-cltrials-information.html#How-many-linked-objects-overall?">How many linked objects overall?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3-grants-enrichment-adding-patents-cltrials-information.html#Patents-and-Clinical-Trials-by-Year">Patents and Clinical Trials by Year</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3-grants-enrichment-adding-patents-cltrials-information.html#Patents-and-Clinical-Trials-by-Grant-Funder">Patents and Clinical Trials by Grant Funder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3-grants-enrichment-adding-patents-cltrials-information.html#Exploring-Correlations-between-dimensions">Exploring Correlations between dimensions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="3-grants-enrichment-adding-patents-cltrials-information.html#Conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="4-grants-topic-analysis.html">Identifying emerging topics in grants using ‘concepts’</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="4-grants-topic-analysis.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4-grants-topic-analysis.html#1.-Creating-a-Dataset:-e.g. Grants-from-a-Funder">1. Creating a Dataset: e.g. Grants from a Funder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4-grants-topic-analysis.html#2.-A-first-look-at-the-concepts-we-extracted">2. A first look at the concepts we extracted</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4-grants-topic-analysis.html#3.-Building-a-word-cloud-visualization">3. Building a word-cloud visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4-grants-topic-analysis.html#4.-Trend-analysis---‘emerging’-new-topics-each-year">4. Trend analysis - ‘emerging’ new topics each year</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4-grants-topic-analysis.html#5.-Segmenting-results-using-the-fields-of-research-categories">5. Segmenting results using the fields of research categories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4-grants-topic-analysis.html#6.-Conclusion">6. Conclusion</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+
+
+   <div id="sidebar_github" style="margin-top: 12px;">
+   <h3>Github Source</h3>
+
+      <div style="margin: 10px 20px;">
+      
+         <iframe src="https://ghbtns.com/github-btn.html?user=digital-science&repo=dimensions-api-lab&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+
+         <iframe src="https://ghbtns.com/github-btn.html?user=digital-science&repo=dimensions-api-lab&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe> 
+      
+      </div>
+
+   </div>
+
+
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DSL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+
+    
+
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt .copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js'></script>
+<script>require=requirejs;</script><a class="reference external image-reference" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/cookbooks/1-grants-enrichment-matching-records-to-dimensions.ipynb"><img alt="../_images/badge-colab.svg" src="../_images/badge-colab.svg" /></a>
+<a class="reference external image-reference" href="https://github.com/digital-science/dimensions-api-lab/blob/master/cookbooks/1-grants-enrichment-matching-records-to-dimensions.ipynb"><img alt="../_images/badge-github-custom.svg" src="../_images/badge-github-custom.svg" /></a>
+<hr class="docutils" />
+<div class="section" id="Enriching-Grants-part-1:-Matching-your-grants-records-to-Dimensions">
+<h1>Enriching Grants part 1: Matching your grants records to Dimensions<a class="headerlink" href="#Enriching-Grants-part-1:-Matching-your-grants-records-to-Dimensions" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial we are going to <strong>match</strong> a sample local grants datasets to Dimensions.</p>
+<p>By <em>matching</em> we mean discovering the unique <strong>Dimensions identifier</strong> for these grants, so that we can then use the IDs to extract from Dimensions more related objects (eg researchers, publications, patents, clinical trials etc.. related to the grants).</p>
+<div class="section" id="A-sample-grants-list">
+<h2>A sample grants list<a class="headerlink" href="#A-sample-grants-list" title="Permalink to this headline">¶</a></h2>
+<p>Our starting point is a <a class="reference external" href="http://api-sample-data.dimensions.ai/data/vaccines-grants-sample-part-0.csv">sample list of completed grants on the topic of vaccines</a>, which contains common fields such as title, funder, grant/project ID, funding amount etc..</p>
+<p>We will show below how to enrich this dataset with Dimensions IDs.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">CHANGELOG</span><span class="se">\n</span><span class="s2">This notebook was last run on </span><span class="si">%s</span><span class="se">\n</span><span class="s2">==&quot;</span> <span class="o">%</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">, %Y&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+==
+CHANGELOG
+This notebook was last run on Jan 25, 2022
+==
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>This notebook assumes you have installed the <a class="reference external" href="https://pypi.org/project/dimcli/">Dimcli</a> library and are familiar with the <a class="reference external" href="https://api-lab.dimensions.ai/cookbooks/1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html">‘Getting Started’ tutorial</a>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install dimcli tqdm -U --quiet
+
+<span class="kn">import</span> <span class="nn">dimcli</span>
+<span class="kn">from</span> <span class="nn">dimcli.utils</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">Logging in..&quot;</span><span class="p">)</span>
+<span class="c1"># https://digital-science.github.io/dimcli/getting-started.html#authentication</span>
+<span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;https://app.dimensions.ai&quot;</span>
+<span class="k">if</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+  <span class="kn">import</span> <span class="nn">getpass</span>
+  <span class="n">KEY</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;API Key: &#39;</span><span class="p">)</span>
+  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">KEY</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="n">ENDPOINT</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="n">KEY</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">KEY</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="n">ENDPOINT</span><span class="p">)</span>
+<span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Searching config file credentials for &#39;https://app.dimensions.ai&#39; endpoint..
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+==
+Logging in..
+Dimcli - Dimensions API Client (v0.9.6)
+Connected to: &lt;https://app.dimensions.ai/api/dsl&gt; - DSL v2.0
+Method: dsl.ini file
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Loading-the-sample-grants-data">
+<h2>Loading the sample grants data<a class="headerlink" href="#Loading-the-sample-grants-data" title="Permalink to this headline">¶</a></h2>
+<p>First we are going to load the sample dataset <a class="reference external" href="http://api-sample-data.dimensions.ai/data/vaccines-grants-sample-part-0.csv">“vaccines-grants-sample-part-0.csv”</a>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grants_source</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;http://api-sample-data.dimensions.ai/data/vaccines-grants-sample-part-0.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Now we can preview the contents of the file.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grants_source</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Grant Number</th>
+      <th>Title</th>
+      <th>Funding Amount in USD</th>
+      <th>Start Year</th>
+      <th>End Year</th>
+      <th>Funder</th>
+      <th>Funder Country</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>30410203277</td>
+      <td>疫苗－整体方案</td>
+      <td>1208.0</td>
+      <td>2004</td>
+      <td>2004</td>
+      <td>National Natural Science Foundation of China</td>
+      <td>China</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>620792</td>
+      <td>Engineering Inhalable Vaccines</td>
+      <td>26956.0</td>
+      <td>2017</td>
+      <td>2018</td>
+      <td>Natural Sciences and Engineering Research Council</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>599115</td>
+      <td>Engineering Inhalable Vaccines</td>
+      <td>26403.0</td>
+      <td>2016</td>
+      <td>2017</td>
+      <td>Natural Sciences and Engineering Research Council</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>251564</td>
+      <td>HIV Vaccine research</td>
+      <td>442366.0</td>
+      <td>2003</td>
+      <td>2007</td>
+      <td>National Health and Medical Research Council</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>334174</td>
+      <td>HIV Vaccine Development</td>
+      <td>236067.0</td>
+      <td>2005</td>
+      <td>2009</td>
+      <td>National Health and Medical Research Council</td>
+      <td>Australia</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Matching-grants-data">
+<h2>Matching grants data<a class="headerlink" href="#Matching-grants-data" title="Permalink to this headline">¶</a></h2>
+<p>The are two possible situations to consider.</p>
+<div class="section" id="A)-Matching-grants-when-we-have-a-grant-number">
+<h3>A) Matching grants when we have a grant number<a class="headerlink" href="#A)-Matching-grants-when-we-have-a-grant-number" title="Permalink to this headline">¶</a></h3>
+<p>The Dimensions API includes a <a class="reference external" href="https://docs.dimensions.ai/dsl/functions.html#function-extract-grants">function ‘extract_grants’</a> that makes it easier to find a grant in Dimensions, by using information such as funder name and the funder grant identifier.</p>
+<p>So one approach is the following:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;extract_grants(grant_number=&quot;30410203277&quot;,</span>
+<span class="s2">    funder_name=&quot;National Natural Science Foundation of China&quot;)&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;grant_id&#39;: &#39;grant.8172033&#39;}
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;extract_grants(grant_number=&quot;334174&quot;,</span>
+<span class="s2">    funder_name=&quot;National Health and Medical Research Council&quot;)&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;grant_id&#39;: &#39;grant.6722306&#39;}
+</pre></div></div>
+</div>
+<p>Note: this won’t work without funder name</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;extract_grants(grant_number=&quot;30410203277&quot;,</span>
+<span class="s2">    funder_name=&quot;&quot;)&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;grant_id&#39;: None}
+</pre></div></div>
+</div>
+<p>But we can pass a <a class="reference external" href="https://www.crossref.org/services/funder-registry/">fundref ID</a> if we have it (also available via <a class="reference external" href="https://grid.ac/institutes/grid.419696.5">GRID</a>)</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;extract_grants(grant_number=&quot;30410203277&quot;,</span>
+<span class="s2">    fundref=&quot;501100001809&quot;)&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;grant_id&#39;: &#39;grant.8172033&#39;}
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="B)-What-if-we-don’t-have-a-grant-number?">
+<h3>B) What if we don’t have a grant number?<a class="headerlink" href="#B)-What-if-we-don’t-have-a-grant-number?" title="Permalink to this headline">¶</a></h3>
+<p>Then the only way is to</p>
+<ul class="simple">
+<li><p>query Dimensions using the best grants metadata we have available</p></li>
+<li><p>if we get only one result, we just take it</p></li>
+<li><p>if we get more than one result, we need to manually review them at a later point, or develop some sort of algorithm to sort them by relevancy so that we can take the first result</p></li>
+</ul>
+<p>Let’s take some of the grants without a number:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grants_without_number</span> <span class="o">=</span> <span class="n">grants_source</span><span class="p">[</span><span class="n">grants_source</span><span class="p">[</span><span class="s1">&#39;Grant Number&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grants_without_number</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Grant Number</th>
+      <th>Title</th>
+      <th>Funding Amount in USD</th>
+      <th>Start Year</th>
+      <th>End Year</th>
+      <th>Funder</th>
+      <th>Funder Country</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>38</th>
+      <td>NaN</td>
+      <td>DENGUE VACCINE DEVELOPMENT</td>
+      <td>50000.0</td>
+      <td>1985</td>
+      <td>1986</td>
+      <td>United States Department of the Army</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>79</th>
+      <td>NaN</td>
+      <td>Sterilization Vaccine for Cattle</td>
+      <td>0.0</td>
+      <td>2006</td>
+      <td>2006</td>
+      <td>Council for International Exchange of Scholars</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>80</th>
+      <td>NaN</td>
+      <td>Vaccine Production in Plants</td>
+      <td>0.0</td>
+      <td>2011</td>
+      <td>2011</td>
+      <td>Council for International Exchange of Scholars</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>81</th>
+      <td>NaN</td>
+      <td>Novel vaccine formulations against tuberculosis</td>
+      <td>295003.0</td>
+      <td>2002</td>
+      <td>2005</td>
+      <td>Canadian Institutes of Health Research</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>446</th>
+      <td>NaN</td>
+      <td>Development of recombinant TB vaccine</td>
+      <td>101459.0</td>
+      <td>1999</td>
+      <td>2003</td>
+      <td>Canadian Institutes of Health Research</td>
+      <td>Canada</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Now let’s try to find the second grant in the list above, using only its title and the funder country</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+
+search grants
+    in title_only for &quot;Vaccine Production in Plants&quot;
+    where funder_countries.name=&quot;United States&quot;
+return grants
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Returned Grants: 1 (total = 1)
+Time: 0.59s
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>active_year</th>
+      <th>end_date</th>
+      <th>funders</th>
+      <th>funding_org_name</th>
+      <th>grant_number</th>
+      <th>id</th>
+      <th>language</th>
+      <th>original_title</th>
+      <th>start_date</th>
+      <th>start_year</th>
+      <th>title</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>[2011]</td>
+      <td>2011-09-01</td>
+      <td>[{'acronym': 'CIES', 'city_name': 'Washington ...</td>
+      <td>Council for International Exchange of Scholars</td>
+      <td>N/A</td>
+      <td>grant.9923948</td>
+      <td>en</td>
+      <td>Vaccine Production in Plants</td>
+      <td>2011-01-01</td>
+      <td>2011</td>
+      <td>Vaccine Production in Plants</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># we&#39;re in luck! only one record found</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The Dimensions ID is: &quot;</span><span class="p">,</span> <span class="n">dsl_last_results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The Dimensions ID is:  grant.9923948
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Back-to-our-grants-list">
+<h2>Back to our grants list<a class="headerlink" href="#Back-to-our-grants-list" title="Permalink to this headline">¶</a></h2>
+<p>We can set up a loop to go through all the grants we want to get a Dimensions ID for, so that we can enrich our original dataset with those IDs. A simple approach is the following:</p>
+<ul class="simple">
+<li><p>we try to use the <code class="docutils literal notranslate"><span class="pre">extract_grants</span></code> function first</p></li>
+<li><p>second we try the <code class="docutils literal notranslate"><span class="pre">search</span></code> operation as a fall back plan</p>
+<ul>
+<li><p>if that returns more than one record, we simply take the first one (even though in real life we’d want a more sophisticated approach)</p></li>
+</ul>
+</li>
+<li><p>note: we pause a second after each query to ensure we don’t hit the max queries quota (~30 per minute)</p></li>
+</ul>
+<p>NOTE For the purpose of this exercise, you can select less that the ~1200 grants in the original list, so to speed things up.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grants</span> <span class="o">=</span> <span class="n">grants_source</span><span class="p">[:</span><span class="mi">100</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grants</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Grant Number</th>
+      <th>Title</th>
+      <th>Funding Amount in USD</th>
+      <th>Start Year</th>
+      <th>End Year</th>
+      <th>Funder</th>
+      <th>Funder Country</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>30410203277</td>
+      <td>疫苗－整体方案</td>
+      <td>1208.0</td>
+      <td>2004</td>
+      <td>2004</td>
+      <td>National Natural Science Foundation of China</td>
+      <td>China</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>620792</td>
+      <td>Engineering Inhalable Vaccines</td>
+      <td>26956.0</td>
+      <td>2017</td>
+      <td>2018</td>
+      <td>Natural Sciences and Engineering Research Council</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>599115</td>
+      <td>Engineering Inhalable Vaccines</td>
+      <td>26403.0</td>
+      <td>2016</td>
+      <td>2017</td>
+      <td>Natural Sciences and Engineering Research Council</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>251564</td>
+      <td>HIV Vaccine research</td>
+      <td>442366.0</td>
+      <td>2003</td>
+      <td>2007</td>
+      <td>National Health and Medical Research Council</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>334174</td>
+      <td>HIV Vaccine Development</td>
+      <td>236067.0</td>
+      <td>2005</td>
+      <td>2009</td>
+      <td>National Health and Medical Research Council</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>910292</td>
+      <td>Dengue virus vaccine.</td>
+      <td>130890.0</td>
+      <td>1991</td>
+      <td>1993</td>
+      <td>National Health and Medical Research Council</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>578221</td>
+      <td>Engineering Inhalable Vaccines</td>
+      <td>27386.0</td>
+      <td>2015</td>
+      <td>2016</td>
+      <td>Natural Sciences and Engineering Research Council</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>IC18980360</td>
+      <td>Schistosomiasis Vaccine Network.</td>
+      <td>0.0</td>
+      <td>1998</td>
+      <td>2000</td>
+      <td>European Commission</td>
+      <td>Belgium</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>7621798</td>
+      <td>Pneumococcal Ribosomal Vaccines</td>
+      <td>46000.0</td>
+      <td>1977</td>
+      <td>1980</td>
+      <td>Directorate for Biological Sciences</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>255890</td>
+      <td>Rational vaccine design</td>
+      <td>7138.0</td>
+      <td>2003</td>
+      <td>2004</td>
+      <td>Natural Sciences and Engineering Research Council</td>
+      <td>Canada</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Setting up the loop</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load the progress bar widget for jupyter</span>
+<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span> <span class="k">as</span> <span class="n">progressbar</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">def</span> <span class="nf">remove_punctuation</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+  <span class="kn">import</span> <span class="nn">string</span>
+  <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">maketrans</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">string</span><span class="o">.</span><span class="n">punctuation</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">find_grant_first_method</span><span class="p">(</span><span class="n">grantno</span><span class="p">,</span> <span class="n">funder</span><span class="p">):</span>
+  <span class="n">match</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;extract_grants(grant_number=&quot;</span><span class="si">{</span><span class="n">grantno</span><span class="si">}</span><span class="s2">&quot;, funder_name=&quot;</span><span class="si">{</span><span class="n">funder</span><span class="si">}</span><span class="s2">&quot;)&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span>
+  <span class="n">grant_id</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;grant_id&quot;</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">grant_id</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Found a match with method 1: &quot;</span><span class="p">,</span> <span class="n">grant_id</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">grant_id</span>
+
+<span class="k">def</span> <span class="nf">find_grant_second_method</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">country</span><span class="p">):</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;search grants in title_only for &quot;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2">&quot; where funder_countries.name=&quot;</span><span class="si">{</span><span class="n">country</span><span class="si">}</span><span class="s2">&quot; return grants&quot;&quot;&quot;</span><span class="p">)</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">res</span><span class="o">.</span><span class="n">errors</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">grants</span> <span class="ow">and</span> <span class="n">res</span><span class="o">.</span><span class="n">grants</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">):</span>
+        <span class="n">grant_id</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">grants</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== Found a match with method 2: &quot;</span><span class="p">,</span> <span class="n">grant_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">grant_id</span>
+
+
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">progressbar</span><span class="p">(</span><span class="n">grants</span><span class="o">.</span><span class="n">iterrows</span><span class="p">(),</span> <span class="n">total</span><span class="o">=</span><span class="n">grants</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+  <span class="c1"># get data from table</span>
+  <span class="n">grantno</span><span class="p">,</span> <span class="n">funder</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Grant Number&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Funder&#39;</span><span class="p">]</span>
+  <span class="c1"># try first method</span>
+  <span class="n">grant_id</span> <span class="o">=</span> <span class="n">find_grant_first_method</span><span class="p">(</span><span class="n">grantno</span><span class="p">,</span> <span class="n">funder</span><span class="p">)</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">grant_id</span><span class="p">:</span>
+    <span class="c1"># try second method</span>
+    <span class="n">title</span><span class="p">,</span> <span class="n">country</span> <span class="o">=</span> <span class="n">remove_punctuation</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Title&#39;</span><span class="p">]),</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Funder Country&#39;</span><span class="p">]</span>
+    <span class="n">grant_id</span> <span class="o">=</span> <span class="n">find_grant_second_method</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">country</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">grant_id</span><span class="p">:</span>
+      <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Failed - skipping&quot;</span><span class="p">)</span>
+  <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">grant_id</span><span class="p">)</span>
+  <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "1128bcc0b7544531884489b7ff72cd87", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Found a match with method 1:  grant.8172033
+Returned Grants: 3 (total = 3)
+Time: 0.60s
+=== Found a match with method 2:  grant.7715379
+Returned Grants: 3 (total = 3)
+Time: 0.51s
+=== Found a match with method 2:  grant.7715379
+Found a match with method 1:  grant.6723913
+Found a match with method 1:  grant.6722306
+Found a match with method 1:  grant.6716312
+Returned Grants: 3 (total = 3)
+Time: 0.54s
+=== Found a match with method 2:  grant.7715379
+Found a match with method 1:  grant.3733803
+Found a match with method 1:  grant.3274273
+Returned Grants: 4 (total = 4)
+Time: 0.62s
+=== Found a match with method 2:  grant.7637970
+Returned Grants: 4 (total = 4)
+Time: 28.84s
+=== Found a match with method 2:  grant.7637970
+Returned Grants: 2 (total = 2)
+Time: 0.62s
+=== Found a match with method 2:  grant.2807651
+Returned Grants: 2 (total = 2)
+Time: 1.62s
+=== Found a match with method 2:  grant.2807651
+Returned Grants: 2 (total = 2)
+Time: 0.53s
+=== Found a match with method 2:  grant.2920553
+Found a match with method 1:  grant.2710461
+Found a match with method 1:  grant.2657659
+Found a match with method 1:  grant.2640369
+Found a match with method 1:  grant.2640228
+Found a match with method 1:  grant.2426045
+Found a match with method 1:  grant.2426044
+Found a match with method 1:  grant.2426039
+Found a match with method 1:  grant.2425936
+Found a match with method 1:  grant.2425935
+Found a match with method 1:  grant.2425932
+Found a match with method 1:  grant.2425010
+Found a match with method 1:  grant.2424436
+Found a match with method 1:  grant.8068979
+Found a match with method 1:  grant.7106480
+Found a match with method 1:  grant.2639983
+Found a match with method 1:  grant.2355874
+Found a match with method 1:  grant.7566903
+Found a match with method 1:  grant.7042623
+Found a match with method 1:  grant.7040393
+Found a match with method 1:  grant.6731478
+Found a match with method 1:  grant.6728996
+Found a match with method 1:  grant.6723289
+Found a match with method 1:  grant.6718929
+Found a match with method 1:  grant.6713873
+Returned Grants: 20 (total = 25)
+Time: 0.67s
+=== Found a match with method 2:  grant.9733127
+Returned Grants: 2 (total = 2)
+Time: 0.57s
+=== Found a match with method 2:  grant.7667275
+Returned Grants: 2 (total = 2)
+Time: 0.53s
+=== Found a match with method 2:  grant.2957579
+Returned Grants: 2 (total = 2)
+Time: 0.65s
+=== Found a match with method 2:  grant.2869083
+Returned Grants: 5 (total = 5)
+Time: 0.60s
+=== Found a match with method 2:  grant.4173726
+Returned Grants: 2 (total = 2)
+Time: 0.53s
+=== Found a match with method 2:  grant.2957579
+Returned Grants: 0
+Time: 0.82s
+Failed - skipping
+Returned Grants: 1 (total = 1)
+Time: 36.89s
+=== Found a match with method 2:  grant.2920553
+Returned Grants: 0
+Time: 4.09s
+Failed - skipping
+Returned Grants: 5 (total = 5)
+Time: 0.59s
+=== Found a match with method 2:  grant.4173726
+Returned Grants: 2 (total = 2)
+Time: 0.62s
+=== Found a match with method 2:  grant.2880945
+Returned Grants: 0
+Time: 0.64s
+Failed - skipping
+Returned Grants: 0
+Time: 0.54s
+Failed - skipping
+Returned Grants: 2 (total = 2)
+Time: 0.57s
+=== Found a match with method 2:  grant.2880945
+Returned Grants: 1 (total = 1)
+Time: 0.62s
+=== Found a match with method 2:  grant.2795214
+Found a match with method 1:  grant.2692263
+Found a match with method 1:  grant.2688631
+Found a match with method 1:  grant.2657670
+Found a match with method 1:  grant.2640366
+Found a match with method 1:  grant.2597598
+Found a match with method 1:  grant.2424826
+Found a match with method 1:  grant.2424691
+Found a match with method 1:  grant.2424653
+Found a match with method 1:  grant.2424634
+Found a match with method 1:  grant.2424633
+Found a match with method 1:  grant.2424632
+Found a match with method 1:  grant.2424631
+Found a match with method 1:  grant.2424630
+Found a match with method 1:  grant.2424629
+Found a match with method 1:  grant.2424455
+Found a match with method 1:  grant.2424372
+Found a match with method 1:  grant.2393802
+Found a match with method 1:  grant.2393756
+Found a match with method 1:  grant.7987079
+Found a match with method 1:  grant.8217971
+Found a match with method 1:  grant.8176576
+Found a match with method 1:  grant.8175344
+Found a match with method 1:  grant.8172020
+Found a match with method 1:  grant.8166566
+Found a match with method 1:  grant.7988463
+Found a match with method 1:  grant.100075050
+Returned Grants: 2 (total = 2)
+Time: 0.57s
+=== Found a match with method 2:  grant.7688859
+Returned Grants: 1 (total = 1)
+Time: 0.60s
+=== Found a match with method 2:  grant.9923948
+Returned Grants: 1 (total = 1)
+Time: 0.58s
+=== Found a match with method 2:  grant.7666696
+Found a match with method 1:  grant.8684816
+Found a match with method 1:  grant.8633207
+Found a match with method 1:  grant.8633389
+Found a match with method 1:  grant.8633097
+Found a match with method 1:  grant.8557183
+Found a match with method 1:  grant.8554194
+Found a match with method 1:  grant.8553708
+Found a match with method 1:  grant.8554075
+Found a match with method 1:  grant.8553908
+Found a match with method 1:  grant.8473170
+Found a match with method 1:  grant.8387795
+Found a match with method 1:  grant.8384515
+Found a match with method 1:  grant.8383668
+Found a match with method 1:  grant.7909702
+Found a match with method 1:  grant.7908868
+Found a match with method 1:  grant.7752832
+Found a match with method 1:  grant.7754464
+Found a match with method 1:  grant.7752982
+</pre></div></div>
+</div>
+<div class="section" id="Enriching-the-original-list">
+<h3>Enriching the original list<a class="headerlink" href="#Enriching-the-original-list" title="Permalink to this headline">¶</a></h3>
+<p>Finally, we can take the Dimensions ID data we extracted and add it to the original grants table as an extra column.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grants</span><span class="p">[</span><span class="s2">&quot;Dimensions ID&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">output</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grants</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Grant Number</th>
+      <th>Title</th>
+      <th>Funding Amount in USD</th>
+      <th>Start Year</th>
+      <th>End Year</th>
+      <th>Funder</th>
+      <th>Funder Country</th>
+      <th>Dimensions ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>30410203277</td>
+      <td>疫苗－整体方案</td>
+      <td>1208.0</td>
+      <td>2004</td>
+      <td>2004</td>
+      <td>National Natural Science Foundation of China</td>
+      <td>China</td>
+      <td>grant.8172033</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>620792</td>
+      <td>Engineering Inhalable Vaccines</td>
+      <td>26956.0</td>
+      <td>2017</td>
+      <td>2018</td>
+      <td>Natural Sciences and Engineering Research Council</td>
+      <td>Canada</td>
+      <td>grant.7715379</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>599115</td>
+      <td>Engineering Inhalable Vaccines</td>
+      <td>26403.0</td>
+      <td>2016</td>
+      <td>2017</td>
+      <td>Natural Sciences and Engineering Research Council</td>
+      <td>Canada</td>
+      <td>grant.7715379</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>251564</td>
+      <td>HIV Vaccine research</td>
+      <td>442366.0</td>
+      <td>2003</td>
+      <td>2007</td>
+      <td>National Health and Medical Research Council</td>
+      <td>Australia</td>
+      <td>grant.6723913</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>334174</td>
+      <td>HIV Vaccine Development</td>
+      <td>236067.0</td>
+      <td>2005</td>
+      <td>2009</td>
+      <td>National Health and Medical Research Council</td>
+      <td>Australia</td>
+      <td>grant.6722306</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>910292</td>
+      <td>Dengue virus vaccine.</td>
+      <td>130890.0</td>
+      <td>1991</td>
+      <td>1993</td>
+      <td>National Health and Medical Research Council</td>
+      <td>Australia</td>
+      <td>grant.6716312</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>578221</td>
+      <td>Engineering Inhalable Vaccines</td>
+      <td>27386.0</td>
+      <td>2015</td>
+      <td>2016</td>
+      <td>Natural Sciences and Engineering Research Council</td>
+      <td>Canada</td>
+      <td>grant.7715379</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>IC18980360</td>
+      <td>Schistosomiasis Vaccine Network.</td>
+      <td>0.0</td>
+      <td>1998</td>
+      <td>2000</td>
+      <td>European Commission</td>
+      <td>Belgium</td>
+      <td>grant.3733803</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>7621798</td>
+      <td>Pneumococcal Ribosomal Vaccines</td>
+      <td>46000.0</td>
+      <td>1977</td>
+      <td>1980</td>
+      <td>Directorate for Biological Sciences</td>
+      <td>United States</td>
+      <td>grant.3274273</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>255890</td>
+      <td>Rational vaccine design</td>
+      <td>7138.0</td>
+      <td>2003</td>
+      <td>2004</td>
+      <td>Natural Sciences and Engineering Research Council</td>
+      <td>Canada</td>
+      <td>grant.7637970</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> allows to carry out sophisticated research data analytics tasks like the ones described on this website. Check out also the associated <a class="reference external" href="https://github.com/digital-science/dimensions-api-lab">Github repository</a> for examples, the source code of these tutorials and much more.</p>
+</div>
+<a class="reference external image-reference" href="https://www.dimensions.ai/dimensions-apis/"><img alt="../_images/badge-dimensions-api.svg" src="../_images/badge-dimensions-api.svg" /></a>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+    <p>© Copyright 2020 Digital Science & Research Solutions, Inc. All Rights Reserved | <a href="https://www.dimensions.ai/">About us</a> · <a href="https://www.dimensions.ai/privacy/">Privacy policy</a> · <a href="https://www.dimensions.ai/website-terms/">Legal terms</a></p>
+     
+
+    <!-- OneTrust Cookies Settings button start -->
+    <button id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</button>
+    <!-- OneTrust Cookies Settings button end -->
+
+
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+    
+
+    <!-- Adds target=_blank to external links -->
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('a[href^="http://"], a[href^="https://"]').not('a[class*=internal]').attr('target', '_blank');
+    });
+  </script>
+
+
+  <!-- OneTrust Cookies Consent Notice start for dimensions.ai -->
+   <script type="text/javascript" src="https://cdn.cookielaw.org/consent/3329b668-7887-4dba-9bee-c3853a706e6f/OtAutoBlock.js" ></script>
+   <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="3329b668-7887-4dba-9bee-c3853a706e6f" ></script>
+   <script type="text/javascript">
+   function OptanonWrapper() { }
+   </script>
+   <!-- OneTrust Cookies Consent Notice end for dimensions.ai -->
+  
+
+
+</body>
+</html>

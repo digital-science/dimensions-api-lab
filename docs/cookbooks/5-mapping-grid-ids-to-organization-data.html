@@ -1,0 +1,1346 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Mapping GRID IDs to Organization Data &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/custom.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Collaboration Patterns By Year (International, Domestic, Internal)" href="4-international-collaboration-by-year.html" />
+    
+
+   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149959808-1"></script>
+   <!-- <script src="_static/js/custom.js"></script> -->
+
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> DSL
+          
+
+          
+            
+            <img src="../_static/dimensions-logo@2x.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+
+   <p class="">
+      <h3 id="cookbooks_title">API COOKBOOKS</h3>
+   </p>
+
+
+   
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Folder</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="1-GRID-preview.html">The Organizations API: Features Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="1-GRID-preview.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1-GRID-preview.html#1.-Matching-affiliation-data-to-GRID-IDs-using-extract_affiliations">1. Matching affiliation data to GRID IDs using <code class="docutils literal notranslate"><span class="pre">extract_affiliations</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="1-GRID-preview.html#2.-Searching-GRID-organizations">2. Searching GRID organizations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="1-GRID-preview.html#Full-text-search">Full-text search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1-GRID-preview.html#Fielded-search">Fielded search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1-GRID-preview.html#Returning-facets">Returning facets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1-GRID-preview.html#Returning-organizations-facets-from-publications">Returning organizations facets from publications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="1-GRID-preview.html#3.-A-closer-look-at-the-organizations-data-statistics">3. A closer look at the organizations data statistics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="1-GRID-preview.html#Let’s-visualize-the-data-with-plotly">Let’s visualize the data with plotly</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="1-GRID-preview.html#Where-to-find-out-more">Where to find out more</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="2-Industry-Collaboration.html">Identifying the Industry Collaborators of an Academic Institution</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="2-Industry-Collaboration.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2-Industry-Collaboration.html#1.-Selecting-an-academic-institution">1. Selecting an academic institution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2-Industry-Collaboration.html#2.-Extracting-publications-from-industry-collaborations">2. Extracting publications from industry collaborations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2-Industry-Collaboration.html#3.-Analyses">3. Analyses</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="2-Industry-Collaboration.html#3.1-Count-of-Publications-per-year-from-Industry-Collaborations">3.1 Count of Publications per year from Industry Collaborations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2-Industry-Collaboration.html#3.2-Citations-from-Industry-Collaboration">3.2 Citations from Industry Collaboration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2-Industry-Collaboration.html#3.3-Top-Industry-Collaborators">3.3 Top Industry Collaborators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2-Industry-Collaboration.html#3.4-Countries-of-Industry-Collaborators">3.4 Countries of Industry Collaborators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2-Industry-Collaboration.html#3.5-Putting-Countries-and-Collaborators-together">3.5 Putting Countries and Collaborators together</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="3-Organizations-Collaboration-Network.html">Building an Organizations Collaboration Network Diagram</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="3-Organizations-Collaboration-Network.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3-Organizations-Collaboration-Network.html#1.-Choose-an-Organization-and-a-keyword-(topic)">1. Choose an Organization and a keyword (topic)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3-Organizations-Collaboration-Network.html#2.-Building-a-one-degree-network-of-collaborating-institutions">2. Building a one-degree network of collaborating institutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3-Organizations-Collaboration-Network.html#3.-Building-a-network-of-any-size">3. Building a network of any size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3-Organizations-Collaboration-Network.html#4.-Visualizing-the-network">4. Visualizing the network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3-Organizations-Collaboration-Network.html#5.-Addendum:-showing-only-‘Government’-collaborators">5. Addendum: showing only ‘Government’ collaborators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3-Organizations-Collaboration-Network.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="4-international-collaboration-by-year.html">Collaboration Patterns By Year (International, Domestic, Internal)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="4-international-collaboration-by-year.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4-international-collaboration-by-year.html#1.-Lookup-the-University-that-you-are-interested-in">1. Lookup the University that you are interested in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4-international-collaboration-by-year.html#2.-Publications-output-by-year">2. Publications output by year</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4-international-collaboration-by-year.html#3.-International-publications">3. International publications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4-international-collaboration-by-year.html#4.-Domestic">4. Domestic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4-international-collaboration-by-year.html#5.-Internal">5. Internal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4-international-collaboration-by-year.html#6.-Joining-up-All-metrics-together">6. Joining up All metrics together</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4-international-collaboration-by-year.html#7.-How-does-this-compare-to-Australia?">7. How does this compare to Australia?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4-international-collaboration-by-year.html#8.-How-does-this-compare-to-a-different-Institution-(University-of-Toronto)?">8. How does this compare to a different Institution (University of Toronto)?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4-international-collaboration-by-year.html#Want-to-learn-more?">Want to learn more?</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Mapping GRID IDs to Organization Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#1.-Importing-Organization-Data">1. Importing Organization Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#1.1-Manually-Generate-Organization-Data">1.1 Manually Generate Organization Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#1.2-Load-Organization-Data-from-Local-Machine">1.2 Load Organization Data from Local Machine</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#2.-Utilizing-Dimensions-API-to-Extract-GRID-IDs">2. Utilizing Dimensions API to Extract GRID IDs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#3.-Save-the-GRID-ID-Dataset-we-created">3. Save the GRID ID Dataset we created</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+
+
+   <div id="sidebar_github" style="margin-top: 12px;">
+   <h3>Github Source</h3>
+
+      <div style="margin: 10px 20px;">
+      
+         <iframe src="https://ghbtns.com/github-btn.html?user=digital-science&repo=dimensions-api-lab&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+
+         <iframe src="https://ghbtns.com/github-btn.html?user=digital-science&repo=dimensions-api-lab&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe> 
+      
+      </div>
+
+   </div>
+
+
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DSL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+
+    
+
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt .copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js'></script>
+<script>require=requirejs;</script><a class="reference external image-reference" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/cookbooks/5-mapping-grid-ids-to-organization-data.ipynb"><img alt="../_images/badge-colab.svg" src="../_images/badge-colab.svg" /></a>
+<a class="reference external image-reference" href="https://github.com/digital-science/dimensions-api-lab/blob/master/cookbooks/5-mapping-grid-ids-to-organization-data.ipynb"><img alt="../_images/badge-github-custom.svg" src="../_images/badge-github-custom.svg" /></a>
+<hr class="docutils" />
+<div class="section" id="Mapping-GRID-IDs-to-Organization-Data">
+<h1>Mapping GRID IDs to Organization Data<a class="headerlink" href="#Mapping-GRID-IDs-to-Organization-Data" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial, we show how to use the <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> and organization data to extract GRID IDs.</p>
+<p><a class="reference external" href="https://grid.ac/">GRID</a> is a free and openly available global database of research-related organisations, cataloging research-related organizations and providing each with a unique and persistent identifier. Dimensions uses this identifier to link organizations to publications, grants, etc.</p>
+<p><strong>Use case scenarios:</strong></p>
+<ul class="simple">
+<li><p>An analyst has a list of organizations of interest, and wants to get details of their publications from Dimensions. To do this, they they need to map them to GRID IDs so they can extract information from the Dimensions database. The organization data can be run through the Dimensions API <a class="reference external" href="https://docs.dimensions.ai/dsl/functions.html#function-extract-affiliations">extract_affiliations</a> function in order to extract GRID IDs, which can then be utilized to get publication data statistics.</p></li>
+<li><p>A second use case is to standardize messy organization data for analysis. For example, an analyst might have a set of affiliation data containing many variants of organization names (“University of Cambridge”, “Cambridge University”). By mapping to GRID IDs, the analyst can standardize the data so it’s easier to analyse.</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">CHANGELOG</span><span class="se">\n</span><span class="s2">This notebook was last run on </span><span class="si">%s</span><span class="se">\n</span><span class="s2">==&quot;</span> <span class="o">%</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">, %Y&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+==
+CHANGELOG
+This notebook was last run on Jan 25, 2022
+==
+</pre></div></div>
+</div>
+<div class="section" id="Prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>This notebook assumes you have installed the <a class="reference external" href="https://pypi.org/project/dimcli/">Dimcli</a> library and are familiar with the <a class="reference external" href="https://api-lab.dimensions.ai/cookbooks/1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html">‘Getting Started’ tutorial</a>.</p>
+<p>To generate an API key from the Dimensions webapp, go to “My Account”. Under “General Settings” there is an “API key” section where there is a “Create API key” button. More information on this can be found <a class="reference external" href="https://dimensions.freshdesk.com/support/solutions/articles/23000018791">here</a>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install dimcli --quiet
+
+<span class="kn">import</span> <span class="nn">dimcli</span>
+<span class="kn">from</span> <span class="nn">dimcli.utils</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">dimcli.functions</span> <span class="kn">import</span> <span class="n">extract_affiliations</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">Logging in..&quot;</span><span class="p">)</span>
+<span class="c1"># https://digital-science.github.io/dimcli/getting-started.html#authentication</span>
+<span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;https://app.dimensions.ai&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">Logging in..&quot;</span><span class="p">)</span>
+<span class="c1"># https://digital-science.github.io/dimcli/getting-started.html#authentication</span>
+<span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;https://app.dimensions.ai&quot;</span>
+<span class="k">if</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+  <span class="kn">import</span> <span class="nn">getpass</span>
+  <span class="n">KEY</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;API Key: &#39;</span><span class="p">)</span>
+  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">KEY</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="n">ENDPOINT</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="n">KEY</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">KEY</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="n">ENDPOINT</span><span class="p">)</span>
+<span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Searching config file credentials for &#39;https://app.dimensions.ai&#39; endpoint..
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+==
+Logging in..
+==
+Logging in..
+Dimcli - Dimensions API Client (v0.9.6)
+Connected to: &lt;https://app.dimensions.ai/api/dsl&gt; - DSL v2.0
+Method: dsl.ini file
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="1.-Importing-Organization-Data">
+<h2>1. Importing Organization Data<a class="headerlink" href="#1.-Importing-Organization-Data" title="Permalink to this headline">¶</a></h2>
+<p>There are several ways to obtain organization data. Below we show examples for 2 different ways to obtain organization data that can be used to run through Dimensions API for GRID ID mapping. <em>For purposes of this demostration, we will be using method 1</em>. Please uncomment the other sections if you wish to use those methods instead.</p>
+<ol class="arabic simple">
+<li><p>Manually Generate Organization Data</p></li>
+<li><p>Load Organization Data from Local Machine</p></li>
+</ol>
+<p><em>Note</em> - To map organizational data to GRID IDs, the data must conform to mapping specifications and contain data (if available) for the following 4 columns (with column headers being lowercase): * name - name of the organization * city - city of the organization * state - state of the organization (use the full name of the state, not acronym) * country - country of the organization</p>
+<p>The user may use structured or unstructured organization data for mapping to GRID IDs like the following:</p>
+<ul class="simple">
+<li><p>Structured Data e.g., <code class="docutils literal notranslate"><span class="pre">[{&quot;name&quot;:&quot;Southwestern</span> <span class="pre">University&quot;,</span>&#160;&#160;&#160;&#160; <span class="pre">&quot;city&quot;:&quot;Georgetown&quot;,</span>&#160;&#160;&#160;&#160; <span class="pre">&quot;state&quot;:&quot;Texas&quot;,</span>&#160;&#160;&#160;&#160; <span class="pre">&quot;country&quot;:&quot;USA&quot;}]</span></code></p></li>
+<li><p>Unstructured Data e.g., <code class="docutils literal notranslate"><span class="pre">[{&quot;affiliation&quot;:</span> <span class="pre">&quot;university</span> <span class="pre">of</span> <span class="pre">oxford,</span> <span class="pre">uk&quot;}]</span></code></p></li>
+</ul>
+<p><em>For purposes of this notebook, we will be utilizing structured data in a pandas dataframe. Therefore, please ensure your organization dataset resembles the format observed under method 1, below.</em></p>
+<div class="section" id="1.1-Manually-Generate-Organization-Data">
+<h3>1.1 Manually Generate Organization Data<a class="headerlink" href="#1.1-Manually-Generate-Organization-Data" title="Permalink to this headline">¶</a></h3>
+<p>The following cell builds an example organization dataset.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The following generates a table of organization data with 4 columns</span>
+<span class="n">organization_names</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;Augusta Univeristy&#39;</span><span class="p">,</span> <span class="s1">&#39;Baylor College of Medicine&#39;</span><span class="p">,</span> <span class="s1">&#39;Brown University&#39;</span><span class="p">,</span> <span class="s1">&#39;California Institute of Technology&#39;</span><span class="p">,</span> <span class="s1">&#39;Duke Univerisity&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;Emory University&#39;</span><span class="p">,</span> <span class="s1">&#39;Florida State University&#39;</span><span class="p">,</span> <span class="s1">&#39;Harvard Medical School&#39;</span><span class="p">,</span> <span class="s1">&#39;Kent State University&#39;</span><span class="p">,</span> <span class="s1">&#39;New York University&#39;</span><span class="p">,</span> <span class="s1">&#39;Mayo Clinic&#39;</span><span class="p">])</span>
+<span class="n">organization_cities</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;Augusta&#39;</span><span class="p">,</span> <span class="s1">&#39;Houston&#39;</span><span class="p">,</span> <span class="s1">&#39;Providence&#39;</span><span class="p">,</span> <span class="s1">&#39;Pasadena&#39;</span><span class="p">,</span> <span class="s1">&#39;Durham&#39;</span><span class="p">,</span>
+                                 <span class="s1">&#39;Atlanta&#39;</span><span class="p">,</span> <span class="s1">&#39;Tallahassee&#39;</span><span class="p">,</span> <span class="s1">&#39;Boston&#39;</span><span class="p">,</span> <span class="s1">&#39;Kent&#39;</span><span class="p">,</span> <span class="s1">&#39;New York&#39;</span><span class="p">])</span>
+<span class="n">organization_states</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;Georgia&#39;</span><span class="p">,</span> <span class="s1">&#39;Texas&#39;</span><span class="p">,</span> <span class="s1">&#39;Rhode Island&#39;</span><span class="p">,</span> <span class="s1">&#39;California&#39;</span><span class="p">,</span> <span class="s1">&#39;North Carolina&#39;</span><span class="p">,</span>
+                                 <span class="s1">&#39;Georgia&#39;</span><span class="p">,</span> <span class="s1">&#39;Florida&#39;</span><span class="p">,</span> <span class="s1">&#39;Massachusetts&#39;</span><span class="p">,</span> <span class="s1">&#39;Ohio&#39;</span><span class="p">,</span> <span class="s1">&#39;New York&#39;</span><span class="p">])</span>
+<span class="n">organization_countries</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;United States&#39;</span><span class="p">,</span> <span class="s1">&#39;United States&#39;</span><span class="p">,</span> <span class="s1">&#39;United States&#39;</span><span class="p">,</span> <span class="s1">&#39;United States&#39;</span><span class="p">,</span> <span class="s1">&#39;United States&#39;</span><span class="p">,</span>
+                                    <span class="s1">&#39;United States&#39;</span><span class="p">,</span> <span class="s1">&#39;United States&#39;</span><span class="p">,</span> <span class="s1">&#39;United States&#39;</span><span class="p">,</span> <span class="s1">&#39;United States&#39;</span><span class="p">,</span> <span class="s1">&#39;United States&#39;</span><span class="p">,</span> <span class="s1">&#39;United States&#39;</span><span class="p">])</span>
+
+<span class="n">orgs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="n">organization_names</span><span class="p">,</span> <span class="s1">&#39;city&#39;</span><span class="p">:</span><span class="n">organization_cities</span><span class="p">,</span> <span class="s1">&#39;state&#39;</span><span class="p">:</span><span class="n">organization_states</span><span class="p">,</span> <span class="s1">&#39;country&#39;</span><span class="p">:</span><span class="n">organization_countries</span><span class="p">})</span>
+
+<span class="c1"># Preview Dataset</span>
+<span class="n">orgs</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>city</th>
+      <th>state</th>
+      <th>country</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Augusta Univeristy</td>
+      <td>Augusta</td>
+      <td>Georgia</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Baylor College of Medicine</td>
+      <td>Houston</td>
+      <td>Texas</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Brown University</td>
+      <td>Providence</td>
+      <td>Rhode Island</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>California Institute of Technology</td>
+      <td>Pasadena</td>
+      <td>California</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Duke Univerisity</td>
+      <td>Durham</td>
+      <td>North Carolina</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Emory University</td>
+      <td>Atlanta</td>
+      <td>Georgia</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Florida State University</td>
+      <td>Tallahassee</td>
+      <td>Florida</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Harvard Medical School</td>
+      <td>Boston</td>
+      <td>Massachusetts</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Kent State University</td>
+      <td>Kent</td>
+      <td>Ohio</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>New York University</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Mayo Clinic</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>United States</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="1.2-Load-Organization-Data-from-Local-Machine">
+<h3>1.2 Load Organization Data from Local Machine<a class="headerlink" href="#1.2-Load-Organization-Data-from-Local-Machine" title="Permalink to this headline">¶</a></h3>
+<p>The following cells can be utilized to import an excel file of organization data from a local machine.</p>
+<p>This method is useful for when you need to map hundreds or thousands of organizations to GRID IDs, as the bulk process using the API will be much faster than any individual mapping.</p>
+<p><em>Please uncomment the cells below if to be utilized</em></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># # Upload the organization dataset from local machine</span>
+
+<span class="c1"># from google.colab import files</span>
+<span class="c1"># uploaded = files.upload()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># # Load and preview the organization dataset into a pandas dataframe</span>
+
+<span class="c1"># import io</span>
+<span class="c1"># import pandas as pd</span>
+
+<span class="c1"># orgs = pd.read_excel(io.BytesIO(uploaded[&#39;dataset_name.xlsx&#39;]))</span>
+
+<span class="c1"># orgs.head()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="2.-Utilizing-Dimensions-API-to-Extract-GRID-IDs">
+<h2>2. Utilizing Dimensions API to Extract GRID IDs<a class="headerlink" href="#2.-Utilizing-Dimensions-API-to-Extract-GRID-IDs" title="Permalink to this headline">¶</a></h2>
+<p>The following cells will take our organization data and run it through the Dimensions API to pull back GRID IDs mapped to each organization.</p>
+<p>Here, we utilize the “<a class="reference external" href="https://docs.dimensions.ai/dsl/functions.html#function-extract-affiliations">extract_affiliations</a>” API function which can be used to enrich private datasets including non-disambiguated organizations data with Dimensions GRID IDs.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># First, we replace empty data with &#39;null&#39; to satisfy mapping specifications</span>
+
+<span class="n">orgs</span> <span class="o">=</span> <span class="n">orgs</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s1">&#39;null&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Second, we will convert organization data from a dataframe to a dictionary (json) for GRID mapping</span>
+
+<span class="n">recs</span> <span class="o">=</span> <span class="n">orgs</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s1">&#39;records&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Then we will take the organization data, run it through the API and return GRID IDs</span>
+
+<span class="c1"># Chunk records to batches, API takes up to 200 records at a time.</span>
+<span class="k">def</span> <span class="nf">chunk_records</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">),</span> <span class="n">n</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">n</span><span class="p">]</span>
+
+<span class="c1"># Use dimcli&#39;s from extract_affiliations API wrapper to process data</span>
+
+<span class="n">chunksize</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">grid</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">chunk_records</span><span class="p">(</span><span class="n">recs</span><span class="p">,</span> <span class="n">chunksize</span><span class="p">)):</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">extract_affiliations</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">output</span><span class="p">,</span><span class="n">sort</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">ignore_index</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># Pause to avoid overloading API with too many calls too quickly</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">chunksize</span><span class="si">}</span><span class="s2"> records complete!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+200 records complete!
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Preview the extracted GRID ID dataframe</span>
+<span class="c1"># Note: data columns labeled with &quot;input&quot; are the original organization data supplied to the API</span>
+
+<span class="n">grid</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>input.city</th>
+      <th>input.country</th>
+      <th>input.name</th>
+      <th>input.state</th>
+      <th>grid_id</th>
+      <th>grid_name</th>
+      <th>grid_city</th>
+      <th>grid_state</th>
+      <th>grid_country</th>
+      <th>requires_review</th>
+      <th>geo_country_id</th>
+      <th>geo_country_name</th>
+      <th>geo_country_code</th>
+      <th>geo_state_id</th>
+      <th>geo_state_name</th>
+      <th>geo_state_code</th>
+      <th>geo_city_id</th>
+      <th>geo_city_name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Augusta</td>
+      <td>United States</td>
+      <td>Augusta Univeristy</td>
+      <td>Georgia</td>
+      <td>grid.410427.4</td>
+      <td>Augusta University</td>
+      <td>Augusta</td>
+      <td>Georgia</td>
+      <td>United States</td>
+      <td>False</td>
+      <td>6252001</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>4197000</td>
+      <td>Georgia</td>
+      <td>US-GA</td>
+      <td>4180531</td>
+      <td>Augusta</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Houston</td>
+      <td>United States</td>
+      <td>Baylor College of Medicine</td>
+      <td>Texas</td>
+      <td>grid.39382.33</td>
+      <td>Baylor College of Medicine</td>
+      <td>Houston</td>
+      <td>Texas</td>
+      <td>United States</td>
+      <td>False</td>
+      <td>6252001</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>4736286</td>
+      <td>Texas</td>
+      <td>US-TX</td>
+      <td>4699066</td>
+      <td>Houston</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Providence</td>
+      <td>United States</td>
+      <td>Brown University</td>
+      <td>Rhode Island</td>
+      <td>grid.40263.33</td>
+      <td>Brown University</td>
+      <td>Providence</td>
+      <td>Rhode Island</td>
+      <td>United States</td>
+      <td>False</td>
+      <td>6252001</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>5224323</td>
+      <td>Rhode Island</td>
+      <td>US-RI</td>
+      <td>5224151</td>
+      <td>Providence</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Pasadena</td>
+      <td>United States</td>
+      <td>California Institute of Technology</td>
+      <td>California</td>
+      <td>grid.20861.3d</td>
+      <td>California Institute of Technology</td>
+      <td>Pasadena</td>
+      <td>California</td>
+      <td>United States</td>
+      <td>False</td>
+      <td>6252001</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>5332921</td>
+      <td>California</td>
+      <td>US-CA</td>
+      <td>5381396</td>
+      <td>Pasadena</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Durham</td>
+      <td>United States</td>
+      <td>Duke Univerisity</td>
+      <td>North Carolina</td>
+      <td>grid.26009.3d</td>
+      <td>Duke University</td>
+      <td>Durham</td>
+      <td>North Carolina</td>
+      <td>United States</td>
+      <td>False</td>
+      <td>6252001</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>4482348</td>
+      <td>North Carolina</td>
+      <td>US-NC</td>
+      <td>4464368</td>
+      <td>Durham</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Note: Some records returned in the GRID mapping may require manual review, as some results may give more than one organization of interest (see below). The user can utilize this information to update their original organization data that is inputted to this notebook.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grid</span><span class="p">[</span><span class="s1">&#39;requires_review&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">grid</span><span class="p">[</span><span class="s1">&#39;requires_review&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<span class="n">grid_review</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">grid</span><span class="p">[</span><span class="s1">&#39;requires_review&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;True&#39;</span><span class="p">]</span>
+<span class="n">grid_review</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>input.city</th>
+      <th>input.country</th>
+      <th>input.name</th>
+      <th>input.state</th>
+      <th>grid_id</th>
+      <th>grid_name</th>
+      <th>grid_city</th>
+      <th>grid_state</th>
+      <th>grid_country</th>
+      <th>requires_review</th>
+      <th>geo_country_id</th>
+      <th>geo_country_name</th>
+      <th>geo_country_code</th>
+      <th>geo_state_id</th>
+      <th>geo_state_name</th>
+      <th>geo_state_code</th>
+      <th>geo_city_id</th>
+      <th>geo_city_name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>10</th>
+      <td>null</td>
+      <td>United States</td>
+      <td>Mayo Clinic</td>
+      <td>null</td>
+      <td>grid.417468.8</td>
+      <td>Mayo Clinic</td>
+      <td>Scottsdale</td>
+      <td>Arizona</td>
+      <td>United States</td>
+      <td>True</td>
+      <td>6252001</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>5551752</td>
+      <td>Arizona</td>
+      <td>US-AZ</td>
+      <td>5313457</td>
+      <td>Scottsdale</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>null</td>
+      <td>United States</td>
+      <td>Mayo Clinic</td>
+      <td>null</td>
+      <td>grid.417468.8</td>
+      <td>Mayo Clinic</td>
+      <td>Scottsdale</td>
+      <td>Arizona</td>
+      <td>United States</td>
+      <td>True</td>
+      <td>6252001</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>5551752</td>
+      <td>Arizona</td>
+      <td>US-AZ</td>
+      <td>4160021</td>
+      <td>Jacksonville</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>null</td>
+      <td>United States</td>
+      <td>Mayo Clinic</td>
+      <td>null</td>
+      <td>grid.417468.8</td>
+      <td>Mayo Clinic</td>
+      <td>Scottsdale</td>
+      <td>Arizona</td>
+      <td>United States</td>
+      <td>True</td>
+      <td>6252001</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>4155751</td>
+      <td>Florida</td>
+      <td>US-FL</td>
+      <td>5313457</td>
+      <td>Scottsdale</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>null</td>
+      <td>United States</td>
+      <td>Mayo Clinic</td>
+      <td>null</td>
+      <td>grid.417468.8</td>
+      <td>Mayo Clinic</td>
+      <td>Scottsdale</td>
+      <td>Arizona</td>
+      <td>United States</td>
+      <td>True</td>
+      <td>6252001</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>4155751</td>
+      <td>Florida</td>
+      <td>US-FL</td>
+      <td>4160021</td>
+      <td>Jacksonville</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>null</td>
+      <td>United States</td>
+      <td>Mayo Clinic</td>
+      <td>null</td>
+      <td>grid.417467.7</td>
+      <td>Mayo Clinic</td>
+      <td>Jacksonville</td>
+      <td>Florida</td>
+      <td>United States</td>
+      <td>True</td>
+      <td>6252001</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>5551752</td>
+      <td>Arizona</td>
+      <td>US-AZ</td>
+      <td>5313457</td>
+      <td>Scottsdale</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>null</td>
+      <td>United States</td>
+      <td>Mayo Clinic</td>
+      <td>null</td>
+      <td>grid.417467.7</td>
+      <td>Mayo Clinic</td>
+      <td>Jacksonville</td>
+      <td>Florida</td>
+      <td>United States</td>
+      <td>True</td>
+      <td>6252001</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>5551752</td>
+      <td>Arizona</td>
+      <td>US-AZ</td>
+      <td>4160021</td>
+      <td>Jacksonville</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>null</td>
+      <td>United States</td>
+      <td>Mayo Clinic</td>
+      <td>null</td>
+      <td>grid.417467.7</td>
+      <td>Mayo Clinic</td>
+      <td>Jacksonville</td>
+      <td>Florida</td>
+      <td>United States</td>
+      <td>True</td>
+      <td>6252001</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>4155751</td>
+      <td>Florida</td>
+      <td>US-FL</td>
+      <td>5313457</td>
+      <td>Scottsdale</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>null</td>
+      <td>United States</td>
+      <td>Mayo Clinic</td>
+      <td>null</td>
+      <td>grid.417467.7</td>
+      <td>Mayo Clinic</td>
+      <td>Jacksonville</td>
+      <td>Florida</td>
+      <td>United States</td>
+      <td>True</td>
+      <td>6252001</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>4155751</td>
+      <td>Florida</td>
+      <td>US-FL</td>
+      <td>4160021</td>
+      <td>Jacksonville</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="3.-Save-the-GRID-ID-Dataset-we-created">
+<h2>3. Save the GRID ID Dataset we created<a class="headerlink" href="#3.-Save-the-GRID-ID-Dataset-we-created" title="Permalink to this headline">¶</a></h2>
+<p>The following cell will export the GRID ID mapped organization data to a csv file that can be saved to your local machine.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># temporarily save pandas dataframe as file in colab environment</span>
+<span class="n">grid</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;file_name.csv&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+
+    <span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">files</span>
+
+    <span class="c1"># download file to local machine</span>
+    <span class="n">files</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;file_name.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Conclusions">
+<h2>Conclusions<a class="headerlink" href="#Conclusions" title="Permalink to this headline">¶</a></h2>
+<p>In this notebook we have shown how to use the <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> <em>extract_affiliations</em> function to assign GRID identifiers to organizations data.</p>
+<p>For more background, see the <a class="reference external" href="https://docs.dimensions.ai/dsl/functions.html#function-extract-affiliations">extract_affiliations function documentation</a>, as well as the other functions available via the Dimensions API.</p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> allows to carry out sophisticated research data analytics tasks like the ones described on this website. Check out also the associated <a class="reference external" href="https://github.com/digital-science/dimensions-api-lab">Github repository</a> for examples, the source code of these tutorials and much more.</p>
+</div>
+<a class="reference external image-reference" href="https://www.dimensions.ai/dimensions-apis/"><img alt="../_images/badge-dimensions-api.svg" src="../_images/badge-dimensions-api.svg" /></a>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+    <p>© Copyright 2020 Digital Science & Research Solutions, Inc. All Rights Reserved | <a href="https://www.dimensions.ai/">About us</a> · <a href="https://www.dimensions.ai/privacy/">Privacy policy</a> · <a href="https://www.dimensions.ai/website-terms/">Legal terms</a></p>
+     
+
+    <!-- OneTrust Cookies Settings button start -->
+    <button id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</button>
+    <!-- OneTrust Cookies Settings button end -->
+
+
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+    
+
+    <!-- Adds target=_blank to external links -->
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('a[href^="http://"], a[href^="https://"]').not('a[class*=internal]').attr('target', '_blank');
+    });
+  </script>
+
+
+  <!-- OneTrust Cookies Consent Notice start for dimensions.ai -->
+   <script type="text/javascript" src="https://cdn.cookielaw.org/consent/3329b668-7887-4dba-9bee-c3853a706e6f/OtAutoBlock.js" ></script>
+   <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="3329b668-7887-4dba-9bee-c3853a706e6f" ></script>
+   <script type="text/javascript">
+   function OptanonWrapper() { }
+   </script>
+   <!-- OneTrust Cookies Consent Notice end for dimensions.ai -->
+  
+
+
+</body>
+</html>

@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Exploring The Dimensions Search Language (DSL) - Quick Intro &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
   
@@ -19,7 +19,10 @@
   
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   
+
   
+  
+
   
 
   
@@ -36,7 +39,8 @@
         <script src="../../_static/js/custom.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -64,7 +68,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> DSL
+            <a href="../../index.html" class="icon icon-home"> DSL
           
 
           
@@ -153,7 +157,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="4-Dimcli-magic-commands.html">The Dimcli Python library: Magic Commands</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="4-Dimcli-magic-commands.html#Prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="4-Dimcli-magic-commands.html#id1">Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="4-Dimcli-magic-commands.html#Dimcli-‘magic’-commands">Dimcli ‘magic’ commands</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="4-Dimcli-magic-commands.html#Tip:-Accessing-data-returned-by-magic-queries">Tip: Accessing data returned by magic queries</a></li>
 </ul>
@@ -172,8 +175,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#Control-the-fields-you-return">Control the fields you return</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Make-a-mistake,-and-the-DSL-will-tell-you-what-fields-that-you-could-have-used">Make a mistake, and the DSL will tell you what fields that you could have used</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Get-all-fields">Get all fields</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Make-a-mistake,-and-the-DSL-will-tell-you-what-fields-that-you-could-have-used">Make a mistake, and the DSL will tell you what fields that you could have used</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#Full-text-search">Full text search</a></li>
 </ul>
 </li>
@@ -264,10 +266,7 @@
 <li class="toctree-l2"><a class="reference internal" href="6-Working-with-lists.html#8.-..and-if-we-want-details-about-our-researchers,-we-can-put-our-list-of-researchers-into-the-researcher-API">8. ..and if we want details about our researchers, we can put our list of researchers into the researcher API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="6-Working-with-lists.html#9.-Patents-example-(patents--&gt;-publications)">9. Patents example (patents -&gt; publications)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="6-Working-with-lists.html#10.-Clinical-Trials-(clinical-trials--&gt;-publications)">10. Clinical Trials (clinical trials -&gt; publications)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="6-Working-with-lists.html#11.-Grants-(publications--&gt;-grants)">11. Grants (publications -&gt; grants)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="6-Working-with-lists.html#Why-didn’t-I-use-resulting_publication_ids-?">Why didn’t I use resulting_publication_ids ?</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="6-Working-with-lists.html#11.-Grants-(publications--&gt;-grants)">11. Grants (publications -&gt; grants)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="6-Working-with-lists.html#Conclusions">Conclusions</a></li>
 </ul>
 </li>
@@ -325,7 +324,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../2-publications/Citation-Analysis.html">Citation Analysis: an Introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Citation-Analysis.html#1.-Prerequisites">1. Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Method-A:-getting-citations-for-one-publication-at-a-time">Method A: getting citations for one publication at a time</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Comments-about-this-method">Comments about this method</a></li>
 </ul>
@@ -383,7 +382,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html">Journal Profiling Part 1: Getting the Data</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Prerequisites">Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Selecting-a-Journal-and-Extracting-All-Publications-Metadata">Selecting a Journal and Extracting All Publications Metadata</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Some-stats-about-authors">Some stats about authors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Basic-stats-about-authors">Basic stats about authors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#A-quick-look-at-authors-without-a-Dimensions-Researcher-ID">A quick look at authors <em>without</em> a Dimensions Researcher ID</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Any-common-patterns?">Any common patterns?</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Creating-an-export-for-manual-curation">Creating an export for manual curation</a></li>
@@ -472,7 +471,6 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#Back-to-our-grants-list">Back to our grants list</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#Enriching-the-original-list">Enriching the original list</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#Save-the-data">Save the data</a></li>
 </ul>
 </li>
 </ul>
@@ -856,6 +854,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -876,21 +876,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -991,7 +1005,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -1057,6 +1071,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -1066,7 +1081,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt a.copybtn {
+.prompt .copybtn {
     display: none;
 }
 
@@ -1137,15 +1152,34 @@ div.rendered_html tbody tr:hover {
 <div><p>See also: <a class="reference external" href="https://docs.dimensions.ai/dsl/">official DSL documentation online</a></p>
 </div></blockquote>
 <p>In this tutorial we leverage the capabilities of the <a class="reference external" href="https://github.com/lambdamusic/dimcli">Dimcli library</a> in the context of Jupyter Notebooks. Dimcli is an open source Python library that simplifies common operations like logging in, querying and displaying results.</p>
-<div class="section" id="Prerequisites">
-<h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
-<p>This notebook assumes you have installed the <a class="reference external" href="https://pypi.org/project/dimcli/">Dimcli</a> library and are familiar with the <em>Getting Started</em> tutorial.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">!</span>pip install dimcli -U --quiet
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">CHANGELOG</span><span class="se">\n</span><span class="s2">This notebook was last run on </span><span class="si">%s</span><span class="se">\n</span><span class="s2">==&quot;</span> <span class="o">%</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">, %Y&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+==
+CHANGELOG
+This notebook was last run on Jan 24, 2022
+==
+</pre></div></div>
+</div>
+<div class="section" id="Prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>This notebook assumes you have installed the <a class="reference external" href="https://pypi.org/project/dimcli/">Dimcli</a> library and are familiar with the <a class="reference external" href="https://api-lab.dimensions.ai/cookbooks/1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html">‘Getting Started’ tutorial</a>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install dimcli -U --quiet
 
 <span class="kn">import</span> <span class="nn">dimcli</span>
 <span class="kn">from</span> <span class="nn">dimcli.utils</span> <span class="kn">import</span> <span class="o">*</span>
@@ -1165,6 +1199,14 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Searching config file credentials for &#39;https://app.dimensions.ai&#39; endpoint..
+</pre></div></div>
+</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
@@ -1172,8 +1214,8 @@ div.rendered_html tbody tr:hover {
 <div class="highlight"><pre>
 ==
 Logging in..
-Dimcli - Dimensions API Client (v0.8.2.2)
-Connected to: https://app.dimensions.ai - DSL v1.28
+Dimcli - Dimensions API Client (v0.9.6)
+Connected to: &lt;https://app.dimensions.ai/api/dsl&gt; - DSL v2.0
 Method: dsl.ini file
 </pre></div></div>
 </div>
@@ -1184,8 +1226,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">res1</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res1</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">  search publications</span>
 <span class="s2">  where year in [2013:2018] and research_orgs=&quot;grid.258806.1&quot;</span>
 <span class="s2">  return publications&quot;&quot;&quot;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -1198,7 +1239,7 @@ Method: dsl.ini file
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;total_count&#39;: 3727}
+{&#39;total_count&#39;: 5807}
 </pre></div></div>
 </div>
 <p>It is important to note though that the <strong>total number always refers to the main source</strong> one is searching for, not necessarily the results being returned. For example, in this query we return <code class="docutils literal notranslate"><span class="pre">researchers</span></code> linked to publications:</p>
@@ -1206,8 +1247,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">res2</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res2</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">  search publications</span>
 <span class="s2">  where year in [2013:2018] and research_orgs=&quot;grid.258806.1&quot;</span>
 <span class="s2">  return researchers&quot;&quot;&quot;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -1220,7 +1260,7 @@ Method: dsl.ini file
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;total_count&#39;: 3727}
+{&#39;total_count&#39;: 5807}
 </pre></div></div>
 </div>
 <p>Still 3815 records! That’s because the total count always refers to the main object type one is searching for, not to the <em>facet</em> being returned.</p>
@@ -1229,8 +1269,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">result</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">     search publications</span>
 <span class="s2">       for &quot;malaria AND congo&quot;</span>
 <span class="s2">     return publications[basics]</span>
@@ -1249,7 +1288,7 @@ Method: dsl.ini file
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Results in this batch:  30
-Results in total:  71812
+Results in total:  86890
 Errors:  None
 </pre></div></div>
 </div>
@@ -1265,8 +1304,7 @@ Errors:  None
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
 
 search publications
 return publications[id+title+year+doi]
@@ -1279,8 +1317,8 @@ limit 5
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 5 (total = 112275334)
-Time: 1.41s
+Returned Publications: 5 (total = 124736479)
+Time: 2.29s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1306,47 +1344,47 @@ Time: 1.41s
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>doi</th>
+      <th>id</th>
       <th>title</th>
       <th>year</th>
-      <th>id</th>
-      <th>doi</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>Literature</td>
-      <td>2020</td>
-      <td>pub.1125632078</td>
-      <td>10.1515/9783110823547-013</td>
+      <td>10.13170/depik.10.3.22492</td>
+      <td>pub.1144593888</td>
+      <td>Profile of ectoparasites and biometric conditi...</td>
+      <td>2022</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>To start or to complete? – Challenges in imple...</td>
-      <td>2020</td>
-      <td>pub.1124099280</td>
-      <td>10.1080/16549716.2019.1704540</td>
+      <td>10.1007/s11708-021-0812-6</td>
+      <td>pub.1144587500</td>
+      <td>Experimental study of stratified lean burn cha...</td>
+      <td>2022</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>Long-term trends in seasonality of mortality i...</td>
-      <td>2020</td>
-      <td>pub.1124649186</td>
-      <td>10.1080/16549716.2020.1717411</td>
+      <td>10.1145/3480027</td>
+      <td>pub.1141731113</td>
+      <td>Opportunities and Challenges in Code Search Tools</td>
+      <td>2022</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>Eine Warnung an alle, dy sych etwaz duncken: D...</td>
-      <td>2020</td>
-      <td>pub.1125632729</td>
-      <td>10.1515/9783110950762-012</td>
+      <td>10.1145/3479393</td>
+      <td>pub.1141731112</td>
+      <td>Ransomware Mitigation in the Modern Era: A Com...</td>
+      <td>2022</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>Marienklagen und Pietà</td>
-      <td>2020</td>
-      <td>pub.1125635978</td>
-      <td>10.1515/9783110922035-011</td>
+      <td>10.1145/3478680</td>
+      <td>pub.1141731111</td>
+      <td>Service Computing for Industry 4.0: State of t...</td>
+      <td>2022</td>
     </tr>
   </tbody>
 </table>
@@ -1359,8 +1397,7 @@ Time: 1.41s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
 
 search publications
 return publications[dois]
@@ -1374,124 +1411,11 @@ limit 100
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Returned Errors: 1
-Time: 0.45s
-Semantic Error
+Time: 4.06s
+1 QueryError found
 Semantic errors found:
-        Field / Fieldset &#39;dois&#39; is not present in Source &#39;publications&#39;. Available fields: FOR,FOR_first,HRCS_HC,HRCS_RAC,RCDC,altmetric,altmetric_id,author_affiliations,authors,book_doi,book_series_title,book_title,category_bra,category_for,category_hra,category_hrcs_hc,category_hrcs_rac,category_icrp_cso,category_icrp_ct,category_rcdc,category_sdg,category_ua,category_uoa,concepts,concepts_scores,date,date_inserted,dimensions_url,doi,field_citation_ratio,funder_countries,funders,id,issn,issue,journal,journal_lists,linkout,mesh_terms,open_access,open_access_categories,pages,pmcid,pmid,proceedings_title,publisher,recent_citations,reference_ids,referenced_pubs,references,relative_citation_ratio,research_org_cities,research_org_countries,research_org_country_names,research_org_names,research_org_state_codes,research_org_state_names,research_orgs,researchers,resulting_publication_doi,supporting_grant_ids,terms,times_cited,title,type,volume,year and available fieldsets: all,basics,book,categories,extras
+        Field / Fieldset &#39;dois&#39; is not present in Source &#39;publications&#39;. Available fields: abstract,acknowledgements,altmetric,altmetric_id,arxiv_id,authors,authors_count,book_doi,book_series_title,book_title,category_bra,category_for,category_hra,category_hrcs_hc,category_hrcs_rac,category_icrp_cso,category_icrp_ct,category_rcdc,category_sdg,category_uoa,clinical_trial_ids,concepts,concepts_scores,date,date_inserted,date_online,date_print,dimensions_url,doi,field_citation_ratio,funder_countries,funders,id,issn,issue,journal,journal_lists,journal_title_raw,linkout,mesh_terms,open_access,pages,pmcid,pmid,proceedings_title,publisher,recent_citations,reference_ids,referenced_pubs,relative_citation_ratio,research_org_cities,research_org_countries,research_org_country_names,research_org_names,research_org_state_codes,research_org_state_names,research_orgs,researchers,resulting_publication_doi,source_title,subtitles,supporting_grant_ids,times_cited,title,type,volume,year and available fieldsets: basics,book,categories,extras
 </pre></div></div>
-</div>
-</div>
-<div class="section" id="Get-all-fields">
-<h2>Get all fields<a class="headerlink" href="#Get-all-fields" title="Permalink to this headline">¶</a></h2>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%%</span><span class="k">dsldf</span>
-
-search publications
-  for &quot;malaria&quot;
-return publications[all]
-limit 1
-</pre></div>
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Returned Publications: 1 (total = 786126)
-Time: 0.92s
-WARNINGS [10]
-Field &#39;references&#39; is deprecated in favor of reference_ids. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
-Field &#39;terms&#39; is deprecated in favor of concepts. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
-Field &#39;RCDC&#39; is deprecated in favor of category_rcdc. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
-Field &#39;HRCS_RAC&#39; is deprecated in favor of category_hrcs_rac. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
-Field &#39;FOR&#39; is deprecated in favor of category_for. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
-Field &#39;author_affiliations&#39; is deprecated in favor of authors. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
-Field &#39;category_ua&#39; is deprecated in favor of category_uoa. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
-Field &#39;HRCS_HC&#39; is deprecated in favor of category_hrcs_hc. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
-Field &#39;open_access&#39; is deprecated in favor of open_access_categories. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
-Field &#39;FOR_first&#39; is deprecated in favor of category_for. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>title</th>
-      <th>terms</th>
-      <th>type</th>
-      <th>recent_citations</th>
-      <th>referenced_pubs</th>
-      <th>year</th>
-      <th>category_ua</th>
-      <th>research_org_countries</th>
-      <th>research_org_cities</th>
-      <th>linkout</th>
-      <th>...</th>
-      <th>category_uoa</th>
-      <th>publisher</th>
-      <th>RCDC</th>
-      <th>category_hra</th>
-      <th>altmetric_id</th>
-      <th>concepts</th>
-      <th>pmid</th>
-      <th>research_org_state_names</th>
-      <th>journal.id</th>
-      <th>journal.title</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Long-term trends in seasonality of mortality i...</td>
-      <td>[patterns, mortality, Sub-Saharan Africa, chan...</td>
-      <td>article</td>
-      <td>1</td>
-      <td>[{'id': 'pub.1070577469', 'doi': '10.2307/4148...</td>
-      <td>2020</td>
-      <td>[{'id': '30002', 'name': 'A02 Public Health, H...</td>
-      <td>[{'id': 'US', 'name': 'United States'}, {'id':...</td>
-      <td>[{'id': 2792073, 'name': 'Louvain-la-Neuve'}, ...</td>
-      <td>https://www.tandfonline.com/doi/pdf/10.1080/16...</td>
-      <td>...</td>
-      <td>[{'id': '30002', 'name': 'A02 Public Health, H...</td>
-      <td>Taylor &amp; Francis</td>
-      <td>[{'id': '547', 'name': 'Pediatric'}]</td>
-      <td>[{'id': '3903', 'name': 'Population &amp; Society'}]</td>
-      <td>75135566</td>
-      <td>[cause-specific mortality, cause mortality, ep...</td>
-      <td>32027239</td>
-      <td>[New Jersey]</td>
-      <td>jour.1041075</td>
-      <td>Global Health Action</td>
-    </tr>
-  </tbody>
-</table>
-<p>1 rows × 51 columns</p>
-</div></div>
 </div>
 <div class="section" id="Full-text-search">
 <h3>Full text search<a class="headerlink" href="#Full-text-search" title="Permalink to this headline">¶</a></h3>
@@ -1500,8 +1424,7 @@ Field &#39;FOR_first&#39; is deprecated in favor of category_for. Please refer t
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%</span><span class="k">dsldf</span> search publications in concepts for &quot;situ detection OR malaria&quot; return publications
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">dsldf</span> search publications in concepts for &quot;situ detection OR malaria&quot; return publications
 </pre></div>
 </div>
 </div>
@@ -1510,8 +1433,8 @@ Field &#39;FOR_first&#39; is deprecated in favor of category_for. Please refer t
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 20 (total = 201452)
-Time: 1.08s
+Returned Publications: 20 (total = 238349)
+Time: 2.24s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1537,278 +1460,278 @@ Time: 1.08s
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>title</th>
-      <th>pages</th>
-      <th>author_affiliations</th>
-      <th>year</th>
-      <th>issue</th>
+      <th>authors</th>
       <th>id</th>
+      <th>pages</th>
+      <th>title</th>
       <th>type</th>
       <th>volume</th>
+      <th>year</th>
       <th>journal.id</th>
       <th>journal.title</th>
+      <th>issue</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>Breeding soundness examination and herd profic...</td>
-      <td>840-855</td>
-      <td>[[{'first_name': 'Víctor Fernando', 'last_name...</td>
-      <td>2020</td>
-      <td>1</td>
-      <td>pub.1130093974</td>
+      <td>[{'affiliations': [{'city': 'Qingdao', 'city_i...</td>
+      <td>pub.1143924946</td>
+      <td>111-122</td>
+      <td>In-situ constructing visible light CdS/Cd-MOF ...</td>
       <td>article</td>
-      <td>19</td>
-      <td>jour.1032284</td>
-      <td>Italian Journal of Animal Science</td>
+      <td>69</td>
+      <td>2022</td>
+      <td>jour.1138885</td>
+      <td>Particuology</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>In‐situ sol–gel synthesis of zirconia networks...</td>
-      <td>49506</td>
-      <td>[[{'first_name': 'Mohammad Hossein', 'last_nam...</td>
-      <td>2020</td>
-      <td>46</td>
-      <td>pub.1128193344</td>
+      <td>[{'affiliations': [{'city': 'Johor Bahru', 'ci...</td>
+      <td>pub.1141511490</td>
+      <td>27-34</td>
+      <td>In situ biosynthesized silver nanoparticle-inc...</td>
       <td>article</td>
-      <td>137</td>
-      <td>jour.1135048</td>
-      <td>Journal of Applied Polymer Science</td>
+      <td>67</td>
+      <td>2022</td>
+      <td>jour.1138885</td>
+      <td>Particuology</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>Hierarchical NiCo2O4-MnO x -NF monolithic cata...</td>
-      <td>147485</td>
-      <td>[[{'first_name': 'Dongdong', 'last_name': 'Wan...</td>
-      <td>2020</td>
-      <td>NaN</td>
-      <td>pub.1130006001</td>
+      <td>[{'affiliations': [{'city': 'Tianjin', 'city_i...</td>
+      <td>pub.1141114620</td>
+      <td>59-70</td>
+      <td>Thermodynamic and kinetic mechanism of phase t...</td>
       <td>article</td>
-      <td>532</td>
-      <td>jour.1038686</td>
-      <td>Applied Surface Science</td>
+      <td>66</td>
+      <td>2022</td>
+      <td>jour.1138885</td>
+      <td>Particuology</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>Nanostructured selenium-doped biphasic calcium...</td>
-      <td>13738</td>
-      <td>[[{'first_name': 'Lei', 'last_name': 'Nie', 'c...</td>
-      <td>2020</td>
-      <td>1</td>
-      <td>pub.1130064403</td>
+      <td>[{'affiliations': [{'city': 'Montpellier', 'ci...</td>
+      <td>pub.1144553393</td>
+      <td>107498</td>
+      <td>Small angle x-ray scattering to investigate th...</td>
       <td>article</td>
-      <td>10</td>
-      <td>jour.1045337</td>
-      <td>Scientific Reports</td>
+      <td>127</td>
+      <td>2022</td>
+      <td>jour.1096852</td>
+      <td>Food Hydrocolloids</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>MRI of prostatic urethral mucinous urothelial ...</td>
-      <td>68-70</td>
-      <td>[[{'first_name': 'Neel', 'last_name': 'Patel',...</td>
-      <td>2020</td>
-      <td>NaN</td>
-      <td>pub.1128497262</td>
+      <td>[{'affiliations': [{'city': 'Beijing', 'city_i...</td>
+      <td>pub.1144437185</td>
+      <td>199-206</td>
+      <td>Dual-function redox mediator enhanced lithium-...</td>
       <td>article</td>
-      <td>68</td>
-      <td>jour.1087975</td>
-      <td>Clinical Imaging</td>
+      <td>113</td>
+      <td>2022</td>
+      <td>jour.1053018</td>
+      <td>Journal of Material Science and Technology</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>In vitro modeling of the neurovascular unit: a...</td>
-      <td>22</td>
-      <td>[[{'first_name': 'Aditya', 'last_name': 'Bhale...</td>
-      <td>2020</td>
-      <td>1</td>
-      <td>pub.1125684242</td>
+      <td>[{'affiliations': [{'city': 'Wollongong', 'cit...</td>
+      <td>pub.1144337486</td>
+      <td>90-104</td>
+      <td>Effects of inter-layer remelting frequency on ...</td>
       <td>article</td>
-      <td>17</td>
-      <td>jour.1034919</td>
-      <td>Fluids and Barriers of the CNS</td>
+      <td>113</td>
+      <td>2022</td>
+      <td>jour.1053018</td>
+      <td>Journal of Material Science and Technology</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>Bacterial cellulose: From production optimizat...</td>
-      <td>2598-2611</td>
-      <td>[[{'first_name': 'Isabela', 'last_name': 'de A...</td>
-      <td>2020</td>
-      <td>NaN</td>
-      <td>pub.1129823711</td>
+      <td>[{'affiliations': [{'city': 'Taipei', 'city_id...</td>
+      <td>pub.1144230882</td>
+      <td>100831</td>
+      <td>Traditional Chinese medicine attenuates hospit...</td>
       <td>article</td>
-      <td>164</td>
-      <td>jour.1090368</td>
-      <td>International Journal of Biological Macromolec...</td>
+      <td>11</td>
+      <td>2022</td>
+      <td>jour.1048721</td>
+      <td>Integrative Medicine Research</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>Hydrogen sulfide removal from geothermal fluid...</td>
-      <td>21</td>
-      <td>[[{'first_name': 'S.', 'last_name': 'Regenspur...</td>
-      <td>2020</td>
-      <td>1</td>
-      <td>pub.1129357222</td>
+      <td>[{'affiliations': [{'city': 'Wuhan', 'city_id'...</td>
+      <td>pub.1143825067</td>
+      <td>1-10</td>
+      <td>Solar fuel generation over nature-inspired rec...</td>
       <td>article</td>
-      <td>8</td>
-      <td>jour.1136002</td>
-      <td>Geothermal Energy</td>
+      <td>112</td>
+      <td>2022</td>
+      <td>jour.1053018</td>
+      <td>Journal of Material Science and Technology</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>Manufacturing and characterization of in-situ ...</td>
-      <td>101436</td>
-      <td>[[{'first_name': 'A.M.', 'last_name': 'Vilarde...</td>
-      <td>2020</td>
-      <td>NaN</td>
-      <td>pub.1128995596</td>
+      <td>[{'affiliations': [{'city': 'Pretoria', 'city_...</td>
+      <td>pub.1143661252</td>
+      <td>153-161</td>
+      <td>Heat-treatment effect on anti-corrosion behavi...</td>
       <td>article</td>
-      <td>36</td>
-      <td>jour.1147513</td>
-      <td>Additive Manufacturing</td>
+      <td>5</td>
+      <td>2022</td>
+      <td>jour.1319579</td>
+      <td>International Journal of Lightweight Materials...</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>Relative survival in early-stage cancers in th...</td>
-      <td>49</td>
-      <td>[[{'first_name': 'Avinash G.', 'last_name': 'D...</td>
-      <td>2020</td>
-      <td>1</td>
-      <td>pub.1127549599</td>
+      <td>[{'affiliations': [{'city': 'Aachen', 'city_id...</td>
+      <td>pub.1143575354</td>
+      <td>100081</td>
+      <td>Adjustment of chemical composition with dissim...</td>
       <td>article</td>
-      <td>13</td>
-      <td>jour.1039771</td>
-      <td>Journal of Hematology &amp; Oncology</td>
+      <td>5</td>
+      <td>2022</td>
+      <td>jour.1386545</td>
+      <td>Journal of Advanced Joining Processes</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>An In-situ and Direct Confirmation of Super-Pl...</td>
-      <td>5209</td>
-      <td>[[{'first_name': 'Shawn-Yu', 'last_name': 'Lin...</td>
-      <td>2020</td>
-      <td>1</td>
-      <td>pub.1125822283</td>
+      <td>[{'affiliations': [{'city': 'Guilin', 'city_id...</td>
+      <td>pub.1143206146</td>
+      <td>189-203</td>
+      <td>Remarkable catalysis of spinel ferrite XFe2O4 ...</td>
       <td>article</td>
-      <td>10</td>
-      <td>jour.1045337</td>
-      <td>Scientific Reports</td>
+      <td>111</td>
+      <td>2022</td>
+      <td>jour.1053018</td>
+      <td>Journal of Material Science and Technology</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>In situ simulation training in helicopter emer...</td>
-      <td>7</td>
-      <td>[[{'first_name': 'Per P.', 'last_name': 'Bredm...</td>
-      <td>2020</td>
-      <td>1</td>
-      <td>pub.1128482253</td>
+      <td>[{'affiliations': [{'city': 'Mosul', 'city_id'...</td>
+      <td>pub.1142709745</td>
+      <td>e00787</td>
+      <td>Rehabilitation and Repair of AL- Tahera Church...</td>
       <td>article</td>
-      <td>5</td>
-      <td>jour.1327571</td>
-      <td>Advances in Simulation</td>
+      <td>16</td>
+      <td>2022</td>
+      <td>jour.1150125</td>
+      <td>Case Studies in Construction Materials</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>In-situ Growth of ZIF-8 in Amphiphilic Graft C...</td>
-      <td>117514</td>
-      <td>[[{'first_name': 'Chang Soo', 'last_name': 'Le...</td>
-      <td>2020</td>
-      <td>NaN</td>
-      <td>pub.1129930273</td>
+      <td>[{'affiliations': [{'city': 'Guangzhou', 'city...</td>
+      <td>pub.1142053424</td>
+      <td>120-132</td>
+      <td>3D-printed bioactive ceramic scaffolds with bi...</td>
       <td>article</td>
-      <td>253</td>
-      <td>jour.1380465</td>
-      <td>Separation and Purification Technology</td>
+      <td>12</td>
+      <td>2022</td>
+      <td>jour.1053750</td>
+      <td>Bioactive Materials</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>13</th>
-      <td>Finding cell-specific expression patterns in t...</td>
-      <td>4961</td>
-      <td>[[{'first_name': 'Garth R.', 'last_name': 'Ils...</td>
-      <td>2020</td>
-      <td>1</td>
-      <td>pub.1125710140</td>
+      <td>[{'affiliations': [{'city': 'Suzhou', 'city_id...</td>
+      <td>pub.1142009407</td>
+      <td>169-184</td>
+      <td>Local bone metabolism balance regulation via d...</td>
       <td>article</td>
-      <td>10</td>
-      <td>jour.1045337</td>
-      <td>Scientific Reports</td>
+      <td>12</td>
+      <td>2022</td>
+      <td>jour.1053750</td>
+      <td>Bioactive Materials</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>14</th>
-      <td>Unravelling three-dimensional adsorption geome...</td>
-      <td>28</td>
-      <td>[[{'first_name': 'Jaco J.', 'last_name': 'Geuc...</td>
-      <td>2020</td>
-      <td>1</td>
-      <td>pub.1125315284</td>
+      <td>[{'affiliations': [{'city': 'Sydney', 'city_id...</td>
+      <td>pub.1144688828</td>
+      <td>100069</td>
+      <td>Development of a portable Universal Testing Ma...</td>
       <td>article</td>
-      <td>3</td>
-      <td>jour.1319511</td>
-      <td>Communications Chemistry</td>
+      <td>4</td>
+      <td>2022</td>
+      <td>jour.1392528</td>
+      <td>Advances in Industrial and Manufacturing Engin...</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>Network hub-node prioritization of gene regula...</td>
-      <td>101</td>
-      <td>[[{'first_name': 'Hung-Ching', 'last_name': 'C...</td>
-      <td>2020</td>
-      <td>1</td>
-      <td>pub.1125610909</td>
+      <td>[{'affiliations': [{'city': 'Hefei', 'city_id'...</td>
+      <td>pub.1144613324</td>
+      <td>106950</td>
+      <td>A sensitive carbon monoxide sensor for industr...</td>
       <td>article</td>
-      <td>21</td>
-      <td>jour.1023786</td>
-      <td>BMC Bioinformatics</td>
+      <td>152</td>
+      <td>2022</td>
+      <td>jour.1038957</td>
+      <td>Optics and Lasers in Engineering</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>16</th>
-      <td>Sebaceous carcinoma of the breast predominantl...</td>
-      <td>41</td>
-      <td>[[{'first_name': 'Koichi', 'last_name': 'Ohno'...</td>
-      <td>2020</td>
-      <td>1</td>
-      <td>pub.1125102540</td>
+      <td>[{'affiliations': [{'city': 'Shanghai', 'city_...</td>
+      <td>pub.1144588137</td>
+      <td>163702</td>
+      <td>Co decoration of molybdenum sulfide and carbon...</td>
       <td>article</td>
-      <td>6</td>
-      <td>jour.1052102</td>
-      <td>Surgical Case Reports</td>
+      <td>902</td>
+      <td>2022</td>
+      <td>jour.1041821</td>
+      <td>Journal of Alloys and Compounds</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>17</th>
-      <td>Ethnomycological study of edible and medicinal...</td>
-      <td>11</td>
-      <td>[[{'first_name': 'Rediet', 'last_name': 'Sitot...</td>
-      <td>2020</td>
-      <td>1</td>
-      <td>pub.1125400666</td>
+      <td>[{'affiliations': [{'city': "Xi'an", 'city_id'...</td>
+      <td>pub.1144433265</td>
+      <td>163631</td>
+      <td>Solid CoZn glycerate template-based engineerin...</td>
       <td>article</td>
-      <td>16</td>
-      <td>jour.1035305</td>
-      <td>Journal of Ethnobiology and Ethnomedicine</td>
+      <td>902</td>
+      <td>2022</td>
+      <td>jour.1041821</td>
+      <td>Journal of Alloys and Compounds</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>18</th>
-      <td>Mechanical breathing in organic electrochromics</td>
-      <td>211</td>
-      <td>[[{'first_name': 'Xiaokang', 'last_name': 'Wan...</td>
-      <td>2020</td>
-      <td>1</td>
-      <td>pub.1124004513</td>
+      <td>[{'affiliations': [{'city': 'Monterrey', 'city...</td>
+      <td>pub.1144368261</td>
+      <td>100180</td>
+      <td>Laccase-assisted biosensing constructs – Robus...</td>
       <td>article</td>
-      <td>11</td>
-      <td>jour.1043282</td>
-      <td>Nature Communications</td>
+      <td>5</td>
+      <td>2022</td>
+      <td>jour.1378967</td>
+      <td>Case Studies in Chemical and Environmental Eng...</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>19</th>
-      <td>Improved kinetic behaviour of Mg(NH2)2-2LiH do...</td>
-      <td>8</td>
-      <td>[[{'first_name': 'Gökhan', 'last_name': 'Gizer...</td>
-      <td>2020</td>
-      <td>1</td>
-      <td>pub.1123884363</td>
+      <td>[{'affiliations': [{'city': 'Harbin', 'city_id...</td>
+      <td>pub.1144117575</td>
+      <td>121033</td>
+      <td>In situ unraveling surface reconstruction of N...</td>
       <td>article</td>
-      <td>10</td>
-      <td>jour.1045337</td>
-      <td>Scientific Reports</td>
+      <td>305</td>
+      <td>2022</td>
+      <td>jour.1039901</td>
+      <td>Applied Catalysis B Environmental</td>
+      <td>NaN</td>
     </tr>
   </tbody>
 </table>
@@ -1818,8 +1741,7 @@ Time: 1.08s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
 
 search publications in title_abstract_only for &quot;nanotechnology&quot;
 return publications
@@ -1832,8 +1754,8 @@ limit 3
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 3 (total = 78065)
-Time: 0.60s
+Returned Publications: 3 (total = 98598)
+Time: 1.14s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1859,57 +1781,57 @@ Time: 0.60s
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>title</th>
-      <th>pages</th>
-      <th>author_affiliations</th>
-      <th>year</th>
-      <th>issue</th>
+      <th>authors</th>
       <th>id</th>
+      <th>pages</th>
+      <th>title</th>
       <th>type</th>
       <th>volume</th>
+      <th>year</th>
       <th>journal.id</th>
       <th>journal.title</th>
+      <th>issue</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>The inventions in nanotechnologies as practica...</td>
-      <td>719-729</td>
-      <td>[[{'first_name': 'L.A.', 'last_name': 'Ivanov'...</td>
-      <td>2020</td>
-      <td>6</td>
-      <td>pub.1125757275</td>
+      <td>[{'affiliations': [{'city': 'Guangzhou', 'city...</td>
+      <td>pub.1143936192</td>
+      <td>334-361</td>
+      <td>Energetics Systems and artificial intelligence...</td>
       <td>article</td>
-      <td>11</td>
-      <td>jour.1153140</td>
-      <td>Nanotechnologies in Construction A Scientific ...</td>
+      <td>8</td>
+      <td>2022</td>
+      <td>jour.1150945</td>
+      <td>Energy Reports</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>The Development of Antibiotics Based on Nanost...</td>
-      <td>7618-7628</td>
-      <td>[[{'first_name': 'Ayesha', 'last_name': 'Taj',...</td>
-      <td>2020</td>
-      <td>12</td>
-      <td>pub.1129669026</td>
+      <td>[{'affiliations': [{'name': 'CAS Key Laborator...</td>
+      <td>pub.1143460385</td>
+      <td>31-48</td>
+      <td>Toxicity of manufactured nanomaterials</td>
       <td>article</td>
-      <td>20</td>
-      <td>jour.1297328</td>
-      <td>Journal of Nanoscience and Nanotechnology</td>
+      <td>69</td>
+      <td>2022</td>
+      <td>jour.1138885</td>
+      <td>Particuology</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>Interactions Between Remdesivir, Ribavirin, Fa...</td>
-      <td>7311-7323</td>
-      <td>[[{'first_name': 'Tiago da', 'last_name': 'Sil...</td>
-      <td>2020</td>
-      <td>12</td>
-      <td>pub.1129669004</td>
+      <td>[{'affiliations': [{'city': 'Huzhou', 'city_id...</td>
+      <td>pub.1144622580</td>
+      <td>978-983</td>
+      <td>The Effect of Bone Morphogenetic Protein 2 (BM...</td>
       <td>article</td>
-      <td>20</td>
-      <td>jour.1297328</td>
-      <td>Journal of Nanoscience and Nanotechnology</td>
+      <td>12</td>
+      <td>2022</td>
+      <td>jour.1047400</td>
+      <td>Journal of Biomaterials and Tissue Engineering</td>
+      <td>5</td>
     </tr>
   </tbody>
 </table>
@@ -1923,8 +1845,7 @@ Time: 0.60s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
 
 search publications in authors for &quot;\&quot;Daniel Hook\&quot;&quot;
 return publications
@@ -1937,8 +1858,8 @@ limit 10
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 10 (total = 78)
-Time: 0.55s
+Returned Publications: 10 (total = 85)
+Time: 1.14s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1964,148 +1885,148 @@ Time: 0.55s
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>authors</th>
       <th>id</th>
       <th>title</th>
-      <th>volume</th>
-      <th>issue</th>
-      <th>pages</th>
       <th>type</th>
       <th>year</th>
-      <th>author_affiliations</th>
       <th>journal.id</th>
       <th>journal.title</th>
+      <th>issue</th>
+      <th>pages</th>
+      <th>volume</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>pub.1124226668</td>
-      <td>Dimensions: Bringing down barriers between sci...</td>
-      <td>1</td>
-      <td>1</td>
-      <td>387-395</td>
-      <td>article</td>
-      <td>2020</td>
-      <td>[[{'first_name': 'Christian', 'last_name': 'He...</td>
-      <td>jour.1377615</td>
-      <td>Quantitative Science Studies</td>
+      <td>[{'affiliations': [], 'corresponding': '', 'cu...</td>
+      <td>pub.1143968248</td>
+      <td>Connecting Scientometrics: Dimensions as a rou...</td>
+      <td>preprint</td>
+      <td>2021</td>
+      <td>jour.1371339</td>
+      <td>arXiv</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>pub.1115957159</td>
-      <td>Perception, prestige and PageRank</td>
-      <td>14</td>
-      <td>5</td>
-      <td>e0216783</td>
+      <td>[{'affiliations': [{'city': 'St Louis', 'city_...</td>
+      <td>pub.1142152310</td>
+      <td>PT -symmetric classical mechanics</td>
       <td>article</td>
-      <td>2019</td>
-      <td>[[{'first_name': 'David', 'last_name': 'Zeitly...</td>
-      <td>jour.1037553</td>
-      <td>PLoS ONE</td>
+      <td>2021</td>
+      <td>jour.1043366</td>
+      <td>Journal of Physics Conference Series</td>
+      <td>1</td>
+      <td>012003</td>
+      <td>2038</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>pub.1119449118</td>
-      <td>The Price of Gold: Curiosity?</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>preprint</td>
-      <td>2019</td>
-      <td>[[{'first_name': 'Daniel W.', 'last_name': 'Ho...</td>
-      <td>jour.1371339</td>
-      <td>arXiv</td>
+      <td>[{'affiliations': [{'city': 'Townsville', 'cit...</td>
+      <td>pub.1141486003</td>
+      <td>Can I breastfeed my baby with Down syndrome? A...</td>
+      <td>article</td>
+      <td>2021</td>
+      <td>jour.1057714</td>
+      <td>Journal of Paediatrics and Child Health</td>
+      <td>12</td>
+      <td>1866-1880</td>
+      <td>57</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>pub.1118864658</td>
-      <td>Perception, Prestige and PageRank</td>
+      <td>[{'affiliations': [{'city': 'London', 'city_id...</td>
+      <td>pub.1137191304</td>
+      <td>Scaling Scientometrics: Dimensions on Google B...</td>
+      <td>article</td>
+      <td>2021</td>
+      <td>jour.1292498</td>
+      <td>Frontiers in Research Metrics and Analytics</td>
       <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>preprint</td>
-      <td>2019</td>
-      <td>[[{'first_name': 'David', 'last_name': 'Zeitly...</td>
-      <td>jour.1371339</td>
-      <td>arXiv</td>
+      <td>656233</td>
+      <td>6</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>pub.1108567148</td>
-      <td>PT Symmetry</td>
+      <td>[{'affiliations': [], 'corresponding': '', 'cu...</td>
+      <td>pub.1136235066</td>
+      <td>$PT$-symmetric classical mechanics</td>
+      <td>preprint</td>
+      <td>2021</td>
+      <td>jour.1371339</td>
+      <td>arXiv</td>
       <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>monograph</td>
-      <td>2019</td>
-      <td>[[{'first_name': 'Carl M', 'last_name': 'Bende...</td>
       <td>NaN</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>pub.1111011264</td>
-      <td>Optical Fiber Sensor Design for Ground Slope M...</td>
-      <td>00</td>
+      <td>[{'affiliations': [], 'corresponding': '', 'cu...</td>
+      <td>pub.1134860042</td>
+      <td>Scaling Scientometrics: Dimensions on Google B...</td>
+      <td>preprint</td>
+      <td>2021</td>
+      <td>jour.1371339</td>
+      <td>arXiv</td>
       <td>NaN</td>
-      <td>1-4</td>
-      <td>proceeding</td>
-      <td>2018</td>
-      <td>[[{'first_name': 'Daniel', 'last_name': 'Hook'...</td>
       <td>NaN</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>pub.1106289502</td>
-      <td>Dimensions: Building Context for Search and Ev...</td>
-      <td>3</td>
-      <td>NaN</td>
-      <td>23</td>
+      <td>[{'affiliations': [{'city': 'London', 'city_id...</td>
+      <td>pub.1134491856</td>
+      <td>Real-Time Bibliometrics: Dimensions as a Resou...</td>
       <td>article</td>
-      <td>2018</td>
-      <td>[[{'first_name': 'Daniel W.', 'last_name': 'Ho...</td>
+      <td>2021</td>
       <td>jour.1292498</td>
       <td>Frontiers in Research Metrics and Analytics</td>
+      <td>NaN</td>
+      <td>595299</td>
+      <td>5</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>pub.1105321123</td>
-      <td>Assessment of the interaction between a natura...</td>
-      <td>41</td>
-      <td>NaN</td>
-      <td>s45</td>
+      <td>[{'affiliations': [{'name': 'Digital Science'}...</td>
+      <td>pub.1124226668</td>
+      <td>Dimensions: Bringing down barriers between sci...</td>
       <td>article</td>
-      <td>2018</td>
-      <td>[[{'first_name': 'Daniel', 'last_name': 'Hook'...</td>
-      <td>jour.1091476</td>
-      <td>Contact Lens and Anterior Eye</td>
+      <td>2020</td>
+      <td>jour.1377615</td>
+      <td>Quantitative Science Studies</td>
+      <td>1</td>
+      <td>387-395</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>pub.1085413261</td>
-      <td>Characterization and quantitation of PVP conte...</td>
-      <td>106</td>
-      <td>3</td>
-      <td>1064-1072</td>
+      <td>[{'affiliations': [{'city': 'Oxford', 'city_id...</td>
+      <td>pub.1115957159</td>
+      <td>Perception, prestige and PageRank</td>
       <td>article</td>
-      <td>2018</td>
-      <td>[[{'first_name': 'Andrew J.', 'last_name': 'Ho...</td>
-      <td>jour.1312091</td>
-      <td>Journal of Biomedical Materials Research Part ...</td>
+      <td>2019</td>
+      <td>jour.1037553</td>
+      <td>PLOS ONE</td>
+      <td>5</td>
+      <td>e0216783</td>
+      <td>14</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>pub.1085511076</td>
-      <td>Behavior of eigenvalues in a region of broken ...</td>
-      <td>95</td>
-      <td>5</td>
-      <td>052113</td>
-      <td>article</td>
-      <td>2017</td>
-      <td>[[{'first_name': 'Carl M.', 'last_name': 'Bend...</td>
-      <td>jour.1053349</td>
-      <td>Physical Review A</td>
+      <td>[{'affiliations': [], 'corresponding': '', 'cu...</td>
+      <td>pub.1119449118</td>
+      <td>The Price of Gold: Curiosity?</td>
+      <td>preprint</td>
+      <td>2019</td>
+      <td>jour.1371339</td>
+      <td>arXiv</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
   </tbody>
 </table>
@@ -2118,8 +2039,7 @@ Time: 0.55s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
 
 search publications
 where researchers.id = &quot;ur.013514345521.07&quot;
@@ -2133,8 +2053,8 @@ limit 1
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 1 (total = 16)
-Time: 0.48s
+Returned Publications: 1 (total = 22)
+Time: 2.68s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -2167,8 +2087,8 @@ Time: 0.48s
   <tbody>
     <tr>
       <th>0</th>
-      <td>10.1038/s41385-020-0334-2</td>
-      <td>[{'id': 'ur.015441462403.62', 'last_name': 'Be...</td>
+      <td>10.1201/9781003042570-10</td>
+      <td>[{'first_name': 'Rashi', 'id': 'ur.01001350755...</td>
     </tr>
   </tbody>
 </table>
@@ -2182,8 +2102,7 @@ Time: 0.48s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">  search publications</span>
 <span class="s2">  where year in [2013:2018] and research_orgs=&quot;grid.258806.1&quot;</span>
 <span class="s2">  return publications limit 2000</span>
@@ -2197,8 +2116,8 @@ Time: 0.48s
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Returned Errors: 1
-Time: 0.45s
-Semantic Error
+Time: 0.57s
+1 QueryError found
 Semantic errors found:
         Limit 2000 exceeds maximum allowed limit 1000
 </pre></div></div>
@@ -2209,7 +2128,7 @@ Semantic errors found:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;dimcli.DslDataset object #4523680624. Errors: 1&gt;
+&lt;dimcli.DslDataset object #4812964912. Errors: 1&gt;
 </pre></div></div>
 </div>
 </div>
@@ -2221,8 +2140,7 @@ Semantic errors found:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">  search publications</span>
 <span class="s2">  where year in [2013:2018] and research_orgs=&quot;grid.258806.1&quot;</span>
 <span class="s2">  return publications limit 1000 skip 1000</span>
@@ -2235,8 +2153,8 @@ Semantic errors found:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 1000 (total = 3727)
-Time: 2.38s
+Returned Publications: 1000 (total = 5807)
+Time: 2.40s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -2245,7 +2163,7 @@ Time: 2.38s
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;dimcli.DslDataset object #4506154128. Records: 1000/3727&gt;
+&lt;dimcli.DslDataset object #4407315520. Records: 1000/5807&gt;
 </pre></div></div>
 </div>
 </div>
@@ -2256,8 +2174,7 @@ Time: 2.38s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">  search publications</span>
 <span class="s2">  where year in [2013:2018] and research_orgs=&quot;grid.258806.1&quot;</span>
 <span class="s2">  return researchers limit 1 skip 1000</span>
@@ -2271,8 +2188,8 @@ Time: 2.38s
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Returned Errors: 1
-Time: 0.44s
-Semantic Error
+Time: 0.95s
+1 QueryError found
 Semantic errors found:
         Offset is not supported for facet results
 </pre></div></div>
@@ -2283,7 +2200,7 @@ Semantic errors found:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;dimcli.DslDataset object #4770861936. Errors: 1&gt;
+&lt;dimcli.DslDataset object #4811599632. Errors: 1&gt;
 </pre></div></div>
 </div>
 <p>While this works…</p>
@@ -2291,8 +2208,7 @@ Semantic errors found:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">  search publications</span>
 <span class="s2">  where year in [2013:2018] and research_orgs=&quot;grid.258806.1&quot;</span>
 <span class="s2">  return researchers limit 1000</span>
@@ -2306,7 +2222,7 @@ Semantic errors found:
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Returned Researchers: 1000
-Time: 1.64s
+Time: 2.94s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -2315,7 +2231,7 @@ Time: 1.64s
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;dimcli.DslDataset object #4523681536. Records: 1000/3727&gt;
+&lt;dimcli.DslDataset object #4811691728. Records: 1000/5807&gt;
 </pre></div></div>
 </div>
 </div>
@@ -2325,8 +2241,7 @@ Time: 1.64s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">search publications</span>
 <span class="s2">return years</span>
 <span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
@@ -2339,10 +2254,10 @@ Time: 1.64s
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Returned Errors: 1
-Time: 0.46s
-Semantic Error
+Time: 0.74s
+1 QueryError found
 Semantic errors found:
-        Facet &#39;years&#39; is not present in source &#39;publications&#39;. Available facets are: FOR,FOR_first,HRCS_HC,HRCS_RAC,RCDC,category_bra,category_for,category_hra,category_hrcs_hc,category_hrcs_rac,category_icrp_cso,category_icrp_ct,category_rcdc,category_sdg,category_ua,category_uoa,experts,funder_countries,funders,journal,journal_lists,mesh_terms,open_access_categories,pf01,publisher,referenced_pubs,research_org_cities,research_org_countries,research_org_state_codes,research_orgs,researchers,times_cited,type,year
+        Facet &#39;years&#39; is not present in source &#39;publications&#39;. Available facets are: authors_count,category_bra,category_for,category_hra,category_hrcs_hc,category_hrcs_rac,category_icrp_cso,category_icrp_ct,category_rcdc,category_sdg,category_uoa,funder_countries,funders,journal,journal_lists,mesh_terms,open_access,publisher,referenced_pubs,research_org_cities,research_org_countries,research_org_state_codes,research_orgs,researchers,source_title,times_cited,type,year
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -2351,7 +2266,7 @@ Semantic errors found:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;dimcli.DslDataset object #4779131712. Errors: 1&gt;
+&lt;dimcli.DslDataset object #4811597088. Errors: 1&gt;
 </pre></div></div>
 </div>
 </div>
@@ -2371,7 +2286,6 @@ Semantic errors found:
            
           </div>
           <footer>
-  
 
   <hr/>
 
@@ -2390,7 +2304,6 @@ Semantic errors found:
 
 
 </footer>
-
         </div>
       </div>
 

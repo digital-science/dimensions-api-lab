@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Extracting researchers based on affiliations and publications history &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
   
@@ -19,7 +19,10 @@
   
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   
+
   
+  
+
   
 
   
@@ -36,7 +39,8 @@
         <script src="../../_static/js/custom.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -64,7 +68,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> DSL
+            <a href="../../index.html" class="icon icon-home"> DSL
           
 
           
@@ -153,7 +157,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html">The Dimcli Python library: Magic Commands</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#Prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#id1">Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#Dimcli-‘magic’-commands">Dimcli ‘magic’ commands</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#Tip:-Accessing-data-returned-by-magic-queries">Tip: Accessing data returned by magic queries</a></li>
 </ul>
@@ -172,8 +175,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Control-the-fields-you-return">Control the fields you return</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Make-a-mistake,-and-the-DSL-will-tell-you-what-fields-that-you-could-have-used">Make a mistake, and the DSL will tell you what fields that you could have used</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Get-all-fields">Get all fields</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Make-a-mistake,-and-the-DSL-will-tell-you-what-fields-that-you-could-have-used">Make a mistake, and the DSL will tell you what fields that you could have used</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Full-text-search">Full text search</a></li>
 </ul>
 </li>
@@ -264,10 +266,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#8.-..and-if-we-want-details-about-our-researchers,-we-can-put-our-list-of-researchers-into-the-researcher-API">8. ..and if we want details about our researchers, we can put our list of researchers into the researcher API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#9.-Patents-example-(patents--&gt;-publications)">9. Patents example (patents -&gt; publications)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#10.-Clinical-Trials-(clinical-trials--&gt;-publications)">10. Clinical Trials (clinical trials -&gt; publications)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#11.-Grants-(publications--&gt;-grants)">11. Grants (publications -&gt; grants)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#Why-didn’t-I-use-resulting_publication_ids-?">Why didn’t I use resulting_publication_ids ?</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#11.-Grants-(publications--&gt;-grants)">11. Grants (publications -&gt; grants)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#Conclusions">Conclusions</a></li>
 </ul>
 </li>
@@ -325,7 +324,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../2-publications/Citation-Analysis.html">Citation Analysis: an Introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Citation-Analysis.html#1.-Prerequisites">1. Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Method-A:-getting-citations-for-one-publication-at-a-time">Method A: getting citations for one publication at a time</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Comments-about-this-method">Comments about this method</a></li>
 </ul>
@@ -383,7 +382,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html">Journal Profiling Part 1: Getting the Data</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Prerequisites">Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Selecting-a-Journal-and-Extracting-All-Publications-Metadata">Selecting a Journal and Extracting All Publications Metadata</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Some-stats-about-authors">Some stats about authors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Basic-stats-about-authors">Basic stats about authors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#A-quick-look-at-authors-without-a-Dimensions-Researcher-ID">A quick look at authors <em>without</em> a Dimensions Researcher ID</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Any-common-patterns?">Any common patterns?</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Creating-an-export-for-manual-curation">Creating an export for manual curation</a></li>
@@ -472,7 +471,6 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#Back-to-our-grants-list">Back to our grants list</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#Enriching-the-original-list">Enriching the original list</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#Save-the-data">Save the data</a></li>
 </ul>
 </li>
 </ul>
@@ -856,6 +854,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -876,21 +876,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -991,7 +1005,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -1057,6 +1071,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -1066,7 +1081,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt a.copybtn {
+.prompt .copybtn {
     display: none;
 }
 
@@ -1138,15 +1153,34 @@ div.rendered_html tbody tr:hover {
 <li><p><strong>Affiliation</strong>. That is, whether they are / have been affiliated to a specific <strong>GRID</strong> organization</p></li>
 <li><p><strong>Publications</strong>. Whether they have published within a chosen <strong>time frame</strong>.</p></li>
 </ol>
-<div class="section" id="Prerequisites">
-<h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
-<p>This notebook assumes you have installed the <a class="reference external" href="https://pypi.org/project/dimcli/">Dimcli</a> library and are familiar with the <em>Getting Started</em> tutorial.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">!</span>pip install dimcli -U --quiet
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">CHANGELOG</span><span class="se">\n</span><span class="s2">This notebook was last run on </span><span class="si">%s</span><span class="se">\n</span><span class="s2">==&quot;</span> <span class="o">%</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">, %Y&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+==
+CHANGELOG
+This notebook was last run on Jan 25, 2022
+==
+</pre></div></div>
+</div>
+<div class="section" id="Prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>This notebook assumes you have installed the <a class="reference external" href="https://pypi.org/project/dimcli/">Dimcli</a> library and are familiar with the <a class="reference external" href="https://api-lab.dimensions.ai/cookbooks/1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html">‘Getting Started’ tutorial</a>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install dimcli -U --quiet
 
 <span class="kn">import</span> <span class="nn">dimcli</span>
 <span class="kn">from</span> <span class="nn">dimcli.utils</span> <span class="kn">import</span> <span class="o">*</span>
@@ -1170,6 +1204,14 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Searching config file credentials for &#39;https://app.dimensions.ai&#39; endpoint..
+</pre></div></div>
+</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
@@ -1177,8 +1219,8 @@ div.rendered_html tbody tr:hover {
 <div class="highlight"><pre>
 ==
 Logging in..
-Dimcli - Dimensions API Client (v0.9.1)
-Connected to: https://app.dimensions.ai - DSL v1.31
+Dimcli - Dimensions API Client (v0.9.6)
+Connected to: &lt;https://app.dimensions.ai/api/dsl&gt; - DSL v2.0
 Method: dsl.ini file
 </pre></div></div>
 </div>
@@ -1186,11 +1228,10 @@ Method: dsl.ini file
 <h3>Select an organization ID<a class="headerlink" href="#Select-an-organization-ID" title="Permalink to this headline">¶</a></h3>
 <p>For the purpose of this exercise, we will are going to use <a class="reference external" href="https://grid.ac/institutes/grid.258806.1">grid.258806.1</a> and the time frame <strong>2013-2018</strong>. Feel free though to change the parameters below as you want, eg by <a class="reference external" href="https://grid.ac/institutes">choosing another GRID organization</a>.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># sample org: grid.258806.1</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># sample org: grid.258806.1</span>
 <span class="n">GRIDID</span> <span class="o">=</span> <span class="s2">&quot;grid.258806.1&quot;</span> <span class="c1">#@param {type:&quot;string&quot;}</span>
 <span class="n">START_YEAR</span> <span class="o">=</span> <span class="mi">2013</span> <span class="c1">#@param {type:&quot;slider&quot;, min:1900, max:2020, step: 1}</span>
 <span class="n">END_YEAR</span> <span class="o">=</span> <span class="mi">2018</span> <span class="c1">#@param {type:&quot;slider&quot;, min:1900, max:2020, step: 1}</span>
@@ -1207,36 +1248,35 @@ Method: dsl.ini file
 <p>In order to process researchers affiliation data in the context of publications, we should first take the time to understand how this data is structured in Dimensions.</p>
 <p>The JSON results of any query with shape <code class="docutils literal notranslate"><span class="pre">search</span> <span class="pre">publications</span> <span class="pre">where</span> <span class="pre">....</span> <span class="pre">return</span> <span class="pre">publications</span></code> are composed by a list of publications. If we open up one single publication record we will immediately see that authors are stored in a nested object <code class="docutils literal notranslate"><span class="pre">authors</span></code> that contains a list of dictionaries. Each element in this dictionary represents <strong>one single publication author</strong> and includes other information e.g. name, surname, ID, the organizations he/she is affiliated with etc..</p>
 <p>For example, in order to extract the second author of the tenth publication from our results we would do the following: <code class="docutils literal notranslate"><span class="pre">results.publications[10]['authors'][1]</span></code>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># author info</span>
-<span class="o">...</span>
-    <span class="p">{</span><span class="s1">&#39;first_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Noboru&#39;</span><span class="p">,</span>
-     <span class="s1">&#39;last_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Sebe&#39;</span><span class="p">,</span>
-     <span class="s1">&#39;orcid&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-     <span class="s1">&#39;current_organization_id&#39;</span><span class="p">:</span> <span class="s1">&#39;grid.258806.1&#39;</span><span class="p">,</span>
-     <span class="s1">&#39;researcher_id&#39;</span><span class="p">:</span> <span class="s1">&#39;ur.010647607673.28&#39;</span><span class="p">,</span>
-     <span class="s1">&#39;affiliations&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;grid.258806.1&#39;</span><span class="p">,</span>
-       <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Kyushu Institute of Technology&#39;</span><span class="p">,</span>
-       <span class="s1">&#39;city&#39;</span><span class="p">:</span> <span class="s1">&#39;Kitakyushu&#39;</span><span class="p">,</span>
-       <span class="s1">&#39;city_id&#39;</span><span class="p">:</span> <span class="mi">1859307</span><span class="p">,</span>
-       <span class="s1">&#39;country&#39;</span><span class="p">:</span> <span class="s1">&#39;Japan&#39;</span><span class="p">,</span>
-       <span class="s1">&#39;country_code&#39;</span><span class="p">:</span> <span class="s1">&#39;JP&#39;</span><span class="p">,</span>
-       <span class="s1">&#39;state&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-       <span class="s1">&#39;state_code&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}]}</span>
- <span class="o">...</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># author info
+...
+    {&#39;first_name&#39;: &#39;Noboru&#39;,
+     &#39;last_name&#39;: &#39;Sebe&#39;,
+     &#39;orcid&#39;: &#39;&#39;,
+     &#39;current_organization_id&#39;: &#39;grid.258806.1&#39;,
+     &#39;researcher_id&#39;: &#39;ur.010647607673.28&#39;,
+     &#39;affiliations&#39;: [{&#39;id&#39;: &#39;grid.258806.1&#39;,
+       &#39;name&#39;: &#39;Kyushu Institute of Technology&#39;,
+       &#39;city&#39;: &#39;Kitakyushu&#39;,
+       &#39;city_id&#39;: 1859307,
+       &#39;country&#39;: &#39;Japan&#39;,
+       &#39;country_code&#39;: &#39;JP&#39;,
+       &#39;state&#39;: None,
+       &#39;state_code&#39;: None}]}
+ ...
 </pre></div>
 </div>
 <p>Here’s a object model diagram summing up how data is structured.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">Image</span><span class="p">(</span><span class="n">url</span><span class="o">=</span> <span class="s2">&quot;http://api-sample-data.dimensions.ai/diagrams/data_model_researchers_publications1.v2.jpg&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Image</span><span class="p">(</span><span class="n">url</span><span class="o">=</span> <span class="s2">&quot;http://api-sample-data.dimensions.ai/diagrams/data_model_researchers_publications1.v2.jpg&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1255,16 +1295,15 @@ Method: dsl.ini file
 </ul>
 <p>So, in the real world we often have scenarios like the following one:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">Image</span><span class="p">(</span><span class="n">url</span><span class="o">=</span> <span class="s2">&quot;http://api-sample-data.dimensions.ai/diagrams/data_model_researchers_publications2.v2.jpg&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Image</span><span class="p">(</span><span class="n">url</span><span class="o">=</span> <span class="s2">&quot;http://api-sample-data.dimensions.ai/diagrams/data_model_researchers_publications2.v2.jpg&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1308,11 +1347,10 @@ Method: dsl.ini file
 </ol>
 <p>First off, we can to get all publications based on our search criteria by using a <code class="docutils literal notranslate"><span class="pre">loop</span></code> query.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">pubs</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query_iterative</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;search publications</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pubs</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query_iterative</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;search publications</span>
 <span class="s2">                                where year in </span><span class="si">{</span><span class="n">YEARS</span><span class="si">}</span><span class="s2"> and research_orgs=&quot;</span><span class="si">{</span><span class="n">GRIDID</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="s2">                            return publications[id+title+doi+year+type+authors+journal+issue+volume]&quot;&quot;&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1321,23 +1359,23 @@ Method: dsl.ini file
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Starting iteration with limit=1000 skip=0 ...
-0-693 / 693 (1.23s)
+0-1000 / 1052 (1.94s)
+1000-1052 / 1052 (1.28s)
 ===
-Records extracted: 693
+Records extracted: 1052
 </pre></div></div>
 </div>
 <p>First we want to know how many researchers linked to these publications were affiliated to the GRID organization <em>when the publication was created</em> (note: they may be at at a different institution right now).</p>
 <p>The affiliation data in publications represent exactly that: we can thus loop over them (for each publication/researcher) and keep only the ones matching our GRID ID.</p>
 <p><strong>TIP</strong> affiliations can be extracted easily thanks one of the ‘dataframe’ transformation methods in <a class="reference external" href="https://github.com/digital-science/dimcli">Dimcli</a>: <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors_affiliations</span></code></p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># extract affiliations from a publications list</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># extract affiliations from a publications list</span>
 <span class="n">affiliations</span> <span class="o">=</span> <span class="n">pubs</span><span class="o">.</span><span class="n">as_dataframe_authors_affiliations</span><span class="p">()</span>
 <span class="c1"># select only affiliations for GRIDID</span>
 <span class="n">authors_historical</span> <span class="o">=</span> <span class="n">affiliations</span><span class="p">[</span><span class="n">affiliations</span><span class="p">[</span><span class="s1">&#39;aff_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">GRIDID</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -1356,12 +1394,12 @@ Records extracted: 693
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 ===
-Researchers with affiliation to grid.258806.1 at time of writing: 546
+Researchers with affiliation to grid.258806.1 at time of writing: 830
 ===
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1383,12 +1421,13 @@ Researchers with affiliation to grid.258806.1 at time of writing: 546
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>aff_id</th>
-      <th>aff_name</th>
       <th>aff_city</th>
       <th>aff_city_id</th>
       <th>aff_country</th>
       <th>aff_country_code</th>
+      <th>aff_id</th>
+      <th>aff_name</th>
+      <th>aff_raw_affiliation</th>
       <th>aff_state</th>
       <th>aff_state_code</th>
       <th>researcher_id</th>
@@ -1399,73 +1438,78 @@ Researchers with affiliation to grid.258806.1 at time of writing: 546
   <tbody>
     <tr>
       <th>0</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
       <td>Kitakyushu</td>
-      <td>1.85931e+06</td>
+      <td>1859307.0</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Department of Electrical and Electronic Engine...</td>
       <td></td>
       <td></td>
       <td></td>
-      <td>Siewteng</td>
-      <td>Sim</td>
+      <td>Meng</td>
+      <td>Ge</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
+      <th>5</th>
       <td>Kitakyushu</td>
-      <td>1.85931e+06</td>
+      <td>1859307.0</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Department of Control Engineering, Kyushu Inst...</td>
       <td></td>
       <td></td>
-      <td>ur.01116323260.31</td>
-      <td>Yoshito</td>
-      <td>Andou</td>
+      <td>ur.0724144151.56</td>
+      <td>Joo Kooi</td>
+      <td>Tan</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
       <td>Kitakyushu</td>
-      <td>1.85931e+06</td>
+      <td>1859307.0</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Department of Electrical Engineering, Kyushu I...</td>
       <td></td>
       <td></td>
-      <td>ur.010362311021.55</td>
-      <td>Kubra</td>
-      <td>Eksiler</td>
+      <td>ur.010214262704.60</td>
+      <td>Gaber</td>
+      <td>Magdy</td>
     </tr>
     <tr>
-      <th>7</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
+      <th>11</th>
       <td>Kitakyushu</td>
-      <td>1.85931e+06</td>
+      <td>1859307.0</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Department of Electrical Engineering, Kyushu I...</td>
       <td></td>
       <td></td>
-      <td>ur.011724474721.84</td>
-      <td>Satoshi</td>
-      <td>Iikubo</td>
+      <td>ur.011456332771.53</td>
+      <td>Yasunori</td>
+      <td>Mitani</td>
     </tr>
     <tr>
-      <th>12</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
+      <th>14</th>
       <td>Kitakyushu</td>
-      <td>1.85931e+06</td>
+      <td>1859307.0</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Kyushu Institute of Technology, Kitakyushu, 80...</td>
       <td></td>
       <td></td>
-      <td>ur.016307426665.31</td>
-      <td>R.</td>
-      <td>Okamoto</td>
+      <td>ur.013152454441.15</td>
+      <td>Kazuhiro</td>
+      <td>Toyoda</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1480,91 +1524,96 @@ Researchers with affiliation to grid.258806.1 at time of writing: 546
       <td>...</td>
       <td>...</td>
       <td>...</td>
+      <td>...</td>
     </tr>
     <tr>
-      <th>4025</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
+      <th>5278</th>
       <td>Kitakyushu</td>
-      <td>1.85931e+06</td>
+      <td>1859307.0</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>九州工業大学</td>
       <td></td>
       <td></td>
-      <td>ur.011222056445.46</td>
-      <td>Harald</td>
-      <td>KLEINE</td>
+      <td>ur.013230043761.21</td>
+      <td>幸左</td>
+      <td>賢二</td>
     </tr>
     <tr>
-      <th>4033</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
+      <th>5283</th>
       <td>Kitakyushu</td>
-      <td>1.85931e+06</td>
+      <td>1859307.0</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Kyushu Institute of Technology</td>
       <td></td>
       <td></td>
-      <td>ur.010000541204.77</td>
-      <td>Ryuji</td>
-      <td>TAKAHASHI</td>
+      <td>ur.015230506045.34</td>
+      <td>Hirohisa</td>
+      <td>ISOGAI</td>
     </tr>
     <tr>
-      <th>4062</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
+      <th>5290</th>
       <td>Kitakyushu</td>
-      <td>1.85931e+06</td>
+      <td>1859307.0</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Kyushu Institute of Technology, Japan</td>
       <td></td>
       <td></td>
-      <td>ur.010305013750.53</td>
-      <td>Satoshi</td>
-      <td>Hiai</td>
+      <td>ur.012270025364.95</td>
+      <td>Naoya</td>
+      <td>Higuchi</td>
     </tr>
     <tr>
-      <th>4072</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
+      <th>5291</th>
       <td>Kitakyushu</td>
-      <td>1.85931e+06</td>
+      <td>1859307.0</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Kyushu Institute of Technology, Japan</td>
       <td></td>
       <td></td>
-      <td>ur.014011430535.10</td>
-      <td>Kei</td>
-      <td>Yamamura</td>
+      <td>ur.013003725541.53</td>
+      <td>Yasunobu</td>
+      <td>Imamura</td>
     </tr>
     <tr>
-      <th>4073</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
+      <th>5294</th>
       <td>Kitakyushu</td>
-      <td>1.85931e+06</td>
+      <td>1859307.0</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Kyushu Institute of Technology, Japan</td>
       <td></td>
       <td></td>
-      <td>ur.014512005745.07</td>
-      <td>Aoi</td>
-      <td>Honda</td>
+      <td>ur.015310517641.55</td>
+      <td>Takeshi</td>
+      <td>Shinohara</td>
     </tr>
   </tbody>
 </table>
-<p>546 rows × 11 columns</p>
+<p>830 rows × 12 columns</p>
 </div></div>
 </div>
 <p>Note: * The first ‘publication-affiliations’ dataframe we get may contain duplicate records - eg if an author has more than one publication it’ll be listed twice. That’s why we have an extra step where we drop the <code class="docutils literal notranslate"><span class="pre">pub_id</span></code> column and simply count unique researchers, based on their researcher ID.</p>
 <p>This can be achieved simply by taking into consideration a different field, called <code class="docutils literal notranslate"><span class="pre">current_organization_id</span></code>, available at the outer level of the JSON author structure (see the data model section above) - outside the <code class="docutils literal notranslate"><span class="pre">affiliations</span></code> list.</p>
 <p>Luckily Dimcli includes another handy method for umpacking authors into a dataframe: <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors</span></code></p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">authors_current</span> <span class="o">=</span> <span class="n">pubs</span><span class="o">.</span><span class="n">as_dataframe_authors</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">authors_current</span> <span class="o">=</span> <span class="n">pubs</span><span class="o">.</span><span class="n">as_dataframe_authors</span><span class="p">()</span>
 <span class="n">authors_current</span> <span class="o">=</span> <span class="n">authors_current</span><span class="p">[</span><span class="n">authors_current</span><span class="p">[</span><span class="s1">&#39;current_organization_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">GRIDID</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="n">authors_current</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pub_id&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">authors_current</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s1">&#39;researcher_id&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1579,12 +1628,12 @@ Researchers with affiliation to grid.258806.1 at time of writing: 546
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 ===
-Researchers with affiliation to grid.258806.1 at the time of speaking: 518
+Researchers with affiliation to grid.258806.1 at the time of speaking: 584
 ===
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1606,65 +1655,71 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 518
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>affiliations</th>
+      <th>corresponding</th>
+      <th>current_organization_id</th>
       <th>first_name</th>
       <th>last_name</th>
-      <th>corresponding</th>
       <th>orcid</th>
-      <th>current_organization_id</th>
+      <th>raw_affiliation</th>
       <th>researcher_id</th>
-      <th>affiliations</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>1</th>
-      <td>Yoshito</td>
-      <td>Andou</td>
-      <td></td>
+      <th>5</th>
+      <td>[{'city': 'Kitakyushu', 'city_id': 1859307, 'c...</td>
       <td></td>
       <td>grid.258806.1</td>
-      <td>ur.01116323260.31</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>Joo Kooi</td>
+      <td>Tan</td>
+      <td>None</td>
+      <td>[Department of Control Engineering, Kyushu Ins...</td>
+      <td>ur.0724144151.56</td>
     </tr>
     <tr>
-      <th>6</th>
-      <td>Kubra</td>
-      <td>Eksiler</td>
-      <td></td>
+      <th>9</th>
+      <td>[{'city': 'Kitakyushu', 'city_id': 1859307, 'c...</td>
       <td></td>
       <td>grid.258806.1</td>
-      <td>ur.010362311021.55</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>Satoshi</td>
-      <td>Iikubo</td>
-      <td></td>
-      <td>['0000-0002-5186-4058']</td>
-      <td>grid.258806.1</td>
-      <td>ur.011724474721.84</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>Yasunori</td>
+      <td>Mitani</td>
+      <td>None</td>
+      <td>[Department of Electrical Engineering, Kyushu ...</td>
+      <td>ur.011456332771.53</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>R.</td>
-      <td>Okamoto</td>
-      <td></td>
+      <td>[{'city': 'Kitakyushu', 'city_id': 1859307, 'c...</td>
       <td></td>
       <td>grid.258806.1</td>
-      <td>ur.016307426665.31</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>Kazuhiro</td>
+      <td>Toyoda</td>
+      <td>None</td>
+      <td>[Kyushu Institute of Technology, Kitakyushu, 8...</td>
+      <td>ur.013152454441.15</td>
     </tr>
     <tr>
-      <th>22</th>
-      <td>Shuzi</td>
-      <td>Hayase</td>
-      <td></td>
+      <th>13</th>
+      <td>[{'city': 'Kitakyushu', 'city_id': 1859307, 'c...</td>
       <td></td>
       <td>grid.258806.1</td>
-      <td>ur.01055753603.27</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>Mengu</td>
+      <td>Cho</td>
+      <td>None</td>
+      <td>[Kyushu Institute of Technology, Kitakyushu, 8...</td>
+      <td>ur.013152112405.28</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>[{'city': 'Kitakyushu', 'city_id': 1859307, 'c...</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>Siowhwa</td>
+      <td>Teo</td>
+      <td>[0000-0001-9927-8309]</td>
+      <td>[Graduate School of Life Science and Systems E...</td>
+      <td>ur.010525770330.49</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1675,60 +1730,66 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 518
       <td>...</td>
       <td>...</td>
       <td>...</td>
+      <td>...</td>
     </tr>
     <tr>
-      <th>3455</th>
-      <td>Makoto</td>
-      <td>TAKENAKA</td>
-      <td></td>
+      <th>4763</th>
+      <td>[{'city': 'Kitakyushu', 'city_id': 1859307, 'c...</td>
       <td></td>
       <td>grid.258806.1</td>
-      <td>ur.015326226575.37</td>
-      <td>[{'name': 'Kagawa Prefectural Industrial Techn...</td>
+      <td>古川</td>
+      <td>徹生</td>
+      <td>None</td>
+      <td>[九州工業大学大学院生命体工学研究科]</td>
+      <td>ur.013546017565.95</td>
     </tr>
     <tr>
-      <th>3475</th>
-      <td>Ryuji</td>
-      <td>TAKAHASHI</td>
-      <td></td>
+      <th>4770</th>
+      <td>[{'city': 'Kitakyushu', 'city_id': 1859307, 'c...</td>
       <td></td>
       <td>grid.258806.1</td>
-      <td>ur.010000541204.77</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>西田</td>
+      <td>治男</td>
+      <td>None</td>
+      <td>[九州工業大学大学院生命体工学研究科]</td>
+      <td>ur.07662175025.31</td>
     </tr>
     <tr>
-      <th>3504</th>
-      <td>Satoshi</td>
-      <td>Hiai</td>
-      <td>True</td>
+      <th>4784</th>
+      <td>[{'city': 'Kitakyushu', 'city_id': 1859307, 'c...</td>
       <td></td>
       <td>grid.258806.1</td>
-      <td>ur.010305013750.53</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>Naoya</td>
+      <td>Higuchi</td>
+      <td>None</td>
+      <td>[Kyushu Institute of Technology, Japan]</td>
+      <td>ur.012270025364.95</td>
     </tr>
     <tr>
-      <th>3514</th>
-      <td>Kei</td>
-      <td>Yamamura</td>
-      <td></td>
+      <th>4785</th>
+      <td>[{'city': 'Kitakyushu', 'city_id': 1859307, 'c...</td>
       <td></td>
       <td>grid.258806.1</td>
-      <td>ur.014011430535.10</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>Yasunobu</td>
+      <td>Imamura</td>
+      <td>None</td>
+      <td>[Kyushu Institute of Technology, Japan]</td>
+      <td>ur.013003725541.53</td>
     </tr>
     <tr>
-      <th>3515</th>
-      <td>Aoi</td>
-      <td>Honda</td>
+      <th>4788</th>
+      <td>[{'city': 'Kitakyushu', 'city_id': 1859307, 'c...</td>
       <td></td>
-      <td>['0000-0002-4485-1523']</td>
       <td>grid.258806.1</td>
-      <td>ur.014512005745.07</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>Takeshi</td>
+      <td>Shinohara</td>
+      <td>None</td>
+      <td>[Kyushu Institute of Technology, Japan]</td>
+      <td>ur.015310517641.55</td>
     </tr>
   </tbody>
 </table>
-<p>518 rows × 7 columns</p>
+<p>584 rows × 8 columns</p>
 </div></div>
 </div>
 </div>
@@ -1764,11 +1825,10 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 518
 </li>
 </ol>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">q</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;search researchers where research_orgs=&quot;</span><span class="si">{</span><span class="n">GRIDID</span><span class="si">}</span><span class="s2">&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">q</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;search researchers where research_orgs=&quot;</span><span class="si">{</span><span class="n">GRIDID</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="s2">        return researchers[basics]&quot;&quot;&quot;</span>
 <span class="n">researchers_json</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query_iterative</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
 <span class="n">researchers</span> <span class="o">=</span> <span class="n">researchers_json</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
@@ -1779,24 +1839,27 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 518
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Starting iteration with limit=1000 skip=0 ...
-0-1000 / 8976 (0.86s)
-1000-2000 / 8993 (1.41s)
-2000-3000 / 8993 (1.08s)
-3000-4000 / 8976 (2.34s)
-4000-5000 / 8993 (1.16s)
-5000-6000 / 8976 (0.90s)
-6000-7000 / 8976 (1.27s)
-7000-8000 / 8976 (0.97s)
-8000-8993 / 8993 (1.06s)
+0-1000 / 11838 (5.43s)
+1000-2000 / 11838 (3.73s)
+2000-3000 / 11838 (2.46s)
+3000-4000 / 11838 (1.84s)
+4000-5000 / 11838 (3.44s)
+5000-6000 / 11838 (2.64s)
+6000-7000 / 11838 (2.29s)
+7000-8000 / 11838 (1.98s)
+8000-9000 / 11838 (2.25s)
+9000-10000 / 11838 (2.40s)
+10000-11000 / 11838 (3.11s)
+11000-11838 / 11838 (3.06s)
 ===
-Records extracted: 8993
+Records extracted: 11838
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1818,8 +1881,8 @@ Records extracted: 8993
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>id</th>
       <th>first_name</th>
+      <th>id</th>
       <th>last_name</th>
       <th>research_orgs</th>
       <th>orcid_id</th>
@@ -1828,43 +1891,43 @@ Records extracted: 8993
   <tbody>
     <tr>
       <th>0</th>
-      <td>ur.012161120453.51</td>
-      <td>Seita</td>
-      <td>Seki</td>
-      <td>[{'id': 'grid.258806.1', 'types': ['Education'...</td>
+      <td>Makoto</td>
+      <td>ur.07777767140.16</td>
+      <td>Kobayashi</td>
+      <td>[{'acronym': 'KIT', 'city_name': 'Kitakyushu',...</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>ur.014746662301.94</td>
-      <td>Takeshi</td>
-      <td>Yoshinaga</td>
-      <td>[{'id': 'grid.258806.1', 'types': ['Education'...</td>
-      <td>NaN</td>
+      <td>Ashraful M</td>
+      <td>ur.07777460411.31</td>
+      <td>Hoque</td>
+      <td>[{'city_name': 'Houston', 'country_name': 'Uni...</td>
+      <td>[0000-0002-3970-8538]</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>ur.016064142555.51</td>
-      <td>Charles Ronald</td>
-      <td>Harahap</td>
-      <td>[{'id': 'grid.258806.1', 'types': ['Education'...</td>
+      <td>Fujio</td>
+      <td>ur.07777374057.66</td>
+      <td>Kubo</td>
+      <td>[{'city_name': 'Hiroshima', 'country_name': 'J...</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>ur.016437530541.00</td>
-      <td>Yurie</td>
-      <td>Sugimoto</td>
-      <td>[{'id': 'grid.258806.1', 'types': ['Education'...</td>
-      <td>NaN</td>
+      <td>Muhammad Akmal Kamarudin</td>
+      <td>ur.07777204200.43</td>
+      <td>Kamarudin</td>
+      <td>[{'acronym': 'UM', 'city_name': 'Kuala Lumpur'...</td>
+      <td>[0000-0002-2256-5948]</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>ur.011113737576.59</td>
-      <td>Zhen</td>
-      <td>Wang</td>
-      <td>[{'id': 'grid.258806.1', 'types': ['Education'...</td>
-      <td>[0000-0002-9136-3100]</td>
+      <td>Chinatsu</td>
+      <td>ur.0777713743.09</td>
+      <td>Ikeura</td>
+      <td>[{'acronym': 'KIT', 'city_name': 'Kitakyushu',...</td>
+      <td>NaN</td>
     </tr>
   </tbody>
 </table>
@@ -1873,11 +1936,10 @@ Records extracted: 8993
 <p>Now we need to select only the researchers who have <strong>published in the time frame [2013:2018]</strong>. So for each researcher ID we must extract the full publication history in order to verify their relevance.</p>
 <p>The most efficient way to do this is to use a query that <strong>extracts the publication history for several researchers at the same time</strong> (so to avoid overruning our API quota), then, as a second step, producing a clean list of relevant researchers from it.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">researchers_ids</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">researchers</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
 <span class="c1"># no of researchers IDs per query: so to ensure we never hit the 1000 records limit per query</span>
 <span class="n">CHUNKS_SIZE</span> <span class="o">=</span> <span class="mi">300</span>
@@ -1888,7 +1950,6 @@ Records extracted: 8993
 <span class="s2">                and research_orgs=&quot;</span><span class="si">{}</span><span class="s2">&quot;</span>
 <span class="s2">            return publications[id+title+doi+year+type+authors+journal+issue+volume] limit 1000&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">dimcli.shortcuts</span> <span class="kn">import</span> <span class="n">chunks_of</span>
 
 <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">chunks_of</span><span class="p">(</span><span class="n">researchers_ids</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">CHUNKS_SIZE</span><span class="p">):</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">chunk</span><span class="p">),</span> <span class="n">YEARS</span><span class="p">,</span> <span class="n">GRIDID</span><span class="p">))</span>
@@ -1914,78 +1975,97 @@ Records extracted: 8993
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 32 (total = 32)
-Time: 0.78s
-Returned Publications: 54 (total = 54)
-Time: 1.34s
-Returned Publications: 78 (total = 78)
-Time: 1.27s
-Returned Publications: 43 (total = 43)
-Time: 0.87s
-Returned Publications: 25 (total = 25)
-Time: 0.86s
-Returned Publications: 88 (total = 88)
-Time: 1.00s
-Returned Publications: 70 (total = 70)
-Time: 0.92s
-Returned Publications: 62 (total = 62)
-Time: 0.76s
-Returned Publications: 24 (total = 24)
-Time: 0.66s
-Returned Publications: 46 (total = 46)
-Time: 0.66s
-Returned Publications: 75 (total = 75)
-Time: 0.77s
-Returned Publications: 47 (total = 47)
-Time: 0.66s
-Returned Publications: 29 (total = 29)
-Time: 0.97s
-Returned Publications: 80 (total = 80)
-Time: 0.78s
-Returned Publications: 89 (total = 89)
-Time: 0.79s
-Returned Publications: 21 (total = 21)
-Time: 0.64s
-Returned Publications: 41 (total = 41)
-Time: 0.63s
-Returned Publications: 66 (total = 66)
-Time: 0.76s
-Returned Publications: 17 (total = 17)
-Time: 0.67s
+Returned Publications: 59 (total = 59)
+Time: 1.99s
+Returned Publications: 49 (total = 49)
+Time: 0.93s
+Returned Publications: 48 (total = 48)
+Time: 0.93s
+Returned Publications: 61 (total = 61)
+Time: 1.02s
 Returned Publications: 36 (total = 36)
-Time: 0.63s
+Time: 0.86s
+Returned Publications: 41 (total = 41)
+Time: 0.85s
+Returned Publications: 64 (total = 64)
+Time: 0.94s
+Returned Publications: 36 (total = 36)
+Time: 0.91s
+Returned Publications: 29 (total = 29)
+Time: 0.98s
+Returned Publications: 48 (total = 48)
+Time: 0.93s
+Returned Publications: 40 (total = 40)
+Time: 0.90s
+Returned Publications: 23 (total = 23)
+Time: 0.79s
+Returned Publications: 45 (total = 45)
+Time: 0.93s
+Returned Publications: 53 (total = 53)
+Time: 1.13s
+Returned Publications: 38 (total = 38)
+Time: 0.94s
+Returned Publications: 61 (total = 61)
+Time: 0.96s
+Returned Publications: 36 (total = 36)
+Time: 1.76s
+Returned Publications: 59 (total = 59)
+Time: 1.06s
+Returned Publications: 52 (total = 52)
+Time: 0.94s
+Returned Publications: 47 (total = 47)
+Time: 0.96s
+Returned Publications: 25 (total = 25)
+Time: 0.88s
+Returned Publications: 52 (total = 52)
+Time: 0.98s
 Returned Publications: 67 (total = 67)
 Time: 0.98s
-Returned Publications: 46 (total = 46)
+Returned Publications: 72 (total = 72)
+Time: 1.02s
+Returned Publications: 26 (total = 26)
+Time: 0.83s
+Returned Publications: 64 (total = 64)
+Time: 0.95s
+Returned Publications: 52 (total = 52)
+Time: 0.96s
+Returned Publications: 42 (total = 42)
+Time: 0.85s
+Returned Publications: 75 (total = 75)
 Time: 0.94s
-Returned Publications: 76 (total = 76)
+Returned Publications: 81 (total = 81)
+Time: 1.01s
+Returned Publications: 99 (total = 99)
+Time: 1.06s
+Returned Publications: 22 (total = 22)
+Time: 0.91s
+Returned Publications: 109 (total = 109)
 Time: 0.94s
-Returned Publications: 54 (total = 54)
-Time: 0.94s
-Returned Publications: 59 (total = 59)
-Time: 0.77s
+Returned Publications: 48 (total = 48)
+Time: 0.91s
+Returned Publications: 38 (total = 38)
+Time: 0.85s
+Returned Publications: 78 (total = 78)
+Time: 0.92s
+Returned Publications: 53 (total = 53)
+Time: 0.89s
+Returned Publications: 72 (total = 72)
+Time: 1.03s
 Returned Publications: 50 (total = 50)
-Time: 0.70s
-Returned Publications: 36 (total = 36)
-Time: 0.70s
-Returned Publications: 46 (total = 46)
-Time: 0.79s
-Returned Publications: 89 (total = 89)
-Time: 0.99s
-Returned Publications: 61 (total = 61)
-Time: 0.78s
+Time: 1.06s
+Returned Publications: 15 (total = 15)
+Time: 0.69s
 ---
-Found 1607 publications for the given criteria (including duplicates)
-Final result: 680 unique publications
+Found 2065 publications for the given criteria (including duplicates)
+Final result: 904 unique publications
 </pre></div></div>
 </div>
 <p>This step is basically the same as in approach 1 above.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># extract affiliations from a publications list</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># extract affiliations from a publications list</span>
 <span class="n">affiliations_v2</span> <span class="o">=</span> <span class="n">pubs_v2</span><span class="o">.</span><span class="n">as_dataframe_authors_affiliations</span><span class="p">()</span>
 <span class="c1"># select only affiliations for GRIDID</span>
 <span class="n">authors_historical_v2</span> <span class="o">=</span> <span class="n">affiliations_v2</span><span class="p">[</span><span class="n">affiliations_v2</span><span class="p">[</span><span class="s1">&#39;aff_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">GRIDID</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -2004,12 +2084,12 @@ Final result: 680 unique publications
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 ===
-Researchers with affiliation to grid.258806.1 at time of writing: 546
+Researchers with affiliation to grid.258806.1 at time of writing: 740
 ===
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -2031,12 +2111,13 @@ Researchers with affiliation to grid.258806.1 at time of writing: 546
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>aff_id</th>
-      <th>aff_name</th>
       <th>aff_city</th>
       <th>aff_city_id</th>
       <th>aff_country</th>
       <th>aff_country_code</th>
+      <th>aff_id</th>
+      <th>aff_name</th>
+      <th>aff_raw_affiliation</th>
       <th>aff_state</th>
       <th>aff_state_code</th>
       <th>researcher_id</th>
@@ -2047,73 +2128,78 @@ Researchers with affiliation to grid.258806.1 at time of writing: 546
   <tbody>
     <tr>
       <th>0</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
       <td>Kitakyushu</td>
-      <td>1.85931e+06</td>
+      <td>1859307.0</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Graduate School of Life Science and Systems En...</td>
       <td></td>
       <td></td>
-      <td>ur.011113737576.59</td>
-      <td>Zhen</td>
-      <td>Wang</td>
+      <td>ur.010525770330.49</td>
+      <td>Siowhwa</td>
+      <td>Teo</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
       <td>Kitakyushu</td>
-      <td>1.85931e+06</td>
+      <td>1859307.0</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Graduate School of Life Science and Systems En...</td>
       <td></td>
       <td></td>
-      <td>ur.011773542351.82</td>
-      <td>Muhammad Akmal</td>
-      <td>Kamarudin</td>
+      <td>ur.07706074430.00</td>
+      <td>Zhanglin</td>
+      <td>Guo</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
       <td>Kitakyushu</td>
-      <td>1.85931e+06</td>
+      <td>1859307.0</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Graduate School of Life Science and Systems En...</td>
       <td></td>
       <td></td>
-      <td></td>
-      <td>Ng Chi</td>
-      <td>Huey</td>
+      <td>ur.012076416030.50</td>
+      <td>Zhenhua</td>
+      <td>Xu</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
       <td>Kitakyushu</td>
-      <td>1.85931e+06</td>
+      <td>1859307.0</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Graduate School of Life Science and Systems En...</td>
       <td></td>
       <td></td>
-      <td>ur.010311155152.66</td>
-      <td>Fu</td>
-      <td>Yang</td>
+      <td>ur.010227671107.36</td>
+      <td>Chu</td>
+      <td>Zhang</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
       <td>Kitakyushu</td>
-      <td>1.85931e+06</td>
+      <td>1859307.0</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Graduate School of Life Science and Systems En...</td>
       <td></td>
       <td></td>
-      <td>ur.010416773662.27</td>
-      <td>Manish</td>
-      <td>Pandey</td>
+      <td>ur.014730512667.72</td>
+      <td>Yusuke</td>
+      <td>Kamata</td>
     </tr>
     <tr>
       <th>...</th>
@@ -2128,89 +2214,94 @@ Researchers with affiliation to grid.258806.1 at time of writing: 546
       <td>...</td>
       <td>...</td>
       <td>...</td>
+      <td>...</td>
     </tr>
     <tr>
-      <th>9445</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
+      <th>12176</th>
       <td>Kitakyushu</td>
-      <td>1.85931e+06</td>
+      <td>1859307.0</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>九州工業大学</td>
       <td></td>
       <td></td>
-      <td>ur.015771611513.28</td>
-      <td>Yoshiro</td>
-      <td>Fukui</td>
+      <td>ur.012307631725.34</td>
+      <td>熊本</td>
+      <td>拓哉</td>
     </tr>
     <tr>
-      <th>9885</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
+      <th>12202</th>
       <td>Kitakyushu</td>
-      <td>1.85931e+06</td>
+      <td>1859307.0</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Department of Bioscience and Bioinformatics, K...</td>
       <td></td>
       <td></td>
-      <td>ur.011176635061.41</td>
-      <td>Takao</td>
-      <td>Kodama</td>
+      <td>ur.010340773642.58</td>
+      <td>Satoshi</td>
+      <td>Fujii</td>
     </tr>
     <tr>
-      <th>9908</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
+      <th>12706</th>
       <td>Kitakyushu</td>
-      <td>1.85931e+06</td>
+      <td>1859307.0</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>九州工業大学大学院情報工学研究院</td>
       <td></td>
       <td></td>
-      <td>ur.014036341366.26</td>
-      <td>Kei</td>
-      <td>Ohnishi</td>
+      <td>ur.010035501405.12</td>
+      <td>國近</td>
+      <td>秀信</td>
     </tr>
     <tr>
-      <th>10098</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
+      <th>12728</th>
       <td>Kitakyushu</td>
-      <td>1.85931e+06</td>
+      <td>1859307.0</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Graduate School of Life Science and Systems En...</td>
       <td></td>
       <td></td>
-      <td>ur.0775361534.49</td>
-      <td>Ken'ichi</td>
-      <td>Yokoyama</td>
+      <td>ur.01004062131.45</td>
+      <td>Momoko</td>
+      <td>Kumemura</td>
     </tr>
     <tr>
-      <th>10122</th>
-      <td>grid.258806.1</td>
-      <td>Kyushu Institute of Technology</td>
+      <th>12752</th>
       <td>Kitakyushu</td>
-      <td>1.85931e+06</td>
+      <td>1859307.0</td>
       <td>Japan</td>
       <td>JP</td>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>九工大</td>
       <td></td>
       <td></td>
-      <td>ur.01156670436.97</td>
-      <td>Hiroki</td>
-      <td>Obata</td>
+      <td>ur.010024355257.03</td>
+      <td>河野</td>
+      <td>晴彦</td>
     </tr>
   </tbody>
 </table>
-<p>546 rows × 11 columns</p>
+<p>740 rows × 12 columns</p>
 </div></div>
 </div>
 <p>Also here, the procedure is exactly the same as in approach 1.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">authors_current_v2</span> <span class="o">=</span> <span class="n">pubs_v2</span><span class="o">.</span><span class="n">as_dataframe_authors</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">authors_current_v2</span> <span class="o">=</span> <span class="n">pubs_v2</span><span class="o">.</span><span class="n">as_dataframe_authors</span><span class="p">()</span>
 <span class="n">authors_current_v2</span> <span class="o">=</span> <span class="n">authors_current_v2</span><span class="p">[</span><span class="n">authors_current_v2</span><span class="p">[</span><span class="s1">&#39;current_organization_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">GRIDID</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="n">authors_current_v2</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pub_id&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">authors_current_v2</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s1">&#39;researcher_id&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -2225,12 +2316,12 @@ Researchers with affiliation to grid.258806.1 at time of writing: 546
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 ===
-Researchers with affiliation to grid.258806.1 at the time of speaking: 518
+Researchers with affiliation to grid.258806.1 at the time of speaking: 584
 ===
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -2252,65 +2343,71 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 518
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>affiliations</th>
+      <th>corresponding</th>
+      <th>current_organization_id</th>
       <th>first_name</th>
       <th>last_name</th>
-      <th>corresponding</th>
       <th>orcid</th>
-      <th>current_organization_id</th>
+      <th>raw_affiliation</th>
       <th>researcher_id</th>
-      <th>affiliations</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>Zhen</td>
-      <td>Wang</td>
+      <td>[{'city': 'Kitakyushu', 'city_id': 1859307, 'c...</td>
       <td></td>
-      <td>['0000-0002-9136-3100']</td>
       <td>grid.258806.1</td>
-      <td>ur.011113737576.59</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>Siowhwa</td>
+      <td>Teo</td>
+      <td>[0000-0001-9927-8309]</td>
+      <td>[Graduate School of Life Science and Systems E...</td>
+      <td>ur.010525770330.49</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>Muhammad Akmal</td>
-      <td>Kamarudin</td>
+      <th>2</th>
+      <td>[{'city': 'Kitakyushu', 'city_id': 1859307, 'c...</td>
       <td></td>
-      <td>['0000-0002-2256-5948']</td>
       <td>grid.258806.1</td>
-      <td>ur.011773542351.82</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>Zhenhua</td>
+      <td>Xu</td>
+      <td>None</td>
+      <td>[Graduate School of Life Science and Systems E...</td>
+      <td>ur.012076416030.50</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>Fu</td>
-      <td>Yang</td>
+      <td>[{'city': 'Kitakyushu', 'city_id': 1859307, 'c...</td>
       <td></td>
-      <td>['0000-0001-7673-8026']</td>
       <td>grid.258806.1</td>
-      <td>ur.010311155152.66</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>Chu</td>
+      <td>Zhang</td>
+      <td>None</td>
+      <td>[Graduate School of Life Science and Systems E...</td>
+      <td>ur.010227671107.36</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>Manish</td>
-      <td>Pandey</td>
+      <td>[{'city': 'Kitakyushu', 'city_id': 1859307, 'c...</td>
       <td></td>
-      <td>['0000-0003-0963-8097']</td>
       <td>grid.258806.1</td>
-      <td>ur.010416773662.27</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>Yusuke</td>
+      <td>Kamata</td>
+      <td>None</td>
+      <td>[Graduate School of Life Science and Systems E...</td>
+      <td>ur.014730512667.72</td>
     </tr>
     <tr>
-      <th>5</th>
-      <td>Gaurav</td>
-      <td>Kapil</td>
-      <td></td>
+      <th>6</th>
+      <td>[{'city': 'Kitakyushu', 'city_id': 1859307, 'c...</td>
       <td></td>
       <td>grid.258806.1</td>
-      <td>ur.07620457442.79</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>Tingli</td>
+      <td>Ma</td>
+      <td>[0000-0002-3310-459X]</td>
+      <td>[Graduate School of Life Science and Systems E...</td>
+      <td>ur.01144540527.52</td>
     </tr>
     <tr>
       <th>...</th>
@@ -2321,60 +2418,66 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 518
       <td>...</td>
       <td>...</td>
       <td>...</td>
+      <td>...</td>
     </tr>
     <tr>
-      <th>8268</th>
-      <td>Yoshiro</td>
-      <td>Fukui</td>
-      <td></td>
+      <th>10482</th>
+      <td>[{'city': 'Kitakyushu', 'city_id': 1859307, 'c...</td>
       <td></td>
       <td>grid.258806.1</td>
-      <td>ur.015771611513.28</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>毛利</td>
+      <td>恵美子</td>
+      <td>None</td>
+      <td>[九州工業大学大学院]</td>
+      <td>ur.010435415335.62</td>
     </tr>
     <tr>
-      <th>8680</th>
-      <td>Takao</td>
-      <td>Kodama</td>
-      <td>True</td>
+      <th>10525</th>
+      <td>[{'city': 'Kitakyushu', 'city_id': 1859307, 'c...</td>
       <td></td>
       <td>grid.258806.1</td>
-      <td>ur.011176635061.41</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>田中</td>
+      <td>和博</td>
+      <td>None</td>
+      <td>[九工大]</td>
+      <td>ur.010456027505.69</td>
     </tr>
     <tr>
-      <th>8701</th>
-      <td>Kei</td>
-      <td>Ohnishi</td>
-      <td></td>
+      <th>11311</th>
+      <td>[{'city': 'Kitakyushu', 'city_id': 1859307, 'c...</td>
       <td></td>
       <td>grid.258806.1</td>
-      <td>ur.014036341366.26</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>國近</td>
+      <td>秀信</td>
+      <td>None</td>
+      <td>[九州工業大学大学院情報工学研究院]</td>
+      <td>ur.010035501405.12</td>
     </tr>
     <tr>
-      <th>8868</th>
-      <td>Ken'ichi</td>
-      <td>Yokoyama</td>
-      <td>True</td>
+      <th>11328</th>
+      <td>[{'city': 'Kitakyushu', 'city_id': 1859307, 'c...</td>
       <td></td>
       <td>grid.258806.1</td>
-      <td>ur.0775361534.49</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>Momoko</td>
+      <td>Kumemura</td>
+      <td>None</td>
+      <td>[Graduate School of Life Science and Systems E...</td>
+      <td>ur.01004062131.45</td>
     </tr>
     <tr>
-      <th>8891</th>
-      <td>Hiroki</td>
-      <td>Obata</td>
-      <td></td>
+      <th>11344</th>
+      <td>[{'city': 'Kitakyushu', 'city_id': 1859307, 'c...</td>
       <td></td>
       <td>grid.258806.1</td>
-      <td>ur.01156670436.97</td>
-      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+      <td>河野</td>
+      <td>晴彦</td>
+      <td>None</td>
+      <td>[九工大]</td>
+      <td>ur.010024355257.03</td>
     </tr>
   </tbody>
 </table>
-<p>518 rows × 7 columns</p>
+<p>584 rows × 8 columns</p>
 </div></div>
 </div>
 </div>
@@ -2382,11 +2485,10 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 518
 <h2>Conclusions<a class="headerlink" href="#Conclusions" title="Permalink to this headline">¶</a></h2>
 <p>As anticipated above, <strong>both approaches are equally valid</strong> and in fact they return the same (or very similar) number of results. Let’s compare them:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># create summary table</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create summary table</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">authors_current</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">authors_historical</span><span class="p">),</span>
          <span class="sd">&quot;&quot;&quot;search publications where year in [2013:2018] and research_orgs=&quot;grid.258806.1&quot; return publication&quot;&quot;&quot;</span><span class="p">,</span>
          <span class="p">],</span>
@@ -2399,7 +2501,7 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 518
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -2431,15 +2533,15 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 518
     <tr>
       <th>0</th>
       <td>1</td>
-      <td>518</td>
-      <td>546</td>
+      <td>584</td>
+      <td>830</td>
       <td>search publications where year in [2013:2018] ...</td>
     </tr>
     <tr>
       <th>1</th>
       <td>2</td>
-      <td>518</td>
-      <td>546</td>
+      <td>584</td>
+      <td>740</td>
       <td>search researchers where research_orgs="grid.2...</td>
     </tr>
   </tbody>
@@ -2473,7 +2575,6 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 518
            
           </div>
           <footer>
-  
 
   <hr/>
 
@@ -2492,7 +2593,6 @@ Researchers with affiliation to grid.258806.1 at the time of speaking: 518
 
 
 </footer>
-
         </div>
       </div>
 

@@ -1,0 +1,1006 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Enrich text with Field of Research (FoR) codes &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/custom.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Generating a report that monitors research topics across Dimensions sources" href="1-report-content-volumes-per-year.html" />
+    
+
+   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149959808-1"></script>
+   <!-- <script src="_static/js/custom.js"></script> -->
+
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> DSL
+          
+
+          
+            
+            <img src="../_static/dimensions-logo@2x.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+
+   <p class="">
+      <h3 id="cookbooks_title">API COOKBOOKS</h3>
+   </p>
+
+
+   
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Folder</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="1-report-content-volumes-per-year.html">Generating a report that monitors research topics across Dimensions sources</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="1-report-content-volumes-per-year.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1-report-content-volumes-per-year.html#1.-Creating-a-query-builder">1. Creating a query builder</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="1-report-content-volumes-per-year.html#Query-logic">Query logic</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="1-report-content-volumes-per-year.html#2.-Plotting-the-results">2. Plotting the results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1-report-content-volumes-per-year.html#3.-Conclusions">3. Conclusions</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Enrich text with Field of Research (FoR) codes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#A-sample-set-of-publications">A sample set of publications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#1.-Loading-the-sample-text">1. Loading the sample text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#2.-FoR-Classification">2. FoR Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#3.-Number-of-FoR-categories-per-document">3. Number of FoR categories per document</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#4.-Top-FoR-categories-by-document-count">4. Top FoR categories by document count</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+
+
+   <div id="sidebar_github" style="margin-top: 12px;">
+   <h3>Github Source</h3>
+
+      <div style="margin: 10px 20px;">
+      
+         <iframe src="https://ghbtns.com/github-btn.html?user=digital-science&repo=dimensions-api-lab&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+
+         <iframe src="https://ghbtns.com/github-btn.html?user=digital-science&repo=dimensions-api-lab&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe> 
+      
+      </div>
+
+   </div>
+
+
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DSL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+
+    
+
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt .copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js'></script>
+<script>require=requirejs;</script><a class="reference external image-reference" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/cookbooks/2-enrich-text-with-for-codes.ipynb"><img alt="../_images/badge-colab.svg" src="../_images/badge-colab.svg" /></a>
+<a class="reference external image-reference" href="https://github.com/digital-science/dimensions-api-lab/blob/master/cookbooks/2-enrich-text-with-for-codes.ipynb"><img alt="../_images/badge-github-custom.svg" src="../_images/badge-github-custom.svg" /></a>
+<hr class="docutils" />
+<div class="section" id="Enrich-text-with-Field-of-Research-(FoR)-codes">
+<h1>Enrich text with Field of Research (FoR) codes<a class="headerlink" href="#Enrich-text-with-Field-of-Research-(FoR)-codes" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial, we show how to use the <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> <em>classify</em> function to retrieve suggested Field of Research (FoR) codes for a set of documents.</p>
+<p>FoR classification is a component of the Australian and New Zealand Standard Research Classification system. It allows all R&amp;D activity to be categorized using a single system. The system is hierarchical, with major fields subdivided into minor fields.</p>
+<p>For more information on FoR classification, please see <a class="reference external" href="https://dimensions.freshdesk.com/support/solutions/articles/23000018826-what-is-the-background-behind-the-fields-of-research-for-classification-system-">this article</a>. For a complete list of all FoR categories in Dimensions, please visit <a class="reference external" href="https://app.dimensions.ai/browse/categories/publication/for">this link</a>.</p>
+<p>The <a class="reference external" href="https://docs.dimensions.ai/dsl/functions.html#function-classify">Dimensions API classifier</a> suggests category classifications based on input title and abstract text. Category classifications allow analysts to gain insight into the area(s) of focus of a set of documents. For example, given a set of documents, how many of the documents relate to ‘Artificial Intelligence and Image Processing’ (FoR code 0801)? How does this compare to the number of documents related to ‘Statistics’ (FoR code
+0104)?</p>
+<div class="section" id="A-sample-set-of-publications">
+<h2>A sample set of publications<a class="headerlink" href="#A-sample-set-of-publications" title="Permalink to this headline">¶</a></h2>
+<p>Our starting point is a <a class="reference external" href="arxiv_june7.csv">sample set of 100 titles/abstracts</a> belonging to publications that were submitted to arxiv.org on June 7th 2021. At the time of writing, these publications have not yet been indexed by Dimensions, and thus have not yet been assigned categories.</p>
+<p>Below, we will show below how to enrich this dataset with FoR codes.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">CHANGELOG</span><span class="se">\n</span><span class="s2">This notebook was last run on </span><span class="si">%s</span><span class="se">\n</span><span class="s2">==&quot;</span> <span class="o">%</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">, %Y&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+==
+CHANGELOG
+This notebook was last run on Jan 24, 2022
+==
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>This notebook assumes you have installed the <a class="reference external" href="https://pypi.org/project/dimcli/">Dimcli</a> library and are familiar with the <a class="reference external" href="https://api-lab.dimensions.ai/cookbooks/1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html">‘Getting Started’ tutorial</a>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install dimcli tqdm -U --quiet
+
+<span class="kn">import</span> <span class="nn">dimcli</span>
+<span class="kn">from</span> <span class="nn">dimcli.utils</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">json</span><span class="o">,</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span> <span class="k">as</span> <span class="n">pbar</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">Logging in..&quot;</span><span class="p">)</span>
+<span class="c1"># https://digital-science.github.io/dimcli/getting-started.html#authentication</span>
+<span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;https://app.dimensions.ai&quot;</span>
+<span class="k">if</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+  <span class="kn">import</span> <span class="nn">getpass</span>
+  <span class="n">KEY</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;API Key: &#39;</span><span class="p">)</span>
+  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">KEY</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="n">ENDPOINT</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="n">KEY</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">KEY</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="n">ENDPOINT</span><span class="p">)</span>
+<span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Searching config file credentials for &#39;https://app.dimensions.ai&#39; endpoint..
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+==
+Logging in..
+Dimcli - Dimensions API Client (v0.9.6)
+Connected to: &lt;https://app.dimensions.ai/api/dsl&gt; - DSL v2.0
+Method: dsl.ini file
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="1.-Loading-the-sample-text">
+<h2>1. Loading the sample text<a class="headerlink" href="#1.-Loading-the-sample-text" title="Permalink to this headline">¶</a></h2>
+<p>First, we are going to load the sample dataset ‘<a class="reference external" href="http://api-sample-data.dimensions.ai/data/arxiv_june7.csv">arxiv_june7.csv</a>’.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;http://api-sample-data.dimensions.ai/data/arxiv_june7.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Let’s preview the contents of the file:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>title</th>
+      <th>abstract</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>SIMONe  View Invariant  Temporally Abstracted ...</td>
+      <td>To help agents reason about scenes in terms ...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>How planets grow by pebble accretion IV  Envel...</td>
+      <td>The amount of nebular gas that a planet can ...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>GAN Cocktail  mixing GANs without dataset access</td>
+      <td>Today s generative models are capable of syn...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>it CosmoPower       emulating cosmological p...</td>
+      <td>We present   it CosmoPower    a suite of neu...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>A Matrix Trickle Down Theorem on Simplicial Co...</td>
+      <td>We show that the natural Glauber dynamics mi...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>As we see above, each document is represented by title text and abstract text. We will use the Dimensions API’s <em>classify</em> function to retrieve suggested FoR codes for this text.</p>
+</div>
+<div class="section" id="2.-FoR-Classification">
+<h2>2. FoR Classification<a class="headerlink" href="#2.-FoR-Classification" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="https://docs.dimensions.ai/dsl/functions.html#function-classify">classify</a> function has three inputs: title, abstract, and system.</p>
+<ul class="simple">
+<li><p><strong>title</strong>: the document’s title text</p></li>
+<li><p><strong>abstract</strong>: the document’s abstract text</p></li>
+<li><p><strong>system</strong>: the desired classification system for output</p></li>
+</ul>
+<p>In our case, we’re going to use the FoR classification system. For details on other available classification schemes, please see <a class="reference external" href="https://support-funder.dimensions.ai/support/solutions/articles/13000037672-which-research-categories-and-classification-schemes-are-available-in-dimensions-">this article</a>.</p>
+<p>To classify each document, we iterate through the dataframe one row at a time and input the title and abstract text for each document. A list of suggested FoR codes is saved into a column called ‘FoR_Categories’.</p>
+<p>We pause for a second after each iteration, which prevents us from hitting the max queries quota (~30 per minute).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;FoR_Categories&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># for index, row in df.iterrows():</span>
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">pbar</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">(),</span> <span class="n">total</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">search_string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                    classify(title=&quot;</span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">title</span><span class="si">}</span><span class="s2">&quot;, abstract=&quot;</span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">abstract</span><span class="si">}</span><span class="s2">&quot;, system=&quot;FOR&quot;)</span>
+<span class="s2">            &quot;&quot;&quot;</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">search_string</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">list_of_categories</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">a</span><span class="o">.</span><span class="n">json</span><span class="p">[</span><span class="s1">&#39;FOR&#39;</span><span class="p">]:</span>
+        <span class="n">list_of_categories</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;FoR_Categories&#39;</span><span class="p">][</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">list_of_categories</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "a825f59c9cfa433ab8afc86873373390", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<p>Now that we have classified our documents, let’s take a look at the updated dataframe:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>title</th>
+      <th>abstract</th>
+      <th>FoR_Categories</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>SIMONe  View Invariant  Temporally Abstracted ...</td>
+      <td>To help agents reason about scenes in terms ...</td>
+      <td>[0801 Artificial Intelligence and Image Proces...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>How planets grow by pebble accretion IV  Envel...</td>
+      <td>The amount of nebular gas that a planet can ...</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>GAN Cocktail  mixing GANs without dataset access</td>
+      <td>Today s generative models are capable of syn...</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>it CosmoPower       emulating cosmological p...</td>
+      <td>We present   it CosmoPower    a suite of neu...</td>
+      <td>[0104 Statistics]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>A Matrix Trickle Down Theorem on Simplicial Co...</td>
+      <td>We show that the natural Glauber dynamics mi...</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Mean Shifted Contrastive Loss for Anomaly Dete...</td>
+      <td>Deep anomaly detection methods learn represe...</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Equivariant Graph Neural Networks for  D Macro...</td>
+      <td>Representing and reasoning about  D structur...</td>
+      <td>[0801 Artificial Intelligence and Image Proces...</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Non Abelian Hybrid Fracton Orders</td>
+      <td>We introduce lattice gauge theories which de...</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>A Helix Down the Throat  Internal Tidal Effects</td>
+      <td>Tidal effects in capped geometries computed ...</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Balancing Garbage Collection vs I O Amplificat...</td>
+      <td>Key value  KV  separation is a technique tha...</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>NTIRE      Challenge on Burst Super Resolution...</td>
+      <td>This paper reviews the NTIRE     challenge o...</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>The quantum  p  spin glass model  A user manua...</td>
+      <td>We study a large  N  bosonic quantum mechani...</td>
+      <td>[0105 Mathematical Physics, 0206 Quantum Physics]</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Tunable Trajectory Planner Using G  Curves</td>
+      <td>Trajectory planning is commonly used as part...</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>MemStream  Memory Based Anomaly Detection in M...</td>
+      <td>Given a stream of entries over time in a mul...</td>
+      <td>[0801 Artificial Intelligence and Image Proces...</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Negative times of the Davey  Stewartson integr...</td>
+      <td>We use example of the Davey  Stewartson hier...</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Khovanov homology for links in thickened multi...</td>
+      <td>We define a variant of Khovanov homology for...</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Learning without Knowing  Unobserved Context i...</td>
+      <td>In this paper  we consider a transfer Reinfo...</td>
+      <td>[0801 Artificial Intelligence and Image Proces...</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Pattern Recognition on Oriented Matroids  Symm...</td>
+      <td>We consider decompositions of topes of the o...</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Counterfactual Maximum Likelihood Estimation f...</td>
+      <td>Although deep learning models have driven st...</td>
+      <td>[0801 Artificial Intelligence and Image Proces...</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>A Simple Recipe for Multilingual Grammatical E...</td>
+      <td>This paper presents a simple recipe to train...</td>
+      <td>[2004 Linguistics, 1702 Cognitive Sciences]</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Above, we see that some document texts did not receive any suggested FoR codes, while others received multiple codes. The classifier is programmed assign each document 0-4 FoR codes. It may fail to classify or produce unexpected results when working with longer texts.</p>
+</div>
+<div class="section" id="3.-Number-of-FoR-categories-per-document">
+<h2>3. Number of FoR categories per document<a class="headerlink" href="#3.-Number-of-FoR-categories-per-document" title="Permalink to this headline">¶</a></h2>
+<p>Below, we plot the frequency of each count of categories using matplotlib:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Counts&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Counts&#39;</span><span class="p">][</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;FoR_Categories&#39;</span><span class="p">][</span><span class="n">index</span><span class="p">])</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Counts&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">rot</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                                     <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Frequency of FoR counts&#39;</span><span class="p">,</span>
+                                     <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Occurences&#39;</span><span class="p">,</span>
+                                     <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Number of FoR categories&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;AxesSubplot:title={&#39;center&#39;:&#39;Frequency of FoR counts&#39;}, xlabel=&#39;Number of FoR categories&#39;, ylabel=&#39;Occurences&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/cookbooks_2-enrich-text-with-for-codes_23_1.png" src="../_images/cookbooks_2-enrich-text-with-for-codes_23_1.png" />
+</div>
+</div>
+<p>Here, we see that many of the documents were not assigned to any FoR categories.</p>
+<p>Of the documents that were successfully classified, the majority received only one FoR assignment.</p>
+</div>
+<div class="section" id="4.-Top-FoR-categories-by-document-count">
+<h2>4. Top FoR categories by document count<a class="headerlink" href="#4.-Top-FoR-categories-by-document-count" title="Permalink to this headline">¶</a></h2>
+<p>Below, we plot the top 10 FoR categories by document count.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_codes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="n">category</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">FoR_Categories</span> <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">item</span><span class="p">])</span>
+<span class="n">code_counts</span> <span class="o">=</span> <span class="n">all_codes</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">code_counts</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">rot</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                           <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Top FoR categories&#39;</span><span class="p">,</span>
+                           <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Category&#39;</span><span class="p">,</span>
+                           <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Number of documents&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;AxesSubplot:title={&#39;center&#39;:&#39;Top FoR categories&#39;}, ylabel=&#39;Number of documents&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/cookbooks_2-enrich-text-with-for-codes_28_1.png" src="../_images/cookbooks_2-enrich-text-with-for-codes_28_1.png" />
+</div>
+</div>
+<p>‘Artificial Intelligence and Image Processing’ is the most common FoR category, followed by ‘Statistics’.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="Conclusions">
+<h2>Conclusions<a class="headerlink" href="#Conclusions" title="Permalink to this headline">¶</a></h2>
+<p>In this notebook we have shown how to use the <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> <em>classify</em> function to retrieve suggested Field of Research (FoR) codes for a set of documents.</p>
+<p>For more background, see the <a class="reference external" href="https://docs.dimensions.ai/dsl/functions.html#function-classify">classify function documentation</a>, as well as the other functions available via the Dimensions API.</p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> allows to carry out sophisticated research data analytics tasks like the ones described on this website. Check out also the associated <a class="reference external" href="https://github.com/digital-science/dimensions-api-lab">Github repository</a> for examples, the source code of these tutorials and much more.</p>
+</div>
+<a class="reference external image-reference" href="https://www.dimensions.ai/dimensions-apis/"><img alt="../_images/badge-dimensions-api.svg" src="../_images/badge-dimensions-api.svg" /></a>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+    <p>© Copyright 2020 Digital Science & Research Solutions, Inc. All Rights Reserved | <a href="https://www.dimensions.ai/">About us</a> · <a href="https://www.dimensions.ai/privacy/">Privacy policy</a> · <a href="https://www.dimensions.ai/website-terms/">Legal terms</a></p>
+     
+
+    <!-- OneTrust Cookies Settings button start -->
+    <button id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</button>
+    <!-- OneTrust Cookies Settings button end -->
+
+
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+    
+
+    <!-- Adds target=_blank to external links -->
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('a[href^="http://"], a[href^="https://"]').not('a[class*=internal]').attr('target', '_blank');
+    });
+  </script>
+
+
+  <!-- OneTrust Cookies Consent Notice start for dimensions.ai -->
+   <script type="text/javascript" src="https://cdn.cookielaw.org/consent/3329b668-7887-4dba-9bee-c3853a706e6f/OtAutoBlock.js" ></script>
+   <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="3329b668-7887-4dba-9bee-c3853a706e6f" ></script>
+   <script type="text/javascript">
+   function OptanonWrapper() { }
+   </script>
+   <!-- OneTrust Cookies Consent Notice end for dimensions.ai -->
+  
+
+
+</body>
+</html>

@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Working with lists in the Dimensions API &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
   
@@ -19,7 +19,10 @@
   
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   
+
   
+  
+
   
 
   
@@ -36,7 +39,8 @@
         <script src="../../_static/js/custom.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -64,7 +68,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> DSL
+            <a href="../../index.html" class="icon icon-home"> DSL
           
 
           
@@ -153,7 +157,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="4-Dimcli-magic-commands.html">The Dimcli Python library: Magic Commands</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="4-Dimcli-magic-commands.html#Prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="4-Dimcli-magic-commands.html#id1">Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="4-Dimcli-magic-commands.html#Dimcli-‘magic’-commands">Dimcli ‘magic’ commands</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="4-Dimcli-magic-commands.html#Tip:-Accessing-data-returned-by-magic-queries">Tip: Accessing data returned by magic queries</a></li>
 </ul>
@@ -172,8 +175,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="2-Understanding-query-results.html#Control-the-fields-you-return">Control the fields you return</a></li>
-<li class="toctree-l2"><a class="reference internal" href="2-Understanding-query-results.html#Make-a-mistake,-and-the-DSL-will-tell-you-what-fields-that-you-could-have-used">Make a mistake, and the DSL will tell you what fields that you could have used</a></li>
-<li class="toctree-l2"><a class="reference internal" href="2-Understanding-query-results.html#Get-all-fields">Get all fields</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="2-Understanding-query-results.html#Make-a-mistake,-and-the-DSL-will-tell-you-what-fields-that-you-could-have-used">Make a mistake, and the DSL will tell you what fields that you could have used</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="2-Understanding-query-results.html#Full-text-search">Full text search</a></li>
 </ul>
 </li>
@@ -264,10 +266,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#8.-..and-if-we-want-details-about-our-researchers,-we-can-put-our-list-of-researchers-into-the-researcher-API">8. ..and if we want details about our researchers, we can put our list of researchers into the researcher API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#9.-Patents-example-(patents--&gt;-publications)">9. Patents example (patents -&gt; publications)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#10.-Clinical-Trials-(clinical-trials--&gt;-publications)">10. Clinical Trials (clinical trials -&gt; publications)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#11.-Grants-(publications--&gt;-grants)">11. Grants (publications -&gt; grants)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#Why-didn’t-I-use-resulting_publication_ids-?">Why didn’t I use resulting_publication_ids ?</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#11.-Grants-(publications--&gt;-grants)">11. Grants (publications -&gt; grants)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Conclusions">Conclusions</a></li>
 </ul>
 </li>
@@ -325,7 +324,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../2-publications/Citation-Analysis.html">Citation Analysis: an Introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Citation-Analysis.html#1.-Prerequisites">1. Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Method-A:-getting-citations-for-one-publication-at-a-time">Method A: getting citations for one publication at a time</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Comments-about-this-method">Comments about this method</a></li>
 </ul>
@@ -383,7 +382,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html">Journal Profiling Part 1: Getting the Data</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Prerequisites">Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Selecting-a-Journal-and-Extracting-All-Publications-Metadata">Selecting a Journal and Extracting All Publications Metadata</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Some-stats-about-authors">Some stats about authors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Basic-stats-about-authors">Basic stats about authors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#A-quick-look-at-authors-without-a-Dimensions-Researcher-ID">A quick look at authors <em>without</em> a Dimensions Researcher ID</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Any-common-patterns?">Any common patterns?</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Creating-an-export-for-manual-curation">Creating an export for manual curation</a></li>
@@ -472,7 +471,6 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#Back-to-our-grants-list">Back to our grants list</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#Enriching-the-original-list">Enriching the original list</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#Save-the-data">Save the data</a></li>
 </ul>
 </li>
 </ul>
@@ -856,6 +854,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -876,21 +876,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -991,7 +1005,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -1057,6 +1071,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -1066,7 +1081,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt a.copybtn {
+.prompt .copybtn {
     display: none;
 }
 
@@ -1138,15 +1153,34 @@ div.rendered_html tbody tr:hover {
 <li><p>How lists can be used to concatenate the results of one query with another query</p></li>
 <li><p>How these methods can be used for real-word applications e.g., getting publications/patents/grants that cite my publications</p></li>
 </ul>
-<div class="section" id="Prerequisites">
-<h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
-<p>This notebook assumes you have installed the <a class="reference external" href="https://pypi.org/project/dimcli/">Dimcli</a> library and are familiar with the <em>Getting Started</em> tutorial.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">!</span>pip install dimcli -U --quiet
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">CHANGELOG</span><span class="se">\n</span><span class="s2">This notebook was last run on </span><span class="si">%s</span><span class="se">\n</span><span class="s2">==&quot;</span> <span class="o">%</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">, %Y&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+==
+CHANGELOG
+This notebook was last run on Jan 24, 2022
+==
+</pre></div></div>
+</div>
+<div class="section" id="Prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>This notebook assumes you have installed the <a class="reference external" href="https://pypi.org/project/dimcli/">Dimcli</a> library and are familiar with the <a class="reference external" href="https://api-lab.dimensions.ai/cookbooks/1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html">‘Getting Started’ tutorial</a>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install dimcli -U --quiet
 
 <span class="kn">import</span> <span class="nn">dimcli</span>
 <span class="kn">from</span> <span class="nn">dimcli.utils</span> <span class="kn">import</span> <span class="o">*</span>
@@ -1169,6 +1203,14 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Searching config file credentials for &#39;https://app.dimensions.ai&#39; endpoint..
+</pre></div></div>
+</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
@@ -1176,8 +1218,8 @@ div.rendered_html tbody tr:hover {
 <div class="highlight"><pre>
 ==
 Logging in..
-Dimcli - Dimensions API Client (v0.8.2)
-Connected to: https://app.dimensions.ai - DSL v1.28
+Dimcli - Dimensions API Client (v0.9.6)
+Connected to: &lt;https://app.dimensions.ai/api/dsl&gt; - DSL v2.0
 Method: dsl.ini file
 </pre></div></div>
 </div>
@@ -1191,8 +1233,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
 
 search publications
 where
@@ -1206,8 +1247,7 @@ where
        )
 return publications
 limit 1
-
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
@@ -1215,8 +1255,8 @@ limit 1
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 1 (total = 39938)
-Time: 0.45s
+Returned Publications: 1 (total = 45670)
+Time: 0.71s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1242,14 +1282,14 @@ Time: 0.45s
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>title</th>
-      <th>pages</th>
-      <th>author_affiliations</th>
-      <th>year</th>
-      <th>issue</th>
+      <th>authors</th>
       <th>id</th>
+      <th>issue</th>
+      <th>pages</th>
+      <th>title</th>
       <th>type</th>
       <th>volume</th>
+      <th>year</th>
       <th>journal.id</th>
       <th>journal.title</th>
     </tr>
@@ -1257,16 +1297,16 @@ Time: 0.45s
   <tbody>
     <tr>
       <th>0</th>
-      <td>“Surviving not thriving”: experiences of healt...</td>
-      <td>809-823</td>
-      <td>[[{'first_name': 'Madelaine', 'last_name': 'Sm...</td>
-      <td>2020</td>
-      <td>1</td>
-      <td>pub.1128910744</td>
+      <td>[{'affiliations': [{'city': 'Lisbon', 'city_id...</td>
+      <td>pub.1141637539</td>
+      <td>3</td>
+      <td>188-197</td>
+      <td>How silence facilitates verbal participation</td>
       <td>article</td>
-      <td>25</td>
-      <td>jour.1097842</td>
-      <td>International Journal of Adolescence and Youth</td>
+      <td>3</td>
+      <td>2020</td>
+      <td>jour.1374325</td>
+      <td>English Language Teaching Educational Journal</td>
     </tr>
   </tbody>
 </table>
@@ -1278,8 +1318,7 @@ Time: 0.45s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
 where research_orgs.id in [&quot;grid.1008.9&quot;,&quot;grid.1002.3&quot;]
   and year in [2019:2020]
@@ -1293,8 +1332,8 @@ limit 100
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 100 (total = 39938)
-Time: 0.45s
+Returned Publications: 100 (total = 45670)
+Time: 2.34s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1326,23 +1365,23 @@ Time: 0.45s
   <tbody>
     <tr>
       <th>0</th>
-      <td>pub.1128910744</td>
+      <td>pub.1141637539</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>pub.1125408894</td>
+      <td>pub.1141305289</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>pub.1125679504</td>
+      <td>pub.1138102366</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>pub.1121881108</td>
+      <td>pub.1135883909</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>pub.1125399511</td>
+      <td>pub.1135432149</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1350,23 +1389,23 @@ Time: 0.45s
     </tr>
     <tr>
       <th>95</th>
-      <td>pub.1130154967</td>
+      <td>pub.1134203058</td>
     </tr>
     <tr>
       <th>96</th>
-      <td>pub.1130473004</td>
+      <td>pub.1134203025</td>
     </tr>
     <tr>
       <th>97</th>
-      <td>pub.1130565969</td>
+      <td>pub.1134202605</td>
     </tr>
     <tr>
       <th>98</th>
-      <td>pub.1129877063</td>
+      <td>pub.1134190313</td>
     </tr>
     <tr>
       <th>99</th>
-      <td>pub.1130210026</td>
+      <td>pub.1134190104</td>
     </tr>
   </tbody>
 </table>
@@ -1382,8 +1421,7 @@ Time: 0.45s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%</span><span class="k">dsldocs</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">dsldocs</span>
 <span class="n">dsl_last_results</span><span class="p">[</span><span class="n">dsl_last_results</span><span class="p">[</span><span class="s1">&#39;is_entity&#39;</span><span class="p">]</span><span class="o">==</span><span class="kc">True</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -1423,17 +1461,17 @@ Time: 0.45s
   <tbody>
     <tr>
       <th>6</th>
-      <td>publications</td>
+      <td>clinical_trials</td>
       <td>category_bra</td>
       <td>categories</td>
-      <td>`Broad Research Areas &lt;https://dimensions.fres...</td>
+      <td>`Broad Research Areas &lt;https://app.dimensions....</td>
       <td>True</td>
       <td>True</td>
       <td>True</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>publications</td>
+      <td>clinical_trials</td>
       <td>category_for</td>
       <td>categories</td>
       <td>`ANZSRC Fields of Research classification &lt;htt...</td>
@@ -1443,7 +1481,7 @@ Time: 0.45s
     </tr>
     <tr>
       <th>8</th>
-      <td>publications</td>
+      <td>clinical_trials</td>
       <td>category_hra</td>
       <td>categories</td>
       <td>`Health Research Areas &lt;https://dimensions.fre...</td>
@@ -1453,7 +1491,7 @@ Time: 0.45s
     </tr>
     <tr>
       <th>9</th>
-      <td>publications</td>
+      <td>clinical_trials</td>
       <td>category_hrcs_hc</td>
       <td>categories</td>
       <td>`HRCS - Health Categories &lt;https://dimensions....</td>
@@ -1463,7 +1501,7 @@ Time: 0.45s
     </tr>
     <tr>
       <th>10</th>
-      <td>publications</td>
+      <td>clinical_trials</td>
       <td>category_hrcs_rac</td>
       <td>categories</td>
       <td>`HRCS – Research Activity Codes &lt;https://dimen...</td>
@@ -1482,58 +1520,58 @@ Time: 0.45s
       <td>...</td>
     </tr>
     <tr>
-      <th>284</th>
-      <td>datasets</td>
-      <td>research_org_cities</td>
+      <th>321</th>
+      <td>reports</td>
+      <td>responsible_orgs_cities</td>
       <td>cities</td>
-      <td>City of the organisations the publication auth...</td>
+      <td>Cities of the organisations responsible for th...</td>
       <td>True</td>
       <td>True</td>
       <td>True</td>
     </tr>
     <tr>
-      <th>285</th>
-      <td>datasets</td>
-      <td>research_org_countries</td>
+      <th>322</th>
+      <td>reports</td>
+      <td>responsible_orgs_countries</td>
       <td>countries</td>
-      <td>Country of the organisations the publication a...</td>
+      <td>Countries of the organisations responsible for...</td>
       <td>True</td>
       <td>True</td>
       <td>True</td>
     </tr>
     <tr>
-      <th>286</th>
-      <td>datasets</td>
-      <td>research_org_states</td>
+      <th>324</th>
+      <td>reports</td>
+      <td>responsible_orgs_states</td>
       <td>states</td>
-      <td>State of the organisations the publication aut...</td>
+      <td>States of the organisations responsible for th...</td>
       <td>True</td>
       <td>True</td>
       <td>True</td>
     </tr>
     <tr>
-      <th>287</th>
-      <td>datasets</td>
+      <th>327</th>
+      <td>researchers</td>
+      <td>current_research_org</td>
+      <td>organizations</td>
+      <td>The most recent research organization linked t...</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>340</th>
+      <td>researchers</td>
       <td>research_orgs</td>
       <td>organizations</td>
-      <td>GRID organisations linked to the publication a...</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>288</th>
-      <td>datasets</td>
-      <td>researchers</td>
-      <td>researchers</td>
-      <td>Dimensions researchers IDs associated to the d...</td>
+      <td>All research organizations linked to the resea...</td>
       <td>True</td>
       <td>True</td>
       <td>True</td>
     </tr>
   </tbody>
 </table>
-<p>101 rows × 7 columns</p>
+<p>123 rows × 7 columns</p>
 </div></div>
 </div>
 </div>
@@ -1543,8 +1581,7 @@ Time: 0.45s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%</span><span class="k">dsldocs</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">dsldocs</span>
 <span class="n">dsl_last_results</span><span class="p">[</span><span class="n">dsl_last_results</span><span class="p">[</span><span class="s1">&#39;field&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span><span class="o">==</span><span class="kc">True</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -1583,127 +1620,7 @@ Time: 0.45s
   </thead>
   <tbody>
     <tr>
-      <th>1</th>
-      <td>publications</td>
-      <td>altmetric_id</td>
-      <td>integer</td>
-      <td>AltMetric Publication ID</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>publications</td>
-      <td>id</td>
-      <td>string</td>
-      <td>Dimensions publication ID.</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>34</th>
-      <td>publications</td>
-      <td>pmcid</td>
-      <td>string</td>
-      <td>PubMed Central ID.</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>35</th>
-      <td>publications</td>
-      <td>pmid</td>
-      <td>string</td>
-      <td>PubMed ID.</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>39</th>
-      <td>publications</td>
-      <td>reference_ids</td>
-      <td>string</td>
-      <td>Dimensions publication ID for publications in ...</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>51</th>
-      <td>publications</td>
-      <td>supporting_grant_ids</td>
-      <td>string</td>
-      <td>Grants supporting a publication, returned as a...</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>89</th>
-      <td>grants</td>
-      <td>id</td>
-      <td>string</td>
-      <td>Dimensions grant ID.</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>111</th>
-      <td>patents</td>
-      <td>associated_grant_ids</td>
-      <td>string</td>
-      <td>Dimensions IDs of the grants associated to the...</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>120</th>
-      <td>patents</td>
-      <td>cited_by_ids</td>
-      <td>string</td>
-      <td>Dimensions IDs of the patents that cite this p...</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>133</th>
-      <td>patents</td>
-      <td>id</td>
-      <td>string</td>
-      <td>Dimensions patent ID</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>143</th>
-      <td>patents</td>
-      <td>publication_ids</td>
-      <td>string</td>
-      <td>Dimensions IDs of the publications related to ...</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>146</th>
-      <td>patents</td>
-      <td>reference_ids</td>
-      <td>string</td>
-      <td>Dimensions IDs of the patents which are cited ...</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>154</th>
+      <th>4</th>
       <td>clinical_trials</td>
       <td>associated_grant_ids</td>
       <td>string</td>
@@ -1713,7 +1630,7 @@ Time: 0.45s
       <td>False</td>
     </tr>
     <tr>
-      <th>171</th>
+      <th>21</th>
       <td>clinical_trials</td>
       <td>id</td>
       <td>string</td>
@@ -1723,197 +1640,17 @@ Time: 0.45s
       <td>False</td>
     </tr>
     <tr>
-      <th>177</th>
+      <th>27</th>
       <td>clinical_trials</td>
       <td>publication_ids</td>
       <td>string</td>
-      <td>Dimensions IDs of the publications related to ...</td>
+      <td>Publications mentioned in clinical trials (exc...</td>
       <td>True</td>
       <td>False</td>
       <td>False</td>
     </tr>
     <tr>
-      <th>193</th>
-      <td>policy_documents</td>
-      <td>id</td>
-      <td>string</td>
-      <td>Dimensions policy document ID</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>195</th>
-      <td>policy_documents</td>
-      <td>publication_ids</td>
-      <td>string</td>
-      <td>Dimensions IDs of the publications related to ...</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>208</th>
-      <td>researchers</td>
-      <td>id</td>
-      <td>string</td>
-      <td>Dimensions researcher ID.</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>212</th>
-      <td>researchers</td>
-      <td>nih_ppid</td>
-      <td>string</td>
-      <td>The PI Profile ID (i.e., ppid) is a Researcher...</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>214</th>
-      <td>researchers</td>
-      <td>orcid_id</td>
-      <td>string</td>
-      <td>`ORCID &lt;https://orcid.org/&gt;`_ ID.</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>221</th>
-      <td>organizations</td>
-      <td>cnrs_ids</td>
-      <td>string</td>
-      <td>CNRS IDs for this organization</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>225</th>
-      <td>organizations</td>
-      <td>external_ids_fundref</td>
-      <td>string</td>
-      <td>Fundref IDs for this organization</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>226</th>
-      <td>organizations</td>
-      <td>hesa_ids</td>
-      <td>string</td>
-      <td>HESA IDs for this organization</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>227</th>
-      <td>organizations</td>
-      <td>id</td>
-      <td>string</td>
-      <td>GRID ID of the organization. E.g., "grid.26999...</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>228</th>
-      <td>organizations</td>
-      <td>isni_ids</td>
-      <td>string</td>
-      <td>ISNI IDs for this organization</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>239</th>
-      <td>organizations</td>
-      <td>organization_child_ids</td>
-      <td>string</td>
-      <td>Child organization IDs</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>240</th>
-      <td>organizations</td>
-      <td>organization_parent_ids</td>
-      <td>string</td>
-      <td>Parent organization IDs</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>241</th>
-      <td>organizations</td>
-      <td>organization_related_ids</td>
-      <td>string</td>
-      <td>Related organization IDs</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>242</th>
-      <td>organizations</td>
-      <td>orgref_ids</td>
-      <td>string</td>
-      <td>OrgRef IDs for this organization</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>244</th>
-      <td>organizations</td>
-      <td>ror_ids</td>
-      <td>string</td>
-      <td>ROR IDs for this organization</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>248</th>
-      <td>organizations</td>
-      <td>ucas_ids</td>
-      <td>string</td>
-      <td>UCAS IDs for this organization</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>249</th>
-      <td>organizations</td>
-      <td>ukprn_ids</td>
-      <td>string</td>
-      <td>UKPRN IDs for this organization</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>250</th>
-      <td>organizations</td>
-      <td>wikidata_ids</td>
-      <td>string</td>
-      <td>WikiData IDs for this organization</td>
-      <td>True</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>252</th>
+      <th>33</th>
       <td>datasets</td>
       <td>associated_grant_ids</td>
       <td>string</td>
@@ -1923,7 +1660,7 @@ Time: 0.45s
       <td>False</td>
     </tr>
     <tr>
-      <th>254</th>
+      <th>35</th>
       <td>datasets</td>
       <td>associated_publication_id</td>
       <td>string</td>
@@ -1933,7 +1670,7 @@ Time: 0.45s
       <td>False</td>
     </tr>
     <tr>
-      <th>276</th>
+      <th>57</th>
       <td>datasets</td>
       <td>id</td>
       <td>string</td>
@@ -1943,7 +1680,7 @@ Time: 0.45s
       <td>False</td>
     </tr>
     <tr>
-      <th>283</th>
+      <th>64</th>
       <td>datasets</td>
       <td>repository_id</td>
       <td>string</td>
@@ -1951,6 +1688,366 @@ Time: 0.45s
       <td>True</td>
       <td>False</td>
       <td>True</td>
+    </tr>
+    <tr>
+      <th>105</th>
+      <td>grants</td>
+      <td>id</td>
+      <td>string</td>
+      <td>Dimensions grant ID.</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>122</th>
+      <td>organizations</td>
+      <td>cnrs_ids</td>
+      <td>string</td>
+      <td>CNRS IDs for this organization</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>126</th>
+      <td>organizations</td>
+      <td>external_ids_fundref</td>
+      <td>string</td>
+      <td>Fundref IDs for this organization</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>127</th>
+      <td>organizations</td>
+      <td>hesa_ids</td>
+      <td>string</td>
+      <td>HESA IDs for this organization</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>128</th>
+      <td>organizations</td>
+      <td>id</td>
+      <td>string</td>
+      <td>GRID ID of the organization. E.g., "grid.26999...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>129</th>
+      <td>organizations</td>
+      <td>isni_ids</td>
+      <td>string</td>
+      <td>ISNI IDs for this organization</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>140</th>
+      <td>organizations</td>
+      <td>organization_child_ids</td>
+      <td>string</td>
+      <td>Child organization IDs</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>141</th>
+      <td>organizations</td>
+      <td>organization_parent_ids</td>
+      <td>string</td>
+      <td>Parent organization IDs</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>142</th>
+      <td>organizations</td>
+      <td>organization_related_ids</td>
+      <td>string</td>
+      <td>Related organization IDs</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>143</th>
+      <td>organizations</td>
+      <td>orgref_ids</td>
+      <td>string</td>
+      <td>OrgRef IDs for this organization</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td>organizations</td>
+      <td>ror_ids</td>
+      <td>string</td>
+      <td>ROR IDs for this organization</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>149</th>
+      <td>organizations</td>
+      <td>ucas_ids</td>
+      <td>string</td>
+      <td>UCAS IDs for this organization</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>150</th>
+      <td>organizations</td>
+      <td>ukprn_ids</td>
+      <td>string</td>
+      <td>UKPRN IDs for this organization</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>151</th>
+      <td>organizations</td>
+      <td>wikidata_ids</td>
+      <td>string</td>
+      <td>WikiData IDs for this organization</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>160</th>
+      <td>patents</td>
+      <td>associated_grant_ids</td>
+      <td>string</td>
+      <td>Dimensions IDs of the grants associated to the...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>169</th>
+      <td>patents</td>
+      <td>cited_by_ids</td>
+      <td>string</td>
+      <td>Dimensions IDs of the patents that cite this p...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>177</th>
+      <td>patents</td>
+      <td>family_id</td>
+      <td>integer</td>
+      <td>Identifier of the corresponding `EPO patent fa...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>183</th>
+      <td>patents</td>
+      <td>id</td>
+      <td>string</td>
+      <td>Dimensions patent ID</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>194</th>
+      <td>patents</td>
+      <td>publication_ids</td>
+      <td>string</td>
+      <td>Dimensions IDs of the publications related to ...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>197</th>
+      <td>patents</td>
+      <td>reference_ids</td>
+      <td>string</td>
+      <td>Dimensions IDs of the patents which are cited ...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>212</th>
+      <td>policy_documents</td>
+      <td>id</td>
+      <td>string</td>
+      <td>Dimensions policy document ID</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>214</th>
+      <td>policy_documents</td>
+      <td>publication_ids</td>
+      <td>string</td>
+      <td>Dimensions IDs of the publications related to ...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>225</th>
+      <td>publications</td>
+      <td>altmetric_id</td>
+      <td>integer</td>
+      <td>Altmetric Publication ID</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>226</th>
+      <td>publications</td>
+      <td>arxiv_id</td>
+      <td>string</td>
+      <td>The publications arXiv identifier (e.g. ‘arXiv...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>242</th>
+      <td>publications</td>
+      <td>clinical_trial_ids</td>
+      <td>string</td>
+      <td>Clinical Trial IDs mentioned in publications f...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>254</th>
+      <td>publications</td>
+      <td>id</td>
+      <td>string</td>
+      <td>Dimensions publication ID.</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>264</th>
+      <td>publications</td>
+      <td>pmcid</td>
+      <td>string</td>
+      <td>PubMed Central ID.</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>265</th>
+      <td>publications</td>
+      <td>pmid</td>
+      <td>string</td>
+      <td>PubMed ID.</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>269</th>
+      <td>publications</td>
+      <td>reference_ids</td>
+      <td>string</td>
+      <td>Dimensions publication ID for publications in ...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>283</th>
+      <td>publications</td>
+      <td>supporting_grant_ids</td>
+      <td>string</td>
+      <td>Grants supporting a publication, returned as a...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>306</th>
+      <td>reports</td>
+      <td>external_ids</td>
+      <td>json</td>
+      <td>External identifiers available from the report...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>310</th>
+      <td>reports</td>
+      <td>id</td>
+      <td>string</td>
+      <td>Dimensions report ID.</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>332</th>
+      <td>researchers</td>
+      <td>id</td>
+      <td>string</td>
+      <td>Dimensions researcher ID.</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>336</th>
+      <td>researchers</td>
+      <td>nih_ppid</td>
+      <td>string</td>
+      <td>The PI Profile ID (i.e., ppid) is a Researcher...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>338</th>
+      <td>researchers</td>
+      <td>orcid_id</td>
+      <td>string</td>
+      <td>`ORCID &lt;https://orcid.org/&gt;`_ ID.</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>343</th>
+      <td>source_titles</td>
+      <td>id</td>
+      <td>string</td>
+      <td>The Dimensions ID of the source.</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
     </tr>
   </tbody>
 </table>
@@ -1975,8 +2072,7 @@ Time: 0.45s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
 where research_orgs.id in [&quot;grid.1008.9&quot;,&quot;grid.1002.3&quot;]
   and year in [2019:2020]
@@ -1990,8 +2086,8 @@ limit 100
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 100 (total = 39938)
-Time: 0.51s
+Returned Publications: 100 (total = 45670)
+Time: 1.43s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -2023,23 +2119,23 @@ Time: 0.51s
   <tbody>
     <tr>
       <th>0</th>
-      <td>pub.1128910744</td>
+      <td>pub.1141637539</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>pub.1125408894</td>
+      <td>pub.1141305289</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>pub.1125679504</td>
+      <td>pub.1138102366</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>pub.1121881108</td>
+      <td>pub.1135883909</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>pub.1125399511</td>
+      <td>pub.1135432149</td>
     </tr>
     <tr>
       <th>...</th>
@@ -2047,23 +2143,23 @@ Time: 0.51s
     </tr>
     <tr>
       <th>95</th>
-      <td>pub.1130154967</td>
+      <td>pub.1134203058</td>
     </tr>
     <tr>
       <th>96</th>
-      <td>pub.1130473004</td>
+      <td>pub.1134203025</td>
     </tr>
     <tr>
       <th>97</th>
-      <td>pub.1130565969</td>
+      <td>pub.1134202605</td>
     </tr>
     <tr>
       <th>98</th>
-      <td>pub.1129877063</td>
+      <td>pub.1134190313</td>
     </tr>
     <tr>
       <th>99</th>
-      <td>pub.1130210026</td>
+      <td>pub.1134190104</td>
     </tr>
   </tbody>
 </table>
@@ -2074,11 +2170,8 @@ Time: 0.51s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">dsl_last_results</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
-
-
-</pre></div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">dsl_last_results</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+<br/><br/></pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -2087,7 +2180,7 @@ Time: 0.51s
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&#39;[&#34;pub.1128910744&#34;, &#34;pub.1125408894&#34;, &#34;pub.1125679504&#34;, &#34;pub.1121881108&#34;, &#34;pub.1125399511&#34;, &#34;pub.1125025149&#34;, &#34;pub.1129750783&#34;, &#34;pub.1129934894&#34;, &#34;pub.1116652110&#34;, &#34;pub.1130428426&#34;, &#34;pub.1125617654&#34;, &#34;pub.1125508088&#34;, &#34;pub.1125663277&#34;, &#34;pub.1127397677&#34;, &#34;pub.1128670172&#34;, &#34;pub.1129738952&#34;, &#34;pub.1129927065&#34;, &#34;pub.1125488818&#34;, &#34;pub.1127579881&#34;, &#34;pub.1129330483&#34;, &#34;pub.1129969190&#34;, &#34;pub.1124060229&#34;, &#34;pub.1130469744&#34;, &#34;pub.1128526965&#34;, &#34;pub.1127449188&#34;, &#34;pub.1128910055&#34;, &#34;pub.1129152052&#34;, &#34;pub.1128835792&#34;, &#34;pub.1128553673&#34;, &#34;pub.1127171381&#34;, &#34;pub.1128188711&#34;, &#34;pub.1124550366&#34;, &#34;pub.1127403602&#34;, &#34;pub.1126704737&#34;, &#34;pub.1126705781&#34;, &#34;pub.1126697386&#34;, &#34;pub.1128490805&#34;, &#34;pub.1127453116&#34;, &#34;pub.1128581013&#34;, &#34;pub.1125617777&#34;, &#34;pub.1125902856&#34;, &#34;pub.1125545402&#34;, &#34;pub.1128250005&#34;, &#34;pub.1129711942&#34;, &#34;pub.1124633600&#34;, &#34;pub.1125753634&#34;, &#34;pub.1125756054&#34;, &#34;pub.1128670125&#34;, &#34;pub.1127351832&#34;, &#34;pub.1125664038&#34;, &#34;pub.1126125606&#34;, &#34;pub.1124372639&#34;, &#34;pub.1124670593&#34;, &#34;pub.1127514900&#34;, &#34;pub.1126502051&#34;, &#34;pub.1126013995&#34;, &#34;pub.1129038309&#34;, &#34;pub.1129100811&#34;, &#34;pub.1126702062&#34;, &#34;pub.1129384636&#34;, &#34;pub.1129492233&#34;, &#34;pub.1124830567&#34;, &#34;pub.1129357934&#34;, &#34;pub.1129327398&#34;, &#34;pub.1125516023&#34;, &#34;pub.1130259916&#34;, &#34;pub.1130003198&#34;, &#34;pub.1130128246&#34;, &#34;pub.1129417550&#34;, &#34;pub.1128978928&#34;, &#34;pub.1129155555&#34;, &#34;pub.1130240573&#34;, &#34;pub.1130286746&#34;, &#34;pub.1125502024&#34;, &#34;pub.1129668495&#34;, &#34;pub.1125609619&#34;, &#34;pub.1127726353&#34;, &#34;pub.1124284911&#34;, &#34;pub.1124342595&#34;, &#34;pub.1124132392&#34;, &#34;pub.1125488824&#34;, &#34;pub.1128939571&#34;, &#34;pub.1125488819&#34;, &#34;pub.1125152336&#34;, &#34;pub.1129605398&#34;, &#34;pub.1128877084&#34;, &#34;pub.1129604079&#34;, &#34;pub.1127419474&#34;, &#34;pub.1125402193&#34;, &#34;pub.1129847614&#34;, &#34;pub.1128556442&#34;, &#34;pub.1124885124&#34;, &#34;pub.1129640786&#34;, &#34;pub.1127252780&#34;, &#34;pub.1130469679&#34;, &#34;pub.1130154967&#34;, &#34;pub.1130473004&#34;, &#34;pub.1130565969&#34;, &#34;pub.1129877063&#34;, &#34;pub.1130210026&#34;]&#39;
+&#39;[&#34;pub.1141637539&#34;, &#34;pub.1141305289&#34;, &#34;pub.1138102366&#34;, &#34;pub.1135883909&#34;, &#34;pub.1135432149&#34;, &#34;pub.1134822967&#34;, &#34;pub.1134491333&#34;, &#34;pub.1134281073&#34;, &#34;pub.1134266008&#34;, &#34;pub.1134265994&#34;, &#34;pub.1134265901&#34;, &#34;pub.1134265655&#34;, &#34;pub.1134265653&#34;, &#34;pub.1134265625&#34;, &#34;pub.1134258780&#34;, &#34;pub.1134258376&#34;, &#34;pub.1134257556&#34;, &#34;pub.1134256126&#34;, &#34;pub.1134256124&#34;, &#34;pub.1134256123&#34;, &#34;pub.1134254481&#34;, &#34;pub.1134252657&#34;, &#34;pub.1134251430&#34;, &#34;pub.1134250811&#34;, &#34;pub.1134250027&#34;, &#34;pub.1134248622&#34;, &#34;pub.1134199431&#34;, &#34;pub.1134198997&#34;, &#34;pub.1134198446&#34;, &#34;pub.1134198388&#34;, &#34;pub.1134196709&#34;, &#34;pub.1134196597&#34;, &#34;pub.1134196290&#34;, &#34;pub.1134196127&#34;, &#34;pub.1134195884&#34;, &#34;pub.1134195597&#34;, &#34;pub.1134195228&#34;, &#34;pub.1134194637&#34;, &#34;pub.1134193894&#34;, &#34;pub.1134193864&#34;, &#34;pub.1134193611&#34;, &#34;pub.1134192883&#34;, &#34;pub.1134192144&#34;, &#34;pub.1134192022&#34;, &#34;pub.1133732704&#34;, &#34;pub.1133137340&#34;, &#34;pub.1133137326&#34;, &#34;pub.1133137275&#34;, &#34;pub.1132992249&#34;, &#34;pub.1132838273&#34;, &#34;pub.1128236326&#34;, &#34;pub.1134262302&#34;, &#34;pub.1134257598&#34;, &#34;pub.1134257594&#34;, &#34;pub.1134257519&#34;, &#34;pub.1134257515&#34;, &#34;pub.1134246135&#34;, &#34;pub.1134233491&#34;, &#34;pub.1134221342&#34;, &#34;pub.1134220735&#34;, &#34;pub.1134201275&#34;, &#34;pub.1134199760&#34;, &#34;pub.1134199173&#34;, &#34;pub.1134199132&#34;, &#34;pub.1134196260&#34;, &#34;pub.1134196172&#34;, &#34;pub.1134195488&#34;, &#34;pub.1134194209&#34;, &#34;pub.1134193250&#34;, &#34;pub.1134193081&#34;, &#34;pub.1134191741&#34;, &#34;pub.1134191365&#34;, &#34;pub.1134190135&#34;, &#34;pub.1134190078&#34;, &#34;pub.1134186262&#34;, &#34;pub.1134185924&#34;, &#34;pub.1134185750&#34;, &#34;pub.1134185659&#34;, &#34;pub.1134184944&#34;, &#34;pub.1134184639&#34;, &#34;pub.1134183226&#34;, &#34;pub.1134182538&#34;, &#34;pub.1134181948&#34;, &#34;pub.1133342464&#34;, &#34;pub.1133065204&#34;, &#34;pub.1132594886&#34;, &#34;pub.1132412597&#34;, &#34;pub.1131466688&#34;, &#34;pub.1134233730&#34;, &#34;pub.1134233503&#34;, &#34;pub.1134233412&#34;, &#34;pub.1134215867&#34;, &#34;pub.1134215652&#34;, &#34;pub.1134215451&#34;, &#34;pub.1134208463&#34;, &#34;pub.1134203058&#34;, &#34;pub.1134203025&#34;, &#34;pub.1134202605&#34;, &#34;pub.1134190313&#34;, &#34;pub.1134190104&#34;]&#39;
 </pre></div></div>
 </div>
 <p>Let’s try to use this list of IDs.</p>
@@ -2096,14 +2189,12 @@ Time: 0.51s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
   search publications
   where id in [json.dumps(list(dsl_last_results.id))]
 
   return publications
-
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -2112,13 +2203,15 @@ Time: 0.51s
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Returned Errors: 1
-Time: 0.45s
+Time: 1.25s
+1 QueryError found
 4 QuerySyntaxErrors found
+
 4 ParserErrors found
   * [Line 2:15] (&#39;json&#39;) no viable alternative at input &#39;[json&#39;
   * [Line 2:26] (&#39;list&#39;) extraneous input &#39;list&#39; expecting {&#39;for&#39;, &#39;in&#39;, &#39;(&#39;}
   * [Line 2:31] (&#39;dsl_last_results&#39;) mismatched input &#39;dsl_last_results&#39; expecting {&#39;for&#39;, &#39;in&#39;, &#39;(&#39;}
-  * [Line 2:52] (&#39;]&#39;) extraneous input &#39;]&#39; expecting &#39;return&#39;
+  * [Line 2:52] (&#39;]&#39;) mismatched input &#39;]&#39; expecting &lt;EOF&gt;
 </pre></div></div>
 </div>
 <p>..so let’s get our results back again</p>
@@ -2126,8 +2219,7 @@ Time: 0.45s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
 where research_orgs.id in [&quot;grid.1008.9&quot;,&quot;grid.1002.3&quot;]
   and year in [2019:2020]
@@ -2141,8 +2233,8 @@ limit 100
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 100 (total = 39938)
-Time: 0.47s
+Returned Publications: 100 (total = 45670)
+Time: 1.14s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -2174,23 +2266,23 @@ Time: 0.47s
   <tbody>
     <tr>
       <th>0</th>
-      <td>pub.1128910744</td>
+      <td>pub.1141637539</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>pub.1125408894</td>
+      <td>pub.1141305289</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>pub.1125679504</td>
+      <td>pub.1138102366</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>pub.1121881108</td>
+      <td>pub.1135883909</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>pub.1125399511</td>
+      <td>pub.1135432149</td>
     </tr>
     <tr>
       <th>...</th>
@@ -2198,23 +2290,23 @@ Time: 0.47s
     </tr>
     <tr>
       <th>95</th>
-      <td>pub.1130154967</td>
+      <td>pub.1134203058</td>
     </tr>
     <tr>
       <th>96</th>
-      <td>pub.1130473004</td>
+      <td>pub.1134203025</td>
     </tr>
     <tr>
       <th>97</th>
-      <td>pub.1130565969</td>
+      <td>pub.1134202605</td>
     </tr>
     <tr>
       <th>98</th>
-      <td>pub.1129877063</td>
+      <td>pub.1134190313</td>
     </tr>
     <tr>
       <th>99</th>
-      <td>pub.1130210026</td>
+      <td>pub.1134190104</td>
     </tr>
   </tbody>
 </table>
@@ -2226,8 +2318,7 @@ Time: 0.47s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
 
 <span class="s2"> search publications</span>
 <span class="s2">  where id in </span><span class="si">{</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">dsl_last_results</span><span class="o">.</span><span class="n">id</span><span class="p">))</span><span class="si">}</span><span class="s2"></span>
@@ -2255,7 +2346,7 @@ Time: 0.47s
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Returned Publications: 20 (total = 100)
-Time: 0.55s
+Time: 3.08s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -2264,7 +2355,7 @@ Time: 0.55s
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&#39;\n\n search publications\n  where id in [&#34;pub.1128910744&#34;, &#34;pub.1125408894&#34;, &#34;pub.1125679504&#34;, &#34;pub.1121881108&#34;, &#34;pub.1125399511&#34;, &#34;pub.1125025149&#34;, &#34;pub.1129750783&#34;, &#34;pub.1129934894&#34;, &#34;pub.1116652110&#34;, &#34;pub.1130428426&#34;, &#34;pub.1125617654&#34;, &#34;pub.1125508088&#34;, &#34;pub.1125663277&#34;, &#34;pub.1127397677&#34;, &#34;pub.1128670172&#34;, &#34;pub.1129738952&#34;, &#34;pub.1129927065&#34;, &#34;pub.1125488818&#34;, &#34;pub.1127579881&#34;, &#34;pub.1129330483&#34;, &#34;pub.1129969190&#34;, &#34;pub.1124060229&#34;, &#34;pub.1130469744&#34;, &#34;pub.1128526965&#34;, &#34;pub.1127449188&#34;, &#34;pub.1128910055&#34;, &#34;pub.1129152052&#34;, &#34;pub.1128835792&#34;, &#34;pub.1128553673&#34;, &#34;pub.1127171381&#34;, &#34;pub.1128188711&#34;, &#34;pub.1124550366&#34;, &#34;pub.1127403602&#34;, &#34;pub.1126704737&#34;, &#34;pub.1126705781&#34;, &#34;pub.1126697386&#34;, &#34;pub.1128490805&#34;, &#34;pub.1127453116&#34;, &#34;pub.1128581013&#34;, &#34;pub.1125617777&#34;, &#34;pub.1125902856&#34;, &#34;pub.1125545402&#34;, &#34;pub.1128250005&#34;, &#34;pub.1129711942&#34;, &#34;pub.1124633600&#34;, &#34;pub.1125753634&#34;, &#34;pub.1125756054&#34;, &#34;pub.1128670125&#34;, &#34;pub.1127351832&#34;, &#34;pub.1125664038&#34;, &#34;pub.1126125606&#34;, &#34;pub.1124372639&#34;, &#34;pub.1124670593&#34;, &#34;pub.1127514900&#34;, &#34;pub.1126502051&#34;, &#34;pub.1126013995&#34;, &#34;pub.1129038309&#34;, &#34;pub.1129100811&#34;, &#34;pub.1126702062&#34;, &#34;pub.1129384636&#34;, &#34;pub.1129492233&#34;, &#34;pub.1124830567&#34;, &#34;pub.1129357934&#34;, &#34;pub.1129327398&#34;, &#34;pub.1125516023&#34;, &#34;pub.1130259916&#34;, &#34;pub.1130003198&#34;, &#34;pub.1130128246&#34;, &#34;pub.1129417550&#34;, &#34;pub.1128978928&#34;, &#34;pub.1129155555&#34;, &#34;pub.1130240573&#34;, &#34;pub.1130286746&#34;, &#34;pub.1125502024&#34;, &#34;pub.1129668495&#34;, &#34;pub.1125609619&#34;, &#34;pub.1127726353&#34;, &#34;pub.1124284911&#34;, &#34;pub.1124342595&#34;, &#34;pub.1124132392&#34;, &#34;pub.1125488824&#34;, &#34;pub.1128939571&#34;, &#34;pub.1125488819&#34;, &#34;pub.1125152336&#34;, &#34;pub.1129605398&#34;, &#34;pub.1128877084&#34;, &#34;pub.1129604079&#34;, &#34;pub.1127419474&#34;, &#34;pub.1125402193&#34;, &#34;pub.1129847614&#34;, &#34;pub.1128556442&#34;, &#34;pub.1124885124&#34;, &#34;pub.1129640786&#34;, &#34;pub.1127252780&#34;, &#34;pub.1130469679&#34;, &#34;pub.1130154967&#34;, &#34;pub.1130473004&#34;, &#34;pub.1130565969&#34;, &#34;pub.1129877063&#34;, &#34;pub.1130210026&#34;]\n\n  return publications\n\n\n&#39;
+&#39;\n\n search publications\n  where id in [&#34;pub.1141637539&#34;, &#34;pub.1141305289&#34;, &#34;pub.1138102366&#34;, &#34;pub.1135883909&#34;, &#34;pub.1135432149&#34;, &#34;pub.1134822967&#34;, &#34;pub.1134491333&#34;, &#34;pub.1134281073&#34;, &#34;pub.1134266008&#34;, &#34;pub.1134265994&#34;, &#34;pub.1134265901&#34;, &#34;pub.1134265655&#34;, &#34;pub.1134265653&#34;, &#34;pub.1134265625&#34;, &#34;pub.1134258780&#34;, &#34;pub.1134258376&#34;, &#34;pub.1134257556&#34;, &#34;pub.1134256126&#34;, &#34;pub.1134256124&#34;, &#34;pub.1134256123&#34;, &#34;pub.1134254481&#34;, &#34;pub.1134252657&#34;, &#34;pub.1134251430&#34;, &#34;pub.1134250811&#34;, &#34;pub.1134250027&#34;, &#34;pub.1134248622&#34;, &#34;pub.1134199431&#34;, &#34;pub.1134198997&#34;, &#34;pub.1134198446&#34;, &#34;pub.1134198388&#34;, &#34;pub.1134196709&#34;, &#34;pub.1134196597&#34;, &#34;pub.1134196290&#34;, &#34;pub.1134196127&#34;, &#34;pub.1134195884&#34;, &#34;pub.1134195597&#34;, &#34;pub.1134195228&#34;, &#34;pub.1134194637&#34;, &#34;pub.1134193894&#34;, &#34;pub.1134193864&#34;, &#34;pub.1134193611&#34;, &#34;pub.1134192883&#34;, &#34;pub.1134192144&#34;, &#34;pub.1134192022&#34;, &#34;pub.1133732704&#34;, &#34;pub.1133137340&#34;, &#34;pub.1133137326&#34;, &#34;pub.1133137275&#34;, &#34;pub.1132992249&#34;, &#34;pub.1132838273&#34;, &#34;pub.1128236326&#34;, &#34;pub.1134262302&#34;, &#34;pub.1134257598&#34;, &#34;pub.1134257594&#34;, &#34;pub.1134257519&#34;, &#34;pub.1134257515&#34;, &#34;pub.1134246135&#34;, &#34;pub.1134233491&#34;, &#34;pub.1134221342&#34;, &#34;pub.1134220735&#34;, &#34;pub.1134201275&#34;, &#34;pub.1134199760&#34;, &#34;pub.1134199173&#34;, &#34;pub.1134199132&#34;, &#34;pub.1134196260&#34;, &#34;pub.1134196172&#34;, &#34;pub.1134195488&#34;, &#34;pub.1134194209&#34;, &#34;pub.1134193250&#34;, &#34;pub.1134193081&#34;, &#34;pub.1134191741&#34;, &#34;pub.1134191365&#34;, &#34;pub.1134190135&#34;, &#34;pub.1134190078&#34;, &#34;pub.1134186262&#34;, &#34;pub.1134185924&#34;, &#34;pub.1134185750&#34;, &#34;pub.1134185659&#34;, &#34;pub.1134184944&#34;, &#34;pub.1134184639&#34;, &#34;pub.1134183226&#34;, &#34;pub.1134182538&#34;, &#34;pub.1134181948&#34;, &#34;pub.1133342464&#34;, &#34;pub.1133065204&#34;, &#34;pub.1132594886&#34;, &#34;pub.1132412597&#34;, &#34;pub.1131466688&#34;, &#34;pub.1134233730&#34;, &#34;pub.1134233503&#34;, &#34;pub.1134233412&#34;, &#34;pub.1134215867&#34;, &#34;pub.1134215652&#34;, &#34;pub.1134215451&#34;, &#34;pub.1134208463&#34;, &#34;pub.1134203058&#34;, &#34;pub.1134203025&#34;, &#34;pub.1134202605&#34;, &#34;pub.1134190313&#34;, &#34;pub.1134190104&#34;]\n\n  return publications\n\n\n&#39;
 </pre></div></div>
 </div>
 <div class="section" id="Putting-both-parts-of-this-example-together">
@@ -2273,8 +2364,7 @@ Time: 0.55s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># Step 1. Get the list of publications..</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 1. Get the list of publications..</span>
 
 <span class="n">pubs</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">                  search publications</span>
@@ -2299,10 +2389,17 @@ Time: 0.55s
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 100 (total = 39938)
-Time: 0.47s
+Returned Publications: 100 (total = 45670)
+Time: 1.80s
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
 Starting iteration with limit=1000 skip=0 ...
-0-100 / 100 (0.98s)
+0-100 / 100 (0.80s)
 ===
 Records extracted: 100
 </pre></div></div>
@@ -2330,14 +2427,14 @@ Records extracted: 100
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>authors</th>
       <th>id</th>
-      <th>title</th>
-      <th>volume</th>
       <th>issue</th>
       <th>pages</th>
+      <th>title</th>
       <th>type</th>
+      <th>volume</th>
       <th>year</th>
-      <th>author_affiliations</th>
       <th>journal.id</th>
       <th>journal.title</th>
     </tr>
@@ -2345,68 +2442,68 @@ Records extracted: 100
   <tbody>
     <tr>
       <th>0</th>
-      <td>pub.1128910744</td>
-      <td>“Surviving not thriving”: experiences of healt...</td>
-      <td>25</td>
-      <td>1</td>
-      <td>809-823</td>
+      <td>[{'affiliations': [{'city': 'Lisbon', 'city_id...</td>
+      <td>pub.1141637539</td>
+      <td>3</td>
+      <td>188-197</td>
+      <td>How silence facilitates verbal participation</td>
       <td>article</td>
+      <td>3</td>
       <td>2020</td>
-      <td>[[{'first_name': 'Madelaine', 'last_name': 'Sm...</td>
-      <td>jour.1097842</td>
-      <td>International Journal of Adolescence and Youth</td>
+      <td>jour.1374325</td>
+      <td>English Language Teaching Educational Journal</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>pub.1125408894</td>
-      <td>Posttraumatic anger: a confirmatory factor ana...</td>
-      <td>11</td>
+      <td>[{'affiliations': [{'city': 'Sydney', 'city_id...</td>
+      <td>pub.1141305289</td>
       <td>1</td>
-      <td>1731127</td>
+      <td>83-138</td>
+      <td>The expression of emotions in Kunbarlang and i...</td>
       <td>article</td>
+      <td>27</td>
       <td>2020</td>
-      <td>[[{'first_name': 'Grazia', 'last_name': 'Cesch...</td>
-      <td>jour.1045059</td>
-      <td>European Journal of Psychotraumatology</td>
+      <td>jour.1129762</td>
+      <td>Pragmatics &amp; Cognition</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>pub.1125679504</td>
-      <td>Direct assessment of mental health and metabol...</td>
-      <td>13</td>
-      <td>1</td>
-      <td>1732665</td>
+      <td>[{'affiliations': [{'city': None, 'city_id': N...</td>
+      <td>pub.1138102366</td>
+      <td>110</td>
+      <td>42-44</td>
+      <td>Ophthalmic nurses: vital team members in the p...</td>
       <td>article</td>
+      <td>33</td>
       <td>2020</td>
-      <td>[[{'first_name': 'Peter S', 'last_name': 'Azzo...</td>
-      <td>jour.1041075</td>
-      <td>Global Health Action</td>
+      <td>jour.1099554</td>
+      <td>Community Eye Health Journal</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>pub.1121881108</td>
-      <td>The large-scale implementation and evaluation ...</td>
-      <td>25</td>
-      <td>1</td>
-      <td>1-11</td>
+      <td>[{'affiliations': [{'city': 'Melbourne', 'city...</td>
+      <td>pub.1135883909</td>
+      <td>4</td>
+      <td>1474-1482</td>
+      <td>Charting a way forward? Post-juristocracy, dem...</td>
       <td>article</td>
+      <td>18</td>
       <td>2020</td>
-      <td>[[{'first_name': 'Bengianni', 'last_name': 'Pi...</td>
-      <td>jour.1097842</td>
-      <td>International Journal of Adolescence and Youth</td>
+      <td>jour.1139636</td>
+      <td>International Journal of Constitutional Law</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>pub.1125399511</td>
-      <td>Structural brain changes with lifetime trauma ...</td>
-      <td>11</td>
-      <td>1</td>
-      <td>1733247</td>
+      <td>[{'affiliations': [{'city': 'Melbourne', 'city...</td>
+      <td>pub.1135432149</td>
+      <td>2</td>
+      <td>100</td>
+      <td>An Interactive Approach to Contraception Teach...</td>
       <td>article</td>
+      <td>14</td>
       <td>2020</td>
-      <td>[[{'first_name': 'Marie-Laure', 'last_name': '...</td>
-      <td>jour.1045059</td>
-      <td>European Journal of Psychotraumatology</td>
+      <td>jour.1051336</td>
+      <td>South-East Asian Journal of Medical Education</td>
     </tr>
   </tbody>
 </table>
@@ -2419,8 +2516,7 @@ Records extracted: 100
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">pubs</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pubs</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">                  search publications</span>
 <span class="s2">                    where research_orgs.id in [&quot;grid.1008.9&quot;,&quot;grid.1002.3&quot;]</span>
 <span class="s2">                      and year in [2019:2020]</span>
@@ -2443,12 +2539,19 @@ Records extracted: 100
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 100 (total = 39938)
-Time: 0.46s
+Returned Publications: 100 (total = 45670)
+Time: 1.36s
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
 Starting iteration with limit=1000 skip=0 ...
-0-47 / 47 (0.61s)
+0-391 / 391 (1.44s)
 ===
-Records extracted: 47
+Records extracted: 391
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -2474,83 +2577,83 @@ Records extracted: 47
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>title</th>
-      <th>pages</th>
-      <th>author_affiliations</th>
-      <th>year</th>
-      <th>issue</th>
+      <th>authors</th>
       <th>id</th>
+      <th>pages</th>
+      <th>title</th>
       <th>type</th>
       <th>volume</th>
+      <th>year</th>
       <th>journal.id</th>
       <th>journal.title</th>
+      <th>issue</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>Non-photochemical quenching, a non-invasive pr...</td>
-      <td>32-43</td>
-      <td>[[{'first_name': 'Pranali', 'last_name': 'Deor...</td>
-      <td>2020</td>
-      <td>1</td>
-      <td>pub.1125663277</td>
+      <td>[{'affiliations': [{'city': 'Monastir', 'city_...</td>
+      <td>pub.1144584350</td>
+      <td>132398</td>
+      <td>New spiropyrrolothiazole derivatives bearing a...</td>
       <td>article</td>
-      <td>1</td>
-      <td>NaN</td>
+      <td>1254</td>
+      <td>2022</td>
+      <td>jour.1009258</td>
+      <td>Journal of Molecular Structure</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Distribution and pyrethroid resistance status ...</td>
-      <td>213</td>
-      <td>[[{'first_name': 'Hitoshi', 'last_name': 'Kawa...</td>
-      <td>2020</td>
-      <td>1</td>
-      <td>pub.1126895840</td>
+      <td>[{'affiliations': [{'city': 'Gwangju', 'city_i...</td>
+      <td>pub.1144716570</td>
+      <td>112636</td>
+      <td>A new paradigm in sarcopenia: Cognitive impair...</td>
       <td>article</td>
-      <td>13</td>
-      <td>jour.1039458</td>
-      <td>Parasites &amp; Vectors</td>
+      <td>147</td>
+      <td>2022</td>
+      <td>jour.1371653</td>
+      <td>Biomedicine &amp; Pharmacotherapy</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>Reducing ignorance about who dies of what: res...</td>
-      <td>58</td>
-      <td>[[{'first_name': 'Alan D.', 'last_name': 'Lope...</td>
-      <td>2020</td>
-      <td>1</td>
-      <td>pub.1125488824</td>
+      <td>[{'affiliations': [{'city': 'Changsha', 'city_...</td>
+      <td>pub.1142243251</td>
+      <td>133215</td>
+      <td>Intercalation and covalent bonding strategies ...</td>
       <td>article</td>
-      <td>18</td>
-      <td>jour.1032885</td>
-      <td>BMC Medicine</td>
+      <td>431</td>
+      <td>2022</td>
+      <td>jour.1127675</td>
+      <td>Chemical Engineering Journal</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>Wolbachia: a possible weapon for controlling d...</td>
-      <td>50</td>
-      <td>[[{'first_name': 'Sujan', 'last_name': 'Khadka...</td>
-      <td>2020</td>
-      <td>1</td>
-      <td>pub.1128670136</td>
+      <td>[{'affiliations': [{'city': 'Wuhan', 'city_id'...</td>
+      <td>pub.1144581821</td>
+      <td>104948</td>
+      <td>Muscle aging amelioration by yeast protein sup...</td>
       <td>article</td>
-      <td>48</td>
-      <td>jour.1312315</td>
-      <td>Tropical Medicine and Health</td>
+      <td>89</td>
+      <td>2022</td>
+      <td>jour.1041965</td>
+      <td>Journal of Functional Foods</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>Can increasing years of schooling reduce type ...</td>
-      <td>12908</td>
-      <td>[[{'first_name': 'Charleen D.', 'last_name': '...</td>
-      <td>2020</td>
-      <td>1</td>
-      <td>pub.1129772083</td>
+      <td>[{'affiliations': [{'city': 'Tehran', 'city_id...</td>
+      <td>pub.1144368116</td>
+      <td>118310</td>
+      <td>Peer-to-peer decentralized energy trading fram...</td>
       <td>article</td>
-      <td>10</td>
-      <td>jour.1045337</td>
-      <td>Scientific Reports</td>
+      <td>308</td>
+      <td>2022</td>
+      <td>jour.1029519</td>
+      <td>Applied Energy</td>
+      <td>NaN</td>
     </tr>
   </tbody>
 </table>
@@ -2567,8 +2670,7 @@ Records extracted: 47
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">pubs</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pubs</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">                  search publications</span>
 <span class="s2">                    where research_orgs.id in [&quot;grid.1008.9&quot;,&quot;grid.1002.3&quot;]</span>
 <span class="s2">                      and year in [2019:2020]</span>
@@ -2591,11 +2693,11 @@ Records extracted: 47
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 1000 (total = 39938)
-Time: 0.50s
+Returned Publications: 1000 (total = 45670)
+Time: 2.89s
 Returned Errors: 1
-Time: 1.11s
-Semantic Error
+Time: 0.80s
+1 QueryError found
 Semantic errors found:
         Filter operator &#39;in&#39; requires 0 &lt; items &lt; 512. &#39;1000 is out of this range&#39;.
 </pre></div></div>
@@ -2607,8 +2709,7 @@ Semantic errors found:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">pubs</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pubs</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">                  search publications</span>
 <span class="s2">                    where research_orgs.id in [&quot;grid.1008.9&quot;,&quot;grid.1002.3&quot;]</span>
 <span class="s2">                      and year in [2019:2020]</span>
@@ -2631,10 +2732,10 @@ Semantic errors found:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 250 (total = 39938)
-Time: 0.59s
-Returned Publications: 20 (total = 168)
-Time: 0.98s
+Returned Publications: 250 (total = 45670)
+Time: 1.95s
+Returned Publications: 20 (total = 1009)
+Time: 1.69s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -2660,44 +2761,44 @@ Time: 0.98s
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>title</th>
-      <th>pages</th>
-      <th>author_affiliations</th>
-      <th>year</th>
-      <th>issue</th>
+      <th>authors</th>
       <th>id</th>
+      <th>pages</th>
+      <th>title</th>
       <th>type</th>
       <th>volume</th>
+      <th>year</th>
       <th>journal.id</th>
       <th>journal.title</th>
+      <th>issue</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>Non-photochemical quenching, a non-invasive pr...</td>
-      <td>32-43</td>
-      <td>[[{'first_name': 'Pranali', 'last_name': 'Deor...</td>
-      <td>2020</td>
-      <td>1</td>
-      <td>pub.1125663277</td>
+      <td>[{'affiliations': [{'city': 'Monastir', 'city_...</td>
+      <td>pub.1144584350</td>
+      <td>132398</td>
+      <td>New spiropyrrolothiazole derivatives bearing a...</td>
       <td>article</td>
-      <td>1</td>
-      <td>NaN</td>
+      <td>1254</td>
+      <td>2022</td>
+      <td>jour.1009258</td>
+      <td>Journal of Molecular Structure</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Predicting breast cancer risk using interactin...</td>
-      <td>11044</td>
-      <td>[[{'first_name': 'Hamid', 'last_name': 'Behrav...</td>
-      <td>2020</td>
-      <td>1</td>
-      <td>pub.1129015188</td>
+      <td>[{'affiliations': [{'city': 'Guangzhou', 'city...</td>
+      <td>pub.1144235680</td>
+      <td>100917</td>
+      <td>Designed Biomass Materials for “Green” Electro...</td>
       <td>article</td>
-      <td>10</td>
-      <td>jour.1045337</td>
-      <td>Scientific Reports</td>
+      <td>125</td>
+      <td>2022</td>
+      <td>jour.1045007</td>
+      <td>Progress in Materials Science</td>
+      <td>NaN</td>
     </tr>
   </tbody>
 </table>
@@ -2712,8 +2813,7 @@ Time: 0.98s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># Step 1 - same as before - except now we want the query in chunks</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 1 - same as before - except now we want the query in chunks</span>
 
 <span class="n">pubs_chunks</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">                  search publications</span>
@@ -2745,8 +2845,7 @@ Time: 0.98s
 <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">query_results</span><span class="p">)</span><span class="o">.</span>\
    <span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="s1">&#39;id&#39;</span><span class="p">)</span><span class="o">.</span>\
    <span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
@@ -2754,24 +2853,33 @@ Time: 0.98s
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 1000 (total = 39938)
-Time: 0.87s
+Returned Publications: 1000 (total = 45670)
+Time: 1.78s
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
 Starting iteration with limit=1000 skip=0 ...
-0-167 / 167 (2.92s)
+0-1000 / 1009 (3.11s)
+1000-1009 / 1009 (1.96s)
 ===
-Records extracted: 167
+Records extracted: 1009
 Starting iteration with limit=1000 skip=0 ...
-0-218 / 218 (1.16s)
+0-1000 / 1016 (3.28s)
+1000-1016 / 1016 (1.46s)
 ===
-Records extracted: 218
+Records extracted: 1016
 Starting iteration with limit=1000 skip=0 ...
-0-262 / 262 (1.29s)
+0-871 / 871 (3.43s)
 ===
-Records extracted: 262
+Records extracted: 871
 Starting iteration with limit=1000 skip=0 ...
-0-74 / 74 (0.75s)
+0-910 / 910 (2.59s)
 ===
-Records extracted: 74
+Records extracted: 910
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -2797,44 +2905,44 @@ Records extracted: 74
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>authors</th>
       <th>id</th>
-      <th>title</th>
-      <th>volume</th>
-      <th>issue</th>
       <th>pages</th>
+      <th>title</th>
       <th>type</th>
+      <th>volume</th>
       <th>year</th>
-      <th>author_affiliations</th>
       <th>journal.id</th>
       <th>journal.title</th>
+      <th>issue</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>pub.1125663277</td>
-      <td>Non-photochemical quenching, a non-invasive pr...</td>
-      <td>1</td>
-      <td>1</td>
-      <td>32-43</td>
+      <td>[{'affiliations': [{'city': 'Monastir', 'city_...</td>
+      <td>pub.1144584350</td>
+      <td>132398</td>
+      <td>New spiropyrrolothiazole derivatives bearing a...</td>
       <td>article</td>
-      <td>2020</td>
-      <td>[[{'first_name': 'Pranali', 'last_name': 'Deor...</td>
-      <td>NaN</td>
+      <td>1254</td>
+      <td>2022.0</td>
+      <td>jour.1009258</td>
+      <td>Journal of Molecular Structure</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>pub.1126895840</td>
-      <td>Distribution and pyrethroid resistance status ...</td>
-      <td>13</td>
-      <td>1</td>
-      <td>213</td>
+      <td>[{'affiliations': [{'city': 'Guangzhou', 'city...</td>
+      <td>pub.1144235680</td>
+      <td>100917</td>
+      <td>Designed Biomass Materials for “Green” Electro...</td>
       <td>article</td>
-      <td>2020</td>
-      <td>[[{'first_name': 'Hitoshi', 'last_name': 'Kawa...</td>
-      <td>jour.1039458</td>
-      <td>Parasites &amp; Vectors</td>
+      <td>125</td>
+      <td>2022.0</td>
+      <td>jour.1045007</td>
+      <td>Progress in Materials Science</td>
+      <td>NaN</td>
     </tr>
   </tbody>
 </table>
@@ -2848,8 +2956,7 @@ Records extracted: 74
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># Step 1 - same as before</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 1 - same as before</span>
 
 <span class="n">pubs_chunks</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">                  search publications</span>
@@ -2884,8 +2991,7 @@ Records extracted: 74
                   <span class="n">agg</span><span class="p">({</span><span class="s1">&#39;count&#39;</span><span class="p">:</span><span class="s1">&#39;sum&#39;</span><span class="p">})</span><span class="o">.</span>\
                   <span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span>\
                   <span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -2893,27 +2999,26 @@ Records extracted: 74
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 1000 (total = 39938)
-Time: 0.46s
+Returned Publications: 1000 (total = 45670)
+Time: 4.17s
 Returned Researchers: 1000
-Time: 1.48s
+Time: 2.60s
 Returned Researchers: 1000
-Time: 1.43s
+Time: 2.38s
 Returned Researchers: 1000
-Time: 1.29s
-Returned Researchers: 293
-Time: 1.02s
+Time: 1.57s
+Returned Researchers: 1000
+Time: 1.65s
 </pre></div></div>
 </div>
 </div>
 <div class="section" id="7.-What-if-I-want-to-get-all-the-researchers-associated-with-the-publications-that-cite-my-institution?">
 <h2>7. What if I want to get <em>all</em> the researchers associated with the publications that cite my institution?<a class="headerlink" href="#7.-What-if-I-want-to-get-all-the-researchers-associated-with-the-publications-that-cite-my-institution?" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># Step 1 - same as before</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 1 - same as before</span>
 
 <span class="n">pubs_chunks</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">                  search publications</span>
@@ -2957,8 +3062,7 @@ Time: 1.02s
 
 <span class="n">my_researchers</span><span class="o">.</span>\
     <span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
@@ -2966,28 +3070,37 @@ Time: 1.02s
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 1000 (total = 39938)
-Time: 0.46s
+Returned Publications: 1000 (total = 45670)
+Time: 1.70s
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
 Starting iteration with limit=1000 skip=0 ...
-0-167 / 167 (1.42s)
+0-1000 / 1009 (2.13s)
+1000-1009 / 1009 (2.78s)
 ===
-Records extracted: 167
+Records extracted: 1009
 Starting iteration with limit=1000 skip=0 ...
-0-218 / 218 (1.11s)
+0-1000 / 1016 (5.23s)
+1000-1016 / 1016 (3.22s)
 ===
-Records extracted: 218
+Records extracted: 1016
 Starting iteration with limit=1000 skip=0 ...
-0-262 / 262 (1.26s)
+0-871 / 871 (4.01s)
 ===
-Records extracted: 262
+Records extracted: 871
 Starting iteration with limit=1000 skip=0 ...
-0-74 / 74 (0.87s)
+0-910 / 910 (2.81s)
 ===
-Records extracted: 74
+Records extracted: 910
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -3018,73 +3131,73 @@ Records extracted: 74
   <tbody>
     <tr>
       <th>0</th>
-      <td>ur.013035660527.88</td>
-      <td>Paul M.</td>
-      <td>Thompson</td>
-      <td>16</td>
+      <td>ur.0631757532.92</td>
+      <td>Gin S.</td>
+      <td>Malhi</td>
+      <td>22</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>ur.0735661630.67</td>
-      <td>Neda</td>
-      <td>Jahanshad</td>
-      <td>11</td>
+      <td>ur.015337322331.59</td>
+      <td>Erica</td>
+      <td>Bell</td>
+      <td>18</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>ur.010365645710.55</td>
-      <td>Sophia I.</td>
-      <td>Thomopoulos</td>
-      <td>9</td>
+      <td>ur.012754752112.35</td>
+      <td>Richard J.</td>
+      <td>Porter</td>
+      <td>17</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>ur.0627614723.01</td>
-      <td>Dan J.</td>
-      <td>Stein</td>
-      <td>9</td>
+      <td>ur.01115612112.63</td>
+      <td>Rena</td>
+      <td>Yadlapati</td>
+      <td>13</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>ur.01015666354.63</td>
-      <td>Dick J.</td>
-      <td>Veltman</td>
-      <td>8</td>
+      <td>ur.01234653773.64</td>
+      <td>Farhad</td>
+      <td>Ravandi</td>
+      <td>12</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>ur.01153670556.36</td>
-      <td>Carlos M.</td>
-      <td>Grilo</td>
-      <td>7</td>
+      <td>ur.0735337324.35</td>
+      <td>Roger T</td>
+      <td>Mulder</td>
+      <td>11</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>ur.01117110035.48</td>
-      <td>Nynke A.</td>
-      <td>Groenewold</td>
-      <td>6</td>
+      <td>ur.01044576346.22</td>
+      <td>Frank R.</td>
+      <td>Dunshea</td>
+      <td>11</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>ur.0652517237.06</td>
-      <td>Tomáš</td>
-      <td>Paus</td>
-      <td>6</td>
+      <td>ur.01224616510.22</td>
+      <td>John E.</td>
+      <td>Pandolfino</td>
+      <td>11</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>ur.0750404115.06</td>
-      <td>Suzanne</td>
-      <td>Fraser</td>
-      <td>5</td>
+      <td>ur.011606313504.49</td>
+      <td>Peter J.</td>
+      <td>Kahrilas</td>
+      <td>10</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>ur.01056633333.53</td>
-      <td>Lars T.</td>
-      <td>Westlye</td>
-      <td>5</td>
+      <td>ur.0772267026.25</td>
+      <td>C. Prakash</td>
+      <td>Gyawali</td>
+      <td>10</td>
     </tr>
   </tbody>
 </table>
@@ -3095,11 +3208,10 @@ Records extracted: 74
 <h2>8. ..and if we want details about our researchers, we can put our list of researchers into the researcher API<a class="headerlink" href="#8.-..and-if-we-want-details-about-our-researchers,-we-can-put-our-list-of-researchers-into-the-researcher-API" title="Permalink to this headline">¶</a></h2>
 <p>See <a class="reference external" href="https://docs.dimensions.ai/dsl/datasource-researchers.html">the researcher source docs</a> for more details.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1">## First, we need to chunk up our researcher list</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## First, we need to chunk up our researcher list</span>
 
 <span class="n">query_results</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -3125,34 +3237,34 @@ Records extracted: 74
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Starting iteration with limit=1000 skip=0 ...
-0-250 / 250 (2.62s)
+0-250 / 250 (1.44s)
 ===
 Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
-0-250 / 250 (1.47s)
+0-250 / 250 (1.62s)
 ===
 Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
-0-250 / 250 (1.63s)
+0-250 / 250 (3.66s)
 ===
 Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
-0-250 / 250 (1.38s)
+0-250 / 250 (1.09s)
 ===
 Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
-0-250 / 250 (1.29s)
+0-250 / 250 (2.76s)
 ===
 Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
-0-250 / 250 (1.24s)
+0-250 / 250 (1.04s)
 ===
 Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
-0-250 / 250 (1.12s)
+0-250 / 250 (1.28s)
 ===
 Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
@@ -3160,35 +3272,59 @@ Starting iteration with limit=1000 skip=0 ...
 ===
 Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
-0-250 / 250 (1.77s)
+0-250 / 250 (3.23s)
 ===
 Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
-0-250 / 250 (1.12s)
+0-250 / 250 (17.52s)
 ===
 Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
-0-250 / 250 (1.12s)
+0-250 / 250 (2.49s)
 ===
 Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
-0-250 / 250 (1.25s)
+0-250 / 250 (0.96s)
 ===
 Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
-0-250 / 250 (1.16s)
+0-250 / 250 (0.91s)
 ===
 Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
-0-250 / 250 (1.15s)
+0-250 / 250 (1.45s)
 ===
 Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
-0-250 / 250 (1.11s)
+0-250 / 250 (2.24s)
 ===
 Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
-0-250 / 250 (1.16s)
+0-250 / 250 (1.05s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.84s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.04s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.74s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (0.90s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.44s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (0.93s)
 ===
 Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
@@ -3196,21 +3332,201 @@ Starting iteration with limit=1000 skip=0 ...
 ===
 Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
-0-250 / 250 (1.17s)
+0-250 / 250 (1.09s)
 ===
 Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
-0-250 / 250 (1.27s)
+0-250 / 250 (2.84s)
 ===
 Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
-0-40 / 40 (0.63s)
+0-250 / 250 (1.32s)
 ===
-Records extracted: 40
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (0.98s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.08s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.78s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.01s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (2.28s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.47s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (2.02s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (0.84s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (2.02s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (3.00s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.26s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.07s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.12s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.24s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.00s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (0.95s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.05s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.05s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (2.23s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (2.38s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (0.94s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (0.98s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.00s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.16s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (0.94s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.04s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (3.39s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.08s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.08s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.06s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.22s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.37s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (3.09s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (2.49s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.15s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.03s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (3.02s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.16s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.00s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (0.98s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.08s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.04s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.05s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (0.95s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-246 / 246 (1.15s)
+===
+Records extracted: 246
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -3232,53 +3548,53 @@ Records extracted: 40
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>id</th>
       <th>first_name</th>
+      <th>id</th>
       <th>last_name</th>
-      <th>research_orgs</th>
       <th>orcid_id</th>
+      <th>research_orgs</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>ur.01262341717.29</td>
-      <td>Eric T</td>
-      <td>Hahnen</td>
-      <td>[{'id': 'grid.411668.c', 'types': ['Healthcare...</td>
-      <td>NaN</td>
+      <td>Jennifer A</td>
+      <td>ur.0777662157.75</td>
+      <td>Summers</td>
+      <td>[0000-0002-3156-0479]</td>
+      <td>[{'city_name': 'Dunedin', 'country_name': 'New...</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>ur.01264721100.06</td>
-      <td>Daniel</td>
-      <td>Barrowdale</td>
-      <td>[{'id': 'grid.5335.0', 'types': ['Education'],...</td>
-      <td>[0000-0003-1661-3939]</td>
+      <td>Francois Henri</td>
+      <td>ur.07764267264.89</td>
+      <td>Nosten</td>
+      <td>[0000-0002-7951-0745]</td>
+      <td>[{'acronym': 'LSTM', 'city_name': 'Liverpool',...</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>ur.0743471221.03</td>
-      <td>Tjoung-Won</td>
-      <td>Park-Simon</td>
-      <td>[{'id': 'grid.4562.5', 'types': ['Education'],...</td>
-      <td>[0000-0002-2863-3040]</td>
+      <td>Tony A</td>
+      <td>ur.0775731540.59</td>
+      <td>Blakely</td>
+      <td>[0000-0002-6995-4369]</td>
+      <td>[{'acronym': 'QUT', 'city_name': 'Brisbane', '...</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>ur.01105220501.02</td>
-      <td>Maria Adelaide</td>
-      <td>Caligo</td>
-      <td>[{'id': 'grid.5395.a', 'types': ['Education'],...</td>
-      <td>[0000-0003-0589-1829]</td>
+      <td>Chandra Prakash</td>
+      <td>ur.0772267026.25</td>
+      <td>Gyawali</td>
+      <td>NaN</td>
+      <td>[{'acronym': 'QMUL', 'city_name': 'London', 'c...</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>ur.01116254763.53</td>
-      <td>Jonathan P</td>
-      <td>Tyrer</td>
-      <td>[{'id': 'grid.470869.4', 'types': ['Facility']...</td>
-      <td>NaN</td>
+      <td>Adam Kenneth</td>
+      <td>ur.0771337646.65</td>
+      <td>Wheatley</td>
+      <td>[0000-0002-5593-9387]</td>
+      <td>[{'city_name': 'Melbourne', 'country_name': 'A...</td>
     </tr>
   </tbody>
 </table>
@@ -3289,17 +3605,16 @@ Records extracted: 40
 <h2>9. Patents example (patents -&gt; publications)<a class="headerlink" href="#9.-Patents-example-(patents-->-publications)" title="Permalink to this headline">¶</a></h2>
 <p>Using the same method, we can retrieve all patents citing publications from my institution.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%</span><span class="k">dsldocs</span> patents
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">dsldocs</span> patents
 <span class="n">dsl_last_results</span><span class="p">[</span><span class="n">dsl_last_results</span><span class="p">[</span><span class="s1">&#39;field&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;publication_ids&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -3332,7 +3647,7 @@ Records extracted: 40
   </thead>
   <tbody>
     <tr>
-      <th>39</th>
+      <th>41</th>
       <td>patents</td>
       <td>publication_ids</td>
       <td>string</td>
@@ -3346,11 +3661,10 @@ Records extracted: 40
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># Step 1 - same as before - except now we want the query in chunks</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 1 - same as before - except now we want the query in chunks</span>
 
 <span class="n">pubs_chunks</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query_iterative</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">                  search publications</span>
@@ -3389,147 +3703,158 @@ Records extracted: 40
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Starting iteration with limit=1000 skip=0 ...
-0-1000 / 8388 (2.17s)
-1000-2000 / 8388 (1.40s)
-2000-3000 / 8388 (1.14s)
-3000-4000 / 8388 (2.58s)
-4000-5000 / 8388 (1.09s)
-5000-6000 / 8388 (1.15s)
-6000-7000 / 8388 (0.95s)
-7000-8000 / 8388 (1.12s)
-8000-8388 / 8388 (0.89s)
+0-1000 / 8884 (2.54s)
+1000-2000 / 8884 (1.41s)
+2000-3000 / 8884 (2.06s)
+3000-4000 / 8884 (1.82s)
+4000-5000 / 8884 (1.63s)
+5000-6000 / 8884 (3.83s)
+6000-7000 / 8884 (1.95s)
+7000-8000 / 8884 (1.93s)
+8000-8884 / 8884 (1.70s)
 ===
-Records extracted: 8388
+Records extracted: 8884
 Starting iteration with limit=1000 skip=0 ...
-0-4 / 4 (1.16s)
-===
-Records extracted: 4
-Starting iteration with limit=1000 skip=0 ...
-===
-Records extracted: 0
-Starting iteration with limit=1000 skip=0 ...
-===
-Records extracted: 0
-Starting iteration with limit=1000 skip=0 ...
-0-3 / 3 (0.69s)
-===
-Records extracted: 3
-Starting iteration with limit=1000 skip=0 ...
-0-4 / 4 (0.77s)
-===
-Records extracted: 4
-Starting iteration with limit=1000 skip=0 ...
-0-2 / 2 (0.78s)
-===
-Records extracted: 2
-Starting iteration with limit=1000 skip=0 ...
-0-5 / 5 (0.71s)
+0-5 / 5 (0.73s)
 ===
 Records extracted: 5
 Starting iteration with limit=1000 skip=0 ...
-0-3 / 3 (0.78s)
+0-24 / 24 (0.83s)
+===
+Records extracted: 24
+Starting iteration with limit=1000 skip=0 ...
+0-3 / 3 (0.88s)
 ===
 Records extracted: 3
 Starting iteration with limit=1000 skip=0 ...
-0-9 / 9 (0.73s)
+0-10 / 10 (1.15s)
+===
+Records extracted: 10
+Starting iteration with limit=1000 skip=0 ...
+0-10 / 10 (1.55s)
+===
+Records extracted: 10
+Starting iteration with limit=1000 skip=0 ...
+0-8 / 8 (0.68s)
+===
+Records extracted: 8
+Starting iteration with limit=1000 skip=0 ...
+0-15 / 15 (0.86s)
+===
+Records extracted: 15
+Starting iteration with limit=1000 skip=0 ...
+0-8 / 8 (0.72s)
+===
+Records extracted: 8
+Starting iteration with limit=1000 skip=0 ...
+0-20 / 20 (0.94s)
+===
+Records extracted: 20
+Starting iteration with limit=1000 skip=0 ...
+0-13 / 13 (0.87s)
+===
+Records extracted: 13
+Starting iteration with limit=1000 skip=0 ...
+0-3 / 3 (0.98s)
+===
+Records extracted: 3
+Starting iteration with limit=1000 skip=0 ...
+0-9 / 9 (0.75s)
 ===
 Records extracted: 9
 Starting iteration with limit=1000 skip=0 ...
-0-2 / 2 (0.68s)
+0-10 / 10 (0.74s)
+===
+Records extracted: 10
+Starting iteration with limit=1000 skip=0 ...
+0-2 / 2 (1.20s)
 ===
 Records extracted: 2
 Starting iteration with limit=1000 skip=0 ...
-0-2 / 2 (0.93s)
+0-26 / 26 (0.86s)
 ===
-Records extracted: 2
+Records extracted: 26
 Starting iteration with limit=1000 skip=0 ...
-0-3 / 3 (0.74s)
+0-5 / 5 (1.06s)
 ===
-Records extracted: 3
+Records extracted: 5
 Starting iteration with limit=1000 skip=0 ...
-0-1 / 1 (0.72s)
+0-8 / 8 (0.72s)
+===
+Records extracted: 8
+Starting iteration with limit=1000 skip=0 ...
+0-17 / 17 (2.38s)
+===
+Records extracted: 17
+Starting iteration with limit=1000 skip=0 ...
+0-14 / 14 (0.67s)
+===
+Records extracted: 14
+Starting iteration with limit=1000 skip=0 ...
+0-20 / 20 (0.70s)
+===
+Records extracted: 20
+Starting iteration with limit=1000 skip=0 ...
+0-26 / 26 (0.69s)
+===
+Records extracted: 26
+Starting iteration with limit=1000 skip=0 ...
+0-5 / 5 (0.72s)
+===
+Records extracted: 5
+Starting iteration with limit=1000 skip=0 ...
+0-36 / 36 (0.69s)
+===
+Records extracted: 36
+Starting iteration with limit=1000 skip=0 ...
+0-15 / 15 (0.73s)
+===
+Records extracted: 15
+Starting iteration with limit=1000 skip=0 ...
+0-21 / 21 (0.66s)
+===
+Records extracted: 21
+Starting iteration with limit=1000 skip=0 ...
+0-18 / 18 (0.70s)
+===
+Records extracted: 18
+Starting iteration with limit=1000 skip=0 ...
+0-16 / 16 (0.71s)
+===
+Records extracted: 16
+Starting iteration with limit=1000 skip=0 ...
+0-18 / 18 (0.75s)
+===
+Records extracted: 18
+Starting iteration with limit=1000 skip=0 ...
+0-28 / 28 (0.70s)
+===
+Records extracted: 28
+Starting iteration with limit=1000 skip=0 ...
+0-22 / 22 (2.21s)
+===
+Records extracted: 22
+Starting iteration with limit=1000 skip=0 ...
+0-18 / 18 (0.69s)
+===
+Records extracted: 18
+Starting iteration with limit=1000 skip=0 ...
+0-21 / 21 (0.74s)
+===
+Records extracted: 21
+Starting iteration with limit=1000 skip=0 ...
+0-7 / 7 (0.74s)
+===
+Records extracted: 7
+Starting iteration with limit=1000 skip=0 ...
+0-1 / 1 (0.92s)
 ===
 Records extracted: 1
-Starting iteration with limit=1000 skip=0 ...
-0-3 / 3 (0.69s)
-===
-Records extracted: 3
-Starting iteration with limit=1000 skip=0 ...
-0-2 / 2 (0.69s)
-===
-Records extracted: 2
-Starting iteration with limit=1000 skip=0 ...
-0-3 / 3 (0.77s)
-===
-Records extracted: 3
-Starting iteration with limit=1000 skip=0 ...
-0-4 / 4 (0.69s)
-===
-Records extracted: 4
-Starting iteration with limit=1000 skip=0 ...
-0-4 / 4 (0.67s)
-===
-Records extracted: 4
-Starting iteration with limit=1000 skip=0 ...
-0-8 / 8 (0.70s)
-===
-Records extracted: 8
-Starting iteration with limit=1000 skip=0 ...
-0-3 / 3 (0.71s)
-===
-Records extracted: 3
-Starting iteration with limit=1000 skip=0 ...
-0-2 / 2 (1.15s)
-===
-Records extracted: 2
-Starting iteration with limit=1000 skip=0 ...
-0-5 / 5 (0.84s)
-===
-Records extracted: 5
-Starting iteration with limit=1000 skip=0 ...
-0-6 / 6 (0.80s)
-===
-Records extracted: 6
-Starting iteration with limit=1000 skip=0 ...
-0-3 / 3 (0.74s)
-===
-Records extracted: 3
-Starting iteration with limit=1000 skip=0 ...
-0-11 / 11 (0.91s)
-===
-Records extracted: 11
-Starting iteration with limit=1000 skip=0 ...
-0-2 / 2 (0.74s)
-===
-Records extracted: 2
-Starting iteration with limit=1000 skip=0 ...
-0-8 / 8 (0.69s)
-===
-Records extracted: 8
-Starting iteration with limit=1000 skip=0 ...
-===
-Records extracted: 0
-Starting iteration with limit=1000 skip=0 ...
-0-5 / 5 (0.86s)
-===
-Records extracted: 5
-Starting iteration with limit=1000 skip=0 ...
-0-4 / 4 (0.81s)
-===
-Records extracted: 4
-Starting iteration with limit=1000 skip=0 ...
-0-2 / 2 (0.70s)
-===
-Records extracted: 2
 Starting iteration with limit=1000 skip=0 ...
 0-1 / 1 (0.68s)
-===
-Records extracted: 1
-Starting iteration with limit=1000 skip=0 ...
-0-1 / 1 (0.69s)
 ===
 Records extracted: 1
 Starting iteration with limit=1000 skip=0 ...
@@ -3538,7 +3863,7 @@ Records extracted: 0
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -3560,61 +3885,60 @@ Records extracted: 0
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>title</th>
-      <th>publication_date</th>
       <th>assignee_names</th>
-      <th>year</th>
       <th>assignees</th>
-      <th>inventor_names</th>
-      <th>times_cited</th>
       <th>filing_status</th>
       <th>id</th>
+      <th>inventor_names</th>
+      <th>publication_date</th>
+      <th>times_cited</th>
+      <th>title</th>
+      <th>year</th>
       <th>granted_year</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>COMPOSITIONS WITH SPECIFIC OLIGOSACCHARIDES TO...</td>
-      <td>2017-08-03</td>
-      <td>[NESTEC SA]</td>
-      <td>2017</td>
-      <td>[{'id': 'grid.419905.0', 'city_name': 'Vevey',...</td>
-      <td>[BLANCHARD, CARINE, NEMBRINI, Chiara]</td>
-      <td>0.0</td>
+      <td>[PASTEUR INSTITUT, INST NAT SANTE RECH MED]</td>
+      <td>[{'city_name': 'Paris', 'country_name': 'Franc...</td>
       <td>Application</td>
-      <td>WO-2017129644-A1</td>
+      <td>WO-2018015815-A2</td>
+      <td>[MECHERI SALAH, MENARD ROBERT, DEMARTA-GATSI C...</td>
+      <td>2018-01-25</td>
+      <td>0</td>
+      <td>PLASMODIUM WITH HISTAMINE RELEASING FACTOR (HR...</td>
+      <td>2017</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>COMPOSITION FOR USE IN THE PREVENTION AND/OR T...</td>
-      <td>2017-08-03</td>
-      <td>[NESTEC SA]</td>
-      <td>2017</td>
-      <td>[{'id': 'grid.419905.0', 'city_name': 'Vevey',...</td>
-      <td>[BLANCHARD, CARINE, NEMBRINI, Chiara]</td>
-      <td>0.0</td>
-      <td>Application</td>
-      <td>WO-2017129642-A1</td>
-      <td>NaN</td>
+      <td>[KDDI Corp]</td>
+      <td>[{'city_name': 'Tokyo', 'country_name': 'Japan...</td>
+      <td>Grant</td>
+      <td>US-10547380-B2</td>
+      <td>[ISHIMURA SHOTA]</td>
+      <td>2020-01-28</td>
+      <td>0</td>
+      <td>Polarization tracking device, optical receivin...</td>
+      <td>2019</td>
+      <td>2020.0</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%</span><span class="k">dsldocs</span> patents
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">dsldocs</span> patents
 <span class="n">dsl_last_results</span><span class="p">[</span><span class="n">dsl_last_results</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;organizations&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -3667,7 +3991,7 @@ Records extracted: 0
       <td>True</td>
     </tr>
     <tr>
-      <th>26</th>
+      <th>27</th>
       <td>patents</td>
       <td>funders</td>
       <td>organizations</td>
@@ -3677,7 +4001,7 @@ Records extracted: 0
       <td>True</td>
     </tr>
     <tr>
-      <th>35</th>
+      <th>37</th>
       <td>patents</td>
       <td>original_assignees</td>
       <td>organizations</td>
@@ -3691,11 +4015,10 @@ Records extracted: 0
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">json</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
 <span class="n">cited_patents_assignees</span> <span class="o">=</span> <span class="n">cited_patents</span><span class="o">.</span><span class="n">explode</span><span class="p">(</span><span class="s1">&#39;assignees&#39;</span><span class="p">)</span>
 
 <span class="n">cited_patents_assignees</span><span class="p">[</span><span class="s1">&#39;assignee_grid_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cited_patents_assignees</span><span class="p">[</span><span class="s1">&#39;assignees&#39;</span><span class="p">]</span><span class="o">.</span>\
@@ -3713,7 +4036,7 @@ Records extracted: 0
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -3748,102 +4071,102 @@ Records extracted: 0
     <tr>
       <th>0</th>
       <th>0</th>
-      <td>29</td>
+      <td>126</td>
     </tr>
     <tr>
-      <th>grid.428999.7</th>
-      <th>Pasteur Institute</th>
+      <th>grid.4280.e</th>
+      <th>National University of Singapore</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>grid.7429.8</th>
+      <th>French Institute of Health and Medical Research</th>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>grid.453420.4</th>
+      <th>SingHealth</th>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>grid.431072.3</th>
+      <th>AbbVie (United States)</th>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>grid.116068.8</th>
+      <th>Massachusetts Institute of Technology</th>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>grid.4444.0</th>
+      <th>French National Centre for Scientific Research</th>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>grid.453773.1</th>
+      <th>Wisconsin Alumni Research Foundation</th>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>grid.1008.9</th>
+      <th>University of Melbourne</th>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>grid.417921.8</th>
+      <th>Incyte (United States)</th>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>grid.421350.1</th>
+      <th>Northrop Grumman (United States)</th>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>grid.6363.0</th>
+      <th>Charité - University Medicine Berlin</th>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>grid.1042.7</th>
+      <th>Walter and Eliza Hall Institute of Medical Research</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>grid.16753.36</th>
+      <th>Northwestern University</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>grid.467402.3</th>
+      <th>Helsinn (Switzerland)</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>grid.51462.34</th>
+      <th>Memorial Sloan Kettering Cancer Center</th>
       <td>5</td>
     </tr>
     <tr>
       <th>grid.1058.c</th>
       <th>Murdoch Children's Research Institute</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>grid.422530.2</th>
+      <th>Waters (United Kingdom)</th>
       <td>4</td>
     </tr>
     <tr>
-      <th>grid.453773.1</th>
-      <th>Wisconsin Alumni Research Foundation</th>
-      <td>3</td>
+      <th>grid.420451.6</th>
+      <th>Google (United States)</th>
+      <td>4</td>
     </tr>
     <tr>
-      <th>grid.419905.0</th>
-      <th>Nestlé (Switzerland)</th>
-      <td>3</td>
-    </tr>
-    <tr>
-      <th>grid.420918.6</th>
-      <th>Imperial Innovations (United Kingdom)</th>
-      <td>3</td>
-    </tr>
-    <tr>
-      <th>grid.1055.1</th>
-      <th>Peter MacCallum Cancer Centre</th>
-      <td>3</td>
-    </tr>
-    <tr>
-      <th>grid.25879.31</th>
-      <th>University of Pennsylvania</th>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>grid.1042.7</th>
-      <th>Walter and Eliza Hall Institute of Medical Research</th>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>grid.4444.0</th>
-      <th>French National Centre for Scientific Research</th>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>grid.452266.1</th>
-      <th>Campus Science Support Facilities</th>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>grid.1003.2</th>
-      <th>University of Queensland</th>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>grid.420377.5</th>
-      <th>NEC (Japan)</th>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>grid.420214.1</th>
-      <th>Sanofi (Germany)</th>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>grid.419859.8</th>
-      <th>NEC Corporation of America</th>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>grid.419318.6</th>
-      <th>Intel (United States)</th>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>grid.417521.4</th>
-      <th>Institute of Molecular Biotechnology</th>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>grid.29857.31</th>
-      <th>Pennsylvania State University</th>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>grid.431532.2</th>
-      <th>Mesoblast (United States)</th>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>grid.7429.8</th>
-      <th>French Institute of Health and Medical Research</th>
-      <td>2</td>
+      <th>grid.168010.e</th>
+      <th>Stanford University</th>
+      <td>4</td>
     </tr>
   </tbody>
 </table>
@@ -3854,17 +4177,16 @@ Records extracted: 0
 <h2>10. Clinical Trials (clinical trials -&gt; publications)<a class="headerlink" href="#10.-Clinical-Trials-(clinical-trials-->-publications)" title="Permalink to this headline">¶</a></h2>
 <p>Using the same method, we can retrieve all clinical trials citing publications from my institution.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%</span><span class="k">dsldocs</span> clinical_trials
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">dsldocs</span> clinical_trials
 <span class="n">dsl_last_results</span><span class="p">[</span><span class="n">dsl_last_results</span><span class="p">[</span><span class="s1">&#39;field&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;research_orgs&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -3897,7 +4219,7 @@ Records extracted: 0
   </thead>
   <tbody>
     <tr>
-      <th>29</th>
+      <th>30</th>
       <td>clinical_trials</td>
       <td>research_orgs</td>
       <td>organizations</td>
@@ -3911,11 +4233,10 @@ Records extracted: 0
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># Step 1 - same as before - except now we want the query in chunks</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 1 - same as before - except now we want the query in chunks</span>
 
 <span class="n">clinical_trials_chunks</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query_iterative</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">                  search publications</span>
@@ -3938,7 +4259,7 @@ Records extracted: 0
                   <span class="n">dsl</span><span class="o">.</span><span class="n">query_iterative</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">                        search clinical_trials</span>
 <span class="s2">                            where publication_ids in </span><span class="si">{</span><span class="n">mypubslist</span><span class="si">}</span><span class="s2"></span>
-<span class="s2">                            return clinical_trials[all]</span>
+<span class="s2">                            return clinical_trials[basics+research_orgs]</span>
 <span class="s2">                        &quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
       <span class="p">)</span>
 
@@ -3954,107 +4275,115 @@ Records extracted: 0
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Starting iteration with limit=1000 skip=0 ...
-0-1000 / 8388 (0.46s)
-1000-2000 / 8388 (0.48s)
-2000-3000 / 8388 (0.48s)
-3000-4000 / 8388 (0.48s)
-4000-5000 / 8388 (0.47s)
-5000-6000 / 8388 (0.48s)
-6000-7000 / 8388 (0.52s)
-7000-8000 / 8388 (0.50s)
-8000-8388 / 8388 (0.47s)
+0-1000 / 8884 (3.10s)
+1000-2000 / 8884 (2.89s)
+2000-3000 / 8884 (3.20s)
+3000-4000 / 8884 (3.63s)
+4000-5000 / 8884 (3.87s)
+5000-6000 / 8884 (3.81s)
+6000-7000 / 8884 (1.63s)
+7000-8000 / 8884 (1.48s)
+8000-8884 / 8884 (1.90s)
 ===
-Records extracted: 8388
-Starting iteration with limit=1000 skip=0 ...
-0-12 / 12 (1.20s)
-===
-Records extracted: 12
-Starting iteration with limit=1000 skip=0 ...
-0-18 / 18 (1.36s)
-===
-Records extracted: 18
-Starting iteration with limit=1000 skip=0 ...
-0-25 / 25 (1.40s)
-===
-Records extracted: 25
+Records extracted: 8884
 Starting iteration with limit=1000 skip=0 ...
 0-9 / 9 (1.13s)
 ===
 Records extracted: 9
 Starting iteration with limit=1000 skip=0 ...
-0-8 / 8 (1.06s)
+0-8 / 8 (1.21s)
 ===
 Records extracted: 8
 Starting iteration with limit=1000 skip=0 ...
-0-15 / 15 (1.11s)
-===
-Records extracted: 15
-Starting iteration with limit=1000 skip=0 ...
-0-5 / 5 (1.71s)
-===
-Records extracted: 5
-Starting iteration with limit=1000 skip=0 ...
-0-8 / 8 (1.01s)
-===
-Records extracted: 8
-Starting iteration with limit=1000 skip=0 ...
-0-13 / 13 (1.17s)
-===
-Records extracted: 13
-Starting iteration with limit=1000 skip=0 ...
-0-12 / 12 (1.06s)
-===
-Records extracted: 12
-Starting iteration with limit=1000 skip=0 ...
-0-14 / 14 (1.02s)
+0-14 / 14 (1.01s)
 ===
 Records extracted: 14
 Starting iteration with limit=1000 skip=0 ...
-0-15 / 15 (1.08s)
-===
-Records extracted: 15
-Starting iteration with limit=1000 skip=0 ...
-0-6 / 6 (0.96s)
-===
-Records extracted: 6
-Starting iteration with limit=1000 skip=0 ...
-0-6 / 6 (1.00s)
-===
-Records extracted: 6
-Starting iteration with limit=1000 skip=0 ...
-0-16 / 16 (1.33s)
+0-16 / 16 (0.85s)
 ===
 Records extracted: 16
 Starting iteration with limit=1000 skip=0 ...
-0-12 / 12 (1.13s)
-===
-Records extracted: 12
-Starting iteration with limit=1000 skip=0 ...
-0-10 / 10 (1.23s)
-===
-Records extracted: 10
-Starting iteration with limit=1000 skip=0 ...
-0-13 / 13 (1.10s)
+0-13 / 13 (2.91s)
 ===
 Records extracted: 13
 Starting iteration with limit=1000 skip=0 ...
-0-2 / 2 (0.84s)
+0-9 / 9 (3.13s)
+===
+Records extracted: 9
+Starting iteration with limit=1000 skip=0 ...
+0-7 / 7 (1.20s)
+===
+Records extracted: 7
+Starting iteration with limit=1000 skip=0 ...
+0-7 / 7 (1.15s)
+===
+Records extracted: 7
+Starting iteration with limit=1000 skip=0 ...
+0-3 / 3 (1.26s)
+===
+Records extracted: 3
+Starting iteration with limit=1000 skip=0 ...
+0-3 / 3 (0.89s)
+===
+Records extracted: 3
+Starting iteration with limit=1000 skip=0 ...
+0-9 / 9 (1.31s)
+===
+Records extracted: 9
+Starting iteration with limit=1000 skip=0 ...
+0-13 / 13 (0.88s)
+===
+Records extracted: 13
+Starting iteration with limit=1000 skip=0 ...
+0-7 / 7 (0.85s)
+===
+Records extracted: 7
+Starting iteration with limit=1000 skip=0 ...
+0-14 / 14 (1.25s)
+===
+Records extracted: 14
+Starting iteration with limit=1000 skip=0 ...
+0-14 / 14 (2.15s)
+===
+Records extracted: 14
+Starting iteration with limit=1000 skip=0 ...
+0-8 / 8 (0.84s)
+===
+Records extracted: 8
+Starting iteration with limit=1000 skip=0 ...
+0-11 / 11 (0.87s)
+===
+Records extracted: 11
+Starting iteration with limit=1000 skip=0 ...
+0-4 / 4 (1.57s)
+===
+Records extracted: 4
+Starting iteration with limit=1000 skip=0 ...
+0-6 / 6 (0.92s)
+===
+Records extracted: 6
+Starting iteration with limit=1000 skip=0 ...
+0-7 / 7 (1.04s)
+===
+Records extracted: 7
+Starting iteration with limit=1000 skip=0 ...
+0-2 / 2 (0.92s)
 ===
 Records extracted: 2
 Starting iteration with limit=1000 skip=0 ...
-===
-Records extracted: 0
-Starting iteration with limit=1000 skip=0 ...
-0-3 / 3 (0.90s)
+0-3 / 3 (1.21s)
 ===
 Records extracted: 3
+Starting iteration with limit=1000 skip=0 ...
+===
+Records extracted: 0
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -4076,95 +4405,45 @@ Records extracted: 3
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>phase</th>
-      <th>investigators</th>
-      <th>abstract</th>
       <th>active_years</th>
-      <th>FOR</th>
-      <th>RCDC</th>
-      <th>researchers</th>
-      <th>organizations</th>
-      <th>HRCS_HC</th>
-      <th>dimensions_url</th>
-      <th>...</th>
-      <th>publication_ids</th>
-      <th>category_for</th>
-      <th>HRCS_RAC</th>
-      <th>funder_groups</th>
-      <th>category_hrcs_rac</th>
-      <th>mesh_terms</th>
-      <th>associated_grant_ids</th>
-      <th>category_icrp_ct</th>
-      <th>category_icrp_cso</th>
-      <th>acronym</th>
+      <th>id</th>
+      <th>investigators</th>
+      <th>title</th>
+      <th>research_orgs</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>N/A</td>
-      <td>[[Beverley-Ann Biggs, Prof, Contact person for...</td>
-      <td>In this study, we will compare the effects of ...</td>
-      <td>[2010]</td>
-      <td>[{'id': '3177', 'name': '1117 Public Health an...</td>
-      <td>[{'id': '388', 'name': 'Nutrition'}, {'id': '4...</td>
-      <td>[{'id': 'ur.015271425054.80', 'first_name': 'B...</td>
-      <td>[{'id': 'grid.431143.0', 'name': 'National Hea...</td>
-      <td>[{'id': '908', 'name': 'Reproductive Health an...</td>
-      <td>https://app.dimensions.ai/details/clinical_tri...</td>
-      <td>...</td>
-      <td>[pub.1029788523, pub.1032854231, pub.100861447...</td>
-      <td>[{'id': '3177', 'name': '1117 Public Health an...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>[2021, 2022, 2023, 2024]</td>
+      <td>NCT05170594</td>
+      <td>[[Haiyan Liu, , Principal Investigator, The Se...</td>
+      <td>A Prospective Study of Bevacizumab Combined Wi...</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Phase 1/2</td>
-      <td>[[Steven Deeks, MD, Principal Investigator, Un...</td>
-      <td>The purpose of this study is to determine the ...</td>
-      <td>[2013, 2014]</td>
-      <td>[{'id': '3114', 'name': '1108 Medical Microbio...</td>
-      <td>[{'id': '533', 'name': 'Infectious Diseases'},...</td>
-      <td>[{'id': 'ur.012534455317.24', 'first_name': 'S...</td>
-      <td>[{'id': 'grid.266102.1', 'name': 'University o...</td>
-      <td>[{'id': '898', 'name': 'Infection'}]</td>
-      <td>https://app.dimensions.ai/details/clinical_tri...</td>
-      <td>...</td>
-      <td>[pub.1032634520]</td>
-      <td>[{'id': '3114', 'name': '1108 Medical Microbio...</td>
-      <td>[{'id': '10601', 'name': '6.1 Pharmaceuticals'...</td>
-      <td>[{'id': '5', 'name': 'NIH'}, {'id': '25', 'nam...</td>
-      <td>[{'id': '10500', 'name': '5 Development of Tre...</td>
-      <td>[Acquired Immunodeficiency Syndrome, HIV Infec...</td>
-      <td>[grant.2420809]</td>
+      <td>[2021, 2022, 2023]</td>
+      <td>NCT05147818</td>
       <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>Risk Factors for Acute Kidney Injury in Diabet...</td>
+      <td>[{'city_name': 'Assiut', 'country_name': 'Egyp...</td>
     </tr>
   </tbody>
 </table>
-<p>2 rows × 40 columns</p>
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%</span><span class="k">dsldocs</span> clinical_trials
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">dsldocs</span> clinical_trials
 <span class="n">dsl_last_results</span><span class="p">[</span><span class="n">dsl_last_results</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;organizations&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -4197,7 +4476,7 @@ Records extracted: 3
   </thead>
   <tbody>
     <tr>
-      <th>18</th>
+      <th>19</th>
       <td>clinical_trials</td>
       <td>funders</td>
       <td>organizations</td>
@@ -4207,7 +4486,7 @@ Records extracted: 3
       <td>True</td>
     </tr>
     <tr>
-      <th>29</th>
+      <th>30</th>
       <td>clinical_trials</td>
       <td>research_orgs</td>
       <td>organizations</td>
@@ -4221,11 +4500,10 @@ Records extracted: 3
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">cited_clinical_trials_orgs</span> <span class="o">=</span> <span class="n">cited_clinical_trials</span><span class="o">.</span><span class="n">explode</span><span class="p">(</span><span class="s1">&#39;research_orgs&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cited_clinical_trials_orgs</span> <span class="o">=</span> <span class="n">cited_clinical_trials</span><span class="o">.</span><span class="n">explode</span><span class="p">(</span><span class="s1">&#39;research_orgs&#39;</span><span class="p">)</span>
 
 <span class="n">cited_clinical_trials_orgs</span><span class="p">[</span><span class="s1">&#39;research_orgs_grid_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cited_clinical_trials_orgs</span><span class="p">[</span><span class="s1">&#39;research_orgs&#39;</span><span class="p">]</span><span class="o">.</span>\
     <span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">g</span><span class="p">:</span> <span class="n">g</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">g</span><span class="p">)</span> <span class="o">==</span> <span class="nb">dict</span> <span class="k">else</span> <span class="mi">0</span> <span class="p">)</span>
@@ -4242,7 +4520,7 @@ Records extracted: 3
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -4275,53 +4553,28 @@ Records extracted: 3
   </thead>
   <tbody>
     <tr>
-      <th>grid.431143.0</th>
-      <th>National Health and Medical Research Council</th>
-      <td>11</td>
-    </tr>
-    <tr>
-      <th>grid.1008.9</th>
-      <th>University of Melbourne</th>
-      <td>11</td>
-    </tr>
-    <tr>
-      <th>grid.416153.4</th>
-      <th>Royal Melbourne Hospital</th>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>grid.21107.35</th>
-      <th>Johns Hopkins University</th>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>0</th>
-      <th>0</th>
-      <td>5</td>
-    </tr>
-    <tr>
-      <th>grid.266102.1</th>
-      <th>University of California, San Francisco</th>
-      <td>5</td>
-    </tr>
-    <tr>
-      <th>grid.1058.c</th>
-      <th>Murdoch Children's Research Institute</th>
-      <td>5</td>
-    </tr>
-    <tr>
-      <th>grid.1055.1</th>
-      <th>Peter MacCallum Cancer Centre</th>
-      <td>5</td>
-    </tr>
-    <tr>
       <th>grid.1002.3</th>
       <th>Monash University</th>
-      <td>5</td>
+      <td>6</td>
     </tr>
     <tr>
-      <th>grid.413249.9</th>
-      <th>Royal Prince Alfred Hospital</th>
+      <th>0</th>
+      <th>0</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>grid.4367.6</th>
+      <th>Washington University in St. Louis</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>grid.506076.2</th>
+      <th>Istanbul University Cerrahpaşa</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>grid.223827.e</th>
+      <th>University of Utah</th>
       <td>4</td>
     </tr>
     <tr>
@@ -4330,49 +4583,74 @@ Records extracted: 3
       <td>4</td>
     </tr>
     <tr>
-      <th>grid.416259.d</th>
-      <th>Royal Women's Hospital</th>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>grid.419681.3</th>
-      <th>National Institute of Allergy and Infectious Diseases</th>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>grid.416100.2</th>
-      <th>Royal Brisbane and Women's Hospital</th>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>grid.277151.7</th>
-      <th>Centre Hospitalier Universitaire de Nantes</th>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>grid.1003.2</th>
-      <th>University of Queensland</th>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>grid.1623.6</th>
-      <th>The Alfred Hospital</th>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>grid.5650.6</th>
-      <th>Academic Medical Center</th>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>grid.411109.c</th>
-      <th>Virgen del Rocío University Hospital</th>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>grid.412687.e</th>
-      <th>Ottawa Hospital</th>
+      <th>grid.411438.b</th>
+      <th>Hospital Universitari Germans Trias i Pujol</th>
       <td>3</td>
+    </tr>
+    <tr>
+      <th>grid.194645.b</th>
+      <th>University of Hong Kong</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>grid.21925.3d</th>
+      <th>University of Pittsburgh</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>grid.248762.d</th>
+      <th>BC Cancer Agency</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>grid.2515.3</th>
+      <th>Boston Children's Hospital</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>grid.252487.e</th>
+      <th>Assiut University</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>grid.412860.9</th>
+      <th>Wake Forest Baptist Medical Center</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>grid.428313.f</th>
+      <th>Corporació Sanitària Parc Taulí</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>grid.266102.1</th>
+      <th>University of California, San Francisco</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>grid.81821.32</th>
+      <th>Hospital Universitario La Paz</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>grid.411052.3</th>
+      <th>Central University Hospital of Asturias</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>grid.411349.a</th>
+      <th>Reina Sofia Hospital</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>grid.417574.4</th>
+      <th>Abbott (United States)</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>grid.440627.3</th>
+      <th>University of the Andes, Chile</th>
+      <td>2</td>
     </tr>
   </tbody>
 </table>
@@ -4383,17 +4661,16 @@ Records extracted: 3
 <h2>11. Grants (publications -&gt; grants)<a class="headerlink" href="#11.-Grants-(publications-->-grants)" title="Permalink to this headline">¶</a></h2>
 <p>Using the same method, we can retrieve all grants funding publications from my institution.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%</span><span class="k">dsldocs</span> publications
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">dsldocs</span> publications
 <span class="n">dsl_last_results</span><span class="p">[</span><span class="n">dsl_last_results</span><span class="p">[</span><span class="s1">&#39;field&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;ids&#39;</span><span class="p">)]</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -4426,7 +4703,17 @@ Records extracted: 3
   </thead>
   <tbody>
     <tr>
-      <th>39</th>
+      <th>20</th>
+      <td>publications</td>
+      <td>clinical_trial_ids</td>
+      <td>string</td>
+      <td>Clinical Trial IDs mentioned in publications f...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>47</th>
       <td>publications</td>
       <td>reference_ids</td>
       <td>string</td>
@@ -4436,7 +4723,7 @@ Records extracted: 3
       <td>False</td>
     </tr>
     <tr>
-      <th>51</th>
+      <th>61</th>
       <td>publications</td>
       <td>supporting_grant_ids</td>
       <td>string</td>
@@ -4450,11 +4737,10 @@ Records extracted: 3
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># Step 1 - same as before - except now we want the query in chunks</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 1 - same as before - except now we want the query in chunks</span>
 
 <span class="n">publications</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query_iterative</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">                  search publications</span>
@@ -4484,7 +4770,7 @@ Records extracted: 3
                   <span class="n">dsl</span><span class="o">.</span><span class="n">query_iterative</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">                        search grants</span>
 <span class="s2">                            where id in </span><span class="si">{</span><span class="n">myglist</span><span class="si">}</span><span class="s2"></span>
-<span class="s2">                          return grants[all]</span>
+<span class="s2">                          return grants[basics+funding_usd]</span>
 <span class="s2">                        &quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
       <span class="p">)</span>
 
@@ -4500,110 +4786,158 @@ Records extracted: 3
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Starting iteration with limit=1000 skip=0 ...
-0-1000 / 10740 (2.57s)
-1000-2000 / 10740 (1.55s)
-2000-3000 / 10740 (1.03s)
-3000-4000 / 10740 (0.97s)
-4000-5000 / 10740 (1.16s)
-5000-6000 / 10740 (2.27s)
-6000-7000 / 10740 (0.96s)
-7000-8000 / 10740 (0.97s)
-8000-9000 / 10740 (0.96s)
-9000-10000 / 10740 (1.00s)
-10000-10740 / 10740 (0.95s)
+0-1000 / 14092 (1.94s)
+1000-2000 / 14092 (1.86s)
+2000-3000 / 14092 (1.22s)
+3000-4000 / 14092 (1.21s)
+4000-5000 / 14092 (4.85s)
+5000-6000 / 14092 (1.20s)
+6000-7000 / 14092 (1.26s)
+7000-8000 / 14092 (1.19s)
+8000-9000 / 14092 (1.18s)
+9000-10000 / 14092 (1.26s)
+10000-11000 / 14092 (1.38s)
+11000-12000 / 14092 (1.25s)
+12000-13000 / 14092 (1.23s)
+13000-14000 / 14092 (1.18s)
+14000-14092 / 14092 (1.13s)
 ===
-Records extracted: 10740
+Records extracted: 14092
 Starting iteration with limit=1000 skip=0 ...
-0-250 / 250 (2.85s)
-===
-Records extracted: 250
-Starting iteration with limit=1000 skip=0 ...
-0-249 / 249 (2.21s)
-===
-Records extracted: 249
-Starting iteration with limit=1000 skip=0 ...
-0-250 / 250 (2.34s)
+0-250 / 250 (1.01s)
 ===
 Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
-0-249 / 249 (2.33s)
-===
-Records extracted: 249
-Starting iteration with limit=1000 skip=0 ...
-0-250 / 250 (3.55s)
+0-250 / 250 (1.29s)
 ===
 Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
-0-249 / 249 (5.50s)
+0-250 / 250 (1.00s)
 ===
-Records extracted: 249
+Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
-0-248 / 248 (3.39s)
+0-250 / 250 (1.12s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.07s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.03s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (0.95s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (0.70s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-248 / 248 (0.98s)
 ===
 Records extracted: 248
 Starting iteration with limit=1000 skip=0 ...
-0-250 / 250 (3.06s)
+0-250 / 250 (0.72s)
 ===
 Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
-0-250 / 250 (2.95s)
+0-250 / 250 (0.73s)
 ===
 Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
-0-249 / 249 (3.08s)
-===
-Records extracted: 249
-Starting iteration with limit=1000 skip=0 ...
-0-249 / 249 (3.34s)
-===
-Records extracted: 249
-Starting iteration with limit=1000 skip=0 ...
-0-250 / 250 (2.94s)
+0-250 / 250 (0.96s)
 ===
 Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
-0-249 / 249 (2.87s)
-===
-Records extracted: 249
-Starting iteration with limit=1000 skip=0 ...
-0-250 / 250 (2.85s)
+0-250 / 250 (0.97s)
 ===
 Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
-0-249 / 249 (2.86s)
-===
-Records extracted: 249
-Starting iteration with limit=1000 skip=0 ...
-0-250 / 250 (3.12s)
+0-250 / 250 (0.95s)
 ===
 Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
-0-250 / 250 (3.11s)
+0-250 / 250 (0.98s)
 ===
 Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
-0-250 / 250 (2.95s)
+0-250 / 250 (0.99s)
 ===
 Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
-0-249 / 249 (2.99s)
+0-250 / 250 (1.02s)
 ===
-Records extracted: 249
+Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
-0-249 / 249 (2.90s)
+0-250 / 250 (0.71s)
 ===
-Records extracted: 249
+Records extracted: 250
 Starting iteration with limit=1000 skip=0 ...
-0-29 / 29 (0.77s)
+0-250 / 250 (0.80s)
 ===
-Records extracted: 29
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.66s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (0.78s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (1.06s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (0.98s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (0.95s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (0.94s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (0.97s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (0.98s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (0.93s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (0.98s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (0.94s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-250 / 250 (0.85s)
+===
+Records extracted: 250
+Starting iteration with limit=1000 skip=0 ...
+0-247 / 247 (0.97s)
+===
+Records extracted: 247
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -4625,173 +4959,116 @@ Records extracted: 29
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>project_num</th>
+      <th>active_year</th>
+      <th>end_date</th>
+      <th>funders</th>
       <th>funding_org_name</th>
-      <th>abstract</th>
-      <th>HRCS_RAC</th>
-      <th>FOR</th>
-      <th>funding_jpy</th>
-      <th>researchers</th>
-      <th>funding_nzd</th>
+      <th>funding_usd</th>
+      <th>grant_number</th>
+      <th>id</th>
+      <th>language</th>
       <th>original_title</th>
-      <th>funding_cad</th>
-      <th>...</th>
-      <th>terms</th>
-      <th>foa_number</th>
-      <th>category_for</th>
-      <th>category_bra</th>
-      <th>category_hra</th>
-      <th>category_icrp_ct</th>
-      <th>category_icrp_cso</th>
-      <th>funding_org_acronym</th>
-      <th>funding_org_city</th>
-      <th>category_sdg</th>
+      <th>start_date</th>
+      <th>start_year</th>
+      <th>title</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>R01HG010480</td>
-      <td>National Human Genome Research Institute</td>
-      <td>Abstract Modern genome-wide association studie...</td>
-      <td>[{'id': '10201', 'name': '2.1 Biological and e...</td>
-      <td>[{'id': '2358', 'name': '0104 Statistics'}, {'...</td>
-      <td>120732088.0</td>
-      <td>[{'id': 'ur.013651144457.90', 'first_name': 'N...</td>
-      <td>1675920.0</td>
-      <td>Robust Methods for Polygenic Analysis to Infor...</td>
-      <td>1459322.0</td>
-      <td>...</td>
-      <td>[robust method, polygenic analysis, analysis, ...</td>
-      <td>PA-18-484</td>
-      <td>[{'id': '2201', 'name': '01 Mathematical Scien...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>[2021, 2022, 2023, 2024]</td>
+      <td>2024-03-31</td>
+      <td>[{'acronym': 'DOE SC', 'city_name': 'Washingto...</td>
+      <td>Office of Science</td>
+      <td>14773638.0</td>
+      <td>DE-SC0007881</td>
+      <td>grant.4320658</td>
+      <td>en</td>
+      <td>Particle Physics and Cosmology Research</td>
+      <td>2021-07-01</td>
+      <td>2021.0</td>
+      <td>Particle Physics and Cosmology Research</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>R21NS107739</td>
-      <td>National Institute of Neurological Disorders a...</td>
-      <td>ABSTRACT Epilepsy is a devastating neurologica...</td>
-      <td>NaN</td>
-      <td>[{'id': '3120', 'name': '1109 Neurosciences'}]</td>
-      <td>48433820.0</td>
-      <td>[{'id': 'ur.01011324163.07', 'first_name': 'Ca...</td>
-      <td>674575.0</td>
-      <td>Prediction of seizure lateralization and posto...</td>
-      <td>589505.0</td>
-      <td>...</td>
-      <td>[seizure lateralization, lateralization, posto...</td>
-      <td>PA-18-358</td>
-      <td>[{'id': '2211', 'name': '11 Medical and Health...</td>
-      <td>[{'id': '4001', 'name': 'Clinical Medicine and...</td>
-      <td>[{'id': '3901', 'name': 'Clinical'}]</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>[2020, 2021, 2022]</td>
+      <td>2022-03-31</td>
+      <td>[{'acronym': 'JSPS', 'city_name': 'Tokyo', 'co...</td>
+      <td>Japan Society for the Promotion of Science</td>
+      <td>62350.0</td>
+      <td>20K21008</td>
+      <td>grant.9399908</td>
+      <td>ja</td>
+      <td>Analysis of bounding flight in birds by dynami...</td>
+      <td>2020-07-30</td>
+      <td>2020.0</td>
+      <td>Analysis of bounding flight in birds by dynami...</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>1158127</td>
-      <td>National Health and Medical Research Council</td>
-      <td>Genome-wide association studies for psychiatri...</td>
-      <td>[{'id': '10201', 'name': '2.1 Biological and e...</td>
-      <td>[{'id': '2620', 'name': '0604 Genetics'}, {'id...</td>
-      <td>72444320.0</td>
-      <td>[{'id': 'ur.01074226355.01', 'first_name': 'Sa...</td>
-      <td>1008990.0</td>
-      <td>Using Statistical Genetics to Elucidate the Ef...</td>
-      <td>881753.0</td>
-      <td>...</td>
-      <td>[statistical genetics, genetics, effect, assoc...</td>
-      <td>Not available</td>
-      <td>[{'id': '2620', 'name': '0604 Genetics'}, {'id...</td>
-      <td>[{'id': '4000', 'name': 'Basic Science'}]</td>
-      <td>[{'id': '3900', 'name': 'Biomedical'}]</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>[2020, 2021, 2022, 2023, 2024, 2025]</td>
+      <td>2025-06-30</td>
+      <td>[{'acronym': 'NIAID', 'city_name': 'Bethesda',...</td>
+      <td>National Institute of Allergy and Infectious D...</td>
+      <td>1587803.0</td>
+      <td>R01AI153400</td>
+      <td>grant.9293892</td>
+      <td>en</td>
+      <td>Polymerase Inhibitors of Respiratory Syncytial...</td>
+      <td>2020-07-01</td>
+      <td>2020.0</td>
+      <td>Polymerase Inhibitors of Respiratory Syncytial...</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>1154217</td>
-      <td>National Health and Medical Research Council</td>
-      <td>Arthritis and musculoskeletal conditions are a...</td>
-      <td>[{'id': '10201', 'name': '2.1 Biological and e...</td>
-      <td>[{'id': '3053', 'name': '1103 Clinical Science...</td>
-      <td>54872472.0</td>
-      <td>[{'id': 'ur.016155464604.94', 'first_name': 'R...</td>
-      <td>764253.0</td>
-      <td>Lifestyle management of knee osteoarthritis: c...</td>
-      <td>667878.0</td>
-      <td>...</td>
-      <td>[lifestyle management, management, knee osteoa...</td>
-      <td>Not available</td>
-      <td>[{'id': '3053', 'name': '1103 Clinical Science...</td>
-      <td>[{'id': '4001', 'name': 'Clinical Medicine and...</td>
-      <td>[{'id': '3901', 'name': 'Clinical'}]</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>[2020, 2021, 2022, 2023, 2024, 2025]</td>
+      <td>2025-05-31</td>
+      <td>[{'acronym': 'NIAID', 'city_name': 'Bethesda',...</td>
+      <td>National Institute of Allergy and Infectious D...</td>
+      <td>1082990.0</td>
+      <td>R01AI148407</td>
+      <td>grant.9293759</td>
+      <td>en</td>
+      <td>Investigating the basis of MAIT cell antigen p...</td>
+      <td>2020-06-15</td>
+      <td>2020.0</td>
+      <td>Investigating the basis of MAIT cell antigen p...</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>1159261</td>
-      <td>National Health and Medical Research Council</td>
-      <td>Preeclampsia and fetal growth restriction are ...</td>
-      <td>NaN</td>
-      <td>[{'id': '3158', 'name': '1114 Paediatrics and ...</td>
-      <td>36628680.0</td>
-      <td>[{'id': 'ur.010007620107.38', 'first_name': 'T...</td>
-      <td>510157.0</td>
-      <td>New diagnostics to predict preelampsia and fet...</td>
-      <td>445824.0</td>
-      <td>...</td>
-      <td>[new diagnostics, diagnostics, fetal growth re...</td>
-      <td>Not available</td>
-      <td>[{'id': '3158', 'name': '1114 Paediatrics and ...</td>
-      <td>[{'id': '4000', 'name': 'Basic Science'}]</td>
-      <td>[{'id': '3900', 'name': 'Biomedical'}]</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>[2020, 2021, 2022, 2023]</td>
+      <td>2023-06-01</td>
+      <td>[{'acronym': 'ARC', 'city_name': 'Canberra', '...</td>
+      <td>Australian Research Council</td>
+      <td>333250.0</td>
+      <td>DE200100264</td>
+      <td>grant.8676066</td>
+      <td>en</td>
+      <td>Giving Mums a fair go: culturally-responsive c...</td>
+      <td>2020-06-01</td>
+      <td>2020.0</td>
+      <td>Giving Mums a fair go: culturally-responsive c...</td>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 58 columns</p>
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">pubs_grants</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;supporting_grant_ids&#39;</span><span class="p">)</span><span class="o">.</span>\
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pubs_grants</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;supporting_grant_ids&#39;</span><span class="p">)</span><span class="o">.</span>\
     <span class="n">agg</span><span class="p">({</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="s1">&#39;count&#39;</span><span class="p">})</span><span class="o">.</span>\
     <span class="n">reset_index</span><span class="p">()</span><span class="o">.</span>\
     <span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="s1">&#39;pubs&#39;</span><span class="p">,</span><span class="s1">&#39;supporting_grant_ids&#39;</span><span class="p">:</span><span class="s1">&#39;id&#39;</span><span class="p">})</span><span class="o">.</span>\
     <span class="n">merge</span><span class="p">(</span><span class="n">grant_details</span><span class="p">[[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span><span class="s1">&#39;original_title&#39;</span><span class="p">,</span><span class="s1">&#39;funding_usd&#39;</span><span class="p">]],</span>
           <span class="n">on</span><span class="o">=</span><span class="s1">&#39;id&#39;</span><span class="p">)</span><span class="o">.</span>\
     <span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;pubs&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -4821,39 +5098,39 @@ Records extracted: 29
   </thead>
   <tbody>
     <tr>
-      <th>2213</th>
-      <td>grant.6711717</td>
-      <td>35</td>
-      <td>ARC Centre of Excellence in Exciton Science</td>
-      <td>22669994.0</td>
+      <th>6803</th>
+      <td>grant.8470130</td>
+      <td>63</td>
+      <td>Consolidated Grant 2019</td>
+      <td>2724578.0</td>
     </tr>
     <tr>
-      <th>1210</th>
-      <td>grant.3931418</td>
-      <td>31</td>
-      <td>ARC Centre of Excellence in Convergent Bio-Nan...</td>
-      <td>19674412.0</td>
+      <th>6811</th>
+      <td>grant.8470469</td>
+      <td>61</td>
+      <td>Particle Physics Consolidated Grant from the U...</td>
+      <td>3097905.0</td>
     </tr>
     <tr>
-      <th>3478</th>
-      <td>grant.7874297</td>
-      <td>23</td>
-      <td>Advancing Nanomedicine through Particle Techno...</td>
-      <td>617151.0</td>
+      <th>6273</th>
+      <td>grant.7924120</td>
+      <td>61</td>
+      <td>GRIDPP PROJECT COORDINATION</td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>1146</th>
-      <td>grant.3860228</td>
-      <td>22</td>
-      <td>ENIGMA Center for Worldwide Medicine, Imaging ...</td>
-      <td>10065774.0</td>
+      <th>2155</th>
+      <td>grant.4320658</td>
+      <td>57</td>
+      <td>Particle Physics and Cosmology Research</td>
+      <td>14773638.0</td>
     </tr>
     <tr>
-      <th>4159</th>
-      <td>grant.7878111</td>
-      <td>22</td>
-      <td>Novel therapies, risk pathways and prevention ...</td>
-      <td>643236.0</td>
+      <th>206</th>
+      <td>grant.2438793</td>
+      <td>55</td>
+      <td>Cancer Center Support Grant</td>
+      <td>266136064.0</td>
     </tr>
     <tr>
       <th>...</th>
@@ -4863,157 +5140,44 @@ Records extracted: 29
       <td>...</td>
     </tr>
     <tr>
-      <th>1953</th>
-      <td>grant.5498709</td>
+      <th>3151</th>
+      <td>grant.6447242</td>
       <td>1</td>
-      <td>Non-Invasive Imaging of Glymphatic Clearance: ...</td>
-      <td>411126.0</td>
+      <td>Participatory Urban Living for Sustainable Env...</td>
+      <td>5696332.0</td>
     </tr>
     <tr>
-      <th>1954</th>
-      <td>grant.5498721</td>
+      <th>3150</th>
+      <td>grant.6447136</td>
       <td>1</td>
-      <td>Mitochondrial ubiquitin dynamics and apoptotic...</td>
-      <td>754966.0</td>
+      <td>Towards Novel Inert (Photo-)toxic Ru(II) Polyp...</td>
+      <td>2317685.0</td>
     </tr>
     <tr>
-      <th>1955</th>
-      <td>grant.5499803</td>
+      <th>3149</th>
+      <td>grant.6446143</td>
       <td>1</td>
-      <td>EMPOWER: Early Signs Monitoring to Prevent Rel...</td>
-      <td>1105477.0</td>
+      <td>Understanding how an MLH1 promoter polymorphis...</td>
+      <td>952550.0</td>
     </tr>
     <tr>
-      <th>1956</th>
-      <td>grant.5503573</td>
+      <th>3148</th>
+      <td>grant.6446046</td>
       <td>1</td>
-      <td>Molecular Regulation of AEP during Ageing</td>
-      <td>3307629.0</td>
+      <td>Macronutrients and Metabolic Health - Understa...</td>
+      <td>2822859.0</td>
     </tr>
     <tr>
-      <th>5017</th>
-      <td>grant.8681118</td>
+      <th>3997</th>
+      <td>grant.6803312</td>
       <td>1</td>
-      <td>Development of molecular markers for applicati...</td>
-      <td>NaN</td>
+      <td>Macrophage Dysfunction in Obesity, Diabetes an...</td>
+      <td>12071621.0</td>
     </tr>
   </tbody>
 </table>
-<p>5018 rows × 4 columns</p>
+<p>7995 rows × 4 columns</p>
 </div></div>
-</div>
-<div class="section" id="Why-didn’t-I-use-resulting_publication_ids-?">
-<h3>Why didn’t I use resulting_publication_ids ?<a class="headerlink" href="#Why-didn’t-I-use-resulting_publication_ids-?" title="Permalink to this headline">¶</a></h3>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%%</span><span class="k">dsldf</span>
-
-search grants
-where resulting_publication_ids in [&quot;pub.1005269097&quot;]
-</pre></div>
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Returned Grants: 3 (total = 3)
-Time: 0.46s
-WARNINGS [1]
-Field &#39;resulting_publication_ids&#39; is deprecated. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>start_date</th>
-      <th>language</th>
-      <th>id</th>
-      <th>original_title</th>
-      <th>title_language</th>
-      <th>title</th>
-      <th>active_year</th>
-      <th>start_year</th>
-      <th>funding_org_name</th>
-      <th>end_date</th>
-      <th>project_num</th>
-      <th>funders</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>2018-12-15</td>
-      <td>en</td>
-      <td>grant.4320525</td>
-      <td>Nanoscale X-Ray Imaging and Dynamics of Electr...</td>
-      <td>en</td>
-      <td>Nanoscale X-Ray Imaging and Dynamics of Electr...</td>
-      <td>[2018, 2019, 2020, 2021]</td>
-      <td>2018</td>
-      <td>Office of Basic Energy Sciences</td>
-      <td>2021-12-14</td>
-      <td>DE-SC0001805</td>
-      <td>[{'id': 'grid.452988.a', 'types': ['Government...</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2014-08-15</td>
-      <td>en</td>
-      <td>grant.3660654</td>
-      <td>Strain-induced modification of nanoscale mater...</td>
-      <td>en</td>
-      <td>Strain-induced modification of nanoscale mater...</td>
-      <td>[2014, 2015, 2016, 2017, 2018]</td>
-      <td>2014</td>
-      <td>Directorate for Mathematical &amp; Physical Sciences</td>
-      <td>2018-07-31</td>
-      <td>1411335</td>
-      <td>[{'id': 'grid.457875.c', 'types': ['Government...</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2009-08-15</td>
-      <td>en</td>
-      <td>grant.3100327</td>
-      <td>Magnetic Transition Metal Nanowires</td>
-      <td>en</td>
-      <td>Magnetic Transition Metal Nanowires</td>
-      <td>[2009, 2010, 2011, 2012, 2013]</td>
-      <td>2009</td>
-      <td>Directorate for Mathematical &amp; Physical Sciences</td>
-      <td>2013-09-30</td>
-      <td>0906957</td>
-      <td>[{'id': 'grid.457875.c', 'types': ['Government...</td>
-    </tr>
-  </tbody>
-</table>
-</div></div>
-</div>
 </div>
 </div>
 <div class="section" id="Conclusions">
@@ -5038,7 +5202,6 @@ Field &#39;resulting_publication_ids&#39; is deprecated. Please refer to https:/
            
           </div>
           <footer>
-  
 
   <hr/>
 
@@ -5057,7 +5220,6 @@ Field &#39;resulting_publication_ids&#39; is deprecated. Please refer to https:/
 
 
 </footer>
-
         </div>
       </div>
 

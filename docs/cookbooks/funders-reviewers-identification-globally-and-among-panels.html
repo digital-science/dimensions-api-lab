@@ -1,0 +1,1675 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Identification of reviewers for funders: Globally and among Panels &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/custom.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Extracting researchers based on affiliations and publications history" href="Researchers-Search-tips-V2.html" />
+    
+
+   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149959808-1"></script>
+   <!-- <script src="_static/js/custom.js"></script> -->
+
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> DSL
+          
+
+          
+            
+            <img src="../_static/dimensions-logo@2x.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+
+   <p class="">
+      <h3 id="cookbooks_title">API COOKBOOKS</h3>
+   </p>
+
+
+   
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Folder</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Calculating-the-H-Index-of-a-researcher.html">Calculating the H-index of a researcher</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Calculating-the-H-Index-of-a-researcher.html#Background">Background</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Calculating-the-H-Index-of-a-researcher.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Calculating-the-H-Index-of-a-researcher.html#Selecting-a-researcher">Selecting a researcher</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Calculating-the-H-Index-of-a-researcher.html#The-H-Index-function">The H-Index function</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Calculating-the-H-Index-of-a-researcher.html#Getting-citations-data-from-Dimensions">Getting citations data from Dimensions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Calculating-the-H-Index-of-a-researcher.html#Wrapping-things-up">Wrapping things up</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Calculating-the-H-Index-of-a-researcher.html#Where-to-find-out-more">Where to find out more</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Experts-search-introduction.html">Expert Identification with the Dimensions API - An Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Experts-search-introduction.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Experts-search-introduction.html#At-a-glance">At a glance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Experts-search-introduction.html#Step-1:-Concept-Extraction">Step 1: Concept Extraction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Experts-search-introduction.html#What-are-concepts?">What are concepts?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Experts-search-introduction.html#Extracting-concepts-with-the-DSL">Extracting concepts with the DSL</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Experts-search-introduction.html#Step-2:-Expert-Identification">Step 2: Expert Identification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Experts-search-introduction.html#Example-1.-Basic-query-using-concepts">Example 1. Basic query using <code class="docutils literal notranslate"><span class="pre">concepts</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Experts-search-introduction.html#Example-2.-Query-with-OR-connectors">Example 2. Query with <code class="docutils literal notranslate"><span class="pre">OR</span></code> connectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Experts-search-introduction.html#Example-3.-Query-with-where-filters">Example 3. Query with <code class="docutils literal notranslate"><span class="pre">where</span></code> filters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Experts-search-introduction.html#Example-4.-Adding-Overlap-Annotations-(eg-for-conflict-of-interests-checks)">Example 4. Adding Overlap Annotations (eg for conflict of interests checks)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Experts-search-introduction.html#Example-5.-Query-with-MUST/NOT-Operators">Example 5. Query with MUST/NOT Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Experts-search-introduction.html#Example-6.-MUST-together-with-AND/OR">Example 6. MUST together with AND/OR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Experts-search-introduction.html#Example-7.-Wildcard-searches">Example 7. Wildcard searches</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Experts-search-introduction.html#Additional-resources:-shortcut-functions-included-in-Dimcli">Additional resources: shortcut functions included in Dimcli</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Experts-search-introduction.html#extract_concepts">extract_concepts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Experts-search-introduction.html#identify_experts">identify_experts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Experts-search-introduction.html#Build-a-reviewers-matrix">Build a reviewers matrix</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Researchers-Search-tips-V2.html">Extracting researchers based on affiliations and publications history</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Researchers-Search-tips-V2.html#Prerequisites">Prerequisites</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Researchers-Search-tips-V2.html#Select-an-organization-ID">Select an organization ID</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Researchers-Search-tips-V2.html#Background:-understanding-the-data-model">Background: understanding the data model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Researchers-Search-tips-V2.html#Methodology:-two-options-available">Methodology: two options available</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Researchers-Search-tips-V2.html#Approach-1.-From-publications-to-researchers">Approach 1. From publications to researchers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Researchers-Search-tips-V2.html#Approach-2.-From-researchers-to-publications">Approach 2. From researchers to publications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Researchers-Search-tips-V2.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Identification of reviewers for funders: Globally and among Panels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Introduction:-Use-Cases-For-Reviewer-Identification">Introduction: Use Cases For Reviewer Identification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Kinds-of-identification">Kinds of identification</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#1.-Loading-and-preprocessing-text-data">1. Loading and preprocessing text data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#1.1-Loading-from-File-(placeholder-code)">1.1 Loading from File (placeholder code)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#1.2-Loading-Sample-Data">1.2 Loading Sample Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#1.3-Preprocess-data-and-extract-concepts">1.3 Preprocess data and extract concepts</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#2.-The-Two-Use-Cases---Recap">2. The Two Use Cases - Recap</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#2.1-Global-identification-use-case">2.1 Global identification use case</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#2.2-Panel-identification-use-case">2.2 Panel identification use case</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#3.-Global-identification">3. Global identification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#3.1-Advanced-Cases:-Working-around-the-limitations-of-global-search">3.1 Advanced Cases: Working around the limitations of global search</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#3.1.1-Searching-based-on-organizational-affiliation">3.1.1 Searching based on organizational affiliation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#3.1.2-Searching-based-on-previous-funding-history">3.1.2 Searching based on previous funding history</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#4.-Panel-Identification">4. Panel Identification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+
+
+   <div id="sidebar_github" style="margin-top: 12px;">
+   <h3>Github Source</h3>
+
+      <div style="margin: 10px 20px;">
+      
+         <iframe src="https://ghbtns.com/github-btn.html?user=digital-science&repo=dimensions-api-lab&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+
+         <iframe src="https://ghbtns.com/github-btn.html?user=digital-science&repo=dimensions-api-lab&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe> 
+      
+      </div>
+
+   </div>
+
+
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DSL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+
+    
+
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt .copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js'></script>
+<script>require=requirejs;</script><a class="reference external image-reference" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/cookbooks/funders-reviewers-identification-globally-and-among-panels.ipynb"><img alt="../_images/badge-colab.svg" src="../_images/badge-colab.svg" /></a>
+<a class="reference external image-reference" href="https://github.com/digital-science/dimensions-api-lab/blob/master/cookbooks/funders-reviewers-identification-globally-and-among-panels.ipynb"><img alt="../_images/badge-github-custom.svg" src="../_images/badge-github-custom.svg" /></a>
+<hr class="docutils" />
+<div class="section" id="Identification-of-reviewers-for-funders:-Globally-and-among-Panels">
+<h1>Identification of reviewers for funders: Globally and among Panels<a class="headerlink" href="#Identification-of-reviewers-for-funders:-Globally-and-among-Panels" title="Permalink to this headline">¶</a></h1>
+<p>This notebook shows to use the <a class="reference external" href="https://docs.dimensions.ai/dsl/expert-identification.html">expert identification</a> workflow available via Dimensions Analytics API, with a focus on the use case of funders identifying reviewers.</p>
+<p>For more general expert identification using the Dimensions Analytics API, see <a class="reference external" href="https://api-lab.dimensions.ai/cookbooks/7-researchers/Experts-search-introduction.html">Expert Identification with the Dimensions API - An Introduction</a>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">CHANGELOG</span><span class="se">\n</span><span class="s2">This notebook was last run on </span><span class="si">%s</span><span class="se">\n</span><span class="s2">==&quot;</span> <span class="o">%</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">, %Y&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+==
+CHANGELOG
+This notebook was last run on Jan 25, 2022
+==
+</pre></div></div>
+</div>
+<div class="section" id="Introduction:-Use-Cases-For-Reviewer-Identification">
+<h2>Introduction: Use Cases For Reviewer Identification<a class="headerlink" href="#Introduction:-Use-Cases-For-Reviewer-Identification" title="Permalink to this headline">¶</a></h2>
+<p>A very common workflow for research funders is to solicit grant applications, then to have members of the research community critique and score those applications to determine what is ultimately funded.</p>
+<p>A challenge for this workflow revolves around finding and assigning the appropriate reviewers to each application. This task is most often handled by relying on past experience and insider knowledge of a specific research area. This approach is not always reliable, is difficult to impart when program staff changes, and risks forming an insular subset of the research community.</p>
+<p>To aid in this problem, Dimensions has developed a suite of tools to help identify researchers for scientific research proposals. These include a GUI available inside the <a class="reference external" href="https://www.digital-science.com/blog/events/webinar-finding-reviewers-dimensions/">Dimensions app</a>, as well a programmatic approach using the <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> which will be described here.</p>
+<hr class="docutils" />
+<p>The overall workflow to identify reviewers is described in <a class="reference external" href="https://api-lab.dimensions.ai/cookbooks/7-researchers/Experts-search-introduction.html">Expert Identification with the Dimensions API - An Introduction</a>, and is discussed in more detail there. At its core, the process has two steps: 1. Use Dimensions Analytics API to extract key concepts from grant application text 2. Use those concepts to search in the Dimensions Analytics API for relevant researchers</p>
+<p>These two steps will be performed and only commented on lightly in this notebook. For more details, see the example linked above.</p>
+<div class="section" id="Kinds-of-identification">
+<h3>Kinds of identification<a class="headerlink" href="#Kinds-of-identification" title="Permalink to this headline">¶</a></h3>
+<p>There are two “kinds” of reviewer identification that can be performed. These are: 1. <strong>GLOBAL IDENTIFICATION</strong> - Where reviewers are identified from the body of all researchers - for example, find the best reviewers for an application worldwide, or from a specific country</p>
+<p><strong>Example 1:</strong> A funder is trying to find reviewers for a set of applications, but only wishes to use people they have already funded (e.g. people they already know, and do not need to worry about vetting). In that case, the body of researchers they are looking for is <em>all researchers who have been funded by them in the past</em>.</p>
+<p><strong>Example 2:</strong> A funder is working in partnership with a collection of universities to perform a body of research. As part of that partnership, personnel from these universities will review grant applications. In that case, the body of researchs they are looking for is <em>all researchers currently affiliated with any of a list of universities.</em></p>
+<ol class="arabic simple" start="2">
+<li><p><strong>PANEL IDENTIFICATION</strong> - Where reviewers are identified from a list of known researchers - for example, find the best reviewers for an application from a panel of reviewers</p></li>
+</ol>
+<p><strong>Example:</strong> A funder has a pre-assembled body of a dozen researchers which it intends to use to review a body of a dozen applications, each of which needs three reviewers. A total of 12 x 12 x 3 = <em>432 assignments</em> need to be made. These assignments should align application topic and reviewer expertise. This is a very arduous task for a human looking at blocks of text (e.g. application abstract vs. reviewer CV) for 144 possible combinations.</p>
+<p>Each of these will be described in subsections below.</p>
+<p><strong>NOTE</strong> In neither of these scenarios is this utility meant to supplant the need for human work and produce a fully automated workflow. Instead, this approach is meant to assist human selection of reviewers, reducing workload by narrowing to a subset of relevant reviews. Final selections can then be made by program staff.</p>
+</div>
+</div>
+<div class="section" id="Prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>This notebook assumes you have installed the <a class="reference external" href="https://pypi.org/project/dimcli/">Dimcli</a> library and are familiar with the <a class="reference external" href="https://api-lab.dimensions.ai/cookbooks/1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html">‘Getting Started’ tutorial</a>.</p>
+<p>To generate an API key from the Dimensions webapp, go to “My Account”. Under “General Settings” there is an “API key” section where there is a “Create API key” button. More information on this can be found <a class="reference external" href="https://dimensions.freshdesk.com/support/solutions/articles/23000018791">here</a>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install dimcli -U --quiet
+
+<span class="kn">import</span> <span class="nn">dimcli</span>
+<span class="kn">from</span> <span class="nn">dimcli.utils</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">json</span><span class="o">,</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">Logging in..&quot;</span><span class="p">)</span>
+<span class="c1"># https://digital-science.github.io/dimcli/getting-started.html#authentication</span>
+<span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;https://app.dimensions.ai&quot;</span>
+<span class="k">if</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+  <span class="kn">import</span> <span class="nn">getpass</span>
+  <span class="n">KEY</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;API Key: &#39;</span><span class="p">)</span>
+  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">KEY</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="n">ENDPOINT</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="n">KEY</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">KEY</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="n">ENDPOINT</span><span class="p">)</span>
+<span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Searching config file credentials for &#39;https://app.dimensions.ai&#39; endpoint..
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+==
+Logging in..
+Dimcli - Dimensions API Client (v0.9.6)
+Connected to: &lt;https://app.dimensions.ai/api/dsl&gt; - DSL v2.0
+Method: dsl.ini file
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="1.-Loading-and-preprocessing-text-data">
+<h2>1. Loading and preprocessing text data<a class="headerlink" href="#1.-Loading-and-preprocessing-text-data" title="Permalink to this headline">¶</a></h2>
+<p>Regardless of whether you are doing Global or Panel identification, the first step is to load grant application text data. A few examples will be hard coded here and loaded into a pandas dataframe. It will hopefully be trivial to alter this load step to read in data from an external source instead.</p>
+<div class="section" id="1.1-Loading-from-File-(placeholder-code)">
+<h3>1.1 Loading from File (placeholder code)<a class="headerlink" href="#1.1-Loading-from-File-(placeholder-code)" title="Permalink to this headline">¶</a></h3>
+<p>General data structure needs some kind of document identifier and at least one text field. The code below relies on having the columns:</p>
+<ul class="simple">
+<li><p>doc_id</p></li>
+<li><p>title</p></li>
+<li><p>abstract</p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Placeholder cell for uploading data from a file. Uncomment lines below and run if uploading file</span>
+<span class="c1"># from google.colab import files</span>
+<span class="c1"># uploaded = files.upload()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Uncomment below and point to uploaded file to load into pandas dataframe</span>
+<span class="c1"># import io</span>
+<span class="c1"># texts = pd.read_excel(io.BytesIO(uploaded[&#39;your_uploaded_excel.xlsx&#39;]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="1.2-Loading-Sample-Data">
+<h3>1.2 Loading Sample Data<a class="headerlink" href="#1.2-Loading-Sample-Data" title="Permalink to this headline">¶</a></h3>
+<p>Sample data used for example purposes only. If using your own data, delete or comment out this cell</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grant1_identifier</span><span class="o">=</span><span class="s2">&quot;A001&quot;</span>
+<span class="n">grant1_title</span><span class="o">=</span><span class="s2">&quot;Computational design of sustainable hydrogenation systems via a novel combination of data science, optimization, and ab initio methods&quot;</span>
+<span class="n">grant1_abstract</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;Sustainable, safe, and process-intensified hydrogenation technologies are essential for distributed, small-scale, and on-demand manufacturing of chemicals and fuels from shale gas and biomass, upgrading carbon dioxide to useful organic chemicals, and upcycling plastic waste. New technological developments in this area would contribute to increasing international competitiveness of the U.S. chemical manufacturing industries and meeting relevant U.N. goals on sustainable development. A promising chemistry to this end is catalytic transfer hydrogenation (CTH), a process that is carried out using hydrogen donors instead of pure molecular H2, thereby offering a safe, H2- and potentially CO2-free hydrogenation technology. A critical step towards deploying CTH is to optimally design the underlying process, a challenging task because atomic-scale information such as reaction thermodynamics, pathways, and rates have implications at the microscopic (e.g., product yield) and macroscopic levels (e.g., process economics). The research vision of this project is to develop and apply novel computational tools, in synergy with experiments, to design CTH processes by integrating information and decisions across the different size scales. In parallel with this research, the educational vision of this project is to promote computational thinking and programming literacy at various levels of STEM education. These two skills are well-recognized as being essential for the next generation of science and engineering innovators to tackle emerging grand challenges in the energy, health, and environmental spheres. This CAREER proposal specifically aims to computationally design a vapor-phase transition-metal catalyzed CTH reaction system of a model oxygenate, viz. acrolein, which is the smallest molecule having both C-C and C-O unsaturation; as such, it can be considered a model representative of biomass-derived molecules and functionalized intermediates in the chemical industry. Designing the acrolein CTH reaction system ultimately requires identifying the optimal donor-catalyst combination that maximizes the yield of a desired product, e.g., hydrogenation selectivity of acrolein to propanal versus propenol. To this end, a novel computational framework that integrates density functional theory (DFT), informatics, machine learning, and several other process systems engineering computational methods including nonlinear optimization and advanced data sampling via reinforcement and transfer learning, will be developed as part of this research to (i) build Gaussian Process surrogate models, (ii) formulate and solve coverage-cognizant microkinetic models, and (iii) solve reaction system optimization problems. This framework will allow the PI to address a critical gap in the fundamental mechanistic elucidation and multiscale design of acrolein CTH reaction systems and thereby identify the optimal donor-catalyst combination from a representative subset of donors and transition metal catalysts. A well-integrated educational program will be developed to target different age groups at Lehigh University and the broader Lehigh valley. This includes engaging high-school and undergraduate students in cutting-edge research at the intersection of data science and catalysis, developing online interactive visualization-based modules to explain high-school science and undergraduate engineering concepts via enquiry-based learning, and developing and offering an interdisciplinary elective to train chemical engineers in the burgeoning area of data science and machine learning. This award reflects NSF&#39;s statutory mission and has been deemed worthy of support through evaluation using the Foundation&#39;s intellectual merit and broader impacts review criteria.&quot;&quot;&quot;</span>
+
+<span class="n">grant2_identifier</span><span class="o">=</span><span class="s2">&quot;A002&quot;</span>
+<span class="n">grant2_title</span><span class="o">=</span><span class="s2">&quot;Simulating catalysis: Multiscale embedding of machine learning potentials&quot;</span>
+<span class="n">grant2_abstract</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;In the recent decades, computer simulations have become an essential part of the molecular scientist&#39;s toolbox. However, as for any computational method, molecular simulations require a compromise between speed and precision. The most precise techniques apply principles of quantum mechanics (QM) to the molecular systems and can precisely describe processes involving changes in the electronic structure, such as the breaking and forming of chemical bonds. However, they require tremendous computer resources, being prohibitively costly even for systems containing only several hundreds of atoms. On the other extreme are highly simplified </span><span class="se">\&quot;</span><span class="s2">Molecular Mechanics</span><span class="se">\&quot;</span><span class="s2"> (MM) methods that ignore the quantum nature of molecules and instead describe the atoms as charged &quot;balls&quot; of certain size connected with springs representing the chemical bonds. The core limitation of MM is its inability to describe breaking/forming of chemical bonds, therefore making it unsuitable for simulating chemical reactions. This drawback motivated the invention of combined &quot;multiscale&quot; models that rely on precise but expensive QM calculations to describe the part of the simulation system where the chemical reaction takes place, while treating the rest of the system with an efficient MM method. This &quot;Quantum Mechanics/Molecular Mechanics&quot; approach (QM/MM), honoured by the Nobel Prize in Chemistry in 2013, is now the state-of-the-art simulation technique for reactions in complex environments, such as those happening inside living organisms. Such simulations are important to understand and design catalysts, which increase the rate of chemical reactions (and can thereby reduce the amount of energy and resources required to produce molecules). However, QM/MM calculations are still only as fast as the QM method used, limiting dramatically the precision and timescale of the simulations. A completely different approach is to employ techniques from the rapidly evolving field of machine learning (ML) and construct a method that can learn and then predict the outcome of a QM calculation. Once properly trained, an ML model can provide results with QM quality, but several orders of magnitude faster. However, ML models are still significantly slower than MM ones. Therefore, a multiscale &quot;ML/MM&quot; model would still offer huge savings of computer time compared to pure ML simulations. Unfortunately, however, existing ML training schemes are only suitable for calculations in gas phase and cannot take into account the presence of an MM environment. The goal of the proposed research project is to develop a novel multiscale embedding approach that will allow the use of ML models as part of a ML/MM scheme. This will enable molecular simulations of unprecedented precision on processes with high complexity without limiting the detailed exploration of molecular conformations. To achieve this goal, we will take advantage of recent advances in machine learning and understanding of intermolecular interactions to develop a specialised ML workflow that predicts the interaction energy between the molecule described by ML and the MM environment. The workflow will be implemented as an open, publicly available software package that allows to train ML/MM models and run ML/MM molecular dynamics simulations of complex chemical processes, such as catalysed reactions. We expect this package to be readily adopted by a wide community of computational chemists working on enzymatic reactions, homo/heterogeneous catalysis and generally on processes in condensed phases, aided by specific training materials and workshops that we will provide. This will allow, for example, the development efficient computational workflows to understand and help design catalysts for more environmentally friendly production of desired molecules.&quot;&quot;&quot;</span>
+
+<span class="n">texts</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">[[</span><span class="n">grant1_identifier</span><span class="p">,</span><span class="n">grant1_title</span><span class="p">,</span><span class="n">grant1_abstract</span><span class="p">],</span>
+                         <span class="p">[</span><span class="n">grant2_identifier</span><span class="p">,</span><span class="n">grant2_title</span><span class="p">,</span><span class="n">grant2_abstract</span><span class="p">]],</span>
+                   <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;doc_id&#39;</span><span class="p">,</span><span class="s1">&#39;title&#39;</span><span class="p">,</span><span class="s1">&#39;abstract&#39;</span><span class="p">])</span>
+<br/><br/></pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="1.3-Preprocess-data-and-extract-concepts">
+<h3>1.3 Preprocess data and extract concepts<a class="headerlink" href="#1.3-Preprocess-data-and-extract-concepts" title="Permalink to this headline">¶</a></h3>
+<p>Additional text cleaning steps may be required if input data is messy. Details of text cleaning are beyond the scope of this tutorial.</p>
+<p>It is worth mentioning that certain special characters may cause the Dimensions Analytics API to fail. When in doubt, remove all non-alphanumeric characters and ensure text is utf-8 encoded.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># It is easiest to have a single text field to extract concepts from. There may be advanced use cases where title and abstract concepts might be handled seperately in order to produce different results.</span>
+<span class="n">texts</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">texts</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39; &#39;</span><span class="o">+</span><span class="n">texts</span><span class="p">[</span><span class="s1">&#39;abstract&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+<span class="c1">#simple regex to remove most non-alphanumeric, non-space, non-punctuation characters</span>
+<span class="n">texts</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">texts</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;[^a-zA-Z0-9 \.,]&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span><span class="n">regex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1">#force text encoding to utf-8</span>
+<span class="n">texts</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">texts</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+
+<span class="c1">#query for concepts</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">series</span> <span class="ow">in</span> <span class="n">texts</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;extract_concepts(&quot;</span><span class="si">{</span><span class="n">series</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;)&quot;&quot;&quot;</span><span class="p">)</span>
+  <span class="n">concepts</span><span class="o">=</span>  <span class="n">res</span><span class="p">[</span><span class="s1">&#39;extracted_concepts&#39;</span><span class="p">]</span>
+  <span class="n">texts</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span><span class="s1">&#39;concepts&#39;</span><span class="p">]</span><span class="o">=</span><span class="s1">&#39;;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">concepts</span><span class="p">)</span>
+
+
+<span class="c1">#format concepts into python list</span>
+<span class="n">texts</span><span class="p">[</span><span class="s1">&#39;concepts&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">texts</span><span class="p">[</span><span class="s1">&#39;concepts&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">)</span>
+
+<span class="c1">#it is generally desirable to narrow the list of concepts to the top concepts to reduce noise. Concepts are returned ranked by relevance, so the top N most relevant concpets are used</span>
+<span class="n">topN_concepts</span><span class="o">=</span><span class="mi">20</span>
+<span class="n">texts</span><span class="p">[</span><span class="s1">&#39;concepts&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">texts</span><span class="p">[</span><span class="s1">&#39;concepts&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="p">[:</span><span class="n">topN_concepts</span><span class="p">]</span>
+
+<span class="c1">#drop the now superfluous text column</span>
+<span class="n">texts</span><span class="o">=</span><span class="n">texts</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">])</span>
+
+<span class="c1">#display data preview</span>
+<span class="n">texts</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>doc_id</th>
+      <th>title</th>
+      <th>abstract</th>
+      <th>concepts</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>A001</td>
+      <td>Computational design of sustainable hydrogenat...</td>
+      <td>Sustainable, safe, and process-intensified hyd...</td>
+      <td>[hydrogenation technology, reaction system, ca...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>A002</td>
+      <td>Simulating catalysis: Multiscale embedding of ...</td>
+      <td>In the recent decades, computer simulations ha...</td>
+      <td>[chemical bonds, chemical reactions, QM calcul...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>with concepts in hand, we can now begin to identify reviewers</p>
+</div>
+</div>
+<div class="section" id="2.-The-Two-Use-Cases---Recap">
+<h2>2. The Two Use Cases - Recap<a class="headerlink" href="#2.-The-Two-Use-Cases---Recap" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="2.1-Global-identification-use-case">
+<h3>2.1 Global identification use case<a class="headerlink" href="#2.1-Global-identification-use-case" title="Permalink to this headline">¶</a></h3>
+<p>This approach is most commonly used when potential reviewers aren’t limited to a pre-determined group of people. In this case, any researcher listed in Dimensions is a potential match. This is the only mode available in the GUI described above. While a global search casts a very wide net, it is possible to use additional data attached to researcher profiles in Dimensions to filter results to a less broad subset. Some examples: - Only researchers from a particular country - Only researchers from
+a particular organization - Only researchers that have been previously funded by a particular funder</p>
+</div>
+<div class="section" id="2.2-Panel-identification-use-case">
+<h3>2.2 Panel identification use case<a class="headerlink" href="#2.2-Panel-identification-use-case" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes reviewers must be identified from a specific list of researchers. This can be thought of as similar to the global search above, but attempting to identify reviewers from only a very particular subset of researchers.</p>
+<p>Another common use case though is to attempt to <strong>rank the best reviewers</strong> for a grant application among a preselected panel <strong>in order to assign reviewers to grant applications</strong>. If a body of multiple grants and review panelists are known, a “reviewer matrix” can be generated in order to visualize the best reviewers for each appliction, as well as any potential gaps in coverage.</p>
+<p><em>NOTE (May 2021): Use of the Dimensions Analytics API to generate a reviewer matrix is still in beta and undergoing review. The overall workflow is likely to remain the same, but changes under the hood may produce slightly different results in the future.</em></p>
+</div>
+</div>
+<div class="section" id="3.-Global-identification">
+<h2>3. Global identification<a class="headerlink" href="#3.-Global-identification" title="Permalink to this headline">¶</a></h2>
+<p>The basic query structure used to identify researchers based on concepts is laid out below.</p>
+<p>By default the query returns only the top 20 researchers. Up to 200 researchers can be returned by paginating queries. It is generally desired to filter these results somehow, which will be covered in the advanced use cases laid out below.</p>
+<p>For more on Dimensions researcher data and what the returned fields mean, see <a class="reference external" href="https://docs.dimensions.ai/dsl/datasource-researchers.html">the documentation for the researchers data source</a>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># instantiate dataframe to hold results</span>
+<span class="n">results</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+<span class="c1">#Loop through texts and identify researchers</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">series</span> <span class="ow">in</span> <span class="n">texts</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+  <span class="n">concepts_string</span> <span class="o">=</span> <span class="s2">&quot; OR &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">series</span><span class="p">[</span><span class="s1">&#39;concepts&#39;</span><span class="p">]])</span>
+
+  <span class="n">q</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">          identify experts</span>
+<span class="s2">              from concepts &quot;</span><span class="si">{</span><span class="n">dsl_escape</span><span class="p">(</span><span class="n">concepts_string</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="s2">          return experts[basics+extras]</span>
+<span class="s2">          &quot;&quot;&quot;</span>
+
+  <span class="n">res</span><span class="o">=</span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
+  <span class="n">res</span><span class="p">[</span><span class="s1">&#39;match_for_doc_id&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">series</span><span class="p">[</span><span class="s1">&#39;doc_id&#39;</span><span class="p">]</span>
+  <span class="n">results</span><span class="o">=</span><span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+<span class="c1">#rename &#39;id&#39; column for clarity</span>
+<span class="n">results</span><span class="o">=</span><span class="n">results</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="s1">&#39;researcher_id&#39;</span><span class="p">})</span>
+
+<span class="c1">#display data preview</span>
+<span class="n">results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>current_research_org</th>
+      <th>docs_found</th>
+      <th>first_grant_year</th>
+      <th>first_name</th>
+      <th>first_publication_year</th>
+      <th>researcher_id</th>
+      <th>last_grant_year</th>
+      <th>last_name</th>
+      <th>last_publication_year</th>
+      <th>orcid_id</th>
+      <th>research_orgs</th>
+      <th>score</th>
+      <th>total_grants</th>
+      <th>total_publications</th>
+      <th>match_for_doc_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>grid.412392.f</td>
+      <td>9</td>
+      <td>2007.0</td>
+      <td>Patrick</td>
+      <td>2000</td>
+      <td>ur.013717027613.00</td>
+      <td>2025.0</td>
+      <td>Linke</td>
+      <td>2021</td>
+      <td>[0000-0003-0105-9947]</td>
+      <td>[grid.452146.0, grid.412603.2, grid.8647.d, gr...</td>
+      <td>326.619473</td>
+      <td>11</td>
+      <td>150</td>
+      <td>A001</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>grid.19006.3e</td>
+      <td>8</td>
+      <td>1998.0</td>
+      <td>Panagiotis D</td>
+      <td>1994</td>
+      <td>ur.01332115004.71</td>
+      <td>2022.0</td>
+      <td>Christofides</td>
+      <td>2021</td>
+      <td>NaN</td>
+      <td>[grid.19006.3e, grid.11047.33, grid.9909.9, gr...</td>
+      <td>309.619233</td>
+      <td>12</td>
+      <td>556</td>
+      <td>A001</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>grid.264756.4</td>
+      <td>8</td>
+      <td>1992.0</td>
+      <td>Mahmoud M</td>
+      <td>1986</td>
+      <td>ur.01301461257.28</td>
+      <td>2021.0</td>
+      <td>El-Halwagi</td>
+      <td>2021</td>
+      <td>[0000-0002-0020-2281]</td>
+      <td>[grid.453681.d, grid.264756.4, grid.55460.32, ...</td>
+      <td>287.066961</td>
+      <td>24</td>
+      <td>528</td>
+      <td>A001</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>grid.147455.6</td>
+      <td>6</td>
+      <td>1980.0</td>
+      <td>Ignacio E</td>
+      <td>1978</td>
+      <td>ur.011034041563.31</td>
+      <td>2021.0</td>
+      <td>Grossmann</td>
+      <td>2021</td>
+      <td>[0000-0002-7210-084X]</td>
+      <td>[grid.37172.30, grid.187073.a, grid.7445.2, gr...</td>
+      <td>228.951728</td>
+      <td>37</td>
+      <td>778</td>
+      <td>A001</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>grid.264756.4</td>
+      <td>5</td>
+      <td>2007.0</td>
+      <td>Efstratios N</td>
+      <td>1988</td>
+      <td>ur.011111004073.75</td>
+      <td>2023.0</td>
+      <td>Pistikopoulos</td>
+      <td>2021</td>
+      <td>NaN</td>
+      <td>[grid.461183.9, grid.169077.e, grid.89336.37, ...</td>
+      <td>177.012200</td>
+      <td>13</td>
+      <td>608</td>
+      <td>A001</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="section" id="3.1-Advanced-Cases:-Working-around-the-limitations-of-global-search">
+<h3>3.1 Advanced Cases: Working around the limitations of global search<a class="headerlink" href="#3.1-Advanced-Cases:-Working-around-the-limitations-of-global-search" title="Permalink to this headline">¶</a></h3>
+<p><em>WARNING: The following represents an advanced use case and may require more sophisticated understanding of python and Dimensions data.</em></p>
+<p>At the present time (May 2021), there is no way to limit the researchers returned based on researcher attributes directly. Therefore, it is impossible to directly get only researchers who are in a certain country, or to only get researchers who work at certain organizations, etc.</p>
+<p>While we cannot apply filters to researchers directly, it <em>is</em> possible to only use a subset publications or grants to identify researchers. These results, combined with pagination, may make it possible to collect a sufficient number of researchers having the attributes desired.</p>
+<p>All of the approaches below have one potentially significant drawback. By narrowing the set of documents searched to identify researchers <strong>only a subset of any researcher’s full Dimensions profile will be considered when making matches with these approaches</strong>.</p>
+<p><em>NOTE on Dimensions Data: Dimensions uses organizational information from</em><a class="reference external" href="www.grid.ac">GRID</a><em>. To learn more about GRID, and to learn how to use the Dimensions Analytics API to find an organization’s GRID ID, see the tutorial:</em><a class="reference external" href="https://api-lab.dimensions.ai/cookbooks/8-organizations/1-GRID-preview.html">The Organizations API: Features Overview</a></p>
+<div class="section" id="3.1.1-Searching-based-on-organizational-affiliation">
+<h4>3.1.1 Searching based on organizational affiliation<a class="headerlink" href="#3.1.1-Searching-based-on-organizational-affiliation" title="Permalink to this headline">¶</a></h4>
+<p>The core of the approach outlined below is to narrow to a subset of publications used to identify researchers. In this way, only publications having certain affiliation attributes, <em>which are derived from all publication coauthors</em>, will be used.</p>
+<p>For a list of all fields that can be used to narrow publications used to identify researchers, see the <a class="reference external" href="https://docs.dimensions.ai/dsl/datasource-publications.html">publications source documentation</a></p>
+<p><strong>This approach will collect some researchers who do not have the attributes desired</strong>. To get a well populated list of researchers having the desired attributes, we are going to paginate through a larger set of results, then filter down to only those having the desired attributes.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># List of GRID IDs of research orgs</span>
+<span class="c1"># Example here is a list of GRID IDs for schools in the University of California system</span>
+<span class="n">orgs_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;grid.19006.3e&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;grid.47840.3f&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;grid.266100.3&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;grid.30389.31&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;grid.266102.1&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;grid.27860.3b&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;grid.266093.8&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;grid.133342.4&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;grid.205975.c&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;grid.266097.c&quot;</span><span class="p">]</span>
+
+<span class="c1"># instantiate dataframe to hold results</span>
+<span class="n">results</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+<span class="c1">#Loop through texts and identify researchers</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">series</span> <span class="ow">in</span> <span class="n">texts</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+  <span class="n">concepts_string</span> <span class="o">=</span> <span class="s2">&quot; OR &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">series</span><span class="p">[</span><span class="s1">&#39;concepts&#39;</span><span class="p">]])</span>
+  <span class="c1"># paginate through results</span>
+  <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">20</span><span class="p">):</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            identify experts</span>
+<span class="s2">                from concepts &quot;</span><span class="si">{</span><span class="n">dsl_escape</span><span class="p">(</span><span class="n">concepts_string</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="s2">                using publications</span>
+<span class="s2">                where research_orgs in </span><span class="si">{</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">orgs_list</span><span class="p">)</span><span class="si">}</span><span class="s2"></span>
+<span class="s2">            return experts[basics+extras]</span>
+<span class="s2">            limit 20 skip </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2"></span>
+<span class="s2">            &quot;&quot;&quot;</span>
+
+    <span class="n">res</span><span class="o">=</span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
+    <span class="n">res</span><span class="p">[</span><span class="s1">&#39;match_for_doc_id&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">series</span><span class="p">[</span><span class="s1">&#39;doc_id&#39;</span><span class="p">]</span>
+    <span class="n">results</span><span class="o">=</span><span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+<span class="c1"># Filter results to researchers whose current affiliation is in orgs list</span>
+<span class="n">results</span><span class="o">=</span><span class="n">results</span><span class="p">[</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;current_research_org&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">orgs_list</span><span class="p">)]</span>
+
+<span class="c1">#rename &#39;id&#39; column for clarity</span>
+<span class="n">results</span><span class="o">=</span><span class="n">results</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="s1">&#39;researcher_id&#39;</span><span class="p">})</span>
+
+<span class="c1">#display data preview</span>
+<span class="n">results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>current_research_org</th>
+      <th>docs_found</th>
+      <th>first_grant_year</th>
+      <th>first_name</th>
+      <th>first_publication_year</th>
+      <th>researcher_id</th>
+      <th>last_grant_year</th>
+      <th>last_name</th>
+      <th>last_publication_year</th>
+      <th>research_orgs</th>
+      <th>score</th>
+      <th>total_grants</th>
+      <th>total_publications</th>
+      <th>orcid_id</th>
+      <th>match_for_doc_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>grid.19006.3e</td>
+      <td>51</td>
+      <td>1998.0</td>
+      <td>Panagiotis D</td>
+      <td>1994</td>
+      <td>ur.01332115004.71</td>
+      <td>2022.0</td>
+      <td>Christofides</td>
+      <td>2021</td>
+      <td>[grid.19006.3e, grid.11047.33, grid.9909.9, gr...</td>
+      <td>1357.636616</td>
+      <td>12</td>
+      <td>556</td>
+      <td>NaN</td>
+      <td>A001</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>grid.27860.3b</td>
+      <td>24</td>
+      <td>2008.0</td>
+      <td>Nael H</td>
+      <td>1999</td>
+      <td>ur.010424362775.61</td>
+      <td>2018.0</td>
+      <td>El-Farra</td>
+      <td>2021</td>
+      <td>[grid.19006.3e, grid.27860.3b]</td>
+      <td>544.685241</td>
+      <td>2</td>
+      <td>180</td>
+      <td>[0000-0002-1973-0287]</td>
+      <td>A001</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>grid.27860.3b</td>
+      <td>13</td>
+      <td>NaN</td>
+      <td>Matthew J</td>
+      <td>2013</td>
+      <td>ur.011052655503.89</td>
+      <td>NaN</td>
+      <td>Ellis</td>
+      <td>2021</td>
+      <td>[grid.467448.d, grid.27860.3b, grid.19006.3e]</td>
+      <td>383.632797</td>
+      <td>0</td>
+      <td>52</td>
+      <td>[0000-0003-3764-7783]</td>
+      <td>A001</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>grid.266100.3</td>
+      <td>17</td>
+      <td>1999.0</td>
+      <td>Andrew B</td>
+      <td>1984</td>
+      <td>ur.013652717041.62</td>
+      <td>2026.0</td>
+      <td>Kahng</td>
+      <td>2021</td>
+      <td>[grid.30389.31, grid.19006.3e, grid.418547.b, ...</td>
+      <td>358.588582</td>
+      <td>11</td>
+      <td>580</td>
+      <td>NaN</td>
+      <td>A001</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>grid.47840.3f</td>
+      <td>17</td>
+      <td>2011.0</td>
+      <td>Alberto Luigi</td>
+      <td>1976</td>
+      <td>ur.010253255177.83</td>
+      <td>2021.0</td>
+      <td>Sangiovanni-Vincentelli</td>
+      <td>2021</td>
+      <td>[grid.263145.7, grid.425176.3, grid.6738.a, gr...</td>
+      <td>349.959567</td>
+      <td>4</td>
+      <td>798</td>
+      <td>[0000-0003-1298-8389]</td>
+      <td>A001</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="3.1.2-Searching-based-on-previous-funding-history">
+<h4>3.1.2 Searching based on previous funding history<a class="headerlink" href="#3.1.2-Searching-based-on-previous-funding-history" title="Permalink to this headline">¶</a></h4>
+<p>This approach will identify only researchers who have recieved grants from specific funders, identified by their GRID IDs. With this approach, pagination and further filtering is not necessary.</p>
+<p>For a list of all fields that can be used to narrow grants used, see the <a class="reference external" href="https://docs.dimensions.ai/dsl/datasource-grants.html">grants source documentation</a></p>
+<p>There are trade-offs to the approach outlined below. While “<em>using grants</em>” will allow you to very directly line up with researcher who have recieved grants from specific funders, it will <strong>only search grant texts</strong> - not publication texts - when finding matches.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#list of GRID IDs of funders</span>
+<span class="c1"># Example here is a list of GRID IDs for directorates of the US National Science Foundation</span>
+<span class="n">funders_list</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;grid.457810.f&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;grid.457875.c&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;grid.457785.c&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;grid.457768.f&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;grid.457836.b&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;grid.457916.8&quot;</span><span class="p">]</span>
+
+<span class="c1"># instantiate dataframe to hold results</span>
+<span class="n">results</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+<span class="c1"># funders_string = &#39;[&quot;{}&quot;]&#39;.format(&#39;&quot;,&quot;&#39;.join(funders_list))</span>
+<span class="c1">#Loop through texts and identify researchers</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">series</span> <span class="ow">in</span> <span class="n">texts</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+  <span class="n">concepts_string</span> <span class="o">=</span> <span class="s2">&quot; OR &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">series</span><span class="p">[</span><span class="s1">&#39;concepts&#39;</span><span class="p">]])</span>
+
+  <span class="n">q</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">          identify experts</span>
+<span class="s2">              from concepts &quot;</span><span class="si">{</span><span class="n">dsl_escape</span><span class="p">(</span><span class="n">concepts_string</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="s2">              using grants</span>
+<span class="s2">              where funders.id in </span><span class="si">{</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">funders_list</span><span class="p">)</span><span class="si">}</span><span class="s2"></span>
+<span class="s2">          return experts[basics+extras]</span>
+<span class="s2">          &quot;&quot;&quot;</span>
+
+  <span class="n">res</span><span class="o">=</span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
+  <span class="n">res</span><span class="p">[</span><span class="s1">&#39;match_for_doc_id&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">series</span><span class="p">[</span><span class="s1">&#39;doc_id&#39;</span><span class="p">]</span>
+  <span class="n">results</span><span class="o">=</span><span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+<span class="c1">#rename &#39;id&#39; column for clarity</span>
+<span class="n">results</span><span class="o">=</span><span class="n">results</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="s1">&#39;researcher_id&#39;</span><span class="p">})</span>
+
+<span class="c1">#display data preview</span>
+<span class="n">results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>current_research_org</th>
+      <th>docs_found</th>
+      <th>first_grant_year</th>
+      <th>first_name</th>
+      <th>first_publication_year</th>
+      <th>researcher_id</th>
+      <th>last_grant_year</th>
+      <th>last_name</th>
+      <th>last_publication_year</th>
+      <th>research_orgs</th>
+      <th>score</th>
+      <th>total_grants</th>
+      <th>total_publications</th>
+      <th>orcid_id</th>
+      <th>match_for_doc_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>grid.259029.5</td>
+      <td>1</td>
+      <td>2018</td>
+      <td>Srinivas</td>
+      <td>2015.0</td>
+      <td>ur.013102571772.72</td>
+      <td>2026</td>
+      <td>Rangarajan</td>
+      <td>2021.0</td>
+      <td>[grid.14003.36, grid.259029.5]</td>
+      <td>2.567357</td>
+      <td>4</td>
+      <td>31</td>
+      <td>NaN</td>
+      <td>A001</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>grid.147455.6</td>
+      <td>8</td>
+      <td>1980</td>
+      <td>Ignacio E</td>
+      <td>1978.0</td>
+      <td>ur.011034041563.31</td>
+      <td>2021</td>
+      <td>Grossmann</td>
+      <td>2021.0</td>
+      <td>[grid.37172.30, grid.187073.a, grid.7445.2, gr...</td>
+      <td>0.808810</td>
+      <td>37</td>
+      <td>778</td>
+      <td>[0000-0002-7210-084X]</td>
+      <td>A001</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>grid.147455.6</td>
+      <td>8</td>
+      <td>1982</td>
+      <td>Lorenz Theodor</td>
+      <td>1982.0</td>
+      <td>ur.07525174375.48</td>
+      <td>2016</td>
+      <td>Biegler</td>
+      <td>2021.0</td>
+      <td>[grid.28803.31, grid.7870.8, grid.147455.6, gr...</td>
+      <td>0.593023</td>
+      <td>25</td>
+      <td>535</td>
+      <td>[0000-0003-3875-4441]</td>
+      <td>A001</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>grid.33489.35</td>
+      <td>5</td>
+      <td>2000</td>
+      <td>Marianthi G</td>
+      <td>1994.0</td>
+      <td>ur.01326503420.77</td>
+      <td>2025</td>
+      <td>Ierapetritou</td>
+      <td>2021.0</td>
+      <td>[grid.7445.2, grid.430387.b, grid.33489.35, gr...</td>
+      <td>0.590299</td>
+      <td>25</td>
+      <td>331</td>
+      <td>[0000-0002-1758-9777]</td>
+      <td>A001</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>grid.264756.4</td>
+      <td>6</td>
+      <td>1986</td>
+      <td>Christodoulos Achilleus</td>
+      <td>1986.0</td>
+      <td>ur.010407376521.12</td>
+      <td>2022</td>
+      <td>Floudas</td>
+      <td>2021.0</td>
+      <td>[grid.264756.4, grid.7445.2, grid.16750.35, gr...</td>
+      <td>0.447884</td>
+      <td>31</td>
+      <td>515</td>
+      <td>NaN</td>
+      <td>A001</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="4.-Panel-Identification">
+<h2>4. Panel Identification<a class="headerlink" href="#4.-Panel-Identification" title="Permalink to this headline">¶</a></h2>
+<p>The use of panels of researchers to review grant applications is wide spread. Once a panel of researchers is identified, assignments must be made between individual researchers and individual applications. It is often the case that applications span a range of topics and subtopics, and that panelists may only have expertise in some of these areas. To conduct a fair review, it is necessary to align panelist expertise and application topic as best as possible.</p>
+<p>The Dimensions Analytics API includes utilities to make these assignments easier. It is possible to calculate a numeric score for how well a reviewer’s research profile aligns with with grant application texts. By building a matrix of reviewer-application scores, it can become very easy to visualize best assignments, as well as to identify possible gap areas.</p>
+<hr class="docutils" />
+<p>This approach relies on Dimensions researcher profiles. For more on Dimensions researcher profiles generally and how to search for them, see <a class="reference external" href="https://support-funder.dimensions.ai/support/solutions/articles/13000065159-how-can-i-search-for-a-person-researcher-">here</a>.</p>
+<p>For more on how to find particular researcher profiles using the API, see <a class="reference external" href="https://docs.dimensions.ai/dsl/language.html#searching-for-researchers">this link</a> or the tutorial <a class="reference external" href="https://api-lab.dimensions.ai/cookbooks/7-researchers/Researchers-Search-tips-V2.html">Extracting researchers based on affiliations and publications history</a></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Curated list of panelists</span>
+<span class="n">panelist_researcher_ids</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ur.011441227347.89&quot;</span><span class="p">,</span>
+                           <span class="s2">&quot;ur.01300337437.48&quot;</span><span class="p">,</span>
+                           <span class="s2">&quot;ur.01367255211.93&quot;</span><span class="p">,</span>
+                           <span class="s2">&quot;ur.01050122660.53&quot;</span><span class="p">,</span>
+                           <span class="s2">&quot;ur.01215263003.24&quot;</span><span class="p">]</span>
+
+<span class="c1"># instantiate dataframe to hold results</span>
+<span class="n">results</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+<span class="c1">#iterate through all texts</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">series</span> <span class="ow">in</span> <span class="n">texts</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+  <span class="n">concepts_string</span> <span class="o">=</span> <span class="s2">&quot; OR &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">series</span><span class="p">[</span><span class="s1">&#39;concepts&#39;</span><span class="p">]])</span>
+  <span class="n">q</span><span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">          identify experts</span>
+<span class="s2">              from concepts &quot;</span><span class="si">{</span><span class="n">dsl_escape</span><span class="p">(</span><span class="n">concepts_string</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="s2">              using publications</span>
+<span class="s2">              where researchers in </span><span class="si">{</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">panelist_researcher_ids</span><span class="p">)</span><span class="si">}</span><span class="s2"></span>
+<span class="s2">          return experts[basics+extras]</span>
+<span class="s2">          &quot;&quot;&quot;</span>
+
+  <span class="n">res</span><span class="o">=</span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
+  <span class="n">res</span><span class="p">[</span><span class="s1">&#39;match_for_doc_id&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">series</span><span class="p">[</span><span class="s1">&#39;doc_id&#39;</span><span class="p">]</span>
+  <span class="n">results</span><span class="o">=</span><span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+<span class="c1">#filter to panelist IDs only</span>
+<span class="n">results</span><span class="o">=</span><span class="n">results</span><span class="p">[</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">panelist_researcher_ids</span><span class="p">)]</span>
+
+<span class="c1">#rename columns for clarity</span>
+<span class="n">results</span><span class="o">=</span><span class="n">results</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="s1">&#39;researcher_id&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;match_for_doc_id&#39;</span><span class="p">:</span><span class="s1">&#39;doc_id&#39;</span><span class="p">})</span>
+
+<span class="c1">#store researcher profile metadata seperately</span>
+<span class="n">researcher_data</span><span class="o">=</span><span class="n">results</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">,</span><span class="s1">&#39;doc_id&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">([</span><span class="s1">&#39;researcher_id&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;researcher_id&#39;</span><span class="p">)</span>
+
+<span class="c1">#pivot resulting scores into researcher-document matrix</span>
+<span class="n">matrix</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;researcher_id&#39;</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;doc_id&#39;</span><span class="p">,</span><span class="n">values</span><span class="o">=</span><span class="s2">&quot;score&quot;</span><span class="p">)</span>
+
+<span class="c1">#normalize scores for each appl so that the best match is always scored 1</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">matrix</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+  <span class="n">matrix</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">=</span><span class="n">matrix</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">/</span><span class="n">matrix</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+<span class="c1">#fill missing values with 0</span>
+<span class="n">matrix</span><span class="o">=</span><span class="n">matrix</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1">#store grant column names to make pretty display</span>
+<span class="n">grant_cols</span><span class="o">=</span><span class="n">matrix</span><span class="o">.</span><span class="n">columns</span>
+
+<span class="c1">#rejoin researcher metadata</span>
+<span class="n">matrix</span><span class="o">=</span><span class="n">matrix</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">researcher_data</span><span class="p">)</span>
+
+<span class="c1">#Display matrix with colors</span>
+<span class="n">matrix</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">background_gradient</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="n">grant_cols</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<style type="text/css">
+#T_85c85_row0_col0 {
+  background-color: #bed8ec;
+  color: #000000;
+}
+#T_85c85_row0_col1 {
+  background-color: #d0e2f2;
+  color: #000000;
+}
+#T_85c85_row1_col0, #T_85c85_row4_col1 {
+  background-color: #f7fbff;
+  color: #000000;
+}
+#T_85c85_row1_col1 {
+  background-color: #eaf3fb;
+  color: #000000;
+}
+#T_85c85_row2_col0, #T_85c85_row2_col1 {
+  background-color: #08306b;
+  color: #f1f1f1;
+}
+#T_85c85_row3_col0 {
+  background-color: #f5fafe;
+  color: #000000;
+}
+#T_85c85_row3_col1 {
+  background-color: #dceaf6;
+  color: #000000;
+}
+#T_85c85_row4_col0 {
+  background-color: #f4f9fe;
+  color: #000000;
+}
+</style>
+<table id="T_85c85_">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th class="col_heading level0 col0" >A001</th>
+      <th class="col_heading level0 col1" >A002</th>
+      <th class="col_heading level0 col2" >current_research_org</th>
+      <th class="col_heading level0 col3" >docs_found</th>
+      <th class="col_heading level0 col4" >first_grant_year</th>
+      <th class="col_heading level0 col5" >first_name</th>
+      <th class="col_heading level0 col6" >first_publication_year</th>
+      <th class="col_heading level0 col7" >last_grant_year</th>
+      <th class="col_heading level0 col8" >last_name</th>
+      <th class="col_heading level0 col9" >last_publication_year</th>
+      <th class="col_heading level0 col10" >orcid_id</th>
+      <th class="col_heading level0 col11" >research_orgs</th>
+      <th class="col_heading level0 col12" >total_grants</th>
+      <th class="col_heading level0 col13" >total_publications</th>
+    </tr>
+    <tr>
+      <th class="index_name level0" >researcher_id</th>
+      <th class="blank col0" >&nbsp;</th>
+      <th class="blank col1" >&nbsp;</th>
+      <th class="blank col2" >&nbsp;</th>
+      <th class="blank col3" >&nbsp;</th>
+      <th class="blank col4" >&nbsp;</th>
+      <th class="blank col5" >&nbsp;</th>
+      <th class="blank col6" >&nbsp;</th>
+      <th class="blank col7" >&nbsp;</th>
+      <th class="blank col8" >&nbsp;</th>
+      <th class="blank col9" >&nbsp;</th>
+      <th class="blank col10" >&nbsp;</th>
+      <th class="blank col11" >&nbsp;</th>
+      <th class="blank col12" >&nbsp;</th>
+      <th class="blank col13" >&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_85c85_level0_row0" class="row_heading level0 row0" >ur.01050122660.53</th>
+      <td id="T_85c85_row0_col0" class="data row0 col0" >0.332839</td>
+      <td id="T_85c85_row0_col1" class="data row0 col1" >0.240871</td>
+      <td id="T_85c85_row0_col2" class="data row0 col2" >grid.34477.33</td>
+      <td id="T_85c85_row0_col3" class="data row0 col3" >80</td>
+      <td id="T_85c85_row0_col4" class="data row0 col4" >1983.000000</td>
+      <td id="T_85c85_row0_col5" class="data row0 col5" >Charles T</td>
+      <td id="T_85c85_row0_col6" class="data row0 col6" >1978</td>
+      <td id="T_85c85_row0_col7" class="data row0 col7" >2023.000000</td>
+      <td id="T_85c85_row0_col8" class="data row0 col8" >Campbell</td>
+      <td id="T_85c85_row0_col9" class="data row0 col9" >2021</td>
+      <td id="T_85c85_row0_col10" class="data row0 col10" >nan</td>
+      <td id="T_85c85_row0_col11" class="data row0 col11" >['grid.253692.9', 'grid.411377.7', 'grid.148313.c', 'grid.5379.8', 'grid.451303.0', 'grid.5335.0', 'grid.89336.37', 'grid.34477.33']</td>
+      <td id="T_85c85_row0_col12" class="data row0 col12" >12</td>
+      <td id="T_85c85_row0_col13" class="data row0 col13" >329</td>
+    </tr>
+    <tr>
+      <th id="T_85c85_level0_row1" class="row_heading level0 row1" >ur.011441227347.89</th>
+      <td id="T_85c85_row1_col0" class="data row1 col0" >0.078677</td>
+      <td id="T_85c85_row1_col1" class="data row1 col1" >0.113787</td>
+      <td id="T_85c85_row1_col2" class="data row1 col2" >grid.410356.5</td>
+      <td id="T_85c85_row1_col3" class="data row1 col3" >23</td>
+      <td id="T_85c85_row1_col4" class="data row1 col4" >2000.000000</td>
+      <td id="T_85c85_row1_col5" class="data row1 col5" >Cathleen M</td>
+      <td id="T_85c85_row1_col6" class="data row1 col6" >1990</td>
+      <td id="T_85c85_row1_col7" class="data row1 col7" >2025.000000</td>
+      <td id="T_85c85_row1_col8" class="data row1 col8" >Crudden</td>
+      <td id="T_85c85_row1_col9" class="data row1 col9" >2021</td>
+      <td id="T_85c85_row1_col10" class="data row1 col10" >nan</td>
+      <td id="T_85c85_row1_col11" class="data row1 col11" >['grid.431983.4', 'grid.27476.30', 'grid.5337.2', 'grid.28046.38', 'grid.17063.33', 'grid.23856.3a', 'grid.35403.31', 'grid.266820.8', 'grid.438548.6', 'grid.292836.4', 'grid.420469.d', 'grid.410356.5']</td>
+      <td id="T_85c85_row1_col12" class="data row1 col12" >60</td>
+      <td id="T_85c85_row1_col13" class="data row1 col13" >218</td>
+    </tr>
+    <tr>
+      <th id="T_85c85_level0_row2" class="row_heading level0 row2" >ur.01215263003.24</th>
+      <td id="T_85c85_row2_col0" class="data row2 col0" >1.000000</td>
+      <td id="T_85c85_row2_col1" class="data row2 col1" >1.000000</td>
+      <td id="T_85c85_row2_col2" class="data row2 col2" >grid.5170.3</td>
+      <td id="T_85c85_row2_col3" class="data row2 col3" >281</td>
+      <td id="T_85c85_row2_col4" class="data row2 col4" >2012.000000</td>
+      <td id="T_85c85_row2_col5" class="data row2 col5" >Jens Kehlet</td>
+      <td id="T_85c85_row2_col6" class="data row2 col6" >1977</td>
+      <td id="T_85c85_row2_col7" class="data row2 col7" >2015.000000</td>
+      <td id="T_85c85_row2_col8" class="data row2 col8" >Nørskov</td>
+      <td id="T_85c85_row2_col9" class="data row2 col9" >2021</td>
+      <td id="T_85c85_row2_col10" class="data row2 col10" >['0000-0002-4427-7728']</td>
+      <td id="T_85c85_row2_col11" class="data row2 col11" >['grid.7491.b', 'grid.445003.6', 'grid.424590.e', 'grid.7048.b', 'grid.10548.38', 'grid.12082.39', 'grid.168010.e', 'grid.5170.3', 'grid.410387.9', 'grid.5117.2', 'grid.5371.0', 'grid.133342.4', 'grid.418028.7', 'grid.481554.9', 'grid.253264.4']</td>
+      <td id="T_85c85_row2_col12" class="data row2 col12" >2</td>
+      <td id="T_85c85_row2_col13" class="data row2 col13" >756</td>
+    </tr>
+    <tr>
+      <th id="T_85c85_level0_row3" class="row_heading level0 row3" >ur.01300337437.48</th>
+      <td id="T_85c85_row3_col0" class="data row3 col0" >0.086336</td>
+      <td id="T_85c85_row3_col1" class="data row3 col1" >0.181127</td>
+      <td id="T_85c85_row3_col2" class="data row3 col2" >grid.1957.a</td>
+      <td id="T_85c85_row3_col3" class="data row3 col3" >32</td>
+      <td id="T_85c85_row3_col4" class="data row3 col4" >2010.000000</td>
+      <td id="T_85c85_row3_col5" class="data row3 col5" >Franziska</td>
+      <td id="T_85c85_row3_col6" class="data row3 col6" >2005</td>
+      <td id="T_85c85_row3_col7" class="data row3 col7" >2025.000000</td>
+      <td id="T_85c85_row3_col8" class="data row3 col8" >Schoenebeck</td>
+      <td id="T_85c85_row3_col9" class="data row3 col9" >2021</td>
+      <td id="T_85c85_row3_col10" class="data row3 col10" >['0000-0003-0047-0929']</td>
+      <td id="T_85c85_row3_col11" class="data row3 col11" >['grid.8547.e', 'grid.19006.3e', 'grid.11984.35', 'grid.417815.e', 'grid.5801.c', 'grid.1957.a']</td>
+      <td id="T_85c85_row3_col12" class="data row3 col12" >7</td>
+      <td id="T_85c85_row3_col13" class="data row3 col13" >171</td>
+    </tr>
+    <tr>
+      <th id="T_85c85_level0_row4" class="row_heading level0 row4" >ur.01367255211.93</th>
+      <td id="T_85c85_row4_col0" class="data row4 col0" >0.095684</td>
+      <td id="T_85c85_row4_col1" class="data row4 col1" >0.053079</td>
+      <td id="T_85c85_row4_col2" class="data row4 col2" >grid.411461.7</td>
+      <td id="T_85c85_row4_col3" class="data row4 col3" >26</td>
+      <td id="T_85c85_row4_col4" class="data row4 col4" >2018.000000</td>
+      <td id="T_85c85_row4_col5" class="data row4 col5" >Konstantinos D</td>
+      <td id="T_85c85_row4_col6" class="data row4 col6" >2009</td>
+      <td id="T_85c85_row4_col7" class="data row4 col7" >2022.000000</td>
+      <td id="T_85c85_row4_col8" class="data row4 col8" >Vogiatzis</td>
+      <td id="T_85c85_row4_col9" class="data row4 col9" >2021</td>
+      <td id="T_85c85_row4_col10" class="data row4 col10" >['0000-0002-7439-3850']</td>
+      <td id="T_85c85_row4_col11" class="data row4 col11" >['grid.8127.c', 'grid.17635.36', 'grid.7892.4', 'grid.267305.5', 'grid.411461.7']</td>
+      <td id="T_85c85_row4_col12" class="data row4 col12" >1</td>
+      <td id="T_85c85_row4_col13" class="data row4 col13" >63</td>
+    </tr>
+  </tbody>
+</table></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><br/><span></span><span class="c1"># FINALLY - if you are using Google Colab, download the results files:</span>
+
+<span class="k">if</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">files</span>
+
+    <span class="c1"># temporarily save pandas dataframe as file in colab environment</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;results.csv&#39;</span><span class="p">)</span>
+    <span class="c1"># download file to local machine</span>
+    <span class="n">files</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;results.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Conclusions">
+<h2>Conclusions<a class="headerlink" href="#Conclusions" title="Permalink to this headline">¶</a></h2>
+<p>In this notebook we have shown how to use the <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> to identify researchers to serve as reviewers for grant funders.</p>
+<p>Two general approaches have been presented: Global Identification or Panel Identification. Regardless of whether you are doing Global Identification or Panel Identification, the final output is a list of researchers for each application. Additional outputs, like the reviewer matrix, can also be exported.</p>
+<p>The selection of reviewers may be an interative process, and it may be desirable to try and produce different results by tuning the number of concepts used, or using a different pool of publications or grants to identify researchers. The <a class="reference external" href="https://api-lab.dimensions.ai/cookbooks/7-researchers/Experts-search-introduction.html">Expert Identification with the Dimensions API - An Introduction</a> contains many more examples on ways to fine tune and tweak expert identification using the Dimensions
+Analytics API.</p>
+<p>Finally, it is worth stressing that the outputs of reviewer finding are meant to be taken with a grain of salt, and are intended to be further reviewed by human eyes. Hence this whole process is intended to aid and speed up pre-existing workflows, rather than replace them entirely.</p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> allows to carry out sophisticated research data analytics tasks like the ones described on this website. Check out also the associated <a class="reference external" href="https://github.com/digital-science/dimensions-api-lab">Github repository</a> for examples, the source code of these tutorials and much more.</p>
+</div>
+<a class="reference external image-reference" href="https://www.dimensions.ai/dimensions-apis/"><img alt="../_images/badge-dimensions-api.svg" src="../_images/badge-dimensions-api.svg" /></a>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+    <p>© Copyright 2020 Digital Science & Research Solutions, Inc. All Rights Reserved | <a href="https://www.dimensions.ai/">About us</a> · <a href="https://www.dimensions.ai/privacy/">Privacy policy</a> · <a href="https://www.dimensions.ai/website-terms/">Legal terms</a></p>
+     
+
+    <!-- OneTrust Cookies Settings button start -->
+    <button id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</button>
+    <!-- OneTrust Cookies Settings button end -->
+
+
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+    
+
+    <!-- Adds target=_blank to external links -->
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('a[href^="http://"], a[href^="https://"]').not('a[class*=internal]').attr('target', '_blank');
+    });
+  </script>
+
+
+  <!-- OneTrust Cookies Consent Notice start for dimensions.ai -->
+   <script type="text/javascript" src="https://cdn.cookielaw.org/consent/3329b668-7887-4dba-9bee-c3853a706e6f/OtAutoBlock.js" ></script>
+   <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="3329b668-7887-4dba-9bee-c3853a706e6f" ></script>
+   <script type="text/javascript">
+   function OptanonWrapper() { }
+   </script>
+   <!-- OneTrust Cookies Consent Notice end for dimensions.ai -->
+  
+
+
+</body>
+</html>

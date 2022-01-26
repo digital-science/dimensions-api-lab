@@ -1,0 +1,1338 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Topic Modeling Analysis for a Set of Publications: Basic Workflow &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/custom.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Building a concepts co-occurence network" href="Concepts-network-graph.html" />
+    <link rel="prev" title="Journal Profiling Part 5: Competing Journals Analysis" href="Journal-Profile-5-Competitive-Analysis.html" />
+    
+
+   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149959808-1"></script>
+   <!-- <script src="_static/js/custom.js"></script> -->
+
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> DSL
+          
+
+          
+            
+            <img src="../_static/dimensions-logo@2x.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+
+   <p class="">
+      <h3 id="cookbooks_title">API COOKBOOKS</h3>
+   </p>
+
+
+   
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Publications</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="General-statistics.html">General Publication Statistics about a Research Organization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Choose-a-Research-Organization">Choose a Research Organization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Publications-output-by-year">Publications output by year</a></li>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Publications-most-cited-in-last-2-years">Publications most cited in last 2 years</a></li>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Publications-most-cited---all-time">Publications most cited - all time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Publications-most-cited-:-which-research-areas?">Publications most cited : which research areas?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Publications-most-cited-:-which-journals?">Publications most cited : which journals?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Top-Funders-(by-aggregated-funding-amount)">Top Funders (by aggregated funding amount)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Top-funders-split-by-country-of-the-funder">Top funders split by country of the funder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Correlation-between-No-of-Publications-VS-Funding">Correlation between No of Publications VS Funding</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Citation-Analysis.html">Citation Analysis: an Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Citation-Analysis.html#1.-Prerequisites">1. Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Citation-Analysis.html#Method-A:-getting-citations-for-one-publication-at-a-time">Method A: getting citations for one publication at a time</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Citation-Analysis.html#Comments-about-this-method">Comments about this method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Citation-Analysis.html#Method-B:-Getting-citations-for-multiple-publications-via-a-single-query">Method B: Getting citations for multiple publications via a single query</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Citation-Analysis.html#Creating-a-second-level-citations-network">Creating a second-level citations network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Citation-Analysis.html#Building-a-Simple-Dataviz">Building a Simple Dataviz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Citation-Analysis.html#Final-considerations">Final considerations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Citation-Analysis.html#Querying-for-more-than-1000-results">Querying for more than 1000 results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Citation-Analysis.html#Querying-for-more-than-50K-results">Querying for more than 50K results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Citation-Analysis.html#Dealing-with-highly-cited-publications">Dealing with highly cited publications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Citation-Analysis.html#Pre-checking-citations-counts">Pre-checking citations counts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html">Citation Analysis: Journals Citing a Research Organization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html#1.-Prerequisites">1. Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html#2.-Choose-a-Research-Organization">2. Choose a Research Organization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html#3.-Building-a-Publications-Baseset">3. Building a Publications Baseset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html#4.-Extracting-Publications-Citing-the-Baseset">4. Extracting Publications Citing the Baseset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html#5.-Journal-Analysis">5. Journal Analysis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html#Number-of-Unique-journals">Number of Unique journals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html#Most-frequent-journals">Most frequent journals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html#Top-100-journals-chart">Top 100 journals chart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html#Top-20-journals-by-year-chart">Top 20 journals by year chart</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Which-Are-the-Journals-Cited-By-My-Organization.html">Citation Analysis: Journals Cited by a Research Organization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Which-Are-the-Journals-Cited-By-My-Organization.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Which-Are-the-Journals-Cited-By-My-Organization.html#1.-Choosing-a-Research-Organization">1. Choosing a Research Organization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Which-Are-the-Journals-Cited-By-My-Organization.html#1.1-Selecting-a-Field-of-Research-ID">1.1 Selecting a Field of Research ID</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Which-Are-the-Journals-Cited-By-My-Organization.html#2.-Getting-the-IDs-of-the-outgoing-citations">2. Getting the IDs of the outgoing citations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Which-Are-the-Journals-Cited-By-My-Organization.html#2.1-Removing-duplicates-and-counting-most-frequent-citations">2.1 Removing duplicates and counting most frequent citations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Which-Are-the-Journals-Cited-By-My-Organization.html#3.-Enriching-the-citations-IDs-with-other-publication-metadata">3. Enriching the citations IDs with other publication metadata</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Which-Are-the-Journals-Cited-By-My-Organization.html#3.1-Adding-the-citations-counts">3.1 Adding the citations counts</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Which-Are-the-Journals-Cited-By-My-Organization.html#4.-Journal-Analysis">4. Journal Analysis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Which-Are-the-Journals-Cited-By-My-Organization.html#4.1-Number-of-Unique-journals">4.1 Number of Unique journals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Which-Are-the-Journals-Cited-By-My-Organization.html#4.2-Most-frequent-journals">4.2 Most frequent journals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Which-Are-the-Journals-Cited-By-My-Organization.html#4.3-Top-50-journals-chart,-by-publisher">4.3 Top 50 journals chart, by publisher</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Which-Are-the-Journals-Cited-By-My-Organization.html#4.4-Top-20-journals-by-year-of-the-cited-publication">4.4 Top 20 journals by year of the cited publication</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Which-Are-the-Journals-Cited-By-My-Organization.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Journal-Profile-1-Gathering-data.html">Journal Profiling Part 1: Getting the Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-1-Gathering-data.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-1-Gathering-data.html#Selecting-a-Journal-and-Extracting-All-Publications-Metadata">Selecting a Journal and Extracting All Publications Metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-1-Gathering-data.html#Basic-stats-about-authors">Basic stats about authors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-1-Gathering-data.html#A-quick-look-at-authors-without-a-Dimensions-Researcher-ID">A quick look at authors <em>without</em> a Dimensions Researcher ID</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Journal-Profile-1-Gathering-data.html#Any-common-patterns?">Any common patterns?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Journal-Profile-1-Gathering-data.html#Creating-an-export-for-manual-curation">Creating an export for manual curation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Journal-Profile-2-Researchers-Impact-Metrics.html">Journal Profiling Part 2: Impact Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-2-Researchers-Impact-Metrics.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-2-Researchers-Impact-Metrics.html#Measuring-the-Impact-of-Researchers-within-a-Journal">Measuring the Impact of Researchers within a Journal</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Journal-Profile-2-Researchers-Impact-Metrics.html#Load-the-publications-and-authors-data-previously-saved">Load the publications and authors data previously saved</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Journal-Profile-2-Researchers-Impact-Metrics.html#Isolate-the-Researchers-data-(=-authors-with-an-ID)">Isolate the Researchers data (= authors with an ID)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Journal-Profile-2-Researchers-Impact-Metrics.html#Enrich-the-data-with-Impact-Statistics">Enrich the data with Impact Statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-2-Researchers-Impact-Metrics.html#Couple-of-Dataviz">Couple of Dataviz</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html">Journal Profiling Part 3: Funding</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#Prerequisites">Prerequisites</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#Load-previously-saved-researchers-data">Load previously saved researchers data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#Adding-another-impact-measure:-funding">Adding another impact measure: funding</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#We’ll-have-to-do-it-in-two-steps">We’ll have to do it in two steps</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#Next:-full-data-for-step-1">Next: full data for step 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#Next:-full-data-for-step-2">Next: full data for step 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#Finally:-let’s-merge-the-new-data-into-the-‘researchers-impact’-table">Finally: let’s merge the new data into the ‘researchers-impact’ table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#Couple-of-Dataviz">Couple of Dataviz</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Journal-Profile-4-Institutions.html">Journal Profiling Part 4: Institutions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Institutions-Contributing-to-a-Journal">Institutions Contributing to a Journal</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Load-previously-saved-affiliations-data">Load previously saved affiliations data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Basic-stats-about-affiliations">Basic stats about affiliations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Enriching-the-unique-affiliations-(GRIDs-list)-with-pubs-count-and-authors-count">Enriching the unique affiliations (GRIDs list) with pubs count and authors count</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Couple-of-Dataviz">Couple of Dataviz</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Journal-Profile-5-Competitive-Analysis.html">Journal Profiling Part 5: Competing Journals Analysis</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-5-Competitive-Analysis.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-5-Competitive-Analysis.html#Competing-Journals">Competing Journals</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Journal-Profile-5-Competitive-Analysis.html#First-let’s-reload-the-data-obtained-in-previous-steps">First let’s reload the data obtained in previous steps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Journal-Profile-5-Competitive-Analysis.html#What-the-query-looks-like">What the query looks like</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-5-Competitive-Analysis.html#Extracting-all-publications/journals-information">Extracting all publications/journals information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-5-Competitive-Analysis.html#Visualizations">Visualizations</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Topic Modeling Analysis for a Set of Publications: Basic Workflow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#1.-Creating-a-Dataset:-e.g. Publications-from-a-Research-Organization">1. Creating a Dataset: e.g. Publications from a Research Organization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#2.-Concepts:-exploratory-analysis">2. Concepts: exploratory analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#3.-Building-a-word-cloud-visualization">3. Building a word-cloud visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#4.-Trend-analysis---‘emerging’-new-topics-each-year">4. Trend analysis - ‘emerging’ new topics each year</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#5.-Trend-Analysis:-topics-growth">5. Trend Analysis: topics growth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#6.-Trend-analysis:-growth-distribution-based-on-selected-years">6. Trend analysis: growth distribution based on selected years</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#7.-Conclusion">7. Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Concepts-network-graph.html">Building a concepts co-occurence network</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Concepts-network-graph.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts-network-graph.html#Step-1:-Creating-a-dataset">Step 1: Creating a dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts-network-graph.html#Step-2:-Building-a-concepts-co-occurrence-network">Step 2: Building a concepts co-occurrence network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts-network-graph.html#Step-3:-Visualizing-the-network">Step 3: Visualizing the network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts-network-graph.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+
+
+   <div id="sidebar_github" style="margin-top: 12px;">
+   <h3>Github Source</h3>
+
+      <div style="margin: 10px 20px;">
+      
+         <iframe src="https://ghbtns.com/github-btn.html?user=digital-science&repo=dimensions-api-lab&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+
+         <iframe src="https://ghbtns.com/github-btn.html?user=digital-science&repo=dimensions-api-lab&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe> 
+      
+      </div>
+
+   </div>
+
+
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DSL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+
+    
+
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt .copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js'></script>
+<script>require=requirejs;</script><a class="reference external image-reference" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/cookbooks/Simple-topic-analysis.ipynb"><img alt="../_images/badge-colab.svg" src="../_images/badge-colab.svg" /></a>
+<a class="reference external image-reference" href="https://github.com/digital-science/dimensions-api-lab/blob/master/cookbooks/Simple-topic-analysis.ipynb"><img alt="../_images/badge-github-custom.svg" src="../_images/badge-github-custom.svg" /></a>
+<hr class="docutils" />
+<div class="section" id="Topic-Modeling-Analysis-for-a-Set-of-Publications:-Basic-Workflow">
+<h1>Topic Modeling Analysis for a Set of Publications: Basic Workflow<a class="headerlink" href="#Topic-Modeling-Analysis-for-a-Set-of-Publications:-Basic-Workflow" title="Permalink to this headline">¶</a></h1>
+<p>This Python notebook shows how to use the <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> in order to extract <a class="reference external" href="https://docs.dimensions.ai/dsl/language.html#searching-using-concepts">concepts</a> from publications and use them as the basis for more advanced topic analyses tasks.</p>
+<p><strong>Note</strong> this tutorial is best experienced using Google Colab.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">CHANGELOG</span><span class="se">\n</span><span class="s2">This notebook was last run on </span><span class="si">%s</span><span class="se">\n</span><span class="s2">==&quot;</span> <span class="o">%</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">, %Y&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+==
+CHANGELOG
+This notebook was last run on Jan 24, 2022
+==
+</pre></div></div>
+</div>
+<div class="section" id="Prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>This notebook assumes you have installed the <a class="reference external" href="https://pypi.org/project/dimcli/">Dimcli</a> library and are familiar with the <a class="reference external" href="https://api-lab.dimensions.ai/cookbooks/1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html">‘Getting Started’ tutorial</a>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install dimcli plotly wordcloud -U --quiet
+
+<span class="kn">import</span> <span class="nn">dimcli</span>
+<span class="kn">from</span> <span class="nn">dimcli.utils</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="kn">import</span> <span class="nn">json</span><span class="o">,</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">wordcloud</span> <span class="kn">import</span> <span class="n">WordCloud</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>  <span class="c1"># plotly&gt;=4.8.1</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+  <span class="c1"># make js dependecies local / needed by html exports</span>
+  <span class="kn">from</span> <span class="nn">plotly.offline</span> <span class="kn">import</span> <span class="n">init_notebook_mode</span>
+  <span class="n">init_notebook_mode</span><span class="p">(</span><span class="n">connected</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1">#</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">Logging in..&quot;</span><span class="p">)</span>
+<span class="c1"># https://digital-science.github.io/dimcli/getting-started.html#authentication</span>
+<span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;https://app.dimensions.ai&quot;</span>
+<span class="k">if</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+  <span class="kn">import</span> <span class="nn">getpass</span>
+  <span class="n">KEY</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;API Key: &#39;</span><span class="p">)</span>
+  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">KEY</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="n">ENDPOINT</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="n">KEY</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">KEY</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="n">ENDPOINT</span><span class="p">)</span>
+<span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Unable to revert mtime: /Library/Fonts
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<script type="text/javascript">
+window.PlotlyConfig = {MathJaxConfig: 'local'};
+if (window.MathJax) {MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+if (typeof require !== 'undefined') {
+require.undef("plotly");
+requirejs.config({
+    paths: {
+        'plotly': ['https://cdn.plot.ly/plotly-2.8.3.min']
+    }
+});
+require(['plotly'], function(Plotly) {
+    window._Plotly = Plotly;
+});
+}
+</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Searching config file credentials for &#39;https://app.dimensions.ai&#39; endpoint..
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+==
+Logging in..
+Dimcli - Dimensions API Client (v0.9.6)
+Connected to: &lt;https://app.dimensions.ai/api/dsl&gt; - DSL v2.0
+Method: dsl.ini file
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="1.-Creating-a-Dataset:-e.g. Publications-from-a-Research-Organization">
+<h2>1. Creating a Dataset: e.g. Publications from a Research Organization<a class="headerlink" href="#1.-Creating-a-Dataset:-e.g. Publications-from-a-Research-Organization" title="Permalink to this headline">¶</a></h2>
+<p>The dataset we’ll be using in this tutorial contains publications from <a class="reference external" href="https://www.grid.ac/institutes/grid.17063.33">University of Toronto</a>.</p>
+<p>By using the parameters below, we can restrict the dataset further using dates (publications year) and a subject area (field of research code).</p>
+<p>After extracting the publications records, we are going to use the <code class="docutils literal notranslate"><span class="pre">as_dataframe_concepts</span></code> method to unpack concepts/scores data into a format that makes it easier to analyse it. For more background, see also the <a class="reference external" href="https://api-lab.dimensions.ai/cookbooks/1-getting-started/7-Working-with-concepts.html">Working with concepts in the Dimensions API</a> tutorial.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#@markdown ## Define the criteria for extracting publications</span>
+
+<span class="c1">#@markdown A GRID organization from https://grid.ac/institutes</span>
+<span class="n">GRIDID</span> <span class="o">=</span> <span class="s2">&quot;grid.17063.33&quot;</span> <span class="c1">#@param {type:&quot;string&quot;}</span>
+
+<span class="c1">#@markdown The start/end year of publications used to extract concepts</span>
+<span class="n">YEAR_START</span> <span class="o">=</span> <span class="mi">1996</span> <span class="c1">#@param {type: &quot;slider&quot;, min: 1950, max: 2020}</span>
+<span class="n">YEAR_END</span> <span class="o">=</span> <span class="mi">2020</span> <span class="c1">#@param {type: &quot;slider&quot;, min: 1950, max: 2020}</span>
+
+<span class="c1">#@markdown The Field Of Research (FOR) category (None = all)</span>
+<span class="n">CATEGORY</span> <span class="o">=</span> <span class="s2">&quot;2203 Philosophy&quot;</span>  <span class="c1">#@param [&#39;None&#39;, &#39;0101 Pure Mathematics&#39;, &#39;0102 Applied Mathematics&#39;, &#39;0103 Numerical and Computational Mathematics&#39;, &#39;0104 Statistics&#39;, &#39;0105 Mathematical Physics&#39;, &#39;0201 Astronomical and Space Sciences&#39;, &#39;0202 Atomic, Molecular, Nuclear, Particle and Plasma Physics&#39;, &#39;0203 Classical Physics&#39;, &#39;0204 Condensed Matter Physics&#39;, &#39;0205 Optical Physics&#39;, &#39;0206 Quantum Physics&#39;, &#39;0299 Other Physical Sciences&#39;, &#39;0301 Analytical Chemistry&#39;, &#39;0302 Inorganic Chemistry&#39;, &#39;0303 Macromolecular and Materials Chemistry&#39;, &#39;0304 Medicinal and Biomolecular Chemistry&#39;, &#39;0305 Organic Chemistry&#39;, &#39;0306 Physical Chemistry (incl. Structural)&#39;, &#39;0307 Theoretical and Computational Chemistry&#39;, &#39;0399 Other Chemical Sciences&#39;, &#39;0401 Atmospheric Sciences&#39;, &#39;0402 Geochemistry&#39;, &#39;0403 Geology&#39;, &#39;0404 Geophysics&#39;, &#39;0405 Oceanography&#39;, &#39;0406 Physical Geography and Environmental Geoscience&#39;, &#39;0499 Other Earth Sciences&#39;, &#39;0501 Ecological Applications&#39;, &#39;0502 Environmental Science and Management&#39;, &#39;0503 Soil Sciences&#39;, &#39;0599 Other Environmental Sciences&#39;, &#39;0601 Biochemistry and Cell Biology&#39;, &#39;0602 Ecology&#39;, &#39;0603 Evolutionary Biology&#39;, &#39;0604 Genetics&#39;, &#39;0605 Microbiology&#39;, &#39;0606 Physiology&#39;, &#39;0607 Plant Biology&#39;, &#39;0608 Zoology&#39;, &#39;0699 Other Biological Sciences&#39;, &#39;0701 Agriculture, Land and Farm Management&#39;, &#39;0702 Animal Production&#39;, &#39;0703 Crop and Pasture Production&#39;, &#39;0704 Fisheries Sciences&#39;, &#39;0705 Forestry Sciences&#39;, &#39;0706 Horticultural Production&#39;, &#39;0707 Veterinary Sciences&#39;, &#39;0799 Other Agricultural and Veterinary Sciences&#39;, &#39;0801 Artificial Intelligence and Image Processing&#39;, &#39;0802 Computation Theory and Mathematics&#39;, &#39;0803 Computer Software&#39;, &#39;0804 Data Format&#39;, &#39;0805 Distributed Computing&#39;, &#39;0806 Information Systems&#39;, &#39;0807 Library and Information Studies&#39;, &#39;0899 Other Information and Computing Sciences&#39;, &#39;0901 Aerospace Engineering&#39;, &#39;0902 Automotive Engineering&#39;, &#39;0903 Biomedical Engineering&#39;, &#39;0904 Chemical Engineering&#39;, &#39;0905 Civil Engineering&#39;, &#39;0906 Electrical and Electronic Engineering&#39;, &#39;0907 Environmental Engineering&#39;, &#39;0908 Food Sciences&#39;, &#39;0909 Geomatic Engineering&#39;, &#39;0910 Manufacturing Engineering&#39;, &#39;0911 Maritime Engineering&#39;, &#39;0912 Materials Engineering&#39;, &#39;0913 Mechanical Engineering&#39;, &#39;0914 Resources Engineering and Extractive Metallurgy&#39;, &#39;0915 Interdisciplinary Engineering&#39;, &#39;0999 Other Engineering&#39;, &#39;1001 Agricultural Biotechnology&#39;, &#39;1002 Environmental Biotechnology&#39;, &#39;1003 Industrial Biotechnology&#39;, &#39;1004 Medical Biotechnology&#39;, &#39;1005 Communications Technologies&#39;, &#39;1006 Computer Hardware&#39;, &#39;1007 Nanotechnology&#39;, &#39;1099 Other Technology&#39;, &#39;1101 Medical Biochemistry and Metabolomics&#39;, &#39;1102 Cardiorespiratory Medicine and Haematology&#39;, &#39;1103 Clinical Sciences&#39;, &#39;1104 Complementary and Alternative Medicine&#39;, &#39;1105 Dentistry&#39;, &#39;1106 Human Movement and Sports Science&#39;, &#39;1107 Immunology&#39;, &#39;1108 Medical Microbiology&#39;, &#39;1109 Neurosciences&#39;, &#39;1110 Nursing&#39;, &#39;1111 Nutrition and Dietetics&#39;, &#39;1112 Oncology and Carcinogenesis&#39;, &#39;1113 Ophthalmology and Optometry&#39;, &#39;1114 Paediatrics and Reproductive Medicine&#39;, &#39;1115 Pharmacology and Pharmaceutical Sciences&#39;, &#39;1116 Medical Physiology&#39;, &#39;1117 Public Health and Health Services&#39;, &#39;1199 Other Medical and Health Sciences&#39;, &#39;1201 Architecture&#39;, &#39;1202 Building&#39;, &#39;1203 Design Practice and Management&#39;, &#39;1205 Urban and Regional Planning&#39;, &#39;1299 Other Built Environment and Design&#39;, &#39;1301 Education Systems&#39;, &#39;1302 Curriculum and Pedagogy&#39;, &#39;1303 Specialist Studies In Education&#39;, &#39;1399 Other Education&#39;, &#39;1401 Economic Theory&#39;, &#39;1402 Applied Economics&#39;, &#39;1403 Econometrics&#39;, &#39;1499 Other Economics&#39;, &#39;1501 Accounting, Auditing and Accountability&#39;, &#39;1502 Banking, Finance and Investment&#39;, &#39;1503 Business and Management&#39;, &#39;1504 Commercial Services&#39;, &#39;1505 Marketing&#39;, &#39;1506 Tourism&#39;, &#39;1507 Transportation and Freight Services&#39;, &#39;1601 Anthropology&#39;, &#39;1602 Criminology&#39;, &#39;1603 Demography&#39;, &#39;1604 Human Geography&#39;, &#39;1605 Policy and Administration&#39;, &#39;1606 Political Science&#39;, &#39;1607 Social Work&#39;, &#39;1608 Sociology&#39;, &#39;1699 Other Studies In Human Society&#39;, &#39;1701 Psychology&#39;, &#39;1702 Cognitive Sciences&#39;, &#39;1799 Other Psychology and Cognitive Sciences&#39;, &#39;1801 Law&#39;, &#39;1899 Other Law and Legal Studies&#39;, &#39;1901 Art Theory and Criticism&#39;, &#39;1902 Film, Television and Digital Media&#39;, &#39;1903 Journalism and Professional Writing&#39;, &#39;1904 Performing Arts and Creative Writing&#39;, &#39;1905 Visual Arts and Crafts&#39;, &#39;1999 Other Studies In Creative Arts and Writing&#39;, &#39;2001 Communication and Media Studies&#39;, &#39;2002 Cultural Studies&#39;, &#39;2003 Language Studies&#39;, &#39;2004 Linguistics&#39;, &#39;2005 Literary Studies&#39;, &#39;2099 Other Language, Communication and Culture&#39;, &#39;2101 Archaeology&#39;, &#39;2102 Curatorial and Related Studies&#39;, &#39;2103 Historical Studies&#39;, &#39;2199 Other History and Archaeology&#39;, &#39;2201 Applied Ethics&#39;, &#39;2202 History and Philosophy of Specific Fields&#39;, &#39;2203 Philosophy&#39;, &#39;2204 Religion and Religious Studies&#39;, &#39;2299 Other Philosophy and Religious Studies&#39;]</span>
+
+<span class="k">if</span> <span class="n">YEAR_END</span> <span class="o">&lt;</span> <span class="n">YEAR_START</span><span class="p">:</span>
+  <span class="n">YEAR_END</span> <span class="o">=</span> <span class="n">YEAR_START</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;You selected:</span><span class="se">\n</span><span class="s2">-&gt;</span><span class="si">{</span><span class="n">GRIDID</span><span class="si">}</span><span class="se">\n</span><span class="s2">-&gt;</span><span class="si">{</span><span class="n">YEAR_START</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">YEAR_END</span><span class="si">}</span><span class="se">\n</span><span class="s2">-&gt;</span><span class="si">{</span><span class="n">CATEGORY</span><span class="si">}</span><span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">IPython.core.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s1">&#39;-&gt;&lt;br /&gt;&lt;a href=&quot;</span><span class="si">{}</span><span class="s1">&quot;&gt;Preview </span><span class="si">{}</span><span class="s1"> in Dimensions.ai &amp;#x29c9;&lt;/a&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dimensions_url</span><span class="p">(</span><span class="n">GRIDID</span><span class="p">),</span> <span class="n">GRIDID</span><span class="p">)))</span>
+
+
+<span class="c1"># subject area query component</span>
+<span class="k">if</span> <span class="n">CATEGORY</span> <span class="o">==</span> <span class="s2">&quot;None&quot;</span><span class="p">:</span>
+  <span class="n">subject_area_q</span> <span class="o">=</span>  <span class="s2">&quot;&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="n">subject_area_q</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot; and category_for.name=&quot;</span><span class="si">{</span><span class="n">CATEGORY</span><span class="si">}</span><span class="s2">&quot; &quot;&quot;&quot;</span>
+
+<span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">search publications</span>
+<span class="s2">    where research_orgs.id = &quot;</span><span class="si">{</span><span class="n">GRIDID</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="s2">    and year in [</span><span class="si">{</span><span class="n">YEAR_START</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">YEAR_END</span><span class="si">}</span><span class="s2">]</span>
+<span class="s2">    </span><span class="si">{</span><span class="n">subject_area_q</span><span class="si">}</span><span class="s2"></span>
+<span class="s2">    return publications[id+concepts_scores+year]</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;===</span><span class="se">\n</span><span class="s2">Query:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;===</span><span class="se">\n</span><span class="s2">Retrieving Publications.. &quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query_iterative</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;===</span><span class="se">\n</span><span class="s2">Extracting Concepts.. &quot;</span><span class="p">)</span>
+<span class="n">concepts</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">as_dataframe_concepts</span><span class="p">()</span>
+<span class="n">concepts_unique</span> <span class="o">=</span> <span class="n">concepts</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s2">&quot;concept&quot;</span><span class="p">)[[</span><span class="s1">&#39;concept&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="s1">&#39;score_avg&#39;</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;===</span><span class="se">\n</span><span class="s2">Concepts Found (total):&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">concepts</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;===</span><span class="se">\n</span><span class="s2">Unique Concepts Found:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">concepts_unique</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;===</span><span class="se">\n</span><span class="s2">Concepts with frequency major than 1:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">concepts_unique</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;frequency &gt; 1&quot;</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+You selected:
+-&gt;grid.17063.33
+-&gt;1996-2020
+-&gt;2203 Philosophy
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+-><br /><a href="None">Preview grid.17063.33 in Dimensions.ai &#x29c9;</a></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Starting iteration with limit=1000 skip=0 ...
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+===
+Query:
+
+search publications
+    where research_orgs.id = &#34;grid.17063.33&#34;
+    and year in [1996:2020]
+     and category_for.name=&#34;2203 Philosophy&#34;
+    return publications[id+concepts_scores+year]
+
+===
+Retrieving Publications..
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+0-1000 / 1358 (1.44s)
+1000-1358 / 1358 (0.78s)
+===
+Records extracted: 1358
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+===
+Extracting Concepts..
+===
+Concepts Found (total): 36382
+===
+Unique Concepts Found: 14505
+===
+Concepts with frequency major than 1: 3286
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="2.-Concepts:-exploratory-analysis">
+<h2>2. Concepts: exploratory analysis<a class="headerlink" href="#2.-Concepts:-exploratory-analysis" title="Permalink to this headline">¶</a></h2>
+<p>The goal of this section is understanding what are the best settings to use, in order to extract useful concepts.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#@markdown ## Define the best parameters to isolate &#39;interesting&#39; concepts</span>
+<span class="c1">#@markdown Frequency: how many documents include a concept (100 = no upper limit).</span>
+<span class="c1">#@markdown Tip: concepts with very high frequencies tend to be common words, so it is useful to exclude them.</span>
+<span class="n">FREQ_MIN</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1">#@param {type: &quot;slider&quot;, min: 1, max: 10, step:1}</span>
+<span class="n">FREQ_MAX</span> <span class="o">=</span> <span class="mi">70</span> <span class="c1">#@param {type: &quot;slider&quot;, min: 10, max: 100, step:10}</span>
+<span class="c1">#@markdown ---</span>
+<span class="c1">#@markdown Score: the average relevancy score of concepts, for the dataset we extracted above.</span>
+<span class="c1">#@markdown This value tends to be a good indicator of &#39;interesting&#39; concepts.</span>
+<span class="n">SCORE_MIN</span> <span class="o">=</span> <span class="mf">0.4</span>  <span class="c1">#@param {type: &quot;slider&quot;, min: 0, max: 1, step:0.1}</span>
+<span class="c1">#@markdown ---</span>
+<span class="c1">#@markdown Select how many concepts to include in the visualization</span>
+<span class="n">MAX_CONCEPTS</span> <span class="o">=</span> <span class="mi">200</span> <span class="c1">#@param {type: &quot;slider&quot;, min: 20, max: 1000, step:10}</span>
+
+<span class="k">if</span> <span class="n">FREQ_MAX</span> <span class="o">==</span> <span class="mi">100</span><span class="p">:</span>
+  <span class="n">FREQ_MAX</span> <span class="o">=</span> <span class="mi">100000000</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;You selected:</span><span class="se">\n</span><span class="s2">-&gt;</span><span class="si">{</span><span class="n">MAX_CONCEPTS</span><span class="si">}</span><span class="se">\n</span><span class="s2">-&gt;</span><span class="si">{</span><span class="n">FREQ_MIN</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">FREQ_MAX</span><span class="si">}</span><span class="se">\n</span><span class="s2">-&gt;</span><span class="si">{</span><span class="n">SCORE_MIN</span><span class="si">}</span><span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="n">filtered_concepts</span> <span class="o">=</span> <span class="n">concepts_unique</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;frequency &gt;= </span><span class="si">{</span><span class="n">FREQ_MIN</span><span class="si">}</span><span class="s2"> &amp; frequency &lt;= </span><span class="si">{</span><span class="n">FREQ_MAX</span><span class="si">}</span><span class="s2"> &amp; score_avg &gt;= </span><span class="si">{</span><span class="n">SCORE_MIN</span><span class="si">}</span><span class="s2"> &quot;&quot;&quot;</span><span class="p">)</span>\
+                    <span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s2">&quot;score_avg&quot;</span><span class="p">,</span> <span class="s2">&quot;frequency&quot;</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)[:</span><span class="n">MAX_CONCEPTS</span><span class="p">]</span>
+
+<span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">filtered_concepts</span><span class="p">,</span>
+           <span class="n">x</span><span class="o">=</span><span class="s2">&quot;concept&quot;</span><span class="p">,</span>
+           <span class="n">y</span><span class="o">=</span><span class="s2">&quot;frequency&quot;</span><span class="p">,</span>
+           <span class="n">height</span><span class="o">=</span><span class="mi">700</span><span class="p">,</span>
+           <span class="n">color</span><span class="o">=</span><span class="s2">&quot;score_avg&quot;</span><span class="p">,</span>
+           <span class="n">size</span><span class="o">=</span><span class="s2">&quot;score_avg&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+You selected:
+-&gt;200
+-&gt;2-70
+-&gt;0.4
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>                            <div id="8e2dcba9-ae57-41d2-a5df-a9e8bdc6efd3" class="plotly-graph-div" style="height:700px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("8e2dcba9-ae57-41d2-a5df-a9e8bdc6efd3")) {                    Plotly.newPlot(                        "8e2dcba9-ae57-41d2-a5df-a9e8bdc6efd3",                        [{"hovertemplate":"concept=%{x}<br>frequency=%{y}<br>score_avg=%{marker.color}<extra></extra>","legendgroup":"","marker":{"color":[0.9055,0.858,0.854,0.8535,0.8385,0.83033,0.8285,0.827,0.8215,0.82,0.82,0.819,0.81875,0.818,0.81775,0.81467,0.8085,0.808,0.8025,0.8025,0.802,0.798,0.79533,0.7895,0.78833,0.7845,0.784,0.7785,0.7785,0.778,0.777,0.7768,0.776,0.7755,0.775,0.771,0.76725,0.762,0.762,0.76175,0.761,0.761,0.761,0.761,0.7606,0.7605,0.7605,0.759,0.7585,0.7585,0.758,0.7565,0.7565,0.7555,0.7555,0.755,0.7545,0.7514,0.751,0.7505,0.7505,0.7495,0.74833,0.7455,0.7445,0.7434,0.741,0.74,0.73933,0.73733,0.7365,0.73633,0.73633,0.735,0.73267,0.7325,0.7325,0.732,0.732,0.732,0.7302,0.73017,0.73,0.73,0.7295,0.729,0.7284,0.728,0.7275,0.727,0.7265,0.726,0.726,0.725,0.72455,0.72425,0.72233,0.72233,0.72167,0.721,0.71975,0.7175,0.71675,0.7165,0.71533,0.713,0.713,0.713,0.71225,0.711,0.71067,0.7085,0.7085,0.708,0.708,0.7075,0.707,0.707,0.7065,0.706,0.706,0.70567,0.7055,0.7055,0.705,0.705,0.705,0.705,0.705,0.705,0.705,0.705,0.705,0.7045,0.7045,0.70433,0.70433,0.704,0.704,0.704,0.70367,0.7035,0.70333,0.703,0.703,0.703,0.703,0.703,0.7025,0.7025,0.702,0.702,0.702,0.7015,0.7015,0.701,0.7005,0.7005,0.6995,0.69933,0.699,0.6985,0.6985,0.698,0.6975,0.6975,0.697,0.6965,0.696,0.696,0.69575,0.695,0.694,0.69362,0.6935,0.6935,0.693,0.692,0.692,0.692,0.692,0.692,0.691,0.6905,0.69033,0.69,0.69,0.6895,0.689,0.689,0.6886,0.6885,0.6885,0.68825,0.688,0.68775,0.6875,0.6875,0.68723,0.6865],"coloraxis":"coloraxis","size":[0.9055,0.858,0.854,0.8535,0.8385,0.83033,0.8285,0.827,0.8215,0.82,0.82,0.819,0.81875,0.818,0.81775,0.81467,0.8085,0.808,0.8025,0.8025,0.802,0.798,0.79533,0.7895,0.78833,0.7845,0.784,0.7785,0.7785,0.778,0.777,0.7768,0.776,0.7755,0.775,0.771,0.76725,0.762,0.762,0.76175,0.761,0.761,0.761,0.761,0.7606,0.7605,0.7605,0.759,0.7585,0.7585,0.758,0.7565,0.7565,0.7555,0.7555,0.755,0.7545,0.7514,0.751,0.7505,0.7505,0.7495,0.74833,0.7455,0.7445,0.7434,0.741,0.74,0.73933,0.73733,0.7365,0.73633,0.73633,0.735,0.73267,0.7325,0.7325,0.732,0.732,0.732,0.7302,0.73017,0.73,0.73,0.7295,0.729,0.7284,0.728,0.7275,0.727,0.7265,0.726,0.726,0.725,0.72455,0.72425,0.72233,0.72233,0.72167,0.721,0.71975,0.7175,0.71675,0.7165,0.71533,0.713,0.713,0.713,0.71225,0.711,0.71067,0.7085,0.7085,0.708,0.708,0.7075,0.707,0.707,0.7065,0.706,0.706,0.70567,0.7055,0.7055,0.705,0.705,0.705,0.705,0.705,0.705,0.705,0.705,0.705,0.7045,0.7045,0.70433,0.70433,0.704,0.704,0.704,0.70367,0.7035,0.70333,0.703,0.703,0.703,0.703,0.703,0.7025,0.7025,0.702,0.702,0.702,0.7015,0.7015,0.701,0.7005,0.7005,0.6995,0.69933,0.699,0.6985,0.6985,0.698,0.6975,0.6975,0.697,0.6965,0.696,0.696,0.69575,0.695,0.694,0.69362,0.6935,0.6935,0.693,0.692,0.692,0.692,0.692,0.692,0.691,0.6905,0.69033,0.69,0.69,0.6895,0.689,0.689,0.6886,0.6885,0.6885,0.68825,0.688,0.68775,0.6875,0.6875,0.68723,0.6865],"sizemode":"area","sizeref":0.00226375,"symbol":"circle"},"mode":"markers","name":"","orientation":"v","showlegend":false,"x":["philosophy of law","discourse ethics","literary history","social contract theory","Catholic philosophy","later philosophy","moral emotions","sexual identity","system of ethics","legal theory","stem cell research","ethics of generosity","moral law","Tamil literary history","evolutionary ethics","philosophy of nature","theory of mind","global health ethics","canon law","philosophy of religion","concept of truth","mind development","Wittgenstein\u2019s later philosophy","ethical research practice","Western intellectual tradition","moral justification","moral psychology","Catholic education","Rawls\u2019s theory","ethical standards","moral discourse","public reason","contract theory","point of departure","business ethics","state of consciousness","social contract","theological ethics","virtue ethics","philosophy of mind","study of religion","philosophical position","philosophy of sex","history of philosophy","philosophy of mathematics","natural philosophy","academic philosophy","late dialogues","ethics of immigration","ethical goals","great philosophers","empirical science","John Rawls\u2019s theory","ethics of care","political philosophers","late nineteenth century","later writings","ethics review","third step I","classical Confucianism","cell research","human soul","ethics consultation","moral virtues","robust conception","moral norms","ethical perspective","intellectual virtues","ethics review board","human person","way of thinking","creative nature","public rights","constitutive norms","personal identity","philosophical reflection","further reflection","human mind","overlapping consensus","Kant\u2019s theory","ethical analysis","cognitive science","mathematical objects","moral education","Charles Sanders Peirce","school-age years","ethical theory","intellectual tradition","research participants","public health research","Origin of Species","epistemology of disagreement","rule of law","educational theory","philosophy of science","moral motivation","interdisciplinary conversations","Research Ethics Committee","mind-body problem","mathematical logic","political community","social theory","practical reasons","ethics review process","review essay","ethics consultants","public sphere","applied mathematics","human flourishing","cognitive capacity","mental state attribution","human dignity","medical practice","feminist ethics","set of beliefs","psychological investigation","political membership","interpretive approach","Jewish philosophy","contemporary philosophy","philosophical inquiry","welcome contribution","Christian ethics","Hegel's account","ethical norms","human actions","philosophical arguments","universities today","religious forms","ancient philosophy","Western philosophers","philosophical dimensions","ethical judgments","Wittgenstein\u2019s reflections","Oliver O'Donovan","philosophical interest","moral practice","philosophical approach","natural goodness","moral action","moral philosophy","ethics education","philosophical point","Bernard Williams","secular world","religious history","ethical manner","Rawls's work","philosophical theories","de Finetti's theory","ethical dimensions","liberal conception","ethical responsibility","ethical subject","moral imagination","liberal tradition","deep disagreement","speculative metaphysics","Wittgenstein\u2019s philosophy","philosophical project","Tamil literature","scientific realists","very possibility","Frank Ramsey","moral status","philosophical accounts","contemporary theorists","medieval philosophy","modern science","political judgment","good sense","modern period","analytic school","ethical principles","epistemic rationality","philosophical perspective","Martin Heidegger","philosophical debate","rightful condition","de Finetti","constitutional theory","careful reflection","global health research","moral obligation","human world","conduct of research","normative force","twenty-first century","liberal democracy","main thesis","public health ethics","Gayatri Spivak","naturalistic theory","social sciences","proper relation","moral claims","ancient past","real dispute","political philosophy","clinical equipoise"],"xaxis":"x","y":[2,3,2,2,2,3,2,2,2,2,2,2,4,2,4,3,4,2,2,2,2,2,3,2,3,2,4,2,2,2,2,5,2,4,5,2,4,2,2,4,2,2,2,2,5,2,2,2,2,2,2,2,2,2,2,2,2,5,2,2,2,2,3,2,2,5,3,2,3,3,2,3,3,2,3,4,2,3,2,2,5,12,2,2,2,2,5,3,2,2,2,3,2,2,11,4,3,3,3,3,4,2,4,2,3,4,3,2,4,2,3,4,4,2,2,2,3,2,2,4,3,3,2,2,3,2,2,2,2,2,2,2,2,2,2,3,3,4,2,2,6,2,3,4,2,2,2,2,4,2,4,2,2,2,2,2,2,2,2,3,2,2,2,2,2,2,2,2,3,2,4,2,2,8,2,2,2,4,2,2,2,2,2,8,3,2,2,2,2,2,5,2,2,4,2,4,2,2,13,2],"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"heatmapgl":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmapgl"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermapbox"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"#E5ECF6","showlakes":true,"showland":true,"subunitcolor":"white"},"hoverlabel":{"align":"left"},"hovermode":"closest","mapbox":{"style":"light"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"title":{"x":0.05},"xaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","zerolinewidth":2}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"concept"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"frequency"}},"coloraxis":{"colorbar":{"title":{"text":"score_avg"}},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"legend":{"tracegroupgap":0,"itemsizing":"constant"},"margin":{"t":60},"height":700},                        {"responsive": true}                    ).then(function(){
+
+var gd = document.getElementById('8e2dcba9-ae57-41d2-a5df-a9e8bdc6efd3');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script>        </div></div>
+</div>
+</div>
+<div class="section" id="3.-Building-a-word-cloud-visualization">
+<h2>3. Building a word-cloud visualization<a class="headerlink" href="#3.-Building-a-word-cloud-visualization" title="Permalink to this headline">¶</a></h2>
+<p>Wordclouds are often a pretty effective way of summarising the relative importance of keywords.</p>
+<p>The <a class="reference external" href="https://github.com/amueller/word_cloud">wordcloud Python library</a> can be used to turn our concepts list into an image. The Wordcloud function takes a list of dictionaries with words/frequency eg</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># [
+#    {&#39;concept&#39;: &#39;study&#39;, &#39;frequency&#39;: 5707},
+#    {&#39;concept&#39;: &#39;patients&#39;, &#39;frequency&#39;: 3579}
+#   ... etc...
+#. ]
+</pre></div>
+</div>
+<p>So we can obtain that easily from the DSL concepts data.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># take top N concepts</span>
+<span class="n">topn</span> <span class="o">=</span> <span class="n">filtered_concepts</span><span class="p">[[</span><span class="s1">&#39;concept&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">]][:</span><span class="mi">300</span><span class="p">]</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;concept&#39;</span><span class="p">]</span> <span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;frequency&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">topn</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s2">&quot;records&quot;</span><span class="p">)}</span>
+
+<span class="n">wordcloud</span> <span class="o">=</span> <span class="n">WordCloud</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">900</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span><span class="o">.</span><span class="n">generate_from_frequencies</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">wordcloud</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;bilinear&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;topics_wordcloud.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/cookbooks_Simple-topic-analysis_10_0.png" src="../_images/cookbooks_Simple-topic-analysis_10_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="4.-Trend-analysis---‘emerging’-new-topics-each-year">
+<h2>4. Trend analysis - ‘emerging’ new topics each year<a class="headerlink" href="#4.-Trend-analysis---‘emerging’-new-topics-each-year" title="Permalink to this headline">¶</a></h2>
+<p>In this section we will look at the concept distribution over the years. In particular, we will focus on the ‘new’ concepts in each year - i.e. concepts that have never appeared in previous years.</p>
+<p>This can be easily achieved by adding a new column <code class="docutils literal notranslate"><span class="pre">first_year</span></code>, marking the earliest publication year a concept was found in.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># enrich initial dataframe by adding &#39;first_year&#39;</span>
+<span class="n">concepts</span><span class="p">[</span><span class="s2">&quot;first_year&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">concepts</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;concept&#39;</span><span class="p">)[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="s1">&#39;min&#39;</span><span class="p">)</span>
+<span class="n">concepts_unique</span> <span class="o">=</span> <span class="n">concepts</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s2">&quot;concept&quot;</span><span class="p">)[[</span><span class="s1">&#39;concept&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="s1">&#39;score_avg&#39;</span><span class="p">,</span> <span class="s1">&#39;first_year&#39;</span><span class="p">]]</span>
+
+<span class="c1">#@markdown ## Emerging concepts: parameters</span>
+<span class="c1">#@markdown Start year of the publications/concepts to include</span>
+<span class="n">YEAR_START</span> <span class="o">=</span> <span class="mi">2010</span> <span class="c1">#@param {type:&quot;integer&quot;}</span>
+<span class="c1">#@markdown How many &#39;emerging&#39; concepts to retain, for each year</span>
+<span class="n">CONCEPTS_PER_YEAR</span> <span class="o">=</span> <span class="mi">5</span> <span class="c1">#@param {type:&quot;integer&quot;}</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># note: we reuse the freq/score threasholds above in order to focus on concepts of interest</span>
+<span class="n">emerging_concepts</span> <span class="o">=</span> <span class="n">concepts_unique</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;first_year &gt;= </span><span class="si">{</span><span class="n">YEAR_START</span><span class="si">}</span><span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>\
+                    <span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;frequency &gt;= </span><span class="si">{</span><span class="n">FREQ_MIN</span><span class="si">}</span><span class="s2"> &amp; frequency &lt;= </span><span class="si">{</span><span class="n">FREQ_MAX</span><span class="si">}</span><span class="s2"> &amp; score_avg &gt;= </span><span class="si">{</span><span class="n">SCORE_MIN</span><span class="si">}</span><span class="s2"> &quot;&quot;&quot;</span><span class="p">)</span>\
+                    <span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s2">&quot;score_avg&quot;</span><span class="p">,</span> <span class="s2">&quot;frequency&quot;</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>\
+                    <span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;first_year&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">CONCEPTS_PER_YEAR</span><span class="p">)</span>
+
+<span class="n">px</span><span class="o">.</span><span class="n">treemap</span><span class="p">(</span><span class="n">emerging_concepts</span><span class="p">,</span>
+           <span class="n">path</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;first_year&#39;</span><span class="p">,</span> <span class="s1">&#39;concept&#39;</span><span class="p">],</span>
+           <span class="n">values</span><span class="o">=</span><span class="s1">&#39;frequency&#39;</span><span class="p">,</span>
+           <span class="n">color</span><span class="o">=</span><span class="s2">&quot;concept&quot;</span><span class="p">,</span>
+           <span class="n">color_discrete_sequence</span><span class="o">=</span><span class="n">px</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">diverging</span><span class="o">.</span><span class="n">Spectral</span><span class="p">,</span>
+           <span class="n">height</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span>
+          <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>                            <div id="5c071cbc-6645-4fa7-857a-0f4f4c45e1fc" class="plotly-graph-div" style="height:600px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("5c071cbc-6645-4fa7-857a-0f4f4c45e1fc")) {                    Plotly.newPlot(                        "5c071cbc-6645-4fa7-857a-0f4f4c45e1fc",                        [{"branchvalues":"total","customdata":[["philosophy of law"],["moral justification"],["theological ethics"],["academic philosophy"],["creative nature"],["natural philosophy"],["ethical research practice"],["moral virtues"],["town hall meetings"],["further reflection"],["classical Confucianism"],["kind of theory"],["ethics review process"],["philosophy of religion"],["scientific methodology"],["philosophy of nature"],["literary history"],["great philosophers"],["concept of truth"],["philosophical position"],["Western intellectual tradition"],["ethics of generosity"],["mental state attribution"],["moral action"],["late dialogues"],["rehabilitation science"],["ethics of immigration"],["intellectual virtues"],["study of religion"],["ethics education"],["Tamil literary history"],["Jewish philosophy"],["legal theory"],["mindreading"],["third step I"],["philosophical arguments"],["empirical science"],["Wittgenstein\u2019s reflections"],["enculturation process"],["global governance"],["ethical perspective"],["moral law"],["epistemology of disagreement"],["Frank Ramsey"],["ancient philosophy"],["artificial intelligence"],["social theory"],["moral psychology"],["system of ethics"],["mathematical objects"],["epistemic rationality"],["Stanley Cavell"],["epistemic injustice"],["feminist ethics"],["religious forms"],["(?)"],["(?)"],["(?)"],["(?)"],["(?)"],["(?)"],["(?)"],["(?)"],["(?)"],["(?)"],["(?)"]],"domain":{"x":[0.0,1.0],"y":[0.0,1.0]},"hovertemplate":"labels=%{label}<br>frequency=%{value}<br>parent=%{parent}<br>id=%{id}<br>concept=%{customdata[0]}<extra></extra>","ids":["2012/philosophy of law","2019/moral justification","2012/theological ethics","2015/academic philosophy","2019/creative nature","2020/natural philosophy","2014/ethical research practice","2018/moral virtues","2015/town hall meetings","2018/further reflection","2013/classical Confucianism","2016/kind of theory","2011/ethics review process","2012/philosophy of religion","2020/scientific methodology","2019/philosophy of nature","2011/literary history","2014/great philosophers","2011/concept of truth","2014/philosophical position","2019/Western intellectual tradition","2017/ethics of generosity","2017/mental state attribution","2013/moral action","2010/late dialogues","2016/rehabilitation science","2014/ethics of immigration","2010/intellectual virtues","2018/study of religion","2017/ethics education","2011/Tamil literary history","2011/Jewish philosophy","2012/legal theory","2020/mindreading","2010/third step I","2017/philosophical arguments","2018/empirical science","2015/Wittgenstein\u2019s reflections","2018/enculturation process","2015/global governance","2013/ethical perspective","2014/moral law","2012/epistemology of disagreement","2016/Frank Ramsey","2010/ancient philosophy","2020/artificial intelligence","2016/social theory","2013/moral psychology","2019/system of ethics","2017/mathematical objects","2015/epistemic rationality","2020/Stanley Cavell","2016/epistemic injustice","2013/feminist ethics","2010/religious forms","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020"],"labels":["philosophy of law","moral justification","theological ethics","academic philosophy","creative nature","natural philosophy","ethical research practice","moral virtues","town hall meetings","further reflection","classical Confucianism","kind of theory","ethics review process","philosophy of religion","scientific methodology","philosophy of nature","literary history","great philosophers","concept of truth","philosophical position","Western intellectual tradition","ethics of generosity","mental state attribution","moral action","late dialogues","rehabilitation science","ethics of immigration","intellectual virtues","study of religion","ethics education","Tamil literary history","Jewish philosophy","legal theory","mindreading","third step I","philosophical arguments","empirical science","Wittgenstein\u2019s reflections","enculturation process","global governance","ethical perspective","moral law","epistemology of disagreement","Frank Ramsey","ancient philosophy","artificial intelligence","social theory","moral psychology","system of ethics","mathematical objects","epistemic rationality","Stanley Cavell","epistemic injustice","feminist ethics","religious forms","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020"],"marker":{"colors":["rgb(158,1,66)","rgb(213,62,79)","rgb(244,109,67)","rgb(253,174,97)","rgb(254,224,139)","rgb(255,255,191)","rgb(230,245,152)","rgb(171,221,164)","rgb(102,194,165)","rgb(50,136,189)","rgb(94,79,162)","rgb(158,1,66)","rgb(213,62,79)","rgb(244,109,67)","rgb(253,174,97)","rgb(254,224,139)","rgb(255,255,191)","rgb(230,245,152)","rgb(171,221,164)","rgb(102,194,165)","rgb(50,136,189)","rgb(94,79,162)","rgb(158,1,66)","rgb(213,62,79)","rgb(244,109,67)","rgb(253,174,97)","rgb(254,224,139)","rgb(255,255,191)","rgb(230,245,152)","rgb(171,221,164)","rgb(102,194,165)","rgb(50,136,189)","rgb(94,79,162)","rgb(158,1,66)","rgb(213,62,79)","rgb(244,109,67)","rgb(253,174,97)","rgb(254,224,139)","rgb(255,255,191)","rgb(230,245,152)","rgb(171,221,164)","rgb(102,194,165)","rgb(50,136,189)","rgb(94,79,162)","rgb(158,1,66)","rgb(213,62,79)","rgb(244,109,67)","rgb(253,174,97)","rgb(254,224,139)","rgb(255,255,191)","rgb(230,245,152)","rgb(171,221,164)","rgb(102,194,165)","rgb(50,136,189)","rgb(94,79,162)","rgb(158,1,66)","rgb(158,1,66)","rgb(158,1,66)","rgb(158,1,66)","rgb(158,1,66)","rgb(158,1,66)","rgb(158,1,66)","rgb(158,1,66)","rgb(158,1,66)","rgb(158,1,66)","rgb(158,1,66)"]},"name":"","parents":["2012","2019","2012","2015","2019","2020","2014","2018","2015","2018","2013","2016","2011","2012","2020","2019","2011","2014","2011","2014","2019","2017","2017","2013","2010","2016","2014","2010","2018","2017","2011","2011","2012","2020","2010","2017","2018","2015","2018","2015","2013","2014","2012","2016","2010","2020","2016","2013","2019","2017","2015","2020","2016","2013","2010","","","","","","","","","","",""],"values":[2,2,2,2,3,2,2,2,2,2,2,2,2,2,2,3,2,2,2,2,3,2,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,4,3,2,2,2,2,4,2,2,2,2,2,2,2,10,10,11,13,12,10,10,11,10,13,10],"type":"treemap"}],                        {"template":{"data":{"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"heatmapgl":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmapgl"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermapbox"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"#E5ECF6","showlakes":true,"showland":true,"subunitcolor":"white"},"hoverlabel":{"align":"left"},"hovermode":"closest","mapbox":{"style":"light"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"title":{"x":0.05},"xaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","zerolinewidth":2}}},"legend":{"tracegroupgap":0},"margin":{"t":60},"treemapcolorway":["rgb(158,1,66)","rgb(213,62,79)","rgb(244,109,67)","rgb(253,174,97)","rgb(254,224,139)","rgb(255,255,191)","rgb(230,245,152)","rgb(171,221,164)","rgb(102,194,165)","rgb(50,136,189)","rgb(94,79,162)"],"height":600},                        {"responsive": true}                    ).then(function(){
+
+var gd = document.getElementById('5c071cbc-6645-4fa7-857a-0f4f4c45e1fc');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script>        </div></div>
+</div>
+</div>
+<div class="section" id="5.-Trend-Analysis:-topics-growth">
+<h2>5. Trend Analysis: topics growth<a class="headerlink" href="#5.-Trend-Analysis:-topics-growth" title="Permalink to this headline">¶</a></h2>
+<p>If we focus on concepts that appear across multiple years, it is pretty interesting to examine their growth / decrease by comparing their frequency (or score) across those years.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="c1"># create dataframe with statistics for all years</span>
+<span class="c1">#</span>
+
+<span class="n">concepts_by_year</span> <span class="o">=</span> <span class="n">concepts</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">concepts_by_year</span><span class="p">[</span><span class="s1">&#39;frequency_year&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">concepts_by_year</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;concept&#39;</span><span class="p">])[</span><span class="s1">&#39;concept&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="s1">&#39;count&#39;</span><span class="p">)</span>
+<span class="n">concepts_by_year</span><span class="p">[</span><span class="s1">&#39;score_avg_year&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">concepts_by_year</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;concept&#39;</span><span class="p">])[</span><span class="s1">&#39;score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="n">concepts_by_year</span> <span class="o">=</span> <span class="n">concepts_by_year</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;concept&#39;</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">])</span>\
+                    <span class="p">[[</span><span class="s1">&#39;concept&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="s1">&#39;score_avg&#39;</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency_year&#39;</span><span class="p">,</span> <span class="s1">&#39;score_avg_year&#39;</span><span class="p">]]</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># pick 3 frequent concepts programmatically</span>
+<span class="c1">#</span>
+
+<span class="n">temp</span> <span class="o">=</span> <span class="n">concepts_unique</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;frequency &gt;= 10 &amp; frequency &lt;= 100 &amp; score_avg &gt;= 0.4 &quot;&quot;&quot;</span><span class="p">)</span>\
+                    <span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s2">&quot;frequency&quot;</span><span class="p">,</span> <span class="s2">&quot;score_avg&quot;</span><span class="p">,</span> <span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">FOCUS</span> <span class="o">=</span> <span class="n">temp</span><span class="p">[</span><span class="s1">&#39;concept&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()[:</span><span class="mi">3</span><span class="p">]</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># plot their frequency over the years</span>
+<span class="c1">#</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">concepts_by_year</span><span class="p">[</span><span class="n">concepts_by_year</span><span class="p">[</span><span class="s1">&#39;concept&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">FOCUS</span><span class="p">)]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;year&quot;</span><span class="p">)</span>
+
+<span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">data</span><span class="p">,</span>
+        <span class="n">x</span><span class="o">=</span><span class="s2">&quot;year&quot;</span><span class="p">,</span>
+        <span class="n">y</span><span class="o">=</span><span class="s2">&quot;frequency_year&quot;</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;concept&quot;</span><span class="p">,</span>
+       <span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>                            <div id="d7a0e0bb-7c89-423c-98d4-a4c7824b160a" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("d7a0e0bb-7c89-423c-98d4-a4c7824b160a")) {                    Plotly.newPlot(                        "d7a0e0bb-7c89-423c-98d4-a4c7824b160a",                        [{"hovertemplate":"concept=conception<br>year=%{x}<br>frequency_year=%{y}<extra></extra>","legendgroup":"conception","line":{"color":"#636efa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"conception","orientation":"v","showlegend":true,"x":[1996,1997,2000,2001,2003,2005,2006,2008,2009,2010,2011,2013,2014,2015,2016,2017,2018,2019,2020],"xaxis":"x","y":[1,3,1,1,1,2,3,5,1,4,3,2,2,4,6,4,3,2,7],"yaxis":"y","type":"scatter"},{"hovertemplate":"concept=debate<br>year=%{x}<br>frequency_year=%{y}<extra></extra>","legendgroup":"debate","line":{"color":"#EF553B","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"debate","orientation":"v","showlegend":true,"x":[1996,1999,2000,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020],"xaxis":"x","y":[1,2,1,1,2,3,5,6,2,3,1,3,2,2,4,2,10,4,1,3],"yaxis":"y","type":"scatter"},{"hovertemplate":"concept=philosophers<br>year=%{x}<br>frequency_year=%{y}<extra></extra>","legendgroup":"philosophers","line":{"color":"#00cc96","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"philosophers","orientation":"v","showlegend":true,"x":[1997,1998,1999,2001,2002,2006,2007,2008,2009,2010,2011,2012,2014,2015,2016,2017,2018,2019,2020],"xaxis":"x","y":[2,2,1,1,3,1,3,5,7,5,2,1,5,6,4,10,5,3,2],"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"heatmapgl":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmapgl"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermapbox"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"#E5ECF6","showlakes":true,"showland":true,"subunitcolor":"white"},"hoverlabel":{"align":"left"},"hovermode":"closest","mapbox":{"style":"light"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"title":{"x":0.05},"xaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","zerolinewidth":2}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"year"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"frequency_year"}},"legend":{"title":{"text":"concept"},"tracegroupgap":0},"margin":{"t":60}},                        {"responsive": true}                    ).then(function(){
+
+var gd = document.getElementById('d7a0e0bb-7c89-423c-98d4-a4c7824b160a');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script>        </div></div>
+</div>
+</div>
+<div class="section" id="6.-Trend-analysis:-growth-distribution-based-on-selected-years">
+<h2>6. Trend analysis: growth distribution based on selected years<a class="headerlink" href="#6.-Trend-analysis:-growth-distribution-based-on-selected-years" title="Permalink to this headline">¶</a></h2>
+<p>We can generalised the method above so to look at the topics that grew the most, within any two chosen years.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">YEAR_START</span> <span class="o">=</span> <span class="mi">2014</span> <span class="c1">#@param {type: &quot;slider&quot;, min: 1950, max: 2020}</span>
+<span class="n">YEAR_END</span> <span class="o">=</span> <span class="mi">2019</span> <span class="c1">#@param {type: &quot;slider&quot;, min: 1950, max: 2020}</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># from two years, find all common concepts, calculate growth for all of them</span>
+<span class="c1">#</span>
+
+<span class="n">first_year</span> <span class="o">=</span> <span class="n">concepts_by_year</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;year == </span><span class="si">{</span><span class="n">YEAR_START</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">second_year</span> <span class="o">=</span> <span class="n">concepts_by_year</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;year == </span><span class="si">{</span><span class="n">YEAR_END</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">two_years</span> <span class="o">=</span> <span class="n">first_year</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">second_year</span><span class="p">)</span>
+<span class="n">common_concepts</span> <span class="o">=</span> <span class="n">two_years</span><span class="p">[</span><span class="n">two_years</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="s1">&#39;concept&#39;</span><span class="p">)]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()[[</span><span class="s1">&#39;concept&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="s1">&#39;score_avg&#39;</span><span class="p">]]</span>
+
+<span class="k">def</span> <span class="nf">calculate_difference</span><span class="p">(</span><span class="n">concept</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s2">&quot;frequency_year&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compare a numeric col value across two years</span>
+<span class="sd">    eg `calculate_difference(&quot;mind&quot;, &quot;frequency_year&quot;)`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">second_year</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;concept == &#39;</span><span class="si">{</span><span class="n">concept</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">first_year</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;concept == &#39;</span><span class="si">{</span><span class="n">concept</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">common_concepts</span><span class="p">[</span><span class="s1">&#39;freq_growth&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">common_concepts</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">calculate_difference</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;concept&#39;</span><span class="p">],</span> <span class="s2">&quot;frequency_year&quot;</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">common_concepts</span><span class="p">[</span><span class="s1">&#39;score_growth&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">common_concepts</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">calculate_difference</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;concept&#39;</span><span class="p">],</span> <span class="s2">&quot;score_avg_year&quot;</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">common_concepts</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;freq_growth&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>concept</th>
+      <th>frequency</th>
+      <th>score_avg</th>
+      <th>freq_growth</th>
+      <th>score_growth</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>43</th>
+      <td>conditions</td>
+      <td>61</td>
+      <td>0.14856</td>
+      <td>10</td>
+      <td>-0.03000</td>
+    </tr>
+    <tr>
+      <th>55</th>
+      <td>questions</td>
+      <td>144</td>
+      <td>0.37733</td>
+      <td>9</td>
+      <td>-0.01887</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>law</td>
+      <td>66</td>
+      <td>0.38936</td>
+      <td>8</td>
+      <td>-0.10122</td>
+    </tr>
+    <tr>
+      <th>56</th>
+      <td>paper</td>
+      <td>281</td>
+      <td>0.20498</td>
+      <td>7</td>
+      <td>-0.01486</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>part</td>
+      <td>75</td>
+      <td>0.30329</td>
+      <td>6</td>
+      <td>0.06525</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>We can build a simple scatter plot using the <code class="docutils literal notranslate"><span class="pre">freq_growth</span></code> and <code class="docutils literal notranslate"><span class="pre">score_growth</span></code> values just calculated.</p>
+<ul class="simple">
+<li><p>by using the <code class="docutils literal notranslate"><span class="pre">MIN_SCORE</span></code> parameter we can filter out concepts with an overall <code class="docutils literal notranslate"><span class="pre">score_avg</span></code> which is too low (note: this value is the average from all years, see section 1 above)</p></li>
+<li><p>by mapping <code class="docutils literal notranslate"><span class="pre">score_avg</span></code> to the dots color, we can quickly visually identify concepts with a high score in the graph</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MIN_SCORE</span> <span class="o">=</span> <span class="mf">0.2</span>
+
+<span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">common_concepts</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;score_avg &gt;= </span><span class="si">{</span><span class="n">MIN_SCORE</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">),</span>
+           <span class="n">x</span><span class="o">=</span><span class="s2">&quot;freq_growth&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;score_growth&quot;</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;score_avg&quot;</span><span class="p">,</span>
+           <span class="n">hover_name</span><span class="o">=</span><span class="s2">&quot;concept&quot;</span><span class="p">,</span> <span class="n">hover_data</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;concept&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="s1">&#39;score_avg&#39;</span><span class="p">],</span>
+            <span class="n">height</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Concepts growth from </span><span class="si">{</span><span class="n">YEAR_START</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">YEAR_END</span><span class="si">}</span><span class="s2">&quot;</span>
+          <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>                            <div id="3d485f95-2afc-4e47-be6e-7482ac6d1b1f" class="plotly-graph-div" style="height:600px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("3d485f95-2afc-4e47-be6e-7482ac6d1b1f")) {                    Plotly.newPlot(                        "3d485f95-2afc-4e47-be6e-7482ac6d1b1f",                        [{"customdata":[["doctrine",22,0.48086],["theorists",31,0.41181],["justification",39,0.40705],["argument",112,0.32036],["acts",28,0.34832],["reasons",88,0.37039],["sense",80,0.36236],["foundation",38,0.36479],["law",66,0.38936],["harm",14,0.36686],["war",7,0.39971],["action",63,0.30632],["article",115,0.37845],["jurisdictions",3,0.33433],["matter",29,0.31055],["understanding",89,0.30003],["individuals",35,0.33571],["countries",13,0.35908],["part",75,0.30329],["state",75,0.26235],["form",102,0.25597],["side",15,0.27893],["efforts",35,0.28986],["force",26,0.24604],["status",37,0.23127],["aggression",5,0.3476],["benefits",19,0.21979],["scientific explanation",4,0.44825],["science",107,0.45407],["nature",96,0.33721],["Kant",39,0.43133],["Heidegger",10,0.3696],["philosophy",163,0.49231],["reflection",50,0.4017],["world",85,0.33467],["explanation",59,0.30388],["place",40,0.34048],["scope",16,0.37362],["possibility",46,0.25054],["limit",20,0.2268],["origin",20,0.3076],["relationship",59,0.31168],["theory",245,0.32782],["phenomenon",34,0.25288],["description",19,0.23179],["principles",80,0.34389],["idea",80,0.39655],["fact",70,0.31979],["answers",17,0.32465],["paradox",12,0.22808],["end",24,0.25133],["questions",144,0.37733],["paper",281,0.20498],["distinction",36,0.33506],["claims",96,0.36296],["community",47,0.40728],["inquiry",26,0.45269],["notion",76,0.32266],["definition",26,0.26858],["discourse",29,0.3921],["implications",45,0.35824],["discussion",70,0.38551],["topic",26,0.37888],["relation",100,0.323],["terms",75,0.25797],["example",70,0.22257],["formulation",14,0.20336],["ethical challenges",14,0.64986],["community engagement",3,0.56333],["challenges",63,0.30043],["imperative",10,0.3858],["responsibility",23,0.46696],["engagement",14,0.39814],["research",87,0.31109],["workers",6,0.35483],["Africa",10,0.3931],["interest",60,0.32913],["Europe",5,0.404],["perspective",73,0.37858],["America",8,0.35762],["project",36,0.31464],["development",75,0.27621],["resources",20,0.3009],["way",189,0.32867],["power",33,0.29827],["difficulties",29,0.25521],["position",42,0.31638],["care",42,0.30267],["one",49,0.22512],["source",32,0.20612],["values",75,0.20151],["nineteenth century",5,0.633],["sixteenth century",2,0.5945],["century",36,0.46064],["history",73,0.37856],["middle",4,0.34525],["language",47,0.33009],["scholars",24,0.38521],["conversation",14,0.4495],["issues",114,0.38033],["appeal",22,0.3705],["authors",43,0.32374],["space",22,0.28541],["approach",121,0.23328],["ethical issues",28,0.6815],["duty",27,0.46],["obligations",27,0.46215],["society",35,0.4008],["ethics",120,0.52207],["commitment",38,0.43732],["medicine",25,0.29912],["practice",101,0.37668],["necessity",24,0.28054],["trainees",5,0.381],["order",70,0.23149],["discrepancy",4,0.27125],["writing",33,0.42982],["book",32,0.39078],["Scripture",4,0.37675],["interpretation",84,0.35426],["life",88,0.3401],["role",121,0.24581],["years",40,0.2213],["owl of Minerva",2,0.4105],["symbols",11,0.31273],["philosophers",68,0.44075],["Minerva",2,0.3175],["view",153,0.34658],["favor",17,0.27853],["chapter",49,0.36163],["attention",61,0.30979],["sections",22,0.20336],["owls",2,0.2145],["rights",51,0.39716],["things",64,0.32953],["relevance",16,0.31794],["moral law",4,0.81875],["consciousness",28,0.43118],["beliefs",48,0.40317],["reading",27,0.4153],["passage",6,0.37117],["approval",7,0.397],["aim",29,0.24834],["Aristotle",16,0.35112],["being",28,0.40721],["division",10,0.3539],["research project",3,0.40033],["education",33,0.42145],["researchers",26,0.31838],["context",85,0.33613],["guide",8,0.23888],["help",10,0.2205],["problem",136,0.23907],["methodology",12,0.23783],["insights",27,0.26137],["objections",34,0.28688],["intuition",21,0.31367],["knowledge",62,0.2565],["proposal",17,0.23753],["light",44,0.28195],["entities",18,0.23489],["link",12,0.31008],["thought",66,0.37294],["experience",74,0.35104],["proponents",9,0.37578],["account",139,0.34905],["tradition",39,0.49008],["work",138,0.31391],["access",9,0.26389],["politics",31,0.32497],["speech",5,0.413],["aspects",54,0.31763],["process",66,0.22838],["events",15,0.21853],["liberty",9,0.30489],["justice",39,0.46736],["culture",18,0.38656],["market",6,0.24717],["goal",40,0.24947],["meaning",47,0.29509],["certain kinds",7,0.26971],["words",19,0.301],["truth",46,0.38557],["sort",23,0.32761],["kind",54,0.28307],["threat",9,0.27856],["mind",54,0.43619],["consequences",33,0.28433],["significance",28,0.29686],["note",9,0.24811],["defense",23,0.21539],["reasoning",32,0.35441],["logic",58,0.24674],["disagreement",17,0.37782],["respect",36,0.27294],["conclusion",33,0.23539],["evidence",48,0.2105],["differences",42,0.23681],["conception",55,0.40345],["elements",24,0.21942],["essay",65,0.37597],["conflict",25,0.3524],["circumstances",13,0.31169],["critique",38,0.43771],["today",15,0.37853],["institutions",27,0.41352],["decisions",35,0.34223],["patients",43,0.22491],["journals",7,0.374],["unity",13,0.27277],["own way",2,0.394],["epistemology",24,0.35546],["reply",18,0.20139],["ethical framework",6,0.6835],["health research",8,0.61312],["publications",9,0.37722],["framework",66,0.30679],["field",37,0.278],["middle-income countries",2,0.4665],["vulnerability",6,0.24133],["attempt",36,0.3465],["art",24,0.3215],["sphere",12,0.3715],["debate",58,0.43407],["pursuit",9,0.276],["legitimacy",11,0.40218],["intellectuals",2,0.4465],["point",54,0.27198],["dimensions",35,0.27997],["preferences",13,0.23169],["seeing",3,0.368],["subjects",39,0.28028],["consideration",42,0.31845],["introduction",23,0.20039],["biology",25,0.34888],["changes",29,0.2279],["constitutive norms",2,0.735],["norms",28,0.48561],["agencies",21,0.3459],["concern",57,0.35825],["version",37,0.23924],["ethical principles",8,0.69362],["study",100,0.2036],["population",15,0.2114],["overview",12,0.29842],["broader context",2,0.499],["metaphysics",27,0.46711],["existence",33,0.25461],["realism",16,0.29675],["assumption",28,0.26407],["hand",20,0.27055],["misconceptions",4,0.37525],["schools",13,0.40185],["ethical practice",3,0.592],["poetics",5,0.3846],["self",21,0.35757],["hermeneutics",4,0.51775],["focus",38,0.33708],["citizenship",13,0.39623],["emphasis",19,0.37363],["protection",10,0.3053],["residents",2,0.339],["political thought",9,0.49944],["refutation",8,0.29738],["mathematics",26,0.3915],["lessons",14,0.30643],["morality",28,0.44439],["rightness",5,0.3552],["concept",102,0.34246],["uncertainty",10,0.2062],["explanatory role",5,0.4448],["research practices",4,0.6655],["credence",6,0.30317],["methodological challenges",3,0.35567],["interaction",24,0.21175],["refugees",2,0.566],["migrants",2,0.507],["safety",3,0.28967]],"hovertemplate":"<b>%{hovertext}</b><br><br>freq_growth=%{x}<br>score_growth=%{y}<br>concept=%{customdata[0]}<br>frequency=%{customdata[1]}<br>score_avg=%{marker.color}<extra></extra>","hovertext":["doctrine","theorists","justification","argument","acts","reasons","sense","foundation","law","harm","war","action","article","jurisdictions","matter","understanding","individuals","countries","part","state","form","side","efforts","force","status","aggression","benefits","scientific explanation","science","nature","Kant","Heidegger","philosophy","reflection","world","explanation","place","scope","possibility","limit","origin","relationship","theory","phenomenon","description","principles","idea","fact","answers","paradox","end","questions","paper","distinction","claims","community","inquiry","notion","definition","discourse","implications","discussion","topic","relation","terms","example","formulation","ethical challenges","community engagement","challenges","imperative","responsibility","engagement","research","workers","Africa","interest","Europe","perspective","America","project","development","resources","way","power","difficulties","position","care","one","source","values","nineteenth century","sixteenth century","century","history","middle","language","scholars","conversation","issues","appeal","authors","space","approach","ethical issues","duty","obligations","society","ethics","commitment","medicine","practice","necessity","trainees","order","discrepancy","writing","book","Scripture","interpretation","life","role","years","owl of Minerva","symbols","philosophers","Minerva","view","favor","chapter","attention","sections","owls","rights","things","relevance","moral law","consciousness","beliefs","reading","passage","approval","aim","Aristotle","being","division","research project","education","researchers","context","guide","help","problem","methodology","insights","objections","intuition","knowledge","proposal","light","entities","link","thought","experience","proponents","account","tradition","work","access","politics","speech","aspects","process","events","liberty","justice","culture","market","goal","meaning","certain kinds","words","truth","sort","kind","threat","mind","consequences","significance","note","defense","reasoning","logic","disagreement","respect","conclusion","evidence","differences","conception","elements","essay","conflict","circumstances","critique","today","institutions","decisions","patients","journals","unity","own way","epistemology","reply","ethical framework","health research","publications","framework","field","middle-income countries","vulnerability","attempt","art","sphere","debate","pursuit","legitimacy","intellectuals","point","dimensions","preferences","seeing","subjects","consideration","introduction","biology","changes","constitutive norms","norms","agencies","concern","version","ethical principles","study","population","overview","broader context","metaphysics","existence","realism","assumption","hand","misconceptions","schools","ethical practice","poetics","self","hermeneutics","focus","citizenship","emphasis","protection","residents","political thought","refutation","mathematics","lessons","morality","rightness","concept","uncertainty","explanatory role","research practices","credence","methodological challenges","interaction","refugees","migrants","safety"],"legendgroup":"","marker":{"color":[0.48086,0.41181,0.40705,0.32036,0.34832,0.37039,0.36236,0.36479,0.38936,0.36686,0.39971,0.30632,0.37845,0.33433,0.31055,0.30003,0.33571,0.35908,0.30329,0.26235,0.25597,0.27893,0.28986,0.24604,0.23127,0.3476,0.21979,0.44825,0.45407,0.33721,0.43133,0.3696,0.49231,0.4017,0.33467,0.30388,0.34048,0.37362,0.25054,0.2268,0.3076,0.31168,0.32782,0.25288,0.23179,0.34389,0.39655,0.31979,0.32465,0.22808,0.25133,0.37733,0.20498,0.33506,0.36296,0.40728,0.45269,0.32266,0.26858,0.3921,0.35824,0.38551,0.37888,0.323,0.25797,0.22257,0.20336,0.64986,0.56333,0.30043,0.3858,0.46696,0.39814,0.31109,0.35483,0.3931,0.32913,0.404,0.37858,0.35762,0.31464,0.27621,0.3009,0.32867,0.29827,0.25521,0.31638,0.30267,0.22512,0.20612,0.20151,0.633,0.5945,0.46064,0.37856,0.34525,0.33009,0.38521,0.4495,0.38033,0.3705,0.32374,0.28541,0.23328,0.6815,0.46,0.46215,0.4008,0.52207,0.43732,0.29912,0.37668,0.28054,0.381,0.23149,0.27125,0.42982,0.39078,0.37675,0.35426,0.3401,0.24581,0.2213,0.4105,0.31273,0.44075,0.3175,0.34658,0.27853,0.36163,0.30979,0.20336,0.2145,0.39716,0.32953,0.31794,0.81875,0.43118,0.40317,0.4153,0.37117,0.397,0.24834,0.35112,0.40721,0.3539,0.40033,0.42145,0.31838,0.33613,0.23888,0.2205,0.23907,0.23783,0.26137,0.28688,0.31367,0.2565,0.23753,0.28195,0.23489,0.31008,0.37294,0.35104,0.37578,0.34905,0.49008,0.31391,0.26389,0.32497,0.413,0.31763,0.22838,0.21853,0.30489,0.46736,0.38656,0.24717,0.24947,0.29509,0.26971,0.301,0.38557,0.32761,0.28307,0.27856,0.43619,0.28433,0.29686,0.24811,0.21539,0.35441,0.24674,0.37782,0.27294,0.23539,0.2105,0.23681,0.40345,0.21942,0.37597,0.3524,0.31169,0.43771,0.37853,0.41352,0.34223,0.22491,0.374,0.27277,0.394,0.35546,0.20139,0.6835,0.61312,0.37722,0.30679,0.278,0.4665,0.24133,0.3465,0.3215,0.3715,0.43407,0.276,0.40218,0.4465,0.27198,0.27997,0.23169,0.368,0.28028,0.31845,0.20039,0.34888,0.2279,0.735,0.48561,0.3459,0.35825,0.23924,0.69362,0.2036,0.2114,0.29842,0.499,0.46711,0.25461,0.29675,0.26407,0.27055,0.37525,0.40185,0.592,0.3846,0.35757,0.51775,0.33708,0.39623,0.37363,0.3053,0.339,0.49944,0.29738,0.3915,0.30643,0.44439,0.3552,0.34246,0.2062,0.4448,0.6655,0.30317,0.35567,0.21175,0.566,0.507,0.28967],"coloraxis":"coloraxis","symbol":"circle"},"mode":"markers","name":"","orientation":"v","showlegend":false,"x":[2,-2,3,4,5,-1,4,-1,8,2,0,4,2,0,-1,4,3,2,6,2,6,0,3,2,3,1,-1,0,2,5,3,0,-1,2,2,-2,-3,2,4,1,0,-1,2,-1,0,1,6,1,3,1,2,9,7,3,2,3,0,1,2,3,4,1,2,1,1,1,2,1,0,0,1,2,1,2,0,0,-1,0,-1,1,1,3,2,1,2,3,2,0,3,3,0,0,0,-2,-2,-1,1,4,4,0,1,3,0,1,0,1,1,1,-6,-1,1,-2,1,0,1,0,0,1,0,3,-5,-1,4,0,0,-2,0,-1,0,-1,1,0,0,3,0,0,2,1,2,-1,0,0,-3,0,1,1,0,-1,2,1,1,0,2,0,0,5,-1,2,0,-1,-1,1,0,3,-1,-3,3,-3,0,-1,0,1,0,0,0,-1,-1,0,1,0,0,1,0,0,3,0,0,0,0,0,-1,-2,2,0,-1,2,1,1,0,1,-3,-3,0,0,1,0,-1,-3,1,0,0,1,1,0,0,1,-3,2,0,0,1,0,0,-1,0,0,0,2,-1,0,0,-3,-3,0,0,-2,0,0,0,-1,1,0,0,-1,0,0,0,-2,0,0,0,0,-1,0,0,0,0,1,-1,-3,0,0,0,0,0,1,-1,0,-3,1,0,0,0,0,0,0,0,0],"xaxis":"x","y":[0.1985,0.03532999999999997,0.11670000000000003,-0.18375000000000002,-0.20816999999999997,0.07555,-0.19376,0.03225,-0.10121999999999998,-0.01599999999999996,0.366,0.03899999999999998,0.01924999999999999,-0.03300000000000003,-0.030500000000000027,0.19547000000000003,-0.055999999999999994,-0.05199999999999999,0.06525,0.08406999999999998,-0.13755999999999996,-0.04899999999999999,0.23375,-0.12232999999999997,-0.0534,0.08099999999999999,-0.04899999999999999,0.36899999999999994,0.07952999999999999,0.11279,0.03866999999999998,-0.06999999999999995,0.11487999999999998,0.396,0.15120000000000003,0.015000000000000013,0.07900000000000001,0.19767,-0.11142999999999997,0.178,0.0,-0.02507999999999999,-0.05830000000000002,0.20599999999999996,0.08650000000000002,-0.21850999999999998,-0.30937999999999993,-0.08215,-0.3385,0.2485,-0.10300000000000004,-0.018869999999999998,-0.014860000000000012,-0.022599999999999953,-0.23532999999999998,-0.20899999999999996,0.193,-0.21600000000000003,-0.221,-0.15300000000000002,-0.057599999999999985,-0.11382999999999999,-0.15900000000000003,-0.03318000000000004,-0.043149999999999994,0.028499999999999998,-0.16967000000000002,0.14400000000000002,-0.21500000000000008,-0.024430000000000007,0.291,0.008329999999999949,-0.09049999999999997,-0.04437000000000002,-0.01200000000000001,0.13999999999999996,-0.08729999999999999,-0.018000000000000016,0.03899999999999998,-0.14149999999999996,-0.16217,0.01739999999999997,0.06699999999999998,-0.14834999999999998,-0.0504,-0.09499999999999997,-0.13567,0.067,-0.1329,-0.008500000000000008,-0.11134,0.04399999999999993,0.20699999999999996,0.134,0.14250000000000002,0.3245,-0.17473,-0.0766,-0.019600000000000006,0.009429999999999994,0.15550000000000003,-0.014999999999999958,-0.0905,-0.07930000000000001,0.015000000000000013,-0.08592,-0.06499999999999995,0.3,0.11839000000000005,0.1405,0.0015000000000000013,-0.03154000000000001,0.26,0.08899999999999997,-0.009749999999999981,-0.17300000000000001,0.012670000000000015,0.3505,-0.15200000000000002,-0.009830000000000005,-0.07379000000000002,-0.14190999999999998,-0.1542,0.6890000000000001,0.4139999999999999,-0.13740000000000002,0.401,-0.028700000000000003,-0.10099999999999998,-0.11809999999999998,-0.05720000000000003,-0.04249999999999998,0.12500000000000003,0.1609,-0.10165999999999997,-0.01200000000000001,0.0023300000000000542,0.11400000000000005,-0.19033,-0.03300000000000003,0.0020000000000000018,0.0,0.08320000000000002,-0.011,-0.362,-0.17600000000000002,-0.563,-0.4275,-0.14400000000000002,-0.09569999999999995,0.0935,-0.316,-0.16827000000000003,-0.322,-0.10675000000000001,-0.23783000000000004,0.11332999999999999,0.13833,-0.23099999999999998,0.064,-0.2625,-0.058499999999999996,-0.12833999999999995,0.028600000000000014,0.01100000000000001,-0.10132000000000002,-0.1916,-0.12713,-0.12,-0.14900000000000002,-0.404,-0.025249999999999995,-0.08850000000000002,-0.0745,0.39199999999999996,-0.036170000000000035,0.027000000000000024,0.306,-0.223,-0.045,-0.579,-0.21799999999999997,0.03067000000000003,-0.052500000000000005,-0.2484,-0.41300000000000003,-0.036,-0.29550000000000004,-0.259,-0.15000000000000002,-0.11682999999999999,-0.28300000000000003,-0.38766999999999996,0.431,0.009500000000000008,-0.05049999999999999,-0.022999999999999965,-0.057999999999999996,-0.2885,-0.171,-0.04319999999999996,-0.13124999999999998,0.262,0.00824999999999998,0.4285,-0.09499999999999997,0.03899999999999998,0.050299999999999984,0.33299999999999996,-0.502,-0.534,0.0445,0.2955,0.038000000000000034,-0.10099999999999998,-0.178,0.11399999999999999,0.09933,-0.21099999999999997,0.08099999999999999,-0.22350000000000003,-0.496,-0.46299999999999997,-0.2505,0.114,0.07699999999999996,0.123,-0.11867,0.05249999999999999,-0.04300000000000004,0.319,0.018000000000000016,-0.289,0.0,0.098,-0.062,-0.10399999999999998,0.08200000000000007,0.041000000000000036,-0.045999999999999985,0.12449999999999997,-0.008000000000000007,0.05166000000000001,-0.01949999999999999,-0.259,-0.26,-0.31900000000000006,0.00767000000000001,-0.518,0.352,0.254,0.07500000000000007,0.15850000000000003,-0.5579999999999999,0.08499999999999996,0.07999999999999996,-0.08599999999999997,-0.020499999999999963,0.20499999999999996,0.04749999999999999,-0.03300000000000003,-0.178,-0.702,0.283,0.2790000000000001,0.008000000000000007,-0.03300000000000003,-0.20400000000000007,-0.22325,0.0050000000000000044,-0.5920000000000001,-0.19700000000000006,0.33199999999999996,-0.08099999999999996,0.0020000000000000018,0.17600000000000005,0.050000000000000044,-0.07],"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"heatmapgl":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmapgl"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermapbox"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"#E5ECF6","showlakes":true,"showland":true,"subunitcolor":"white"},"hoverlabel":{"align":"left"},"hovermode":"closest","mapbox":{"style":"light"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"title":{"x":0.05},"xaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","zerolinewidth":2}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"freq_growth"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"score_growth"}},"coloraxis":{"colorbar":{"title":{"text":"score_avg"}},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"legend":{"tracegroupgap":0},"title":{"text":"Concepts growth from 2014 to 2019"},"height":600},                        {"responsive": true}                    ).then(function(){
+
+var gd = document.getElementById('3d485f95-2afc-4e47-be6e-7482ac6d1b1f');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script>        </div></div>
+</div>
+</div>
+<div class="section" id="7.-Conclusion">
+<h2>7. Conclusion<a class="headerlink" href="#7.-Conclusion" title="Permalink to this headline">¶</a></h2>
+<p>In this tutorial we have demonstrated how to process publication <em>concepts</em> - normalised keywords found in documents- obtained using the <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a>.</p>
+<p>By playing with parameters like <em>frequency</em> and <em>average score</em>, it is possible to highlight interesting concepts programmatically and use them to carry out semantic analyses of the documents dataset they derive from.</p>
+<p>For more information on this topic, see also the <a class="reference external" href="https://docs.dimensions.ai/dsl/language.html#searching-using-concepts">official documentation on concepts</a> and the <a class="reference external" href="https://api-lab.dimensions.ai/cookbooks/1-getting-started/7-Working-with-concepts.html">Working with concepts in the Dimensions API</a> tutorial.</p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> allows to carry out sophisticated research data analytics tasks like the ones described on this website. Check out also the associated <a class="reference external" href="https://github.com/digital-science/dimensions-api-lab">Github repository</a> for examples, the source code of these tutorials and much more.</p>
+</div>
+<a class="reference external image-reference" href="https://www.dimensions.ai/dimensions-apis/"><img alt="../_images/badge-dimensions-api.svg" src="../_images/badge-dimensions-api.svg" /></a>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+    <p>© Copyright 2020 Digital Science & Research Solutions, Inc. All Rights Reserved | <a href="https://www.dimensions.ai/">About us</a> · <a href="https://www.dimensions.ai/privacy/">Privacy policy</a> · <a href="https://www.dimensions.ai/website-terms/">Legal terms</a></p>
+     
+
+    <!-- OneTrust Cookies Settings button start -->
+    <button id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</button>
+    <!-- OneTrust Cookies Settings button end -->
+
+
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+    
+
+    <!-- Adds target=_blank to external links -->
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('a[href^="http://"], a[href^="https://"]').not('a[class*=internal]').attr('target', '_blank');
+    });
+  </script>
+
+
+  <!-- OneTrust Cookies Consent Notice start for dimensions.ai -->
+   <script type="text/javascript" src="https://cdn.cookielaw.org/consent/3329b668-7887-4dba-9bee-c3853a706e6f/OtAutoBlock.js" ></script>
+   <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="3329b668-7887-4dba-9bee-c3853a706e6f" ></script>
+   <script type="text/javascript">
+   function OptanonWrapper() { }
+   </script>
+   <!-- OneTrust Cookies Consent Notice end for dimensions.ai -->
+  
+
+
+</body>
+</html>

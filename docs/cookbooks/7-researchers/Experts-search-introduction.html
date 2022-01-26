@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Expert Identification with the Dimensions API - An Introduction &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
   
@@ -19,7 +19,10 @@
   
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   
+
   
+  
+
   
 
   
@@ -36,7 +39,8 @@
         <script src="../../_static/js/custom.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -64,7 +68,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> DSL
+            <a href="../../index.html" class="icon icon-home"> DSL
           
 
           
@@ -153,7 +157,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html">The Dimcli Python library: Magic Commands</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#Prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#id1">Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#Dimcli-‘magic’-commands">Dimcli ‘magic’ commands</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#Tip:-Accessing-data-returned-by-magic-queries">Tip: Accessing data returned by magic queries</a></li>
 </ul>
@@ -172,8 +175,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Control-the-fields-you-return">Control the fields you return</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Make-a-mistake,-and-the-DSL-will-tell-you-what-fields-that-you-could-have-used">Make a mistake, and the DSL will tell you what fields that you could have used</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Get-all-fields">Get all fields</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Make-a-mistake,-and-the-DSL-will-tell-you-what-fields-that-you-could-have-used">Make a mistake, and the DSL will tell you what fields that you could have used</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Full-text-search">Full text search</a></li>
 </ul>
 </li>
@@ -264,10 +266,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#8.-..and-if-we-want-details-about-our-researchers,-we-can-put-our-list-of-researchers-into-the-researcher-API">8. ..and if we want details about our researchers, we can put our list of researchers into the researcher API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#9.-Patents-example-(patents--&gt;-publications)">9. Patents example (patents -&gt; publications)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#10.-Clinical-Trials-(clinical-trials--&gt;-publications)">10. Clinical Trials (clinical trials -&gt; publications)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#11.-Grants-(publications--&gt;-grants)">11. Grants (publications -&gt; grants)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#Why-didn’t-I-use-resulting_publication_ids-?">Why didn’t I use resulting_publication_ids ?</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#11.-Grants-(publications--&gt;-grants)">11. Grants (publications -&gt; grants)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#Conclusions">Conclusions</a></li>
 </ul>
 </li>
@@ -325,7 +324,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../2-publications/Citation-Analysis.html">Citation Analysis: an Introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Citation-Analysis.html#1.-Prerequisites">1. Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Method-A:-getting-citations-for-one-publication-at-a-time">Method A: getting citations for one publication at a time</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Comments-about-this-method">Comments about this method</a></li>
 </ul>
@@ -383,7 +382,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html">Journal Profiling Part 1: Getting the Data</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Prerequisites">Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Selecting-a-Journal-and-Extracting-All-Publications-Metadata">Selecting a Journal and Extracting All Publications Metadata</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Some-stats-about-authors">Some stats about authors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Basic-stats-about-authors">Basic stats about authors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#A-quick-look-at-authors-without-a-Dimensions-Researcher-ID">A quick look at authors <em>without</em> a Dimensions Researcher ID</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Any-common-patterns?">Any common patterns?</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Creating-an-export-for-manual-curation">Creating an export for manual curation</a></li>
@@ -472,7 +471,6 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#Back-to-our-grants-list">Back to our grants list</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#Enriching-the-original-list">Enriching the original list</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#Save-the-data">Save the data</a></li>
 </ul>
 </li>
 </ul>
@@ -856,6 +854,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -876,21 +876,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -991,7 +1005,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -1057,6 +1071,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -1066,7 +1081,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt a.copybtn {
+.prompt .copybtn {
     display: none;
 }
 
@@ -1133,15 +1148,34 @@ div.rendered_html tbody tr:hover {
 <div class="section" id="Expert-Identification-with-the-Dimensions-API---An-Introduction">
 <h1>Expert Identification with the Dimensions API - An Introduction<a class="headerlink" href="#Expert-Identification-with-the-Dimensions-API---An-Introduction" title="Permalink to this headline">¶</a></h1>
 <p>This notebook shows to use the <a class="reference external" href="https://docs.dimensions.ai/dsl/expert-identification.html">expert identification</a> workflow available via Dimensions Analytics API.</p>
-<div class="section" id="Prerequisites">
-<h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
-<p>This notebook assumes you have installed the <a class="reference external" href="https://pypi.org/project/dimcli/">Dimcli</a> library and are familiar with the <em>Getting Started</em> tutorial.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">!</span>pip install dimcli --quiet
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">CHANGELOG</span><span class="se">\n</span><span class="s2">This notebook was last run on </span><span class="si">%s</span><span class="se">\n</span><span class="s2">==&quot;</span> <span class="o">%</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">, %Y&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+==
+CHANGELOG
+This notebook was last run on Jan 25, 2022
+==
+</pre></div></div>
+</div>
+<div class="section" id="Prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>This notebook assumes you have installed the <a class="reference external" href="https://pypi.org/project/dimcli/">Dimcli</a> library and are familiar with the <a class="reference external" href="https://api-lab.dimensions.ai/cookbooks/1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html">‘Getting Started’ tutorial</a>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install dimcli --quiet
 
 <span class="kn">import</span> <span class="nn">dimcli</span>
 <span class="kn">from</span> <span class="nn">dimcli.utils</span> <span class="kn">import</span> <span class="o">*</span>
@@ -1164,6 +1198,14 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Searching config file credentials for &#39;https://app.dimensions.ai&#39; endpoint..
+</pre></div></div>
+</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
@@ -1171,8 +1213,8 @@ div.rendered_html tbody tr:hover {
 <div class="highlight"><pre>
 ==
 Logging in..
-Dimcli - Dimensions API Client (v0.9)
-Connected to: https://app.dimensions.ai - DSL v1.30
+Dimcli - Dimensions API Client (v0.9.6)
+Connected to: &lt;https://app.dimensions.ai/api/dsl&gt; - DSL v2.0
 Method: dsl.ini file
 </pre></div></div>
 </div>
@@ -1181,11 +1223,10 @@ Method: dsl.ini file
 <h2>At a glance<a class="headerlink" href="#At-a-glance" title="Permalink to this headline">¶</a></h2>
 <p>At its simplest, an expert search query looks like this:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%%</span><span class="k">dsl</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsl</span>
 
 identify experts from concepts &quot;malaria OR \&quot;effective malaria vaccine\&quot; OR \&quot;effective prevention\&quot;&quot;
       using publications
@@ -1195,26 +1236,25 @@ return experts[basics]
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;dimcli.DslDataset object #4405912048. Dict keys: &#39;_stats&#39;, &#39;_version&#39;, &#39;_copyright&#39;, &#39;experts&#39;&gt;
+&lt;dimcli.DslDataset object #4415239408. Dict keys: &#39;_copyright&#39;, &#39;_stats&#39;, &#39;_version&#39;, &#39;experts&#39;&gt;
 </pre></div></div>
 </div>
 <p>The query takes a list of <strong>concepts</strong> defining the expertise you’re looking for, plus other parameters defining the pool of publications to be used, and it returns a list of researchers sorted by relevance.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dsl_last_results</span><span class="p">[</span><span class="s1">&#39;experts&#39;</span><span class="p">])</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dsl_last_results</span><span class="p">[</span><span class="s1">&#39;experts&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1236,215 +1276,215 @@ return experts[basics]
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>id</th>
-      <th>score</th>
-      <th>orcid_id</th>
+      <th>docs_found</th>
       <th>first_name</th>
+      <th>id</th>
       <th>last_name</th>
       <th>research_orgs</th>
-      <th>docs_found</th>
+      <th>score</th>
+      <th>orcid_id</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>ur.01332073522.49</td>
-      <td>4.307605</td>
-      <td>[0000-0002-3396-1700]</td>
-      <td>Nicholas John</td>
-      <td>White</td>
-      <td>[grid.417815.e, grid.22072.35, grid.5335.0, gr...</td>
-      <td>7</td>
+      <td>5</td>
+      <td>Martha</td>
+      <td>ur.01162445502.98</td>
+      <td>Sedegah</td>
+      <td>[grid.4437.4, grid.94365.3d, grid.411439.a, gr...</td>
+      <td>124.891458</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>ur.01303637137.59</td>
-      <td>3.853188</td>
-      <td>[0000-0001-8300-9593]</td>
-      <td>Miriam K</td>
-      <td>Laufer</td>
-      <td>[grid.8271.c, grid.10595.38, grid.420069.9, gr...</td>
-      <td>6</td>
+      <td>5</td>
+      <td>James G</td>
+      <td>ur.01225135650.70</td>
+      <td>Beeson</td>
+      <td>[grid.1002.3, grid.10223.32, grid.33058.3d, gr...</td>
+      <td>112.559316</td>
+      <td>[0000-0002-1018-7898]</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>ur.01314633455.19</td>
-      <td>3.788729</td>
-      <td>NaN</td>
-      <td>Ritabrata</td>
-      <td>Kundu</td>
-      <td>[grid.414710.7]</td>
-      <td>6</td>
+      <td>4</td>
+      <td>Danielle I</td>
+      <td>ur.01323510115.98</td>
+      <td>Stanisic</td>
+      <td>[grid.1022.1, grid.1049.c, grid.1042.7, grid.1...</td>
+      <td>109.252085</td>
+      <td>[0000-0003-3908-7468]</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>ur.01355076624.38</td>
-      <td>3.788729</td>
-      <td>NaN</td>
-      <td>Jaydeep Choudhury</td>
-      <td>Choudhury</td>
-      <td>[grid.414710.7]</td>
-      <td>6</td>
+      <td>5</td>
+      <td>Kazutoyo</td>
+      <td>ur.01253714727.65</td>
+      <td>Miura</td>
+      <td>[grid.94365.3d, grid.429651.d, grid.265107.7, ...</td>
+      <td>101.304842</td>
+      <td>[0000-0003-4455-2432]</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>ur.01333507624.36</td>
-      <td>3.360286</td>
-      <td>NaN</td>
-      <td>Christopher Vine</td>
-      <td>Plowe</td>
-      <td>[grid.15653.34, grid.4305.2, grid.94365.3d, gr...</td>
       <td>3</td>
+      <td>Michael Francis</td>
+      <td>ur.0752141120.95</td>
+      <td>Good</td>
+      <td>[grid.1008.9, grid.1043.6, grid.415913.b, grid...</td>
+      <td>90.852515</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>ur.07764267264.89</td>
-      <td>3.211528</td>
-      <td>[0000-0002-7951-0745]</td>
-      <td>Francois Henri</td>
-      <td>Nosten</td>
-      <td>[grid.11586.3b, grid.4367.6, grid.412433.3, gr...</td>
       <td>4</td>
+      <td>Jack S</td>
+      <td>ur.01354757704.29</td>
+      <td>Richards</td>
+      <td>[grid.1056.2, grid.1623.6, grid.416153.4, grid...</td>
+      <td>80.522901</td>
+      <td>[0000-0001-5786-6989]</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>ur.01323510115.98</td>
-      <td>3.214206</td>
-      <td>NaN</td>
-      <td>Danielle I</td>
-      <td>Stanisic</td>
-      <td>[grid.1008.9, grid.1042.7, grid.1049.c, grid.4...</td>
       <td>3</td>
+      <td>Michael R</td>
+      <td>ur.01165702423.17</td>
+      <td>Hollingdale</td>
+      <td>[grid.507680.c, grid.418352.9, grid.265436.0, ...</td>
+      <td>80.158875</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>ur.0752141120.95</td>
-      <td>3.214206</td>
-      <td>NaN</td>
-      <td>Michael Francis</td>
-      <td>Good</td>
-      <td>[grid.1048.d, grid.417993.1, grid.1003.2, grid...</td>
       <td>3</td>
+      <td>Eileen D</td>
+      <td>ur.0703623237.41</td>
+      <td>Villasante</td>
+      <td>[grid.415913.b]</td>
+      <td>80.158875</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>ur.015476113652.05</td>
-      <td>3.180696</td>
-      <td>[0000-0001-5725-9118]</td>
-      <td>Brian Mellor</td>
-      <td>Greenwood</td>
-      <td>[grid.8348.7, grid.10025.36, grid.415375.1, gr...</td>
-      <td>5</td>
+      <td>4</td>
+      <td>Carole A</td>
+      <td>ur.01153247161.33</td>
+      <td>Long</td>
+      <td>[grid.419681.3, grid.94365.3d, grid.4991.5, gr...</td>
+      <td>79.714262</td>
+      <td>[0000-0002-3835-5443]</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>ur.016122312437.59</td>
-      <td>3.172880</td>
-      <td>NaN</td>
-      <td>Ogobara K</td>
-      <td>Doumbo</td>
-      <td>[grid.8191.1, grid.8982.b, grid.10548.38, grid...</td>
       <td>3</td>
+      <td>Harini D</td>
+      <td>ur.01066177176.10</td>
+      <td>Ganeshan</td>
+      <td>[grid.415913.b, grid.201075.1]</td>
+      <td>77.814179</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>ur.01225135650.70</td>
-      <td>2.805810</td>
-      <td>[0000-0002-1018-7898]</td>
-      <td>James G</td>
-      <td>Beeson</td>
-      <td>[grid.1013.3, grid.1056.2, grid.1042.7, grid.1...</td>
       <td>3</td>
+      <td>Maria N</td>
+      <td>ur.01211504563.47</td>
+      <td>Belmonte</td>
+      <td>[grid.415913.b, grid.201075.1]</td>
+      <td>77.814179</td>
+      <td>[0000-0002-4103-6611]</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>ur.01162445502.98</td>
-      <td>2.653315</td>
-      <td>NaN</td>
-      <td>Martha</td>
-      <td>Sedegah</td>
-      <td>[grid.428999.7, grid.201075.1, grid.290496.0, ...</td>
       <td>3</td>
+      <td>Bjoern</td>
+      <td>ur.07447331037.97</td>
+      <td>Peters</td>
+      <td>[grid.5170.3, grid.266100.3, grid.185006.a, gr...</td>
+      <td>77.814179</td>
+      <td>[0000-0002-8457-6693]</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>ur.01165702423.17</td>
-      <td>2.653315</td>
-      <td>NaN</td>
-      <td>Michael R</td>
-      <td>Hollingdale</td>
-      <td>[grid.417587.8, grid.265436.0, grid.8991.9, gr...</td>
       <td>3</td>
+      <td>Stefan H I</td>
+      <td>ur.01214724604.55</td>
+      <td>Kappe</td>
+      <td>[grid.34477.33, grid.412623.0, grid.7849.2, gr...</td>
+      <td>76.991466</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>13</th>
-      <td>ur.0703623237.41</td>
-      <td>2.653315</td>
-      <td>NaN</td>
-      <td>Eileen D</td>
-      <td>Villasante</td>
-      <td>[grid.415913.b]</td>
       <td>3</td>
+      <td>Simon J</td>
+      <td>ur.0751102271.80</td>
+      <td>Draper</td>
+      <td>[grid.4991.5, grid.10253.35, grid.425090.a, gr...</td>
+      <td>76.402222</td>
+      <td>[0000-0002-9415-1357]</td>
     </tr>
     <tr>
       <th>14</th>
-      <td>ur.01240215027.61</td>
-      <td>2.616639</td>
-      <td>NaN</td>
-      <td>Rose M</td>
-      <td>Mcgready</td>
-      <td>[grid.1005.4, grid.462844.8, grid.4991.5, grid...</td>
       <td>3</td>
+      <td>Robert W</td>
+      <td>ur.01136367303.27</td>
+      <td>Sauerwein</td>
+      <td>[grid.475691.8, grid.420155.7, grid.461088.3, ...</td>
+      <td>73.216753</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>ur.01204711510.82</td>
-      <td>2.598776</td>
-      <td>[0000-0001-9773-2192]</td>
-      <td>Alfonso Javier</td>
-      <td>Rodriguez-Morales</td>
-      <td>[grid.419226.a, grid.441853.f, grid.8171.f, gr...</td>
       <td>4</td>
+      <td>Kenneth D</td>
+      <td>ur.07564342517.54</td>
+      <td>Stuart</td>
+      <td>[grid.280051.e, grid.418352.9, grid.5252.0, gr...</td>
+      <td>69.617699</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>16</th>
-      <td>ur.0667763776.52</td>
-      <td>2.515726</td>
+      <td>3</td>
+      <td>Arnel D</td>
+      <td>ur.01104675207.03</td>
+      <td>Belmonte</td>
+      <td>[grid.415913.b, grid.201075.1]</td>
+      <td>68.449397</td>
       <td>NaN</td>
-      <td>Ashley Michael</td>
-      <td>Vaughan</td>
-      <td>[grid.28046.38, grid.413019.e, grid.53964.3d, ...</td>
-      <td>2</td>
     </tr>
     <tr>
       <th>17</th>
-      <td>ur.01022543462.48</td>
-      <td>2.427615</td>
-      <td>[0000-0002-0607-6941]</td>
-      <td>Paul</td>
-      <td>Garner</td>
-      <td>[grid.417153.5, grid.7445.2, grid.48004.38, gr...</td>
-      <td>4</td>
+      <td>2</td>
+      <td>Adrian Vivian Sinton</td>
+      <td>ur.010475203247.10</td>
+      <td>Hill</td>
+      <td>[grid.412587.d, grid.8191.1, grid.418159.0, gr...</td>
+      <td>64.351523</td>
+      <td>[0000-0003-0900-9629]</td>
     </tr>
     <tr>
       <th>18</th>
-      <td>ur.01270143765.64</td>
-      <td>2.422990</td>
-      <td>[0000-0003-4566-4030]</td>
-      <td>Joel</td>
-      <td>Tarning</td>
-      <td>[grid.8761.8, grid.501272.3, grid.413674.3, gr...</td>
-      <td>4</td>
+      <td>2</td>
+      <td>Ashley Michael</td>
+      <td>ur.0667763776.52</td>
+      <td>Vaughan</td>
+      <td>[grid.418227.a, grid.53964.3d, grid.34477.33, ...</td>
+      <td>61.861446</td>
+      <td>[0000-0001-5815-756X]</td>
     </tr>
     <tr>
       <th>19</th>
-      <td>ur.0751102271.80</td>
-      <td>2.368244</td>
-      <td>[0000-0002-9415-1357]</td>
-      <td>Simon J</td>
-      <td>Draper</td>
-      <td>[grid.425090.a, grid.4991.5, grid.10253.35, gr...</td>
       <td>3</td>
+      <td>Takafumi</td>
+      <td>ur.01246255474.14</td>
+      <td>Tsuboi</td>
+      <td>[grid.31501.36, grid.174567.6, grid.267625.2, ...</td>
+      <td>59.119142</td>
+      <td>[0000-0002-7415-1325]</td>
     </tr>
   </tbody>
 </table>
@@ -1468,16 +1508,15 @@ return experts[basics]
 <div class="section" id="Extracting-concepts-with-the-DSL">
 <h3>Extracting concepts with the DSL<a class="headerlink" href="#Extracting-concepts-with-the-DSL" title="Permalink to this headline">¶</a></h3>
 <p>Extracting concepts is implemented using the <a class="reference external" href="https://docs.dimensions.ai/dsl/functions.html#function-extract-concepts">extract_concepts DSL function</a>. This is the syntax:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">extract_concepts</span><span class="p">(</span><span class="s2">&quot;publication abstract&quot;</span><span class="p">)</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>extract_concepts(&quot;publication abstract&quot;)
 </pre></div>
 </div>
 <p>This query will return a list of extracted concepts, ordered by weight, in descending order. For example:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">abstract</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;We describe monocrystalline graphitic films, which are a few atoms thick but are nonetheless stable under ambient conditions,</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">abstract</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;We describe monocrystalline graphitic films, which are a few atoms thick but are nonetheless stable under ambient conditions,</span>
 <span class="s2">metallic, and of remarkably high quality. The films are found to be a two-dimensional semimetal with a tiny overlap between</span>
 <span class="s2">valence and conductance bands, and they exhibit a strong ambipolar electric field effect such that electrons and</span>
 <span class="s2">holes in concentrations up to 10 per square centimeter and with room-temperature mobilities of approximately 10,000 square</span>
@@ -1495,7 +1534,7 @@ return experts[basics]
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1523,15 +1562,15 @@ return experts[basics]
   <tbody>
     <tr>
       <th>0</th>
-      <td>ambipolar electric field effect</td>
+      <td>films</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>two-dimensional semimetal</td>
+      <td>ambipolar electric field effect</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>room-temperature mobility</td>
+      <td>two-dimensional semimetal</td>
     </tr>
     <tr>
       <th>3</th>
@@ -1539,75 +1578,75 @@ return experts[basics]
     </tr>
     <tr>
       <th>4</th>
-      <td>field effects</td>
+      <td>room temperature mobility</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>graphitic films</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>gate voltage</td>
-    </tr>
-    <tr>
-      <th>7</th>
       <td>conductance band</td>
     </tr>
     <tr>
+      <th>6</th>
+      <td>field effects</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>graphitic films</td>
+    </tr>
+    <tr>
       <th>8</th>
-      <td>square centimeter</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>films</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>electrons</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>semimetals</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>ambient conditions</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>atoms</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>holes</td>
-    </tr>
-    <tr>
-      <th>15</th>
       <td>centimeters</td>
     </tr>
     <tr>
-      <th>16</th>
+      <th>9</th>
+      <td>gate voltage</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>semimetals</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>electrons</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>atoms</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>holes</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>square centimeter</td>
+    </tr>
+    <tr>
+      <th>15</th>
       <td>metallic</td>
     </tr>
     <tr>
-      <th>17</th>
-      <td>voltage</td>
+      <th>16</th>
+      <td>ambient conditions</td>
     </tr>
     <tr>
-      <th>18</th>
+      <th>17</th>
       <td>band</td>
     </tr>
     <tr>
-      <th>19</th>
-      <td>high quality</td>
-    </tr>
-    <tr>
-      <th>20</th>
+      <th>18</th>
       <td>valence</td>
     </tr>
     <tr>
-      <th>21</th>
+      <th>19</th>
+      <td>voltage</td>
+    </tr>
+    <tr>
+      <th>20</th>
       <td>mobility</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>high quality</td>
     </tr>
     <tr>
       <th>22</th>
@@ -1629,18 +1668,6 @@ return experts[basics]
       <th>26</th>
       <td>quality</td>
     </tr>
-    <tr>
-      <th>27</th>
-      <td>monocrystalline graphitic films</td>
-    </tr>
-    <tr>
-      <th>28</th>
-      <td>tiny overlap</td>
-    </tr>
-    <tr>
-      <th>29</th>
-      <td>strong ambipolar electric field effect</td>
-    </tr>
   </tbody>
 </table>
 </div></div>
@@ -1650,14 +1677,14 @@ return experts[basics]
 <div class="section" id="Step-2:-Expert-Identification">
 <h2>Step 2: Expert Identification<a class="headerlink" href="#Step-2:-Expert-Identification" title="Permalink to this headline">¶</a></h2>
 <p>Extracted concepts, from step one, can be used in a <code class="docutils literal notranslate"><span class="pre">identify</span> <span class="pre">experts</span></code> queries, for example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">identify</span> <span class="n">experts</span> <span class="kn">from</span> <span class="nn">concepts</span> <span class="s2">&quot;+malaria OR </span><span class="se">\&quot;</span><span class="s2">effective malaria vaccine</span><span class="se">\&quot;</span><span class="s2"> OR </span><span class="se">\&quot;</span><span class="s2">effective prevention</span><span class="se">\&quot;</span><span class="s2">&quot;</span>
-      <span class="n">using</span> <span class="n">publications</span>
-      <span class="n">where</span> <span class="n">research_org_countries</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">empty</span>
-          <span class="ow">and</span> <span class="n">year</span> <span class="o">&gt;=</span> <span class="mi">2013</span>
-<span class="k">return</span> <span class="n">experts</span><span class="p">[</span><span class="n">basics</span><span class="p">]</span>
-      <span class="n">limit</span> <span class="mi">20</span> <span class="n">skip</span> <span class="mi">0</span>
-      <span class="n">annotate</span> <span class="n">organizational</span><span class="p">,</span> <span class="n">coauthorship</span> <span class="n">overlap</span>
-          <span class="k">with</span> <span class="p">[</span><span class="s2">&quot;ur.016204724721.35&quot;</span><span class="p">,</span> <span class="s2">&quot;ur.012127355561.32&quot;</span><span class="p">]</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>identify experts from concepts &quot;+malaria OR \&quot;effective malaria vaccine\&quot; OR \&quot;effective prevention\&quot;&quot;
+      using publications
+      where research_org_countries is not empty
+          and year &gt;= 2013
+return experts[basics]
+      limit 20 skip 0
+      annotate organizational, coauthorship overlap
+          with [&quot;ur.016204724721.35&quot;, &quot;ur.012127355561.32&quot;]
 </pre></div>
 </div>
 <p>Returned experts are ordered by their <strong>relevance</strong>.</p>
@@ -1677,11 +1704,10 @@ return experts[basics]
 <div class="section" id="Example-1.-Basic-query-using-concepts">
 <h3>Example 1. Basic query using <code class="docutils literal notranslate"><span class="pre">concepts</span></code><a class="headerlink" href="#Example-1.-Basic-query-using-concepts" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># take the top 15 concepts</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># take the top 15 concepts</span>
 <span class="n">some_concepts</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">CONCEPTS</span><span class="p">[:</span><span class="mi">15</span><span class="p">]])</span>
 
 <span class="n">q</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
@@ -1693,8 +1719,7 @@ return experts[basics]
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Query:</span><span class="se">\n</span><span class="s2">======&quot;</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
 
 <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
-
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
@@ -1705,13 +1730,13 @@ return experts[basics]
 Query:
 ======
         identify experts
-            from concepts &#34;\&#34;ambipolar electric field effect\&#34; \&#34;two-dimensional semimetal\&#34; \&#34;room-temperature mobility\&#34; \&#34;electric field effects\&#34; \&#34;field effects\&#34; \&#34;graphitic films\&#34; \&#34;gate voltage\&#34; \&#34;conductance band\&#34; \&#34;square centimeter\&#34; \&#34;films\&#34; \&#34;electrons\&#34; \&#34;semimetals\&#34; \&#34;ambient conditions\&#34; \&#34;atoms\&#34; \&#34;holes\&#34;&#34;
+            from concepts &#34;\&#34;films\&#34; \&#34;ambipolar electric field effect\&#34; \&#34;two-dimensional semimetal\&#34; \&#34;electric field effects\&#34; \&#34;room temperature mobility\&#34; \&#34;conductance band\&#34; \&#34;field effects\&#34; \&#34;graphitic films\&#34; \&#34;centimeters\&#34; \&#34;gate voltage\&#34; \&#34;semimetals\&#34; \&#34;electrons\&#34; \&#34;atoms\&#34; \&#34;holes\&#34; \&#34;square centimeter\&#34;&#34;
         return experts
 
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1733,94 +1758,94 @@ Query:
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>id</th>
-      <th>score</th>
-      <th>research_orgs</th>
-      <th>last_name</th>
-      <th>first_name</th>
       <th>docs_found</th>
+      <th>first_name</th>
+      <th>id</th>
+      <th>last_name</th>
+      <th>research_orgs</th>
+      <th>score</th>
       <th>orcid_id</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>ur.011033016243.08</td>
-      <td>7.87576</td>
-      <td>[grid.4886.2, grid.424048.e, grid.425037.7, gr...</td>
-      <td>Firsov</td>
-      <td>Anatoly A</td>
       <td>1</td>
+      <td>Anatoly A</td>
+      <td>ur.011033016243.08</td>
+      <td>Firsov</td>
+      <td>[grid.4886.2, grid.424048.e, grid.425037.7, gr...</td>
+      <td>269.41174</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>ur.01146544531.57</td>
-      <td>7.87576</td>
-      <td>[grid.5379.8]</td>
-      <td>Jiang</td>
-      <td>Da</td>
       <td>1</td>
+      <td>Da</td>
+      <td>ur.01146544531.57</td>
+      <td>Jiang</td>
+      <td>[grid.5379.8]</td>
+      <td>269.41174</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>ur.011535264111.51</td>
-      <td>7.87576</td>
-      <td>[grid.4886.2, grid.5379.8, grid.5254.6, grid.5...</td>
-      <td>Dubonos</td>
-      <td>Sergey V</td>
       <td>1</td>
+      <td>Sergey V</td>
+      <td>ur.011535264111.51</td>
+      <td>Dubonos</td>
+      <td>[grid.5254.6, grid.510709.a, grid.5379.8, grid...</td>
+      <td>269.41174</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>ur.01207120103.29</td>
-      <td>7.87576</td>
-      <td>[grid.5379.8, grid.425037.7, grid.116068.8, gr...</td>
-      <td>Novoselov</td>
-      <td>Konstantin Sergeevich</td>
       <td>1</td>
+      <td>Konstantin Sergeevich</td>
+      <td>ur.01207120103.29</td>
+      <td>Novoselov</td>
+      <td>[grid.5335.0, grid.423905.9, grid.425037.7, gr...</td>
+      <td>269.41174</td>
       <td>[0000-0003-4972-5371]</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>ur.0657076451.24</td>
-      <td>7.87576</td>
-      <td>[grid.8547.e, grid.5386.8, grid.184769.5, grid...</td>
-      <td>Zhang</td>
-      <td>Yuanbo</td>
       <td>1</td>
-      <td>NaN</td>
+      <td>Yuanbo</td>
+      <td>ur.0657076451.24</td>
+      <td>Zhang</td>
+      <td>[grid.8547.e, grid.30389.31, grid.184769.5, gr...</td>
+      <td>269.41174</td>
+      <td>[0000-0003-1290-7980]</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>ur.0721730631.45</td>
-      <td>7.87576</td>
-      <td>[grid.7340.0, grid.5254.6, grid.418975.6, grid...</td>
-      <td>Geim</td>
-      <td>Andre Konstantin</td>
       <td>1</td>
+      <td>Andre Konstantin</td>
+      <td>ur.0721730631.45</td>
+      <td>Geim</td>
+      <td>[grid.418975.6, grid.9026.d, grid.12527.33, gr...</td>
+      <td>269.41174</td>
       <td>[0000-0003-2861-8331]</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>ur.07423561367.62</td>
-      <td>7.87576</td>
-      <td>[grid.4886.2, grid.425081.a, grid.28171.3d, gr...</td>
-      <td>Morozov</td>
-      <td>Sergey V</td>
       <td>1</td>
+      <td>Sergey V</td>
+      <td>ur.07423561367.62</td>
+      <td>Morozov</td>
+      <td>[grid.5379.8, grid.9026.d, grid.470117.4, grid...</td>
+      <td>269.41174</td>
       <td>[0000-0003-3075-7787]</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>ur.0767105504.29</td>
-      <td>7.87576</td>
-      <td>[grid.4886.2, grid.7340.0, grid.5337.2, grid.4...</td>
-      <td>Grigorieva</td>
-      <td>Irina V</td>
       <td>1</td>
+      <td>Irina V</td>
+      <td>ur.0767105504.29</td>
+      <td>Grigorieva</td>
+      <td>[grid.418975.6, grid.500282.d, grid.418751.e, ...</td>
+      <td>269.41174</td>
       <td>[0000-0001-5991-7778]</td>
     </tr>
   </tbody>
@@ -1832,11 +1857,10 @@ Query:
 <h3>Example 2. Query with <code class="docutils literal notranslate"><span class="pre">OR</span></code> connectors<a class="headerlink" href="#Example-2.-Query-with-OR-connectors" title="Permalink to this headline">¶</a></h3>
 <p>Note: this time we return all experts fields by using the syntax <code class="docutils literal notranslate"><span class="pre">experts[all]</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">some_concepts</span> <span class="o">=</span> <span class="s2">&quot; OR &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">CONCEPTS</span><span class="p">[:</span><span class="mi">15</span><span class="p">]])</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">some_concepts</span> <span class="o">=</span> <span class="s2">&quot; OR &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">CONCEPTS</span><span class="p">[:</span><span class="mi">15</span><span class="p">]])</span>
 
 <span class="n">q</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">        identify experts</span>
@@ -1847,11 +1871,10 @@ Query:
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Query:</span><span class="se">\n</span><span class="s2">======&quot;</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
 
 <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
-
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
+<div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
@@ -1859,425 +1882,22 @@ Query:
 Query:
 ======
         identify experts
-            from concepts &#34;\&#34;ambipolar electric field effect\&#34; OR \&#34;two-dimensional semimetal\&#34; OR \&#34;room-temperature mobility\&#34; OR \&#34;electric field effects\&#34; OR \&#34;field effects\&#34; OR \&#34;graphitic films\&#34; OR \&#34;gate voltage\&#34; OR \&#34;conductance band\&#34; OR \&#34;square centimeter\&#34; OR \&#34;films\&#34; OR \&#34;electrons\&#34; OR \&#34;semimetals\&#34; OR \&#34;ambient conditions\&#34; OR \&#34;atoms\&#34; OR \&#34;holes\&#34;&#34;
+            from concepts &#34;\&#34;films\&#34; OR \&#34;ambipolar electric field effect\&#34; OR \&#34;two-dimensional semimetal\&#34; OR \&#34;electric field effects\&#34; OR \&#34;room temperature mobility\&#34; OR \&#34;conductance band\&#34; OR \&#34;field effects\&#34; OR \&#34;graphitic films\&#34; OR \&#34;centimeters\&#34; OR \&#34;gate voltage\&#34; OR \&#34;semimetals\&#34; OR \&#34;electrons\&#34; OR \&#34;atoms\&#34; OR \&#34;holes\&#34; OR \&#34;square centimeter\&#34;&#34;
         return experts[all]
 
+1 QueryError found
+Semantic errors found:
+        Field / Fieldset &#39;all&#39; is not present in Source &#39;researchers&#39;. Available fields: current_research_org,dimensions_url,first_grant_year,first_name,first_publication_year,id,last_grant_year,last_name,last_publication_year,nih_ppid,obsolete,orcid_id,redirect,research_orgs,total_grants,total_publications and available fieldsets: basics,extras
 </pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>id</th>
-      <th>score</th>
-      <th>research_orgs</th>
-      <th>orcid_id</th>
-      <th>total_grants</th>
-      <th>last_grant_year</th>
-      <th>obsolete</th>
-      <th>last_name</th>
-      <th>total_publications</th>
-      <th>first_publication_year</th>
-      <th>last_publication_year</th>
-      <th>current_research_org</th>
-      <th>first_name</th>
-      <th>first_grant_year</th>
-      <th>docs_found</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>ur.01207120103.29</td>
-      <td>8.406035</td>
-      <td>[grid.5379.8, grid.425037.7, grid.116068.8, gr...</td>
-      <td>[0000-0003-4972-5371]</td>
-      <td>11</td>
-      <td>2023.0</td>
-      <td>0</td>
-      <td>Novoselov</td>
-      <td>590</td>
-      <td>1997</td>
-      <td>2020</td>
-      <td>grid.5379.8</td>
-      <td>Konstantin Sergeevich</td>
-      <td>2006.0</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>ur.0721730631.45</td>
-      <td>8.406035</td>
-      <td>[grid.7340.0, grid.5254.6, grid.418975.6, grid...</td>
-      <td>[0000-0003-2861-8331]</td>
-      <td>10</td>
-      <td>2024.0</td>
-      <td>0</td>
-      <td>Geim</td>
-      <td>582</td>
-      <td>1991</td>
-      <td>2020</td>
-      <td>grid.5379.8</td>
-      <td>Andre Konstantin</td>
-      <td>2006.0</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>ur.07423561367.62</td>
-      <td>8.406035</td>
-      <td>[grid.4886.2, grid.425081.a, grid.28171.3d, gr...</td>
-      <td>[0000-0003-3075-7787]</td>
-      <td>6</td>
-      <td>2021.0</td>
-      <td>0</td>
-      <td>Morozov</td>
-      <td>269</td>
-      <td>1990</td>
-      <td>2020</td>
-      <td>grid.425081.a</td>
-      <td>Sergey V</td>
-      <td>2013.0</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>ur.0657076451.24</td>
-      <td>8.355439</td>
-      <td>[grid.8547.e, grid.5386.8, grid.184769.5, grid...</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>Zhang</td>
-      <td>74</td>
-      <td>2004</td>
-      <td>2019</td>
-      <td>grid.8547.e</td>
-      <td>Yuanbo</td>
-      <td>NaN</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>ur.011033016243.08</td>
-      <td>8.081146</td>
-      <td>[grid.4886.2, grid.424048.e, grid.425037.7, gr...</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>Firsov</td>
-      <td>25</td>
-      <td>2003</td>
-      <td>2018</td>
-      <td>grid.424048.e</td>
-      <td>Anatoly A</td>
-      <td>NaN</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>ur.01146544531.57</td>
-      <td>8.081146</td>
-      <td>[grid.5379.8]</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>Jiang</td>
-      <td>11</td>
-      <td>2004</td>
-      <td>2008</td>
-      <td>grid.5379.8</td>
-      <td>Da</td>
-      <td>NaN</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>ur.011535264111.51</td>
-      <td>7.875760</td>
-      <td>[grid.4886.2, grid.5379.8, grid.5254.6, grid.5...</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>Dubonos</td>
-      <td>81</td>
-      <td>1990</td>
-      <td>2009</td>
-      <td>grid.425037.7</td>
-      <td>Sergey V</td>
-      <td>NaN</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>ur.0767105504.29</td>
-      <td>7.875760</td>
-      <td>[grid.4886.2, grid.7340.0, grid.5337.2, grid.4...</td>
-      <td>[0000-0001-5991-7778]</td>
-      <td>4</td>
-      <td>2021.0</td>
-      <td>0</td>
-      <td>Grigorieva</td>
-      <td>158</td>
-      <td>1989</td>
-      <td>2020</td>
-      <td>grid.5379.8</td>
-      <td>Irina V</td>
-      <td>2007.0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>ur.011513332561.53</td>
-      <td>5.697777</td>
-      <td>[grid.39158.36, grid.260539.b, grid.69566.3a]</td>
-      <td>NaN</td>
-      <td>23</td>
-      <td>2011.0</td>
-      <td>0</td>
-      <td>Ohta</td>
-      <td>208</td>
-      <td>1976</td>
-      <td>2020</td>
-      <td>grid.260539.b</td>
-      <td>Nobuhiro</td>
-      <td>1987.0</td>
-      <td>21</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>ur.01055006635.53</td>
-      <td>3.264948</td>
-      <td>[grid.450314.7, grid.4605.7, grid.7727.5, grid...</td>
-      <td>NaN</td>
-      <td>12</td>
-      <td>2011.0</td>
-      <td>0</td>
-      <td>Kvon</td>
-      <td>326</td>
-      <td>1983</td>
-      <td>2020</td>
-      <td>grid.4605.7</td>
-      <td>Ze Don</td>
-      <td>1993.0</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>ur.013312524031.58</td>
-      <td>3.022535</td>
-      <td>[grid.443127.7, grid.420030.5, grid.419396.0, ...</td>
-      <td>NaN</td>
-      <td>28</td>
-      <td>2003.0</td>
-      <td>0</td>
-      <td>Yamazaki</td>
-      <td>258</td>
-      <td>1966</td>
-      <td>2013</td>
-      <td>grid.39158.36</td>
-      <td>Iwao</td>
-      <td>1984.0</td>
-      <td>11</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>ur.01203703171.12</td>
-      <td>2.642304</td>
-      <td>[grid.26999.3d, grid.69566.3a, grid.472717.0, ...</td>
-      <td>[0000-0002-6631-5131]</td>
-      <td>11</td>
-      <td>2022.0</td>
-      <td>0</td>
-      <td>Chiba</td>
-      <td>208</td>
-      <td>2000</td>
-      <td>2020</td>
-      <td>grid.136593.b</td>
-      <td>Daichi</td>
-      <td>2009.0</td>
-      <td>9</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>ur.0740560235.48</td>
-      <td>2.564912</td>
-      <td>[grid.4886.2, grid.15276.37, grid.11899.38, gr...</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>Olshanetsky</td>
-      <td>91</td>
-      <td>1989</td>
-      <td>2020</td>
-      <td>grid.450314.7</td>
-      <td>Eugene</td>
-      <td>NaN</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>ur.01034030721.03</td>
-      <td>2.516857</td>
-      <td>[grid.5338.d, grid.116068.8, grid.21941.3f, gr...</td>
-      <td>[0000-0001-8217-8213]</td>
-      <td>7</td>
-      <td>2023.0</td>
-      <td>0</td>
-      <td>Jarillo-Herrero</td>
-      <td>233</td>
-      <td>2000</td>
-      <td>2020</td>
-      <td>grid.116068.8</td>
-      <td>Pablo</td>
-      <td>2009.0</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>ur.01340766601.27</td>
-      <td>1.758987</td>
-      <td>[grid.469490.6, grid.432790.b, grid.431860.8, ...</td>
-      <td>NaN</td>
-      <td>6</td>
-      <td>2009.0</td>
-      <td>0</td>
-      <td>Venkatesan</td>
-      <td>777</td>
-      <td>1975</td>
-      <td>2020</td>
-      <td>grid.4280.e</td>
-      <td>Thirumalai Venky</td>
-      <td>1984.0</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>ur.011775522057.45</td>
-      <td>1.718926</td>
-      <td>[grid.448924.7, grid.450314.7, grid.4605.7, gr...</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>Mikhailov</td>
-      <td>222</td>
-      <td>1995</td>
-      <td>2020</td>
-      <td>grid.450314.7</td>
-      <td>Nikolay N</td>
-      <td>NaN</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>ur.01024676171.26</td>
-      <td>1.649508</td>
-      <td>[grid.5801.c, grid.481554.9, grid.410387.9, gr...</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>Bednorz</td>
-      <td>129</td>
-      <td>1976</td>
-      <td>2017</td>
-      <td>grid.410387.9</td>
-      <td>Johannes Georg</td>
-      <td>NaN</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>ur.01267137567.67</td>
-      <td>1.649508</td>
-      <td>[grid.410387.9, grid.7307.3, grid.10392.39, gr...</td>
-      <td>[0000-0001-6331-2640]</td>
-      <td>7</td>
-      <td>2020.0</td>
-      <td>0</td>
-      <td>Mannhart</td>
-      <td>358</td>
-      <td>1986</td>
-      <td>2020</td>
-      <td>grid.419552.e</td>
-      <td>Jochen D</td>
-      <td>1990.0</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>ur.07376375471.82</td>
-      <td>1.637159</td>
-      <td>[grid.4886.2, grid.4605.7, grid.7727.5, grid.4...</td>
-      <td>NaN</td>
-      <td>2</td>
-      <td>2019.0</td>
-      <td>0</td>
-      <td>Kozlov</td>
-      <td>52</td>
-      <td>2007</td>
-      <td>2020</td>
-      <td>grid.450314.7</td>
-      <td>Dmitriy A</td>
-      <td>2014.0</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>ur.07410612715.77</td>
-      <td>1.631930</td>
-      <td>[grid.24434.35, grid.39158.36, grid.20515.33, ...</td>
-      <td>[0000-0002-9982-141X]</td>
-      <td>15</td>
-      <td>2008.0</td>
-      <td>0</td>
-      <td>Nishimura</td>
-      <td>173</td>
-      <td>1987</td>
-      <td>2020</td>
-      <td>grid.20515.33</td>
-      <td>Yoshinobu</td>
-      <td>1989.0</td>
-      <td>5</td>
-    </tr>
-  </tbody>
-</table>
-</div></div>
 </div>
 </div>
 <div class="section" id="Example-3.-Query-with-where-filters">
 <h3>Example 3. Query with <code class="docutils literal notranslate"><span class="pre">where</span></code> filters<a class="headerlink" href="#Example-3.-Query-with-where-filters" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">some_concepts</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">CONCEPTS</span><span class="p">[:</span><span class="mi">10</span><span class="p">]])</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">some_concepts</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">CONCEPTS</span><span class="p">[:</span><span class="mi">10</span><span class="p">]])</span>
 
 <span class="n">q</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;identify experts</span>
 <span class="s2">            from concepts &quot;</span><span class="si">{</span><span class="n">dsl_escape</span><span class="p">(</span><span class="n">some_concepts</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -2301,7 +1921,7 @@ Query:
 <div class="highlight"><pre>
 Query:
 ====== identify experts
-            from concepts &#34;\&#34;ambipolar electric field effect\&#34; \&#34;two-dimensional semimetal\&#34; \&#34;room-temperature mobility\&#34; \&#34;electric field effects\&#34; \&#34;field effects\&#34; \&#34;graphitic films\&#34; \&#34;gate voltage\&#34; \&#34;conductance band\&#34; \&#34;square centimeter\&#34; \&#34;films\&#34;&#34;
+            from concepts &#34;\&#34;films\&#34; \&#34;ambipolar electric field effect\&#34; \&#34;two-dimensional semimetal\&#34; \&#34;electric field effects\&#34; \&#34;room temperature mobility\&#34; \&#34;conductance band\&#34; \&#34;field effects\&#34; \&#34;graphitic films\&#34; \&#34;centimeters\&#34; \&#34;gate voltage\&#34;&#34;
             using publications
             where research_org_countries is not empty
               and year &gt;= 2000
@@ -2311,7 +1931,7 @@ Query:
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -2333,94 +1953,94 @@ Query:
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>id</th>
-      <th>score</th>
-      <th>first_name</th>
-      <th>research_orgs</th>
-      <th>last_name</th>
       <th>docs_found</th>
+      <th>first_name</th>
+      <th>id</th>
+      <th>last_name</th>
+      <th>research_orgs</th>
+      <th>score</th>
       <th>orcid_id</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>ur.011033016243.08</td>
-      <td>7.383875</td>
-      <td>Anatoly A</td>
-      <td>[grid.4886.2, grid.424048.e, grid.425037.7, gr...</td>
-      <td>Firsov</td>
       <td>1</td>
+      <td>Anatoly A</td>
+      <td>ur.011033016243.08</td>
+      <td>Firsov</td>
+      <td>[grid.4886.2, grid.424048.e, grid.425037.7, gr...</td>
+      <td>204.01543</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>ur.01146544531.57</td>
-      <td>7.383875</td>
-      <td>Da</td>
-      <td>[grid.5379.8]</td>
-      <td>Jiang</td>
       <td>1</td>
+      <td>Da</td>
+      <td>ur.01146544531.57</td>
+      <td>Jiang</td>
+      <td>[grid.5379.8]</td>
+      <td>204.01543</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>ur.011535264111.51</td>
-      <td>7.383875</td>
-      <td>Sergey V</td>
-      <td>[grid.4886.2, grid.5379.8, grid.5254.6, grid.5...</td>
-      <td>Dubonos</td>
       <td>1</td>
+      <td>Sergey V</td>
+      <td>ur.011535264111.51</td>
+      <td>Dubonos</td>
+      <td>[grid.5254.6, grid.510709.a, grid.5379.8, grid...</td>
+      <td>204.01543</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>ur.01207120103.29</td>
-      <td>7.383875</td>
-      <td>Konstantin Sergeevich</td>
-      <td>[grid.5379.8, grid.425037.7, grid.116068.8, gr...</td>
-      <td>Novoselov</td>
       <td>1</td>
+      <td>Konstantin Sergeevich</td>
+      <td>ur.01207120103.29</td>
+      <td>Novoselov</td>
+      <td>[grid.5335.0, grid.423905.9, grid.425037.7, gr...</td>
+      <td>204.01543</td>
       <td>[0000-0003-4972-5371]</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>ur.0657076451.24</td>
-      <td>7.383875</td>
-      <td>Yuanbo</td>
-      <td>[grid.8547.e, grid.5386.8, grid.184769.5, grid...</td>
-      <td>Zhang</td>
       <td>1</td>
-      <td>NaN</td>
+      <td>Yuanbo</td>
+      <td>ur.0657076451.24</td>
+      <td>Zhang</td>
+      <td>[grid.8547.e, grid.30389.31, grid.184769.5, gr...</td>
+      <td>204.01543</td>
+      <td>[0000-0003-1290-7980]</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>ur.0721730631.45</td>
-      <td>7.383875</td>
-      <td>Andre Konstantin</td>
-      <td>[grid.7340.0, grid.5254.6, grid.418975.6, grid...</td>
-      <td>Geim</td>
       <td>1</td>
+      <td>Andre Konstantin</td>
+      <td>ur.0721730631.45</td>
+      <td>Geim</td>
+      <td>[grid.418975.6, grid.9026.d, grid.12527.33, gr...</td>
+      <td>204.01543</td>
       <td>[0000-0003-2861-8331]</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>ur.07423561367.62</td>
-      <td>7.383875</td>
-      <td>Sergey V</td>
-      <td>[grid.4886.2, grid.425081.a, grid.28171.3d, gr...</td>
-      <td>Morozov</td>
       <td>1</td>
+      <td>Sergey V</td>
+      <td>ur.07423561367.62</td>
+      <td>Morozov</td>
+      <td>[grid.5379.8, grid.9026.d, grid.470117.4, grid...</td>
+      <td>204.01543</td>
       <td>[0000-0003-3075-7787]</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>ur.0767105504.29</td>
-      <td>7.383875</td>
-      <td>Irina V</td>
-      <td>[grid.4886.2, grid.7340.0, grid.5337.2, grid.4...</td>
-      <td>Grigorieva</td>
       <td>1</td>
+      <td>Irina V</td>
+      <td>ur.0767105504.29</td>
+      <td>Grigorieva</td>
+      <td>[grid.418975.6, grid.500282.d, grid.418751.e, ...</td>
+      <td>204.01543</td>
       <td>[0000-0001-5991-7778]</td>
     </tr>
   </tbody>
@@ -2431,11 +2051,10 @@ Query:
 <div class="section" id="Example-4.-Adding-Overlap-Annotations-(eg-for-conflict-of-interests-checks)">
 <h3>Example 4. Adding Overlap Annotations (eg for conflict of interests checks)<a class="headerlink" href="#Example-4.-Adding-Overlap-Annotations-(eg-for-conflict-of-interests-checks)" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">overlap_researchers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ur.011535264111.51&quot;</span><span class="p">,</span> <span class="s2">&quot;ur.011033016243.08&quot;</span><span class="p">,</span> <span class="s2">&quot;ur.01207120103.29&quot;</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">overlap_researchers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ur.011535264111.51&quot;</span><span class="p">,</span> <span class="s2">&quot;ur.011033016243.08&quot;</span><span class="p">,</span> <span class="s2">&quot;ur.01207120103.29&quot;</span><span class="p">]</span>
 
 <span class="n">q</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">        identify experts</span>
@@ -2451,8 +2070,7 @@ Query:
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Query:</span><span class="se">\n</span><span class="s2">======&quot;</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
 
 <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
-
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
@@ -2463,7 +2081,7 @@ Query:
 Query:
 ======
         identify experts
-            from concepts &#34;\&#34;ambipolar electric field effect\&#34; \&#34;two-dimensional semimetal\&#34; \&#34;room-temperature mobility\&#34; \&#34;electric field effects\&#34; \&#34;field effects\&#34; \&#34;graphitic films\&#34; \&#34;gate voltage\&#34; \&#34;conductance band\&#34; \&#34;square centimeter\&#34; \&#34;films\&#34;&#34;
+            from concepts &#34;\&#34;films\&#34; \&#34;ambipolar electric field effect\&#34; \&#34;two-dimensional semimetal\&#34; \&#34;electric field effects\&#34; \&#34;room temperature mobility\&#34; \&#34;conductance band\&#34; \&#34;field effects\&#34; \&#34;graphitic films\&#34; \&#34;centimeters\&#34; \&#34;gate voltage\&#34;&#34;
             using publications
             where research_org_countries is not empty
               and year &gt;= 2000
@@ -2474,7 +2092,7 @@ Query:
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -2496,12 +2114,12 @@ Query:
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>id</th>
-      <th>score</th>
-      <th>first_name</th>
-      <th>research_orgs</th>
-      <th>last_name</th>
       <th>docs_found</th>
+      <th>first_name</th>
+      <th>id</th>
+      <th>last_name</th>
+      <th>research_orgs</th>
+      <th>score</th>
       <th>overlap.coauthorship</th>
       <th>overlap.organizational</th>
       <th>orcid_id</th>
@@ -2510,98 +2128,98 @@ Query:
   <tbody>
     <tr>
       <th>0</th>
-      <td>ur.011033016243.08</td>
-      <td>7.382478</td>
+      <td>1</td>
       <td>Anatoly A</td>
-      <td>[grid.4886.2, grid.424048.e, grid.425037.7, gr...</td>
+      <td>ur.011033016243.08</td>
       <td>Firsov</td>
-      <td>1</td>
-      <td>3</td>
-      <td>True</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>ur.01146544531.57</td>
-      <td>7.382478</td>
-      <td>Da</td>
-      <td>[grid.5379.8]</td>
-      <td>Jiang</td>
-      <td>1</td>
+      <td>[grid.4886.2, grid.424048.e, grid.425037.7, gr...</td>
+      <td>204.01543</td>
       <td>0</td>
       <td>True</td>
       <td>NaN</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>ur.011535264111.51</td>
-      <td>7.382478</td>
-      <td>Sergey V</td>
-      <td>[grid.4886.2, grid.5379.8, grid.5254.6, grid.5...</td>
-      <td>Dubonos</td>
+      <th>1</th>
       <td>1</td>
+      <td>Da</td>
+      <td>ur.01146544531.57</td>
+      <td>Jiang</td>
+      <td>[grid.5379.8]</td>
+      <td>204.01543</td>
+      <td>0</td>
+      <td>False</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>Sergey V</td>
+      <td>ur.011535264111.51</td>
+      <td>Dubonos</td>
+      <td>[grid.5254.6, grid.510709.a, grid.5379.8, grid...</td>
+      <td>204.01543</td>
       <td>0</td>
       <td>True</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>ur.01207120103.29</td>
-      <td>7.382478</td>
-      <td>Konstantin Sergeevich</td>
-      <td>[grid.5379.8, grid.425037.7, grid.116068.8, gr...</td>
-      <td>Novoselov</td>
       <td>1</td>
-      <td>153</td>
+      <td>Konstantin Sergeevich</td>
+      <td>ur.01207120103.29</td>
+      <td>Novoselov</td>
+      <td>[grid.5335.0, grid.423905.9, grid.425037.7, gr...</td>
+      <td>204.01543</td>
+      <td>175</td>
       <td>True</td>
       <td>[0000-0003-4972-5371]</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>ur.0657076451.24</td>
-      <td>7.382478</td>
-      <td>Yuanbo</td>
-      <td>[grid.8547.e, grid.5386.8, grid.184769.5, grid...</td>
-      <td>Zhang</td>
       <td>1</td>
-      <td>0</td>
+      <td>Yuanbo</td>
+      <td>ur.0657076451.24</td>
+      <td>Zhang</td>
+      <td>[grid.8547.e, grid.30389.31, grid.184769.5, gr...</td>
+      <td>204.01543</td>
+      <td>1</td>
       <td>False</td>
-      <td>NaN</td>
+      <td>[0000-0003-1290-7980]</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>ur.0721730631.45</td>
-      <td>7.382478</td>
-      <td>Andre Konstantin</td>
-      <td>[grid.7340.0, grid.5254.6, grid.418975.6, grid...</td>
-      <td>Geim</td>
       <td>1</td>
-      <td>38</td>
-      <td>True</td>
+      <td>Andre Konstantin</td>
+      <td>ur.0721730631.45</td>
+      <td>Geim</td>
+      <td>[grid.418975.6, grid.9026.d, grid.12527.33, gr...</td>
+      <td>204.01543</td>
+      <td>26</td>
+      <td>False</td>
       <td>[0000-0003-2861-8331]</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>ur.07423561367.62</td>
-      <td>7.382478</td>
-      <td>Sergey V</td>
-      <td>[grid.4886.2, grid.425081.a, grid.28171.3d, gr...</td>
-      <td>Morozov</td>
       <td>1</td>
-      <td>6</td>
+      <td>Sergey V</td>
+      <td>ur.07423561367.62</td>
+      <td>Morozov</td>
+      <td>[grid.5379.8, grid.9026.d, grid.470117.4, grid...</td>
+      <td>204.01543</td>
+      <td>7</td>
       <td>False</td>
       <td>[0000-0003-3075-7787]</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>ur.0767105504.29</td>
-      <td>7.382478</td>
-      <td>Irina V</td>
-      <td>[grid.4886.2, grid.7340.0, grid.5337.2, grid.4...</td>
-      <td>Grigorieva</td>
       <td>1</td>
-      <td>6</td>
-      <td>True</td>
+      <td>Irina V</td>
+      <td>ur.0767105504.29</td>
+      <td>Grigorieva</td>
+      <td>[grid.418975.6, grid.500282.d, grid.418751.e, ...</td>
+      <td>204.01543</td>
+      <td>8</td>
+      <td>False</td>
       <td>[0000-0001-5991-7778]</td>
     </tr>
   </tbody>
@@ -2615,11 +2233,10 @@ Query:
 <p>It is possible to specify MUST/NOT rules with concepts by passing them via a string and using the <code class="docutils literal notranslate"><span class="pre">+</span></code> and <code class="docutils literal notranslate"><span class="pre">-</span></code> operators.</p>
 <p>Note: please remember that concepts phrases (= concepts that are composed by more than one word) need to be wrapped using quotes, and the quotes need to be escaped with a <code class="docutils literal notranslate"><span class="pre">\</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">concepts</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">concepts</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">    +&quot;ambipolar electric field effect&quot;</span>
 <span class="s2">    -&quot;graphitic films&quot;</span>
 <span class="s2">    +&quot;films&quot;</span>
@@ -2636,9 +2253,7 @@ Query:
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Query:</span><span class="se">\n</span><span class="s2">======&quot;</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
 
 <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
-
-
-</pre></div>
+<br/><br/></pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
@@ -2661,7 +2276,7 @@ return experts
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -2683,145 +2298,155 @@ return experts
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>id</th>
-      <th>score</th>
-      <th>research_orgs</th>
-      <th>last_name</th>
-      <th>first_name</th>
       <th>docs_found</th>
+      <th>first_name</th>
+      <th>id</th>
+      <th>last_name</th>
       <th>orcid_id</th>
+      <th>research_orgs</th>
+      <th>score</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>ur.01005576245.93</td>
-      <td>3.480071</td>
-      <td>[grid.6520.1, grid.121334.6]</td>
-      <td>Henrard</td>
-      <td>Luc</td>
       <td>1</td>
-      <td>NaN</td>
+      <td>Luc</td>
+      <td>ur.01005576245.93</td>
+      <td>Henrard</td>
+      <td>[0000-0002-2564-1221]</td>
+      <td>[grid.5284.b, grid.121334.6, grid.6520.1]</td>
+      <td>51.435350</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>ur.01251242035.86</td>
-      <td>3.480071</td>
-      <td>[grid.6520.1, grid.121334.6, grid.12082.39, gr...</td>
-      <td>Latil</td>
-      <td>Sylvain</td>
       <td>1</td>
+      <td>Sylvain</td>
+      <td>ur.01251242035.86</td>
+      <td>Latil</td>
       <td>NaN</td>
+      <td>[grid.14095.39, grid.462531.7, grid.457336.0, ...</td>
+      <td>51.435350</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>ur.01000623240.81</td>
-      <td>2.589067</td>
-      <td>[grid.164295.d]</td>
-      <td>Syers</td>
-      <td>Paul</td>
       <td>1</td>
+      <td>Paul</td>
+      <td>ur.01000623240.81</td>
+      <td>Syers</td>
       <td>NaN</td>
+      <td>[grid.164295.d]</td>
+      <td>44.719536</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>ur.01046736440.46</td>
-      <td>2.589067</td>
-      <td>[grid.266100.3, grid.410443.6, grid.250008.f, ...</td>
-      <td>Butch</td>
-      <td>Nicholas Patrick</td>
       <td>1</td>
-      <td>NaN</td>
+      <td>Nicholas Patrick</td>
+      <td>ur.01046736440.46</td>
+      <td>Butch</td>
+      <td>[0000-0002-6083-8388]</td>
+      <td>[grid.8547.e, grid.507868.4, grid.94225.38, gr...</td>
+      <td>44.719536</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>ur.01060352233.12</td>
-      <td>2.589067</td>
-      <td>[grid.266100.3, grid.440050.5, grid.410443.6, ...</td>
-      <td>Paglione</td>
-      <td>John-Pierre</td>
       <td>1</td>
+      <td>John-Pierre</td>
+      <td>ur.01060352233.12</td>
+      <td>Paglione</td>
       <td>NaN</td>
+      <td>[grid.8547.e, grid.507868.4, grid.440050.5, gr...</td>
+      <td>44.719536</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>ur.01200656557.13</td>
-      <td>2.589067</td>
-      <td>[grid.47840.3f, grid.499241.3, grid.184769.5, ...</td>
-      <td>Fuhrer</td>
-      <td>Michael Sears</td>
       <td>1</td>
+      <td>Michael Sears</td>
+      <td>ur.01200656557.13</td>
+      <td>Fuhrer</td>
       <td>[0000-0001-6183-2773]</td>
+      <td>[grid.184769.5, grid.1002.3, grid.499241.3, gr...</td>
+      <td>44.719536</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>ur.01205352017.54</td>
-      <td>2.589067</td>
-      <td>[grid.31501.36, grid.164295.d, grid.35541.36, ...</td>
-      <td>Kim</td>
-      <td>Dohun</td>
       <td>1</td>
+      <td>Dohun</td>
+      <td>ur.01205352017.54</td>
+      <td>Kim</td>
       <td>[0000-0001-9687-2089]</td>
+      <td>[grid.14003.36, grid.35541.36, grid.15444.30, ...</td>
+      <td>44.719536</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>ur.01025667341.62</td>
-      <td>2.061342</td>
-      <td>[grid.263856.c, grid.78837.33, grid.35043.31, ...</td>
-      <td>Sysoev</td>
-      <td>Victor V</td>
       <td>1</td>
+      <td>Victor V</td>
+      <td>ur.01025667341.62</td>
+      <td>Sysoev</td>
       <td>[0000-0002-0372-1802]</td>
+      <td>[grid.446088.6, grid.263856.c, grid.78837.33, ...</td>
+      <td>38.569305</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>ur.01245543252.06</td>
-      <td>2.061342</td>
-      <td>[grid.14476.30, grid.24434.35]</td>
-      <td>Shekhirev</td>
-      <td>Mikhail A</td>
       <td>1</td>
+      <td>Mikhail A</td>
+      <td>ur.01245543252.06</td>
+      <td>Shekhirev</td>
       <td>[0000-0002-8381-1276]</td>
+      <td>[grid.14476.30, grid.24434.35, grid.166341.7]</td>
+      <td>38.569305</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>ur.01276657166.76</td>
-      <td>2.061342</td>
-      <td>[grid.426324.5, grid.10420.37, grid.24434.35, ...</td>
-      <td>Lipatov</td>
-      <td>Alexey</td>
       <td>1</td>
+      <td>Alexey</td>
+      <td>ur.01276657166.76</td>
+      <td>Lipatov</td>
       <td>[0000-0001-5043-1616]</td>
+      <td>[grid.14476.30, grid.426324.5, grid.10420.37, ...</td>
+      <td>38.569305</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>ur.013212454037.49</td>
-      <td>2.061342</td>
-      <td>[grid.78837.33]</td>
-      <td>Lashkov</td>
-      <td>Andrey V</td>
       <td>1</td>
+      <td>Andrey V</td>
+      <td>ur.013212454037.49</td>
+      <td>Lashkov</td>
       <td>[0000-0001-6794-8523]</td>
+      <td>[grid.78837.33]</td>
+      <td>38.569305</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>ur.016560200577.43</td>
-      <td>2.061342</td>
-      <td>[grid.24434.35]</td>
-      <td>Vorobeva</td>
-      <td>Nataliia S</td>
       <td>1</td>
+      <td>Angel</td>
+      <td>ur.014430675711.42</td>
+      <td>Torres</td>
       <td>NaN</td>
+      <td>[grid.24434.35]</td>
+      <td>38.569305</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>ur.0646414360.09</td>
-      <td>2.061342</td>
-      <td>[grid.35043.31, grid.24434.35, grid.170430.1, ...</td>
-      <td>Sinitskii</td>
-      <td>Alexander S</td>
       <td>1</td>
+      <td>Nataliia S</td>
+      <td>ur.016560200577.43</td>
+      <td>Vorobeva</td>
+      <td>NaN</td>
+      <td>[grid.24434.35]</td>
+      <td>38.569305</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>1</td>
+      <td>Alexander S</td>
+      <td>ur.0646414360.09</td>
+      <td>Sinitskii</td>
       <td>[0000-0002-8688-3451]</td>
+      <td>[grid.24434.35, grid.170430.1, grid.1957.a, gr...</td>
+      <td>38.569305</td>
     </tr>
   </tbody>
 </table>
@@ -2831,11 +2456,10 @@ return experts
 <div class="section" id="Example-6.-MUST-together-with-AND/OR">
 <h3>Example 6. MUST together with AND/OR<a class="headerlink" href="#Example-6.-MUST-together-with-AND/OR" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">concepts</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">concepts</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">    (+&quot;ambipolar electric field effect&quot; -&quot;graphitic films&quot;) OR</span>
 <span class="s2">    (+&quot;films&quot; -&quot;electric field effects&quot;)</span>
 <span class="s2">    &quot;&quot;&quot;</span>
@@ -2850,9 +2474,7 @@ return experts
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Query:</span><span class="se">\n</span><span class="s2">======&quot;</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
 
 <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
-
-
-</pre></div>
+<br/><br/></pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
@@ -2873,7 +2495,7 @@ return experts
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -2895,215 +2517,215 @@ return experts
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>id</th>
-      <th>score</th>
-      <th>first_name</th>
-      <th>research_orgs</th>
-      <th>last_name</th>
       <th>docs_found</th>
+      <th>first_name</th>
+      <th>id</th>
+      <th>last_name</th>
       <th>orcid_id</th>
+      <th>research_orgs</th>
+      <th>score</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>ur.014516430466.88</td>
-      <td>10.359314</td>
-      <td>Ledford C</td>
-      <td>[grid.411377.7]</td>
-      <td>Carter</td>
-      <td>18</td>
-      <td>NaN</td>
+      <td>3</td>
+      <td>Pablo</td>
+      <td>ur.01034030721.03</td>
+      <td>Jarillo-Herrero</td>
+      <td>[0000-0001-8217-8213]</td>
+      <td>[grid.159791.2, grid.5338.d, grid.116068.8, gr...</td>
+      <td>78.260747</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>ur.01034030721.03</td>
-      <td>3.576317</td>
-      <td>Pablo</td>
-      <td>[grid.5338.d, grid.116068.8, grid.21941.3f, gr...</td>
-      <td>Jarillo-Herrero</td>
       <td>3</td>
-      <td>[0000-0001-8217-8213]</td>
+      <td>Young Sang</td>
+      <td>ur.01342755473.89</td>
+      <td>Lee</td>
+      <td>NaN</td>
+      <td>[grid.69566.3a, grid.94225.38, grid.507868.4, ...</td>
+      <td>78.260747</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>ur.010122277451.23</td>
-      <td>3.499347</td>
-      <td>Alberta</td>
-      <td>NaN</td>
-      <td>Meyer</td>
-      <td>4</td>
-      <td>NaN</td>
+      <td>3</td>
+      <td>Lan</td>
+      <td>ur.014670440227.86</td>
+      <td>Wang</td>
+      <td>[0000-0001-7124-2718]</td>
+      <td>[grid.418788.a, grid.1007.6, grid.17635.36, gr...</td>
+      <td>75.645182</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>ur.012760700525.87</td>
-      <td>3.499347</td>
-      <td>Esther</td>
-      <td>NaN</td>
-      <td>Aschemeyer</td>
-      <td>4</td>
-      <td>NaN</td>
+      <td>3</td>
+      <td>Shun-Qing</td>
+      <td>ur.0624630056.98</td>
+      <td>Shen</td>
+      <td>[0000-0002-1954-5882]</td>
+      <td>[grid.8547.e, grid.450298.2, grid.464262.0, gr...</td>
+      <td>75.645182</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>ur.011313310557.79</td>
-      <td>2.884011</td>
-      <td>Erwin Randolph</td>
-      <td>[grid.26009.3d]</td>
-      <td>Parson</td>
-      <td>5</td>
-      <td>NaN</td>
+      <td>3</td>
+      <td>Alexander S</td>
+      <td>ur.0646414360.09</td>
+      <td>Sinitskii</td>
+      <td>[0000-0002-8688-3451]</td>
+      <td>[grid.24434.35, grid.170430.1, grid.1957.a, gr...</td>
+      <td>69.488090</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>ur.011224625507.86</td>
-      <td>2.798074</td>
-      <td>W</td>
-      <td>[grid.461804.f]</td>
-      <td>Feneberg</td>
-      <td>1</td>
+      <td>2</td>
+      <td>Peng</td>
+      <td>ur.01150036175.42</td>
+      <td>Ren</td>
       <td>NaN</td>
+      <td>[grid.59025.3b]</td>
+      <td>51.162295</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>ur.015134442047.63</td>
-      <td>2.798074</td>
-      <td>Manfred A</td>
-      <td>[grid.16463.36]</td>
-      <td>Hellberg</td>
-      <td>1</td>
-      <td>[0000-0003-0785-8125]</td>
+      <td>2</td>
+      <td>Azat</td>
+      <td>ur.056250446.77</td>
+      <td>Sulaev</td>
+      <td>NaN</td>
+      <td>[grid.59025.3b]</td>
+      <td>51.162295</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>ur.01150036175.42</td>
-      <td>2.434489</td>
-      <td>Peng</td>
-      <td>[grid.59025.3b]</td>
-      <td>Ren</td>
       <td>2</td>
+      <td>Bin</td>
+      <td>ur.0756673070.05</td>
+      <td>Xia</td>
       <td>NaN</td>
+      <td>[grid.59025.3b]</td>
+      <td>51.162295</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>ur.013275477227.26</td>
-      <td>2.434489</td>
-      <td>Lan</td>
-      <td>[grid.17635.36, grid.59025.3b, grid.451303.0, ...</td>
-      <td>Wang</td>
       <td>2</td>
-      <td>[0000-0001-7124-2718]</td>
+      <td>James Mitchell</td>
+      <td>ur.01275626274.52</td>
+      <td>Tour</td>
+      <td>[0000-0002-8479-9328]</td>
+      <td>[grid.264756.4, grid.21940.3e, grid.254567.7, ...</td>
+      <td>49.416673</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>ur.056250446.77</td>
-      <td>2.434489</td>
-      <td>Azat</td>
-      <td>[grid.59025.3b]</td>
-      <td>Sulaev</td>
       <td>2</td>
+      <td>Christian F</td>
+      <td>ur.01010600302.93</td>
+      <td>Kisielowski</td>
       <td>NaN</td>
+      <td>[grid.184769.5, grid.8385.6, grid.469490.6, gr...</td>
+      <td>47.051859</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>ur.0624630056.98</td>
-      <td>2.434489</td>
-      <td>Shun-Qing</td>
-      <td>[grid.8547.e, grid.450298.2, grid.194645.b, gr...</td>
-      <td>Shen</td>
       <td>2</td>
-      <td>NaN</td>
+      <td>Andrey A</td>
+      <td>ur.01022425321.95</td>
+      <td>Turchanin</td>
+      <td>[0000-0003-2388-1042]</td>
+      <td>[grid.7491.b, grid.4764.1, grid.35043.31, grid...</td>
+      <td>47.051859</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>ur.0756673070.05</td>
-      <td>2.434489</td>
-      <td>Bin</td>
-      <td>[grid.59025.3b]</td>
-      <td>Xia</td>
       <td>2</td>
-      <td>NaN</td>
+      <td>Joachim</td>
+      <td>ur.01161437031.05</td>
+      <td>Mayer</td>
+      <td>[0000-0003-3292-5342]</td>
+      <td>[grid.5719.a, grid.419534.e, grid.4372.2, grid...</td>
+      <td>47.051859</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>ur.01003543541.78</td>
-      <td>2.370124</td>
-      <td>Shlomo</td>
-      <td>[grid.12136.37, grid.13992.30, grid.133342.4, ...</td>
-      <td>Efrima</td>
-      <td>3</td>
-      <td>NaN</td>
+      <td>2</td>
+      <td>Konstantin B</td>
+      <td>ur.01163755245.41</td>
+      <td>Efetov</td>
+      <td>[0000-0003-2245-1366]</td>
+      <td>[grid.21729.3f, grid.423485.c, grid.411233.6, ...</td>
+      <td>47.051859</td>
     </tr>
     <tr>
       <th>13</th>
-      <td>ur.015146652071.00</td>
-      <td>2.370124</td>
-      <td>D</td>
-      <td>[grid.13992.30, grid.7489.2]</td>
-      <td>Yogev</td>
-      <td>3</td>
-      <td>NaN</td>
+      <td>2</td>
+      <td>Armin</td>
+      <td>ur.01172120354.34</td>
+      <td>Gölzhäuser</td>
+      <td>[0000-0002-0838-9028]</td>
+      <td>[grid.1957.a, grid.419547.a, grid.414703.5, gr...</td>
+      <td>47.051859</td>
     </tr>
     <tr>
       <th>14</th>
-      <td>ur.012476642650.51</td>
-      <td>2.251025</td>
-      <td>B Ruby</td>
-      <td>[grid.205975.c]</td>
-      <td>Rich</td>
-      <td>3</td>
+      <td>2</td>
+      <td>Thomas</td>
+      <td>ur.0704114136.03</td>
+      <td>Weimann</td>
       <td>NaN</td>
+      <td>[grid.7491.b, grid.10392.39, grid.4764.1, grid...</td>
+      <td>47.051859</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>ur.01022425321.95</td>
-      <td>2.067556</td>
-      <td>Andrey A</td>
-      <td>[grid.35043.31, grid.7491.b, grid.4764.1, grid...</td>
-      <td>Turchanin</td>
       <td>2</td>
-      <td>[0000-0003-2388-1042]</td>
+      <td>Mikhail V</td>
+      <td>ur.0770321167.94</td>
+      <td>Fistul</td>
+      <td>NaN</td>
+      <td>[grid.169077.e, grid.5330.5, grid.4886.2, grid...</td>
+      <td>47.051859</td>
     </tr>
     <tr>
       <th>16</th>
-      <td>ur.01161437031.05</td>
-      <td>2.067556</td>
-      <td>Joachim</td>
-      <td>[grid.5719.a, grid.419534.e, grid.4372.2, grid...</td>
-      <td>Mayer</td>
       <td>2</td>
-      <td>[0000-0003-3292-5342]</td>
+      <td>Chinthamani Nagesa Ramachandra</td>
+      <td>ur.01301431054.98</td>
+      <td>Rao</td>
+      <td>[0000-0003-4088-0615]</td>
+      <td>[grid.8155.9, grid.8954.0, grid.417965.8, grid...</td>
+      <td>45.842103</td>
     </tr>
     <tr>
       <th>17</th>
-      <td>ur.01163755245.41</td>
-      <td>2.067556</td>
-      <td>Konstantin B</td>
-      <td>[grid.4886.2, grid.457334.2, grid.411233.6, gr...</td>
-      <td>Efetov</td>
       <td>2</td>
-      <td>[0000-0003-2245-1366]</td>
+      <td>Kota Surya</td>
+      <td>ur.0634451611.05</td>
+      <td>Subrahmanyam</td>
+      <td>NaN</td>
+      <td>[grid.16753.36, grid.472491.d, grid.419636.f, ...</td>
+      <td>45.842103</td>
     </tr>
     <tr>
       <th>18</th>
-      <td>ur.01172120354.34</td>
-      <td>2.067556</td>
-      <td>Armin</td>
-      <td>[grid.7491.b, grid.7700.0, grid.414703.5, grid...</td>
-      <td>Gölzhäuser</td>
       <td>2</td>
-      <td>[0000-0002-0838-9028]</td>
+      <td>H S S Ramakrishna</td>
+      <td>ur.0726377173.88</td>
+      <td>Matte</td>
+      <td>[0000-0001-8279-8447]</td>
+      <td>[grid.7468.d, grid.16753.36, grid.472491.d, gr...</td>
+      <td>45.842103</td>
     </tr>
     <tr>
       <th>19</th>
-      <td>ur.0704114136.03</td>
-      <td>2.067556</td>
-      <td>Thomas</td>
-      <td>[grid.10392.39, grid.4764.1, grid.7491.b]</td>
-      <td>Weimann</td>
       <td>2</td>
-      <td>NaN</td>
+      <td>Ashok K</td>
+      <td>ur.01150320016.45</td>
+      <td>Mulchandani</td>
+      <td>[0000-0002-2831-4154]</td>
+      <td>[grid.30389.31, grid.215654.1, grid.24805.3b, ...</td>
+      <td>33.572757</td>
     </tr>
   </tbody>
 </table>
@@ -3113,11 +2735,10 @@ return experts
 <div class="section" id="Example-7.-Wildcard-searches">
 <h3>Example 7. Wildcard searches<a class="headerlink" href="#Example-7.-Wildcard-searches" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">concepts</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;temperat* &quot;ray diffraction&quot; -magnet* &quot;&quot;&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">concepts</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;temperat* &quot;ray diffraction&quot; -magnet* &quot;&quot;&quot;</span>
 
 <span class="n">q</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">identify experts</span>
@@ -3147,7 +2768,7 @@ return experts
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -3169,215 +2790,215 @@ return experts
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>id</th>
-      <th>score</th>
-      <th>research_orgs</th>
-      <th>last_name</th>
-      <th>first_name</th>
       <th>docs_found</th>
+      <th>first_name</th>
+      <th>id</th>
+      <th>last_name</th>
+      <th>research_orgs</th>
+      <th>score</th>
       <th>orcid_id</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>ur.010752560241.92</td>
-      <td>9.023557</td>
-      <td>[grid.494717.8, grid.411717.5, grid.5399.6, gr...</td>
-      <td>Buscail</td>
-      <td>Henri</td>
       <td>4</td>
+      <td>Akinori</td>
+      <td>ur.07620725665.51</td>
+      <td>Katsui</td>
+      <td>[grid.26999.3d, grid.69566.3a, grid.265061.6, ...</td>
+      <td>45.133475</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>ur.016151106345.71</td>
-      <td>8.850567</td>
-      <td>[grid.461616.2]</td>
-      <td>Kolarik</td>
-      <td>Vladislav</td>
-      <td>4</td>
-      <td>NaN</td>
+      <td>3</td>
+      <td>Andrey V</td>
+      <td>ur.010274015357.59</td>
+      <td>Khoroshilov</td>
+      <td>[grid.435216.7, grid.431939.5]</td>
+      <td>34.575968</td>
+      <td>[0000-0002-0678-1421]</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>ur.012006337013.67</td>
-      <td>8.245036</td>
-      <td>[grid.461616.2]</td>
-      <td>Engel</td>
-      <td>Walter</td>
-      <td>4</td>
-      <td>NaN</td>
+      <td>3</td>
+      <td>Konstantin S</td>
+      <td>ur.014606545157.85</td>
+      <td>Gavrichev</td>
+      <td>[grid.435216.7]</td>
+      <td>34.575968</td>
+      <td>[0000-0001-5304-3555]</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>ur.01264404625.74</td>
-      <td>8.127706</td>
-      <td>[grid.425759.8, grid.415877.8, grid.465435.5, ...</td>
-      <td>Boldyreva</td>
-      <td>Elena V</td>
-      <td>4</td>
-      <td>[0000-0002-1401-2438]</td>
+      <td>3</td>
+      <td>Paul</td>
+      <td>ur.014146743075.39</td>
+      <td>Hagenmuller</td>
+      <td>[grid.4795.f, grid.463879.7, grid.411840.8, gr...</td>
+      <td>34.065056</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>ur.01356350415.50</td>
-      <td>8.127706</td>
-      <td>[grid.415877.8, grid.4605.7, grid.418421.a, gr...</td>
-      <td>Zakharov</td>
-      <td>Boris A</td>
-      <td>4</td>
-      <td>[0000-0002-3520-632X]</td>
+      <td>3</td>
+      <td>Yi-Tai</td>
+      <td>ur.01261545713.97</td>
+      <td>Qian</td>
+      <td>[grid.503014.3, grid.27255.37, grid.12527.33, ...</td>
+      <td>33.943935</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>ur.07650346631.13</td>
-      <td>7.050485</td>
-      <td>[grid.4444.0, grid.462844.8, grid.424133.3, gr...</td>
-      <td>Itié</td>
-      <td>Jean-Paul</td>
       <td>3</td>
+      <td>Jean Pierre</td>
+      <td>ur.012446305716.07</td>
+      <td>Chaminade</td>
+      <td>[grid.4444.0, grid.461891.3, grid.5292.c, grid...</td>
+      <td>33.930549</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>ur.011274203435.25</td>
-      <td>6.858861</td>
-      <td>[grid.27736.37, grid.418094.0]</td>
-      <td>Kocharyan</td>
-      <td>Vahan</td>
-      <td>3</td>
-      <td>NaN</td>
+      <td>2</td>
+      <td>Tatyana V</td>
+      <td>ur.011457114721.52</td>
+      <td>Dyachkova</td>
+      <td>[grid.426536.0, grid.465372.1, grid.446087.9]</td>
+      <td>23.329706</td>
+      <td>[0000-0001-6204-797X]</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>ur.015270341551.59</td>
-      <td>6.810949</td>
-      <td>[grid.494717.8, grid.5399.6]</td>
-      <td>Caudron</td>
-      <td>Eric</td>
-      <td>3</td>
+      <td>2</td>
+      <td>Sergey A</td>
+      <td>ur.015627070115.78</td>
+      <td>Gromilov</td>
+      <td>[grid.4886.2, grid.4605.7, grid.415877.8, grid...</td>
+      <td>23.329706</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>ur.012153454351.77</td>
-      <td>6.641345</td>
-      <td>[grid.461616.2, grid.466709.a]</td>
-      <td>Juez-Lorenzo</td>
-      <td>Maria Del Mar</td>
-      <td>3</td>
-      <td>NaN</td>
+      <td>2</td>
+      <td>Elena V</td>
+      <td>ur.01264404625.74</td>
+      <td>Boldyreva</td>
+      <td>[grid.4605.7, grid.424048.e, grid.4708.b, grid...</td>
+      <td>23.184193</td>
+      <td>[0000-0002-1401-2438]</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>ur.011235502761.97</td>
-      <td>6.217678</td>
-      <td>NaN</td>
-      <td>Triviño</td>
-      <td>F</td>
-      <td>3</td>
-      <td>NaN</td>
+      <td>2</td>
+      <td>Alexander P</td>
+      <td>ur.015443160631.46</td>
+      <td>Tyutyunnik</td>
+      <td>[grid.426536.0, grid.4886.2, grid.10548.38, gr...</td>
+      <td>23.063437</td>
+      <td>[0000-0003-1360-0913]</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>ur.012267521017.15</td>
-      <td>6.217678</td>
-      <td>NaN</td>
-      <td>Vázquez</td>
-      <td>T</td>
-      <td>3</td>
+      <td>2</td>
+      <td>Steeve</td>
+      <td>ur.010407434762.78</td>
+      <td>Rousselot</td>
+      <td>[grid.14848.31, grid.418084.1]</td>
+      <td>22.955062</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>ur.012630443761.25</td>
-      <td>6.217678</td>
-      <td>NaN</td>
-      <td>Ruiz De Gauna</td>
-      <td>A</td>
-      <td>3</td>
+      <td>2</td>
+      <td>David</td>
+      <td>ur.014245141470.20</td>
+      <td>Aymé-Perrot</td>
+      <td>[grid.424348.d]</td>
+      <td>22.955062</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>ur.012352473245.95</td>
-      <td>6.180346</td>
-      <td>[grid.47894.36, grid.168010.e, grid.299175.1, ...</td>
-      <td>Qadri</td>
-      <td>Syed B</td>
-      <td>3</td>
-      <td>NaN</td>
+      <td>2</td>
+      <td>Mickael</td>
+      <td>ur.016103556371.52</td>
+      <td>Dollé</td>
+      <td>[grid.419552.e, grid.463728.c, grid.184769.5, ...</td>
+      <td>22.955062</td>
+      <td>[0000-0002-8887-6730]</td>
     </tr>
     <tr>
       <th>13</th>
-      <td>ur.013352205311.74</td>
-      <td>6.088813</td>
-      <td>[grid.412761.7]</td>
-      <td>Ustinova</td>
-      <td>I S</td>
-      <td>3</td>
+      <td>2</td>
+      <td>Marc</td>
+      <td>ur.016131736155.35</td>
+      <td>Bertrand</td>
+      <td>[grid.14848.31]</td>
+      <td>22.955062</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>14</th>
-      <td>ur.0654202176.07</td>
-      <td>6.088813</td>
-      <td>[grid.4886.2, grid.465372.1]</td>
-      <td>Kadyrova</td>
-      <td>Nadezda I</td>
-      <td>3</td>
-      <td>NaN</td>
+      <td>2</td>
+      <td>Mitsuru</td>
+      <td>ur.013216052361.31</td>
+      <td>Itoh</td>
+      <td>[grid.208504.b, grid.62167.34, grid.267827.e, ...</td>
+      <td>22.942325</td>
+      <td>[0000-0001-6457-9152]</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>ur.012077537127.36</td>
-      <td>6.035814</td>
-      <td>[grid.461616.2, grid.4561.6, grid.4886.2]</td>
-      <td>Eisenreich</td>
-      <td>Norbert</td>
-      <td>3</td>
+      <td>2</td>
+      <td>Takemasa</td>
+      <td>ur.010313134742.30</td>
+      <td>Fujino</td>
+      <td>[grid.263518.b]</td>
+      <td>22.932349</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>16</th>
-      <td>ur.01015306115.93</td>
-      <td>5.794733</td>
-      <td>[grid.418421.a, grid.4605.7, grid.435414.3]</td>
-      <td>Losev</td>
-      <td>Evgeniy A</td>
-      <td>3</td>
-      <td>[0000-0003-1743-4166]</td>
+      <td>2</td>
+      <td>Morinobu</td>
+      <td>ur.01117474603.87</td>
+      <td>Endo</td>
+      <td>[grid.5268.9, grid.417799.5, grid.136304.3, gr...</td>
+      <td>22.932349</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>17</th>
-      <td>ur.014146743075.39</td>
-      <td>5.561709</td>
-      <td>[grid.4795.f, grid.463879.7, grid.411840.8, gr...</td>
-      <td>Hagenmuller</td>
-      <td>Paul</td>
-      <td>3</td>
+      <td>2</td>
+      <td>Mildred S</td>
+      <td>ur.01226407050.99</td>
+      <td>Dresselhaus</td>
+      <td>[grid.300943.d, grid.250008.f, grid.5335.0, gr...</td>
+      <td>22.932349</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>18</th>
-      <td>ur.015400602443.87</td>
-      <td>5.309069</td>
-      <td>[grid.423902.e, grid.435347.2]</td>
-      <td>Guseinov</td>
-      <td>G G</td>
-      <td>3</td>
+      <td>2</td>
+      <td>Chan</td>
+      <td>ur.014164432033.81</td>
+      <td>Kim</td>
+      <td>[grid.263518.b]</td>
+      <td>22.932349</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>19</th>
-      <td>ur.012651704451.05</td>
-      <td>5.108303</td>
-      <td>[grid.32197.3e, grid.136593.b]</td>
-      <td>Oguni</td>
-      <td>Masaharu</td>
       <td>2</td>
-      <td>NaN</td>
+      <td>Guang-Xiang</td>
+      <td>ur.012216352601.27</td>
+      <td>Liu</td>
+      <td>[grid.411412.3, grid.467196.b, grid.136593.b, ...</td>
+      <td>22.894837</td>
+      <td>[0000-0002-4742-6194]</td>
     </tr>
   </tbody>
 </table>
@@ -3389,11 +3010,10 @@ return experts
 <h2>Additional resources: shortcut functions included in Dimcli<a class="headerlink" href="#Additional-resources:-shortcut-functions-included-in-Dimcli" title="Permalink to this headline">¶</a></h2>
 <p>Dimcli includes a number of ‘shortcut’ <a class="reference external" href="https://digital-science.github.io/dimcli/modules.html#module-dimcli.core.functions">Python functions</a> that make it easier to work with the expert identification API.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">dimcli.functions</span> <span class="kn">import</span> <span class="n">extract_concepts</span><span class="p">,</span> <span class="n">identify_experts</span><span class="p">,</span> <span class="n">build_reviewers_matrix</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dimcli.functions</span> <span class="kn">import</span> <span class="n">extract_concepts</span><span class="p">,</span> <span class="n">identify_experts</span><span class="p">,</span> <span class="n">build_reviewers_matrix</span>
 </pre></div>
 </div>
 </div>
@@ -3402,11 +3022,10 @@ return experts
 <p>A Python wrapper for the DSL function extract_concept (<a class="reference external" href="https://digital-science.github.io/dimcli/modules.html#dimcli.core.functions.extract_concepts">see source</a>).</p>
 <p>Extract concepts from any text. Text input is processed and extracted concepts are returned as an array of strings ordered by their relevance</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%%</span><span class="k">extract_concepts</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">extract_concepts</span>
 
 We describe monocrystalline graphitic films, which are a few atoms thick but are nonetheless stable under ambient conditions,
  metallic, and of remarkably high quality. The films are found to be a two-dimensional semimetal with a tiny overlap between
@@ -3417,7 +3036,7 @@ We describe monocrystalline graphitic films, which are a few atoms thick but are
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -3446,133 +3065,133 @@ We describe monocrystalline graphitic films, which are a few atoms thick but are
   <tbody>
     <tr>
       <th>0</th>
-      <td>ambipolar electric field effect</td>
-      <td>0.299</td>
+      <td>square centimeter</td>
+      <td>0.681</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>two-dimensional semimetal</td>
-      <td>0.293</td>
+      <td>films</td>
+      <td>0.669</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>room-temperature mobility</td>
-      <td>0.285</td>
+      <td>ambipolar electric field effect</td>
+      <td>0.653</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>electric field effects</td>
-      <td>0.279</td>
+      <td>two-dimensional semimetal</td>
+      <td>0.646</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>square centimeter</td>
-      <td>0.262</td>
+      <td>electric field effects</td>
+      <td>0.628</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>graphitic films</td>
-      <td>0.254</td>
+      <td>room temperature mobility</td>
+      <td>0.621</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>field effects</td>
-      <td>0.254</td>
+      <td>conductance band</td>
+      <td>0.601</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>gate voltage</td>
-      <td>0.253</td>
+      <td>graphitic films</td>
+      <td>0.596</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>conductance band</td>
-      <td>0.234</td>
+      <td>field effects</td>
+      <td>0.596</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>films</td>
-      <td>0.213</td>
+      <td>centimeters</td>
+      <td>0.587</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>electrons</td>
-      <td>0.204</td>
+      <td>gate voltage</td>
+      <td>0.587</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>ambient conditions</td>
-      <td>0.201</td>
+      <td>semimetals</td>
+      <td>0.582</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>semimetals</td>
-      <td>0.201</td>
+      <td>electrons</td>
+      <td>0.576</td>
     </tr>
     <tr>
       <th>13</th>
       <td>atoms</td>
-      <td>0.195</td>
+      <td>0.549</td>
     </tr>
     <tr>
       <th>14</th>
       <td>holes</td>
-      <td>0.190</td>
+      <td>0.542</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>centimeters</td>
-      <td>0.187</td>
+      <td>ambient conditions</td>
+      <td>0.500</td>
     </tr>
     <tr>
       <th>16</th>
-      <td>voltage</td>
-      <td>0.167</td>
+      <td>band</td>
+      <td>0.499</td>
     </tr>
     <tr>
       <th>17</th>
-      <td>band</td>
-      <td>0.164</td>
+      <td>valence</td>
+      <td>0.471</td>
     </tr>
     <tr>
       <th>18</th>
-      <td>high quality</td>
-      <td>0.163</td>
+      <td>voltage</td>
+      <td>0.464</td>
     </tr>
     <tr>
       <th>19</th>
-      <td>valence</td>
-      <td>0.159</td>
+      <td>mobility</td>
+      <td>0.406</td>
     </tr>
     <tr>
       <th>20</th>
-      <td>mobility</td>
-      <td>0.150</td>
+      <td>high quality</td>
+      <td>0.390</td>
     </tr>
     <tr>
       <th>21</th>
       <td>overlap</td>
-      <td>0.126</td>
+      <td>0.367</td>
     </tr>
     <tr>
       <th>22</th>
       <td>effect</td>
-      <td>0.114</td>
+      <td>0.323</td>
     </tr>
     <tr>
       <th>23</th>
       <td>conditions</td>
-      <td>0.104</td>
+      <td>0.293</td>
     </tr>
     <tr>
       <th>24</th>
       <td>concentration</td>
-      <td>0.088</td>
+      <td>0.264</td>
     </tr>
     <tr>
       <th>25</th>
       <td>quality</td>
-      <td>0.074</td>
+      <td>0.214</td>
     </tr>
   </tbody>
 </table>
@@ -3584,11 +3203,10 @@ We describe monocrystalline graphitic films, which are a few atoms thick but are
 <p>A Python wrapper for the full expert identification workflow (<a class="reference external" href="https://digital-science.github.io/dimcli/modules.html#dimcli.core.functions.identify_experts">see source</a>).</p>
 <p>This wrapper provide a simpler version of the expert identification API. It is meant to be a convenient alternative for basic queries. For more options, it is advised to use the API directly.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%%</span><span class="k">identify_experts</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">identify_experts</span>
 
 We describe monocrystalline graphitic films, which are a few atoms thick but are nonetheless stable under ambient conditions,
  metallic, and of remarkably high quality. The films are found to be a two-dimensional semimetal with a tiny overlap between
@@ -3599,7 +3217,7 @@ We describe monocrystalline graphitic films, which are a few atoms thick but are
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -3621,382 +3239,277 @@ We describe monocrystalline graphitic films, which are a few atoms thick but are
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>id</th>
-      <th>score</th>
-      <th>last_publication_year</th>
-      <th>total_publications</th>
-      <th>last_grant_year</th>
-      <th>current_research_org</th>
-      <th>total_grants</th>
-      <th>research_orgs</th>
-      <th>first_grant_year</th>
-      <th>orcid_id</th>
-      <th>first_publication_year</th>
-      <th>last_name</th>
-      <th>first_name</th>
       <th>docs_found</th>
+      <th>first_name</th>
+      <th>first_publication_year</th>
+      <th>id</th>
+      <th>last_name</th>
+      <th>orcid_id</th>
+      <th>score</th>
+      <th>total_grants</th>
+      <th>total_publications</th>
       <th>dimensions_url</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>ur.01203703171.12</td>
-      <td>4.221575</td>
-      <td>2021</td>
-      <td>217</td>
-      <td>2023.0</td>
-      <td>grid.136593.b</td>
-      <td>12</td>
-      <td>[grid.136593.b, grid.258799.8, grid.472717.0, ...</td>
-      <td>2009.0</td>
-      <td>[0000-0002-6631-5131]</td>
-      <td>2000</td>
-      <td>Chiba</td>
-      <td>Daichi</td>
       <td>17</td>
+      <td>Daichi</td>
+      <td>2000</td>
+      <td>ur.01203703171.12</td>
+      <td>Chiba</td>
+      <td>[0000-0002-6631-5131]</td>
+      <td>720.802273</td>
+      <td>14</td>
+      <td>226</td>
       <td>https://app.dimensions.ai/discover/publication...</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>ur.01311211105.43</td>
-      <td>2.924170</td>
-      <td>2021</td>
-      <td>107</td>
-      <td>2020.0</td>
-      <td>grid.136593.b</td>
-      <td>3</td>
-      <td>[grid.257022.0, grid.258799.8, grid.136593.b, ...</td>
-      <td>2013.0</td>
-      <td>[0000-0003-4796-1776]</td>
-      <td>2008</td>
-      <td>Koyama</td>
-      <td>Tomohiro</td>
-      <td>13</td>
+      <td>12</td>
+      <td>Ze Don</td>
+      <td>1983</td>
+      <td>ur.01055006635.53</td>
+      <td>Kvon</td>
+      <td>NaN</td>
+      <td>564.498955</td>
+      <td>16</td>
+      <td>367</td>
       <td>https://app.dimensions.ai/discover/publication...</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>ur.01055006635.53</td>
-      <td>2.882491</td>
-      <td>2021</td>
-      <td>340</td>
-      <td>2017.0</td>
-      <td>grid.4605.7</td>
       <td>14</td>
-      <td>[grid.415877.8, grid.4886.2, grid.4605.7, grid...</td>
-      <td>1993.0</td>
+      <td>Nobuhiro</td>
+      <td>1976</td>
+      <td>ur.011513332561.53</td>
+      <td>Ohta</td>
       <td>NaN</td>
-      <td>1983</td>
-      <td>Kvon</td>
-      <td>Ze Don</td>
-      <td>11</td>
+      <td>547.722462</td>
+      <td>23</td>
+      <td>229</td>
       <td>https://app.dimensions.ai/discover/publication...</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>ur.01034030721.03</td>
-      <td>2.861368</td>
-      <td>2021</td>
-      <td>248</td>
-      <td>2023.0</td>
-      <td>grid.116068.8</td>
-      <td>7</td>
-      <td>[grid.21729.3f, grid.116068.8, grid.38142.3c, ...</td>
-      <td>2009.0</td>
-      <td>[0000-0001-8217-8213]</td>
-      <td>2000</td>
-      <td>Jarillo-Herrero</td>
-      <td>Pablo</td>
-      <td>7</td>
+      <td>12</td>
+      <td>Tomohiro</td>
+      <td>2008</td>
+      <td>ur.01311211105.43</td>
+      <td>Koyama</td>
+      <td>[0000-0003-4796-1776]</td>
+      <td>497.447215</td>
+      <td>3</td>
+      <td>111</td>
       <td>https://app.dimensions.ai/discover/publication...</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>ur.011513332561.53</td>
-      <td>2.268820</td>
-      <td>2020</td>
-      <td>213</td>
-      <td>2011.0</td>
-      <td>grid.260539.b</td>
-      <td>23</td>
-      <td>[grid.39158.36, grid.69566.3a, grid.417929.0, ...</td>
-      <td>1987.0</td>
-      <td>NaN</td>
-      <td>1976</td>
-      <td>Ohta</td>
-      <td>Nobuhiro</td>
       <td>10</td>
+      <td>Teruo</td>
+      <td>1993</td>
+      <td>ur.012735754655.38</td>
+      <td>Ono</td>
+      <td>NaN</td>
+      <td>407.495159</td>
+      <td>29</td>
+      <td>486</td>
       <td>https://app.dimensions.ai/discover/publication...</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>ur.012735754655.38</td>
-      <td>2.144676</td>
-      <td>2021</td>
-      <td>465</td>
-      <td>2023.0</td>
-      <td>grid.258799.8</td>
-      <td>26</td>
-      <td>[grid.507644.4, grid.136593.b, grid.26091.3c, ...</td>
-      <td>1995.0</td>
-      <td>NaN</td>
-      <td>1993</td>
-      <td>Ono</td>
-      <td>Teruo</td>
-      <td>9</td>
+      <td>7</td>
+      <td>Pablo</td>
+      <td>1999</td>
+      <td>ur.01034030721.03</td>
+      <td>Jarillo-Herrero</td>
+      <td>[0000-0001-8217-8213]</td>
+      <td>402.322615</td>
+      <td>7</td>
+      <td>276</td>
       <td>https://app.dimensions.ai/discover/publication...</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>ur.0740560235.48</td>
-      <td>2.100961</td>
-      <td>2020</td>
-      <td>90</td>
-      <td>NaN</td>
-      <td>grid.450314.7</td>
-      <td>0</td>
-      <td>[grid.15276.37, grid.4886.2, grid.11899.38, gr...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>1989</td>
-      <td>Olshanetsky</td>
-      <td>Eugene</td>
-      <td>8</td>
+      <td>9</td>
+      <td>Kenji</td>
+      <td>1987</td>
+      <td>ur.010575643400.34</td>
+      <td>Watanabe</td>
+      <td>[0000-0003-3701-8119]</td>
+      <td>360.808606</td>
+      <td>13</td>
+      <td>2694</td>
       <td>https://app.dimensions.ai/discover/publication...</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>ur.014407221755.12</td>
-      <td>1.879059</td>
-      <td>2021</td>
-      <td>171</td>
-      <td>2022.0</td>
-      <td>grid.258799.8</td>
-      <td>8</td>
-      <td>[grid.258799.8, grid.260026.0, grid.5386.8, gr...</td>
-      <td>2011.0</td>
-      <td>[0000-0001-7071-0823]</td>
-      <td>2002</td>
-      <td>Moriyama</td>
-      <td>Takahiro</td>
-      <td>8</td>
+      <td>9</td>
+      <td>Takashi</td>
+      <td>1989</td>
+      <td>ur.0765715521.02</td>
+      <td>Taniguchi</td>
+      <td>NaN</td>
+      <td>360.808606</td>
+      <td>24</td>
+      <td>2874</td>
       <td>https://app.dimensions.ai/discover/publication...</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>ur.013563236015.42</td>
-      <td>1.640245</td>
-      <td>2020</td>
-      <td>15</td>
-      <td>NaN</td>
-      <td>grid.258799.8</td>
+      <td>8</td>
+      <td>Eugene</td>
+      <td>1989</td>
+      <td>ur.0740560235.48</td>
+      <td>Olshanetsky</td>
+      <td>[0000-0001-7027-9084]</td>
+      <td>357.604337</td>
       <td>0</td>
-      <td>[grid.258799.8]</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>2016</td>
-      <td>Ando</td>
-      <td>Fuyuki</td>
-      <td>7</td>
+      <td>98</td>
       <td>https://app.dimensions.ai/discover/publication...</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>ur.0765715521.02</td>
-      <td>1.569727</td>
-      <td>2021</td>
-      <td>2307</td>
-      <td>2023.0</td>
-      <td>grid.21941.3f</td>
-      <td>24</td>
-      <td>[grid.26999.3d, grid.213917.f, grid.89336.37, ...</td>
-      <td>2000.0</td>
-      <td>NaN</td>
-      <td>1989</td>
-      <td>Taniguchi</td>
-      <td>Takashi</td>
       <td>8</td>
+      <td>Takahiro</td>
+      <td>2002</td>
+      <td>ur.014407221755.12</td>
+      <td>Moriyama</td>
+      <td>[0000-0001-7071-0823]</td>
+      <td>313.140915</td>
+      <td>10</td>
+      <td>181</td>
       <td>https://app.dimensions.ai/discover/publication...</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>ur.014356370677.99</td>
-      <td>1.506538</td>
-      <td>2021</td>
-      <td>255</td>
-      <td>NaN</td>
-      <td>grid.77602.34</td>
-      <td>0</td>
-      <td>[grid.4886.2, grid.450314.7, grid.423485.c, gr...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>1992</td>
-      <td>Dvoretsky</td>
-      <td>Sergey A</td>
       <td>6</td>
+      <td>Nikolai N</td>
+      <td>2005</td>
+      <td>ur.012411463367.07</td>
+      <td>Mikhailov</td>
+      <td>NaN</td>
+      <td>289.726385</td>
+      <td>1</td>
+      <td>227</td>
       <td>https://app.dimensions.ai/discover/publication...</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>ur.016551140015.09</td>
-      <td>1.506452</td>
-      <td>2020</td>
-      <td>19</td>
-      <td>NaN</td>
-      <td>grid.258799.8</td>
-      <td>0</td>
-      <td>[grid.32197.3e, grid.258799.8]</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>2013</td>
-      <td>Yamada</td>
-      <td>Kihiro T</td>
       <td>6</td>
+      <td>Sergey A</td>
+      <td>1992</td>
+      <td>ur.014356370677.99</td>
+      <td>Dvoretsky</td>
+      <td>NaN</td>
+      <td>273.726251</td>
+      <td>0</td>
+      <td>272</td>
       <td>https://app.dimensions.ai/discover/publication...</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>ur.0632644662.66</td>
-      <td>1.483708</td>
-      <td>2020</td>
-      <td>162</td>
-      <td>2021.0</td>
-      <td>grid.450314.7</td>
       <td>7</td>
-      <td>[grid.4886.2, grid.265880.1, grid.450314.7, gr...</td>
-      <td>1996.0</td>
+      <td>Fuyuki</td>
+      <td>2016</td>
+      <td>ur.013563236015.42</td>
+      <td>Ando</td>
       <td>NaN</td>
-      <td>1977</td>
-      <td>Chaplik</td>
-      <td>Alexander V</td>
-      <td>4</td>
+      <td>273.314873</td>
+      <td>0</td>
+      <td>18</td>
       <td>https://app.dimensions.ai/discover/publication...</td>
     </tr>
     <tr>
       <th>13</th>
-      <td>ur.010535542231.81</td>
-      <td>1.444431</td>
-      <td>2018</td>
-      <td>12</td>
-      <td>NaN</td>
-      <td>grid.258799.8</td>
+      <td>7</td>
+      <td>Kamlesh</td>
+      <td>2008</td>
+      <td>ur.01166776577.55</td>
+      <td>Awasthi</td>
+      <td>[0000-0001-7852-059X]</td>
+      <td>269.313042</td>
       <td>0</td>
-      <td>[grid.258799.8]</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>2013</td>
-      <td>Kakizakai</td>
-      <td>Haruka</td>
-      <td>6</td>
+      <td>48</td>
       <td>https://app.dimensions.ai/discover/publication...</td>
     </tr>
     <tr>
       <th>14</th>
-      <td>ur.014040516167.51</td>
-      <td>1.331730</td>
-      <td>2020</td>
-      <td>11</td>
-      <td>NaN</td>
-      <td>grid.258799.8</td>
-      <td>0</td>
-      <td>[grid.258799.8]</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>2015</td>
-      <td>Mizuno</td>
-      <td>Hayato</td>
+      <td>6</td>
+      <td>Masashi</td>
+      <td>2012</td>
+      <td>ur.016465573056.75</td>
+      <td>Kawaguchi</td>
+      <td>[0000-0001-5907-9137]</td>
+      <td>244.958344</td>
       <td>5</td>
+      <td>37</td>
       <td>https://app.dimensions.ai/discover/publication...</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>ur.01056154103.66</td>
-      <td>1.327606</td>
-      <td>2021</td>
-      <td>190</td>
-      <td>2022.0</td>
-      <td>grid.417751.1</td>
-      <td>14</td>
-      <td>[grid.450308.a, grid.8591.5, grid.474689.0, gr...</td>
-      <td>2004.0</td>
-      <td>[0000-0003-1514-8879]</td>
-      <td>1999</td>
-      <td>Ono</td>
-      <td>Shimpei</td>
-      <td>4</td>
+      <td>6</td>
+      <td>Kihiro T</td>
+      <td>2013</td>
+      <td>ur.016551140015.09</td>
+      <td>Yamada</td>
+      <td>NaN</td>
+      <td>239.089080</td>
+      <td>0</td>
+      <td>19</td>
       <td>https://app.dimensions.ai/discover/publication...</td>
     </tr>
     <tr>
       <th>16</th>
-      <td>ur.011775522057.45</td>
-      <td>1.284237</td>
-      <td>2021</td>
-      <td>245</td>
-      <td>2019.0</td>
-      <td>grid.450314.7</td>
-      <td>2</td>
-      <td>[grid.415877.8, grid.423485.c, grid.4886.2, gr...</td>
-      <td>2018.0</td>
+      <td>6</td>
+      <td>Haruka</td>
+      <td>2013</td>
+      <td>ur.010535542231.81</td>
+      <td>Kakizakai</td>
       <td>NaN</td>
-      <td>1995</td>
-      <td>Mikhailov</td>
-      <td>Nikolay N</td>
-      <td>4</td>
+      <td>232.707798</td>
+      <td>0</td>
+      <td>12</td>
       <td>https://app.dimensions.ai/discover/publication...</td>
     </tr>
     <tr>
       <th>17</th>
-      <td>ur.07376375471.82</td>
-      <td>1.205354</td>
-      <td>2021</td>
-      <td>53</td>
-      <td>2019.0</td>
-      <td>grid.450314.7</td>
-      <td>2</td>
-      <td>[grid.7727.5, grid.450314.7, grid.4886.2, grid...</td>
-      <td>2014.0</td>
+      <td>6</td>
+      <td>Myeongkyu</td>
+      <td>1997</td>
+      <td>ur.014732046553.91</td>
+      <td>Lee</td>
       <td>NaN</td>
-      <td>2007</td>
-      <td>Kozlov</td>
-      <td>Dmitriy A</td>
-      <td>3</td>
+      <td>226.825885</td>
+      <td>0</td>
+      <td>125</td>
       <td>https://app.dimensions.ai/discover/publication...</td>
     </tr>
     <tr>
       <th>18</th>
-      <td>ur.012411463367.07</td>
-      <td>1.178384</td>
-      <td>2021</td>
-      <td>217</td>
+      <td>3</td>
+      <td>Young Sang</td>
+      <td>1995</td>
+      <td>ur.01342755473.89</td>
+      <td>Lee</td>
       <td>NaN</td>
-      <td>grid.450314.7</td>
+      <td>220.422560</td>
       <td>0</td>
-      <td>[grid.415877.8, grid.450314.7, grid.4886.2, gr...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>2005</td>
-      <td>Mikhailov</td>
-      <td>Nikolai N</td>
-      <td>5</td>
+      <td>156</td>
       <td>https://app.dimensions.ai/discover/publication...</td>
     </tr>
     <tr>
       <th>19</th>
-      <td>ur.014001623651.15</td>
-      <td>1.158604</td>
-      <td>2020</td>
-      <td>62</td>
-      <td>NaN</td>
-      <td>grid.450314.7</td>
-      <td>0</td>
-      <td>[grid.4886.2, grid.450314.7, grid.423485.c, gr...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>2005</td>
-      <td>Dvoretsky</td>
-      <td>Sergei A</td>
       <td>4</td>
+      <td>Alexander V</td>
+      <td>1977</td>
+      <td>ur.0632644662.66</td>
+      <td>Chaplik</td>
+      <td>NaN</td>
+      <td>211.387046</td>
+      <td>7</td>
+      <td>171</td>
       <td>https://app.dimensions.ai/discover/publication...</td>
     </tr>
   </tbody>
@@ -4009,11 +3522,10 @@ We describe monocrystalline graphitic films, which are a few atoms thick but are
 <p>Generates a matrix of candidate reviewers for abstracts, using the expert identification workflow (<a class="reference external" href="https://digital-science.github.io/dimcli/modules.html#dimcli.core.functions.build_reviewers_matrix">see source</a>).</p>
 <p>If the input abstracts include identifiers, then those are used in the resulting matrix. Alternatively, a simple list of strings as input will result in a matrix where the identifiers are auto-generated from the abstracts order (first one is 1, etc..).</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">abstracts</span> <span class="o">=</span> <span class="p">[</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">abstracts</span> <span class="o">=</span> <span class="p">[</span>
      <span class="p">{</span>
      <span class="s1">&#39;id&#39;</span> <span class="p">:</span> <span class="s1">&#39;A1&#39;</span><span class="p">,</span>
      <span class="s1">&#39;text&#39;</span> <span class="p">:</span> <span class="s2">&quot;&quot;&quot;We describe monocrystalline graphitic films, which are a few atoms thick but are nonetheless stable under ambient conditions,</span>
@@ -4035,20 +3547,18 @@ We describe monocrystalline graphitic films, which are a few atoms thick but are
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">candidates</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ur.01146544531.57&quot;</span><span class="p">,</span> <span class="s2">&quot;ur.011535264111.51&quot;</span><span class="p">,</span> <span class="s2">&quot;ur.0767105504.29&quot;</span><span class="p">,</span> <span class="s2">&quot;ur.011513332561.53&quot;</span><span class="p">,</span> <span class="s2">&quot;ur.01055006635.53&quot;</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">candidates</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ur.01146544531.57&quot;</span><span class="p">,</span> <span class="s2">&quot;ur.011535264111.51&quot;</span><span class="p">,</span> <span class="s2">&quot;ur.0767105504.29&quot;</span><span class="p">,</span> <span class="s2">&quot;ur.011513332561.53&quot;</span><span class="p">,</span> <span class="s2">&quot;ur.01055006635.53&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">build_reviewers_matrix</span><span class="p">(</span><span class="n">abstracts</span><span class="p">,</span> <span class="n">candidates</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">build_reviewers_matrix</span><span class="p">(</span><span class="n">abstracts</span><span class="p">,</span> <span class="n">candidates</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -4057,11 +3567,11 @@ We describe monocrystalline graphitic films, which are a few atoms thick but are
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|██████████| 2/2 [00:07&lt;00:00,  3.57s/it]
+100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 2/2 [00:05&lt;00:00,  2.95s/it]
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -4092,45 +3602,36 @@ We describe monocrystalline graphitic films, which are a few atoms thick but are
     <tr>
       <th>0</th>
       <td>ur.01146544531.57</td>
-      <td>8.166581</td>
+      <td>0.000000</td>
       <td>0.000000</td>
     </tr>
     <tr>
       <th>1</th>
       <td>ur.011535264111.51</td>
-      <td>8.183493</td>
-      <td>0.000000</td>
+      <td>500.057833</td>
+      <td>237.479195</td>
     </tr>
     <tr>
       <th>2</th>
       <td>ur.0767105504.29</td>
-      <td>8.586408</td>
-      <td>2.560822</td>
+      <td>860.072228</td>
+      <td>924.316053</td>
     </tr>
     <tr>
       <th>3</th>
       <td>ur.011513332561.53</td>
-      <td>12.946742</td>
-      <td>1.620928</td>
+      <td>3235.742721</td>
+      <td>1140.205152</td>
     </tr>
     <tr>
       <th>4</th>
       <td>ur.01055006635.53</td>
-      <td>6.877411</td>
-      <td>1.838120</td>
+      <td>2518.152591</td>
+      <td>1183.936190</td>
     </tr>
   </tbody>
 </table>
 </div></div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>
-</pre></div>
-</div>
 </div>
 </div>
 </div>
@@ -4150,7 +3651,6 @@ We describe monocrystalline graphitic films, which are a few atoms thick but are
            
           </div>
           <footer>
-  
 
   <hr/>
 
@@ -4169,7 +3669,6 @@ We describe monocrystalline graphitic films, which are a few atoms thick but are
 
 
 </footer>
-
         </div>
       </div>
 
