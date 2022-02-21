@@ -1,6 +1,13 @@
 # Changelog - Dimensions API Lab 
 
 
+### 2022-02-21
+
+New notebooks:
+* [Getting all grants received by a list of researchers](https://api-lab.dimensions.ai/cookbooks/3-grants/5-grants-from-researchers.html)
+* [Using Dimensions organization groups with the API](https://api-lab.dimensions.ai/cookbooks/8-organizations/6-organization-groups.html)
+
+
 ### 2021-09-07
 
 New notebooks:
