@@ -1,0 +1,1638 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Clinical Trials by Volume of Publications &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/js/custom.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="The Patents API: Features Overview" href="../5-patents/0-introducing-patents.html" />
+    <link rel="prev" title="Getting all grants received by a list of researchers" href="../3-grants/5-grants-from-researchers.html" />
+    
+
+   <!-- Global site tag (gtag.js) - Google Analytics -->
+   <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y26MGCNDNL"></script>
+   <script>
+   window.dataLayer = window.dataLayer || [];
+   function gtag(){dataLayer.push(arguments);}
+   gtag('js', new Date());
+
+   gtag('config', 'G-Y26MGCNDNL');
+   </script>
+
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> DSL
+          
+
+          
+            
+            <img src="../../_static/dimensions-logo@2x.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+
+   <p class="">
+      <h3 id="cookbooks_title">API COOKBOOKS</h3>
+   </p>
+
+
+   
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/0-Verifying-your-connection.html">Verifying Your API Connection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/0-Verifying-your-connection.html#Technical-prerequisites">Technical prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/0-Verifying-your-connection.html#Connecting-to-the-API-using-a-key">Connecting to the API using a <code class="docutils literal notranslate"><span class="pre">key</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/0-Verifying-your-connection.html#Legacy-authentication-method:-username-&amp;-password">Legacy authentication method: username &amp; password</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/0-Verifying-your-connection.html#Troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html">The Dimcli Python library: Installation and Querying</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Authentication">Authentication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#More-secure-method:-storing-a-private-credentials-file">More secure method: storing a private credentials file</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Querying">Querying</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Simple-Querying">Simple Querying</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Iterative-querying-(loops)">Iterative querying (loops)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Command-line-interface">Command line interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Running-the-CLI">Running the CLI</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html">The Dimcli Python library: Working with Pandas Dataframes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#1.-General-method-to-transform-JSON-query-results-into-a-dataframe">1. General method to transform JSON query results into a dataframe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#2.-Dataframe-Methods-for-‘Publications’-queries">2. Dataframe Methods for ‘Publications’ queries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#Extracting-authors:-as_dataframe_authors">Extracting authors: <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#Extracting-Affiliations:-as_dataframe_authors_affiliations">Extracting Affiliations: <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors_affiliations</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#3.-Dataframe-Methods-for-‘Grants’-queries">3. Dataframe Methods for ‘Grants’ queries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#Extracting-Funders:-as_dataframe_funders">Extracting Funders: <code class="docutils literal notranslate"><span class="pre">as_dataframe_funders</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#Extracting-investigators:-as_dataframe_investigators">Extracting investigators: <code class="docutils literal notranslate"><span class="pre">as_dataframe_investigators</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#4.-Dataframe-Methods-for-‘Concepts’-queries">4. Dataframe Methods for ‘Concepts’ queries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#Extracting-Concepts:-as_dataframe_concepts">Extracting Concepts: <code class="docutils literal notranslate"><span class="pre">as_dataframe_concepts</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html">The Dimcli Python library: Magic Commands</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#Dimcli-‘magic’-commands">Dimcli ‘magic’ commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#Tip:-Accessing-data-returned-by-magic-queries">Tip: Accessing data returned by magic queries</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#1.-Simple-queries-with-%dsl-or-%%dsl">1. Simple queries with <code class="docutils literal notranslate"><span class="pre">%dsl</span></code> or <code class="docutils literal notranslate"><span class="pre">%%dsl</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#2.-Loop-queries-with-%dslloop-or-%%dslloop">2. Loop queries with <code class="docutils literal notranslate"><span class="pre">%dslloop</span></code> or <code class="docutils literal notranslate"><span class="pre">%%dslloop</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#3.-Returning-dataframes:-%dsldf-and-%%dsldf">3. Returning dataframes: <code class="docutils literal notranslate"><span class="pre">%dsldf</span></code> and <code class="docutils literal notranslate"><span class="pre">%%dsldf</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#4.-Looped-dataframe-queries:-%dslloopdf-and-%%dslloopdf">4. Looped dataframe queries: <code class="docutils literal notranslate"><span class="pre">%dslloopdf</span></code> and <code class="docutils literal notranslate"><span class="pre">%%dslloopdf</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#5.-Getting-API-schema-documentation-with-%dsldocs">5. Getting API schema documentation with <code class="docutils literal notranslate"><span class="pre">%dsldocs</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html">Exploring The Dimensions Search Language (DSL) - Quick Intro</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Prerequisites">Prerequisites</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#What-the-query-statistics-refer-to">What the query statistics refer to</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Working-with-fields">Working with fields</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Control-the-fields-you-return">Control the fields you return</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Make-a-mistake,-and-the-DSL-will-tell-you-what-fields-that-you-could-have-used">Make a mistake, and the DSL will tell you what fields that you could have used</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Full-text-search">Full text search</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#A-simple-author-search">A simple author search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#..or-search-for-a-researcher-by-a-specific-id">..or search for a researcher by a specific id</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Sources-VS-Facets">Sources VS Facets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#You-can-paginate-through-source-results-up-to-50000-rows">You can paginate through <em>source</em> results up to 50000 rows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#You-can-return-max-1000-facet-rows">You can return max 1000 <code class="docutils literal notranslate"><span class="pre">facet</span></code> rows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Just-make-a-mistake,-and-you-will-ge-the-complete-list-of-available-facets">Just make a mistake, and you will ge the complete list of available facets</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html">Exploring The Dimensions Search Language (DSL) - Deep Dive</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#What-is-the-Dimensions-Search-Language?">What is the Dimensions Search Language?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#Sections-Index">Sections Index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#1.-Basic-query-structure">1. Basic query structure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#search-source"><code class="docutils literal notranslate"><span class="pre">search</span> <span class="pre">source</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#return-result-(source-or-facet)"><code class="docutils literal notranslate"><span class="pre">return</span></code> result (source or facet)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#2.-Full-text-Searching">2. Full-text Searching</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#2.1-in-[search-index]">2.1 <code class="docutils literal notranslate"><span class="pre">in</span> <span class="pre">[search</span> <span class="pre">index]</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#2.2-for-&quot;search-term&quot;">2.2 <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">&quot;search</span> <span class="pre">term&quot;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#2.3-Boolean-Operators">2.3 Boolean Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#2.4-Wildcard-Searches">2.4 Wildcard Searches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#2.5-Proximity-Searches">2.5 Proximity Searches</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#3.-Field-Searching">3. Field Searching</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#3.1-where">3.1 <code class="docutils literal notranslate"><span class="pre">where</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#3.2-in">3.2 <code class="docutils literal notranslate"><span class="pre">in</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#3.3-count---filter-function">3.3 <code class="docutils literal notranslate"><span class="pre">count</span></code> - filter function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#3.4-Filter-Operators">3.4 Filter Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#3.5-Partial-string-matching-with-~">3.5 Partial string matching with <code class="docutils literal notranslate"><span class="pre">~</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#3.6-Emptiness-filters-is-empty">3.6 Emptiness filters <code class="docutils literal notranslate"><span class="pre">is</span> <span class="pre">empty</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#4.-Searching-for-Researchers">4. Searching for Researchers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#4.1-Exact-name-searches">4.1 Exact name searches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#4.2-Fuzzy-Searches">4.2 Fuzzy Searches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#4.3-Using-the-disambiguated-Researchers-database">4.3 Using the disambiguated Researchers database</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.-Returning-results">5. Returning results</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.1-Returning-Multiple-Sources">5.1 Returning Multiple Sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.2-Returning-Specific-Fields">5.2 Returning Specific Fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.3-Returning-Facets">5.3 Returning Facets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.4-What-the-query-statistics-refer-to---sources-VS-facets">5.4 What the query statistics refer to - sources VS facets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.5-Paginating-Results">5.5 Paginating Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.6-Sorting-Results">5.6 Sorting Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.7-Unnesting-results">5.7 Unnesting results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#6.-Aggregations">6. Aggregations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#6.1-Complex-aggregations">6.1 Complex aggregations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#Publications-citations_per_year">Publications <code class="docutils literal notranslate"><span class="pre">citations_per_year</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#Grants-funding_per_year">Grants <code class="docutils literal notranslate"><span class="pre">funding_per_year</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html">Working with lists in the Dimensions API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#1.-How-do-we-use-lists-in-the-Dimensions-API?">1. How do we use lists in the Dimensions API?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#2.-What-are-all-the-things-that-we-can-make-lists-of-in-the-Dimensions-API?">2. What are all the things that we can make lists of in the Dimensions API?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#What-are-the-internal-Entities-that-we-might-put-in-a-list?">What are the internal Entities that we might put in a list?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#What-about-lists-of-ids?">What about lists of ids?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#What-are-the-external-entities-that-we-can-put-in-a-list?">What are the external entities that we can put in a list?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#3.-Making-a-list-from-the-results-of-a-query">3. Making a list from the results of a query</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#Putting-both-parts-of-this-example-together">Putting both parts of this example together</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#Doing-something-useful:-Get-all-the-publications-that-cite-my-publications">Doing something useful: Get all the publications that cite my publications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#5.-How-Long-can-lists-get?">5. How Long can lists get?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#This-won’t-work">This won’t work</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#This-will">This will</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#What-if-I-need-a-very-long-list?">What if I need a very long list?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#6.-What-if-I-want-to-get-the-researchers-associated-with-the-publications-the-cite-my-institution?">6. What if I want to get the researchers associated with the publications the cite my institution?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#7.-What-if-I-want-to-get-all-the-researchers-associated-with-the-publications-that-cite-my-institution?">7. What if I want to get <em>all</em> the researchers associated with the publications that cite my institution?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#8.-..and-if-we-want-details-about-our-researchers,-we-can-put-our-list-of-researchers-into-the-researcher-API">8. ..and if we want details about our researchers, we can put our list of researchers into the researcher API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#9.-Patents-example-(patents--&gt;-publications)">9. Patents example (patents -&gt; publications)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#10.-Clinical-Trials-(clinical-trials--&gt;-publications)">10. Clinical Trials (clinical trials -&gt; publications)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#11.-Grants-(publications--&gt;-grants)">11. Grants (publications -&gt; grants)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html">Working with <em>concepts</em> in the Dimensions API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#1.-Background:-What-are-concepts?">1. Background: What are <code class="docutils literal notranslate"><span class="pre">concepts</span></code>?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#1.1-From-concepts-to-dataframes:-Dimcli’s-as_dataframe_concepts-method">1.1 From concepts to dataframes: Dimcli’s <code class="docutils literal notranslate"><span class="pre">as_dataframe_concepts</span></code> method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#1.2-Extracting-concepts-from-any-text">1.2 Extracting concepts from any text</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#2.-Data-acquisition:-retrieving-publications-and-all-their-associated-concepts">2. Data acquisition: retrieving publications and all their associated concepts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#2.1-Processing-concept-data">2.1 Processing concept data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#3.-Exploring-our-dataset:-basic-statistics-about-Publications-/-Concepts">3. Exploring our dataset: basic statistics about Publications / Concepts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#3.1-Documents-With-concepts-VS-Without">3.1 Documents With concepts VS Without</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#3.2-Yearly-breakdown-of-Documents-With-concepts-VS-Without">3.2 Yearly breakdown of Documents With concepts VS Without</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#3.3-Concepts-frequency">3.3 Concepts frequency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#3.4-Distribution-of-Concepts-Frequency">3.4 Distribution of Concepts Frequency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#3.5-Yearly-breakdown:-unique-VS-repeated-concepts">3.5 Yearly breakdown: unique VS repeated concepts</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#4.-Isolating-‘interesting’-concepts-using-frequency-and-score_avg">4. Isolating ‘interesting’ concepts using <code class="docutils literal notranslate"><span class="pre">frequency</span></code> and <code class="docutils literal notranslate"><span class="pre">score_avg</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#4.1-The-problem:-frequent-concepts-are-not-that-interesting!">4.1 The problem: frequent concepts are not <em>that</em> interesting!</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#4.2-Solution-1:-prefiltering-by-score_avg-and-sorting-by-frequency">4.2 Solution 1: prefiltering by <code class="docutils literal notranslate"><span class="pre">score_avg</span></code> and sorting by <code class="docutils literal notranslate"><span class="pre">frequency</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#4.3-Solution-2:-prefiltering-by-frequency-and-sorting-by-score_avg">4.3 Solution 2: prefiltering by <code class="docutils literal notranslate"><span class="pre">frequency</span></code> and sorting by <code class="docutils literal notranslate"><span class="pre">score_avg</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#5.-Analyses-By-Year">5. Analyses By Year</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#5.1-Adding-year-based-metrics-to-the-concepts-dataframe">5.1 Adding year-based metrics to the concepts dataframe</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#5.2-Charting-the-variation:-multi-year-visualization">5.2 Charting the variation: multi-year visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#6.-Conclusion">6. Conclusion</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#The-main-takeaways">The main takeaways</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#What-next">What next</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Publications</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../2-publications/General-statistics.html">General Publication Statistics about a Research Organization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/General-statistics.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/General-statistics.html#Choose-a-Research-Organization">Choose a Research Organization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/General-statistics.html#Publications-output-by-year">Publications output by year</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/General-statistics.html#Publications-most-cited-in-last-2-years">Publications most cited in last 2 years</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/General-statistics.html#Publications-most-cited---all-time">Publications most cited - all time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/General-statistics.html#Publications-most-cited-:-which-research-areas?">Publications most cited : which research areas?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/General-statistics.html#Publications-most-cited-:-which-journals?">Publications most cited : which journals?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/General-statistics.html#Top-Funders-(by-aggregated-funding-amount)">Top Funders (by aggregated funding amount)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/General-statistics.html#Top-funders-split-by-country-of-the-funder">Top funders split by country of the funder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/General-statistics.html#Correlation-between-No-of-Publications-VS-Funding">Correlation between No of Publications VS Funding</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2-publications/Citation-Analysis.html">Citation Analysis: an Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Citation-Analysis.html#1.-Prerequisites">1. Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Method-A:-getting-citations-for-one-publication-at-a-time">Method A: getting citations for one publication at a time</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Comments-about-this-method">Comments about this method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Method-B:-Getting-citations-for-multiple-publications-via-a-single-query">Method B: Getting citations for multiple publications via a single query</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Creating-a-second-level-citations-network">Creating a second-level citations network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Building-a-Simple-Dataviz">Building a Simple Dataviz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Final-considerations">Final considerations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Querying-for-more-than-1000-results">Querying for more than 1000 results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Querying-for-more-than-50K-results">Querying for more than 50K results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Dealing-with-highly-cited-publications">Dealing with highly cited publications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Citation-Analysis.html#Pre-checking-citations-counts">Pre-checking citations counts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Citing-My-Organization.html">Citation Analysis: Journals Citing a Research Organization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Citing-My-Organization.html#1.-Prerequisites">1. Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Citing-My-Organization.html#2.-Choose-a-Research-Organization">2. Choose a Research Organization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Citing-My-Organization.html#3.-Building-a-Publications-Baseset">3. Building a Publications Baseset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Citing-My-Organization.html#4.-Extracting-Publications-Citing-the-Baseset">4. Extracting Publications Citing the Baseset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Citing-My-Organization.html#5.-Journal-Analysis">5. Journal Analysis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Citing-My-Organization.html#Number-of-Unique-journals">Number of Unique journals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Citing-My-Organization.html#Most-frequent-journals">Most frequent journals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Citing-My-Organization.html#Top-100-journals-chart">Top 100 journals chart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Citing-My-Organization.html#Top-20-journals-by-year-chart">Top 20 journals by year chart</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Cited-By-My-Organization.html">Citation Analysis: Journals Cited by a Research Organization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Cited-By-My-Organization.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Cited-By-My-Organization.html#1.-Choosing-a-Research-Organization">1. Choosing a Research Organization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Cited-By-My-Organization.html#1.1-Selecting-a-Field-of-Research-ID">1.1 Selecting a Field of Research ID</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Cited-By-My-Organization.html#2.-Getting-the-IDs-of-the-outgoing-citations">2. Getting the IDs of the outgoing citations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Cited-By-My-Organization.html#2.1-Removing-duplicates-and-counting-most-frequent-citations">2.1 Removing duplicates and counting most frequent citations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Cited-By-My-Organization.html#3.-Enriching-the-citations-IDs-with-other-publication-metadata">3. Enriching the citations IDs with other publication metadata</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Cited-By-My-Organization.html#3.1-Adding-the-citations-counts">3.1 Adding the citations counts</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Cited-By-My-Organization.html#4.-Journal-Analysis">4. Journal Analysis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Cited-By-My-Organization.html#4.1-Number-of-Unique-journals">4.1 Number of Unique journals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Cited-By-My-Organization.html#4.2-Most-frequent-journals">4.2 Most frequent journals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Cited-By-My-Organization.html#4.3-Top-50-journals-chart,-by-publisher">4.3 Top 50 journals chart, by publisher</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Cited-By-My-Organization.html#4.4-Top-20-journals-by-year-of-the-cited-publication">4.4 Top 20 journals by year of the cited publication</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Which-Are-the-Journals-Cited-By-My-Organization.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html">Journal Profiling Part 1: Getting the Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Selecting-a-Journal-and-Extracting-All-Publications-Metadata">Selecting a Journal and Extracting All Publications Metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Basic-stats-about-authors">Basic stats about authors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#A-quick-look-at-authors-without-a-Dimensions-Researcher-ID">A quick look at authors <em>without</em> a Dimensions Researcher ID</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Any-common-patterns?">Any common patterns?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-1-Gathering-data.html#Creating-an-export-for-manual-curation">Creating an export for manual curation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2-publications/Journal-Profile-2-Researchers-Impact-Metrics.html">Journal Profiling Part 2: Impact Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-2-Researchers-Impact-Metrics.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-2-Researchers-Impact-Metrics.html#Measuring-the-Impact-of-Researchers-within-a-Journal">Measuring the Impact of Researchers within a Journal</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-2-Researchers-Impact-Metrics.html#Load-the-publications-and-authors-data-previously-saved">Load the publications and authors data previously saved</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-2-Researchers-Impact-Metrics.html#Isolate-the-Researchers-data-(=-authors-with-an-ID)">Isolate the Researchers data (= authors with an ID)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-2-Researchers-Impact-Metrics.html#Enrich-the-data-with-Impact-Statistics">Enrich the data with Impact Statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-2-Researchers-Impact-Metrics.html#Couple-of-Dataviz">Couple of Dataviz</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2-publications/Journal-Profile-3-Funding-of-Researchers.html">Journal Profiling Part 3: Funding</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-3-Funding-of-Researchers.html#Prerequisites">Prerequisites</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-3-Funding-of-Researchers.html#Load-previously-saved-researchers-data">Load previously saved researchers data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-3-Funding-of-Researchers.html#Adding-another-impact-measure:-funding">Adding another impact measure: funding</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-3-Funding-of-Researchers.html#We’ll-have-to-do-it-in-two-steps">We’ll have to do it in two steps</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-3-Funding-of-Researchers.html#Next:-full-data-for-step-1">Next: full data for step 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-3-Funding-of-Researchers.html#Next:-full-data-for-step-2">Next: full data for step 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-3-Funding-of-Researchers.html#Finally:-let’s-merge-the-new-data-into-the-‘researchers-impact’-table">Finally: let’s merge the new data into the ‘researchers-impact’ table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-3-Funding-of-Researchers.html#Couple-of-Dataviz">Couple of Dataviz</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2-publications/Journal-Profile-4-Institutions.html">Journal Profiling Part 4: Institutions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-4-Institutions.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-4-Institutions.html#Institutions-Contributing-to-a-Journal">Institutions Contributing to a Journal</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-4-Institutions.html#Load-previously-saved-affiliations-data">Load previously saved affiliations data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-4-Institutions.html#Basic-stats-about-affiliations">Basic stats about affiliations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-4-Institutions.html#Enriching-the-unique-affiliations-(GRIDs-list)-with-pubs-count-and-authors-count">Enriching the unique affiliations (GRIDs list) with pubs count and authors count</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-4-Institutions.html#Couple-of-Dataviz">Couple of Dataviz</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2-publications/Journal-Profile-5-Competitive-Analysis.html">Journal Profiling Part 5: Competing Journals Analysis</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-5-Competitive-Analysis.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-5-Competitive-Analysis.html#Competing-Journals">Competing Journals</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-5-Competitive-Analysis.html#First-let’s-reload-the-data-obtained-in-previous-steps">First let’s reload the data obtained in previous steps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-5-Competitive-Analysis.html#What-the-query-looks-like">What the query looks like</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-5-Competitive-Analysis.html#Extracting-all-publications/journals-information">Extracting all publications/journals information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-5-Competitive-Analysis.html#Visualizations">Visualizations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2-publications/Simple-topic-analysis.html">Topic Modeling Analysis for a Set of Publications: Basic Workflow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Simple-topic-analysis.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Simple-topic-analysis.html#1.-Creating-a-Dataset:-e.g. Publications-from-a-Research-Organization">1. Creating a Dataset: e.g. Publications from a Research Organization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Simple-topic-analysis.html#2.-Concepts:-exploratory-analysis">2. Concepts: exploratory analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Simple-topic-analysis.html#3.-Building-a-word-cloud-visualization">3. Building a word-cloud visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Simple-topic-analysis.html#4.-Trend-analysis---‘emerging’-new-topics-each-year">4. Trend analysis - ‘emerging’ new topics each year</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Simple-topic-analysis.html#5.-Trend-Analysis:-topics-growth">5. Trend Analysis: topics growth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Simple-topic-analysis.html#6.-Trend-analysis:-growth-distribution-based-on-selected-years">6. Trend analysis: growth distribution based on selected years</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Simple-topic-analysis.html#7.-Conclusion">7. Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2-publications/Concepts-network-graph.html">Building a concepts co-occurence network</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Concepts-network-graph.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Concepts-network-graph.html#Step-1:-Creating-a-dataset">Step 1: Creating a dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Concepts-network-graph.html#Step-2:-Building-a-concepts-co-occurrence-network">Step 2: Building a concepts co-occurrence network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Concepts-network-graph.html#Step-3:-Visualizing-the-network">Step 3: Visualizing the network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Concepts-network-graph.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Grants</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html">Enriching Grants part 1: Matching your grants records to Dimensions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#A-sample-grants-list">A sample grants list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#Loading-the-sample-grants-data">Loading the sample grants data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#Matching-grants-data">Matching grants data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#A)-Matching-grants-when-we-have-a-grant-number">A) Matching grants when we have a grant number</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#B)-What-if-we-don’t-have-a-grant-number?">B) What if we don’t have a grant number?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#Back-to-our-grants-list">Back to our grants list</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#Enriching-the-original-list">Enriching the original list</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3-grants/2-grants-enrichment-adding-publications-information.html">Enriching Grants part 2: Adding Publications Information from Dimensions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/2-grants-enrichment-adding-publications-information.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/2-grants-enrichment-adding-publications-information.html#Reusing-the-sample-grants-data-from-part-1">Reusing the sample grants data from part-1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/2-grants-enrichment-adding-publications-information.html#Extracting-linked-Publications-data-from-Dimensions">Extracting linked Publications data from Dimensions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/2-grants-enrichment-adding-publications-information.html#Building-a-looped-extraction">Building a looped extraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/2-grants-enrichment-adding-publications-information.html#Final-step:-grouping-publications-by-grant">Final step: grouping publications by grant</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/2-grants-enrichment-adding-publications-information.html#Data-Exploration">Data Exploration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/2-grants-enrichment-adding-publications-information.html#Publications-per-grant-by-year-and-funding-amount">Publications per grant by year and funding amount</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/2-grants-enrichment-adding-publications-information.html#Publications-per-grant-by-country">Publications per grant by country</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/2-grants-enrichment-adding-publications-information.html#Correlation-of-num-of-publications-to-grant-length">Correlation of num of publications to grant length</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/2-grants-enrichment-adding-publications-information.html#Publications-by-grant-funder">Publications by grant funder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/2-grants-enrichment-adding-publications-information.html#Publications-by-grant-funder-vs-funding-amount">Publications by grant funder vs funding amount</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/2-grants-enrichment-adding-publications-information.html#Conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3-grants/3-grants-enrichment-adding-patents-cltrials-information.html">Enriching Grants part 3: adding related Patents and Clinical Trials data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/3-grants-enrichment-adding-patents-cltrials-information.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/3-grants-enrichment-adding-patents-cltrials-information.html#Reusing-the-enriched-grants-data-from-part-2">Reusing the enriched grants data from part-2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/3-grants-enrichment-adding-patents-cltrials-information.html#Extracting-linked-Patents-data">Extracting linked Patents data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/3-grants-enrichment-adding-patents-cltrials-information.html#Extracting-linked-Clinical-Trials-data">Extracting linked Clinical Trials data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/3-grants-enrichment-adding-patents-cltrials-information.html#Data-Exploration">Data Exploration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/3-grants-enrichment-adding-patents-cltrials-information.html#How-many-linked-objects-overall?">How many linked objects overall?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/3-grants-enrichment-adding-patents-cltrials-information.html#Patents-and-Clinical-Trials-by-Year">Patents and Clinical Trials by Year</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/3-grants-enrichment-adding-patents-cltrials-information.html#Patents-and-Clinical-Trials-by-Grant-Funder">Patents and Clinical Trials by Grant Funder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/3-grants-enrichment-adding-patents-cltrials-information.html#Exploring-Correlations-between-dimensions">Exploring Correlations between dimensions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/3-grants-enrichment-adding-patents-cltrials-information.html#Conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3-grants/4-grants-topic-analysis.html">Identifying emerging topics in grants using ‘concepts’</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/4-grants-topic-analysis.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/4-grants-topic-analysis.html#1.-Creating-a-Dataset:-e.g. Grants-from-a-Funder">1. Creating a Dataset: e.g. Grants from a Funder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/4-grants-topic-analysis.html#2.-A-first-look-at-the-concepts-we-extracted">2. A first look at the concepts we extracted</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/4-grants-topic-analysis.html#3.-Building-a-word-cloud-visualization">3. Building a word-cloud visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/4-grants-topic-analysis.html#4.-Trend-analysis---‘emerging’-new-topics-each-year">4. Trend analysis - ‘emerging’ new topics each year</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/4-grants-topic-analysis.html#5.-Segmenting-results-using-the-fields-of-research-categories">5. Segmenting results using the fields of research categories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/4-grants-topic-analysis.html#6.-Conclusion">6. Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3-grants/5-grants-from-researchers.html">Getting all grants received by a list of researchers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/5-grants-from-researchers.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/5-grants-from-researchers.html#1.-Starting-point:-a-list-of-researchers">1. Starting point: a list of researchers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/5-grants-from-researchers.html#2.-What-Grants-have-been-received-by-these-researchers?">2. What Grants have been received by these researchers?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/5-grants-from-researchers.html#3.-Data-Exploration">3. Data Exploration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/5-grants-from-researchers.html#Grants-by-year">Grants by year</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/5-grants-from-researchers.html#Grants-by-funders">Grants by funders</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/5-grants-from-researchers.html#Funders-by-funding-amount">Funders by funding amount</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Clinical Trials</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Clinical Trials by Volume of Publications</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Query-for-Clinical-Trials">Query for Clinical Trials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Counting-publications-per-clinical-trial">Counting publications per clinical trial</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Patents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../5-patents/0-introducing-patents.html">The Patents API: Features Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/0-introducing-patents.html#1.-Sample-Patents-Queries">1. Sample Patents Queries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Searching-patents-by-keyword">Searching patents by keyword</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Searching-using-fielded-search">Searching using fielded search</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Searching-using-dates">Searching using dates</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Extracting-cited-publications-via-publication_ids">Extracting cited publications via <code class="docutils literal notranslate"><span class="pre">publication_ids</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Extracting-cited-patents-via-reference_ids">Extracting cited patents via <code class="docutils literal notranslate"><span class="pre">reference_ids</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Aggregating-results-using-facets">Aggregating results using facets</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Top-assignees">Top assignees</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Top-researchers">Top researchers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Top-FOR-categories">Top FOR categories</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/0-introducing-patents.html#2.-A-closer-look-at-Patents-statistics">2. A closer look at Patents statistics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Counting-records-per-each-field">Counting records per each field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Creating-a-bar-chart">Creating a bar chart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Counting-the-yearly-distribution-of-field/records-data">Counting the yearly distribution of field/records data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Creating-a-line-chart">Creating a line chart</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Where-to-find-out-more">Where to find out more</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html">Measuring the Innovation Impact of an Organization using Patents Citations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#1.-Choosing-a-GRID-Research-Organization">1. Choosing a GRID Research Organization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#2.-Extracting-Publications-Data">2. Extracting Publications Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#Quick-look-at-publications-statistics">Quick look at publications statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#What-are-the-main-subject-areas?">What are the main subject areas?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#3.-Extracting-Patents-linked-to-Publications">3. Extracting Patents linked to Publications</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#Enriching-publications-with-patents-citations-metrics">Enriching publications with patents citations metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#4.-Patents-Data-Analysis">4. Patents Data Analysis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#How-many-patents-per-year?">How many patents per year?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#Who-is-filing-the-patents?">Who is filing the patents?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#What-are-the-publications-most-frequenlty-referenced-in-patents?">What are the publications most frequenlty referenced in patents?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#What-are-the-main-subject-areas-of-referenced-publications?">What are the main subject areas of referenced publications?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#Is-there-a-correlation-between-publication-citations-and-patents-citations?">Is there a correlation between publication citations and patents citations?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#Where-to-go-from-here">Where to go from here</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5-patents/2-Patent-Family-Citing-Publications.html">Patent publication references, for an entire patent family</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/2-Patent-Family-Citing-Publications.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/2-Patent-Family-Citing-Publications.html#1.-Search-for-the-patent-ID-and-return-the-family-ID.">1. Search for the patent ID and return the family ID.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/2-Patent-Family-Citing-Publications.html#2.-Use-the-family-ID-to-search-for-all-related-patents-and-return-the-publications-IDs-they-reference">2. Use the family ID to search for all related patents and return the publications IDs they reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/2-Patent-Family-Citing-Publications.html#3.-Enriching-the-publication-IDs-with-additional-metadata">3. Enriching the publication IDs with additional metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/2-Patent-Family-Citing-Publications.html#4.-Combine-the-publication-metadata-with-the-patent-citations-information">4. Combine the publication metadata with the patent citations information</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/2-Patent-Family-Citing-Publications.html#4.1-Optional:-exporting-the-data-to-google-sheets">4.1 Optional: exporting the data to google sheets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/2-Patent-Family-Citing-Publications.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Datasets</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html">The Datasets API: Features Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#1.-Sample-Dataset-Queries">1. Sample Dataset Queries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Searching-datasets-by-keyword">Searching datasets by keyword</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Returning-associated-grants-and-publication-data">Returning associated grants and publication data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Searching-using-fielded-search">Searching using fielded search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Extracting-related-funding-via-grants">Extracting related funding via grants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Aggregating-results-using-facets">Aggregating results using facets</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Top-funders">Top funders</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Top-research-organizations">Top research organizations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Top-contributors">Top contributors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#2.-A-closer-look-at-Datasets-statistics">2. A closer look at Datasets statistics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Counting-records-per-each-field">Counting records per each field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Creating-a-bar-chart">Creating a bar chart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Counting-the-yearly-distribution-of-field/records-data">Counting the yearly distribution of field/records data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Creating-a-line-chart">Creating a line chart</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Where-to-find-out-more">Where to find out more</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Researchers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html">Calculating the H-index of a researcher</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html#Background">Background</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html#Selecting-a-researcher">Selecting a researcher</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html#The-H-Index-function">The H-Index function</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html#Getting-citations-data-from-Dimensions">Getting citations data from Dimensions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html#Wrapping-things-up">Wrapping things up</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html#Where-to-find-out-more">Where to find out more</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html">Extracting researchers based on affiliations and publications history</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Prerequisites">Prerequisites</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Select-an-organization-ID">Select an organization ID</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Background:-understanding-the-data-model">Background: understanding the data model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Methodology:-two-options-available">Methodology: two options available</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Approach-1.-From-publications-to-researchers">Approach 1. From publications to researchers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Approach-2.-From-researchers-to-publications">Approach 2. From researchers to publications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html">Expert Identification with the Dimensions API - An Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#At-a-glance">At a glance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Step-1:-Concept-Extraction">Step 1: Concept Extraction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#What-are-concepts?">What are concepts?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Extracting-concepts-with-the-DSL">Extracting concepts with the DSL</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Step-2:-Expert-Identification">Step 2: Expert Identification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-1.-Basic-query-using-concepts">Example 1. Basic query using <code class="docutils literal notranslate"><span class="pre">concepts</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-2.-Query-with-OR-connectors">Example 2. Query with <code class="docutils literal notranslate"><span class="pre">OR</span></code> connectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-3.-Query-with-where-filters">Example 3. Query with <code class="docutils literal notranslate"><span class="pre">where</span></code> filters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-4.-Adding-Overlap-Annotations-(eg-for-conflict-of-interests-checks)">Example 4. Adding Overlap Annotations (eg for conflict of interests checks)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-5.-Query-with-MUST/NOT-Operators">Example 5. Query with MUST/NOT Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-6.-MUST-together-with-AND/OR">Example 6. MUST together with AND/OR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-7.-Wildcard-searches">Example 7. Wildcard searches</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Additional-resources:-shortcut-functions-included-in-Dimcli">Additional resources: shortcut functions included in Dimcli</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#extract_concepts">extract_concepts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#identify_experts">identify_experts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Build-a-reviewers-matrix">Build a reviewers matrix</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html">Identification of reviewers for funders: Globally and among Panels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#Introduction:-Use-Cases-For-Reviewer-Identification">Introduction: Use Cases For Reviewer Identification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#Kinds-of-identification">Kinds of identification</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#1.-Loading-and-preprocessing-text-data">1. Loading and preprocessing text data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#1.1-Loading-from-File-(placeholder-code)">1.1 Loading from File (placeholder code)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#1.2-Loading-Sample-Data">1.2 Loading Sample Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#1.3-Preprocess-data-and-extract-concepts">1.3 Preprocess data and extract concepts</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#2.-The-Two-Use-Cases---Recap">2. The Two Use Cases - Recap</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#2.1-Global-identification-use-case">2.1 Global identification use case</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#2.2-Panel-identification-use-case">2.2 Panel identification use case</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#3.-Global-identification">3. Global identification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#3.1-Advanced-Cases:-Working-around-the-limitations-of-global-search">3.1 Advanced Cases: Working around the limitations of global search</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#3.1.1-Searching-based-on-organizational-affiliation">3.1.1 Searching based on organizational affiliation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#3.1.2-Searching-based-on-previous-funding-history">3.1.2 Searching based on previous funding history</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#4.-Panel-Identification">4. Panel Identification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Organizations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../8-organizations/1-GRID-preview.html">The Organizations API: Features Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#1.-Matching-affiliation-data-to-GRID-IDs-using-extract_affiliations">1. Matching affiliation data to GRID IDs using <code class="docutils literal notranslate"><span class="pre">extract_affiliations</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#2.-Searching-GRID-organizations">2. Searching GRID organizations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Full-text-search">Full-text search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Fielded-search">Fielded search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Returning-facets">Returning facets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Returning-organizations-facets-from-publications">Returning organizations facets from publications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#3.-A-closer-look-at-the-organizations-data-statistics">3. A closer look at the organizations data statistics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Let’s-visualize-the-data-with-plotly">Let’s visualize the data with plotly</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Where-to-find-out-more">Where to find out more</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html">Identifying the Industry Collaborators of an Academic Institution</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#1.-Selecting-an-academic-institution">1. Selecting an academic institution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#2.-Extracting-publications-from-industry-collaborations">2. Extracting publications from industry collaborations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#3.-Analyses">3. Analyses</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#3.1-Count-of-Publications-per-year-from-Industry-Collaborations">3.1 Count of Publications per year from Industry Collaborations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#3.2-Citations-from-Industry-Collaboration">3.2 Citations from Industry Collaboration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#3.3-Top-Industry-Collaborators">3.3 Top Industry Collaborators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#3.4-Countries-of-Industry-Collaborators">3.4 Countries of Industry Collaborators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#3.5-Putting-Countries-and-Collaborators-together">3.5 Putting Countries and Collaborators together</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html">Building an Organizations Collaboration Network Diagram</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#1.-Choose-an-Organization-and-a-keyword-(topic)">1. Choose an Organization and a keyword (topic)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#2.-Building-a-one-degree-network-of-collaborating-institutions">2. Building a one-degree network of collaborating institutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#3.-Building-a-network-of-any-size">3. Building a network of any size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#4.-Visualizing-the-network">4. Visualizing the network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#5.-Addendum:-showing-only-‘Government’-collaborators">5. Addendum: showing only ‘Government’ collaborators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html">Collaboration Patterns By Year (International, Domestic, Internal)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#1.-Lookup-the-University-that-you-are-interested-in">1. Lookup the University that you are interested in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#2.-Publications-output-by-year">2. Publications output by year</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#3.-International-publications">3. International publications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#4.-Domestic">4. Domestic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#5.-Internal">5. Internal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#6.-Joining-up-All-metrics-together">6. Joining up All metrics together</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#7.-How-does-this-compare-to-Australia?">7. How does this compare to Australia?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#8.-How-does-this-compare-to-a-different-Institution-(University-of-Toronto)?">8. How does this compare to a different Institution (University of Toronto)?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#Want-to-learn-more?">Want to learn more?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8-organizations/5-mapping-grid-ids-to-organization-data.html">Mapping GRID IDs to Organization Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/5-mapping-grid-ids-to-organization-data.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/5-mapping-grid-ids-to-organization-data.html#1.-Importing-Organization-Data">1. Importing Organization Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/5-mapping-grid-ids-to-organization-data.html#1.1-Manually-Generate-Organization-Data">1.1 Manually Generate Organization Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/5-mapping-grid-ids-to-organization-data.html#1.2-Load-Organization-Data-from-Local-Machine">1.2 Load Organization Data from Local Machine</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/5-mapping-grid-ids-to-organization-data.html#2.-Utilizing-Dimensions-API-to-Extract-GRID-IDs">2. Utilizing Dimensions API to Extract GRID IDs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/5-mapping-grid-ids-to-organization-data.html#3.-Save-the-GRID-ID-Dataset-we-created">3. Save the GRID ID Dataset we created</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/5-mapping-grid-ids-to-organization-data.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8-organizations/6-organization-groups.html">Using Dimensions organization groups with the API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/6-organization-groups.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/6-organization-groups.html#1.-Downloading-groups-data-from-Dimensions">1. Downloading groups data from Dimensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/6-organization-groups.html#2.-Using-group-data-with-the-API">2. Using group data with the API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/6-organization-groups.html#How-many-grants-from-the-NSF?">How many grants from the NSF?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html">Benchmarking organizations with the Dimensions API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#1.-Quick-benchmarking-using-the-API">1. Quick benchmarking using the API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#2.-Calculating-more-complex-‘Quality’-Benchmarking-indicators:-Number-of-articles-in-the-top-X-percent-of-research-their-category">2. Calculating more complex ‘Quality’ Benchmarking indicators: Number of articles in the top X percent of research their category</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Step-1.-retrieve-the-total-volume-of-publications-by-volume.-(focusing-on-Fields-of-Research)">Step 1. retrieve the total volume of publications by volume. (focusing on Fields of Research)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Step-1.2.-…-Need-to-filter-for-level-2-codes">Step 1.2. … Need to filter for level 2 codes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Step-2.-calculate-1%-of-the-total-number-of-records-by-category.-This-will-be-used-to-retrieve-the-1%-boundary-record..">Step 2. calculate 1% of the total number of records by category. This will be used to retrieve the 1% boundary record..</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Step-3.-Use-the-cutoff-value-to-get-the-indicator-value-for-the-1%-boundary">Step 3. Use the cutoff value to get the indicator value for the 1% boundary</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#We-can-only-filter-on-integers-in-the-DSL,-so-we-will-round-up-the-values">We can only filter on integers in the DSL, so we will round up the values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Step-4.-Now-get-the-number-of-publications-by-organisation,-filtered-by-category-that-have-a-field_citation_ratio-&gt;-the-boundary-score">Step 4. Now get the number of publications by organisation, filtered by category that have a field_citation_ratio &gt; the boundary score</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Step-5.-Rank-the-results">Step 5. Rank the results</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#We-should-probably-control-for-Volume-though…">We should probably control for Volume though…</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Step-6.-Get-the-total-paper-counts-for-each-organisation">Step 6. Get the total paper counts for each organisation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Step-7.-calculate-the-percentage-of-local-papers-in-the-top-1%-of-global-publications-(in-2018)">Step 7. calculate the percentage of local papers in the top 1% of global publications (in 2018)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Now-the-results-are-going-to-look-a-little-strange…">Now the results are going to look a little strange…</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Need-to-control-for-size…">Need to control for size…</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Final-step.-Show-me-the-institutions-that-I-should-be-most-interested-in-(Five-above)">Final step. Show me the institutions that I should be most interested in (Five above)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../10-misc/1-report-content-volumes-per-year.html">Generating a report that monitors research topics across Dimensions sources</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../10-misc/1-report-content-volumes-per-year.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10-misc/1-report-content-volumes-per-year.html#1.-Creating-a-query-builder">1. Creating a query builder</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../10-misc/1-report-content-volumes-per-year.html#Query-logic">Query logic</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../10-misc/1-report-content-volumes-per-year.html#2.-Plotting-the-results">2. Plotting the results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10-misc/1-report-content-volumes-per-year.html#3.-Conclusions">3. Conclusions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../10-misc/2-enrich-text-with-for-codes.html">Enrich text with Field of Research (FoR) codes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../10-misc/2-enrich-text-with-for-codes.html#A-sample-set-of-publications">A sample set of publications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10-misc/2-enrich-text-with-for-codes.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10-misc/2-enrich-text-with-for-codes.html#1.-Loading-the-sample-text">1. Loading the sample text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10-misc/2-enrich-text-with-for-codes.html#2.-FoR-Classification">2. FoR Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10-misc/2-enrich-text-with-for-codes.html#3.-Number-of-FoR-categories-per-document">3. Number of FoR categories per document</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10-misc/2-enrich-text-with-for-codes.html#4.-Top-FoR-categories-by-document-count">4. Top FoR categories by document count</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10-misc/2-enrich-text-with-for-codes.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+
+
+   <div id="sidebar_github" style="margin-top: 12px;">
+   <h3>Github Source</h3>
+
+      <div style="margin: 10px 20px;">
+      
+         <iframe src="https://ghbtns.com/github-btn.html?user=digital-science&repo=dimensions-api-lab&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+
+         <iframe src="https://ghbtns.com/github-btn.html?user=digital-science&repo=dimensions-api-lab&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe> 
+      
+      </div>
+
+   </div>
+
+
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">DSL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+
+    
+
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt .copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js'></script>
+<script>require=requirejs;</script><a class="reference external image-reference" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/cookbooks/4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.ipynb"><img alt="../../_images/badge-colab.svg" src="../../_images/badge-colab.svg" /></a>
+<a class="reference external image-reference" href="https://github.com/digital-science/dimensions-api-lab/blob/master/cookbooks/4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.ipynb"><img alt="../../_images/badge-github-custom.svg" src="../../_images/badge-github-custom.svg" /></a>
+<hr class="docutils" />
+<div class="section" id="Clinical-Trials-by-Volume-of-Publications">
+<h1>Clinical Trials by Volume of Publications<a class="headerlink" href="#Clinical-Trials-by-Volume-of-Publications" title="Permalink to this headline">¶</a></h1>
+<p>This notebook shows how use the <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> in order to get a list of clinical trials records and then sort them by the total number of publications they cite.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">CHANGELOG</span><span class="se">\n</span><span class="s2">This notebook was last run on </span><span class="si">%s</span><span class="se">\n</span><span class="s2">==&quot;</span> <span class="o">%</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">, %Y&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+==
+CHANGELOG
+This notebook was last run on Jan 25, 2022
+==
+</pre></div></div>
+</div>
+<div class="section" id="Prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>This notebook assumes you have installed the <a class="reference external" href="https://pypi.org/project/dimcli/">Dimcli</a> library and are familiar with the <a class="reference external" href="https://api-lab.dimensions.ai/cookbooks/1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html">‘Getting Started’ tutorial</a>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install dimcli plotly tqdm -U --quiet
+
+<span class="kn">import</span> <span class="nn">dimcli</span>
+<span class="kn">from</span> <span class="nn">dimcli.utils</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">from</span> <span class="nn">plotly.offline</span> <span class="kn">import</span> <span class="n">plot</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+  <span class="c1"># make js dependecies local / needed by html exports</span>
+  <span class="kn">from</span> <span class="nn">plotly.offline</span> <span class="kn">import</span> <span class="n">init_notebook_mode</span>
+  <span class="n">init_notebook_mode</span><span class="p">(</span><span class="n">connected</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">Logging in..&quot;</span><span class="p">)</span>
+<span class="c1"># https://digital-science.github.io/dimcli/getting-started.html#authentication</span>
+<span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;https://app.dimensions.ai&quot;</span>
+<span class="k">if</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+  <span class="kn">import</span> <span class="nn">getpass</span>
+  <span class="n">KEY</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;API Key: &#39;</span><span class="p">)</span>
+  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">KEY</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="n">ENDPOINT</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="n">KEY</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">KEY</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="n">ENDPOINT</span><span class="p">)</span>
+<span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<script type="text/javascript">
+window.PlotlyConfig = {MathJaxConfig: 'local'};
+if (window.MathJax) {MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+if (typeof require !== 'undefined') {
+require.undef("plotly");
+requirejs.config({
+    paths: {
+        'plotly': ['https://cdn.plot.ly/plotly-2.8.3.min']
+    }
+});
+require(['plotly'], function(Plotly) {
+    window._Plotly = Plotly;
+});
+}
+</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Searching config file credentials for &#39;https://app.dimensions.ai&#39; endpoint..
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+==
+Logging in..
+Dimcli - Dimensions API Client (v0.9.6)
+Connected to: &lt;https://app.dimensions.ai/api/dsl&gt; - DSL v2.0
+Method: dsl.ini file
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Query-for-Clinical-Trials">
+<h2>Query for Clinical Trials<a class="headerlink" href="#Query-for-Clinical-Trials" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search clinical_trials where category_rcdc.name=&quot;Multiple Sclerosis&quot;</span>
+<span class="s2">        and active_years=[2017, 2018, 2019]</span>
+<span class="s2">        return clinical_trials[basics+publication_ids]&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query_iterative</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Starting iteration with limit=1000 skip=0 ...
+0-1000 / 3353 (3.08s)
+1000-2000 / 3353 (3.93s)
+2000-3000 / 3353 (2.83s)
+3000-3353 / 3353 (1.22s)
+===
+Records extracted: 3353
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>investigators</th>
+      <th>title</th>
+      <th>active_years</th>
+      <th>publication_ids</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>UMIN000045085</td>
+      <td>[[Mostafa  Sarabzadeh, , Public Contact, Natio...</td>
+      <td>Neurophysiological effects of a high-speed neu...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>UMIN000044955</td>
+      <td>[[Seina  Toneri, , Public Contact, Mebix, Inc....</td>
+      <td>A multicentre, retrospective study in patients...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>UMIN000043910</td>
+      <td>[[Hiroaki  Yokote, , Public Contact, Nitobe Me...</td>
+      <td>Association between brain atrophy and intestin...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>UMIN000038903</td>
+      <td>[[Takami  Ishizuka, , Public Contact, National...</td>
+      <td>Efficacy and Safety of OCH-NCNP1 in patients w...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>UMIN000038431</td>
+      <td>[[Mohammad  Bayattork, , Public Contact, Unive...</td>
+      <td>Twelve weeks of Pilates training improved func...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Counting-publications-per-clinical-trial">
+<h2>Counting publications per clinical trial<a class="headerlink" href="#Counting-publications-per-clinical-trial" title="Permalink to this headline">¶</a></h2>
+<p>Before we can count publications, we should ensure that all the values are ‘countable’. So we have to transform all None values in <code class="docutils literal notranslate"><span class="pre">publication_ids</span></code> into empty lists first.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># replace empty values with empty lists so that they can be counted</span>
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">publication_ids</span><span class="o">.</span><span class="n">isnull</span><span class="p">(),</span> <span class="s1">&#39;publication_ids&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="s1">&#39;publication_ids&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+</div>
+<p>Now it’s ok to count publications</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create new column</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;pubs_tot&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;publication_ids&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="c1"># sort</span>
+<span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;pubs_tot&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>investigators</th>
+      <th>title</th>
+      <th>active_years</th>
+      <th>publication_ids</th>
+      <th>pubs_tot</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>521</th>
+      <td>NCT04073940</td>
+      <td>[[Citlali Lopez-Ortiz, PhD, MA, Contact, Unive...</td>
+      <td>Exploration of Brain Changes Due to a Targeted...</td>
+      <td>[2019, 2020, 2021]</td>
+      <td>[pub.1100827489, pub.1035450339, pub.103700030...</td>
+      <td>99</td>
+    </tr>
+    <tr>
+      <th>648</th>
+      <td>NCT03782246</td>
+      <td>[[Dawn Ehde, PhD, Principal Investigator, Univ...</td>
+      <td>Mindfulness-based Cognitive Therapy and Cognit...</td>
+      <td>[2018, 2019, 2020, 2021, 2022]</td>
+      <td>[pub.1059401852, pub.1001854818, pub.102868830...</td>
+      <td>72</td>
+    </tr>
+    <tr>
+      <th>327</th>
+      <td>NCT04550455</td>
+      <td>[[Keith R Edwards, MD, Study Director, MS Cent...</td>
+      <td>A Prospective Biomarker Study in Active Second...</td>
+      <td>[2020, 2021, 2022, 2023, 2024, 2025]</td>
+      <td>[pub.1104144237, pub.1122095683, pub.101866541...</td>
+      <td>52</td>
+    </tr>
+    <tr>
+      <th>1313</th>
+      <td>NCT02104661</td>
+      <td>[[Gavin Givannoni, , Principal Investigator, Q...</td>
+      <td>OxCarbazepine as a Neuroprotective Agent in MS...</td>
+      <td>[2014, 2015, 2016, 2017, 2018]</td>
+      <td>[pub.1035408940, pub.1011294811, pub.100257806...</td>
+      <td>48</td>
+    </tr>
+    <tr>
+      <th>947</th>
+      <td>NCT03004079</td>
+      <td>[[Myla Goldman, MD, Principal Investigator, Un...</td>
+      <td>Assessment of the Clinical Importance of Insul...</td>
+      <td>[2016, 2017, 2018, 2019, 2020]</td>
+      <td>[pub.1001068458, pub.1013002909, pub.103549213...</td>
+      <td>46</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>A simple data visualization</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">df</span><span class="p">[:</span><span class="mi">200</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;pubs_tot&quot;</span><span class="p">,</span>
+      <span class="n">hover_name</span><span class="o">=</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="n">hover_data</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;active_years&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>                            <div id="2c6d0436-e642-4dc7-8260-3ce515ebfe15" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("2c6d0436-e642-4dc7-8260-3ce515ebfe15")) {                    Plotly.newPlot(                        "2c6d0436-e642-4dc7-8260-3ce515ebfe15",                        [{"alignmentgroup":"True","customdata":[[[2019,2020,2021]],[[2018,2019,2020,2021,2022]],[[2020,2021,2022,2023,2024,2025]],[[2014,2015,2016,2017,2018]],[[2016,2017,2018,2019,2020]],[[2020,2021,2022,2023,2024,2025]],[[2020,2021,2022]],[[2017,2018,2019]],[[2019,2020,2021]],[[2020]],[[2017,2018]],[[2011,2012,2013]],[[2014,2015,2016]],[[2020,2021,2022,2023]],[[2015,2016,2017,2018,2019,2020]],[[2022,2023]],[[2018,2019]],[[2021,2022]],[[2021,2022,2023]],[[2010,2011,2012,2013]],[[2018,2019,2020]],[[2021,2022]],[[2021,2022,2023]],[[2015,2016,2017,2018,2019,2020,2021]],[[2015,2016,2017]],[[2015,2016,2017]],[[2013,2014,2015,2016,2017,2018]],[[2014,2015,2016]],[null],[[2015,2016,2017]],[[2018,2019]],[null],[[2019,2020]],[[2019,2020,2021]],[[2017,2018,2019,2020,2021]],[[2020,2021,2022,2023,2024,2025]],[[2015,2016,2017,2018,2019,2020,2021,2022]],[[2018,2019,2020,2021,2022,2023]],[[2015,2016,2017,2018,2019]],[[2018,2019,2020,2021,2022]],[[2020,2021,2022]],[[2021,2022,2023,2024,2025,2026]],[[2020,2021,2022]],[[2016,2017]],[[2020,2021]],[[2019]],[[2017,2018,2019,2020]],[[2012,2013,2014,2015]],[[2016,2017,2018,2019]],[[2021,2022]],[[2021,2022,2023,2024]],[[2018,2019,2020,2021,2022]],[[2018,2019]],[[2019,2020,2021,2022,2023,2024,2025]],[[2019,2020]],[[2020,2021,2022]],[[2018,2019,2020,2021,2022]],[[2014,2015,2016,2017,2018]],[[2016,2017,2018]],[[2018,2019,2020]],[[2020,2021]],[[2018,2019,2020]],[[2020,2021,2022]],[[2012,2013,2014,2015,2016,2017,2018]],[[2019,2020,2021]],[[2021,2022]],[[2018]],[[2016,2017,2018,2019,2020,2021,2022,2023,2024,2025]],[[2008]],[[2012,2013,2014,2015,2016]],[[2018,2019]],[[2021,2022,2023,2024]],[[2019,2020]],[[2020,2021,2022,2023,2024]],[[2016,2017,2018]],[[2020,2021]],[[2021]],[[2020,2021,2022]],[[2014,2015,2016]],[[2012,2013,2014]],[[2012]],[[2018,2019]],[[2012,2013]],[[2015]],[[2011,2012,2013,2014,2015,2016,2017,2018,2019]],[null],[[2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022]],[[2021,2022,2023]],[[2017,2018,2019]],[null],[[2018,2019,2020,2021,2022,2023,2024]],[[2017,2018,2019]],[[2015,2016,2017,2018,2019,2020]],[[2014,2015,2016]],[[2018,2019,2020,2021,2022]],[[2018,2019,2020,2021]],[[2017,2018,2019,2020,2021]],[[2019,2020,2021]],[[2015,2016]],[[2021,2022,2023]],[[2020,2021,2022,2023,2024,2025,2026,2027]],[[2014,2015,2016,2017]],[[2020,2021,2022,2023]],[[2015,2016,2017,2018,2019,2020,2021,2022,2023,2024]],[[2013,2014,2015,2016]],[[2015,2016,2017]],[[2016,2017,2018,2019]],[[2017,2018,2019]],[[2012,2013,2014,2015,2016]],[[2016,2017]],[[2019,2020,2021]],[[2022,2023,2024]],[[2018,2019]],[[2002,2003,2004,2005,2006,2007,2008]],[[2010,2011]],[[2019,2020,2021,2022]],[[2018,2019,2020,2021,2022]],[[2016,2017,2018]],[[2005,2006,2007,2008,2009,2010,2011]],[[2018,2019,2020]],[[2007,2008,2009,2010,2011,2012,2013,2014]],[[2019,2020]],[[2019,2020]],[[2013,2014]],[[2018,2019,2020,2021]],[null],[[2015,2016]],[[2001,2002,2003,2004,2005,2006,2007,2008]],[[2012,2013,2014,2015,2016,2017]],[[2020,2021,2022,2023]],[[2019,2020]],[[2014,2015]],[[2006,2007,2008,2009,2010,2011,2012,2013,2014,2015]],[[2017,2018,2019,2020]],[[2019,2020,2021,2022,2023]],[[2019,2020,2021]],[[2021,2022]],[[2021,2022,2023,2024]],[[2018,2019,2020,2021,2022]],[[2016,2017,2018,2019]],[[2015,2016,2017,2018,2019,2020,2021]],[[2021,2022]],[[2021,2022,2023]],[[2022,2023,2024]],[[2009,2010,2011]],[[2014,2015,2016,2017]],[[2020,2021]],[[2008,2009,2010,2011,2012]],[[2018,2019,2020]],[[2018]],[[2011,2012,2013,2014]],[[2001,2002,2003,2004,2005,2006,2007,2008,2009]],[[2015,2016]],[[2015,2016,2017,2018,2019,2020]],[[2020,2021,2022]],[[2010,2011,2012,2013]],[[2012,2013,2014,2015,2016,2017]],[[2019,2020,2021,2022,2023,2024]],[[2011,2012,2013]],[[2016,2017,2018,2019,2020]],[[2014]],[[2020,2021]],[[2015,2016,2017,2018,2019,2020,2021]],[[2013,2014,2015,2016,2017,2018]],[[2015,2016]],[[2011,2012,2013,2014,2015]],[[2021]],[[2018,2019]],[[2004,2005,2006]],[[2013,2014]],[[2018]],[[2017,2018,2019,2020]],[[2010,2011]],[[2010,2011,2012,2013,2014]],[[2012,2013]],[[2004,2005,2006,2007,2008,2009,2010,2011]],[[2018]],[[2015,2016,2017,2018,2019,2020,2021]],[[2004,2005]],[[2009,2010,2011,2012,2013,2014]],[[2021,2022]],[[2020,2021]],[[2017,2018]],[[2018,2019,2020,2021,2022]],[[2009,2010,2011,2012]],[[2015,2016,2017]],[[2020,2021]],[[2009,2010]],[[2003,2004,2005]],[[2019,2020,2021,2022,2023]],[[2002,2003,2004,2005]],[[2022,2023,2024,2025]],[[2013,2014,2015,2016,2017,2018,2019,2020,2021,2022]],[[2009,2010]],[[2008,2009,2010,2011,2012,2013]],[[2018]],[[2014,2015,2016]],[[1999,2000,2001,2002]],[[2015,2016,2017,2018,2019,2020]],[[2011,2012]]],"hovertemplate":"<b>%{hovertext}</b><br><br>id=%{x}<br>pubs_tot=%{y}<br>active_years=%{customdata[0]}<extra></extra>","hovertext":["Exploration of Brain Changes Due to a Targeted Ballet Program in Multiple Sclerosis","Mindfulness-based Cognitive Therapy and Cognitive Behavioral Therapy for Chronic Pain in Multiple Sclerosis","A Prospective Biomarker Study in Active Secondary Progressive Multiple Sclerosis (SPMS)Subjects Treated With Cladribine Tablets","OxCarbazepine as a Neuroprotective Agent in MS: A Phase 2a Trial","Assessment of the Clinical Importance of Insulin Resistance & Steroid-Associated Hyperglycemia in Relapsing Multiple Sclerosis","Impact of Ocrelizumab on Cerebrospinal Fluid Biomarkers at Multiple Sclerosis Onset","Cladribine Tablets After Treatment With Natalizumab (CLADRINA)","A Randomized, Placebo-Controlled Study of Mindfulness Meditation in Treating Insomnia in Multiple Sclerosis","A Double-blind, Randomised, Placebo-controlled Single-site Study of High Dose Simvastatin Treatment for Secondary Progressive Multiple Sclerosis: Impact on Vascular Perfusion and Oxidative Damage","The Utilization of Yoga as a Therapeutic Tool to Promote Physical Activity Behavior Change and Improved Postural Control in Individuals With Multiple Sclerosis","Qigong for Multiple Sclerosis: A Feasibility Study","Dalfampridine After Optic Neuritis to Improve Visual Function in Multiple Sclerosis","Improving the Quality of Life of People With Multiple Sclerosis and Their Caregivers With a Telemedicine Mindfulness-Based Intervention","Cerebrospinal Fluid-biomarkers-based Diagnostic and Prognostic Models for Multiple Sclerosis","Self-Management Program Based on Physical Exercises for People With Multiple Sclerosis With Mild Neurological Impairment: A Randomized Controlled Trial","Impact of a Multimedia Website With Patient Experiences of Multiple Sclerosis (PExMS) on Immunotherapy Decision-making: a Pilot Randomised Controlled Trial in a Mixed-methods Design","Attitudes, Barriers and Facilitators to Physical Activity in People With Multiple Sclerosis Following a Relapse","COVID-19 Booster Vaccination in Persons With Multiple Sclerosis","Neurophysiological Estimates of Cortical Grey and White Matters Damage in Patients With Multiple Sclerosis","A Randomised, Double Blinded Cross-over Study Comparing the Efficacy of L-carnitine Versus Placebo in the Treatment of Fatigue in Multiple Sclerosis","Sequential Natalizumab - Alemtuzumab Therapy in Patients With Relapsing Forms of Multiple Sclerosis (SUPPRESS)","Hematopoietic Stem Cell Transplantation for Treatment of Multiple Sclerosis in Sweden - a Register-based Retrospective Observational Study","Using Patient-Reported Outcomes To Improve the Care of People With Multiple Sclerosis: A Randomized Trial","A Randomized Trial of Positive Airway Pressure Therapy to Treat Cognitive Dysfunction in MS Patients With Obstructive Sleep Apnea","An Open-label, Non-randomized, Phase I/II Study of Allogeneic Human Umbilical Cord Tissue-Derived Mesenchymal Stem Cells (UC-MSC) and Liberation Therapy (When Associated With Chronic Cerebrovascular Venous Insufficiency) in Patients With Relapsing Remitting Multiple Sclerosis (RRMS)","An Open-label, Non-randomized, Phase I/II Study of Allogeneic Human Umbilical Cord Tissue-Derived Mesenchymal Stem Cells (UC-MSC) and Liberation Therapy (When Associated With Chronic Cerebrovascular Venous Insufficiency) in Patients With Relapsing Remitting Multiple Sclerosis (RRMS)","Effects of Adrenocorticotropic Hormone (ACTHAR Gel) on Recovery From Cognitive Relapses in Multiple Sclerosis","Real-Life Outcomes of Multiple Sclerosis Treatment With Rebif on Employment Status, Quality of Life and Cognition: a Pilot Study","Longitudinal Optic Neuritis Study (LONS)","An Open-label, Non-randomized, Phase I/II Study of Autologous Bone Marrow-Derived Mononuclear Stem Cells (BM-MNC) and Liberation Therapy (When Associated With CCSVI) in Patients With RRMS","Intervention to Reduce Distress From Perceived Cognitive Impairment in Multiple Sclerosis","Optic Neuritis Treatment Trial (ONTT)","To Investigate the Effect of Aerobic Exercise on Neurophysiological Values and Functionality in Individuals With Multiple Sclerosis.","KITAMS: Kinesio Tape and Physical Function in Persons With Multiples Sclerosis","Intranasal Insulin for Improving Cognitive Function in Multiple Sclerosis","Interventional Not Pharmacological Study to Investigate the Role of ADA in Multiple Sclerosis PatientsTreated With an Immune-Reconstitution Therapy (2-CdA)","Evaluation of the Safety and Efficacy of Reduced-intensity Immunoablation and Autologous Hematopoietic Stem Cell Transplantation (AHSCT) in Multiple Sclerosis","Use of Cellular Stromal Vascular Fraction (cSVF) for Select Multiple Sclerosis, Autoimmune, Inflammatory, and Neurologic Conditions: Clinical Interventional Study of Adverse Events and Clinical Outcomes Using Autologous Stem-Stromal Cells.","Randomized, Controlled Pilot Trial of Domperidone in Relapsing-Remitting Multiple Sclerosis","Risk Factors in Early Multiple Sclerosis","Effectiveness of Exercise Training in Pediatric-Onset Multiple Sclerosis Patients","Importance of Therapeutic Monitoring of Orally Administered Disease-modifying Drugs Used in the Treatment of Multiple Sclerosis","Effects of a Multiple Sclerosis Relapse Therapy With Methylprednisolone (MP) During Pregnancy on Offspring Cognitive Function, Stress Sensitivity, Behaviour and Functional and Structural Brain Development","Clinical Pilot Study in the Feasibility and Effect of Online Cognitive Training on Cognitive Functions in Patients With Parkinson's Disease, Multiple Sclerosis and Depressive Patients Treated With Electroconvulsive Therapy","Feasibility Study of Tolerogenic Fibroblasts in Patients With Refractory Multiple Sclerosis","Investigation of the Effects of Respiratory Functions and Trunk Control on Functional Mobility in Individuals With Multiple Sclerosis","The Effect of Alemtuzumab on the Blood-brain-barrier and Cerebral Metabolism in Multiple Sclerosis Patients; a New MRI Method for Treatment Response Evaluation in Multiple Sclerosis","Randomized, Comparative, Double Blind Controlled Phase II Clinical Trial, to Evaluate the Efficacy of ApE in Patients With Multiple Sclerosis (MS).","Correlation Between the 'Nine Holes Peg Test' Performance and the Triple Stimulation Technique Within a Group a Patients With Multiple Sclerosis","The Effect of Cigarette Smoke on Sleep Quality and Physical Activity in People With Multiple Sclerosis","Obesity as a Driver of Inflammation and Brain Volume Loss in Pediatric Multiple Sclerosis.","Mechanistic Studies of Teriflunomide in Relapsing Remitting Multiple Sclerosis: Regulatory B Lymphocytes as Central Mediators of the Therapeutic Effects of Teriflunomide in MS","Factors Associated With Dual-Task Performance in Patients With Multiple Sclerosis","Clinical Relevance of miR-142-3p as Potential Biomarker of Synaptopathy in Multiple Sclerosis","Treatment Response Among Chinese Patients With Acute Attack of Neuromyelitis Optica Spectrum Disorders: A Prospective, Multicenter Real-world Study","ESPRIMO: A Bio-psycho-social Co-created Intervention for Young Adults With Multiple Sclerosis: Study Protocol for a Feasibility Study","Observational Prospective Multicentered Study Evaluating Initial Clinical Presentation of Inflammatory Optic Neuritis (ON) Associated or Not With Autoantibodies Anti- Myelin-oligodendrocyte-glycoprotein (MOG-Ab)","7T MRI Ferumoxytol-Enhanced Characterization of Multiple Sclerosis and Demyelinating Diseases","Intensity Dependent Clinical Effects of a Task-oriented Upper Limb Training in Multiple Sclerosis","Single-Arm, Non-Randomized, Time Series, Single-Subject Study: Fecal Microbiota Transplantation (FMT) in Multiple Sclerosis","Pilot Feasibility Study of Out-of-Pocket Cost Communication and Supportive Financial Services for Reducing Financial Toxicity Among Multiple Sclerosis Patients","Reliability and Validity of the Glittre Activities of Daily Living Test in Multiple Sclerosis Patients","Development and Evaluation of an Interactive Web-based Programme on Relapse Management for People With Multiple Sclerosis - a Randomized Controlled Trial With Mixed Methods Process Evaluation","The Role of Exercise in Modifying Outcomes for People With Multiple Sclerosis","The Inflammatory Synaptopathy as a Target of Exercise Therapy in the Fight Against Multiple Sclerosis","Comparison of Tele-Assessment and Face-to-Face Evaluation of Balance in Patients With Multiple Sclerosis (MS)","The Effect of Task-Oriented Training on the Physical and Cognitive Functions in Patients With Multiple Sclerosis","Dietary Approaches to Treat Multiple Sclerosis-Related Fatigue Study","Immunoregulation by Controlled Parasite Exposure in Multiple Sclerosis.","Continuous Positive Airway Pressure for Fatigue Treatment in Patients With Multiple Sclerosis and Obstructive Sleep Apnea","The Effect of a Gluten Free Diet on the Permeability of the Blood Brain Barrier in Patients With Clinically Isolated Syndrome Measured by Dynamic Contrast Enhanced Magnetic Resonance Imaging","An Observation Monocentric Study to Analyse the Possible Neuroprotective Effect of Ocrelizumab Via VEGF Protein Expression in Relapsing Multiple Sclerosis Patients","Exercise in Persons With Multiple Sclerosis","Exercise and Neuroprotection in Older Persons With Multiple Sclerosis","How Does Strength Training and Balance Training Affect Gait Function and Fatigue in Patients With Multiple Sclerosis?","The Effectiveness of Game-Based Virtual Reality Approach in Patients With Multiple Sclerosis","Use of the Functional Gait Assessment in Patients With Multiple Sclerosis: Examining Reliability Between Face-to-Face and Online Applications","Intermittent Theta Burst Stimulation (iTBS) for the Treatment of Depression in Patients With Multiple Sclerosis: a Randomized Controlled Study","Tolerability of Acthar for the Treatment of Multiple Sclerosis Relapses (TAMS)","Comparing Lesion Contrast With Both Magnevist and Gadavist and Understanding the Cerebral Perfusion Patterns of Patients With Multiple Sclerosis (MS) Using Magnetic Resonance Imaging (MRI)","The Effect of Percutaneous Venoplasty on Muscular Function, Mobility and Fatigue of Multiple Sclerosis (MS) Patients With Chronic Cerebrospinal Venous Insufficiency (CCSVI).","The Effect of Multiple-Task Training on Physical and Cognitive Functions in Patients With Multiple Sclerosis","A Phase II Study of High Dose Chemotherapy With Autologous Hematopoietic Progenitor Cell Transplant for Multiple Sclerosis That Failed at Least Two Lines of Therapy","Theory Based Intervention Program to Support Physical Activity for Individuals With Multiple Sclerosis: a Case Series","Multiple Sclerosis and Fabry Disease: Prevalence of Fabry Disease in a Defined Population at Risk - Patients Formerly Diagnosed With Multiple Sclerosis - an Epidemiological Study","The German Multiple Sclerosis Registry of the German MS Society","A Double-Blind, Placebo Controlled Trial of Estriol Treatment in Women With Multiple Sclerosis: Effect on Cognition.","Investigating Cortical Gray Matter Demyelination in Primary Progressive Multiple Sclerosis at 7 Tesla","Comparison of Expanded Disability Status Scale, Gad-enhanced Brain Lesions, Annualized Relapse Rate, and Side Effects Between Active Secondary Progressive Multiple Sclerosis Patients on Rituximab and Glatiramer Acetate","NARCOMS Global Multiple Sclerosis Registry: A Long-Term Study to Facilitate Research in Multiple Sclerosis","A Pilot Trial of Testosterone Treatment for Fatigue in Men With Multiple Sclerosis","MS Wellness Navigator: The Effect of Nurse Practitioner (NP-led) Care on Mood, Anxiety and Health Related Quality of Life in People With Multiple Sclerosis - A Randomized Trial","Open-label, Single-center, Single-arm Futility Trial Evaluating Oral Domperidone 10mg QID for Reducing Progression of Disability in Patients With Secondary Progressive Multiple Sclerosis (SPMS)","An Examination of Potential Neurochemical and Cognitive Mediators of the Relationship Between Mindfulness and Emotion Regulation in Individuals With Multiple Sclerosis: An Internet Based Self-Guided Pilot Study.","Fecal Microbiota Transplantation (FMT) of FMP30 in Relapsing-Remitting Multiple Sclerosis: A Phase 1b Clinical Trial to Evaluate Feasibility, Safety, Tolerability and Effects on Immune Function","A Randomized Controlled Trial of Telephone-delivered Cognitive Behavioral-therapy, Modafinil, and Combination Therapy of Both Interventions for Fatigue in Multiple Sclerosis","Tolerance-Induction With Dendritic Cells Treated With Vitamin-D3 and Loaded With Myelin Peptides, in Multiple Sclerosis Patients (TOLERVIT-MS)","The Impact of a Planned 12-week Dosing Interruption of Natalizumab on Immune Cell Trafficking, Pharmacokinetic (PK)/Pharmacodynamic (PD) Parameters, and Multiple Sclerosis (MS) Disease Stability.","Comparison of Rebif Compared to Tecifdera on Six-month Outcomes in Patients With Relapsing-remitting MS","Evaluation of an Online Course Designed to Support the Adoption of Healthier Diet and Self-Care Routines in Multiple Sclerosis Patients","Clinically Isolated Syndrome and Relapsing-Remitting Multiple Sclerosis","Controlled, Randomized, Double-blind Clinical Trial, 24 Months Duration, to Compare the Efficacy, Safety and Tolerability of Andrographolide Versus Placebo in Patients With Progressive Forms of Multiple Sclerosis","Use Of Autologous Stem Cell Use In Neurological Non-neoplastic Disorders And Disease","Effects of Aerobic Training on Motor and Cognitive Performances in Patients With MS: an Exploratory Study With Structural and Functional MRI","Spinal Direct Current Stimulation Effects on Pain in Multiple Sclerosis: Clinical and Neurophysiological Assessment and Evaluation of Endocannabinoid System Activity","A Phase 1b, Open-label Study to Evaluate the Safety and Tolerability of the Putative Remyelinating Agent, Liothyronine, in Individuals With MS","Effect of a Tissue Selective Estrogen Complex on Menopausal Symptoms in Women With MS: A Pilot Trial.","A Multicentric Randomized PRAGmatic Trial to Compare the Effectiveness of Fingolimod Versus Dimethyl-Fumarate on Patient Overall Disease Experience in Relapsing Remitting Multiple Sclerosis: Novel Data to Inform Decision-makers","A Phase II Proof of Concept Study Evaluating the Reduction of Mitoxantrone-induced Cardiotoxicity and Neurological Outcome in the Combined Use of Mitoxantrone and Dexrazoxane (Cardioxane\u00ae) in Multiple Sclerosis (MSCardioPro)","The Effects of Oral Nanocurcumin on Expression Levels of microRNAs and Treg Cells and Th17 Cells Development Factors in Multiple Sclerosis Patients","The Relationship Between Kinesiophobia, Physical Activity, Balance and Fear of Fall in Multiple Sclerosis Patients","NEUROKINASE : Expression Profile of ERK5 and PKM2 Kinases in Neuroinflammatory Diseases.","The Effect of Combined Exercise Training on Cognitive Functions in Patients With Multiple Sclerosis","Safety and Tolerability of Oral Two-Doses Estroprogestins Associated With Interferon-Beta 1a in Patients With Relapsing-Remitting Multiple Sclerosis","De-escalation After Natalizumab Treatment With Interferon-beta-1b in Patients With Relapsing-remitting Multiple Sclerosis","Behaviour and Well-Being: A Bio-Psycho-Social Model of Resilience in Young Adults Newly Diagnosed With Multiple Sclerosis","Muscle Strain in Multiple Sclerosis Patients Measured by Ultrasound Speckle Tracking","Intrathecal Methotrexate for Progressive Multiple Sclerosis: An Open Label Single Arm Study","Effect of Cyclical Administration of Interferon \u03b2-1b in Multiple Sclerosis - Comparison With Normal Dose.","Cortical Lesions in the Primary Sensorimotor Hand Area and Their Impact on Dexterity in Multiple Sclerosis: a 7T MRI Study","A Combination Trial of Copaxone Plus Estriol in RRMS","Clinical Patterns of Neuromyelitis Optica Spectrum Disorders in Assiut University Hospital","A Study to Assess Quality of Life in Stroke and Multiple Sclerosis Patients of the Same Age Range","Role of Vitamin D on the Relapse Rate of Multiple Sclerosis","Exercise as a Supplemental Treatment Strategy Early in the Disease Course of Multiple Sclerosis","fMRI and Neurophysiological Study Protocol on Cannabinoids in Multiple Sclerosis","Evaluating the Effect of Fingolimod With Fish Oil Compared to Fingolimod With Placebo on Tumor Necrosis Factor-\u03b1 , Interleukin1b , Interleukin6, and Interferon-gamma in Patients With Relapsing-Remitting Multiple Sclerosis","Phase 2-3 Use of Bacille Calmette-Gu\u00e8rin (BCG) Vaccine in Patients With a First Clinical Demyelinating Episode: a Multicenter, Randomized, Single Blind Study.","Keratinocyte Growth Factor - Promoting Thymic Reconstitution and Preventing Autoimmunity After Alemtuzumab (Campath-1H) Treatment of Multiple Sclerosis","A Systems Approach to Understanding Disease Processes in Multiple Sclerosis","The Reliability and Validity of the Functional Reach Test in Patients With Multiple Sclerosis","Evaluation of Cerebrovascular Hemodynamics With Transcranial Doppler and Near-infrared Spectroscopy in Patients With Multiple Sclerosis","A Phase II Study of High-Dose Immunosuppressive Therapy Using Carmustine, Etoposide, Cytarabine, Melphalan, Thymoglobulin and Autologous CD34+ Hematopoietic Stem Cell Transplant for the Treatment of Poor Prognosis Multiple Sclerosis","Study of the Link Between Retinal Atrophy and Demyelinating Inflammatory Processes on Visual Pathways in Relapsing Multiple Sclerosis in Magnetic Resonance Imaging and Optical Coherence Tomography","Novel Nanosensor Array for Detection of Volatile Biomarkers From Skin in Multiple Sclerosis","Validation of a Shared Decision-Making Tool, MS-SUPPORT, to Improve Decisions About Disease Modifying Therapies (DMT) for Multiple Sclerosis","A Pilot Study of NeuBie, a Direct Current Electrical Stimulation Device, to Inhibit Lower Extremity Spasticity Levels and Normalize Muscle Functional Use During Transfers and Ambulation in Individuals With Multiple Sclerosis","Phase IA Trial of Intrathecal Administration of Human Umbilical Cord Blood-Derived Cell Therapy (DUOC-01) in Adults With Primary Progressive Multiple Sclerosis (PPMS)","A Single-center Prospective Measurement of Upper Extremity Function in Multiple Sclerosis Patients With Advanced Disability Treated With Ocrevus\u2122","Linking Optic Nerve Lesion Length at MRI and the Retinal Axonal Loss at 12 Months From a Clinical Episode of Optic Neuritis","Control Fatigue: Sleep Medical Treatment as a Novel Therapeutic Approach to an Unmet Medical Need in Multiple Sclerosis","Testosterone TReatment for Erectile Dysfunction in Male Multiple Sclerosis Patients With Low Testosterone (TTRED-MS Study)","Immune Response to SARS-CoV2 Vaccinations in Treated MS Patients Compared to Controls","Remyelination in Multiple Sclerosis: a PET-MR Longitudinal Study Investigating Individual Profiles of Myelin Repair and the Contribution of Neuroinflammation","An Open Label Study of the Effects of Eculizumab in Neuromyelitis Optica","Efficacy and Safety of 4-aminopyridine on Cognitive Performance and Motor Function of Patients With Multiple Sclerosis. Randomized, Blinded, Placebo-controlled Clinical Trial.","MicroRNA-150 and microRNA-155 as Molecular Biomarkers in Multiple Sclerosis","Anti-Inflammatory Type II Monocyte Induction by Glatiramer Acetate (Copaxone) Treatment of Multiple Sclerosis","The Effects of Extremity and \"Core\" Muscles Strength on Walking and Sit-to-Stand Performance in Patients With Multiple Sclerosis","The Reliability, Validity, and Responsiveness of the Static Balance Test in Patients With Multiple Sclerosis.","An Exploratory Randomized Controlled Trial of a Manualized, Nurse-led, Telephone Intervention Support Service for Support Persons of People With Multiple Sclerosis","Controlled High-risk Avonex Multiple Sclerosis Prevention Study in Ongoing Neurologic Surveillance (CHAMPIONS10)","Assessment of the Effectiveness of Guided by a Physiotherapist Versus Non-guided Pelvic Floor Exercises for Urinary Incontinence (UI) in Patients With Relapsing-Remitting (RR) Multiple Sclerosis","Effect of Aerobic Exercises on Immune System in Patients With Multiple Sclerosis","Double-blinded, Randomized Controlled Trial of Simvastatin Use As Adjuvant Therapy in Relapsing-Remitting Multiple Sclerosis","The Effectiveness of Endovascular Treatment of Chronic Cerebrospinal Venous Insufficiency (CCSVI) in Patients With Multiple Sclerosis","Effect of Vitamin D Replacement on Immune Function and Cognition in MS Patients","Use of Cellular Stromal Vascular Fraction in Multiple Sclerosis","Study to Evaluate the Responsiveness and Minimal Clinical Important Difference (MCID) of the 'Multiple Sclerosis Questionnaire for Physiotherapists' (MSQPT)","Effect of Nordic Walking Training Compared With Conventional Endurance Training in Walking Capacity in People With Multiple Sclerosis: a Simple Blinded Randomized Controlled Trial","Efficacy of Sustained-release Oral Dalfampridine on Upper Extremity Function in Patients With Multiple Sclerosis: a Pilot Study","The Clinical Features of Combined Central and Peripheral Demyelination","Teriflunomide Observational Effectiveness Study","Multidimensional Assessment of Fatigue in Multiple Sclerosis- Observational Study - Ticino","Randomized Controlled Trial of Core Stability Training in Patients With Multiple Sclerosis: Biomechanical and Performance Based Analysis of Gait","Phase IV Study of Oral Prednisone Taper vs. Placebo Following Intravenous Steroids for the Treatment of Acute Relapses in Multiple Sclerosis Within the Ticino Cohort","Barriers to Physical Activity in People With MS (Barrieren f\u00fcr k\u00f6rperliche Aktivit\u00e4t Bei MS-Betroffenen - BarKA-MS) - A Longitudinal Observational Study","Reducing Sedentary Behaviour: A Novel Opportunity for Managing Comorbidity in MS?","Proposal to Create a Flagship Neurology and Palliative Care Service for South London","A Phase II Baseline Versus Treatment Study to Determine the Efficacy of Raltegravir (Isentress) in Preventing Progression of Relapsing Remitting Multiple Sclerosis as Determined by Gadolinium-enhanced MRI","The Relationship of Cognitive Functions to Physical and Personal Factors in Patients With Multiple Sclerosis","A First-in-Kind Randomized, Controlled Pilot Clinical Trial Testing Proactive vs Reactive Management of a Symptom Triad in Multiple Sclerosis","An Open-label, Randomised, Crossover Study to Assess the Relative Bioavailability of Different 2mg Formulations of GSK2018682(S1P1 Agonist) in Healthy Volunteers","The Efficacy of Eye Movement Desensitization and Reprocessing (EMDR) in Patients With Post Traumatic Stress Disorder in Multiple Sclerosis. A Randomized Controlled Trial.","Natalizumab De-escalation to Interferon-beta-1b in Patients With Relapsing-remitting Multiple Sclerosis: A Swiss Multicenter Study Prospective, Controlled, Single-arm, Open-label, Multi-centre, Phase IV Study","Gene Expression in MS Patients Before and During Treatment With High-dose Interferon Beta: Prospective Study for the Identification of Predicting Factors of Therapeutic Response.","Effects of Immersive Virtual Reality on Balance, Mobility, and Fatigue in Patients With Multiple Sclerosis","Deciphering the Role of the Gut Microbiota in Multiple Sclerosis","Factors That Influence Compliance With Disease-Modifying Therapy in Multiple Sclerosis","Assessment of Lesion Activity Analysis in the Avonex- Steroid Azathioprine (ASA) Study","Efficacy of COVID 19 SARS-CoV-2 mRNA Vaccination in Patients With Multiple Sclerosis Treated With Immune Modulating Medication (SARSmRNA_MS)","Relationship of Position Sense With Gait and Balance in Patients With Multiple Sclerosis","Understanding Evaluation of Patient Information Sheets of Two Multiple Sclerosis Studies Through User Testing Method in a Randomized, Open Label, Crossover Design","Longitudinal Effect of Vitamin D3 Replacement on Cognitive Performance and MRI Markers in Multiple Sclerosis Patients: A Single-Blind Randomized Clinical Trial","A Multicentre, Non Interventional, Non Randomized, Observational Study for the Assessment of Compliance and Persistence With Rebif\u00ae Therapy of Patients With Relapsing-Remitting Multiple Sclerosis as Well as for the Evaluation of Potential Factors Influencing These Parameters, in Real Life Clinical Practice","Single Test to ARrive at MS Diagnosis. A Prospective, Longitudinal, Investigator Blinded, Pilot Study Assessing the Accuracy of a Single 3 Tesla MRI Scan in Predicting Multiple Sclerosis in Cases of Diagnostic Uncertainty","Clinical Factors Associated With Position Sense in Patients With Multiple Sclerosis","The Effects of Vitamin D3 Supplementation on the T Cell Compartment in Multiple Sclerosis; a Pilot Study","A Phase I/II, Open-Label Pilot Trial to Evaluate the Safety of Rapamune (Sirolimus) in Patients With Multiple Sclerosis","Physical Activity Intervention for Improving Vascular Comorbidity Risk in Multiple Sclerosis","Treatment of Multiple Sclerosis Using Over the Counter Inosine","Safety of Cultured Allogeneic Adult Umbilical Cord Derived Mesenchymal Stem Cell Intravenous Infusion for the Treatment of Multiple Sclerosis","Switching Relapsing Multiple Sclerosis Patients Treated With Natalizumab at Risk for Progressive Multifocal Leukoencephalopathy to Teriflunomide: Is This Safe and Effective? (Sub-study: SWITCH-JCV)","Herbal Therapy for Subcutaneous Injection Site Reactions in Multiple Sclerosis","Lokomat Treadmill Training Effects on MS Gait","The Reliability, Validity, and Responsiveness of the Timed 360\u00b0 Turn Test Test in Patients With Multiple Sclerosis","Functional Electrical Stimulation to Treat Foot Drop in People With Multiple Sclerosis","Interventions to Improve Memory in Patients With Multiple Sclerosis","Thematic Studies of Multiple Sclerosis and Related Diseases","Effects of Electromechanical Gait Trainer on Endurance, Fatigue and Daily Life Autonomy in Patients With Multiple Sclerosis: a Randomized Control Trial"],"legendgroup":"","marker":{"color":"#636efa","pattern":{"shape":""}},"name":"","offsetgroup":"","orientation":"v","showlegend":false,"textposition":"auto","x":["NCT04073940","NCT03782246","NCT04550455","NCT02104661","NCT03004079","NCT04466150","NCT04178005","NCT03949296","NCT03896217","NCT04113135","NCT04585659","NCT01337986","NCT02364505","NCT04496830","NCT02607020","NCT04236544","NCT03736902","NCT05081271","NCT04997343","NCT01149525","NCT03135249","NCT05029206","NCT04979546","NCT02544373","NCT02418325","NCT02587715","NCT02290444","NCT02377323","NCT00000147","NCT02587806","NCT03889327","NCT00000146","NCT04121637","NCT03804047","NCT02988401","NCT04121065","NCT03113162","NCT02939859","NCT02493049","NCT03586986","NCT04660227","NCT05112484","NCT04832269","NCT02525367","NCT05080270","NCT03826095","NCT03193086","NCT02280876","NCT02805634","NCT05046535","NCT04593082","NCT03464448","NCT03508284","NCT03999788","NCT04101058","NCT04431323","NCT03345537","NCT01973517","NCT02688231","NCT03975413","NCT04257071","NCT04182269","NCT04233970","NCT01611987","NCT03735524","NCT04743284","NCT03505294","NCT02914964","NCT00630383","NCT01563900","NCT03451955","NCT04902690","NCT04944251","NCT04762342","NCT02870023","NCT04212689","NCT04932616","NCT04524039","NCT02258217","NCT01836055","NCT01555684","NCT03512886","NCT01679041","NCT02335450","NCT01271699","DRKS00011257","NCT01466114","NCT04977622","NCT03315923","NCT01018537","NCT03000127","NCT04388592","NCT02308137","NCT02391298","NCT03594487","NCT03621761","NCT02903537","NCT04048577","NCT02419638","NCT05057676","NCT04009005","NCT02273635","NCT03297177","NCT04097418","NCT02331654","NCT02506751","NCT02710214","NCT03345940","NCT01627938","NCT03150966","NCT04183751","NCT04674163","NCT03591809","NCT00151801","NCT01144052","NCT03825055","NCT03847545","NCT02644044","NCT00270816","NCT03653585","NCT00451204","NCT03819413","NCT04758494","NCT01753375","NCT03322761","NCT00202423","NCT02939079","NCT00202410","NCT01712945","NCT05081700","NCT04185688","NCT02389426","NCT00288626","NCT03656055","NCT04074629","NCT04122989","NCT04942938","NCT04943289","NCT03562975","NCT03651362","NCT03759249","NCT04601233","NCT05060354","NCT05147532","NCT00904826","NCT02280096","NCT04300543","NCT00819195","NCT03597451","NCT03584672","NCT01302431","NCT00179478","NCT03000647","NCT04545372","NCT04178980","NCT01201707","NCT01952483","NCT03461419","NCT02346279","NCT03976128","NCT02259361","NCT04664647","NCT02490982","NCT02082002","NCT03442049","NCT01411514","NCT04746807","NCT03136744","NCT00364936","NCT01767701","NCT03594357","NCT03335618","NCT01466322","NCT01743664","NCT01701856","NCT00202384","NCT03501342","NCT02580435","NCT00223457","NCT01628315","NCT04796584","NCT04547400","NCT03155334","NCT03610139","NCT01112345","NCT02485223","NCT04548297","NCT00940719","NCT00095329","NCT03944538","NCT00067327","NCT05003388","NCT01970410","NCT00972062","NCT00835835","NCT03718026","NCT02123537","NCT00062972","NCT02504840","NCT01564511"],"xaxis":"x","y":[99,72,52,48,46,45,39,39,37,34,34,33,33,33,31,29,29,27,27,27,27,26,25,25,24,24,24,23,23,23,23,22,22,22,22,21,21,20,20,19,18,18,18,17,17,17,17,17,16,16,16,16,16,16,16,15,15,15,15,15,15,15,14,14,14,14,13,13,13,13,13,13,13,12,12,12,12,12,12,12,12,12,12,12,11,11,11,11,11,11,11,10,10,10,10,10,10,10,10,9,9,9,9,9,9,9,9,9,9,8,8,8,8,8,8,8,8,8,8,8,8,7,7,7,7,7,7,7,7,7,7,7,6,6,6,6,6,6,6,6,6,6,6,6,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,3],"yaxis":"y","type":"bar"}],                        {"template":{"data":{"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"heatmapgl":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmapgl"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermapbox"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"#E5ECF6","showlakes":true,"showland":true,"subunitcolor":"white"},"hoverlabel":{"align":"left"},"hovermode":"closest","mapbox":{"style":"light"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"title":{"x":0.05},"xaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","zerolinewidth":2}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"id"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"pubs_tot"}},"legend":{"tracegroupgap":0},"margin":{"t":60},"barmode":"relative"},                        {"responsive": true}                    ).then(function(){
+
+var gd = document.getElementById('2c6d0436-e642-4dc7-8260-3ce515ebfe15');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script>        </div></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> allows to carry out sophisticated research data analytics tasks like the ones described on this website. Check out also the associated <a class="reference external" href="https://github.com/digital-science/dimensions-api-lab">Github repository</a> for examples, the source code of these tutorials and much more.</p>
+</div>
+<a class="reference external image-reference" href="https://www.dimensions.ai/dimensions-apis/"><img alt="../../_images/badge-dimensions-api.svg" src="../../_images/badge-dimensions-api.svg" /></a>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+    <p>© Copyright 2020 Digital Science & Research Solutions, Inc. All Rights Reserved | <a href="https://www.dimensions.ai/">About us</a> · <a href="https://www.dimensions.ai/privacy/">Privacy policy</a> · <a href="https://www.dimensions.ai/website-terms/">Legal terms</a></p>
+     
+
+    <!-- OneTrust Cookies Settings button start -->
+    <button id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</button>
+    <!-- OneTrust Cookies Settings button end -->
+
+
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+    
+
+    <!-- Adds target=_blank to external links -->
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('a[href^="http://"], a[href^="https://"]').not('a[class*=internal]').attr('target', '_blank');
+    });
+  </script>
+
+
+  <!-- OneTrust Cookies Consent Notice start for dimensions.ai -->
+   <script type="text/javascript" src="https://cdn.cookielaw.org/consent/3329b668-7887-4dba-9bee-c3853a706e6f/OtAutoBlock.js" ></script>
+   <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="3329b668-7887-4dba-9bee-c3853a706e6f" ></script>
+   <script type="text/javascript">
+   function OptanonWrapper() { }
+   </script>
+   <!-- OneTrust Cookies Consent Notice end for dimensions.ai -->
+  
+
+
+</body>
+</html>

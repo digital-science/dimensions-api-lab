@@ -1226,7 +1226,7 @@ div.rendered_html tbody tr:hover {
 <div class="highlight"><pre>
 ==
 CHANGELOG
-This notebook was last run on Apr 19, 2023
+This notebook was last run on Jan 25, 2022
 ==
 </pre></div></div>
 </div>
@@ -1276,8 +1276,8 @@ Searching config file credentials for &#39;https://app.dimensions.ai&#39; endpoi
 <div class="highlight"><pre>
 ==
 Logging in..
-Dimcli - Dimensions API Client (v1.0.2)
-Connected to: &lt;https://app.dimensions.ai/api/dsl&gt; - DSL v2.6
+Dimcli - Dimensions API Client (v0.9.6)
+Connected to: &lt;https://app.dimensions.ai/api/dsl&gt; - DSL v2.0
 Method: dsl.ini file
 </pre></div></div>
 </div>
@@ -1604,9 +1604,7 @@ return grants
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Returned Grants: 1 (total = 1)
-Time: 0.65s
-WARNINGS [1]
-Field &#39;funder_countries&#39; is deprecated in favor of funder_org_countries. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
+Time: 0.59s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1632,33 +1630,33 @@ Field &#39;funder_countries&#39; is deprecated in favor of funder_org_countries.
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>id</th>
-      <th>title</th>
       <th>active_year</th>
       <th>end_date</th>
-      <th>funder_org_name</th>
-      <th>funder_orgs</th>
+      <th>funders</th>
+      <th>funding_org_name</th>
       <th>grant_number</th>
+      <th>id</th>
       <th>language</th>
       <th>original_title</th>
       <th>start_date</th>
       <th>start_year</th>
+      <th>title</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>grant.9923948</td>
-      <td>Vaccine Production in Plants</td>
       <td>[2011]</td>
       <td>2011-09-01</td>
-      <td>Council for International Exchange of Scholars</td>
       <td>[{'acronym': 'CIES', 'city_name': 'Washington ...</td>
+      <td>Council for International Exchange of Scholars</td>
       <td>N/A</td>
+      <td>grant.9923948</td>
       <td>en</td>
       <td>Vaccine Production in Plants</td>
       <td>2011-01-01</td>
       <td>2011</td>
+      <td>Vaccine Production in Plants</td>
     </tr>
   </tbody>
 </table>
@@ -1697,7 +1695,7 @@ The Dimensions ID is:  grant.9923948
 </ul>
 <p>NOTE For the purpose of this exercise, you can select less that the ~1200 grants in the original list, so to speed things up.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grants</span> <span class="o">=</span> <span class="n">grants_source</span><span class="p">[:</span><span class="mi">100</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -1705,7 +1703,7 @@ The Dimensions ID is:  grant.9923948
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grants</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
@@ -1713,7 +1711,7 @@ The Dimensions ID is:  grant.9923948
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1851,7 +1849,7 @@ The Dimensions ID is:  grant.9923948
 </div>
 <p>Setting up the loop</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load the progress bar widget for jupyter</span>
@@ -1859,16 +1857,19 @@ The Dimensions ID is:  grant.9923948
 
 <span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
 
+<span class="k">def</span> <span class="nf">remove_punctuation</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+  <span class="kn">import</span> <span class="nn">string</span>
+  <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">maketrans</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">string</span><span class="o">.</span><span class="n">punctuation</span><span class="p">))</span>
+
 <span class="k">def</span> <span class="nf">find_grant_first_method</span><span class="p">(</span><span class="n">grantno</span><span class="p">,</span> <span class="n">funder</span><span class="p">):</span>
-  <span class="n">match</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&#39;&#39;extract_grants(grant_number=&quot;</span><span class="si">{</span><span class="n">grantno</span><span class="si">}</span><span class="s1">&quot;, funder_name=&quot;</span><span class="si">{</span><span class="n">funder</span><span class="si">}</span><span class="s1">&quot;)&#39;&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span>
+  <span class="n">match</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;extract_grants(grant_number=&quot;</span><span class="si">{</span><span class="n">grantno</span><span class="si">}</span><span class="s2">&quot;, funder_name=&quot;</span><span class="si">{</span><span class="n">funder</span><span class="si">}</span><span class="s2">&quot;)&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span>
   <span class="n">grant_id</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;grant_id&quot;</span><span class="p">)</span>
   <span class="k">if</span> <span class="n">grant_id</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Found a match with method 1: &quot;</span><span class="p">,</span> <span class="n">grant_id</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">grant_id</span>
 
 <span class="k">def</span> <span class="nf">find_grant_second_method</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">country</span><span class="p">):</span>
-  <span class="c1"># match titles exactly - see also https://docs.dimensions.ai/dsl/language.html#using-triple-quotes</span>
-  <span class="n">res</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&#39;&#39;search grants in title_only for &quot;&quot;&quot; &quot;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s1">&quot; &quot;&quot;&quot; where funder_org_countries.name=&quot;</span><span class="si">{</span><span class="n">country</span><span class="si">}</span><span class="s1">&quot; return grants&#39;&#39;&#39;</span><span class="p">)</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;search grants in title_only for &quot;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2">&quot; where funder_countries.name=&quot;</span><span class="si">{</span><span class="n">country</span><span class="si">}</span><span class="s2">&quot; return grants&quot;&quot;&quot;</span><span class="p">)</span>
   <span class="k">if</span> <span class="ow">not</span> <span class="n">res</span><span class="o">.</span><span class="n">errors</span><span class="p">:</span>
       <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">grants</span> <span class="ow">and</span> <span class="n">res</span><span class="o">.</span><span class="n">grants</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">):</span>
         <span class="n">grant_id</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">grants</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span>
@@ -1883,7 +1884,7 @@ The Dimensions ID is:  grant.9923948
   <span class="n">grant_id</span> <span class="o">=</span> <span class="n">find_grant_first_method</span><span class="p">(</span><span class="n">grantno</span><span class="p">,</span> <span class="n">funder</span><span class="p">)</span>
   <span class="k">if</span> <span class="ow">not</span> <span class="n">grant_id</span><span class="p">:</span>
     <span class="c1"># try second method</span>
-    <span class="n">title</span><span class="p">,</span> <span class="n">country</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Title&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Funder Country&#39;</span><span class="p">]</span>
+    <span class="n">title</span><span class="p">,</span> <span class="n">country</span> <span class="o">=</span> <span class="n">remove_punctuation</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Title&#39;</span><span class="p">]),</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Funder Country&#39;</span><span class="p">]</span>
     <span class="n">grant_id</span> <span class="o">=</span> <span class="n">find_grant_second_method</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">country</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">grant_id</span><span class="p">:</span>
       <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Failed - skipping&quot;</span><span class="p">)</span>
@@ -1896,7 +1897,7 @@ The Dimensions ID is:  grant.9923948
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "b429ac7fbeaa49378a7f57073f53485a", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "1128bcc0b7544531884489b7ff72cd87", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
@@ -1905,33 +1906,33 @@ The Dimensions ID is:  grant.9923948
 <div class="highlight"><pre>
 Found a match with method 1:  grant.8172033
 Returned Grants: 3 (total = 3)
-Time: 0.56s
+Time: 0.60s
 === Found a match with method 2:  grant.7715379
 Returned Grants: 3 (total = 3)
-Time: 3.35s
+Time: 0.51s
 === Found a match with method 2:  grant.7715379
 Found a match with method 1:  grant.6723913
 Found a match with method 1:  grant.6722306
 Found a match with method 1:  grant.6716312
 Returned Grants: 3 (total = 3)
-Time: 7.82s
+Time: 0.54s
 === Found a match with method 2:  grant.7715379
 Found a match with method 1:  grant.3733803
 Found a match with method 1:  grant.3274273
+Returned Grants: 4 (total = 4)
+Time: 0.62s
+=== Found a match with method 2:  grant.7637970
+Returned Grants: 4 (total = 4)
+Time: 28.84s
+=== Found a match with method 2:  grant.7637970
+Returned Grants: 2 (total = 2)
+Time: 0.62s
+=== Found a match with method 2:  grant.2807651
 Returned Grants: 2 (total = 2)
 Time: 1.62s
-=== Found a match with method 2:  grant.2863615
-Returned Grants: 2 (total = 2)
-Time: 0.55s
-=== Found a match with method 2:  grant.2863615
-Returned Grants: 2 (total = 2)
-Time: 6.07s
 === Found a match with method 2:  grant.2807651
 Returned Grants: 2 (total = 2)
-Time: 3.28s
-=== Found a match with method 2:  grant.2807651
-Returned Grants: 2 (total = 2)
-Time: 6.50s
+Time: 0.53s
 === Found a match with method 2:  grant.2920553
 Found a match with method 1:  grant.2710461
 Found a match with method 1:  grant.2657659
@@ -1957,50 +1958,50 @@ Found a match with method 1:  grant.6728996
 Found a match with method 1:  grant.6723289
 Found a match with method 1:  grant.6718929
 Found a match with method 1:  grant.6713873
-Returned Grants: 4 (total = 4)
-Time: 2.53s
-=== Found a match with method 2:  grant.6585159
+Returned Grants: 20 (total = 25)
+Time: 0.67s
+=== Found a match with method 2:  grant.9733127
 Returned Grants: 2 (total = 2)
-Time: 4.45s
+Time: 0.57s
 === Found a match with method 2:  grant.7667275
 Returned Grants: 2 (total = 2)
-Time: 5.75s
-=== Found a match with method 2:  grant.2957579
-Returned Grants: 1 (total = 1)
 Time: 0.53s
-=== Found a match with method 2:  grant.2972379
-Returned Grants: 2 (total = 2)
-Time: 0.66s
-=== Found a match with method 2:  grant.2964974
-Returned Grants: 2 (total = 2)
-Time: 2.65s
 === Found a match with method 2:  grant.2957579
+Returned Grants: 2 (total = 2)
+Time: 0.65s
+=== Found a match with method 2:  grant.2869083
+Returned Grants: 5 (total = 5)
+Time: 0.60s
+=== Found a match with method 2:  grant.4173726
+Returned Grants: 2 (total = 2)
+Time: 0.53s
+=== Found a match with method 2:  grant.2957579
+Returned Grants: 0
+Time: 0.82s
+Failed - skipping
+Returned Grants: 1 (total = 1)
+Time: 36.89s
+=== Found a match with method 2:  grant.2920553
+Returned Grants: 0
+Time: 4.09s
+Failed - skipping
+Returned Grants: 5 (total = 5)
+Time: 0.59s
+=== Found a match with method 2:  grant.4173726
+Returned Grants: 2 (total = 2)
+Time: 0.62s
+=== Found a match with method 2:  grant.2880945
+Returned Grants: 0
+Time: 0.64s
+Failed - skipping
 Returned Grants: 0
 Time: 0.54s
 Failed - skipping
-Returned Grants: 1 (total = 1)
-Time: 0.55s
-=== Found a match with method 2:  grant.2920553
-Returned Grants: 3 (total = 3)
-Time: 3.16s
-=== Found a match with method 2:  grant.7654331
 Returned Grants: 2 (total = 2)
-Time: 4.28s
-=== Found a match with method 2:  grant.2964974
-Returned Grants: 2 (total = 2)
-Time: 5.40s
-=== Found a match with method 2:  grant.2880945
-Returned Grants: 0
-Time: 0.58s
-Failed - skipping
-Returned Grants: 0
-Time: 6.05s
-Failed - skipping
-Returned Grants: 2 (total = 2)
-Time: 0.52s
+Time: 0.57s
 === Found a match with method 2:  grant.2880945
 Returned Grants: 1 (total = 1)
-Time: 0.55s
+Time: 0.62s
 === Found a match with method 2:  grant.2795214
 Found a match with method 1:  grant.2692263
 Found a match with method 1:  grant.2688631
@@ -2029,13 +2030,13 @@ Found a match with method 1:  grant.8166566
 Found a match with method 1:  grant.7988463
 Found a match with method 1:  grant.100075050
 Returned Grants: 2 (total = 2)
-Time: 3.13s
+Time: 0.57s
 === Found a match with method 2:  grant.7688859
 Returned Grants: 1 (total = 1)
-Time: 0.57s
+Time: 0.60s
 === Found a match with method 2:  grant.9923948
 Returned Grants: 1 (total = 1)
-Time: 4.67s
+Time: 0.58s
 === Found a match with method 2:  grant.7666696
 Found a match with method 1:  grant.8684816
 Found a match with method 1:  grant.8633207
@@ -2061,7 +2062,7 @@ Found a match with method 1:  grant.7752982
 <h3>Enriching the original list<a class="headerlink" href="#Enriching-the-original-list" title="Permalink to this headline">¶</a></h3>
 <p>Finally, we can take the Dimensions ID data we extracted and add it to the original grants table as an extra column.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grants</span><span class="p">[</span><span class="s2">&quot;Dimensions ID&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">output</span>
@@ -2069,7 +2070,7 @@ Found a match with method 1:  grant.7752982
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grants</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
@@ -2077,7 +2078,7 @@ Found a match with method 1:  grant.7752982
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -2218,7 +2219,7 @@ Found a match with method 1:  grant.7752982
       <td>2004</td>
       <td>Natural Sciences and Engineering Research Council</td>
       <td>Canada</td>
-      <td>grant.2863615</td>
+      <td>grant.7637970</td>
     </tr>
   </tbody>
 </table>

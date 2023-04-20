@@ -1,0 +1,2522 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Journal Profiling Part 1: Getting the Data &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/js/custom.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Journal Profiling Part 2: Impact Metrics" href="Journal-Profile-2-Researchers-Impact-Metrics.html" />
+    <link rel="prev" title="Citation Analysis: Journals Cited by a Research Organization" href="Which-Are-the-Journals-Cited-By-My-Organization.html" />
+    
+
+   <!-- Global site tag (gtag.js) - Google Analytics -->
+   <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y26MGCNDNL"></script>
+   <script>
+   window.dataLayer = window.dataLayer || [];
+   function gtag(){dataLayer.push(arguments);}
+   gtag('js', new Date());
+
+   gtag('config', 'G-Y26MGCNDNL');
+   </script>
+
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> DSL
+          
+
+          
+            
+            <img src="../../_static/dimensions-logo@2x.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+
+   <p class="">
+      <h3 id="cookbooks_title">API COOKBOOKS</h3>
+   </p>
+
+
+   
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/0-Verifying-your-connection.html">Verifying Your API Connection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/0-Verifying-your-connection.html#Technical-prerequisites">Technical prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/0-Verifying-your-connection.html#Connecting-to-the-API-using-a-key">Connecting to the API using a <code class="docutils literal notranslate"><span class="pre">key</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/0-Verifying-your-connection.html#Legacy-authentication-method:-username-&amp;-password">Legacy authentication method: username &amp; password</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/0-Verifying-your-connection.html#Troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html">The Dimcli Python library: Installation and Querying</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Authentication">Authentication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#More-secure-method:-storing-a-private-credentials-file">More secure method: storing a private credentials file</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Querying">Querying</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Simple-Querying">Simple Querying</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Iterative-querying-(loops)">Iterative querying (loops)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Command-line-interface">Command line interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Running-the-CLI">Running the CLI</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html">The Dimcli Python library: Working with Pandas Dataframes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#1.-General-method-to-transform-JSON-query-results-into-a-dataframe">1. General method to transform JSON query results into a dataframe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#2.-Dataframe-Methods-for-‘Publications’-queries">2. Dataframe Methods for ‘Publications’ queries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#Extracting-authors:-as_dataframe_authors">Extracting authors: <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#Extracting-Affiliations:-as_dataframe_authors_affiliations">Extracting Affiliations: <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors_affiliations</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#3.-Dataframe-Methods-for-‘Grants’-queries">3. Dataframe Methods for ‘Grants’ queries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#Extracting-Funders:-as_dataframe_funders">Extracting Funders: <code class="docutils literal notranslate"><span class="pre">as_dataframe_funders</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#Extracting-investigators:-as_dataframe_investigators">Extracting investigators: <code class="docutils literal notranslate"><span class="pre">as_dataframe_investigators</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#4.-Dataframe-Methods-for-‘Concepts’-queries">4. Dataframe Methods for ‘Concepts’ queries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#Extracting-Concepts:-as_dataframe_concepts">Extracting Concepts: <code class="docutils literal notranslate"><span class="pre">as_dataframe_concepts</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/3-Working-with-dataframes.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html">The Dimcli Python library: Magic Commands</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#Dimcli-‘magic’-commands">Dimcli ‘magic’ commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#Tip:-Accessing-data-returned-by-magic-queries">Tip: Accessing data returned by magic queries</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#1.-Simple-queries-with-%dsl-or-%%dsl">1. Simple queries with <code class="docutils literal notranslate"><span class="pre">%dsl</span></code> or <code class="docutils literal notranslate"><span class="pre">%%dsl</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#2.-Loop-queries-with-%dslloop-or-%%dslloop">2. Loop queries with <code class="docutils literal notranslate"><span class="pre">%dslloop</span></code> or <code class="docutils literal notranslate"><span class="pre">%%dslloop</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#3.-Returning-dataframes:-%dsldf-and-%%dsldf">3. Returning dataframes: <code class="docutils literal notranslate"><span class="pre">%dsldf</span></code> and <code class="docutils literal notranslate"><span class="pre">%%dsldf</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#4.-Looped-dataframe-queries:-%dslloopdf-and-%%dslloopdf">4. Looped dataframe queries: <code class="docutils literal notranslate"><span class="pre">%dslloopdf</span></code> and <code class="docutils literal notranslate"><span class="pre">%%dslloopdf</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/4-Dimcli-magic-commands.html#5.-Getting-API-schema-documentation-with-%dsldocs">5. Getting API schema documentation with <code class="docutils literal notranslate"><span class="pre">%dsldocs</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html">Exploring The Dimensions Search Language (DSL) - Quick Intro</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Prerequisites">Prerequisites</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#What-the-query-statistics-refer-to">What the query statistics refer to</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Working-with-fields">Working with fields</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Control-the-fields-you-return">Control the fields you return</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Make-a-mistake,-and-the-DSL-will-tell-you-what-fields-that-you-could-have-used">Make a mistake, and the DSL will tell you what fields that you could have used</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Full-text-search">Full text search</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#A-simple-author-search">A simple author search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#..or-search-for-a-researcher-by-a-specific-id">..or search for a researcher by a specific id</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Sources-VS-Facets">Sources VS Facets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#You-can-paginate-through-source-results-up-to-50000-rows">You can paginate through <em>source</em> results up to 50000 rows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#You-can-return-max-1000-facet-rows">You can return max 1000 <code class="docutils literal notranslate"><span class="pre">facet</span></code> rows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/2-Understanding-query-results.html#Just-make-a-mistake,-and-you-will-ge-the-complete-list-of-available-facets">Just make a mistake, and you will ge the complete list of available facets</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html">Exploring The Dimensions Search Language (DSL) - Deep Dive</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#What-is-the-Dimensions-Search-Language?">What is the Dimensions Search Language?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#Sections-Index">Sections Index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#1.-Basic-query-structure">1. Basic query structure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#search-source"><code class="docutils literal notranslate"><span class="pre">search</span> <span class="pre">source</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#return-result-(source-or-facet)"><code class="docutils literal notranslate"><span class="pre">return</span></code> result (source or facet)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#2.-Full-text-Searching">2. Full-text Searching</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#2.1-in-[search-index]">2.1 <code class="docutils literal notranslate"><span class="pre">in</span> <span class="pre">[search</span> <span class="pre">index]</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#2.2-for-&quot;search-term&quot;">2.2 <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">&quot;search</span> <span class="pre">term&quot;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#2.3-Boolean-Operators">2.3 Boolean Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#2.4-Wildcard-Searches">2.4 Wildcard Searches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#2.5-Proximity-Searches">2.5 Proximity Searches</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#3.-Field-Searching">3. Field Searching</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#3.1-where">3.1 <code class="docutils literal notranslate"><span class="pre">where</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#3.2-in">3.2 <code class="docutils literal notranslate"><span class="pre">in</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#3.3-count---filter-function">3.3 <code class="docutils literal notranslate"><span class="pre">count</span></code> - filter function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#3.4-Filter-Operators">3.4 Filter Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#3.5-Partial-string-matching-with-~">3.5 Partial string matching with <code class="docutils literal notranslate"><span class="pre">~</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#3.6-Emptiness-filters-is-empty">3.6 Emptiness filters <code class="docutils literal notranslate"><span class="pre">is</span> <span class="pre">empty</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#4.-Searching-for-Researchers">4. Searching for Researchers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#4.1-Exact-name-searches">4.1 Exact name searches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#4.2-Fuzzy-Searches">4.2 Fuzzy Searches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#4.3-Using-the-disambiguated-Researchers-database">4.3 Using the disambiguated Researchers database</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.-Returning-results">5. Returning results</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.1-Returning-Multiple-Sources">5.1 Returning Multiple Sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.2-Returning-Specific-Fields">5.2 Returning Specific Fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.3-Returning-Facets">5.3 Returning Facets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.4-What-the-query-statistics-refer-to---sources-VS-facets">5.4 What the query statistics refer to - sources VS facets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.5-Paginating-Results">5.5 Paginating Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.6-Sorting-Results">5.6 Sorting Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#5.7-Unnesting-results">5.7 Unnesting results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#6.-Aggregations">6. Aggregations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#6.1-Complex-aggregations">6.1 Complex aggregations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#Publications-citations_per_year">Publications <code class="docutils literal notranslate"><span class="pre">citations_per_year</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../1-getting-started/5-Deep-dive-DSL-language.html#Grants-funding_per_year">Grants <code class="docutils literal notranslate"><span class="pre">funding_per_year</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html">Working with lists in the Dimensions API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#1.-How-do-we-use-lists-in-the-Dimensions-API?">1. How do we use lists in the Dimensions API?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#2.-What-are-all-the-things-that-we-can-make-lists-of-in-the-Dimensions-API?">2. What are all the things that we can make lists of in the Dimensions API?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#What-are-the-internal-Entities-that-we-might-put-in-a-list?">What are the internal Entities that we might put in a list?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#What-about-lists-of-ids?">What about lists of ids?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#What-are-the-external-entities-that-we-can-put-in-a-list?">What are the external entities that we can put in a list?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#3.-Making-a-list-from-the-results-of-a-query">3. Making a list from the results of a query</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#Putting-both-parts-of-this-example-together">Putting both parts of this example together</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#Doing-something-useful:-Get-all-the-publications-that-cite-my-publications">Doing something useful: Get all the publications that cite my publications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#5.-How-Long-can-lists-get?">5. How Long can lists get?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#This-won’t-work">This won’t work</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#This-will">This will</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#What-if-I-need-a-very-long-list?">What if I need a very long list?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#6.-What-if-I-want-to-get-the-researchers-associated-with-the-publications-the-cite-my-institution?">6. What if I want to get the researchers associated with the publications the cite my institution?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#7.-What-if-I-want-to-get-all-the-researchers-associated-with-the-publications-that-cite-my-institution?">7. What if I want to get <em>all</em> the researchers associated with the publications that cite my institution?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#8.-..and-if-we-want-details-about-our-researchers,-we-can-put-our-list-of-researchers-into-the-researcher-API">8. ..and if we want details about our researchers, we can put our list of researchers into the researcher API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#9.-Patents-example-(patents--&gt;-publications)">9. Patents example (patents -&gt; publications)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#10.-Clinical-Trials-(clinical-trials--&gt;-publications)">10. Clinical Trials (clinical trials -&gt; publications)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#11.-Grants-(publications--&gt;-grants)">11. Grants (publications -&gt; grants)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/6-Working-with-lists.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html">Working with <em>concepts</em> in the Dimensions API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#1.-Background:-What-are-concepts?">1. Background: What are <code class="docutils literal notranslate"><span class="pre">concepts</span></code>?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#1.1-From-concepts-to-dataframes:-Dimcli’s-as_dataframe_concepts-method">1.1 From concepts to dataframes: Dimcli’s <code class="docutils literal notranslate"><span class="pre">as_dataframe_concepts</span></code> method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#1.2-Extracting-concepts-from-any-text">1.2 Extracting concepts from any text</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#2.-Data-acquisition:-retrieving-publications-and-all-their-associated-concepts">2. Data acquisition: retrieving publications and all their associated concepts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#2.1-Processing-concept-data">2.1 Processing concept data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#3.-Exploring-our-dataset:-basic-statistics-about-Publications-/-Concepts">3. Exploring our dataset: basic statistics about Publications / Concepts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#3.1-Documents-With-concepts-VS-Without">3.1 Documents With concepts VS Without</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#3.2-Yearly-breakdown-of-Documents-With-concepts-VS-Without">3.2 Yearly breakdown of Documents With concepts VS Without</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#3.3-Concepts-frequency">3.3 Concepts frequency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#3.4-Distribution-of-Concepts-Frequency">3.4 Distribution of Concepts Frequency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#3.5-Yearly-breakdown:-unique-VS-repeated-concepts">3.5 Yearly breakdown: unique VS repeated concepts</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#4.-Isolating-‘interesting’-concepts-using-frequency-and-score_avg">4. Isolating ‘interesting’ concepts using <code class="docutils literal notranslate"><span class="pre">frequency</span></code> and <code class="docutils literal notranslate"><span class="pre">score_avg</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#4.1-The-problem:-frequent-concepts-are-not-that-interesting!">4.1 The problem: frequent concepts are not <em>that</em> interesting!</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#4.2-Solution-1:-prefiltering-by-score_avg-and-sorting-by-frequency">4.2 Solution 1: prefiltering by <code class="docutils literal notranslate"><span class="pre">score_avg</span></code> and sorting by <code class="docutils literal notranslate"><span class="pre">frequency</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#4.3-Solution-2:-prefiltering-by-frequency-and-sorting-by-score_avg">4.3 Solution 2: prefiltering by <code class="docutils literal notranslate"><span class="pre">frequency</span></code> and sorting by <code class="docutils literal notranslate"><span class="pre">score_avg</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#5.-Analyses-By-Year">5. Analyses By Year</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#5.1-Adding-year-based-metrics-to-the-concepts-dataframe">5.1 Adding year-based metrics to the concepts dataframe</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#5.2-Charting-the-variation:-multi-year-visualization">5.2 Charting the variation: multi-year visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#6.-Conclusion">6. Conclusion</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#The-main-takeaways">The main takeaways</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1-getting-started/7-Working-with-concepts.html#What-next">What next</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Publications</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="General-statistics.html">General Publication Statistics about a Research Organization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Choose-a-Research-Organization">Choose a Research Organization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Publications-output-by-year">Publications output by year</a></li>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Publications-most-cited-in-last-2-years">Publications most cited in last 2 years</a></li>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Publications-most-cited---all-time">Publications most cited - all time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Publications-most-cited-:-which-research-areas?">Publications most cited : which research areas?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Publications-most-cited-:-which-journals?">Publications most cited : which journals?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Top-Funders-(by-aggregated-funding-amount)">Top Funders (by aggregated funding amount)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Top-funders-split-by-country-of-the-funder">Top funders split by country of the funder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="General-statistics.html#Correlation-between-No-of-Publications-VS-Funding">Correlation between No of Publications VS Funding</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Citation-Analysis.html">Citation Analysis: an Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Citation-Analysis.html#1.-Prerequisites">1. Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Citation-Analysis.html#Method-A:-getting-citations-for-one-publication-at-a-time">Method A: getting citations for one publication at a time</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Citation-Analysis.html#Comments-about-this-method">Comments about this method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Citation-Analysis.html#Method-B:-Getting-citations-for-multiple-publications-via-a-single-query">Method B: Getting citations for multiple publications via a single query</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Citation-Analysis.html#Creating-a-second-level-citations-network">Creating a second-level citations network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Citation-Analysis.html#Building-a-Simple-Dataviz">Building a Simple Dataviz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Citation-Analysis.html#Final-considerations">Final considerations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Citation-Analysis.html#Querying-for-more-than-1000-results">Querying for more than 1000 results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Citation-Analysis.html#Querying-for-more-than-50K-results">Querying for more than 50K results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Citation-Analysis.html#Dealing-with-highly-cited-publications">Dealing with highly cited publications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Citation-Analysis.html#Pre-checking-citations-counts">Pre-checking citations counts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html">Citation Analysis: Journals Citing a Research Organization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html#1.-Prerequisites">1. Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html#2.-Choose-a-Research-Organization">2. Choose a Research Organization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html#3.-Building-a-Publications-Baseset">3. Building a Publications Baseset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html#4.-Extracting-Publications-Citing-the-Baseset">4. Extracting Publications Citing the Baseset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html#5.-Journal-Analysis">5. Journal Analysis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html#Number-of-Unique-journals">Number of Unique journals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html#Most-frequent-journals">Most frequent journals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html#Top-100-journals-chart">Top 100 journals chart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Which-Are-the-Journals-Citing-My-Organization.html#Top-20-journals-by-year-chart">Top 20 journals by year chart</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Which-Are-the-Journals-Cited-By-My-Organization.html">Citation Analysis: Journals Cited by a Research Organization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Which-Are-the-Journals-Cited-By-My-Organization.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Which-Are-the-Journals-Cited-By-My-Organization.html#1.-Choosing-a-Research-Organization">1. Choosing a Research Organization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Which-Are-the-Journals-Cited-By-My-Organization.html#1.1-Selecting-a-Field-of-Research-ID">1.1 Selecting a Field of Research ID</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Which-Are-the-Journals-Cited-By-My-Organization.html#2.-Getting-the-IDs-of-the-outgoing-citations">2. Getting the IDs of the outgoing citations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Which-Are-the-Journals-Cited-By-My-Organization.html#2.1-Removing-duplicates-and-counting-most-frequent-citations">2.1 Removing duplicates and counting most frequent citations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Which-Are-the-Journals-Cited-By-My-Organization.html#3.-Enriching-the-citations-IDs-with-other-publication-metadata">3. Enriching the citations IDs with other publication metadata</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Which-Are-the-Journals-Cited-By-My-Organization.html#3.1-Adding-the-citations-counts">3.1 Adding the citations counts</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Which-Are-the-Journals-Cited-By-My-Organization.html#4.-Journal-Analysis">4. Journal Analysis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Which-Are-the-Journals-Cited-By-My-Organization.html#4.1-Number-of-Unique-journals">4.1 Number of Unique journals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Which-Are-the-Journals-Cited-By-My-Organization.html#4.2-Most-frequent-journals">4.2 Most frequent journals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Which-Are-the-Journals-Cited-By-My-Organization.html#4.3-Top-50-journals-chart,-by-publisher">4.3 Top 50 journals chart, by publisher</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Which-Are-the-Journals-Cited-By-My-Organization.html#4.4-Top-20-journals-by-year-of-the-cited-publication">4.4 Top 20 journals by year of the cited publication</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Which-Are-the-Journals-Cited-By-My-Organization.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Journal Profiling Part 1: Getting the Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Selecting-a-Journal-and-Extracting-All-Publications-Metadata">Selecting a Journal and Extracting All Publications Metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Basic-stats-about-authors">Basic stats about authors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#A-quick-look-at-authors-without-a-Dimensions-Researcher-ID">A quick look at authors <em>without</em> a Dimensions Researcher ID</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Any-common-patterns?">Any common patterns?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Creating-an-export-for-manual-curation">Creating an export for manual curation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Journal-Profile-2-Researchers-Impact-Metrics.html">Journal Profiling Part 2: Impact Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-2-Researchers-Impact-Metrics.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-2-Researchers-Impact-Metrics.html#Measuring-the-Impact-of-Researchers-within-a-Journal">Measuring the Impact of Researchers within a Journal</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Journal-Profile-2-Researchers-Impact-Metrics.html#Load-the-publications-and-authors-data-previously-saved">Load the publications and authors data previously saved</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Journal-Profile-2-Researchers-Impact-Metrics.html#Isolate-the-Researchers-data-(=-authors-with-an-ID)">Isolate the Researchers data (= authors with an ID)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Journal-Profile-2-Researchers-Impact-Metrics.html#Enrich-the-data-with-Impact-Statistics">Enrich the data with Impact Statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-2-Researchers-Impact-Metrics.html#Couple-of-Dataviz">Couple of Dataviz</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html">Journal Profiling Part 3: Funding</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#Prerequisites">Prerequisites</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#Load-previously-saved-researchers-data">Load previously saved researchers data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#Adding-another-impact-measure:-funding">Adding another impact measure: funding</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#We’ll-have-to-do-it-in-two-steps">We’ll have to do it in two steps</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#Next:-full-data-for-step-1">Next: full data for step 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#Next:-full-data-for-step-2">Next: full data for step 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#Finally:-let’s-merge-the-new-data-into-the-‘researchers-impact’-table">Finally: let’s merge the new data into the ‘researchers-impact’ table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-3-Funding-of-Researchers.html#Couple-of-Dataviz">Couple of Dataviz</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Journal-Profile-4-Institutions.html">Journal Profiling Part 4: Institutions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Institutions-Contributing-to-a-Journal">Institutions Contributing to a Journal</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Load-previously-saved-affiliations-data">Load previously saved affiliations data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Basic-stats-about-affiliations">Basic stats about affiliations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Enriching-the-unique-affiliations-(GRIDs-list)-with-pubs-count-and-authors-count">Enriching the unique affiliations (GRIDs list) with pubs count and authors count</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-4-Institutions.html#Couple-of-Dataviz">Couple of Dataviz</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Journal-Profile-5-Competitive-Analysis.html">Journal Profiling Part 5: Competing Journals Analysis</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-5-Competitive-Analysis.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-5-Competitive-Analysis.html#Competing-Journals">Competing Journals</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Journal-Profile-5-Competitive-Analysis.html#First-let’s-reload-the-data-obtained-in-previous-steps">First let’s reload the data obtained in previous steps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Journal-Profile-5-Competitive-Analysis.html#What-the-query-looks-like">What the query looks like</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-5-Competitive-Analysis.html#Extracting-all-publications/journals-information">Extracting all publications/journals information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Journal-Profile-5-Competitive-Analysis.html#Visualizations">Visualizations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Simple-topic-analysis.html">Topic Modeling Analysis for a Set of Publications: Basic Workflow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Simple-topic-analysis.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Simple-topic-analysis.html#1.-Creating-a-Dataset:-e.g. Publications-from-a-Research-Organization">1. Creating a Dataset: e.g. Publications from a Research Organization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Simple-topic-analysis.html#2.-Concepts:-exploratory-analysis">2. Concepts: exploratory analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Simple-topic-analysis.html#3.-Building-a-word-cloud-visualization">3. Building a word-cloud visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Simple-topic-analysis.html#4.-Trend-analysis---‘emerging’-new-topics-each-year">4. Trend analysis - ‘emerging’ new topics each year</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Simple-topic-analysis.html#5.-Trend-Analysis:-topics-growth">5. Trend Analysis: topics growth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Simple-topic-analysis.html#6.-Trend-analysis:-growth-distribution-based-on-selected-years">6. Trend analysis: growth distribution based on selected years</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Simple-topic-analysis.html#7.-Conclusion">7. Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Concepts-network-graph.html">Building a concepts co-occurence network</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Concepts-network-graph.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts-network-graph.html#Step-1:-Creating-a-dataset">Step 1: Creating a dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts-network-graph.html#Step-2:-Building-a-concepts-co-occurrence-network">Step 2: Building a concepts co-occurrence network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts-network-graph.html#Step-3:-Visualizing-the-network">Step 3: Visualizing the network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts-network-graph.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Grants</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html">Enriching Grants part 1: Matching your grants records to Dimensions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#A-sample-grants-list">A sample grants list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#Loading-the-sample-grants-data">Loading the sample grants data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#Matching-grants-data">Matching grants data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#A)-Matching-grants-when-we-have-a-grant-number">A) Matching grants when we have a grant number</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#B)-What-if-we-don’t-have-a-grant-number?">B) What if we don’t have a grant number?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#Back-to-our-grants-list">Back to our grants list</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#Enriching-the-original-list">Enriching the original list</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3-grants/2-grants-enrichment-adding-publications-information.html">Enriching Grants part 2: Adding Publications Information from Dimensions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/2-grants-enrichment-adding-publications-information.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/2-grants-enrichment-adding-publications-information.html#Reusing-the-sample-grants-data-from-part-1">Reusing the sample grants data from part-1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/2-grants-enrichment-adding-publications-information.html#Extracting-linked-Publications-data-from-Dimensions">Extracting linked Publications data from Dimensions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/2-grants-enrichment-adding-publications-information.html#Building-a-looped-extraction">Building a looped extraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/2-grants-enrichment-adding-publications-information.html#Final-step:-grouping-publications-by-grant">Final step: grouping publications by grant</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/2-grants-enrichment-adding-publications-information.html#Data-Exploration">Data Exploration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/2-grants-enrichment-adding-publications-information.html#Publications-per-grant-by-year-and-funding-amount">Publications per grant by year and funding amount</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/2-grants-enrichment-adding-publications-information.html#Publications-per-grant-by-country">Publications per grant by country</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/2-grants-enrichment-adding-publications-information.html#Correlation-of-num-of-publications-to-grant-length">Correlation of num of publications to grant length</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/2-grants-enrichment-adding-publications-information.html#Publications-by-grant-funder">Publications by grant funder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/2-grants-enrichment-adding-publications-information.html#Publications-by-grant-funder-vs-funding-amount">Publications by grant funder vs funding amount</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/2-grants-enrichment-adding-publications-information.html#Conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3-grants/3-grants-enrichment-adding-patents-cltrials-information.html">Enriching Grants part 3: adding related Patents and Clinical Trials data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/3-grants-enrichment-adding-patents-cltrials-information.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/3-grants-enrichment-adding-patents-cltrials-information.html#Reusing-the-enriched-grants-data-from-part-2">Reusing the enriched grants data from part-2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/3-grants-enrichment-adding-patents-cltrials-information.html#Extracting-linked-Patents-data">Extracting linked Patents data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/3-grants-enrichment-adding-patents-cltrials-information.html#Extracting-linked-Clinical-Trials-data">Extracting linked Clinical Trials data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/3-grants-enrichment-adding-patents-cltrials-information.html#Data-Exploration">Data Exploration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/3-grants-enrichment-adding-patents-cltrials-information.html#How-many-linked-objects-overall?">How many linked objects overall?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/3-grants-enrichment-adding-patents-cltrials-information.html#Patents-and-Clinical-Trials-by-Year">Patents and Clinical Trials by Year</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/3-grants-enrichment-adding-patents-cltrials-information.html#Patents-and-Clinical-Trials-by-Grant-Funder">Patents and Clinical Trials by Grant Funder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/3-grants-enrichment-adding-patents-cltrials-information.html#Exploring-Correlations-between-dimensions">Exploring Correlations between dimensions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/3-grants-enrichment-adding-patents-cltrials-information.html#Conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3-grants/4-grants-topic-analysis.html">Identifying emerging topics in grants using ‘concepts’</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/4-grants-topic-analysis.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/4-grants-topic-analysis.html#1.-Creating-a-Dataset:-e.g. Grants-from-a-Funder">1. Creating a Dataset: e.g. Grants from a Funder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/4-grants-topic-analysis.html#2.-A-first-look-at-the-concepts-we-extracted">2. A first look at the concepts we extracted</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/4-grants-topic-analysis.html#3.-Building-a-word-cloud-visualization">3. Building a word-cloud visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/4-grants-topic-analysis.html#4.-Trend-analysis---‘emerging’-new-topics-each-year">4. Trend analysis - ‘emerging’ new topics each year</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/4-grants-topic-analysis.html#5.-Segmenting-results-using-the-fields-of-research-categories">5. Segmenting results using the fields of research categories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/4-grants-topic-analysis.html#6.-Conclusion">6. Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3-grants/5-grants-from-researchers.html">Getting all grants received by a list of researchers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/5-grants-from-researchers.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/5-grants-from-researchers.html#1.-Starting-point:-a-list-of-researchers">1. Starting point: a list of researchers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/5-grants-from-researchers.html#2.-What-Grants-have-been-received-by-these-researchers?">2. What Grants have been received by these researchers?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/5-grants-from-researchers.html#3.-Data-Exploration">3. Data Exploration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/5-grants-from-researchers.html#Grants-by-year">Grants by year</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/5-grants-from-researchers.html#Grants-by-funders">Grants by funders</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/5-grants-from-researchers.html#Funders-by-funding-amount">Funders by funding amount</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Clinical Trials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.html">Clinical Trials by Volume of Publications</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.html#Query-for-Clinical-Trials">Query for Clinical Trials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.html#Counting-publications-per-clinical-trial">Counting publications per clinical trial</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Patents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../5-patents/0-introducing-patents.html">The Patents API: Features Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/0-introducing-patents.html#1.-Sample-Patents-Queries">1. Sample Patents Queries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Searching-patents-by-keyword">Searching patents by keyword</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Searching-using-fielded-search">Searching using fielded search</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Searching-using-dates">Searching using dates</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Extracting-cited-publications-via-publication_ids">Extracting cited publications via <code class="docutils literal notranslate"><span class="pre">publication_ids</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Extracting-cited-patents-via-reference_ids">Extracting cited patents via <code class="docutils literal notranslate"><span class="pre">reference_ids</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Aggregating-results-using-facets">Aggregating results using facets</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Top-assignees">Top assignees</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Top-researchers">Top researchers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Top-FOR-categories">Top FOR categories</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/0-introducing-patents.html#2.-A-closer-look-at-Patents-statistics">2. A closer look at Patents statistics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Counting-records-per-each-field">Counting records per each field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Creating-a-bar-chart">Creating a bar chart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Counting-the-yearly-distribution-of-field/records-data">Counting the yearly distribution of field/records data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Creating-a-line-chart">Creating a line chart</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Where-to-find-out-more">Where to find out more</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html">Measuring the Innovation Impact of an Organization using Patents Citations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#1.-Choosing-a-GRID-Research-Organization">1. Choosing a GRID Research Organization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#2.-Extracting-Publications-Data">2. Extracting Publications Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#Quick-look-at-publications-statistics">Quick look at publications statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#What-are-the-main-subject-areas?">What are the main subject areas?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#3.-Extracting-Patents-linked-to-Publications">3. Extracting Patents linked to Publications</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#Enriching-publications-with-patents-citations-metrics">Enriching publications with patents citations metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#4.-Patents-Data-Analysis">4. Patents Data Analysis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#How-many-patents-per-year?">How many patents per year?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#Who-is-filing-the-patents?">Who is filing the patents?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#What-are-the-publications-most-frequenlty-referenced-in-patents?">What are the publications most frequenlty referenced in patents?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#What-are-the-main-subject-areas-of-referenced-publications?">What are the main subject areas of referenced publications?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#Is-there-a-correlation-between-publication-citations-and-patents-citations?">Is there a correlation between publication citations and patents citations?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#Where-to-go-from-here">Where to go from here</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5-patents/2-Patent-Family-Citing-Publications.html">Patent publication references, for an entire patent family</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/2-Patent-Family-Citing-Publications.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/2-Patent-Family-Citing-Publications.html#1.-Search-for-the-patent-ID-and-return-the-family-ID.">1. Search for the patent ID and return the family ID.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/2-Patent-Family-Citing-Publications.html#2.-Use-the-family-ID-to-search-for-all-related-patents-and-return-the-publications-IDs-they-reference">2. Use the family ID to search for all related patents and return the publications IDs they reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/2-Patent-Family-Citing-Publications.html#3.-Enriching-the-publication-IDs-with-additional-metadata">3. Enriching the publication IDs with additional metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/2-Patent-Family-Citing-Publications.html#4.-Combine-the-publication-metadata-with-the-patent-citations-information">4. Combine the publication metadata with the patent citations information</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5-patents/2-Patent-Family-Citing-Publications.html#4.1-Optional:-exporting-the-data-to-google-sheets">4.1 Optional: exporting the data to google sheets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/2-Patent-Family-Citing-Publications.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Datasets</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html">The Datasets API: Features Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#1.-Sample-Dataset-Queries">1. Sample Dataset Queries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Searching-datasets-by-keyword">Searching datasets by keyword</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Returning-associated-grants-and-publication-data">Returning associated grants and publication data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Searching-using-fielded-search">Searching using fielded search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Extracting-related-funding-via-grants">Extracting related funding via grants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Aggregating-results-using-facets">Aggregating results using facets</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Top-funders">Top funders</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Top-research-organizations">Top research organizations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Top-contributors">Top contributors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#2.-A-closer-look-at-Datasets-statistics">2. A closer look at Datasets statistics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Counting-records-per-each-field">Counting records per each field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Creating-a-bar-chart">Creating a bar chart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Counting-the-yearly-distribution-of-field/records-data">Counting the yearly distribution of field/records data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Creating-a-line-chart">Creating a line chart</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Where-to-find-out-more">Where to find out more</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Researchers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html">Calculating the H-index of a researcher</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html#Background">Background</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html#Selecting-a-researcher">Selecting a researcher</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html#The-H-Index-function">The H-Index function</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html#Getting-citations-data-from-Dimensions">Getting citations data from Dimensions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html#Wrapping-things-up">Wrapping things up</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html#Where-to-find-out-more">Where to find out more</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html">Extracting researchers based on affiliations and publications history</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Prerequisites">Prerequisites</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Select-an-organization-ID">Select an organization ID</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Background:-understanding-the-data-model">Background: understanding the data model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Methodology:-two-options-available">Methodology: two options available</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Approach-1.-From-publications-to-researchers">Approach 1. From publications to researchers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Approach-2.-From-researchers-to-publications">Approach 2. From researchers to publications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Researchers-Search-tips-V2.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html">Expert Identification with the Dimensions API - An Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#At-a-glance">At a glance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Step-1:-Concept-Extraction">Step 1: Concept Extraction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#What-are-concepts?">What are concepts?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Extracting-concepts-with-the-DSL">Extracting concepts with the DSL</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Step-2:-Expert-Identification">Step 2: Expert Identification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-1.-Basic-query-using-concepts">Example 1. Basic query using <code class="docutils literal notranslate"><span class="pre">concepts</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-2.-Query-with-OR-connectors">Example 2. Query with <code class="docutils literal notranslate"><span class="pre">OR</span></code> connectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-3.-Query-with-where-filters">Example 3. Query with <code class="docutils literal notranslate"><span class="pre">where</span></code> filters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-4.-Adding-Overlap-Annotations-(eg-for-conflict-of-interests-checks)">Example 4. Adding Overlap Annotations (eg for conflict of interests checks)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-5.-Query-with-MUST/NOT-Operators">Example 5. Query with MUST/NOT Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-6.-MUST-together-with-AND/OR">Example 6. MUST together with AND/OR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Example-7.-Wildcard-searches">Example 7. Wildcard searches</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Additional-resources:-shortcut-functions-included-in-Dimcli">Additional resources: shortcut functions included in Dimcli</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#extract_concepts">extract_concepts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#identify_experts">identify_experts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/Experts-search-introduction.html#Build-a-reviewers-matrix">Build a reviewers matrix</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html">Identification of reviewers for funders: Globally and among Panels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#Introduction:-Use-Cases-For-Reviewer-Identification">Introduction: Use Cases For Reviewer Identification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#Kinds-of-identification">Kinds of identification</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#1.-Loading-and-preprocessing-text-data">1. Loading and preprocessing text data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#1.1-Loading-from-File-(placeholder-code)">1.1 Loading from File (placeholder code)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#1.2-Loading-Sample-Data">1.2 Loading Sample Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#1.3-Preprocess-data-and-extract-concepts">1.3 Preprocess data and extract concepts</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#2.-The-Two-Use-Cases---Recap">2. The Two Use Cases - Recap</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#2.1-Global-identification-use-case">2.1 Global identification use case</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#2.2-Panel-identification-use-case">2.2 Panel identification use case</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#3.-Global-identification">3. Global identification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#3.1-Advanced-Cases:-Working-around-the-limitations-of-global-search">3.1 Advanced Cases: Working around the limitations of global search</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#3.1.1-Searching-based-on-organizational-affiliation">3.1.1 Searching based on organizational affiliation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#3.1.2-Searching-based-on-previous-funding-history">3.1.2 Searching based on previous funding history</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#4.-Panel-Identification">4. Panel Identification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Organizations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../8-organizations/1-GRID-preview.html">The Organizations API: Features Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#1.-Matching-affiliation-data-to-GRID-IDs-using-extract_affiliations">1. Matching affiliation data to GRID IDs using <code class="docutils literal notranslate"><span class="pre">extract_affiliations</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#2.-Searching-GRID-organizations">2. Searching GRID organizations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Full-text-search">Full-text search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Fielded-search">Fielded search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Returning-facets">Returning facets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Returning-organizations-facets-from-publications">Returning organizations facets from publications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#3.-A-closer-look-at-the-organizations-data-statistics">3. A closer look at the organizations data statistics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Let’s-visualize-the-data-with-plotly">Let’s visualize the data with plotly</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Where-to-find-out-more">Where to find out more</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html">Identifying the Industry Collaborators of an Academic Institution</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#1.-Selecting-an-academic-institution">1. Selecting an academic institution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#2.-Extracting-publications-from-industry-collaborations">2. Extracting publications from industry collaborations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#3.-Analyses">3. Analyses</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#3.1-Count-of-Publications-per-year-from-Industry-Collaborations">3.1 Count of Publications per year from Industry Collaborations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#3.2-Citations-from-Industry-Collaboration">3.2 Citations from Industry Collaboration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#3.3-Top-Industry-Collaborators">3.3 Top Industry Collaborators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#3.4-Countries-of-Industry-Collaborators">3.4 Countries of Industry Collaborators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/2-Industry-Collaboration.html#3.5-Putting-Countries-and-Collaborators-together">3.5 Putting Countries and Collaborators together</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html">Building an Organizations Collaboration Network Diagram</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#1.-Choose-an-Organization-and-a-keyword-(topic)">1. Choose an Organization and a keyword (topic)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#2.-Building-a-one-degree-network-of-collaborating-institutions">2. Building a one-degree network of collaborating institutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#3.-Building-a-network-of-any-size">3. Building a network of any size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#4.-Visualizing-the-network">4. Visualizing the network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#5.-Addendum:-showing-only-‘Government’-collaborators">5. Addendum: showing only ‘Government’ collaborators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html">Collaboration Patterns By Year (International, Domestic, Internal)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#1.-Lookup-the-University-that-you-are-interested-in">1. Lookup the University that you are interested in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#2.-Publications-output-by-year">2. Publications output by year</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#3.-International-publications">3. International publications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#4.-Domestic">4. Domestic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#5.-Internal">5. Internal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#6.-Joining-up-All-metrics-together">6. Joining up All metrics together</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#7.-How-does-this-compare-to-Australia?">7. How does this compare to Australia?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#8.-How-does-this-compare-to-a-different-Institution-(University-of-Toronto)?">8. How does this compare to a different Institution (University of Toronto)?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#Want-to-learn-more?">Want to learn more?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8-organizations/5-mapping-grid-ids-to-organization-data.html">Mapping GRID IDs to Organization Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/5-mapping-grid-ids-to-organization-data.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/5-mapping-grid-ids-to-organization-data.html#1.-Importing-Organization-Data">1. Importing Organization Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/5-mapping-grid-ids-to-organization-data.html#1.1-Manually-Generate-Organization-Data">1.1 Manually Generate Organization Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/5-mapping-grid-ids-to-organization-data.html#1.2-Load-Organization-Data-from-Local-Machine">1.2 Load Organization Data from Local Machine</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/5-mapping-grid-ids-to-organization-data.html#2.-Utilizing-Dimensions-API-to-Extract-GRID-IDs">2. Utilizing Dimensions API to Extract GRID IDs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/5-mapping-grid-ids-to-organization-data.html#3.-Save-the-GRID-ID-Dataset-we-created">3. Save the GRID ID Dataset we created</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/5-mapping-grid-ids-to-organization-data.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8-organizations/6-organization-groups.html">Using Dimensions organization groups with the API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/6-organization-groups.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/6-organization-groups.html#1.-Downloading-groups-data-from-Dimensions">1. Downloading groups data from Dimensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/6-organization-groups.html#2.-Using-group-data-with-the-API">2. Using group data with the API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/6-organization-groups.html#How-many-grants-from-the-NSF?">How many grants from the NSF?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html">Benchmarking organizations with the Dimensions API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#1.-Quick-benchmarking-using-the-API">1. Quick benchmarking using the API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#2.-Calculating-more-complex-‘Quality’-Benchmarking-indicators:-Number-of-articles-in-the-top-X-percent-of-research-their-category">2. Calculating more complex ‘Quality’ Benchmarking indicators: Number of articles in the top X percent of research their category</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Step-1.-retrieve-the-total-volume-of-publications-by-volume.-(focusing-on-Fields-of-Research)">Step 1. retrieve the total volume of publications by volume. (focusing on Fields of Research)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Step-1.2.-…-Need-to-filter-for-level-2-codes">Step 1.2. … Need to filter for level 2 codes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Step-2.-calculate-1%-of-the-total-number-of-records-by-category.-This-will-be-used-to-retrieve-the-1%-boundary-record..">Step 2. calculate 1% of the total number of records by category. This will be used to retrieve the 1% boundary record..</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Step-3.-Use-the-cutoff-value-to-get-the-indicator-value-for-the-1%-boundary">Step 3. Use the cutoff value to get the indicator value for the 1% boundary</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#We-can-only-filter-on-integers-in-the-DSL,-so-we-will-round-up-the-values">We can only filter on integers in the DSL, so we will round up the values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Step-4.-Now-get-the-number-of-publications-by-organisation,-filtered-by-category-that-have-a-field_citation_ratio-&gt;-the-boundary-score">Step 4. Now get the number of publications by organisation, filtered by category that have a field_citation_ratio &gt; the boundary score</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Step-5.-Rank-the-results">Step 5. Rank the results</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#We-should-probably-control-for-Volume-though…">We should probably control for Volume though…</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Step-6.-Get-the-total-paper-counts-for-each-organisation">Step 6. Get the total paper counts for each organisation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Step-7.-calculate-the-percentage-of-local-papers-in-the-top-1%-of-global-publications-(in-2018)">Step 7. calculate the percentage of local papers in the top 1% of global publications (in 2018)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Now-the-results-are-going-to-look-a-little-strange…">Now the results are going to look a little strange…</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Need-to-control-for-size…">Need to control for size…</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Final-step.-Show-me-the-institutions-that-I-should-be-most-interested-in-(Five-above)">Final step. Show me the institutions that I should be most interested in (Five above)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../10-misc/1-report-content-volumes-per-year.html">Generating a report that monitors research topics across Dimensions sources</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../10-misc/1-report-content-volumes-per-year.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10-misc/1-report-content-volumes-per-year.html#1.-Creating-a-query-builder">1. Creating a query builder</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../10-misc/1-report-content-volumes-per-year.html#Query-logic">Query logic</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../10-misc/1-report-content-volumes-per-year.html#2.-Plotting-the-results">2. Plotting the results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10-misc/1-report-content-volumes-per-year.html#3.-Conclusions">3. Conclusions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../10-misc/2-enrich-text-with-for-codes.html">Enrich text with Field of Research (FoR) codes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../10-misc/2-enrich-text-with-for-codes.html#A-sample-set-of-publications">A sample set of publications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10-misc/2-enrich-text-with-for-codes.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10-misc/2-enrich-text-with-for-codes.html#1.-Loading-the-sample-text">1. Loading the sample text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10-misc/2-enrich-text-with-for-codes.html#2.-FoR-Classification">2. FoR Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10-misc/2-enrich-text-with-for-codes.html#3.-Number-of-FoR-categories-per-document">3. Number of FoR categories per document</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10-misc/2-enrich-text-with-for-codes.html#4.-Top-FoR-categories-by-document-count">4. Top FoR categories by document count</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10-misc/2-enrich-text-with-for-codes.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+
+
+   <div id="sidebar_github" style="margin-top: 12px;">
+   <h3>Github Source</h3>
+
+      <div style="margin: 10px 20px;">
+      
+         <iframe src="https://ghbtns.com/github-btn.html?user=digital-science&repo=dimensions-api-lab&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+
+         <iframe src="https://ghbtns.com/github-btn.html?user=digital-science&repo=dimensions-api-lab&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe> 
+      
+      </div>
+
+   </div>
+
+
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">DSL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+
+    
+
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt .copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js'></script>
+<script>require=requirejs;</script><a class="reference external image-reference" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/cookbooks/2-publications/Journal-Profile-1-Gathering-data.ipynb"><img alt="../../_images/badge-colab.svg" src="../../_images/badge-colab.svg" /></a>
+<a class="reference external image-reference" href="https://github.com/digital-science/dimensions-api-lab/blob/master/cookbooks/2-publications/Journal-Profile-1-Gathering-data.ipynb"><img alt="../../_images/badge-github-custom.svg" src="../../_images/badge-github-custom.svg" /></a>
+<hr class="docutils" />
+<div class="section" id="Journal-Profiling-Part-1:-Getting-the-Data">
+<h1>Journal Profiling Part 1: Getting the Data<a class="headerlink" href="#Journal-Profiling-Part-1:-Getting-the-Data" title="Permalink to this headline">¶</a></h1>
+<p>This Python notebook shows how to use the <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> to extract <a class="reference external" href="https://docs.dimensions.ai/dsl/datasource-publications.html">publications data</a> for a specific journal, as well its authors and affiliations.</p>
+<p>This tutorial is the first of a series that uses the data extracted in order to generate a ‘journal profile’ report. See the <a class="reference external" href="https://api-lab.dimensions.ai/">API Lab homepage</a> for the other tutorials in this series.</p>
+<p>In this notebook we are going to:</p>
+<ul class="simple">
+<li><p>extract all publications data for a given journal</p></li>
+<li><p>have a quick look at the publications’ authors and affiliations</p></li>
+<li><p>review how many authors have been disambiguated with a Dimensions Researcher ID</p></li>
+<li><p>produce a dataset of non-disambiguated authors that can be used for manual disambiguation</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">CHANGELOG</span><span class="se">\n</span><span class="s2">This notebook was last run on </span><span class="si">%s</span><span class="se">\n</span><span class="s2">==&quot;</span> <span class="o">%</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">, %Y&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+==
+CHANGELOG
+This notebook was last run on Jan 24, 2022
+==
+</pre></div></div>
+</div>
+<div class="section" id="Prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>This notebook assumes you have installed the <a class="reference external" href="https://pypi.org/project/dimcli/">Dimcli</a> library and are familiar with the <a class="reference external" href="https://api-lab.dimensions.ai/cookbooks/1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html">‘Getting Started’ tutorial</a>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install dimcli plotly tqdm -U --quiet
+
+<span class="kn">import</span> <span class="nn">dimcli</span>
+<span class="kn">from</span> <span class="nn">dimcli.utils</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span> <span class="k">as</span> <span class="n">progress</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+  <span class="c1"># make js dependecies local / needed by html exports</span>
+  <span class="kn">from</span> <span class="nn">plotly.offline</span> <span class="kn">import</span> <span class="n">init_notebook_mode</span>
+  <span class="n">init_notebook_mode</span><span class="p">(</span><span class="n">connected</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1">#</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">Logging in..&quot;</span><span class="p">)</span>
+<span class="c1"># https://digital-science.github.io/dimcli/getting-started.html#authentication</span>
+<span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;https://app.dimensions.ai&quot;</span>
+<span class="k">if</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+  <span class="kn">import</span> <span class="nn">getpass</span>
+  <span class="n">KEY</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;API Key: &#39;</span><span class="p">)</span>
+  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">KEY</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="n">ENDPOINT</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="n">KEY</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+  <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">KEY</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="n">ENDPOINT</span><span class="p">)</span>
+<span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<script type="text/javascript">
+window.PlotlyConfig = {MathJaxConfig: 'local'};
+if (window.MathJax) {MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+if (typeof require !== 'undefined') {
+require.undef("plotly");
+requirejs.config({
+    paths: {
+        'plotly': ['https://cdn.plot.ly/plotly-2.8.3.min']
+    }
+});
+require(['plotly'], function(Plotly) {
+    window._Plotly = Plotly;
+});
+}
+</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Searching config file credentials for &#39;https://app.dimensions.ai&#39; endpoint..
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+==
+Logging in..
+Dimcli - Dimensions API Client (v0.9.6)
+Connected to: &lt;https://app.dimensions.ai/api/dsl&gt; - DSL v2.0
+Method: dsl.ini file
+</pre></div></div>
+</div>
+<p>Some helper functions to store the data we are going to extract</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create output data folder</span>
+<span class="n">FOLDER_NAME</span> <span class="o">=</span> <span class="s2">&quot;journal-profile-data&quot;</span>
+<span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">FOLDER_NAME</span><span class="p">)):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">FOLDER_NAME</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="n">filename_dot_csv</span><span class="p">):</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">FOLDER_NAME</span><span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="n">filename_dot_csv</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Selecting-a-Journal-and-Extracting-All-Publications-Metadata">
+<h2>Selecting a Journal and Extracting All Publications Metadata<a class="headerlink" href="#Selecting-a-Journal-and-Extracting-All-Publications-Metadata" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#@title Select a journal from the dropdown</span>
+<span class="c1">#@markdown If the journal isn&#39;t there, you can try type in the exact name instead.</span>
+
+<span class="n">journal_title</span> <span class="o">=</span> <span class="s2">&quot;Nature Genetics&quot;</span> <span class="c1">#@param [&#39;Nature&#39;, &#39;Nature Communications&#39;, &#39;Nature Biotechnology&#39;, &#39;Nature Medicine&#39;, &#39;Nature Genetics&#39;, &#39;Nature Neuroscience&#39;, &#39;Nature Structural &amp; Molecular Biology&#39;, &#39;Nature Methods&#39;, &#39;Nature Cell Biology&#39;, &#39;Nature Immunology&#39;, &#39;Nature Reviews Drug Discovery&#39;, &#39;Nature Materials&#39;, &#39;Nature Physics&#39;, &#39;Nature Reviews Neuroscience&#39;, &#39;Nature Nanotechnology&#39;, &#39;Nature Reviews Genetics&#39;, &#39;Nature Reviews Urology&#39;, &#39;Nature Reviews Molecular Cell Biology&#39;, &#39;Nature Precedings&#39;, &#39;Nature Reviews Cancer&#39;, &#39;Nature Photonics&#39;, &#39;Nature Reviews Immunology&#39;, &#39;Nature Reviews Cardiology&#39;, &#39;Nature Reviews Gastroenterology &amp; Hepatology&#39;, &#39;Nature Reviews Clinical Oncology&#39;, &#39;Nature Reviews Endocrinology&#39;, &#39;Nature Reviews Neurology&#39;, &#39;Nature Chemical Biology&#39;, &#39;Nature Reviews Microbiology&#39;, &#39;Nature Geoscience&#39;, &#39;Nature Reviews Rheumatology&#39;, &#39;Nature Climate Change&#39;, &#39;Nature Reviews Nephrology&#39;, &#39;Nature Chemistry&#39;, &#39;Nature Digest&#39;, &#39;Nature Protocols&#39;, &#39;Nature Middle East&#39;, &#39;Nature India&#39;, &#39;Nature China&#39;, &#39;Nature Plants&#39;, &#39;Nature Microbiology&#39;, &#39;Nature Ecology &amp; Evolution&#39;, &#39;Nature Astronomy&#39;, &#39;Nature Energy&#39;, &#39;Nature Human Behaviour&#39;, &#39;AfCS-Nature Molecule Pages&#39;, &#39;Human Nature&#39;, &#39;Nature Reviews Disease Primers&#39;, &#39;Nature Biomedical Engineering&#39;, &#39;Nature Reports Stem Cells&#39;, &#39;Nature Reviews Materials&#39;, &#39;Nature Sustainability&#39;, &#39;Nature Catalysis&#39;, &#39;Nature Electronics&#39;, &#39;Nature Reviews Chemistry&#39;, &#39;Nature Metabolism&#39;, &#39;Nature Reviews Physics&#39;, &#39;Nature Machine Intelligence&#39;, &#39;NCI Nature Pathway Interaction Database&#39;, &#39;Nature Reports: Climate Change&#39;] {allow-input: true}</span>
+<span class="n">start_year</span> <span class="o">=</span> <span class="mi">2015</span>  <span class="c1">#@param {type: &quot;number&quot;}</span>
+<span class="c1">#@markdown ---</span>
+
+<span class="c1"># PS</span>
+<span class="c1"># To get titles from the API one can do this:</span>
+<span class="c1"># &gt; %dsldf search publications where journal.title~&quot;Nature&quot; and publisher=&quot;Springer Nature&quot; return journal limit 100</span>
+<span class="c1"># &gt; &quot;, &quot;.join([f&quot;&#39;{x}&#39;&quot; for x in list(dsl_last_results.title)])</span>
+<span class="c1">#</span>
+
+<span class="n">q_template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search publications where</span>
+<span class="s2">    journal.title=&quot;</span><span class="si">{}</span><span class="s2">&quot; and</span>
+<span class="s2">    year&gt;=</span><span class="si">{}</span><span class="s2"></span>
+<span class="s2">    return publications[id+title+doi+year+authors+type+pages+journal+issue+volume+altmetric+times_cited]&quot;&quot;&quot;</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">q_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">journal_title</span><span class="p">,</span> <span class="n">start_year</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DSL Query:</span><span class="se">\n</span><span class="s2">----</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">----&quot;</span><span class="p">)</span>
+<span class="n">pubs</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query_iterative</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">journal_title</span><span class="p">,</span> <span class="n">start_year</span><span class="p">),</span> <span class="n">limit</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Starting iteration with limit=500 skip=0 ...
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+DSL Query:
+----
+ search publications where
+    journal.title=&#34;Nature Genetics&#34; and
+    year&gt;=2015
+    return publications[id+title+doi+year+authors+type+pages+journal+issue+volume+altmetric+times_cited]
+----
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+0-500 / 1820 (4.64s)
+500-1000 / 1820 (6.96s)
+1000-1500 / 1820 (10.18s)
+1500-1820 / 1820 (2.45s)
+===
+Records extracted: 1820
+</pre></div></div>
+</div>
+<p>Save the data as a CSV file in case we want to reuse it later</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfpubs</span> <span class="o">=</span> <span class="n">pubs</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
+<span class="n">save</span><span class="p">(</span><span class="n">dfpubs</span><span class="p">,</span><span class="s2">&quot;1_publications.csv&quot;</span><span class="p">)</span>
+<span class="c1"># preview the publications</span>
+<span class="n">dfpubs</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>altmetric</th>
+      <th>authors</th>
+      <th>doi</th>
+      <th>id</th>
+      <th>pages</th>
+      <th>times_cited</th>
+      <th>title</th>
+      <th>type</th>
+      <th>year</th>
+      <th>journal.id</th>
+      <th>journal.title</th>
+      <th>issue</th>
+      <th>volume</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>28.0</td>
+      <td>[{'affiliations': [{'city': 'New York', 'city_...</td>
+      <td>10.1038/s41588-021-00987-9</td>
+      <td>pub.1144816179</td>
+      <td>1-9</td>
+      <td>0</td>
+      <td>Multi-ancestry eQTL meta-analysis of human bra...</td>
+      <td>article</td>
+      <td>2022</td>
+      <td>jour.1103138</td>
+      <td>Nature Genetics</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>7.0</td>
+      <td>[{'affiliations': [{'city': 'Heidelberg', 'cit...</td>
+      <td>10.1038/s41588-021-01003-w</td>
+      <td>pub.1144813674</td>
+      <td>1-2</td>
+      <td>0</td>
+      <td>Walking the LINEs hidden in the dark matter of...</td>
+      <td>article</td>
+      <td>2022</td>
+      <td>jour.1103138</td>
+      <td>Nature Genetics</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1581.0</td>
+      <td>[{'affiliations': [{'city': 'Sunnyvale', 'city...</td>
+      <td>10.1038/s41588-021-00986-w</td>
+      <td>pub.1144721591</td>
+      <td>1-4</td>
+      <td>0</td>
+      <td>The UGT2A1/UGT2A2 locus is associated with COV...</td>
+      <td>article</td>
+      <td>2022</td>
+      <td>jour.1103138</td>
+      <td>Nature Genetics</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>79.0</td>
+      <td>[{'affiliations': [{'city': 'Milan', 'city_id'...</td>
+      <td>10.1038/s41588-021-00989-7</td>
+      <td>pub.1144719271</td>
+      <td>1-14</td>
+      <td>1</td>
+      <td>LINE1 are spliced in non-canonical transcript ...</td>
+      <td>article</td>
+      <td>2022</td>
+      <td>jour.1103138</td>
+      <td>Nature Genetics</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>626.0</td>
+      <td>[{'affiliations': [{'city': 'Boston', 'city_id...</td>
+      <td>10.1038/s41588-021-00996-8</td>
+      <td>pub.1144627157</td>
+      <td>1-3</td>
+      <td>0</td>
+      <td>Multi-ancestry fine mapping implicates OAS1 sp...</td>
+      <td>article</td>
+      <td>2022</td>
+      <td>jour.1103138</td>
+      <td>Nature Genetics</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>9.0</td>
+      <td>NaN</td>
+      <td>10.1038/s41588-021-01002-x</td>
+      <td>pub.1144610758</td>
+      <td>1-1</td>
+      <td>0</td>
+      <td>A very Mendelian year</td>
+      <td>article</td>
+      <td>2022</td>
+      <td>jour.1103138</td>
+      <td>Nature Genetics</td>
+      <td>1</td>
+      <td>54</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>14.0</td>
+      <td>[{'affiliations': [{'city': 'Maastricht', 'cit...</td>
+      <td>10.1038/s41588-021-00994-w</td>
+      <td>pub.1144607904</td>
+      <td>2-3</td>
+      <td>0</td>
+      <td>The regulatory network architecture of cardiom...</td>
+      <td>article</td>
+      <td>2022</td>
+      <td>jour.1103138</td>
+      <td>Nature Genetics</td>
+      <td>1</td>
+      <td>54</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>132.0</td>
+      <td>[{'affiliations': [{'city': 'New York', 'city_...</td>
+      <td>10.1038/s41588-021-00976-y</td>
+      <td>pub.1144471964</td>
+      <td>4-17</td>
+      <td>0</td>
+      <td>Genetic analysis of the human microglial trans...</td>
+      <td>article</td>
+      <td>2022</td>
+      <td>jour.1103138</td>
+      <td>Nature Genetics</td>
+      <td>1</td>
+      <td>54</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>178.0</td>
+      <td>[{'affiliations': [{'city': 'Wageningen', 'cit...</td>
+      <td>10.1038/s41588-021-00984-y</td>
+      <td>pub.1144463791</td>
+      <td>84-93</td>
+      <td>0</td>
+      <td>A PARTHENOGENESIS allele from apomictic dandel...</td>
+      <td>article</td>
+      <td>2022</td>
+      <td>jour.1103138</td>
+      <td>Nature Genetics</td>
+      <td>1</td>
+      <td>54</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1.0</td>
+      <td>[{'affiliations': [{'city': 'Shanghai', 'city_...</td>
+      <td>10.1038/s41588-021-00998-6</td>
+      <td>pub.1144435478</td>
+      <td>1-1</td>
+      <td>0</td>
+      <td>Author Correction: Gain-of-function variants i...</td>
+      <td>article</td>
+      <td>2022</td>
+      <td>jour.1103138</td>
+      <td>Nature Genetics</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Extract the authors data</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># preview the authors data</span>
+<span class="n">authors</span> <span class="o">=</span> <span class="n">pubs</span><span class="o">.</span><span class="n">as_dataframe_authors</span><span class="p">()</span>
+<span class="n">save</span><span class="p">(</span><span class="n">authors</span><span class="p">,</span><span class="s2">&quot;1_publications_authors.csv&quot;</span><span class="p">)</span>
+<span class="n">authors</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>affiliations</th>
+      <th>corresponding</th>
+      <th>current_organization_id</th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>orcid</th>
+      <th>raw_affiliation</th>
+      <th>researcher_id</th>
+      <th>pub_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>[{'city': 'New York', 'city_id': 5128581, 'cou...</td>
+      <td></td>
+      <td></td>
+      <td>Biao</td>
+      <td>Zeng</td>
+      <td>[]</td>
+      <td>[Center for Disease Neurogenomics, Icahn Schoo...</td>
+      <td>None</td>
+      <td>pub.1144816179</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>[{'city': 'New York', 'city_id': 5128581, 'cou...</td>
+      <td></td>
+      <td></td>
+      <td>Jaroslav</td>
+      <td>Bendl</td>
+      <td>[]</td>
+      <td>[Center for Disease Neurogenomics, Icahn Schoo...</td>
+      <td>None</td>
+      <td>pub.1144816179</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>[{'city': 'New York', 'city_id': 5128581, 'cou...</td>
+      <td></td>
+      <td></td>
+      <td>Roman</td>
+      <td>Kosoy</td>
+      <td>[]</td>
+      <td>[Center for Disease Neurogenomics, Icahn Schoo...</td>
+      <td>None</td>
+      <td>pub.1144816179</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>[{'city': 'New York', 'city_id': 5128581, 'cou...</td>
+      <td></td>
+      <td></td>
+      <td>John F.</td>
+      <td>Fullard</td>
+      <td>[]</td>
+      <td>[Center for Disease Neurogenomics, Icahn Schoo...</td>
+      <td>None</td>
+      <td>pub.1144816179</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>[{'city': 'New York', 'city_id': 5128581, 'cou...</td>
+      <td>True</td>
+      <td></td>
+      <td>Gabriel E.</td>
+      <td>Hoffman</td>
+      <td>[]</td>
+      <td>[Center for Disease Neurogenomics, Icahn Schoo...</td>
+      <td>None</td>
+      <td>pub.1144816179</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>[{'city': 'New York', 'city_id': 5128581, 'cou...</td>
+      <td>True</td>
+      <td></td>
+      <td>Panos</td>
+      <td>Roussos</td>
+      <td>[]</td>
+      <td>[Center for Disease Neurogenomics, Icahn Schoo...</td>
+      <td>None</td>
+      <td>pub.1144816179</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>[{'city': 'Heidelberg', 'city_id': 2907911, 'c...</td>
+      <td></td>
+      <td></td>
+      <td>Marina</td>
+      <td>Lusic</td>
+      <td>[]</td>
+      <td>[Department of Infectious Diseases, Integrativ...</td>
+      <td>None</td>
+      <td>pub.1144813674</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>[{'city': 'Nijmegen', 'city_id': 2750053, 'cou...</td>
+      <td>True</td>
+      <td></td>
+      <td>Musa M.</td>
+      <td>Mhlanga</td>
+      <td>[]</td>
+      <td>[Epigenomics &amp; Single Cell Biophysics Group, D...</td>
+      <td>None</td>
+      <td>pub.1144813674</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>[{'city': 'Sunnyvale', 'city_id': 5400075, 'co...</td>
+      <td></td>
+      <td></td>
+      <td>Janie F.</td>
+      <td>Shelton</td>
+      <td>[]</td>
+      <td>[23andMe Inc., Sunnyvale, CA, USA]</td>
+      <td>None</td>
+      <td>pub.1144721591</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>[{'city': 'Sunnyvale', 'city_id': 5400075, 'co...</td>
+      <td></td>
+      <td></td>
+      <td>Anjali J.</td>
+      <td>Shastri</td>
+      <td>[]</td>
+      <td>[23andMe Inc., Sunnyvale, CA, USA]</td>
+      <td>None</td>
+      <td>pub.1144721591</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Extract the affiliations data</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">affiliations</span> <span class="o">=</span> <span class="n">pubs</span><span class="o">.</span><span class="n">as_dataframe_authors_affiliations</span><span class="p">()</span>
+<span class="n">save</span><span class="p">(</span><span class="n">affiliations</span><span class="p">,</span><span class="s2">&quot;1_publications_affiliations.csv&quot;</span><span class="p">)</span>
+<span class="n">affiliations</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>aff_city</th>
+      <th>aff_city_id</th>
+      <th>aff_country</th>
+      <th>aff_country_code</th>
+      <th>aff_id</th>
+      <th>aff_name</th>
+      <th>aff_raw_affiliation</th>
+      <th>aff_state</th>
+      <th>aff_state_code</th>
+      <th>pub_id</th>
+      <th>researcher_id</th>
+      <th>first_name</th>
+      <th>last_name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>New York</td>
+      <td>5128581.0</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>grid.59734.3c</td>
+      <td>Icahn School of Medicine at Mount Sinai</td>
+      <td>Center for Disease Neurogenomics, Icahn School...</td>
+      <td>New York</td>
+      <td>US-NY</td>
+      <td>pub.1144816179</td>
+      <td></td>
+      <td>Biao</td>
+      <td>Zeng</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>New York</td>
+      <td>5128581.0</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>grid.59734.3c</td>
+      <td>Icahn School of Medicine at Mount Sinai</td>
+      <td>Pamela Sklar Division of Psychiatric Genomics,...</td>
+      <td>New York</td>
+      <td>US-NY</td>
+      <td>pub.1144816179</td>
+      <td></td>
+      <td>Biao</td>
+      <td>Zeng</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>New York</td>
+      <td>5128581.0</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>grid.59734.3c</td>
+      <td>Icahn School of Medicine at Mount Sinai</td>
+      <td>Department of Genetics and Genomic Sciences, I...</td>
+      <td>New York</td>
+      <td>US-NY</td>
+      <td>pub.1144816179</td>
+      <td></td>
+      <td>Biao</td>
+      <td>Zeng</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>New York</td>
+      <td>5128581.0</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>grid.59734.3c</td>
+      <td>Icahn School of Medicine at Mount Sinai</td>
+      <td>Icahn Institute for Data Science and Genomic T...</td>
+      <td>New York</td>
+      <td>US-NY</td>
+      <td>pub.1144816179</td>
+      <td></td>
+      <td>Biao</td>
+      <td>Zeng</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>New York</td>
+      <td>5128581.0</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>grid.59734.3c</td>
+      <td>Icahn School of Medicine at Mount Sinai</td>
+      <td>Department of Psychiatry, Icahn School of Medi...</td>
+      <td>New York</td>
+      <td>US-NY</td>
+      <td>pub.1144816179</td>
+      <td></td>
+      <td>Biao</td>
+      <td>Zeng</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>New York</td>
+      <td>5128581.0</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>grid.59734.3c</td>
+      <td>Icahn School of Medicine at Mount Sinai</td>
+      <td>Center for Disease Neurogenomics, Icahn School...</td>
+      <td>New York</td>
+      <td>US-NY</td>
+      <td>pub.1144816179</td>
+      <td></td>
+      <td>Jaroslav</td>
+      <td>Bendl</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>New York</td>
+      <td>5128581.0</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>grid.59734.3c</td>
+      <td>Icahn School of Medicine at Mount Sinai</td>
+      <td>Pamela Sklar Division of Psychiatric Genomics,...</td>
+      <td>New York</td>
+      <td>US-NY</td>
+      <td>pub.1144816179</td>
+      <td></td>
+      <td>Jaroslav</td>
+      <td>Bendl</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>New York</td>
+      <td>5128581.0</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>grid.59734.3c</td>
+      <td>Icahn School of Medicine at Mount Sinai</td>
+      <td>Department of Genetics and Genomic Sciences, I...</td>
+      <td>New York</td>
+      <td>US-NY</td>
+      <td>pub.1144816179</td>
+      <td></td>
+      <td>Jaroslav</td>
+      <td>Bendl</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>New York</td>
+      <td>5128581.0</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>grid.59734.3c</td>
+      <td>Icahn School of Medicine at Mount Sinai</td>
+      <td>Icahn Institute for Data Science and Genomic T...</td>
+      <td>New York</td>
+      <td>US-NY</td>
+      <td>pub.1144816179</td>
+      <td></td>
+      <td>Jaroslav</td>
+      <td>Bendl</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>New York</td>
+      <td>5128581.0</td>
+      <td>United States</td>
+      <td>US</td>
+      <td>grid.59734.3c</td>
+      <td>Icahn School of Medicine at Mount Sinai</td>
+      <td>Department of Psychiatry, Icahn School of Medi...</td>
+      <td>New York</td>
+      <td>US-NY</td>
+      <td>pub.1144816179</td>
+      <td></td>
+      <td>Jaroslav</td>
+      <td>Bendl</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Basic-stats-about-authors">
+<h2>Basic stats about authors<a class="headerlink" href="#Basic-stats-about-authors" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>count how many authors in total</p></li>
+<li><p>count how many authors have a researcher ID</p></li>
+<li><p>count how many unique researchers IDs we have in total</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">researchers</span> <span class="o">=</span> <span class="n">authors</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;researcher_id!=&#39;&#39;&quot;</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;measure&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Authors in total (non unique)&#39;</span><span class="p">,</span> <span class="s1">&#39;Authors with a researcher ID&#39;</span><span class="p">,</span> <span class="s1">&#39;Authors with a researcher ID (unique)&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;count&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">authors</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">researchers</span><span class="p">),</span> <span class="n">researchers</span><span class="p">[</span><span class="s1">&#39;researcher_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()],</span>
+<span class="p">})</span>
+<span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;measure&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;count&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Author stats for </span><span class="si">{</span><span class="n">journal_title</span><span class="si">}</span><span class="s2"> (from </span><span class="si">{</span><span class="n">start_year</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>                            <div id="9fa37fda-902e-4d1a-bd35-9154195a2c01" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("9fa37fda-902e-4d1a-bd35-9154195a2c01")) {                    Plotly.newPlot(                        "9fa37fda-902e-4d1a-bd35-9154195a2c01",                        [{"alignmentgroup":"True","hovertemplate":"measure=%{x}<br>count=%{y}<extra></extra>","legendgroup":"","marker":{"color":"#636efa","pattern":{"shape":""}},"name":"","offsetgroup":"","orientation":"v","showlegend":false,"textposition":"auto","x":["Authors in total (non unique)","Authors with a researcher ID","Authors with a researcher ID (unique)"],"xaxis":"x","y":[53638,53625,23346],"yaxis":"y","type":"bar"}],                        {"template":{"data":{"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"heatmapgl":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmapgl"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermapbox"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"#E5ECF6","showlakes":true,"showland":true,"subunitcolor":"white"},"hoverlabel":{"align":"left"},"hovermode":"closest","mapbox":{"style":"light"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"title":{"x":0.05},"xaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","zerolinewidth":2}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"measure"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"count"}},"legend":{"tracegroupgap":0},"title":{"text":"Author stats for Nature Genetics (from 2015)"},"barmode":"relative"},                        {"responsive": true}                    ).then(function(){
+
+var gd = document.getElementById('9fa37fda-902e-4d1a-bd35-9154195a2c01');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script>        </div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># save the researchers data to a file</span>
+<span class="n">save</span><span class="p">(</span><span class="n">researchers</span><span class="p">,</span> <span class="s2">&quot;1_authors_with_researchers_id.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="A-quick-look-at-authors-without-a-Dimensions-Researcher-ID">
+<h2>A quick look at authors <em>without</em> a Dimensions Researcher ID<a class="headerlink" href="#A-quick-look-at-authors-without-a-Dimensions-Researcher-ID" title="Permalink to this headline">¶</a></h2>
+<p>We’re not going to try to disambiguate them here, but still it’s good to have a quick look at them…</p>
+<p>Looks like the most common surname is <code class="docutils literal notranslate"><span class="pre">Wang</span></code>, while the most common first name is an empty value</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">authors_without_id</span> <span class="o">=</span> <span class="n">authors</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;researcher_id==&#39;&#39;&quot;</span><span class="p">)</span>
+<span class="n">authors_without_id</span><span class="p">[[</span><span class="s1">&#39;first_name&#39;</span><span class="p">,</span> <span class="s1">&#39;last_name&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first_name</th>
+      <th>last_name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>13</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>unique</th>
+      <td>6</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>top</th>
+      <td></td>
+      <td>Consortium</td>
+    </tr>
+    <tr>
+      <th>freq</th>
+      <td>8</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Top ten ‘ambiguous’ surnames seem to be all Asian.. it’s a rather known problem!</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">authors_without_id</span><span class="p">[</span><span class="s1">&#39;last_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Consortium                                  4
+EPIC-CVD Consortium                         2
+ReproGen Consortium                         1
+Understanding Society Scientific Group      1
+AFGen Consortium                            1
+BioBank Japan Cooperative Hospital Group    1
+EPIC-InterAct Consortium                    1
+HIPSCI Consortium                           1
+consortium                                  1
+Name: last_name, dtype: int64
+</pre></div></div>
+</div>
+<div class="section" id="Any-common-patterns?">
+<h3>Any common patterns?<a class="headerlink" href="#Any-common-patterns?" title="Permalink to this headline">¶</a></h3>
+<p>If we try to group the data by name+surname we can see some interesting patterns</p>
+<ul class="simple">
+<li><p>some entries are things which are not persons (presumably the results of bad source data in Dimensions, eg from the publisher)</p></li>
+<li><p>there are some apparently meaningful name+surname combinations with a lot of hits</p></li>
+<li><p>not many Asian names in the top ones</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">authors_without_id</span> <span class="o">=</span> <span class="n">authors_without_id</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;first_name&quot;</span><span class="p">,</span> <span class="s2">&quot;last_name&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;frequency&quot;</span><span class="p">})</span>
+<span class="n">authors_without_id</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;frequency&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">authors_without_id</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>frequency</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2</th>
+      <td></td>
+      <td>EPIC-CVD Consortium</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td></td>
+      <td>AFGen Consortium</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td></td>
+      <td>BioBank Japan Cooperative Hospital Group</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td></td>
+      <td>EPIC-InterAct Consortium</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td></td>
+      <td>HIPSCI Consortium</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td></td>
+      <td>ReproGen Consortium</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td></td>
+      <td>Understanding Society Scientific Group</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>BIOS</td>
+      <td>Consortium</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>EPIC-InterAct</td>
+      <td>Consortium</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>ReproGen</td>
+      <td>Consortium</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>arcOGEN</td>
+      <td>consortium</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>eQTLGen</td>
+      <td>Consortium</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Creating-an-export-for-manual-curation">
+<h3>Creating an export for manual curation<a class="headerlink" href="#Creating-an-export-for-manual-curation" title="Permalink to this headline">¶</a></h3>
+<p>For the next tasks, we will focus on the disambiguated authors as the Researcher ID links will let us carry out useful analyses.</p>
+<p>Still, we can <strong>save the authors with missing IDs</strong> results and try to do some manual disambiguation later. To this end, adding a simple google-search URL can help in making sense of these data quickly.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dimcli.shortcuts</span> <span class="kn">import</span> <span class="n">google_url</span>
+
+<span class="n">authors_without_id</span><span class="p">[</span><span class="s1">&#39;search_url&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">authors_without_id</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">google_url</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;first_name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;last_name&#39;</span><span class="p">]</span> <span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">authors_without_id</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+WARNING: the `shortcuts` module is deprecated. Use instead ``from dimcli.utils import *``
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>frequency</th>
+      <th>search_url</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2</th>
+      <td></td>
+      <td>EPIC-CVD Consortium</td>
+      <td>2</td>
+      <td>https://www.google.com/search?q=%20EPIC-CVD%20...</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td></td>
+      <td>AFGen Consortium</td>
+      <td>1</td>
+      <td>https://www.google.com/search?q=%20AFGen%20Con...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td></td>
+      <td>BioBank Japan Cooperative Hospital Group</td>
+      <td>1</td>
+      <td>https://www.google.com/search?q=%20BioBank%20J...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td></td>
+      <td>EPIC-InterAct Consortium</td>
+      <td>1</td>
+      <td>https://www.google.com/search?q=%20EPIC-InterA...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td></td>
+      <td>HIPSCI Consortium</td>
+      <td>1</td>
+      <td>https://www.google.com/search?q=%20HIPSCI%20Co...</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td></td>
+      <td>ReproGen Consortium</td>
+      <td>1</td>
+      <td>https://www.google.com/search?q=%20ReproGen%20...</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td></td>
+      <td>Understanding Society Scientific Group</td>
+      <td>1</td>
+      <td>https://www.google.com/search?q=%20Understandi...</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>BIOS</td>
+      <td>Consortium</td>
+      <td>1</td>
+      <td>https://www.google.com/search?q=BIOS%20Consortium</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>EPIC-InterAct</td>
+      <td>Consortium</td>
+      <td>1</td>
+      <td>https://www.google.com/search?q=EPIC-InterAct%...</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>ReproGen</td>
+      <td>Consortium</td>
+      <td>1</td>
+      <td>https://www.google.com/search?q=ReproGen%20Con...</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>arcOGEN</td>
+      <td>consortium</td>
+      <td>1</td>
+      <td>https://www.google.com/search?q=arcOGEN%20cons...</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>eQTLGen</td>
+      <td>Consortium</td>
+      <td>1</td>
+      <td>https://www.google.com/search?q=eQTLGen%20Cons...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># save the data</span>
+<span class="n">save</span><span class="p">(</span><span class="n">authors_without_id</span><span class="p">,</span> <span class="s2">&quot;1_authors_without_researchers_id.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>That’s it!</p>
+<p>Now let’s go and open this in <a class="reference external" href="https://docs.google.com/spreadsheets/">Google Sheets</a>…</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># for colab users: download everything</span>
+<span class="k">if</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">auth</span>
+    <span class="n">auth</span><span class="o">.</span><span class="n">authenticate_user</span><span class="p">()</span>
+
+    <span class="kn">import</span> <span class="nn">gspread</span>
+    <span class="kn">from</span> <span class="nn">gspread_dataframe</span> <span class="kn">import</span> <span class="n">get_as_dataframe</span><span class="p">,</span> <span class="n">set_with_dataframe</span>
+    <span class="kn">from</span> <span class="nn">oauth2client.client</span> <span class="kn">import</span> <span class="n">GoogleCredentials</span>
+
+    <span class="n">gc</span> <span class="o">=</span> <span class="n">gspread</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="n">GoogleCredentials</span><span class="o">.</span><span class="n">get_application_default</span><span class="p">())</span>
+
+    <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Authors_without_IDs&#39;</span>
+    <span class="n">sh</span> <span class="o">=</span> <span class="n">gc</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">worksheet</span> <span class="o">=</span> <span class="n">gc</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="o">.</span><span class="n">sheet1</span>
+    <span class="n">set_with_dataframe</span><span class="p">(</span><span class="n">worksheet</span><span class="p">,</span> <span class="n">authors_without_id</span><span class="p">)</span>
+    <span class="n">spreadsheet_url</span> <span class="o">=</span> <span class="s2">&quot;https://docs.google.com/spreadsheets/d/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">sh</span><span class="o">.</span><span class="n">id</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">spreadsheet_url</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> allows to carry out sophisticated research data analytics tasks like the ones described on this website. Check out also the associated <a class="reference external" href="https://github.com/digital-science/dimensions-api-lab">Github repository</a> for examples, the source code of these tutorials and much more.</p>
+</div>
+<a class="reference external image-reference" href="https://www.dimensions.ai/dimensions-apis/"><img alt="../../_images/badge-dimensions-api.svg" src="../../_images/badge-dimensions-api.svg" /></a>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+    <p>© Copyright 2020 Digital Science & Research Solutions, Inc. All Rights Reserved | <a href="https://www.dimensions.ai/">About us</a> · <a href="https://www.dimensions.ai/privacy/">Privacy policy</a> · <a href="https://www.dimensions.ai/website-terms/">Legal terms</a></p>
+     
+
+    <!-- OneTrust Cookies Settings button start -->
+    <button id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</button>
+    <!-- OneTrust Cookies Settings button end -->
+
+
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+    
+
+    <!-- Adds target=_blank to external links -->
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('a[href^="http://"], a[href^="https://"]').not('a[class*=internal]').attr('target', '_blank');
+    });
+  </script>
+
+
+  <!-- OneTrust Cookies Consent Notice start for dimensions.ai -->
+   <script type="text/javascript" src="https://cdn.cookielaw.org/consent/3329b668-7887-4dba-9bee-c3853a706e6f/OtAutoBlock.js" ></script>
+   <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="3329b668-7887-4dba-9bee-c3853a706e6f" ></script>
+   <script type="text/javascript">
+   function OptanonWrapper() { }
+   </script>
+   <!-- OneTrust Cookies Consent Notice end for dimensions.ai -->
+  
+
+
+</body>
+</html>

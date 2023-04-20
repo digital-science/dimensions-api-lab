@@ -1,0 +1,2770 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "Pesu5qAD6J7-"
+   },
+   "source": [
+    "# Journal Profiling Part 1: Getting the Data\n",
+    "\n",
+    "This Python notebook shows how to use the [Dimensions Analytics API](https://www.dimensions.ai/dimensions-apis/) to extract [publications data ](https://docs.dimensions.ai/dsl/datasource-publications.html) for a specific journal, as well its authors and affiliations.\n",
+    "\n",
+    "This tutorial is the first of a series that uses the data extracted in order to generate a 'journal profile' report. See the [API Lab homepage](https://api-lab.dimensions.ai/) for the other tutorials in this series.\n",
+    "\n",
+    "\n",
+    "In this notebook we are going to:\n",
+    "\n",
+    "* extract all publications data for a given journal\n",
+    "* have a quick look at the publications' authors and affiliations \n",
+    "* review how many authors have been disambiguated with a Dimensions Researcher ID\n",
+    "* produce a dataset of non-disambiguated authors that can be used for manual disambiguation "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "==\n",
+      "CHANGELOG\n",
+      "This notebook was last run on Jan 24, 2022\n",
+      "==\n"
+     ]
+    }
+   ],
+   "source": [
+    "import datetime\n",
+    "print(\"==\\nCHANGELOG\\nThis notebook was last run on %s\\n==\" % datetime.date.today().strftime('%b %d, %Y'))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "hMaQlB7DG8Vw"
+   },
+   "source": [
+    "## Prerequisites\n",
+    "\n",
+    "This notebook assumes you have installed the [Dimcli](https://pypi.org/project/dimcli/) library and are familiar with the ['Getting Started' tutorial](https://api-lab.dimensions.ai/cookbooks/1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html).\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "        <script type=\"text/javascript\">\n",
+       "        window.PlotlyConfig = {MathJaxConfig: 'local'};\n",
+       "        if (window.MathJax) {MathJax.Hub.Config({SVG: {font: \"STIX-Web\"}});}\n",
+       "        if (typeof require !== 'undefined') {\n",
+       "        require.undef(\"plotly\");\n",
+       "        requirejs.config({\n",
+       "            paths: {\n",
+       "                'plotly': ['https://cdn.plot.ly/plotly-2.8.3.min']\n",
+       "            }\n",
+       "        });\n",
+       "        require(['plotly'], function(Plotly) {\n",
+       "            window._Plotly = Plotly;\n",
+       "        });\n",
+       "        }\n",
+       "        </script>\n",
+       "        "
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "\u001b[2mSearching config file credentials for 'https://app.dimensions.ai' endpoint..\u001b[0m\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "==\n",
+      "Logging in..\n",
+      "\u001b[2mDimcli - Dimensions API Client (v0.9.6)\u001b[0m\n",
+      "\u001b[2mConnected to: <https://app.dimensions.ai/api/dsl> - DSL v2.0\u001b[0m\n",
+      "\u001b[2mMethod: dsl.ini file\u001b[0m\n"
+     ]
+    }
+   ],
+   "source": [
+    "!pip install dimcli plotly tqdm -U --quiet \n",
+    "\n",
+    "import dimcli\n",
+    "from dimcli.utils import *\n",
+    "import os, sys, time, json\n",
+    "from tqdm.notebook import tqdm as progress\n",
+    "import pandas as pd\n",
+    "import plotly.express as px\n",
+    "if not 'google.colab' in sys.modules:\n",
+    "  # make js dependecies local / needed by html exports\n",
+    "  from plotly.offline import init_notebook_mode\n",
+    "  init_notebook_mode(connected=True)\n",
+    "#\n",
+    "\n",
+    "print(\"==\\nLogging in..\")\n",
+    "# https://digital-science.github.io/dimcli/getting-started.html#authentication\n",
+    "ENDPOINT = \"https://app.dimensions.ai\"\n",
+    "if 'google.colab' in sys.modules:\n",
+    "  import getpass\n",
+    "  KEY = getpass.getpass(prompt='API Key: ')  \n",
+    "  dimcli.login(key=KEY, endpoint=ENDPOINT)\n",
+    "else:\n",
+    "  KEY = \"\"\n",
+    "  dimcli.login(key=KEY, endpoint=ENDPOINT)\n",
+    "dsl = dimcli.Dsl()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "Some helper functions to store the data we are going to extract"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 85
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 22421,
+     "status": "ok",
+     "timestamp": 1590004308752,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GiYfmLTPbeMuYDDrETLbTVXTXnfVr9f7eBtkmR73A=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "zN1l7rvMo6Ds",
+    "outputId": "cf4253c6-272a-4186-8461-72db2a225670"
+   },
+   "outputs": [],
+   "source": [
+    "# create output data folder\n",
+    "FOLDER_NAME = \"journal-profile-data\"\n",
+    "if not(os.path.exists(FOLDER_NAME)):\n",
+    "    os.mkdir(FOLDER_NAME)\n",
+    "    \n",
+    "def save(df,filename_dot_csv):\n",
+    "    df.to_csv(FOLDER_NAME+\"/\"+filename_dot_csv, index=False)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "Z1jwOf1F64mr"
+   },
+   "source": [
+    "## Selecting a Journal and Extracting All Publications Metadata"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {
+    "Collapsed": "false",
+    "cellView": "form",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 238
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 30263,
+     "status": "ok",
+     "timestamp": 1590004324419,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GiYfmLTPbeMuYDDrETLbTVXTXnfVr9f7eBtkmR73A=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "Ku0GkHfE7JI7",
+    "outputId": "23e41dd0-af76-4150-9a60-17da1bd1746e"
+   },
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "Starting iteration with limit=500 skip=0 ...\u001b[0m\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "DSL Query:\n",
+      "----\n",
+      " search publications where \n",
+      "    journal.title=\"Nature Genetics\" and \n",
+      "    year>=2015 \n",
+      "    return publications[id+title+doi+year+authors+type+pages+journal+issue+volume+altmetric+times_cited] \n",
+      "----\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "0-500 / 1820 (4.64s)\u001b[0m\n",
+      "500-1000 / 1820 (6.96s)\u001b[0m\n",
+      "1000-1500 / 1820 (10.18s)\u001b[0m\n",
+      "1500-1820 / 1820 (2.45s)\u001b[0m\n",
+      "===\n",
+      "Records extracted: 1820\u001b[0m\n"
+     ]
+    }
+   ],
+   "source": [
+    "#@title Select a journal from the dropdown\n",
+    "#@markdown If the journal isn't there, you can try type in the exact name instead.\n",
+    "\n",
+    "journal_title = \"Nature Genetics\" #@param ['Nature', 'Nature Communications', 'Nature Biotechnology', 'Nature Medicine', 'Nature Genetics', 'Nature Neuroscience', 'Nature Structural & Molecular Biology', 'Nature Methods', 'Nature Cell Biology', 'Nature Immunology', 'Nature Reviews Drug Discovery', 'Nature Materials', 'Nature Physics', 'Nature Reviews Neuroscience', 'Nature Nanotechnology', 'Nature Reviews Genetics', 'Nature Reviews Urology', 'Nature Reviews Molecular Cell Biology', 'Nature Precedings', 'Nature Reviews Cancer', 'Nature Photonics', 'Nature Reviews Immunology', 'Nature Reviews Cardiology', 'Nature Reviews Gastroenterology & Hepatology', 'Nature Reviews Clinical Oncology', 'Nature Reviews Endocrinology', 'Nature Reviews Neurology', 'Nature Chemical Biology', 'Nature Reviews Microbiology', 'Nature Geoscience', 'Nature Reviews Rheumatology', 'Nature Climate Change', 'Nature Reviews Nephrology', 'Nature Chemistry', 'Nature Digest', 'Nature Protocols', 'Nature Middle East', 'Nature India', 'Nature China', 'Nature Plants', 'Nature Microbiology', 'Nature Ecology & Evolution', 'Nature Astronomy', 'Nature Energy', 'Nature Human Behaviour', 'AfCS-Nature Molecule Pages', 'Human Nature', 'Nature Reviews Disease Primers', 'Nature Biomedical Engineering', 'Nature Reports Stem Cells', 'Nature Reviews Materials', 'Nature Sustainability', 'Nature Catalysis', 'Nature Electronics', 'Nature Reviews Chemistry', 'Nature Metabolism', 'Nature Reviews Physics', 'Nature Machine Intelligence', 'NCI Nature Pathway Interaction Database', 'Nature Reports: Climate Change'] {allow-input: true}\n",
+    "start_year = 2015  #@param {type: \"number\"}\n",
+    "#@markdown ---\n",
+    "\n",
+    "# PS \n",
+    "# To get titles from the API one can do this:\n",
+    "# > %dsldf search publications where journal.title~\"Nature\" and publisher=\"Springer Nature\" return journal limit 100\n",
+    "# > \", \".join([f\"'{x}'\" for x in list(dsl_last_results.title)]) \n",
+    "#\n",
+    "\n",
+    "q_template = \"\"\"search publications where \n",
+    "    journal.title=\"{}\" and \n",
+    "    year>={} \n",
+    "    return publications[id+title+doi+year+authors+type+pages+journal+issue+volume+altmetric+times_cited]\"\"\"\n",
+    "q = q_template.format(journal_title, start_year)\n",
+    "print(\"DSL Query:\\n----\\n\", q, \"\\n----\")\n",
+    "pubs = dsl.query_iterative(q.format(journal_title, start_year), limit=500)\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "FFT3DayHo6Dy"
+   },
+   "source": [
+    "Save the data as a CSV file in case we want to reuse it later"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 1946
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 3101,
+     "status": "ok",
+     "timestamp": 1590004329997,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GiYfmLTPbeMuYDDrETLbTVXTXnfVr9f7eBtkmR73A=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "xnwSEydio6Dy",
+    "outputId": "6cde27d6-8c9c-4b5c-8544-7f3871ea390d"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>altmetric</th>\n",
+       "      <th>authors</th>\n",
+       "      <th>doi</th>\n",
+       "      <th>id</th>\n",
+       "      <th>pages</th>\n",
+       "      <th>times_cited</th>\n",
+       "      <th>title</th>\n",
+       "      <th>type</th>\n",
+       "      <th>year</th>\n",
+       "      <th>journal.id</th>\n",
+       "      <th>journal.title</th>\n",
+       "      <th>issue</th>\n",
+       "      <th>volume</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>28.0</td>\n",
+       "      <td>[{'affiliations': [{'city': 'New York', 'city_...</td>\n",
+       "      <td>10.1038/s41588-021-00987-9</td>\n",
+       "      <td>pub.1144816179</td>\n",
+       "      <td>1-9</td>\n",
+       "      <td>0</td>\n",
+       "      <td>Multi-ancestry eQTL meta-analysis of human bra...</td>\n",
+       "      <td>article</td>\n",
+       "      <td>2022</td>\n",
+       "      <td>jour.1103138</td>\n",
+       "      <td>Nature Genetics</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>7.0</td>\n",
+       "      <td>[{'affiliations': [{'city': 'Heidelberg', 'cit...</td>\n",
+       "      <td>10.1038/s41588-021-01003-w</td>\n",
+       "      <td>pub.1144813674</td>\n",
+       "      <td>1-2</td>\n",
+       "      <td>0</td>\n",
+       "      <td>Walking the LINEs hidden in the dark matter of...</td>\n",
+       "      <td>article</td>\n",
+       "      <td>2022</td>\n",
+       "      <td>jour.1103138</td>\n",
+       "      <td>Nature Genetics</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>1581.0</td>\n",
+       "      <td>[{'affiliations': [{'city': 'Sunnyvale', 'city...</td>\n",
+       "      <td>10.1038/s41588-021-00986-w</td>\n",
+       "      <td>pub.1144721591</td>\n",
+       "      <td>1-4</td>\n",
+       "      <td>0</td>\n",
+       "      <td>The UGT2A1/UGT2A2 locus is associated with COV...</td>\n",
+       "      <td>article</td>\n",
+       "      <td>2022</td>\n",
+       "      <td>jour.1103138</td>\n",
+       "      <td>Nature Genetics</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>79.0</td>\n",
+       "      <td>[{'affiliations': [{'city': 'Milan', 'city_id'...</td>\n",
+       "      <td>10.1038/s41588-021-00989-7</td>\n",
+       "      <td>pub.1144719271</td>\n",
+       "      <td>1-14</td>\n",
+       "      <td>1</td>\n",
+       "      <td>LINE1 are spliced in non-canonical transcript ...</td>\n",
+       "      <td>article</td>\n",
+       "      <td>2022</td>\n",
+       "      <td>jour.1103138</td>\n",
+       "      <td>Nature Genetics</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>626.0</td>\n",
+       "      <td>[{'affiliations': [{'city': 'Boston', 'city_id...</td>\n",
+       "      <td>10.1038/s41588-021-00996-8</td>\n",
+       "      <td>pub.1144627157</td>\n",
+       "      <td>1-3</td>\n",
+       "      <td>0</td>\n",
+       "      <td>Multi-ancestry fine mapping implicates OAS1 sp...</td>\n",
+       "      <td>article</td>\n",
+       "      <td>2022</td>\n",
+       "      <td>jour.1103138</td>\n",
+       "      <td>Nature Genetics</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td>9.0</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>10.1038/s41588-021-01002-x</td>\n",
+       "      <td>pub.1144610758</td>\n",
+       "      <td>1-1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>A very Mendelian year</td>\n",
+       "      <td>article</td>\n",
+       "      <td>2022</td>\n",
+       "      <td>jour.1103138</td>\n",
+       "      <td>Nature Genetics</td>\n",
+       "      <td>1</td>\n",
+       "      <td>54</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>6</th>\n",
+       "      <td>14.0</td>\n",
+       "      <td>[{'affiliations': [{'city': 'Maastricht', 'cit...</td>\n",
+       "      <td>10.1038/s41588-021-00994-w</td>\n",
+       "      <td>pub.1144607904</td>\n",
+       "      <td>2-3</td>\n",
+       "      <td>0</td>\n",
+       "      <td>The regulatory network architecture of cardiom...</td>\n",
+       "      <td>article</td>\n",
+       "      <td>2022</td>\n",
+       "      <td>jour.1103138</td>\n",
+       "      <td>Nature Genetics</td>\n",
+       "      <td>1</td>\n",
+       "      <td>54</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>7</th>\n",
+       "      <td>132.0</td>\n",
+       "      <td>[{'affiliations': [{'city': 'New York', 'city_...</td>\n",
+       "      <td>10.1038/s41588-021-00976-y</td>\n",
+       "      <td>pub.1144471964</td>\n",
+       "      <td>4-17</td>\n",
+       "      <td>0</td>\n",
+       "      <td>Genetic analysis of the human microglial trans...</td>\n",
+       "      <td>article</td>\n",
+       "      <td>2022</td>\n",
+       "      <td>jour.1103138</td>\n",
+       "      <td>Nature Genetics</td>\n",
+       "      <td>1</td>\n",
+       "      <td>54</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>8</th>\n",
+       "      <td>178.0</td>\n",
+       "      <td>[{'affiliations': [{'city': 'Wageningen', 'cit...</td>\n",
+       "      <td>10.1038/s41588-021-00984-y</td>\n",
+       "      <td>pub.1144463791</td>\n",
+       "      <td>84-93</td>\n",
+       "      <td>0</td>\n",
+       "      <td>A PARTHENOGENESIS allele from apomictic dandel...</td>\n",
+       "      <td>article</td>\n",
+       "      <td>2022</td>\n",
+       "      <td>jour.1103138</td>\n",
+       "      <td>Nature Genetics</td>\n",
+       "      <td>1</td>\n",
+       "      <td>54</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>9</th>\n",
+       "      <td>1.0</td>\n",
+       "      <td>[{'affiliations': [{'city': 'Shanghai', 'city_...</td>\n",
+       "      <td>10.1038/s41588-021-00998-6</td>\n",
+       "      <td>pub.1144435478</td>\n",
+       "      <td>1-1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>Author Correction: Gain-of-function variants i...</td>\n",
+       "      <td>article</td>\n",
+       "      <td>2022</td>\n",
+       "      <td>jour.1103138</td>\n",
+       "      <td>Nature Genetics</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   altmetric                                            authors  \\\n",
+       "0       28.0  [{'affiliations': [{'city': 'New York', 'city_...   \n",
+       "1        7.0  [{'affiliations': [{'city': 'Heidelberg', 'cit...   \n",
+       "2     1581.0  [{'affiliations': [{'city': 'Sunnyvale', 'city...   \n",
+       "3       79.0  [{'affiliations': [{'city': 'Milan', 'city_id'...   \n",
+       "4      626.0  [{'affiliations': [{'city': 'Boston', 'city_id...   \n",
+       "5        9.0                                                NaN   \n",
+       "6       14.0  [{'affiliations': [{'city': 'Maastricht', 'cit...   \n",
+       "7      132.0  [{'affiliations': [{'city': 'New York', 'city_...   \n",
+       "8      178.0  [{'affiliations': [{'city': 'Wageningen', 'cit...   \n",
+       "9        1.0  [{'affiliations': [{'city': 'Shanghai', 'city_...   \n",
+       "\n",
+       "                          doi              id  pages  times_cited  \\\n",
+       "0  10.1038/s41588-021-00987-9  pub.1144816179    1-9            0   \n",
+       "1  10.1038/s41588-021-01003-w  pub.1144813674    1-2            0   \n",
+       "2  10.1038/s41588-021-00986-w  pub.1144721591    1-4            0   \n",
+       "3  10.1038/s41588-021-00989-7  pub.1144719271   1-14            1   \n",
+       "4  10.1038/s41588-021-00996-8  pub.1144627157    1-3            0   \n",
+       "5  10.1038/s41588-021-01002-x  pub.1144610758    1-1            0   \n",
+       "6  10.1038/s41588-021-00994-w  pub.1144607904    2-3            0   \n",
+       "7  10.1038/s41588-021-00976-y  pub.1144471964   4-17            0   \n",
+       "8  10.1038/s41588-021-00984-y  pub.1144463791  84-93            0   \n",
+       "9  10.1038/s41588-021-00998-6  pub.1144435478    1-1            0   \n",
+       "\n",
+       "                                               title     type  year  \\\n",
+       "0  Multi-ancestry eQTL meta-analysis of human bra...  article  2022   \n",
+       "1  Walking the LINEs hidden in the dark matter of...  article  2022   \n",
+       "2  The UGT2A1/UGT2A2 locus is associated with COV...  article  2022   \n",
+       "3  LINE1 are spliced in non-canonical transcript ...  article  2022   \n",
+       "4  Multi-ancestry fine mapping implicates OAS1 sp...  article  2022   \n",
+       "5                              A very Mendelian year  article  2022   \n",
+       "6  The regulatory network architecture of cardiom...  article  2022   \n",
+       "7  Genetic analysis of the human microglial trans...  article  2022   \n",
+       "8  A PARTHENOGENESIS allele from apomictic dandel...  article  2022   \n",
+       "9  Author Correction: Gain-of-function variants i...  article  2022   \n",
+       "\n",
+       "     journal.id    journal.title issue volume  \n",
+       "0  jour.1103138  Nature Genetics   NaN    NaN  \n",
+       "1  jour.1103138  Nature Genetics   NaN    NaN  \n",
+       "2  jour.1103138  Nature Genetics   NaN    NaN  \n",
+       "3  jour.1103138  Nature Genetics   NaN    NaN  \n",
+       "4  jour.1103138  Nature Genetics   NaN    NaN  \n",
+       "5  jour.1103138  Nature Genetics     1     54  \n",
+       "6  jour.1103138  Nature Genetics     1     54  \n",
+       "7  jour.1103138  Nature Genetics     1     54  \n",
+       "8  jour.1103138  Nature Genetics     1     54  \n",
+       "9  jour.1103138  Nature Genetics   NaN    NaN  "
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "dfpubs = pubs.as_dataframe()\n",
+    "save(dfpubs,\"1_publications.csv\")\n",
+    "# preview the publications \n",
+    "dfpubs.head(10)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "aJSz9ltEo6D0"
+   },
+   "source": [
+    "Extract the authors data "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 1194
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 5007,
+     "status": "ok",
+     "timestamp": 1590004331909,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GiYfmLTPbeMuYDDrETLbTVXTXnfVr9f7eBtkmR73A=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "ihjtFg1pUofn",
+    "outputId": "9eb0aec0-8a28-4e07-c847-1b140a5a7919"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>affiliations</th>\n",
+       "      <th>corresponding</th>\n",
+       "      <th>current_organization_id</th>\n",
+       "      <th>first_name</th>\n",
+       "      <th>last_name</th>\n",
+       "      <th>orcid</th>\n",
+       "      <th>raw_affiliation</th>\n",
+       "      <th>researcher_id</th>\n",
+       "      <th>pub_id</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>[{'city': 'New York', 'city_id': 5128581, 'cou...</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>Biao</td>\n",
+       "      <td>Zeng</td>\n",
+       "      <td>[]</td>\n",
+       "      <td>[Center for Disease Neurogenomics, Icahn Schoo...</td>\n",
+       "      <td>None</td>\n",
+       "      <td>pub.1144816179</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>[{'city': 'New York', 'city_id': 5128581, 'cou...</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>Jaroslav</td>\n",
+       "      <td>Bendl</td>\n",
+       "      <td>[]</td>\n",
+       "      <td>[Center for Disease Neurogenomics, Icahn Schoo...</td>\n",
+       "      <td>None</td>\n",
+       "      <td>pub.1144816179</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>[{'city': 'New York', 'city_id': 5128581, 'cou...</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>Roman</td>\n",
+       "      <td>Kosoy</td>\n",
+       "      <td>[]</td>\n",
+       "      <td>[Center for Disease Neurogenomics, Icahn Schoo...</td>\n",
+       "      <td>None</td>\n",
+       "      <td>pub.1144816179</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>[{'city': 'New York', 'city_id': 5128581, 'cou...</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>John F.</td>\n",
+       "      <td>Fullard</td>\n",
+       "      <td>[]</td>\n",
+       "      <td>[Center for Disease Neurogenomics, Icahn Schoo...</td>\n",
+       "      <td>None</td>\n",
+       "      <td>pub.1144816179</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>[{'city': 'New York', 'city_id': 5128581, 'cou...</td>\n",
+       "      <td>True</td>\n",
+       "      <td></td>\n",
+       "      <td>Gabriel E.</td>\n",
+       "      <td>Hoffman</td>\n",
+       "      <td>[]</td>\n",
+       "      <td>[Center for Disease Neurogenomics, Icahn Schoo...</td>\n",
+       "      <td>None</td>\n",
+       "      <td>pub.1144816179</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td>[{'city': 'New York', 'city_id': 5128581, 'cou...</td>\n",
+       "      <td>True</td>\n",
+       "      <td></td>\n",
+       "      <td>Panos</td>\n",
+       "      <td>Roussos</td>\n",
+       "      <td>[]</td>\n",
+       "      <td>[Center for Disease Neurogenomics, Icahn Schoo...</td>\n",
+       "      <td>None</td>\n",
+       "      <td>pub.1144816179</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>6</th>\n",
+       "      <td>[{'city': 'Heidelberg', 'city_id': 2907911, 'c...</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>Marina</td>\n",
+       "      <td>Lusic</td>\n",
+       "      <td>[]</td>\n",
+       "      <td>[Department of Infectious Diseases, Integrativ...</td>\n",
+       "      <td>None</td>\n",
+       "      <td>pub.1144813674</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>7</th>\n",
+       "      <td>[{'city': 'Nijmegen', 'city_id': 2750053, 'cou...</td>\n",
+       "      <td>True</td>\n",
+       "      <td></td>\n",
+       "      <td>Musa M.</td>\n",
+       "      <td>Mhlanga</td>\n",
+       "      <td>[]</td>\n",
+       "      <td>[Epigenomics &amp; Single Cell Biophysics Group, D...</td>\n",
+       "      <td>None</td>\n",
+       "      <td>pub.1144813674</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>8</th>\n",
+       "      <td>[{'city': 'Sunnyvale', 'city_id': 5400075, 'co...</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>Janie F.</td>\n",
+       "      <td>Shelton</td>\n",
+       "      <td>[]</td>\n",
+       "      <td>[23andMe Inc., Sunnyvale, CA, USA]</td>\n",
+       "      <td>None</td>\n",
+       "      <td>pub.1144721591</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>9</th>\n",
+       "      <td>[{'city': 'Sunnyvale', 'city_id': 5400075, 'co...</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>Anjali J.</td>\n",
+       "      <td>Shastri</td>\n",
+       "      <td>[]</td>\n",
+       "      <td>[23andMe Inc., Sunnyvale, CA, USA]</td>\n",
+       "      <td>None</td>\n",
+       "      <td>pub.1144721591</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                                        affiliations corresponding  \\\n",
+       "0  [{'city': 'New York', 'city_id': 5128581, 'cou...                 \n",
+       "1  [{'city': 'New York', 'city_id': 5128581, 'cou...                 \n",
+       "2  [{'city': 'New York', 'city_id': 5128581, 'cou...                 \n",
+       "3  [{'city': 'New York', 'city_id': 5128581, 'cou...                 \n",
+       "4  [{'city': 'New York', 'city_id': 5128581, 'cou...          True   \n",
+       "5  [{'city': 'New York', 'city_id': 5128581, 'cou...          True   \n",
+       "6  [{'city': 'Heidelberg', 'city_id': 2907911, 'c...                 \n",
+       "7  [{'city': 'Nijmegen', 'city_id': 2750053, 'cou...          True   \n",
+       "8  [{'city': 'Sunnyvale', 'city_id': 5400075, 'co...                 \n",
+       "9  [{'city': 'Sunnyvale', 'city_id': 5400075, 'co...                 \n",
+       "\n",
+       "  current_organization_id  first_name last_name orcid  \\\n",
+       "0                                Biao      Zeng    []   \n",
+       "1                            Jaroslav     Bendl    []   \n",
+       "2                               Roman     Kosoy    []   \n",
+       "3                             John F.   Fullard    []   \n",
+       "4                          Gabriel E.   Hoffman    []   \n",
+       "5                               Panos   Roussos    []   \n",
+       "6                              Marina     Lusic    []   \n",
+       "7                             Musa M.   Mhlanga    []   \n",
+       "8                            Janie F.   Shelton    []   \n",
+       "9                           Anjali J.   Shastri    []   \n",
+       "\n",
+       "                                     raw_affiliation researcher_id  \\\n",
+       "0  [Center for Disease Neurogenomics, Icahn Schoo...          None   \n",
+       "1  [Center for Disease Neurogenomics, Icahn Schoo...          None   \n",
+       "2  [Center for Disease Neurogenomics, Icahn Schoo...          None   \n",
+       "3  [Center for Disease Neurogenomics, Icahn Schoo...          None   \n",
+       "4  [Center for Disease Neurogenomics, Icahn Schoo...          None   \n",
+       "5  [Center for Disease Neurogenomics, Icahn Schoo...          None   \n",
+       "6  [Department of Infectious Diseases, Integrativ...          None   \n",
+       "7  [Epigenomics & Single Cell Biophysics Group, D...          None   \n",
+       "8                 [23andMe Inc., Sunnyvale, CA, USA]          None   \n",
+       "9                 [23andMe Inc., Sunnyvale, CA, USA]          None   \n",
+       "\n",
+       "           pub_id  \n",
+       "0  pub.1144816179  \n",
+       "1  pub.1144816179  \n",
+       "2  pub.1144816179  \n",
+       "3  pub.1144816179  \n",
+       "4  pub.1144816179  \n",
+       "5  pub.1144816179  \n",
+       "6  pub.1144813674  \n",
+       "7  pub.1144813674  \n",
+       "8  pub.1144721591  \n",
+       "9  pub.1144721591  "
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# preview the authors data \n",
+    "authors = pubs.as_dataframe_authors()\n",
+    "save(authors,\"1_publications_authors.csv\")\n",
+    "authors.head(10)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "QLkrxzT2o6D3"
+   },
+   "source": [
+    "Extract the affiliations data "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 681
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 8888,
+     "status": "ok",
+     "timestamp": 1590004335794,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GiYfmLTPbeMuYDDrETLbTVXTXnfVr9f7eBtkmR73A=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "SsT078tTuhvX",
+    "outputId": "e0a4e40d-b009-4f0c-a907-4e1623c13a93"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>aff_city</th>\n",
+       "      <th>aff_city_id</th>\n",
+       "      <th>aff_country</th>\n",
+       "      <th>aff_country_code</th>\n",
+       "      <th>aff_id</th>\n",
+       "      <th>aff_name</th>\n",
+       "      <th>aff_raw_affiliation</th>\n",
+       "      <th>aff_state</th>\n",
+       "      <th>aff_state_code</th>\n",
+       "      <th>pub_id</th>\n",
+       "      <th>researcher_id</th>\n",
+       "      <th>first_name</th>\n",
+       "      <th>last_name</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>New York</td>\n",
+       "      <td>5128581.0</td>\n",
+       "      <td>United States</td>\n",
+       "      <td>US</td>\n",
+       "      <td>grid.59734.3c</td>\n",
+       "      <td>Icahn School of Medicine at Mount Sinai</td>\n",
+       "      <td>Center for Disease Neurogenomics, Icahn School...</td>\n",
+       "      <td>New York</td>\n",
+       "      <td>US-NY</td>\n",
+       "      <td>pub.1144816179</td>\n",
+       "      <td></td>\n",
+       "      <td>Biao</td>\n",
+       "      <td>Zeng</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>New York</td>\n",
+       "      <td>5128581.0</td>\n",
+       "      <td>United States</td>\n",
+       "      <td>US</td>\n",
+       "      <td>grid.59734.3c</td>\n",
+       "      <td>Icahn School of Medicine at Mount Sinai</td>\n",
+       "      <td>Pamela Sklar Division of Psychiatric Genomics,...</td>\n",
+       "      <td>New York</td>\n",
+       "      <td>US-NY</td>\n",
+       "      <td>pub.1144816179</td>\n",
+       "      <td></td>\n",
+       "      <td>Biao</td>\n",
+       "      <td>Zeng</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>New York</td>\n",
+       "      <td>5128581.0</td>\n",
+       "      <td>United States</td>\n",
+       "      <td>US</td>\n",
+       "      <td>grid.59734.3c</td>\n",
+       "      <td>Icahn School of Medicine at Mount Sinai</td>\n",
+       "      <td>Department of Genetics and Genomic Sciences, I...</td>\n",
+       "      <td>New York</td>\n",
+       "      <td>US-NY</td>\n",
+       "      <td>pub.1144816179</td>\n",
+       "      <td></td>\n",
+       "      <td>Biao</td>\n",
+       "      <td>Zeng</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>New York</td>\n",
+       "      <td>5128581.0</td>\n",
+       "      <td>United States</td>\n",
+       "      <td>US</td>\n",
+       "      <td>grid.59734.3c</td>\n",
+       "      <td>Icahn School of Medicine at Mount Sinai</td>\n",
+       "      <td>Icahn Institute for Data Science and Genomic T...</td>\n",
+       "      <td>New York</td>\n",
+       "      <td>US-NY</td>\n",
+       "      <td>pub.1144816179</td>\n",
+       "      <td></td>\n",
+       "      <td>Biao</td>\n",
+       "      <td>Zeng</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>New York</td>\n",
+       "      <td>5128581.0</td>\n",
+       "      <td>United States</td>\n",
+       "      <td>US</td>\n",
+       "      <td>grid.59734.3c</td>\n",
+       "      <td>Icahn School of Medicine at Mount Sinai</td>\n",
+       "      <td>Department of Psychiatry, Icahn School of Medi...</td>\n",
+       "      <td>New York</td>\n",
+       "      <td>US-NY</td>\n",
+       "      <td>pub.1144816179</td>\n",
+       "      <td></td>\n",
+       "      <td>Biao</td>\n",
+       "      <td>Zeng</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td>New York</td>\n",
+       "      <td>5128581.0</td>\n",
+       "      <td>United States</td>\n",
+       "      <td>US</td>\n",
+       "      <td>grid.59734.3c</td>\n",
+       "      <td>Icahn School of Medicine at Mount Sinai</td>\n",
+       "      <td>Center for Disease Neurogenomics, Icahn School...</td>\n",
+       "      <td>New York</td>\n",
+       "      <td>US-NY</td>\n",
+       "      <td>pub.1144816179</td>\n",
+       "      <td></td>\n",
+       "      <td>Jaroslav</td>\n",
+       "      <td>Bendl</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>6</th>\n",
+       "      <td>New York</td>\n",
+       "      <td>5128581.0</td>\n",
+       "      <td>United States</td>\n",
+       "      <td>US</td>\n",
+       "      <td>grid.59734.3c</td>\n",
+       "      <td>Icahn School of Medicine at Mount Sinai</td>\n",
+       "      <td>Pamela Sklar Division of Psychiatric Genomics,...</td>\n",
+       "      <td>New York</td>\n",
+       "      <td>US-NY</td>\n",
+       "      <td>pub.1144816179</td>\n",
+       "      <td></td>\n",
+       "      <td>Jaroslav</td>\n",
+       "      <td>Bendl</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>7</th>\n",
+       "      <td>New York</td>\n",
+       "      <td>5128581.0</td>\n",
+       "      <td>United States</td>\n",
+       "      <td>US</td>\n",
+       "      <td>grid.59734.3c</td>\n",
+       "      <td>Icahn School of Medicine at Mount Sinai</td>\n",
+       "      <td>Department of Genetics and Genomic Sciences, I...</td>\n",
+       "      <td>New York</td>\n",
+       "      <td>US-NY</td>\n",
+       "      <td>pub.1144816179</td>\n",
+       "      <td></td>\n",
+       "      <td>Jaroslav</td>\n",
+       "      <td>Bendl</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>8</th>\n",
+       "      <td>New York</td>\n",
+       "      <td>5128581.0</td>\n",
+       "      <td>United States</td>\n",
+       "      <td>US</td>\n",
+       "      <td>grid.59734.3c</td>\n",
+       "      <td>Icahn School of Medicine at Mount Sinai</td>\n",
+       "      <td>Icahn Institute for Data Science and Genomic T...</td>\n",
+       "      <td>New York</td>\n",
+       "      <td>US-NY</td>\n",
+       "      <td>pub.1144816179</td>\n",
+       "      <td></td>\n",
+       "      <td>Jaroslav</td>\n",
+       "      <td>Bendl</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>9</th>\n",
+       "      <td>New York</td>\n",
+       "      <td>5128581.0</td>\n",
+       "      <td>United States</td>\n",
+       "      <td>US</td>\n",
+       "      <td>grid.59734.3c</td>\n",
+       "      <td>Icahn School of Medicine at Mount Sinai</td>\n",
+       "      <td>Department of Psychiatry, Icahn School of Medi...</td>\n",
+       "      <td>New York</td>\n",
+       "      <td>US-NY</td>\n",
+       "      <td>pub.1144816179</td>\n",
+       "      <td></td>\n",
+       "      <td>Jaroslav</td>\n",
+       "      <td>Bendl</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   aff_city aff_city_id    aff_country aff_country_code         aff_id  \\\n",
+       "0  New York   5128581.0  United States               US  grid.59734.3c   \n",
+       "1  New York   5128581.0  United States               US  grid.59734.3c   \n",
+       "2  New York   5128581.0  United States               US  grid.59734.3c   \n",
+       "3  New York   5128581.0  United States               US  grid.59734.3c   \n",
+       "4  New York   5128581.0  United States               US  grid.59734.3c   \n",
+       "5  New York   5128581.0  United States               US  grid.59734.3c   \n",
+       "6  New York   5128581.0  United States               US  grid.59734.3c   \n",
+       "7  New York   5128581.0  United States               US  grid.59734.3c   \n",
+       "8  New York   5128581.0  United States               US  grid.59734.3c   \n",
+       "9  New York   5128581.0  United States               US  grid.59734.3c   \n",
+       "\n",
+       "                                  aff_name  \\\n",
+       "0  Icahn School of Medicine at Mount Sinai   \n",
+       "1  Icahn School of Medicine at Mount Sinai   \n",
+       "2  Icahn School of Medicine at Mount Sinai   \n",
+       "3  Icahn School of Medicine at Mount Sinai   \n",
+       "4  Icahn School of Medicine at Mount Sinai   \n",
+       "5  Icahn School of Medicine at Mount Sinai   \n",
+       "6  Icahn School of Medicine at Mount Sinai   \n",
+       "7  Icahn School of Medicine at Mount Sinai   \n",
+       "8  Icahn School of Medicine at Mount Sinai   \n",
+       "9  Icahn School of Medicine at Mount Sinai   \n",
+       "\n",
+       "                                 aff_raw_affiliation aff_state aff_state_code  \\\n",
+       "0  Center for Disease Neurogenomics, Icahn School...  New York          US-NY   \n",
+       "1  Pamela Sklar Division of Psychiatric Genomics,...  New York          US-NY   \n",
+       "2  Department of Genetics and Genomic Sciences, I...  New York          US-NY   \n",
+       "3  Icahn Institute for Data Science and Genomic T...  New York          US-NY   \n",
+       "4  Department of Psychiatry, Icahn School of Medi...  New York          US-NY   \n",
+       "5  Center for Disease Neurogenomics, Icahn School...  New York          US-NY   \n",
+       "6  Pamela Sklar Division of Psychiatric Genomics,...  New York          US-NY   \n",
+       "7  Department of Genetics and Genomic Sciences, I...  New York          US-NY   \n",
+       "8  Icahn Institute for Data Science and Genomic T...  New York          US-NY   \n",
+       "9  Department of Psychiatry, Icahn School of Medi...  New York          US-NY   \n",
+       "\n",
+       "           pub_id researcher_id first_name last_name  \n",
+       "0  pub.1144816179                     Biao      Zeng  \n",
+       "1  pub.1144816179                     Biao      Zeng  \n",
+       "2  pub.1144816179                     Biao      Zeng  \n",
+       "3  pub.1144816179                     Biao      Zeng  \n",
+       "4  pub.1144816179                     Biao      Zeng  \n",
+       "5  pub.1144816179                 Jaroslav     Bendl  \n",
+       "6  pub.1144816179                 Jaroslav     Bendl  \n",
+       "7  pub.1144816179                 Jaroslav     Bendl  \n",
+       "8  pub.1144816179                 Jaroslav     Bendl  \n",
+       "9  pub.1144816179                 Jaroslav     Bendl  "
+      ]
+     },
+     "execution_count": 6,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "affiliations = pubs.as_dataframe_authors_affiliations()\n",
+    "save(affiliations,\"1_publications_affiliations.csv\")\n",
+    "affiliations.head(10)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "8Tri9qhoCYH3"
+   },
+   "source": [
+    "## Basic stats about authors\n",
+    "\n",
+    "* count how many authors in total \n",
+    "* count how many authors have a researcher ID\n",
+    "* count how many unique researchers IDs we have in total"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 542
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 9231,
+     "status": "ok",
+     "timestamp": 1590004336142,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GiYfmLTPbeMuYDDrETLbTVXTXnfVr9f7eBtkmR73A=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "4k5V31MFRmdH",
+    "outputId": "fa7662e9-f7fd-4df4-b119-9bee723ceb8f"
+   },
+   "outputs": [
+    {
+     "data": {
+      "application/vnd.plotly.v1+json": {
+       "config": {
+        "plotlyServerURL": "https://plot.ly"
+       },
+       "data": [
+        {
+         "alignmentgroup": "True",
+         "hovertemplate": "measure=%{x}<br>count=%{y}<extra></extra>",
+         "legendgroup": "",
+         "marker": {
+          "color": "#636efa",
+          "pattern": {
+           "shape": ""
+          }
+         },
+         "name": "",
+         "offsetgroup": "",
+         "orientation": "v",
+         "showlegend": false,
+         "textposition": "auto",
+         "type": "bar",
+         "x": [
+          "Authors in total (non unique)",
+          "Authors with a researcher ID",
+          "Authors with a researcher ID (unique)"
+         ],
+         "xaxis": "x",
+         "y": [
+          53638,
+          53625,
+          23346
+         ],
+         "yaxis": "y"
+        }
+       ],
+       "layout": {
+        "autosize": true,
+        "barmode": "relative",
+        "legend": {
+         "tracegroupgap": 0
+        },
+        "template": {
+         "data": {
+          "bar": [
+           {
+            "error_x": {
+             "color": "#2a3f5f"
+            },
+            "error_y": {
+             "color": "#2a3f5f"
+            },
+            "marker": {
+             "line": {
+              "color": "#E5ECF6",
+              "width": 0.5
+             },
+             "pattern": {
+              "fillmode": "overlay",
+              "size": 10,
+              "solidity": 0.2
+             }
+            },
+            "type": "bar"
+           }
+          ],
+          "barpolar": [
+           {
+            "marker": {
+             "line": {
+              "color": "#E5ECF6",
+              "width": 0.5
+             },
+             "pattern": {
+              "fillmode": "overlay",
+              "size": 10,
+              "solidity": 0.2
+             }
+            },
+            "type": "barpolar"
+           }
+          ],
+          "carpet": [
+           {
+            "aaxis": {
+             "endlinecolor": "#2a3f5f",
+             "gridcolor": "white",
+             "linecolor": "white",
+             "minorgridcolor": "white",
+             "startlinecolor": "#2a3f5f"
+            },
+            "baxis": {
+             "endlinecolor": "#2a3f5f",
+             "gridcolor": "white",
+             "linecolor": "white",
+             "minorgridcolor": "white",
+             "startlinecolor": "#2a3f5f"
+            },
+            "type": "carpet"
+           }
+          ],
+          "choropleth": [
+           {
+            "colorbar": {
+             "outlinewidth": 0,
+             "ticks": ""
+            },
+            "type": "choropleth"
+           }
+          ],
+          "contour": [
+           {
+            "colorbar": {
+             "outlinewidth": 0,
+             "ticks": ""
+            },
+            "colorscale": [
+             [
+              0,
+              "#0d0887"
+             ],
+             [
+              0.1111111111111111,
+              "#46039f"
+             ],
+             [
+              0.2222222222222222,
+              "#7201a8"
+             ],
+             [
+              0.3333333333333333,
+              "#9c179e"
+             ],
+             [
+              0.4444444444444444,
+              "#bd3786"
+             ],
+             [
+              0.5555555555555556,
+              "#d8576b"
+             ],
+             [
+              0.6666666666666666,
+              "#ed7953"
+             ],
+             [
+              0.7777777777777778,
+              "#fb9f3a"
+             ],
+             [
+              0.8888888888888888,
+              "#fdca26"
+             ],
+             [
+              1,
+              "#f0f921"
+             ]
+            ],
+            "type": "contour"
+           }
+          ],
+          "contourcarpet": [
+           {
+            "colorbar": {
+             "outlinewidth": 0,
+             "ticks": ""
+            },
+            "type": "contourcarpet"
+           }
+          ],
+          "heatmap": [
+           {
+            "colorbar": {
+             "outlinewidth": 0,
+             "ticks": ""
+            },
+            "colorscale": [
+             [
+              0,
+              "#0d0887"
+             ],
+             [
+              0.1111111111111111,
+              "#46039f"
+             ],
+             [
+              0.2222222222222222,
+              "#7201a8"
+             ],
+             [
+              0.3333333333333333,
+              "#9c179e"
+             ],
+             [
+              0.4444444444444444,
+              "#bd3786"
+             ],
+             [
+              0.5555555555555556,
+              "#d8576b"
+             ],
+             [
+              0.6666666666666666,
+              "#ed7953"
+             ],
+             [
+              0.7777777777777778,
+              "#fb9f3a"
+             ],
+             [
+              0.8888888888888888,
+              "#fdca26"
+             ],
+             [
+              1,
+              "#f0f921"
+             ]
+            ],
+            "type": "heatmap"
+           }
+          ],
+          "heatmapgl": [
+           {
+            "colorbar": {
+             "outlinewidth": 0,
+             "ticks": ""
+            },
+            "colorscale": [
+             [
+              0,
+              "#0d0887"
+             ],
+             [
+              0.1111111111111111,
+              "#46039f"
+             ],
+             [
+              0.2222222222222222,
+              "#7201a8"
+             ],
+             [
+              0.3333333333333333,
+              "#9c179e"
+             ],
+             [
+              0.4444444444444444,
+              "#bd3786"
+             ],
+             [
+              0.5555555555555556,
+              "#d8576b"
+             ],
+             [
+              0.6666666666666666,
+              "#ed7953"
+             ],
+             [
+              0.7777777777777778,
+              "#fb9f3a"
+             ],
+             [
+              0.8888888888888888,
+              "#fdca26"
+             ],
+             [
+              1,
+              "#f0f921"
+             ]
+            ],
+            "type": "heatmapgl"
+           }
+          ],
+          "histogram": [
+           {
+            "marker": {
+             "pattern": {
+              "fillmode": "overlay",
+              "size": 10,
+              "solidity": 0.2
+             }
+            },
+            "type": "histogram"
+           }
+          ],
+          "histogram2d": [
+           {
+            "colorbar": {
+             "outlinewidth": 0,
+             "ticks": ""
+            },
+            "colorscale": [
+             [
+              0,
+              "#0d0887"
+             ],
+             [
+              0.1111111111111111,
+              "#46039f"
+             ],
+             [
+              0.2222222222222222,
+              "#7201a8"
+             ],
+             [
+              0.3333333333333333,
+              "#9c179e"
+             ],
+             [
+              0.4444444444444444,
+              "#bd3786"
+             ],
+             [
+              0.5555555555555556,
+              "#d8576b"
+             ],
+             [
+              0.6666666666666666,
+              "#ed7953"
+             ],
+             [
+              0.7777777777777778,
+              "#fb9f3a"
+             ],
+             [
+              0.8888888888888888,
+              "#fdca26"
+             ],
+             [
+              1,
+              "#f0f921"
+             ]
+            ],
+            "type": "histogram2d"
+           }
+          ],
+          "histogram2dcontour": [
+           {
+            "colorbar": {
+             "outlinewidth": 0,
+             "ticks": ""
+            },
+            "colorscale": [
+             [
+              0,
+              "#0d0887"
+             ],
+             [
+              0.1111111111111111,
+              "#46039f"
+             ],
+             [
+              0.2222222222222222,
+              "#7201a8"
+             ],
+             [
+              0.3333333333333333,
+              "#9c179e"
+             ],
+             [
+              0.4444444444444444,
+              "#bd3786"
+             ],
+             [
+              0.5555555555555556,
+              "#d8576b"
+             ],
+             [
+              0.6666666666666666,
+              "#ed7953"
+             ],
+             [
+              0.7777777777777778,
+              "#fb9f3a"
+             ],
+             [
+              0.8888888888888888,
+              "#fdca26"
+             ],
+             [
+              1,
+              "#f0f921"
+             ]
+            ],
+            "type": "histogram2dcontour"
+           }
+          ],
+          "mesh3d": [
+           {
+            "colorbar": {
+             "outlinewidth": 0,
+             "ticks": ""
+            },
+            "type": "mesh3d"
+           }
+          ],
+          "parcoords": [
+           {
+            "line": {
+             "colorbar": {
+              "outlinewidth": 0,
+              "ticks": ""
+             }
+            },
+            "type": "parcoords"
+           }
+          ],
+          "pie": [
+           {
+            "automargin": true,
+            "type": "pie"
+           }
+          ],
+          "scatter": [
+           {
+            "marker": {
+             "colorbar": {
+              "outlinewidth": 0,
+              "ticks": ""
+             }
+            },
+            "type": "scatter"
+           }
+          ],
+          "scatter3d": [
+           {
+            "line": {
+             "colorbar": {
+              "outlinewidth": 0,
+              "ticks": ""
+             }
+            },
+            "marker": {
+             "colorbar": {
+              "outlinewidth": 0,
+              "ticks": ""
+             }
+            },
+            "type": "scatter3d"
+           }
+          ],
+          "scattercarpet": [
+           {
+            "marker": {
+             "colorbar": {
+              "outlinewidth": 0,
+              "ticks": ""
+             }
+            },
+            "type": "scattercarpet"
+           }
+          ],
+          "scattergeo": [
+           {
+            "marker": {
+             "colorbar": {
+              "outlinewidth": 0,
+              "ticks": ""
+             }
+            },
+            "type": "scattergeo"
+           }
+          ],
+          "scattergl": [
+           {
+            "marker": {
+             "colorbar": {
+              "outlinewidth": 0,
+              "ticks": ""
+             }
+            },
+            "type": "scattergl"
+           }
+          ],
+          "scattermapbox": [
+           {
+            "marker": {
+             "colorbar": {
+              "outlinewidth": 0,
+              "ticks": ""
+             }
+            },
+            "type": "scattermapbox"
+           }
+          ],
+          "scatterpolar": [
+           {
+            "marker": {
+             "colorbar": {
+              "outlinewidth": 0,
+              "ticks": ""
+             }
+            },
+            "type": "scatterpolar"
+           }
+          ],
+          "scatterpolargl": [
+           {
+            "marker": {
+             "colorbar": {
+              "outlinewidth": 0,
+              "ticks": ""
+             }
+            },
+            "type": "scatterpolargl"
+           }
+          ],
+          "scatterternary": [
+           {
+            "marker": {
+             "colorbar": {
+              "outlinewidth": 0,
+              "ticks": ""
+             }
+            },
+            "type": "scatterternary"
+           }
+          ],
+          "surface": [
+           {
+            "colorbar": {
+             "outlinewidth": 0,
+             "ticks": ""
+            },
+            "colorscale": [
+             [
+              0,
+              "#0d0887"
+             ],
+             [
+              0.1111111111111111,
+              "#46039f"
+             ],
+             [
+              0.2222222222222222,
+              "#7201a8"
+             ],
+             [
+              0.3333333333333333,
+              "#9c179e"
+             ],
+             [
+              0.4444444444444444,
+              "#bd3786"
+             ],
+             [
+              0.5555555555555556,
+              "#d8576b"
+             ],
+             [
+              0.6666666666666666,
+              "#ed7953"
+             ],
+             [
+              0.7777777777777778,
+              "#fb9f3a"
+             ],
+             [
+              0.8888888888888888,
+              "#fdca26"
+             ],
+             [
+              1,
+              "#f0f921"
+             ]
+            ],
+            "type": "surface"
+           }
+          ],
+          "table": [
+           {
+            "cells": {
+             "fill": {
+              "color": "#EBF0F8"
+             },
+             "line": {
+              "color": "white"
+             }
+            },
+            "header": {
+             "fill": {
+              "color": "#C8D4E3"
+             },
+             "line": {
+              "color": "white"
+             }
+            },
+            "type": "table"
+           }
+          ]
+         },
+         "layout": {
+          "annotationdefaults": {
+           "arrowcolor": "#2a3f5f",
+           "arrowhead": 0,
+           "arrowwidth": 1
+          },
+          "autotypenumbers": "strict",
+          "coloraxis": {
+           "colorbar": {
+            "outlinewidth": 0,
+            "ticks": ""
+           }
+          },
+          "colorscale": {
+           "diverging": [
+            [
+             0,
+             "#8e0152"
+            ],
+            [
+             0.1,
+             "#c51b7d"
+            ],
+            [
+             0.2,
+             "#de77ae"
+            ],
+            [
+             0.3,
+             "#f1b6da"
+            ],
+            [
+             0.4,
+             "#fde0ef"
+            ],
+            [
+             0.5,
+             "#f7f7f7"
+            ],
+            [
+             0.6,
+             "#e6f5d0"
+            ],
+            [
+             0.7,
+             "#b8e186"
+            ],
+            [
+             0.8,
+             "#7fbc41"
+            ],
+            [
+             0.9,
+             "#4d9221"
+            ],
+            [
+             1,
+             "#276419"
+            ]
+           ],
+           "sequential": [
+            [
+             0,
+             "#0d0887"
+            ],
+            [
+             0.1111111111111111,
+             "#46039f"
+            ],
+            [
+             0.2222222222222222,
+             "#7201a8"
+            ],
+            [
+             0.3333333333333333,
+             "#9c179e"
+            ],
+            [
+             0.4444444444444444,
+             "#bd3786"
+            ],
+            [
+             0.5555555555555556,
+             "#d8576b"
+            ],
+            [
+             0.6666666666666666,
+             "#ed7953"
+            ],
+            [
+             0.7777777777777778,
+             "#fb9f3a"
+            ],
+            [
+             0.8888888888888888,
+             "#fdca26"
+            ],
+            [
+             1,
+             "#f0f921"
+            ]
+           ],
+           "sequentialminus": [
+            [
+             0,
+             "#0d0887"
+            ],
+            [
+             0.1111111111111111,
+             "#46039f"
+            ],
+            [
+             0.2222222222222222,
+             "#7201a8"
+            ],
+            [
+             0.3333333333333333,
+             "#9c179e"
+            ],
+            [
+             0.4444444444444444,
+             "#bd3786"
+            ],
+            [
+             0.5555555555555556,
+             "#d8576b"
+            ],
+            [
+             0.6666666666666666,
+             "#ed7953"
+            ],
+            [
+             0.7777777777777778,
+             "#fb9f3a"
+            ],
+            [
+             0.8888888888888888,
+             "#fdca26"
+            ],
+            [
+             1,
+             "#f0f921"
+            ]
+           ]
+          },
+          "colorway": [
+           "#636efa",
+           "#EF553B",
+           "#00cc96",
+           "#ab63fa",
+           "#FFA15A",
+           "#19d3f3",
+           "#FF6692",
+           "#B6E880",
+           "#FF97FF",
+           "#FECB52"
+          ],
+          "font": {
+           "color": "#2a3f5f"
+          },
+          "geo": {
+           "bgcolor": "white",
+           "lakecolor": "white",
+           "landcolor": "#E5ECF6",
+           "showlakes": true,
+           "showland": true,
+           "subunitcolor": "white"
+          },
+          "hoverlabel": {
+           "align": "left"
+          },
+          "hovermode": "closest",
+          "mapbox": {
+           "style": "light"
+          },
+          "paper_bgcolor": "white",
+          "plot_bgcolor": "#E5ECF6",
+          "polar": {
+           "angularaxis": {
+            "gridcolor": "white",
+            "linecolor": "white",
+            "ticks": ""
+           },
+           "bgcolor": "#E5ECF6",
+           "radialaxis": {
+            "gridcolor": "white",
+            "linecolor": "white",
+            "ticks": ""
+           }
+          },
+          "scene": {
+           "xaxis": {
+            "backgroundcolor": "#E5ECF6",
+            "gridcolor": "white",
+            "gridwidth": 2,
+            "linecolor": "white",
+            "showbackground": true,
+            "ticks": "",
+            "zerolinecolor": "white"
+           },
+           "yaxis": {
+            "backgroundcolor": "#E5ECF6",
+            "gridcolor": "white",
+            "gridwidth": 2,
+            "linecolor": "white",
+            "showbackground": true,
+            "ticks": "",
+            "zerolinecolor": "white"
+           },
+           "zaxis": {
+            "backgroundcolor": "#E5ECF6",
+            "gridcolor": "white",
+            "gridwidth": 2,
+            "linecolor": "white",
+            "showbackground": true,
+            "ticks": "",
+            "zerolinecolor": "white"
+           }
+          },
+          "shapedefaults": {
+           "line": {
+            "color": "#2a3f5f"
+           }
+          },
+          "ternary": {
+           "aaxis": {
+            "gridcolor": "white",
+            "linecolor": "white",
+            "ticks": ""
+           },
+           "baxis": {
+            "gridcolor": "white",
+            "linecolor": "white",
+            "ticks": ""
+           },
+           "bgcolor": "#E5ECF6",
+           "caxis": {
+            "gridcolor": "white",
+            "linecolor": "white",
+            "ticks": ""
+           }
+          },
+          "title": {
+           "x": 0.05
+          },
+          "xaxis": {
+           "automargin": true,
+           "gridcolor": "white",
+           "linecolor": "white",
+           "ticks": "",
+           "title": {
+            "standoff": 15
+           },
+           "zerolinecolor": "white",
+           "zerolinewidth": 2
+          },
+          "yaxis": {
+           "automargin": true,
+           "gridcolor": "white",
+           "linecolor": "white",
+           "ticks": "",
+           "title": {
+            "standoff": 15
+           },
+           "zerolinecolor": "white",
+           "zerolinewidth": 2
+          }
+         }
+        },
+        "title": {
+         "text": "Author stats for Nature Genetics (from 2015)"
+        },
+        "xaxis": {
+         "anchor": "y",
+         "autorange": true,
+         "domain": [
+          0,
+          1
+         ],
+         "range": [
+          -0.5,
+          2.5
+         ],
+         "title": {
+          "text": "measure"
+         },
+         "type": "category"
+        },
+        "yaxis": {
+         "anchor": "x",
+         "autorange": true,
+         "domain": [
+          0,
+          1
+         ],
+         "range": [
+          0,
+          56461.05263157895
+         ],
+         "title": {
+          "text": "count"
+         },
+         "type": "linear"
+        }
+       }
+      },
+      "image/png": "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",
+      "text/html": [
+       "<div>                            <div id=\"9fa37fda-902e-4d1a-bd35-9154195a2c01\" class=\"plotly-graph-div\" style=\"height:525px; width:100%;\"></div>            <script type=\"text/javascript\">                require([\"plotly\"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById(\"9fa37fda-902e-4d1a-bd35-9154195a2c01\")) {                    Plotly.newPlot(                        \"9fa37fda-902e-4d1a-bd35-9154195a2c01\",                        [{\"alignmentgroup\":\"True\",\"hovertemplate\":\"measure=%{x}<br>count=%{y}<extra></extra>\",\"legendgroup\":\"\",\"marker\":{\"color\":\"#636efa\",\"pattern\":{\"shape\":\"\"}},\"name\":\"\",\"offsetgroup\":\"\",\"orientation\":\"v\",\"showlegend\":false,\"textposition\":\"auto\",\"x\":[\"Authors in total (non unique)\",\"Authors with a researcher ID\",\"Authors with a researcher ID (unique)\"],\"xaxis\":\"x\",\"y\":[53638,53625,23346],\"yaxis\":\"y\",\"type\":\"bar\"}],                        {\"template\":{\"data\":{\"bar\":[{\"error_x\":{\"color\":\"#2a3f5f\"},\"error_y\":{\"color\":\"#2a3f5f\"},\"marker\":{\"line\":{\"color\":\"#E5ECF6\",\"width\":0.5},\"pattern\":{\"fillmode\":\"overlay\",\"size\":10,\"solidity\":0.2}},\"type\":\"bar\"}],\"barpolar\":[{\"marker\":{\"line\":{\"color\":\"#E5ECF6\",\"width\":0.5},\"pattern\":{\"fillmode\":\"overlay\",\"size\":10,\"solidity\":0.2}},\"type\":\"barpolar\"}],\"carpet\":[{\"aaxis\":{\"endlinecolor\":\"#2a3f5f\",\"gridcolor\":\"white\",\"linecolor\":\"white\",\"minorgridcolor\":\"white\",\"startlinecolor\":\"#2a3f5f\"},\"baxis\":{\"endlinecolor\":\"#2a3f5f\",\"gridcolor\":\"white\",\"linecolor\":\"white\",\"minorgridcolor\":\"white\",\"startlinecolor\":\"#2a3f5f\"},\"type\":\"carpet\"}],\"choropleth\":[{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"},\"type\":\"choropleth\"}],\"contour\":[{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"},\"colorscale\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]],\"type\":\"contour\"}],\"contourcarpet\":[{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"},\"type\":\"contourcarpet\"}],\"heatmap\":[{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"},\"colorscale\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]],\"type\":\"heatmap\"}],\"heatmapgl\":[{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"},\"colorscale\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]],\"type\":\"heatmapgl\"}],\"histogram\":[{\"marker\":{\"pattern\":{\"fillmode\":\"overlay\",\"size\":10,\"solidity\":0.2}},\"type\":\"histogram\"}],\"histogram2d\":[{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"},\"colorscale\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]],\"type\":\"histogram2d\"}],\"histogram2dcontour\":[{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"},\"colorscale\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]],\"type\":\"histogram2dcontour\"}],\"mesh3d\":[{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"},\"type\":\"mesh3d\"}],\"parcoords\":[{\"line\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}},\"type\":\"parcoords\"}],\"pie\":[{\"automargin\":true,\"type\":\"pie\"}],\"scatter\":[{\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}},\"type\":\"scatter\"}],\"scatter3d\":[{\"line\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}},\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}},\"type\":\"scatter3d\"}],\"scattercarpet\":[{\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}},\"type\":\"scattercarpet\"}],\"scattergeo\":[{\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}},\"type\":\"scattergeo\"}],\"scattergl\":[{\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}},\"type\":\"scattergl\"}],\"scattermapbox\":[{\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}},\"type\":\"scattermapbox\"}],\"scatterpolar\":[{\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}},\"type\":\"scatterpolar\"}],\"scatterpolargl\":[{\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}},\"type\":\"scatterpolargl\"}],\"scatterternary\":[{\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}},\"type\":\"scatterternary\"}],\"surface\":[{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"},\"colorscale\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]],\"type\":\"surface\"}],\"table\":[{\"cells\":{\"fill\":{\"color\":\"#EBF0F8\"},\"line\":{\"color\":\"white\"}},\"header\":{\"fill\":{\"color\":\"#C8D4E3\"},\"line\":{\"color\":\"white\"}},\"type\":\"table\"}]},\"layout\":{\"annotationdefaults\":{\"arrowcolor\":\"#2a3f5f\",\"arrowhead\":0,\"arrowwidth\":1},\"autotypenumbers\":\"strict\",\"coloraxis\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}},\"colorscale\":{\"diverging\":[[0,\"#8e0152\"],[0.1,\"#c51b7d\"],[0.2,\"#de77ae\"],[0.3,\"#f1b6da\"],[0.4,\"#fde0ef\"],[0.5,\"#f7f7f7\"],[0.6,\"#e6f5d0\"],[0.7,\"#b8e186\"],[0.8,\"#7fbc41\"],[0.9,\"#4d9221\"],[1,\"#276419\"]],\"sequential\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]],\"sequentialminus\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]]},\"colorway\":[\"#636efa\",\"#EF553B\",\"#00cc96\",\"#ab63fa\",\"#FFA15A\",\"#19d3f3\",\"#FF6692\",\"#B6E880\",\"#FF97FF\",\"#FECB52\"],\"font\":{\"color\":\"#2a3f5f\"},\"geo\":{\"bgcolor\":\"white\",\"lakecolor\":\"white\",\"landcolor\":\"#E5ECF6\",\"showlakes\":true,\"showland\":true,\"subunitcolor\":\"white\"},\"hoverlabel\":{\"align\":\"left\"},\"hovermode\":\"closest\",\"mapbox\":{\"style\":\"light\"},\"paper_bgcolor\":\"white\",\"plot_bgcolor\":\"#E5ECF6\",\"polar\":{\"angularaxis\":{\"gridcolor\":\"white\",\"linecolor\":\"white\",\"ticks\":\"\"},\"bgcolor\":\"#E5ECF6\",\"radialaxis\":{\"gridcolor\":\"white\",\"linecolor\":\"white\",\"ticks\":\"\"}},\"scene\":{\"xaxis\":{\"backgroundcolor\":\"#E5ECF6\",\"gridcolor\":\"white\",\"gridwidth\":2,\"linecolor\":\"white\",\"showbackground\":true,\"ticks\":\"\",\"zerolinecolor\":\"white\"},\"yaxis\":{\"backgroundcolor\":\"#E5ECF6\",\"gridcolor\":\"white\",\"gridwidth\":2,\"linecolor\":\"white\",\"showbackground\":true,\"ticks\":\"\",\"zerolinecolor\":\"white\"},\"zaxis\":{\"backgroundcolor\":\"#E5ECF6\",\"gridcolor\":\"white\",\"gridwidth\":2,\"linecolor\":\"white\",\"showbackground\":true,\"ticks\":\"\",\"zerolinecolor\":\"white\"}},\"shapedefaults\":{\"line\":{\"color\":\"#2a3f5f\"}},\"ternary\":{\"aaxis\":{\"gridcolor\":\"white\",\"linecolor\":\"white\",\"ticks\":\"\"},\"baxis\":{\"gridcolor\":\"white\",\"linecolor\":\"white\",\"ticks\":\"\"},\"bgcolor\":\"#E5ECF6\",\"caxis\":{\"gridcolor\":\"white\",\"linecolor\":\"white\",\"ticks\":\"\"}},\"title\":{\"x\":0.05},\"xaxis\":{\"automargin\":true,\"gridcolor\":\"white\",\"linecolor\":\"white\",\"ticks\":\"\",\"title\":{\"standoff\":15},\"zerolinecolor\":\"white\",\"zerolinewidth\":2},\"yaxis\":{\"automargin\":true,\"gridcolor\":\"white\",\"linecolor\":\"white\",\"ticks\":\"\",\"title\":{\"standoff\":15},\"zerolinecolor\":\"white\",\"zerolinewidth\":2}}},\"xaxis\":{\"anchor\":\"y\",\"domain\":[0.0,1.0],\"title\":{\"text\":\"measure\"}},\"yaxis\":{\"anchor\":\"x\",\"domain\":[0.0,1.0],\"title\":{\"text\":\"count\"}},\"legend\":{\"tracegroupgap\":0},\"title\":{\"text\":\"Author stats for Nature Genetics (from 2015)\"},\"barmode\":\"relative\"},                        {\"responsive\": true}                    ).then(function(){\n",
+       "                            \n",
+       "var gd = document.getElementById('9fa37fda-902e-4d1a-bd35-9154195a2c01');\n",
+       "var x = new MutationObserver(function (mutations, observer) {{\n",
+       "        var display = window.getComputedStyle(gd).display;\n",
+       "        if (!display || display === 'none') {{\n",
+       "            console.log([gd, 'removed!']);\n",
+       "            Plotly.purge(gd);\n",
+       "            observer.disconnect();\n",
+       "        }}\n",
+       "}});\n",
+       "\n",
+       "// Listen for the removal of the full notebook cells\n",
+       "var notebookContainer = gd.closest('#notebook-container');\n",
+       "if (notebookContainer) {{\n",
+       "    x.observe(notebookContainer, {childList: true});\n",
+       "}}\n",
+       "\n",
+       "// Listen for the clearing of the current output cell\n",
+       "var outputEl = gd.closest('.output');\n",
+       "if (outputEl) {{\n",
+       "    x.observe(outputEl, {childList: true});\n",
+       "}}\n",
+       "\n",
+       "                        })                };                });            </script>        </div>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "researchers = authors.query(\"researcher_id!=''\")\n",
+    "#\n",
+    "df = pd.DataFrame({\n",
+    "    'measure' : ['Authors in total (non unique)', 'Authors with a researcher ID', 'Authors with a researcher ID (unique)'],\n",
+    "    'count' : [len(authors), len(researchers), researchers['researcher_id'].nunique()],\n",
+    "})\n",
+    "px.bar(df, x=\"measure\", y=\"count\", title=f\"Author stats for {journal_title} (from {start_year})\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {},
+    "colab_type": "code",
+    "id": "bs2a6hzBRmdM"
+   },
+   "outputs": [],
+   "source": [
+    "# save the researchers data to a file\n",
+    "save(researchers, \"1_authors_with_researchers_id.csv\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "fJuPwNoORmdN"
+   },
+   "source": [
+    "## A quick look at authors *without* a Dimensions Researcher ID\n",
+    "\n",
+    "We're not going to try to disambiguate them here, but still it's good to have a quick look at them... \n",
+    "\n",
+    "Looks like the most common surname is `Wang`, while the most common first name is an empty value"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 172
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 9573,
+     "status": "ok",
+     "timestamp": 1590004336490,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GiYfmLTPbeMuYDDrETLbTVXTXnfVr9f7eBtkmR73A=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "Zh-u7ZN4RmdO",
+    "outputId": "4ab12b2a-dabc-4cf8-f64d-9e85e0e6e086"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>first_name</th>\n",
+       "      <th>last_name</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>count</th>\n",
+       "      <td>13</td>\n",
+       "      <td>13</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>unique</th>\n",
+       "      <td>6</td>\n",
+       "      <td>9</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>top</th>\n",
+       "      <td></td>\n",
+       "      <td>Consortium</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>freq</th>\n",
+       "      <td>8</td>\n",
+       "      <td>4</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "       first_name   last_name\n",
+       "count          13          13\n",
+       "unique          6           9\n",
+       "top                Consortium\n",
+       "freq            8           4"
+      ]
+     },
+     "execution_count": 9,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "authors_without_id = authors.query(\"researcher_id==''\")\n",
+    "authors_without_id[['first_name', 'last_name']].describe()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "17_9q8y1RmdP"
+   },
+   "source": [
+    "Top ten 'ambiguous' surnames seem to be all Asian.. it's a rather known problem! "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 204
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 9567,
+     "status": "ok",
+     "timestamp": 1590004336491,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GiYfmLTPbeMuYDDrETLbTVXTXnfVr9f7eBtkmR73A=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "IO6R4sRARmdQ",
+    "outputId": "9adfea21-5f69-4698-a8b9-e6b9fb2c3e61"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Consortium                                  4\n",
+       "EPIC-CVD Consortium                         2\n",
+       "ReproGen Consortium                         1\n",
+       "Understanding Society Scientific Group      1\n",
+       "AFGen Consortium                            1\n",
+       "BioBank Japan Cooperative Hospital Group    1\n",
+       "EPIC-InterAct Consortium                    1\n",
+       "HIPSCI Consortium                           1\n",
+       "consortium                                  1\n",
+       "Name: last_name, dtype: int64"
+      ]
+     },
+     "execution_count": 10,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "authors_without_id['last_name'].value_counts()[:10]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "ivhKZPLsRmdS"
+   },
+   "source": [
+    "### Any common patterns? \n",
+    "\n",
+    "If we try to group the data by name+surname we can see some interesting patterns \n",
+    "\n",
+    "* some entries are things which are not persons (presumably the results of bad source data in Dimensions, eg from the publisher) \n",
+    "* there are some apparently meaningful name+surname combinations with a lot of hits\n",
+    "* not many Asian names in the top ones \n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 901
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 9563,
+     "status": "ok",
+     "timestamp": 1590004336491,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GiYfmLTPbeMuYDDrETLbTVXTXnfVr9f7eBtkmR73A=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "VCkNdlWgRmdS",
+    "outputId": "2ec4715d-0dc6-442c-a38a-6e9ef19344b6"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>first_name</th>\n",
+       "      <th>last_name</th>\n",
+       "      <th>frequency</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td></td>\n",
+       "      <td>EPIC-CVD Consortium</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td></td>\n",
+       "      <td>AFGen Consortium</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td></td>\n",
+       "      <td>BioBank Japan Cooperative Hospital Group</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td></td>\n",
+       "      <td>EPIC-InterAct Consortium</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td></td>\n",
+       "      <td>HIPSCI Consortium</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td></td>\n",
+       "      <td>ReproGen Consortium</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>6</th>\n",
+       "      <td></td>\n",
+       "      <td>Understanding Society Scientific Group</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>7</th>\n",
+       "      <td>BIOS</td>\n",
+       "      <td>Consortium</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>8</th>\n",
+       "      <td>EPIC-InterAct</td>\n",
+       "      <td>Consortium</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>9</th>\n",
+       "      <td>ReproGen</td>\n",
+       "      <td>Consortium</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>10</th>\n",
+       "      <td>arcOGEN</td>\n",
+       "      <td>consortium</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>11</th>\n",
+       "      <td>eQTLGen</td>\n",
+       "      <td>Consortium</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "       first_name                                 last_name  frequency\n",
+       "2                                       EPIC-CVD Consortium          2\n",
+       "0                                          AFGen Consortium          1\n",
+       "1                  BioBank Japan Cooperative Hospital Group          1\n",
+       "3                                  EPIC-InterAct Consortium          1\n",
+       "4                                         HIPSCI Consortium          1\n",
+       "5                                       ReproGen Consortium          1\n",
+       "6                    Understanding Society Scientific Group          1\n",
+       "7            BIOS                                Consortium          1\n",
+       "8   EPIC-InterAct                                Consortium          1\n",
+       "9        ReproGen                                Consortium          1\n",
+       "10        arcOGEN                                consortium          1\n",
+       "11        eQTLGen                                Consortium          1"
+      ]
+     },
+     "execution_count": 11,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "authors_without_id = authors_without_id.groupby([\"first_name\", \"last_name\"]).size().reset_index().rename(columns={0: \"frequency\"})\n",
+    "authors_without_id.sort_values(\"frequency\", ascending=False, inplace=True)\n",
+    "authors_without_id.head(20)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "dqxFegeLRmdW"
+   },
+   "source": [
+    "### Creating an export for manual curation\n",
+    "\n",
+    "For the next tasks, we will focus on the disambiguated authors as the Researcher ID links will let us carry out useful analyses.\n",
+    "\n",
+    "Still, we can **save the authors with missing IDs** results and try to do some manual disambiguation later. To this end, adding a simple google-search URL can help in making sense of these data quickly."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 508
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 9890,
+     "status": "ok",
+     "timestamp": 1590004336822,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GiYfmLTPbeMuYDDrETLbTVXTXnfVr9f7eBtkmR73A=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "cC__pj51RmdW",
+    "outputId": "da9b33b0-1cf5-4a3c-9d5e-4c5a95b3fa28"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "WARNING: the `shortcuts` module is deprecated. Use instead ``from dimcli.utils import *``\n"
+     ]
+    },
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>first_name</th>\n",
+       "      <th>last_name</th>\n",
+       "      <th>frequency</th>\n",
+       "      <th>search_url</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td></td>\n",
+       "      <td>EPIC-CVD Consortium</td>\n",
+       "      <td>2</td>\n",
+       "      <td>https://www.google.com/search?q=%20EPIC-CVD%20...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td></td>\n",
+       "      <td>AFGen Consortium</td>\n",
+       "      <td>1</td>\n",
+       "      <td>https://www.google.com/search?q=%20AFGen%20Con...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td></td>\n",
+       "      <td>BioBank Japan Cooperative Hospital Group</td>\n",
+       "      <td>1</td>\n",
+       "      <td>https://www.google.com/search?q=%20BioBank%20J...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td></td>\n",
+       "      <td>EPIC-InterAct Consortium</td>\n",
+       "      <td>1</td>\n",
+       "      <td>https://www.google.com/search?q=%20EPIC-InterA...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td></td>\n",
+       "      <td>HIPSCI Consortium</td>\n",
+       "      <td>1</td>\n",
+       "      <td>https://www.google.com/search?q=%20HIPSCI%20Co...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td></td>\n",
+       "      <td>ReproGen Consortium</td>\n",
+       "      <td>1</td>\n",
+       "      <td>https://www.google.com/search?q=%20ReproGen%20...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>6</th>\n",
+       "      <td></td>\n",
+       "      <td>Understanding Society Scientific Group</td>\n",
+       "      <td>1</td>\n",
+       "      <td>https://www.google.com/search?q=%20Understandi...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>7</th>\n",
+       "      <td>BIOS</td>\n",
+       "      <td>Consortium</td>\n",
+       "      <td>1</td>\n",
+       "      <td>https://www.google.com/search?q=BIOS%20Consortium</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>8</th>\n",
+       "      <td>EPIC-InterAct</td>\n",
+       "      <td>Consortium</td>\n",
+       "      <td>1</td>\n",
+       "      <td>https://www.google.com/search?q=EPIC-InterAct%...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>9</th>\n",
+       "      <td>ReproGen</td>\n",
+       "      <td>Consortium</td>\n",
+       "      <td>1</td>\n",
+       "      <td>https://www.google.com/search?q=ReproGen%20Con...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>10</th>\n",
+       "      <td>arcOGEN</td>\n",
+       "      <td>consortium</td>\n",
+       "      <td>1</td>\n",
+       "      <td>https://www.google.com/search?q=arcOGEN%20cons...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>11</th>\n",
+       "      <td>eQTLGen</td>\n",
+       "      <td>Consortium</td>\n",
+       "      <td>1</td>\n",
+       "      <td>https://www.google.com/search?q=eQTLGen%20Cons...</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "       first_name                                 last_name  frequency  \\\n",
+       "2                                       EPIC-CVD Consortium          2   \n",
+       "0                                          AFGen Consortium          1   \n",
+       "1                  BioBank Japan Cooperative Hospital Group          1   \n",
+       "3                                  EPIC-InterAct Consortium          1   \n",
+       "4                                         HIPSCI Consortium          1   \n",
+       "5                                       ReproGen Consortium          1   \n",
+       "6                    Understanding Society Scientific Group          1   \n",
+       "7            BIOS                                Consortium          1   \n",
+       "8   EPIC-InterAct                                Consortium          1   \n",
+       "9        ReproGen                                Consortium          1   \n",
+       "10        arcOGEN                                consortium          1   \n",
+       "11        eQTLGen                                Consortium          1   \n",
+       "\n",
+       "                                           search_url  \n",
+       "2   https://www.google.com/search?q=%20EPIC-CVD%20...  \n",
+       "0   https://www.google.com/search?q=%20AFGen%20Con...  \n",
+       "1   https://www.google.com/search?q=%20BioBank%20J...  \n",
+       "3   https://www.google.com/search?q=%20EPIC-InterA...  \n",
+       "4   https://www.google.com/search?q=%20HIPSCI%20Co...  \n",
+       "5   https://www.google.com/search?q=%20ReproGen%20...  \n",
+       "6   https://www.google.com/search?q=%20Understandi...  \n",
+       "7   https://www.google.com/search?q=BIOS%20Consortium  \n",
+       "8   https://www.google.com/search?q=EPIC-InterAct%...  \n",
+       "9   https://www.google.com/search?q=ReproGen%20Con...  \n",
+       "10  https://www.google.com/search?q=arcOGEN%20cons...  \n",
+       "11  https://www.google.com/search?q=eQTLGen%20Cons...  "
+      ]
+     },
+     "execution_count": 12,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "from dimcli.shortcuts import google_url\n",
+    "\n",
+    "authors_without_id['search_url'] = authors_without_id.apply(lambda x: google_url(x['first_name'] + \" \" +x['last_name'] ), axis=1)\n",
+    "\n",
+    "authors_without_id.head(20)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {},
+    "colab_type": "code",
+    "id": "xQFQTOPOWm_T"
+   },
+   "outputs": [],
+   "source": [
+    "# save the data\n",
+    "save(authors_without_id, \"1_authors_without_researchers_id.csv\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "Y9cYfZJZRmdY"
+   },
+   "source": [
+    "That's it! \n",
+    "\n",
+    "Now let's go and open this in [Google Sheets](https://docs.google.com/spreadsheets/)..."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 34
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 9303,
+     "status": "ok",
+     "timestamp": 1590004531476,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GiYfmLTPbeMuYDDrETLbTVXTXnfVr9f7eBtkmR73A=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "pt8y3YXAo6EM",
+    "outputId": "18b6b189-f5f3-4290-ed40-662184d36525"
+   },
+   "outputs": [],
+   "source": [
+    "# for colab users: download everything\n",
+    "if 'google.colab' in sys.modules:\n",
+    "    from google.colab import auth\n",
+    "    auth.authenticate_user()\n",
+    "\n",
+    "    import gspread\n",
+    "    from gspread_dataframe import get_as_dataframe, set_with_dataframe\n",
+    "    from oauth2client.client import GoogleCredentials\n",
+    "\n",
+    "    gc = gspread.authorize(GoogleCredentials.get_application_default())\n",
+    "\n",
+    "    title = 'Authors_without_IDs'\n",
+    "    sh = gc.create(title)\n",
+    "    worksheet = gc.open(title).sheet1\n",
+    "    set_with_dataframe(worksheet, authors_without_id)\n",
+    "    spreadsheet_url = \"https://docs.google.com/spreadsheets/d/%s\" % sh.id\n",
+    "    print(spreadsheet_url)"
+   ]
+  }
+ ],
+ "metadata": {
+  "colab": {
+   "collapsed_sections": [],
+   "name": "Journal-Profile-1-Gathering-data.ipynb",
+   "provenance": [],
+   "toc_visible": true
+  },
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.9.9"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}
