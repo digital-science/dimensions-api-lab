@@ -6,6 +6,7 @@
 New notebooks:
 
 * [Extracting Authors order from Publications data](https://api-lab.dimensions.ai/cookbooks/2-publications/Extracting-authors-order.html)
+* [Measuring the policy impact of an organization using policy document citations](https://api-lab.dimensions.ai/cookbooks/6-policy-documents/Policy_Documents_referencing_a_Research_Organization.html)
 
 Updates: 
 
