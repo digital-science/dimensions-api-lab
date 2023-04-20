@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Building a concepts co-occurence network &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
+  <title>Extracting Authors order from Publications data &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
   
 
   
@@ -47,8 +47,8 @@
     
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Enriching Grants part 1: Matching your grants records to Dimensions" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html" />
-    <link rel="prev" title="Topic Modeling Analysis for a Set of Publications: Basic Workflow" href="Simple-topic-analysis.html" />
+    <link rel="next" title="Journal Profiling Part 1: Getting the Data" href="Journal-Profile-1-Gathering-data.html" />
+    <link rel="prev" title="Citation Analysis: Journals Cited by a Research Organization" href="Which-Are-the-Journals-Cited-By-My-Organization.html" />
     
 
    <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -386,11 +386,11 @@
 <li class="toctree-l2"><a class="reference internal" href="Which-Are-the-Journals-Cited-By-My-Organization.html#Conclusions">Conclusions</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Extracting-authors-order.html">Extracting Authors order from Publications data</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Extracting-authors-order.html#Prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Extracting-authors-order.html#1.-Extracting-a-dataset-from-Dimensions">1. Extracting a dataset from Dimensions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Extracting-authors-order.html#2.-Combining-the-results">2. Combining the results</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Extracting-authors-order.html#Where-to-go-from-here">Where to go from here</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Extracting Authors order from Publications data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#1.-Extracting-a-dataset-from-Dimensions">1. Extracting a dataset from Dimensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#2.-Combining-the-results">2. Combining the results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Where-to-go-from-here">Where to go from here</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Journal-Profile-1-Gathering-data.html">Journal Profiling Part 1: Getting the Data</a><ul>
@@ -463,12 +463,12 @@
 <li class="toctree-l2"><a class="reference internal" href="Simple-topic-analysis.html#7.-Conclusion">7. Conclusion</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Building a concepts co-occurence network</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#Prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Step-1:-Creating-a-dataset">Step 1: Creating a dataset</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Step-2:-Building-a-concepts-co-occurrence-network">Step 2: Building a concepts co-occurrence network</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Step-3:-Visualizing-the-network">Step 3: Visualizing the network</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Conclusions">Conclusions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Concepts-network-graph.html">Building a concepts co-occurence network</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Concepts-network-graph.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts-network-graph.html#Step-1:-Creating-a-dataset">Step 1: Creating a dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts-network-graph.html#Step-2:-Building-a-concepts-co-occurrence-network">Step 2: Building a concepts co-occurrence network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts-network-graph.html#Step-3:-Visualizing-the-network">Step 3: Visualizing the network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts-network-graph.html#Conclusions">Conclusions</a></li>
 </ul>
 </li>
 </ul>
@@ -1206,14 +1206,18 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js'></script>
-<script>require=requirejs;</script><a class="reference external image-reference" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/cookbooks/2-publications/Concepts-network-graph.ipynb"><img alt="../../_images/badge-colab.svg" src="../../_images/badge-colab.svg" /></a>
-<a class="reference external image-reference" href="https://github.com/digital-science/dimensions-api-lab/blob/master/cookbooks/2-publications/Concepts-network-graph.ipynb"><img alt="../../_images/badge-github-custom.svg" src="../../_images/badge-github-custom.svg" /></a>
+<script>require=requirejs;</script><a class="reference external image-reference" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/cookbooks/2-publications/Extracting-authors-order.ipynb"><img alt="../../_images/badge-colab.svg" src="../../_images/badge-colab.svg" /></a>
+<a class="reference external image-reference" href="https://github.com/digital-science/dimensions-api-lab/blob/master/cookbooks/2-publications/Extracting-authors-order.ipynb"><img alt="../../_images/badge-github-custom.svg" src="../../_images/badge-github-custom.svg" /></a>
 <hr class="docutils" />
-<div class="section" id="Building-a-concepts-co-occurence-network">
-<h1>Building a concepts co-occurence network<a class="headerlink" href="#Building-a-concepts-co-occurence-network" title="Permalink to this headline">¶</a></h1>
-<p>This Python notebook shows how to use the <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> in order to extract <a class="reference external" href="https://docs.dimensions.ai/dsl/language.html#searching-using-concepts">concepts</a> from publications and use them to generate a ‘topics map’ using co-occurence information.</p>
-<p>The resulting visualization is also <a class="reference external" href="http://api-sample-data.dimensions.ai/dataviz-exports/concets-cooccurence/concepts_network_2023-04-20.html">available as a standalone file</a>.</p>
-<p>For more background on concepts, see also the <a class="reference external" href="https://api-lab.dimensions.ai/cookbooks/1-getting-started/7-Working-with-concepts.html">Working with concepts in the Dimensions API</a> tutorial.</p>
+<div class="section" id="Extracting-Authors-order-from-Publications-data">
+<h1>Extracting Authors order from Publications data<a class="headerlink" href="#Extracting-Authors-order-from-Publications-data" title="Permalink to this headline">¶</a></h1>
+<p>This Python notebook shows how to use the <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a>, in particular the <a class="reference external" href="https://docs.dimensions.ai/dsl/datasource-publications.html">publications source</a>, in order to analyse the publications’ authors’ order.</p>
+<p>These are the steps:</p>
+<ul class="simple">
+<li><p>First we extract a dataset of interest from Dimensions’ publications database</p></li>
+<li><p>Second, we process authors structured data so to turn the implicit authorship order into a number</p></li>
+<li><p>Third, we mark first and last authors via a new ‘author category’ column</p></li>
+</ul>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -1236,23 +1240,21 @@ This notebook was last run on Apr 20, 2023
 </div>
 <div class="section" id="Prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
-<p>This notebook assumes you have installed the <a class="reference external" href="https://pypi.org/project/dimcli/">Dimcli</a> library and are familiar with the <em>Getting Started</em> tutorial. The <a class="reference external" href="https://networkx.github.io/documentation/stable/reference/introduction.html">networkx</a> and <a class="reference external" href="https://pyvis.readthedocs.io/en/latest/tutorial.html">pyvis</a> libraries are used for generating and visualizing the network, respectively.</p>
+<p>This notebook assumes you have installed the <a class="reference external" href="https://pypi.org/project/dimcli/">Dimcli</a> library and have followed the steps in the <a class="reference external" href="https://api-lab.dimensions.ai/cookbooks/1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html">‘Getting Started’ tutorial</a>.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install dimcli plotly networkx pyvis jsonpickle  -U --quiet
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install dimcli plotly tqdm -U --quiet
 
 <span class="kn">import</span> <span class="nn">dimcli</span>
 <span class="kn">from</span> <span class="nn">dimcli.utils</span> <span class="kn">import</span> <span class="o">*</span>
 
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span> <span class="k">as</span> <span class="n">progressbar</span>
+
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
-<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
-<span class="kn">import</span> <span class="nn">itertools</span>
-<span class="kn">from</span> <span class="nn">pyvis.network</span> <span class="kn">import</span> <span class="n">Network</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">Logging in..&quot;</span><span class="p">)</span>
 <span class="c1"># https://digital-science.github.io/dimcli/getting-started.html#authentication</span>
@@ -1289,46 +1291,177 @@ Method: dsl.ini file
 </pre></div></div>
 </div>
 </div>
-<div class="section" id="Step-1:-Creating-a-dataset">
-<h2>Step 1: Creating a dataset<a class="headerlink" href="#Step-1:-Creating-a-dataset" title="Permalink to this headline">¶</a></h2>
-<p>We start by creating a dataset consisting of the most cited 1000 publications matching a chosen keyword.</p>
-<p>The API query below will return a list of documents including all the related concepts.</p>
-<p>Tip: try changing the query keyword in order to experiment with different results.</p>
-<div class="nbinput docutils container">
+<div class="section" id="1.-Extracting-a-dataset-from-Dimensions">
+<h2>1. Extracting a dataset from Dimensions<a class="headerlink" href="#1.-Extracting-a-dataset-from-Dimensions" title="Permalink to this headline">¶</a></h2>
+<p>We use three different queries in order to extract</p>
+<ul class="simple">
+<li><p>authors information</p></li>
+<li><p>publications metadata</p></li>
+<li><p>research organizations information</p></li>
+</ul>
+<p><strong>NOTE</strong> other approaches are also possible e.g. extracting all data via a single query and then using Python to select only the fields of interests. For the purpose of this tutorial, using separate queries is the most straighforward way to achieve our goal.</p>
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#@markdown Enter the keyword used to seed the search</span>
-<span class="n">KEYWORD</span> <span class="o">=</span> <span class="s2">&quot;Semantic Web&quot;</span> <span class="c1">#@param {type:&quot;string&quot;}</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="c1"># the main query string selects publications based on a) pub year, b) specific organization IDs and c) concept</span>
+<span class="c1"># you can update this query based on your preferences</span>
+<span class="c1">#</span>
 
-<span class="n">q</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;search publications</span>
-<span class="s2">            for &quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">KEYWORD</span><span class="si">}</span><span class="se">\\</span><span class="s2">&quot;&quot;</span>
-<span class="s2">        return publications[id+title+concepts_scores]</span>
-<span class="s2">        sort by times_cited limit 1000&quot;&quot;&quot;</span>
-
-
-
-<span class="n">data</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
-<span class="n">concepts</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">as_dataframe_concepts</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Total concepts:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">concepts</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Concepts score average&quot;</span><span class="p">,</span> <span class="n">concepts</span><span class="p">[</span><span class="s1">&#39;score_avg&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
-<span class="n">concepts</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">main_query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">search publications</span>
+<span class="s2">    where year in [2022:2022]</span>
+<span class="s2">    and research_orgs in [&quot;grid.21925.3d&quot;,&quot;grid.147455.6&quot;,&quot;grid.25879.31&quot;,&quot;grid.29857.31&quot;]</span>
+<span class="s2">    and concepts = &quot;oncology&quot;</span>
+<span class="s2"> return publications</span>
+<span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># use the main query but extract only authors infos</span>
+<span class="n">Authors</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query_iterative</span><span class="p">(</span><span class="n">main_query</span> <span class="o">+</span> <span class="s2">&quot;[id+authors]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe_authors</span><span class="p">()</span>  <span class="c1">##researcher_id, pub_id, current_organization_ID</span>
+<span class="n">Authors</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-Returned Publications: 1000 (total = 188034)
-Time: 3.92s
-Total concepts: 51192
-Concepts score average 0.3960016883497422
+Starting iteration with limit=1000 skip=0 ...
+0-120 / 120 (4.36s)
+===
+Records extracted: 120
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>affiliations</th>
+      <th>corresponding</th>
+      <th>current_organization_id</th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>orcid</th>
+      <th>raw_affiliation</th>
+      <th>researcher_id</th>
+      <th>pub_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>[{'city': 'Philadelphia', 'city_id': 4560349, ...</td>
+      <td></td>
+      <td>grid.25879.31</td>
+      <td>Andrew</td>
+      <td>Schlafly</td>
+      <td>None</td>
+      <td>[Perelman School of Medicine, University of Pe...</td>
+      <td>ur.012676303143.43</td>
+      <td>pub.1154094821</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>[{'city': 'Jacksonville', 'city_id': 4160021, ...</td>
+      <td>True</td>
+      <td>grid.25879.31</td>
+      <td>Ronnie</td>
+      <td>Sebro</td>
+      <td>None</td>
+      <td>[Center for Augmented Intelligence, Mayo Clini...</td>
+      <td>ur.0660765735.77</td>
+      <td>pub.1154094821</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>[{'city': 'Madison', 'city_id': 5261457, 'coun...</td>
+      <td></td>
+      <td>grid.14003.36</td>
+      <td>Jessica R.</td>
+      <td>Schumacher</td>
+      <td>[0000-0002-6740-9498]</td>
+      <td>[Department of Surgery, University of Wisconsi...</td>
+      <td>ur.0661627033.29</td>
+      <td>pub.1153677611</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>[{'city': 'Madison', 'city_id': 5261457, 'coun...</td>
+      <td></td>
+      <td>grid.14003.36</td>
+      <td>Alyssa A.</td>
+      <td>Wiener</td>
+      <td>None</td>
+      <td>[Department of Surgery, University of Wisconsi...</td>
+      <td>ur.015612367333.32</td>
+      <td>pub.1153677611</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>[{'city': 'Madison', 'city_id': 5261457, 'coun...</td>
+      <td></td>
+      <td>grid.410427.4</td>
+      <td>Caprice C.</td>
+      <td>Greenberg</td>
+      <td>None</td>
+      <td>[Department of Surgery, University of Wisconsi...</td>
+      <td>ur.012326542557.13</td>
+      <td>pub.1153677611</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># use the main query but extract only pubs metadata</span>
+<span class="n">Pubs</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query_iterative</span><span class="p">(</span><span class="n">main_query</span> <span class="o">+</span> <span class="s2">&quot;[id+title+year+times_cited]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
+<span class="n">Pubs</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Starting iteration with limit=1000 skip=0 ...
+0-120 / 120 (1.88s)
+===
+Records extracted: 120
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1352,242 +1485,731 @@ Concepts score average 0.3960016883497422
       <th></th>
       <th>id</th>
       <th>title</th>
-      <th>concepts_count</th>
-      <th>concept</th>
-      <th>score</th>
-      <th>frequency</th>
-      <th>score_avg</th>
+      <th>times_cited</th>
+      <th>year</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>pub.1056527616</td>
-      <td>The Semantic Web</td>
-      <td>2</td>
-      <td>Web</td>
-      <td>0.072</td>
-      <td>136</td>
-      <td>0.45477</td>
+      <td>pub.1154094821</td>
+      <td>Does NIH funding differ between medical specia...</td>
+      <td>0</td>
+      <td>2022</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>pub.1056527616</td>
-      <td>The Semantic Web</td>
-      <td>2</td>
-      <td>Semantic Web</td>
-      <td>0.006</td>
-      <td>66</td>
-      <td>0.65579</td>
+      <td>pub.1153677611</td>
+      <td>Local/Regional Recurrence Rates After Breast-C...</td>
+      <td>0</td>
+      <td>2022</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>pub.1010449058</td>
-      <td>Social Network Sites: Definition, History, and...</td>
-      <td>31</td>
-      <td>special theme section</td>
-      <td>0.280</td>
-      <td>1</td>
-      <td>0.28000</td>
+      <td>pub.1153575321</td>
+      <td>Quality and Safety Considerations in Intensity...</td>
+      <td>0</td>
+      <td>2022</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>pub.1010449058</td>
-      <td>Social Network Sites: Definition, History, and...</td>
-      <td>31</td>
-      <td>scholarship</td>
-      <td>0.262</td>
-      <td>4</td>
-      <td>0.35000</td>
+      <td>pub.1153525111</td>
+      <td>Data standards in pediatric oncology: Past, pr...</td>
+      <td>0</td>
+      <td>2022</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>pub.1010449058</td>
-      <td>Social Network Sites: Definition, History, and...</td>
-      <td>31</td>
-      <td>theme section</td>
-      <td>0.260</td>
-      <td>1</td>
-      <td>0.26000</td>
+      <td>pub.1153522196</td>
+      <td>Assessments of Somatic Variant Classification ...</td>
+      <td>0</td>
+      <td>2022</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># use the main query but extract only research orgs infos</span>
+<span class="n">RORGS</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query_iterative</span><span class="p">(</span><span class="n">main_query</span> <span class="o">+</span> <span class="s2">&quot;[unnest(research_orgs)]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
+<span class="n">RORGS</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Starting iteration with limit=1000 skip=0 ...
+0-120 / 120 (1.03s)
+120-120 / 120 (4.07s)
+===
+Records extracted: 599
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>research_orgs.city_name</th>
+      <th>research_orgs.country_name</th>
+      <th>research_orgs.id</th>
+      <th>research_orgs.latitude</th>
+      <th>research_orgs.linkout</th>
+      <th>research_orgs.longitude</th>
+      <th>research_orgs.name</th>
+      <th>research_orgs.state_name</th>
+      <th>research_orgs.types</th>
+      <th>research_orgs.acronym</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Philadelphia</td>
+      <td>United States</td>
+      <td>grid.25879.31</td>
+      <td>39.952457</td>
+      <td>[http://www.upenn.edu/]</td>
+      <td>-75.193220</td>
+      <td>University of Pennsylvania</td>
+      <td>Pennsylvania</td>
+      <td>[Education]</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Jacksonville</td>
+      <td>United States</td>
+      <td>grid.417467.7</td>
+      <td>30.289337</td>
+      <td>[https://www.mayoclinic.org/patient-visitor-gu...</td>
+      <td>-81.437775</td>
+      <td>Mayo Clinic</td>
+      <td>Florida</td>
+      <td>[Healthcare]</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Madison</td>
+      <td>United States</td>
+      <td>grid.14003.36</td>
+      <td>43.076694</td>
+      <td>[http://www.wisc.edu/]</td>
+      <td>-89.412440</td>
+      <td>University of Wisconsin–Madison</td>
+      <td>Wisconsin</td>
+      <td>[Education]</td>
+      <td>UW</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Rochester</td>
+      <td>United States</td>
+      <td>grid.66875.3a</td>
+      <td>44.024070</td>
+      <td>[http://www.mayoclinic.org/patient-visitor-gui...</td>
+      <td>-92.466310</td>
+      <td>Mayo Clinic</td>
+      <td>Minnesota</td>
+      <td>[Healthcare]</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Madison</td>
+      <td>United States</td>
+      <td>grid.412639.b</td>
+      <td>43.076946</td>
+      <td>[https://cancer.wisc.edu/]</td>
+      <td>-89.431470</td>
+      <td>UW Carbone Cancer Center</td>
+      <td>Wisconsin</td>
+      <td>[Healthcare]</td>
+      <td>UWCCC</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
 </div>
-<div class="section" id="Step-2:-Building-a-concepts-co-occurrence-network">
-<h2>Step 2: Building a concepts co-occurrence network<a class="headerlink" href="#Step-2:-Building-a-concepts-co-occurrence-network" title="Permalink to this headline">¶</a></h2>
-<p>Each publication in our dataset includes a list of related concepts. In order to build a concepts co-occurrence network, we simply add an edge between concepts that appear in the same document.</p>
-<p>Edges have a default weight of 1. If any two concepts appear together in more documents, we increase the weight each time.</p>
-<p>Note: the resulting network can be very large, so in order to make our network smaller (and more relevant), we can filter out less interesting concepts in two ways:</p>
-<ul class="simple">
-<li><p>by setting a <code class="docutils literal notranslate"><span class="pre">frequency</span></code> and <code class="docutils literal notranslate"><span class="pre">score_avg</span></code> threshold (as shown in the <a class="reference external" href="https://api-lab.dimensions.ai/cookbooks/1-getting-started/7-Working-with-concepts.html">Working with concepts in the Dimensions API</a> tutorial)</p></li>
-<li><p>by keeping only nodes that, in our network, have an edge &gt; MIN WEIGHT (that is, nodes that have more connections)</p></li>
-</ul>
+<div class="section" id="2.-Combining-the-results">
+<h2>2. Combining the results<a class="headerlink" href="#2.-Combining-the-results" title="Permalink to this headline">¶</a></h2>
+<p>We merge the results from the queries above into a single table containing only the columns we want.</p>
+<p>Additionally, we calculate for each author which is the order of authorship and add a category for ‘first’ and ‘last’ authors.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span> <span class="c1"># networkX instance</span>
-
-<span class="c1">#</span>
-<span class="c1"># TIP play with these parameters in ordeto generate different types of networks</span>
-<span class="c1">#</span>
-<span class="n">MIN_CONCEPT_SCORE</span> <span class="o">=</span> <span class="mf">0.6</span>
-<span class="n">MIN_CONCEPT_FREQUENCY</span> <span class="o">=</span> <span class="mi">4</span>
-<span class="n">MIN_CONCEPT_FREQUENCY</span> <span class="o">=</span> <span class="mi">4</span>
-<span class="n">MIN_EDGE_WEIGHT</span> <span class="o">=</span> <span class="mi">2</span>
-
-<span class="n">CONCEPTS_SET</span> <span class="o">=</span> <span class="n">concepts</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;score_avg &gt;= </span><span class="si">{</span><span class="n">MIN_CONCEPT_SCORE</span><span class="si">}</span><span class="s2"> &amp; frequency &gt;=  </span><span class="si">{</span><span class="n">MIN_CONCEPT_FREQUENCY</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-
-<span class="c1">#</span>
-<span class="c1"># build nodes from concepts, including score_avg and frequency</span>
-<span class="c1"># -- NOTE: score_bucket indicates if the concepts is above or below the mean_score</span>
-<span class="c1"># -- this value is used in the visualization below to color-code nodes</span>
-<span class="c1">#</span>
-<span class="n">mean_score</span> <span class="o">=</span> <span class="n">CONCEPTS_SET</span><span class="p">[</span><span class="s1">&#39;score_avg&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">CONCEPTS_SET</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s2">&quot;concept&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
-    <span class="n">score_bucket</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;score_avg&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">mean_score</span> <span class="k">else</span> <span class="mi">2</span>
-    <span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;concept&#39;</span><span class="p">],</span><span class="n">frequency</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;frequency&#39;</span><span class="p">],</span> <span class="n">score_avg</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;score_avg&#39;</span><span class="p">],</span> <span class="n">score_bucket</span><span class="o">=</span><span class="n">score_bucket</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Nodes:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">()),</span> <span class="s2">&quot;Edges:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">()))</span>
-
-<span class="c1">#</span>
-<span class="c1"># build edges, based on concepts co-occurrence within pubs</span>
-<span class="c1"># -- calculate a &#39;weight&#39; based on how often two concepts co-occur</span>
-<span class="c1">#</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;.. adding edges from pubs cooccurrence...&quot;</span><span class="p">)</span>
-<span class="n">pubs_list</span> <span class="o">=</span> <span class="n">CONCEPTS_SET</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
-
-<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pubs_list</span><span class="p">:</span>
-    <span class="n">concepts_for_this_pub</span> <span class="o">=</span> <span class="n">CONCEPTS_SET</span><span class="p">[</span><span class="n">CONCEPTS_SET</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">p</span><span class="p">][</span><span class="s1">&#39;concept&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">concepts_for_this_pub</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>  <span class="c1"># gen all permutations</span>
-        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">group</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">][</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">][</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Nodes:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">()),</span> <span class="s2">&quot;Edges:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">()))</span>
-
-<span class="c1">#</span>
-<span class="c1"># this extra step is useful to remove low-weight connections</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="c1"># Authors becomes the &quot;main table&quot; because it has both the PubID and the ResearcherID</span>
+<span class="c1"># Then use Authors-&gt;Pubs to lookup title, year, times cited      on authors.pub_id = Pubs.id</span>
+<span class="c1"># Then use Authors-&gt;RORGS to lookup rorg name, type and country  on authors.current_organization_ID = RORGS.id</span>
 <span class="c1">#</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;.. cleaning up edges with weight &lt; </span><span class="si">{</span><span class="n">MIN_EDGE_WEIGHT</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
 
-<span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s1">&#39;weight&#39;</span><span class="p">)):</span>
-    <span class="k">if</span> <span class="n">w</span> <span class="o">&lt;</span> <span class="n">MIN_EDGE_WEIGHT</span><span class="p">:</span>
-        <span class="n">G</span><span class="o">.</span><span class="n">remove_edge</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Nodes:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">()),</span> <span class="s2">&quot;Edges:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">()))</span>
+<span class="c1">##prep RORGS for merge</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;.. removing isolated nodes...&quot;</span><span class="p">)</span>
+<span class="n">RORGS</span> <span class="o">=</span> <span class="n">RORGS</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;research_orgs.id&#39;</span><span class="p">])</span>
+<span class="n">RORGS</span> <span class="o">=</span> <span class="n">RORGS</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;research_orgs.id&#39;</span><span class="p">:</span><span class="s1">&#39;rorg_id&#39;</span><span class="p">})</span>
+<span class="n">RORGS</span> <span class="o">=</span> <span class="n">RORGS</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;rorg_id&#39;</span><span class="p">,</span> <span class="s1">&#39;research_orgs.name&#39;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s1">&#39;last&#39;</span><span class="p">)</span>
 
-<span class="n">G</span><span class="o">.</span><span class="n">remove_nodes_from</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">isolates</span><span class="p">(</span><span class="n">G</span><span class="p">)))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Nodes:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">()),</span> <span class="s2">&quot;Edges:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">()))</span>
+
+<span class="c1">##Combine all three dataframes into one</span>
+
+<span class="n">AutPub</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+    <span class="n">left</span><span class="o">=</span><span class="n">Authors</span><span class="p">,</span>
+    <span class="n">right</span><span class="o">=</span><span class="n">Pubs</span><span class="p">,</span>
+    <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;pub_id&#39;</span><span class="p">,</span>
+    <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;id&#39;</span><span class="p">,</span>
+    <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span>
+<span class="p">)</span>
+
+<span class="n">final</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+    <span class="n">left</span><span class="o">=</span><span class="n">AutPub</span><span class="p">,</span>
+    <span class="n">right</span><span class="o">=</span><span class="n">RORGS</span><span class="p">,</span>
+    <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;current_organization_id&#39;</span><span class="p">,</span>
+    <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;rorg_id&#39;</span><span class="p">,</span>
+    <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span>
+<span class="p">)</span>
+
+<span class="n">final</span><span class="p">[</span><span class="s2">&quot;author_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">final</span><span class="p">[</span><span class="s2">&quot;last_name&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;, &quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">final</span><span class="p">[</span><span class="s2">&quot;first_name&quot;</span><span class="p">]</span>
+<span class="n">final</span><span class="p">[</span><span class="s1">&#39;author_number&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">final</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;pub_id&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">cumcount</span><span class="p">()</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>  <span class="c1">#this will only work if you haven&#39;t sorted the dataframe</span>
+<span class="n">final</span> <span class="o">=</span> <span class="n">final</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;affiliations&#39;</span><span class="p">,</span> <span class="s1">&#39;corresponding&#39;</span><span class="p">,</span> <span class="s1">&#39;raw_affiliation&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;first_name&#39;</span><span class="p">,</span> <span class="s1">&#39;last_name&#39;</span><span class="p">,</span><span class="s1">&#39;research_orgs.latitude&#39;</span><span class="p">,</span><span class="s1">&#39;research_orgs.longitude&#39;</span><span class="p">,</span><span class="s1">&#39;research_orgs.acronym&#39;</span><span class="p">])</span>
+
+<span class="c1">#Get AuthorCounts,etc by pub ID and join back to AutPubRORG table</span>
+
+<span class="n">AuthorCount</span> <span class="o">=</span> <span class="n">final</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;pub_id&#39;</span><span class="p">])[</span><span class="s1">&#39;author_number&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+<span class="n">final</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+    <span class="n">left</span><span class="o">=</span><span class="n">final</span><span class="p">,</span>
+    <span class="n">right</span><span class="o">=</span><span class="n">AuthorCount</span><span class="p">,</span>
+    <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;pub_id&#39;</span><span class="p">,</span>
+    <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;pub_id&#39;</span><span class="p">,</span>
+    <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span>
+<span class="p">)</span>
+
+<span class="n">final</span> <span class="o">=</span> <span class="n">final</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;author_number_x&#39;</span><span class="p">:</span><span class="s1">&#39;author_number&#39;</span><span class="p">,</span> <span class="s1">&#39;author_number_y&#39;</span><span class="p">:</span><span class="s1">&#39;authors_tot&#39;</span><span class="p">,</span> <span class="p">})</span>
+
+
+<span class="c1"># Assing a category to first authors and last authors</span>
+
+<span class="n">final</span><span class="p">[</span><span class="s1">&#39;AuthorCategory&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+     <span class="n">final</span><span class="p">[</span><span class="s1">&#39;author_number&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;FirstAuthor&#39;</span><span class="p">,</span>
+         <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+            <span class="n">final</span><span class="p">[</span><span class="s1">&#39;author_number&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">final</span><span class="p">[</span><span class="s1">&#39;authors_tot&#39;</span><span class="p">],</span><span class="s2">&quot;LastAuthor&quot;</span><span class="p">,</span>
+             <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">final</span><span class="p">[</span><span class="s1">&#39;authors_tot&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">final</span><span class="p">[</span><span class="s1">&#39;author_number&#39;</span><span class="p">])</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span><span class="s2">&quot;Penultimate&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span>
+             <span class="p">)</span>
+         <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">final</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
 <br/></pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Nodes: 231 Edges: 0
-.. adding edges from pubs cooccurrence...
-Nodes: 231 Edges: 2006
-.. cleaning up edges with weight &lt; 2...
-Nodes: 231 Edges: 503
-.. removing isolated nodes...
-Nodes: 198 Edges: 503
-</pre></div></div>
-</div>
-</div>
-<div class="section" id="Step-3:-Visualizing-the-network">
-<h2>Step 3: Visualizing the network<a class="headerlink" href="#Step-3:-Visualizing-the-network" title="Permalink to this headline">¶</a></h2>
-<p>Note</p>
-<ul class="simple">
-<li><p>The <a class="reference external" href="https://pyvis.readthedocs.io/en/latest/tutorial.html">pyvis</a> library allows to quickly generate network visualizations from a <a class="reference external" href="https://networkx.github.io/documentation/stable/reference/introduction.html">networkx</a> object.</p></li>
-<li><p>The pyvis <code class="docutils literal notranslate"><span class="pre">from_nx</span></code> method doesn’t automatically convert node WEIGHTs or any other value from our network data; so we need to set it manually using another pass.</p></li>
-<li><p>By using the <code class="docutils literal notranslate"><span class="pre">score_bucket</span></code> value (see above), we can mark the higher-score concepts using a brighter color.</p></li>
-</ul>
-<p>The resulting visualization file might not render inline on all notebook environments; if that’s the case, just open the <code class="docutils literal notranslate"><span class="pre">concepts_network.html</span></code> file in a new browser window (or see an example <a class="reference external" href="http://api-sample-data.dimensions.ai/dataviz-exports/concets-cooccurence/concepts_network_2023-04-20.html">here</a>).</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">viznet</span> <span class="o">=</span> <span class="n">Network</span><span class="p">(</span><span class="n">notebook</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">width</span><span class="o">=</span><span class="s2">&quot;100%&quot;</span><span class="p">,</span>
-            <span class="n">height</span><span class="o">=</span><span class="s2">&quot;900px&quot;</span><span class="p">,</span>
-            <span class="n">cdn_resources</span><span class="o">=</span><span class="s2">&quot;remote&quot;</span><span class="p">,</span>
-            <span class="n">neighborhood_highlight</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">select_menu</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-           <span class="p">)</span>
-
-<span class="n">viznet</span><span class="o">.</span><span class="n">toggle_hide_edges_on_drag</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">viznet</span><span class="o">.</span><span class="n">barnes_hut</span><span class="p">()</span>
-<span class="n">viznet</span><span class="o">.</span><span class="n">repulsion</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
-<span class="c1"># Double heading bug: https://github.com/WestHealth/pyvis/issues/190</span>
-<span class="n">viznet</span><span class="o">.</span><span class="n">heading</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Concepts co-occurrence for &#39;</span><span class="si">{</span><span class="n">KEYWORD</span><span class="si">}</span><span class="s2">&#39; publications&quot;</span>
-
-
-<span class="c1"># reuse plotly color palette</span>
-<span class="n">palette</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">diverging</span><span class="o">.</span><span class="n">Temps</span>  <span class="c1"># 7 colors</span>
-
-<span class="n">viznet</span><span class="o">.</span><span class="n">from_nx</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
-
-
-<span class="c1"># update visual features</span>
-
-<span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">viznet</span><span class="o">.</span><span class="n">nodes</span><span class="p">:</span>
-    <span class="n">freq</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]][</span><span class="s1">&#39;frequency&#39;</span><span class="p">]</span>
-    <span class="n">score_avg</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]][</span><span class="s1">&#39;score_avg&#39;</span><span class="p">]</span>
-    <span class="n">score_bucket</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]][</span><span class="s1">&#39;score_bucket&#39;</span><span class="p">]</span> <span class="c1"># get from original network</span>
-
-    <span class="n">node</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">freq</span> <span class="o">*</span> <span class="mi">2</span>
-    <span class="n">node</span><span class="p">[</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">palette</span><span class="p">[</span><span class="mi">3</span><span class="o">*</span><span class="n">score_bucket</span><span class="p">]</span>  <span class="c1"># get color based on score_bucket (1 or 2)</span>
-    <span class="n">node</span><span class="p">[</span><span class="s1">&#39;borderWidthSelected&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
-    <span class="n">node</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&lt;h4&gt;Concept: &#39;</span><span class="si">{</span><span class="n">node</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&#39;&lt;/h4&gt;&lt;hr&gt;Frequency: </span><span class="si">{</span><span class="n">freq</span><span class="si">}</span><span class="s2">&lt;br&gt;Score avg: </span><span class="si">{</span><span class="n">score_avg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-    <span class="c1"># print(node)</span>
-
-<span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">viznet</span><span class="o">.</span><span class="n">edges</span><span class="p">:</span>
-    <span class="c1"># get value from main Network weight</span>
-    <span class="n">edge</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">[</span><span class="n">edge</span><span class="p">[</span><span class="s1">&#39;from&#39;</span><span class="p">],</span> <span class="n">edge</span><span class="p">[</span><span class="s1">&#39;to&#39;</span><span class="p">]][</span><span class="s1">&#39;width&#39;</span><span class="p">]</span>
-    <span class="c1"># print(edge)</span>
-
-<span class="n">viznet</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s2">&quot;concepts_network.html&quot;</span><span class="p">)</span>
-<br/><br/></pre></div>
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-concepts_network.html
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
-<iframe
-    width="100%"
-    height="900px"
-    src="concepts_network.html"
-    frameborder="0"
-    allowfullscreen
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-></iframe></div>
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>current_organization_id</th>
+      <th>orcid</th>
+      <th>researcher_id</th>
+      <th>pub_id</th>
+      <th>title</th>
+      <th>times_cited</th>
+      <th>year</th>
+      <th>research_orgs.city_name</th>
+      <th>research_orgs.country_name</th>
+      <th>rorg_id</th>
+      <th>research_orgs.linkout</th>
+      <th>research_orgs.name</th>
+      <th>research_orgs.state_name</th>
+      <th>research_orgs.types</th>
+      <th>author_name</th>
+      <th>author_number</th>
+      <th>authors_tot</th>
+      <th>AuthorCategory</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>grid.25879.31</td>
+      <td>None</td>
+      <td>ur.012676303143.43</td>
+      <td>pub.1154094821</td>
+      <td>Does NIH funding differ between medical specia...</td>
+      <td>0</td>
+      <td>2022</td>
+      <td>Philadelphia</td>
+      <td>United States</td>
+      <td>grid.25879.31</td>
+      <td>[http://www.upenn.edu/]</td>
+      <td>University of Pennsylvania</td>
+      <td>Pennsylvania</td>
+      <td>[Education]</td>
+      <td>Schlafly, Andrew</td>
+      <td>1</td>
+      <td>2</td>
+      <td>FirstAuthor</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>grid.25879.31</td>
+      <td>None</td>
+      <td>ur.0660765735.77</td>
+      <td>pub.1154094821</td>
+      <td>Does NIH funding differ between medical specia...</td>
+      <td>0</td>
+      <td>2022</td>
+      <td>Philadelphia</td>
+      <td>United States</td>
+      <td>grid.25879.31</td>
+      <td>[http://www.upenn.edu/]</td>
+      <td>University of Pennsylvania</td>
+      <td>Pennsylvania</td>
+      <td>[Education]</td>
+      <td>Sebro, Ronnie</td>
+      <td>2</td>
+      <td>2</td>
+      <td>LastAuthor</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>grid.14003.36</td>
+      <td>[0000-0002-6740-9498]</td>
+      <td>ur.0661627033.29</td>
+      <td>pub.1153677611</td>
+      <td>Local/Regional Recurrence Rates After Breast-C...</td>
+      <td>0</td>
+      <td>2022</td>
+      <td>Madison</td>
+      <td>United States</td>
+      <td>grid.14003.36</td>
+      <td>[http://www.wisc.edu/]</td>
+      <td>University of Wisconsin–Madison</td>
+      <td>Wisconsin</td>
+      <td>[Education]</td>
+      <td>Schumacher, Jessica R.</td>
+      <td>1</td>
+      <td>14</td>
+      <td>FirstAuthor</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>grid.14003.36</td>
+      <td>None</td>
+      <td>ur.015612367333.32</td>
+      <td>pub.1153677611</td>
+      <td>Local/Regional Recurrence Rates After Breast-C...</td>
+      <td>0</td>
+      <td>2022</td>
+      <td>Madison</td>
+      <td>United States</td>
+      <td>grid.14003.36</td>
+      <td>[http://www.wisc.edu/]</td>
+      <td>University of Wisconsin–Madison</td>
+      <td>Wisconsin</td>
+      <td>[Education]</td>
+      <td>Wiener, Alyssa A.</td>
+      <td>2</td>
+      <td>14</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>grid.410427.4</td>
+      <td>None</td>
+      <td>ur.012326542557.13</td>
+      <td>pub.1153677611</td>
+      <td>Local/Regional Recurrence Rates After Breast-C...</td>
+      <td>0</td>
+      <td>2022</td>
+      <td>Augusta</td>
+      <td>United States</td>
+      <td>grid.410427.4</td>
+      <td>[http://www.augusta.edu/]</td>
+      <td>Augusta University</td>
+      <td>Georgia</td>
+      <td>[Education]</td>
+      <td>Greenberg, Caprice C.</td>
+      <td>3</td>
+      <td>14</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>grid.14003.36</td>
+      <td>[0000-0002-4517-1204]</td>
+      <td>ur.0632670166.10</td>
+      <td>pub.1153677611</td>
+      <td>Local/Regional Recurrence Rates After Breast-C...</td>
+      <td>0</td>
+      <td>2022</td>
+      <td>Madison</td>
+      <td>United States</td>
+      <td>grid.14003.36</td>
+      <td>[http://www.wisc.edu/]</td>
+      <td>University of Wisconsin–Madison</td>
+      <td>Wisconsin</td>
+      <td>[Education]</td>
+      <td>Hanlon, Bret</td>
+      <td>4</td>
+      <td>14</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>grid.240614.5</td>
+      <td>None</td>
+      <td>ur.0671641425.86</td>
+      <td>pub.1153677611</td>
+      <td>Local/Regional Recurrence Rates After Breast-C...</td>
+      <td>0</td>
+      <td>2022</td>
+      <td>Buffalo</td>
+      <td>United States</td>
+      <td>grid.240614.5</td>
+      <td>[https://www.roswellpark.org/]</td>
+      <td>Roswell Park Comprehensive Cancer Center</td>
+      <td>New York</td>
+      <td>[Healthcare]</td>
+      <td>Edge, Stephen B.</td>
+      <td>5</td>
+      <td>14</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>grid.66875.3a</td>
+      <td>None</td>
+      <td>ur.01264057027.05</td>
+      <td>pub.1153677611</td>
+      <td>Local/Regional Recurrence Rates After Breast-C...</td>
+      <td>0</td>
+      <td>2022</td>
+      <td>Rochester</td>
+      <td>United States</td>
+      <td>grid.66875.3a</td>
+      <td>[http://www.mayoclinic.org/patient-visitor-gui...</td>
+      <td>Mayo Clinic</td>
+      <td>Minnesota</td>
+      <td>[Healthcare]</td>
+      <td>Ruddy, Kathryn J.</td>
+      <td>6</td>
+      <td>14</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>grid.65499.37</td>
+      <td>[0000-0002-4722-4824]</td>
+      <td>ur.012333143317.98</td>
+      <td>pub.1153677611</td>
+      <td>Local/Regional Recurrence Rates After Breast-C...</td>
+      <td>0</td>
+      <td>2022</td>
+      <td>Boston</td>
+      <td>United States</td>
+      <td>grid.65499.37</td>
+      <td>[http://www.dana-farber.org/]</td>
+      <td>Dana-Farber Cancer Institute</td>
+      <td>Massachusetts</td>
+      <td>[Facility]</td>
+      <td>Partridge, Ann H.</td>
+      <td>7</td>
+      <td>14</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>grid.66875.3a</td>
+      <td>[0000-0002-2234-7430]</td>
+      <td>ur.0654547635.88</td>
+      <td>pub.1153677611</td>
+      <td>Local/Regional Recurrence Rates After Breast-C...</td>
+      <td>0</td>
+      <td>2022</td>
+      <td>Rochester</td>
+      <td>United States</td>
+      <td>grid.66875.3a</td>
+      <td>[http://www.mayoclinic.org/patient-visitor-gui...</td>
+      <td>Mayo Clinic</td>
+      <td>Minnesota</td>
+      <td>[Healthcare]</td>
+      <td>Le-Rademacher, Jennifer G.</td>
+      <td>8</td>
+      <td>14</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>grid.14003.36</td>
+      <td>None</td>
+      <td>ur.016365762407.99</td>
+      <td>pub.1153677611</td>
+      <td>Local/Regional Recurrence Rates After Breast-C...</td>
+      <td>0</td>
+      <td>2022</td>
+      <td>Madison</td>
+      <td>United States</td>
+      <td>grid.14003.36</td>
+      <td>[http://www.wisc.edu/]</td>
+      <td>University of Wisconsin–Madison</td>
+      <td>Wisconsin</td>
+      <td>[Education]</td>
+      <td>Yu, Menggang</td>
+      <td>9</td>
+      <td>14</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>grid.29857.31</td>
+      <td>[0000-0002-9790-2988]</td>
+      <td>ur.07542517775.28</td>
+      <td>pub.1153677611</td>
+      <td>Local/Regional Recurrence Rates After Breast-C...</td>
+      <td>0</td>
+      <td>2022</td>
+      <td>State College</td>
+      <td>United States</td>
+      <td>grid.29857.31</td>
+      <td>[http://www.psu.edu/]</td>
+      <td>Pennsylvania State University</td>
+      <td>Pennsylvania</td>
+      <td>[Education]</td>
+      <td>Vanness, David J.</td>
+      <td>10</td>
+      <td>14</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>grid.14003.36</td>
+      <td>None</td>
+      <td>ur.012527107034.48</td>
+      <td>pub.1153677611</td>
+      <td>Local/Regional Recurrence Rates After Breast-C...</td>
+      <td>0</td>
+      <td>2022</td>
+      <td>Madison</td>
+      <td>United States</td>
+      <td>grid.14003.36</td>
+      <td>[http://www.wisc.edu/]</td>
+      <td>University of Wisconsin–Madison</td>
+      <td>Wisconsin</td>
+      <td>[Education]</td>
+      <td>Yang, Dou-Yan</td>
+      <td>11</td>
+      <td>14</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>grid.14003.36</td>
+      <td>[0000-0001-8796-4328]</td>
+      <td>ur.01224567375.46</td>
+      <td>pub.1153677611</td>
+      <td>Local/Regional Recurrence Rates After Breast-C...</td>
+      <td>0</td>
+      <td>2022</td>
+      <td>Madison</td>
+      <td>United States</td>
+      <td>grid.14003.36</td>
+      <td>[http://www.wisc.edu/]</td>
+      <td>University of Wisconsin–Madison</td>
+      <td>Wisconsin</td>
+      <td>[Education]</td>
+      <td>Havlena, Jeffrey</td>
+      <td>12</td>
+      <td>14</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>grid.66875.3a</td>
+      <td>None</td>
+      <td>ur.014436171657.16</td>
+      <td>pub.1153677611</td>
+      <td>Local/Regional Recurrence Rates After Breast-C...</td>
+      <td>0</td>
+      <td>2022</td>
+      <td>Rochester</td>
+      <td>United States</td>
+      <td>grid.66875.3a</td>
+      <td>[http://www.mayoclinic.org/patient-visitor-gui...</td>
+      <td>Mayo Clinic</td>
+      <td>Minnesota</td>
+      <td>[Healthcare]</td>
+      <td>Strand, Carrie</td>
+      <td>13</td>
+      <td>14</td>
+      <td>Penultimate</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>grid.14003.36</td>
+      <td>None</td>
+      <td>ur.01333351663.72</td>
+      <td>pub.1153677611</td>
+      <td>Local/Regional Recurrence Rates After Breast-C...</td>
+      <td>0</td>
+      <td>2022</td>
+      <td>Madison</td>
+      <td>United States</td>
+      <td>grid.14003.36</td>
+      <td>[http://www.wisc.edu/]</td>
+      <td>University of Wisconsin–Madison</td>
+      <td>Wisconsin</td>
+      <td>[Education]</td>
+      <td>Neuman, Heather B.</td>
+      <td>14</td>
+      <td>14</td>
+      <td>LastAuthor</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td></td>
+      <td>[]</td>
+      <td>None</td>
+      <td>pub.1153575321</td>
+      <td>Quality and Safety Considerations in Intensity...</td>
+      <td>0</td>
+      <td>2022</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Moran, Jean M</td>
+      <td>1</td>
+      <td>9</td>
+      <td>FirstAuthor</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td></td>
+      <td>[]</td>
+      <td>None</td>
+      <td>pub.1153575321</td>
+      <td>Quality and Safety Considerations in Intensity...</td>
+      <td>0</td>
+      <td>2022</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Bazan, Jose G</td>
+      <td>2</td>
+      <td>9</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>grid.478397.6</td>
+      <td>None</td>
+      <td>ur.016200147053.28</td>
+      <td>pub.1153575321</td>
+      <td>Quality and Safety Considerations in Intensity...</td>
+      <td>0</td>
+      <td>2022</td>
+      <td>Arlington</td>
+      <td>United States</td>
+      <td>grid.478397.6</td>
+      <td>[https://www.astro.org/home/]</td>
+      <td>American Society for Radiation Oncology</td>
+      <td>Virginia</td>
+      <td>[Nonprofit]</td>
+      <td>Dawes, Samantha L</td>
+      <td>3</td>
+      <td>9</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>grid.478397.6</td>
+      <td>None</td>
+      <td>ur.010477224250.27</td>
+      <td>pub.1153575321</td>
+      <td>Quality and Safety Considerations in Intensity...</td>
+      <td>0</td>
+      <td>2022</td>
+      <td>Arlington</td>
+      <td>United States</td>
+      <td>grid.478397.6</td>
+      <td>[https://www.astro.org/home/]</td>
+      <td>American Society for Radiation Oncology</td>
+      <td>Virginia</td>
+      <td>[Nonprofit]</td>
+      <td>Kujundzic, Ksenija</td>
+      <td>4</td>
+      <td>9</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
 </div>
 </div>
-<div class="section" id="Conclusions">
-<h2>Conclusions<a class="headerlink" href="#Conclusions" title="Permalink to this headline">¶</a></h2>
-<p>In this tutorial we have demonstrated how to generate an concepts ‘co-occurence network diagram’ using the Dimensions API.</p>
-<p>The resulting visualization is also <a class="reference external" href="http://api-sample-data.dimensions.ai/dataviz-exports/concets-cooccurence/concepts_network_2023-04-20.html">available as a standalone file here</a>.</p>
-<p>For more information on this topic, see also the <a class="reference external" href="https://docs.dimensions.ai/dsl/language.html#searching-using-concepts">official documentation on concepts</a> and the <a class="reference external" href="https://api-lab.dimensions.ai/cookbooks/1-getting-started/7-Working-with-concepts.html">Working with concepts in the Dimensions API</a> tutorial.</p>
-</div>
+<hr class="docutils" />
+<div class="section" id="Where-to-go-from-here">
+<h2>Where to go from here<a class="headerlink" href="#Where-to-go-from-here" title="Permalink to this headline">¶</a></h2>
+<p>In this <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> tutorial we have seen how, using the <a class="reference external" href="https://docs.dimensions.ai/dsl/datasource-publications.html">publications source</a>, it is possible to extract and analyse information about authors and their order to authorhip.</p>
+<p>This only scratches the surface of the possible applications of publications data, but hopefully it’ll give you a few basic tools to get started building your own application.</p>
+<p>For more tutorials, see the <a class="reference external" href="https://api-lab.dimensions.ai/">API LAB homepage</a>.</p>
+<script type="application/vnd.jupyter.widget-state+json">
+{"016cd8e5355147b5aa5f772296915e51": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "DescriptionStyleModel", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "DescriptionStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": ""}}, "1e2c4768ea6c4d0fbe65f74a1854d1bd": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "FloatProgressModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "FloatProgressModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "ProgressView", "bar_style": "success", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_475fa12852b948afafd4cf1f5c30e682", "max": 29135, "min": 0, "orientation": "horizontal", "style": "IPY_MODEL_387830332d0a4a3aacfb1b36fe14db19", "value": 29135}}, "387830332d0a4a3aacfb1b36fe14db19": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "ProgressStyleModel", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "ProgressStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "bar_color": null, "description_width": ""}}, "475fa12852b948afafd4cf1f5c30e682": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "4b8488d6c6844aa0ab01c01ca3f3229f": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HTMLModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HTMLView", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_ae4c4632c6e34fa5b2f3cf1760f5f4de", "placeholder": "\u200b", "style": "IPY_MODEL_9a43f80e6cb34ec0bd6646205daf6764", "value": "100%"}}, "5e4dfa2b36d54efa91e7d353ac28b3fe": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HTMLModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HTMLView", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_bfae45584f1b4ed5add2a9394d086496", "placeholder": "\u200b", "style": "IPY_MODEL_8b9575b9723e4de0905d2de66fc41a39", "value": " 29135/29135 [02:54&lt;00:00, 193.45it/s]"}}, "6c612d4dbfd44f21b491e8dcaa853c77": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "86b2b2acf9c941219da74a6eb9ac3a58": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "FloatProgressModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "FloatProgressModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "ProgressView", "bar_style": "success", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_6c612d4dbfd44f21b491e8dcaa853c77", "max": 117, "min": 0, "orientation": "horizontal", "style": "IPY_MODEL_b77c5a66ad7344a49e5971d03ea9ad1a", "value": 117}}, "8b9575b9723e4de0905d2de66fc41a39": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "DescriptionStyleModel", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "DescriptionStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": ""}}, "9a43f80e6cb34ec0bd6646205daf6764": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "DescriptionStyleModel", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "DescriptionStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": ""}}, "a0df7491d0fa4223bc4fcc1c0b5044b0": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "a1096212481a4594a0223c6fe745da4f": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "ae4c4632c6e34fa5b2f3cf1760f5f4de": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "b757c2ec867d4cda8d129780504078e2": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "b77c5a66ad7344a49e5971d03ea9ad1a": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "ProgressStyleModel", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "ProgressStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "bar_color": null, "description_width": ""}}, "ba6f2f822747429cba08758ea98cc761": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HTMLModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HTMLView", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_b757c2ec867d4cda8d129780504078e2", "placeholder": "\u200b", "style": "IPY_MODEL_016cd8e5355147b5aa5f772296915e51", "value": " 117/117 [07:43&lt;00:00,  4.23s/it]"}}, "bfae45584f1b4ed5add2a9394d086496": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "c526490d2660447fbbfa17e495c25241": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HTMLModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HTMLView", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_fbbd6037419f44db9544015a1b45b727", "placeholder": "\u200b", "style": "IPY_MODEL_fd6a5e0368264defabacd8be2176c8ab", "value": "100%"}}, "d804f95389504a418d2a73a0a15f83c2": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HBoxModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HBoxView", "box_style": "", "children": ["IPY_MODEL_4b8488d6c6844aa0ab01c01ca3f3229f", "IPY_MODEL_1e2c4768ea6c4d0fbe65f74a1854d1bd", "IPY_MODEL_5e4dfa2b36d54efa91e7d353ac28b3fe"], "layout": "IPY_MODEL_a0df7491d0fa4223bc4fcc1c0b5044b0"}}, "f9a8bd4c112e46ec87b1a87b8af4cfb4": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HBoxModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HBoxView", "box_style": "", "children": ["IPY_MODEL_c526490d2660447fbbfa17e495c25241", "IPY_MODEL_86b2b2acf9c941219da74a6eb9ac3a58", "IPY_MODEL_ba6f2f822747429cba08758ea98cc761"], "layout": "IPY_MODEL_a1096212481a4594a0223c6fe745da4f"}}, "fbbd6037419f44db9544015a1b45b727": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "fd6a5e0368264defabacd8be2176c8ab": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "DescriptionStyleModel", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "DescriptionStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": ""}}}
+</script></div>
 </div>
 <hr class="docutils" />
 <div class="line-block">

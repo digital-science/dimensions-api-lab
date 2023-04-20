@@ -1,13 +1,24 @@
 # Changelog - Dimensions API Lab 
 
 
+### 2023-04-20
+
+New notebooks:
+
+* [Extracting Authors order from Publications data](https://api-lab.dimensions.ai/cookbooks/2-publications/Extracting-authors-order.html)
+
+Updates: 
+
+* [Building a concepts co-occurence network](https://api-lab.dimensions.ai/cookbooks/2-publications/Concepts-network-graph.html) uses the latest version of pyvis to render the graph correctly
+* [Enriching Grants part 1: Matching your grants records to Dimensions](https://api-lab.dimensions.ai/cookbooks/3-grants/1-grants-enrichment-matching-records-to-dimensions.html) uses the latest triple-quotes syntax to search for grants
+
+
 ### 2022-02-21
 
 New notebooks:
 * [Getting all grants received by a list of researchers](https://api-lab.dimensions.ai/cookbooks/3-grants/5-grants-from-researchers.html)
 * [Using Dimensions organization groups with the API](https://api-lab.dimensions.ai/cookbooks/8-organizations/6-organization-groups.html)
 * [Benchmarking organizations with the Dimensions API](https://api-lab.dimensions.ai/cookbooks/8-organizations/7-benchmarking-organizations.html)
-
 
 ### 2021-09-07
 
@@ -21,7 +32,6 @@ New notebooks:
 New notebooks:
 * [Patent publication references, for an entire patent family](https://api-lab.dimensions.ai/cookbooks/5-patents/2-Patent-Family-Citing-Publications.html)
 * [Citation Analysis: Journals Cited by a Research Organization](https://api-lab.dimensions.ai/cookbooks/2-publications/Which-Are-the-Journals-Cited-By-My-Organization.html)
-
 
 ### 2021-06-02
 
