@@ -1,39 +1,6 @@
+# DSL API Lab - DEVELOPERS information
 
-# DSL API Lab 
-
-## TODOs
-
-* Provide a detailed installation recipe 
-    * include both repos and how the workflow is
-* Define ENV variables to make the whole project more portable
-    * in Make file and /tools scripts primarily
-
-
-## Requirements
-
-The notebook export functionality will work correctly with these library versions:
-
-```
-docutils==0.16 
-nbconvert==6.0.0
-markupsafe==1.1.1 
-jinja2==2.11.3
-sphinx==3.0.0 
-sphinx_rtd_theme==0.5.0 
-nbsphinx==0.8.3 
-```
-
-> TODO: update to most recent versions, dealing with css error dues to mathjax rendering [issue](https://github.com/spatialaudio/nbsphinx/issues/572#issuecomment-853389268) 
-
-Pandoc is also needed: `brew install pandoc`
-
-To set up the dev environment: 
-
-```bash
-$ mkvirtualenv api-lab
-$ pip install -r requirements.txt
-```
-
+Various useful tips for running the API LAB in development mode.
 
 ## Workflow
 
@@ -79,17 +46,6 @@ $ git commit
 $ git push
 ```
 
-Second, in order to publish to the [public LIVE repo](https://github.com/digital-science/dimensions-api-lab), run the sync command.  
-
-```
-./tools/run-sync-and-push
-```
-
-> TODO the sync command currently contains hardcoded paths, which should be generalised using ENV variables!
-
-Prerequisite: clone the [public APILAB project](https://github.com/digital-science/dimensions-api-lab) somewhere on your computer. The sync commands copies everything there before pushing changes to master.
-
-
 #### 3.1 Update the CHANGELOG
 
 The [CHANGELOG.md](CHANGELOG.md) file is publically available to end users. 
@@ -100,6 +56,25 @@ When notebooks are added or updated, changes are recorded in that file.
 ## Tips and tricks
 
 A few gotchas and related solutions.
+
+### Dependencies
+
+The notebook export functionality will work correctly with these library versions:
+
+```
+docutils==0.16 
+nbconvert==6.0.0
+markupsafe==1.1.1 
+jinja2==2.11.3
+sphinx==3.0.0 
+sphinx_rtd_theme==0.5.0 
+nbsphinx==0.8.3 
+```
+
+> TODO: update to most recent versions, dealing with css error dues to mathjax rendering [issue](https://github.com/spatialaudio/nbsphinx/issues/572#issuecomment-853389268) 
+
+Pandoc is also needed: `brew install pandoc`
+
 
 ### Visualizations built with vis.js break!
 
@@ -157,12 +132,3 @@ Also, these settings:
     'navigation_depth': -1,
 ```
 
-
-
-
-
-## Issues, PRs etc..
-
-Please contact the [Dimensions Data Solutions Team](https://digital-science.atlassian.net/wiki/spaces/DAPIS/overview?homepageId=667582670).
-
-Email: dds-team@digital-science.com

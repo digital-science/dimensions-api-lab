@@ -1,0 +1,888 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script>function neighbourhoodHighlight(params) {
+  // console.log("in nieghbourhoodhighlight");
+  allNodes = nodes.get({ returnType: "Object" });
+  // originalNodes = JSON.parse(JSON.stringify(allNodes));
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    highlightActive = true;
+    var i, j;
+    var selectedNode = params.nodes[0];
+    var degrees = 2;
+
+    // mark all nodes as hard to read.
+    for (let nodeId in allNodes) {
+      // nodeColors[nodeId] = allNodes[nodeId].color;
+      allNodes[nodeId].color = "rgba(200,200,200,0.5)";
+      if (allNodes[nodeId].hiddenLabel === undefined) {
+        allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+    var connectedNodes = network.getConnectedNodes(selectedNode);
+    var allConnectedNodes = [];
+
+    // get the second degree nodes
+    for (i = 1; i < degrees; i++) {
+      for (j = 0; j < connectedNodes.length; j++) {
+        allConnectedNodes = allConnectedNodes.concat(
+          network.getConnectedNodes(connectedNodes[j])
+        );
+      }
+    }
+
+    // all second degree nodes get a different color and their label back
+    for (i = 0; i < allConnectedNodes.length; i++) {
+      // allNodes[allConnectedNodes[i]].color = "pink";
+      allNodes[allConnectedNodes[i]].color = "rgba(150,150,150,0.75)";
+      if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[allConnectedNodes[i]].label =
+          allNodes[allConnectedNodes[i]].hiddenLabel;
+        allNodes[allConnectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // all first degree nodes get their own color and their label back
+    for (i = 0; i < connectedNodes.length; i++) {
+      // allNodes[connectedNodes[i]].color = undefined;
+      allNodes[connectedNodes[i]].color = nodeColors[connectedNodes[i]];
+      if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[connectedNodes[i]].label =
+          allNodes[connectedNodes[i]].hiddenLabel;
+        allNodes[connectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // the main node gets its own color and its label back.
+    // allNodes[selectedNode].color = undefined;
+    allNodes[selectedNode].color = nodeColors[selectedNode];
+    if (allNodes[selectedNode].hiddenLabel !== undefined) {
+      allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;
+      allNodes[selectedNode].hiddenLabel = undefined;
+    }
+  } else if (highlightActive === true) {
+    // console.log("highlightActive was true");
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      // allNodes[nodeId].color = "purple";
+      allNodes[nodeId].color = nodeColors[nodeId];
+      // delete allNodes[nodeId].color;
+      if (allNodes[nodeId].hiddenLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;
+        allNodes[nodeId].hiddenLabel = undefined;
+      }
+    }
+    highlightActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    // console.log("Nothing was selected");
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        // allNodes[nodeId].color = {};
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function filterHighlight(params) {
+  allNodes = nodes.get({ returnType: "Object" });
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    filterActive = true;
+    let selectedNodes = params.nodes;
+
+    // hiding all nodes and saving the label
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = true;
+      if (allNodes[nodeId].savedLabel === undefined) {
+        allNodes[nodeId].savedLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+
+    for (let i=0; i < selectedNodes.length; i++) {
+      allNodes[selectedNodes[i]].hidden = false;
+      if (allNodes[selectedNodes[i]].savedLabel !== undefined) {
+        allNodes[selectedNodes[i]].label = allNodes[selectedNodes[i]].savedLabel;
+        allNodes[selectedNodes[i]].savedLabel = undefined;
+      }
+    }
+
+  } else if (filterActive === true) {
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = false;
+      if (allNodes[nodeId].savedLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].savedLabel;
+        allNodes[nodeId].savedLabel = undefined;
+      }
+    }
+    filterActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function selectNode(nodes) {
+  network.selectNodes(nodes);
+  neighbourhoodHighlight({ nodes: nodes });
+  return nodes;
+}
+
+function selectNodes(nodes) {
+  network.selectNodes(nodes);
+  filterHighlight({nodes: nodes});
+  return nodes;
+}
+
+function highlightFilter(filter) {
+  let selectedNodes = []
+  let selectedProp = filter['property']
+  if (filter['item'] === 'node') {
+    let allNodes = nodes.get({ returnType: "Object" });
+    for (let nodeId in allNodes) {
+      if (allNodes[nodeId][selectedProp] && filter['value'].includes((allNodes[nodeId][selectedProp]).toString())) {
+        selectedNodes.push(nodeId)
+      }
+    }
+  }
+  else if (filter['item'] === 'edge'){
+    let allEdges = edges.get({returnType: 'object'});
+    // check if the selected property exists for selected edge and select the nodes connected to the edge
+    for (let edge in allEdges) {
+      if (allEdges[edge][selectedProp] && filter['value'].includes((allEdges[edge][selectedProp]).toString())) {
+        selectedNodes.push(allEdges[edge]['from'])
+        selectedNodes.push(allEdges[edge]['to'])
+      }
+    }
+  }
+  selectNodes(selectedNodes)
+}</script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+            
+            
+            
+            
+            
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/css/tom-select.min.css" integrity="sha512-43fHB3GLgZfz8QXl1RPQ8O66oIgv3po9cJ5erMt1c4QISq9dYb195T3vr5ImnJPXuVroKcGBPXBFKETW8jrPNQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/js/tom-select.complete.js" integrity="sha512-jeF9CfnvzDiw9G9xiksVjxR2lib44Gnovvkv+3CgCG6NXCD4gqlA5nDAVW5WjpA+i+/zKsUWV5xNEbW1X/HH0Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+
+        
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1>Concepts co-occurrence for 'Semantic Web' publications</h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 900px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 100%;
+                 height: 900px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+                <div id="select-menu" class="card-header">
+                    <div class="row no-gutters">
+                        <div class="col-10 pb-2">
+                            <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="selectNode([value]);"
+                            id="select-node"
+                            placeholder="Select node..."
+                            >
+                                <option selected>Select a Node by ID</option>
+                                
+                                    <option value="Semantic Web">Semantic Web</option>
+                                
+                                    <option value="heterogeneous data">heterogeneous data</option>
+                                
+                                    <option value="Web Ontology Language">Web Ontology Language</option>
+                                
+                                    <option value="e-commerce">e-commerce</option>
+                                
+                                    <option value="web content">web content</option>
+                                
+                                    <option value="World Wide Web">World Wide Web</option>
+                                
+                                    <option value="web services">web services</option>
+                                
+                                    <option value="Wide Web">Wide Web</option>
+                                
+                                    <option value="data processing">data processing</option>
+                                
+                                    <option value="schema matching">schema matching</option>
+                                
+                                    <option value="different ontologies">different ontologies</option>
+                                
+                                    <option value="Semantic Web Services">Semantic Web Services</option>
+                                
+                                    <option value="peer systems">peer systems</option>
+                                
+                                    <option value="information systems">information systems</option>
+                                
+                                    <option value="service descriptions">service descriptions</option>
+                                
+                                    <option value="composite services">composite services</option>
+                                
+                                    <option value="application areas">application areas</option>
+                                
+                                    <option value="semantic mapping">semantic mapping</option>
+                                
+                                    <option value="similarity measure">similarity measure</option>
+                                
+                                    <option value="matching process">matching process</option>
+                                
+                                    <option value="Web services technology">Web services technology</option>
+                                
+                                    <option value="Semantic Web technologies">Semantic Web technologies</option>
+                                
+                                    <option value="service technology">service technology</option>
+                                
+                                    <option value="computer science">computer science</option>
+                                
+                                    <option value="process model">process model</option>
+                                
+                                    <option value="Web service descriptions">Web service descriptions</option>
+                                
+                                    <option value="natural language processing">natural language processing</option>
+                                
+                                    <option value="information retrieval">information retrieval</option>
+                                
+                                    <option value="service composition">service composition</option>
+                                
+                                    <option value="service discovery">service discovery</option>
+                                
+                                    <option value="semantic annotation">semantic annotation</option>
+                                
+                                    <option value="knowledge bases">knowledge bases</option>
+                                
+                                    <option value="management system">management system</option>
+                                
+                                    <option value="use of ontologies">use of ontologies</option>
+                                
+                                    <option value="web resources">web resources</option>
+                                
+                                    <option value="search engines">search engines</option>
+                                
+                                    <option value="neural network">neural network</option>
+                                
+                                    <option value="knowledge graph">knowledge graph</option>
+                                
+                                    <option value="network architecture">network architecture</option>
+                                
+                                    <option value="deep learning">deep learning</option>
+                                
+                                    <option value="recurrent neural network">recurrent neural network</option>
+                                
+                                    <option value="convolutional neural network">convolutional neural network</option>
+                                
+                                    <option value="genetic algorithm">genetic algorithm</option>
+                                
+                                    <option value="support vector machine">support vector machine</option>
+                                
+                                    <option value="computer vision">computer vision</option>
+                                
+                                    <option value="machine learning">machine learning</option>
+                                
+                                    <option value="learning model">learning model</option>
+                                
+                                    <option value="big data analytics">big data analytics</option>
+                                
+                                    <option value="Internet of Things">Internet of Things</option>
+                                
+                                    <option value="data analytics">data analytics</option>
+                                
+                                    <option value="communication technologies">communication technologies</option>
+                                
+                                    <option value="cyber-physical systems">cyber-physical systems</option>
+                                
+                                    <option value="big data">big data</option>
+                                
+                                    <option value="supply chain management">supply chain management</option>
+                                
+                                    <option value="chain management">chain management</option>
+                                
+                                    <option value="data storage">data storage</option>
+                                
+                                    <option value="fog computing">fog computing</option>
+                                
+                                    <option value="Enabling Technologies">Enabling Technologies</option>
+                                
+                                    <option value="IoT applications">IoT applications</option>
+                                
+                                    <option value="sensor data">sensor data</option>
+                                
+                                    <option value="edge computing">edge computing</option>
+                                
+                                    <option value="privacy issues">privacy issues</option>
+                                
+                                    <option value="smart cities">smart cities</option>
+                                
+                                    <option value="smart grid">smart grid</option>
+                                
+                                    <option value="cloud computing">cloud computing</option>
+                                
+                                    <option value="key technologies">key technologies</option>
+                                
+                                    <option value="access control">access control</option>
+                                
+                                    <option value="IoT technology">IoT technology</option>
+                                
+                                    <option value="security threats">security threats</option>
+                                
+                                    <option value="dynamic environment">dynamic environment</option>
+                                
+                                    <option value="research challenges">research challenges</option>
+                                
+                                    <option value="IoT devices">IoT devices</option>
+                                
+                                    <option value="Ambient Intelligence">Ambient Intelligence</option>
+                                
+                                    <option value="Social Internet">Social Internet</option>
+                                
+                                    <option value="open research issues">open research issues</option>
+                                
+                                    <option value="human intervention">human intervention</option>
+                                
+                                    <option value="wireless sensor networks">wireless sensor networks</option>
+                                
+                                    <option value="sensor networks">sensor networks</option>
+                                
+                                    <option value="application layer">application layer</option>
+                                
+                                    <option value="IoT data">IoT data</option>
+                                
+                                    <option value="cyber world">cyber world</option>
+                                
+                                    <option value="physical world">physical world</option>
+                                
+                                    <option value="blockchain technology">blockchain technology</option>
+                                
+                                    <option value="computing paradigm">computing paradigm</option>
+                                
+                                    <option value="end users">end users</option>
+                                
+                                    <option value="smart contracts">smart contracts</option>
+                                
+                                    <option value="security requirements">security requirements</option>
+                                
+                                    <option value="IoT environment">IoT environment</option>
+                                
+                                    <option value="IoT systems">IoT systems</option>
+                                
+                                    <option value="knowledge discovery">knowledge discovery</option>
+                                
+                                    <option value="open challenges">open challenges</option>
+                                
+                                    <option value="business processes">business processes</option>
+                                
+                                    <option value="service providers">service providers</option>
+                                
+                                    <option value="smart objects">smart objects</option>
+                                
+                                    <option value="application scenarios">application scenarios</option>
+                                
+                                    <option value="computing applications">computing applications</option>
+                                
+                                    <option value="data infrastructure">data infrastructure</option>
+                                
+                                    <option value="human-computer interaction">human-computer interaction</option>
+                                
+                                    <option value="recommender systems">recommender systems</option>
+                                
+                                    <option value="quality of service">quality of service</option>
+                                
+                                    <option value="user interface">user interface</option>
+                                
+                                    <option value="real-world applications">real-world applications</option>
+                                
+                                    <option value="unified repository">unified repository</option>
+                                
+                                    <option value="data mining">data mining</option>
+                                
+                                    <option value="online social networks">online social networks</option>
+                                
+                                    <option value="Twitter users">Twitter users</option>
+                                
+                                    <option value="event detection">event detection</option>
+                                
+                                    <option value="pervasive computing">pervasive computing</option>
+                                
+                                    <option value="mining techniques">mining techniques</option>
+                                
+                                    <option value="query language">query language</option>
+                                
+                                    <option value="RDF Schema">RDF Schema</option>
+                                
+                                    <option value="relational database">relational database</option>
+                                
+                                    <option value="SPARQL queries">SPARQL queries</option>
+                                
+                                    <option value="RDF graphs">RDF graphs</option>
+                                
+                                    <option value="Semantic Web applications">Semantic Web applications</option>
+                                
+                                    <option value="web application">web application</option>
+                                
+                                    <option value="structured information">structured information</option>
+                                
+                                    <option value="large-scale datasets">large-scale datasets</option>
+                                
+                                    <option value="Web service composition">Web service composition</option>
+                                
+                                    <option value="Web service discovery">Web service discovery</option>
+                                
+                                    <option value="agent technology">agent technology</option>
+                                
+                                    <option value="application integration">application integration</option>
+                                
+                                    <option value="QoS constraints">QoS constraints</option>
+                                
+                                    <option value="software components">software components</option>
+                                
+                                    <option value="service selection">service selection</option>
+                                
+                                    <option value="such applications">such applications</option>
+                                
+                                    <option value="new computing paradigm">new computing paradigm</option>
+                                
+                                    <option value="cloud manufacturing">cloud manufacturing</option>
+                                
+                                    <option value="manufacturing systems">manufacturing systems</option>
+                                
+                                    <option value="query processing">query processing</option>
+                                
+                                    <option value="RDF data">RDF data</option>
+                                
+                                    <option value="data management">data management</option>
+                                
+                                    <option value="data model">data model</option>
+                                
+                                    <option value="data mining methods">data mining methods</option>
+                                
+                                    <option value="mining methods">mining methods</option>
+                                
+                                    <option value="unstructured data">unstructured data</option>
+                                
+                                    <option value="deep learning models">deep learning models</option>
+                                
+                                    <option value="cognitive science">cognitive science</option>
+                                
+                                    <option value="data mining techniques">data mining techniques</option>
+                                
+                                    <option value="advanced-level students">advanced-level students</option>
+                                
+                                    <option value="educational data mining">educational data mining</option>
+                                
+                                    <option value="association rule mining">association rule mining</option>
+                                
+                                    <option value="rule mining">rule mining</option>
+                                
+                                    <option value="data mining algorithms">data mining algorithms</option>
+                                
+                                    <option value="mining algorithms">mining algorithms</option>
+                                
+                                    <option value="information security">information security</option>
+                                
+                                    <option value="systems biology">systems biology</option>
+                                
+                                    <option value="Extensive experiments">Extensive experiments</option>
+                                
+                                    <option value="mobile computing">mobile computing</option>
+                                
+                                    <option value="mobile devices">mobile devices</option>
+                                
+                                    <option value="security issues">security issues</option>
+                                
+                                    <option value="third party">third party</option>
+                                
+                                    <option value="data streams">data streams</option>
+                                
+                                    <option value="computing environment">computing environment</option>
+                                
+                                    <option value="future Internet">future Internet</option>
+                                
+                                    <option value="geographic information">geographic information</option>
+                                
+                                    <option value="user-generated content">user-generated content</option>
+                                
+                                    <option value="social network information">social network information</option>
+                                
+                                    <option value="network information">network information</option>
+                                
+                                    <option value="collaborative filtering">collaborative filtering</option>
+                                
+                                    <option value="social network analysis">social network analysis</option>
+                                
+                                    <option value="user profiles">user profiles</option>
+                                
+                                    <option value="art approaches">art approaches</option>
+                                
+                                    <option value="recommendation techniques">recommendation techniques</option>
+                                
+                                    <option value="recommendation method">recommendation method</option>
+                                
+                                    <option value="application platform">application platform</option>
+                                
+                                    <option value="e-learning">e-learning</option>
+                                
+                                    <option value="trust information">trust information</option>
+                                
+                                    <option value="trust metrics">trust metrics</option>
+                                
+                                    <option value="trust network">trust network</option>
+                                
+                                    <option value="real-world datasets">real-world datasets</option>
+                                
+                                    <option value="recommendation algorithm">recommendation algorithm</option>
+                                
+                                    <option value="business process management">business process management</option>
+                                
+                                    <option value="process management">process management</option>
+                                
+                                    <option value="workflow systems">workflow systems</option>
+                                
+                                    <option value="workflow management system">workflow management system</option>
+                                
+                                    <option value="social networking">social networking</option>
+                                
+                                    <option value="wireless networks">wireless networks</option>
+                                
+                                    <option value="search results">search results</option>
+                                
+                                    <option value="online information">online information</option>
+                                
+                                    <option value="trust relationships">trust relationships</option>
+                                
+                                    <option value="database management system">database management system</option>
+                                
+                                    <option value="learning techniques">learning techniques</option>
+                                
+                                    <option value="learning approach">learning approach</option>
+                                
+                                    <option value="wireless communication systems">wireless communication systems</option>
+                                
+                                    <option value="communication systems">communication systems</option>
+                                
+                                    <option value="privacy concerns">privacy concerns</option>
+                                
+                                    <option value="Web 2.0 technologies">Web 2.0 technologies</option>
+                                
+                                    <option value="Web 2.0">Web 2.0</option>
+                                
+                                    <option value="e-Science">e-Science</option>
+                                
+                                    <option value="information management">information management</option>
+                                
+                                    <option value="sensor nodes">sensor nodes</option>
+                                
+                                    <option value="social networking services">social networking services</option>
+                                
+                                    <option value="networking services">networking services</option>
+                                
+                                    <option value="context reasoning">context reasoning</option>
+                                
+                                    <option value="web-based social networks">web-based social networks</option>
+                                
+                                    <option value="natural language text">natural language text</option>
+                                
+                                    <option value="language text">language text</option>
+                                
+                            </select>
+                        </div>
+                        <div class="col-2 pb-2">
+                            <button type="button" class="btn btn-primary btn-block" onclick="neighbourhoodHighlight({nodes: []});">Reset Selection</button>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+                  new TomSelect("#select-node",{
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      }
+                  });
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 66, "id": "Semantic Web", "label": "Semantic Web", "score_avg": 0.65579, "score_bucket": 2, "shape": "dot", "size": 132, "title": ["\u003ch4\u003eConcept: \u0027Semantic Web\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 66\u003cbr\u003eScore avg: 0.65579"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 4, "id": "heterogeneous data", "label": "heterogeneous data", "score_avg": 0.643, "score_bucket": 2, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027heterogeneous data\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.643"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 8, "id": "Web Ontology Language", "label": "Web Ontology Language", "score_avg": 0.63112, "score_bucket": 2, "shape": "dot", "size": 16, "title": ["\u003ch4\u003eConcept: \u0027Web Ontology Language\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 8\u003cbr\u003eScore avg: 0.63112"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 16, "id": "e-commerce", "label": "e-commerce", "score_avg": 0.641, "score_bucket": 2, "shape": "dot", "size": 32, "title": ["\u003ch4\u003eConcept: \u0027e-commerce\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 16\u003cbr\u003eScore avg: 0.641"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 11, "id": "web content", "label": "web content", "score_avg": 0.61855, "score_bucket": 2, "shape": "dot", "size": 22, "title": ["\u003ch4\u003eConcept: \u0027web content\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 11\u003cbr\u003eScore avg: 0.61855"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 16, "id": "World Wide Web", "label": "World Wide Web", "score_avg": 0.63069, "score_bucket": 2, "shape": "dot", "size": 32, "title": ["\u003ch4\u003eConcept: \u0027World Wide Web\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 16\u003cbr\u003eScore avg: 0.63069"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 49, "id": "web services", "label": "web services", "score_avg": 0.71761, "score_bucket": 1, "shape": "dot", "size": 98, "title": ["\u003ch4\u003eConcept: \u0027web services\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 49\u003cbr\u003eScore avg: 0.71761"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 14, "id": "Wide Web", "label": "Wide Web", "score_avg": 0.60314, "score_bucket": 2, "shape": "dot", "size": 28, "title": ["\u003ch4\u003eConcept: \u0027Wide Web\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 14\u003cbr\u003eScore avg: 0.60314"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 9, "id": "data processing", "label": "data processing", "score_avg": 0.65111, "score_bucket": 2, "shape": "dot", "size": 18, "title": ["\u003ch4\u003eConcept: \u0027data processing\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 9\u003cbr\u003eScore avg: 0.65111"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "schema matching", "label": "schema matching", "score_avg": 0.746, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027schema matching\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.746"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 7, "id": "different ontologies", "label": "different ontologies", "score_avg": 0.67186, "score_bucket": 1, "shape": "dot", "size": 14, "title": ["\u003ch4\u003eConcept: \u0027different ontologies\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 7\u003cbr\u003eScore avg: 0.67186"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 5, "id": "Semantic Web Services", "label": "Semantic Web Services", "score_avg": 0.776, "score_bucket": 1, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027Semantic Web Services\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.776"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "peer systems", "label": "peer systems", "score_avg": 0.68425, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027peer systems\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.68425"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 20, "id": "information systems", "label": "information systems", "score_avg": 0.62815, "score_bucket": 2, "shape": "dot", "size": 40, "title": ["\u003ch4\u003eConcept: \u0027information systems\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 20\u003cbr\u003eScore avg: 0.62815"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 7, "id": "service descriptions", "label": "service descriptions", "score_avg": 0.69257, "score_bucket": 1, "shape": "dot", "size": 14, "title": ["\u003ch4\u003eConcept: \u0027service descriptions\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 7\u003cbr\u003eScore avg: 0.69257"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 7, "id": "composite services", "label": "composite services", "score_avg": 0.71643, "score_bucket": 1, "shape": "dot", "size": 14, "title": ["\u003ch4\u003eConcept: \u0027composite services\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 7\u003cbr\u003eScore avg: 0.71643"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 8, "id": "application areas", "label": "application areas", "score_avg": 0.63688, "score_bucket": 2, "shape": "dot", "size": 16, "title": ["\u003ch4\u003eConcept: \u0027application areas\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 8\u003cbr\u003eScore avg: 0.63688"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "semantic mapping", "label": "semantic mapping", "score_avg": 0.7465, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027semantic mapping\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.7465"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 6, "id": "similarity measure", "label": "similarity measure", "score_avg": 0.61833, "score_bucket": 2, "shape": "dot", "size": 12, "title": ["\u003ch4\u003eConcept: \u0027similarity measure\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 6\u003cbr\u003eScore avg: 0.61833"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "matching process", "label": "matching process", "score_avg": 0.674, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027matching process\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.674"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 5, "id": "Web services technology", "label": "Web services technology", "score_avg": 0.7122, "score_bucket": 1, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027Web services technology\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.7122"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 15, "id": "Semantic Web technologies", "label": "Semantic Web technologies", "score_avg": 0.6018, "score_bucket": 2, "shape": "dot", "size": 30, "title": ["\u003ch4\u003eConcept: \u0027Semantic Web technologies\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 15\u003cbr\u003eScore avg: 0.6018"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 5, "id": "service technology", "label": "service technology", "score_avg": 0.6562, "score_bucket": 2, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027service technology\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.6562"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 21, "id": "computer science", "label": "computer science", "score_avg": 0.64476, "score_bucket": 2, "shape": "dot", "size": 42, "title": ["\u003ch4\u003eConcept: \u0027computer science\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 21\u003cbr\u003eScore avg: 0.64476"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 7, "id": "process model", "label": "process model", "score_avg": 0.63914, "score_bucket": 2, "shape": "dot", "size": 14, "title": ["\u003ch4\u003eConcept: \u0027process model\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 7\u003cbr\u003eScore avg: 0.63914"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "Web service descriptions", "label": "Web service descriptions", "score_avg": 0.74475, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027Web service descriptions\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.74475"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 17, "id": "natural language processing", "label": "natural language processing", "score_avg": 0.61859, "score_bucket": 2, "shape": "dot", "size": 34, "title": ["\u003ch4\u003eConcept: \u0027natural language processing\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 17\u003cbr\u003eScore avg: 0.61859"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 20, "id": "information retrieval", "label": "information retrieval", "score_avg": 0.6228, "score_bucket": 2, "shape": "dot", "size": 40, "title": ["\u003ch4\u003eConcept: \u0027information retrieval\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 20\u003cbr\u003eScore avg: 0.6228"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 22, "id": "service composition", "label": "service composition", "score_avg": 0.70873, "score_bucket": 1, "shape": "dot", "size": 44, "title": ["\u003ch4\u003eConcept: \u0027service composition\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 22\u003cbr\u003eScore avg: 0.70873"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 7, "id": "service discovery", "label": "service discovery", "score_avg": 0.64857, "score_bucket": 2, "shape": "dot", "size": 14, "title": ["\u003ch4\u003eConcept: \u0027service discovery\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 7\u003cbr\u003eScore avg: 0.64857"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 7, "id": "semantic annotation", "label": "semantic annotation", "score_avg": 0.73157, "score_bucket": 1, "shape": "dot", "size": 14, "title": ["\u003ch4\u003eConcept: \u0027semantic annotation\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 7\u003cbr\u003eScore avg: 0.73157"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 13, "id": "knowledge bases", "label": "knowledge bases", "score_avg": 0.635, "score_bucket": 2, "shape": "dot", "size": 26, "title": ["\u003ch4\u003eConcept: \u0027knowledge bases\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 13\u003cbr\u003eScore avg: 0.635"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 21, "id": "management system", "label": "management system", "score_avg": 0.64848, "score_bucket": 2, "shape": "dot", "size": 42, "title": ["\u003ch4\u003eConcept: \u0027management system\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 21\u003cbr\u003eScore avg: 0.64848"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 7, "id": "use of ontologies", "label": "use of ontologies", "score_avg": 0.63371, "score_bucket": 2, "shape": "dot", "size": 14, "title": ["\u003ch4\u003eConcept: \u0027use of ontologies\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 7\u003cbr\u003eScore avg: 0.63371"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 7, "id": "web resources", "label": "web resources", "score_avg": 0.67229, "score_bucket": 1, "shape": "dot", "size": 14, "title": ["\u003ch4\u003eConcept: \u0027web resources\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 7\u003cbr\u003eScore avg: 0.67229"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 12, "id": "search engines", "label": "search engines", "score_avg": 0.63608, "score_bucket": 2, "shape": "dot", "size": 24, "title": ["\u003ch4\u003eConcept: \u0027search engines\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 12\u003cbr\u003eScore avg: 0.63608"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 24, "id": "neural network", "label": "neural network", "score_avg": 0.603, "score_bucket": 2, "shape": "dot", "size": 48, "title": ["\u003ch4\u003eConcept: \u0027neural network\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 24\u003cbr\u003eScore avg: 0.603"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 10, "id": "knowledge graph", "label": "knowledge graph", "score_avg": 0.6981, "score_bucket": 1, "shape": "dot", "size": 20, "title": ["\u003ch4\u003eConcept: \u0027knowledge graph\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 10\u003cbr\u003eScore avg: 0.6981"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 4, "id": "network architecture", "label": "network architecture", "score_avg": 0.627, "score_bucket": 2, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027network architecture\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.627"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 14, "id": "deep learning", "label": "deep learning", "score_avg": 0.70679, "score_bucket": 1, "shape": "dot", "size": 28, "title": ["\u003ch4\u003eConcept: \u0027deep learning\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 14\u003cbr\u003eScore avg: 0.70679"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "recurrent neural network", "label": "recurrent neural network", "score_avg": 0.741, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027recurrent neural network\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.741"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "convolutional neural network", "label": "convolutional neural network", "score_avg": 0.75375, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027convolutional neural network\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.75375"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 4, "id": "genetic algorithm", "label": "genetic algorithm", "score_avg": 0.6, "score_bucket": 2, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027genetic algorithm\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.6"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 8, "id": "support vector machine", "label": "support vector machine", "score_avg": 0.60387, "score_bucket": 2, "shape": "dot", "size": 16, "title": ["\u003ch4\u003eConcept: \u0027support vector machine\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 8\u003cbr\u003eScore avg: 0.60387"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 6, "id": "computer vision", "label": "computer vision", "score_avg": 0.68267, "score_bucket": 1, "shape": "dot", "size": 12, "title": ["\u003ch4\u003eConcept: \u0027computer vision\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 6\u003cbr\u003eScore avg: 0.68267"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 24, "id": "machine learning", "label": "machine learning", "score_avg": 0.63775, "score_bucket": 2, "shape": "dot", "size": 48, "title": ["\u003ch4\u003eConcept: \u0027machine learning\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 24\u003cbr\u003eScore avg: 0.63775"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 5, "id": "learning model", "label": "learning model", "score_avg": 0.6194, "score_bucket": 2, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027learning model\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.6194"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 12, "id": "big data analytics", "label": "big data analytics", "score_avg": 0.78908, "score_bucket": 1, "shape": "dot", "size": 24, "title": ["\u003ch4\u003eConcept: \u0027big data analytics\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 12\u003cbr\u003eScore avg: 0.78908"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 52, "id": "Internet of Things", "label": "Internet of Things", "score_avg": 0.74908, "score_bucket": 1, "shape": "dot", "size": 104, "title": ["\u003ch4\u003eConcept: \u0027Internet of Things\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 52\u003cbr\u003eScore avg: 0.74908"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 20, "id": "data analytics", "label": "data analytics", "score_avg": 0.6873, "score_bucket": 1, "shape": "dot", "size": 40, "title": ["\u003ch4\u003eConcept: \u0027data analytics\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 20\u003cbr\u003eScore avg: 0.6873"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 14, "id": "communication technologies", "label": "communication technologies", "score_avg": 0.60364, "score_bucket": 2, "shape": "dot", "size": 28, "title": ["\u003ch4\u003eConcept: \u0027communication technologies\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 14\u003cbr\u003eScore avg: 0.60364"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 9, "id": "cyber-physical systems", "label": "cyber-physical systems", "score_avg": 0.70522, "score_bucket": 1, "shape": "dot", "size": 18, "title": ["\u003ch4\u003eConcept: \u0027cyber-physical systems\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 9\u003cbr\u003eScore avg: 0.70522"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 30, "id": "big data", "label": "big data", "score_avg": 0.67023, "score_bucket": 1, "shape": "dot", "size": 60, "title": ["\u003ch4\u003eConcept: \u0027big data\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 30\u003cbr\u003eScore avg: 0.67023"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "supply chain management", "label": "supply chain management", "score_avg": 0.7485, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027supply chain management\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.7485"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "chain management", "label": "chain management", "score_avg": 0.6905, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027chain management\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.6905"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 7, "id": "data storage", "label": "data storage", "score_avg": 0.63729, "score_bucket": 2, "shape": "dot", "size": 14, "title": ["\u003ch4\u003eConcept: \u0027data storage\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 7\u003cbr\u003eScore avg: 0.63729"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 9, "id": "fog computing", "label": "fog computing", "score_avg": 0.72256, "score_bucket": 1, "shape": "dot", "size": 18, "title": ["\u003ch4\u003eConcept: \u0027fog computing\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 9\u003cbr\u003eScore avg: 0.72256"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 5, "id": "Enabling Technologies", "label": "Enabling Technologies", "score_avg": 0.6276, "score_bucket": 2, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027Enabling Technologies\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.6276"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 11, "id": "IoT applications", "label": "IoT applications", "score_avg": 0.68773, "score_bucket": 1, "shape": "dot", "size": 22, "title": ["\u003ch4\u003eConcept: \u0027IoT applications\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 11\u003cbr\u003eScore avg: 0.68773"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 6, "id": "sensor data", "label": "sensor data", "score_avg": 0.67433, "score_bucket": 1, "shape": "dot", "size": 12, "title": ["\u003ch4\u003eConcept: \u0027sensor data\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 6\u003cbr\u003eScore avg: 0.67433"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "edge computing", "label": "edge computing", "score_avg": 0.74625, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027edge computing\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.74625"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 6, "id": "privacy issues", "label": "privacy issues", "score_avg": 0.68133, "score_bucket": 1, "shape": "dot", "size": 12, "title": ["\u003ch4\u003eConcept: \u0027privacy issues\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 6\u003cbr\u003eScore avg: 0.68133"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 15, "id": "smart cities", "label": "smart cities", "score_avg": 0.66587, "score_bucket": 2, "shape": "dot", "size": 30, "title": ["\u003ch4\u003eConcept: \u0027smart cities\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 15\u003cbr\u003eScore avg: 0.66587"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 5, "id": "smart grid", "label": "smart grid", "score_avg": 0.6994, "score_bucket": 1, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027smart grid\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.6994"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 35, "id": "cloud computing", "label": "cloud computing", "score_avg": 0.70089, "score_bucket": 1, "shape": "dot", "size": 70, "title": ["\u003ch4\u003eConcept: \u0027cloud computing\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 35\u003cbr\u003eScore avg: 0.70089"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 7, "id": "key technologies", "label": "key technologies", "score_avg": 0.66229, "score_bucket": 2, "shape": "dot", "size": 14, "title": ["\u003ch4\u003eConcept: \u0027key technologies\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 7\u003cbr\u003eScore avg: 0.66229"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 9, "id": "access control", "label": "access control", "score_avg": 0.67211, "score_bucket": 1, "shape": "dot", "size": 18, "title": ["\u003ch4\u003eConcept: \u0027access control\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 9\u003cbr\u003eScore avg: 0.67211"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 4, "id": "IoT technology", "label": "IoT technology", "score_avg": 0.61025, "score_bucket": 2, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027IoT technology\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.61025"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "security threats", "label": "security threats", "score_avg": 0.681, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027security threats\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.681"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 5, "id": "dynamic environment", "label": "dynamic environment", "score_avg": 0.6396, "score_bucket": 2, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027dynamic environment\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.6396"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 15, "id": "research challenges", "label": "research challenges", "score_avg": 0.63793, "score_bucket": 2, "shape": "dot", "size": 30, "title": ["\u003ch4\u003eConcept: \u0027research challenges\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 15\u003cbr\u003eScore avg: 0.63793"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 8, "id": "IoT devices", "label": "IoT devices", "score_avg": 0.69988, "score_bucket": 1, "shape": "dot", "size": 16, "title": ["\u003ch4\u003eConcept: \u0027IoT devices\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 8\u003cbr\u003eScore avg: 0.69988"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "Ambient Intelligence", "label": "Ambient Intelligence", "score_avg": 0.67075, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027Ambient Intelligence\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.67075"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "Social Internet", "label": "Social Internet", "score_avg": 0.72025, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027Social Internet\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.72025"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "open research issues", "label": "open research issues", "score_avg": 0.69125, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027open research issues\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.69125"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 4, "id": "human intervention", "label": "human intervention", "score_avg": 0.6315, "score_bucket": 2, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027human intervention\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.6315"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 6, "id": "wireless sensor networks", "label": "wireless sensor networks", "score_avg": 0.83367, "score_bucket": 1, "shape": "dot", "size": 12, "title": ["\u003ch4\u003eConcept: \u0027wireless sensor networks\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 6\u003cbr\u003eScore avg: 0.83367"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 20, "id": "sensor networks", "label": "sensor networks", "score_avg": 0.67965, "score_bucket": 1, "shape": "dot", "size": 40, "title": ["\u003ch4\u003eConcept: \u0027sensor networks\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 20\u003cbr\u003eScore avg: 0.67965"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 5, "id": "application layer", "label": "application layer", "score_avg": 0.659, "score_bucket": 2, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027application layer\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.659"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "IoT data", "label": "IoT data", "score_avg": 0.69225, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027IoT data\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.69225"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 4, "id": "cyber world", "label": "cyber world", "score_avg": 0.6405, "score_bucket": 2, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027cyber world\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.6405"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 16, "id": "physical world", "label": "physical world", "score_avg": 0.60556, "score_bucket": 2, "shape": "dot", "size": 32, "title": ["\u003ch4\u003eConcept: \u0027physical world\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 16\u003cbr\u003eScore avg: 0.60556"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 8, "id": "blockchain technology", "label": "blockchain technology", "score_avg": 0.69275, "score_bucket": 1, "shape": "dot", "size": 16, "title": ["\u003ch4\u003eConcept: \u0027blockchain technology\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 8\u003cbr\u003eScore avg: 0.69275"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 6, "id": "computing paradigm", "label": "computing paradigm", "score_avg": 0.71933, "score_bucket": 1, "shape": "dot", "size": 12, "title": ["\u003ch4\u003eConcept: \u0027computing paradigm\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 6\u003cbr\u003eScore avg: 0.71933"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 7, "id": "end users", "label": "end users", "score_avg": 0.64171, "score_bucket": 2, "shape": "dot", "size": 14, "title": ["\u003ch4\u003eConcept: \u0027end users\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 7\u003cbr\u003eScore avg: 0.64171"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 5, "id": "smart contracts", "label": "smart contracts", "score_avg": 0.7532, "score_bucket": 1, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027smart contracts\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.7532"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 5, "id": "security requirements", "label": "security requirements", "score_avg": 0.6658, "score_bucket": 2, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027security requirements\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.6658"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "IoT environment", "label": "IoT environment", "score_avg": 0.6875, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027IoT environment\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.6875"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "IoT systems", "label": "IoT systems", "score_avg": 0.725, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027IoT systems\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.725"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 6, "id": "knowledge discovery", "label": "knowledge discovery", "score_avg": 0.7165, "score_bucket": 1, "shape": "dot", "size": 12, "title": ["\u003ch4\u003eConcept: \u0027knowledge discovery\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 6\u003cbr\u003eScore avg: 0.7165"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 9, "id": "open challenges", "label": "open challenges", "score_avg": 0.61056, "score_bucket": 2, "shape": "dot", "size": 18, "title": ["\u003ch4\u003eConcept: \u0027open challenges\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 9\u003cbr\u003eScore avg: 0.61056"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 19, "id": "business processes", "label": "business processes", "score_avg": 0.68142, "score_bucket": 1, "shape": "dot", "size": 38, "title": ["\u003ch4\u003eConcept: \u0027business processes\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 19\u003cbr\u003eScore avg: 0.68142"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 6, "id": "service providers", "label": "service providers", "score_avg": 0.6295, "score_bucket": 2, "shape": "dot", "size": 12, "title": ["\u003ch4\u003eConcept: \u0027service providers\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 6\u003cbr\u003eScore avg: 0.6295"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 5, "id": "smart objects", "label": "smart objects", "score_avg": 0.6818, "score_bucket": 1, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027smart objects\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.6818"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 6, "id": "application scenarios", "label": "application scenarios", "score_avg": 0.66717, "score_bucket": 2, "shape": "dot", "size": 12, "title": ["\u003ch4\u003eConcept: \u0027application scenarios\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 6\u003cbr\u003eScore avg: 0.66717"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 8, "id": "computing applications", "label": "computing applications", "score_avg": 0.60262, "score_bucket": 2, "shape": "dot", "size": 16, "title": ["\u003ch4\u003eConcept: \u0027computing applications\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 8\u003cbr\u003eScore avg: 0.60262"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 4, "id": "data infrastructure", "label": "data infrastructure", "score_avg": 0.657, "score_bucket": 2, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027data infrastructure\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.657"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 4, "id": "human-computer interaction", "label": "human-computer interaction", "score_avg": 0.65975, "score_bucket": 2, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027human-computer interaction\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.65975"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 43, "id": "recommender systems", "label": "recommender systems", "score_avg": 0.66614, "score_bucket": 2, "shape": "dot", "size": 86, "title": ["\u003ch4\u003eConcept: \u0027recommender systems\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 43\u003cbr\u003eScore avg: 0.66614"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 7, "id": "quality of service", "label": "quality of service", "score_avg": 0.70443, "score_bucket": 1, "shape": "dot", "size": 14, "title": ["\u003ch4\u003eConcept: \u0027quality of service\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 7\u003cbr\u003eScore avg: 0.70443"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 12, "id": "user interface", "label": "user interface", "score_avg": 0.62508, "score_bucket": 2, "shape": "dot", "size": 24, "title": ["\u003ch4\u003eConcept: \u0027user interface\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 12\u003cbr\u003eScore avg: 0.62508"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 9, "id": "real-world applications", "label": "real-world applications", "score_avg": 0.69089, "score_bucket": 1, "shape": "dot", "size": 18, "title": ["\u003ch4\u003eConcept: \u0027real-world applications\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 9\u003cbr\u003eScore avg: 0.69089"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 4, "id": "unified repository", "label": "unified repository", "score_avg": 0.666, "score_bucket": 2, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027unified repository\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.666"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 33, "id": "data mining", "label": "data mining", "score_avg": 0.72024, "score_bucket": 1, "shape": "dot", "size": 66, "title": ["\u003ch4\u003eConcept: \u0027data mining\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 33\u003cbr\u003eScore avg: 0.72024"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 15, "id": "online social networks", "label": "online social networks", "score_avg": 0.6438, "score_bucket": 2, "shape": "dot", "size": 30, "title": ["\u003ch4\u003eConcept: \u0027online social networks\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 15\u003cbr\u003eScore avg: 0.6438"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 4, "id": "Twitter users", "label": "Twitter users", "score_avg": 0.6195, "score_bucket": 2, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027Twitter users\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.6195"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 5, "id": "event detection", "label": "event detection", "score_avg": 0.6032, "score_bucket": 2, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027event detection\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.6032"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 4, "id": "pervasive computing", "label": "pervasive computing", "score_avg": 0.639, "score_bucket": 2, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027pervasive computing\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.639"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 11, "id": "mining techniques", "label": "mining techniques", "score_avg": 0.65818, "score_bucket": 2, "shape": "dot", "size": 22, "title": ["\u003ch4\u003eConcept: \u0027mining techniques\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 11\u003cbr\u003eScore avg: 0.65818"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 10, "id": "query language", "label": "query language", "score_avg": 0.6218, "score_bucket": 2, "shape": "dot", "size": 20, "title": ["\u003ch4\u003eConcept: \u0027query language\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 10\u003cbr\u003eScore avg: 0.6218"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "RDF Schema", "label": "RDF Schema", "score_avg": 0.71875, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027RDF Schema\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.71875"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 8, "id": "relational database", "label": "relational database", "score_avg": 0.6825, "score_bucket": 1, "shape": "dot", "size": 16, "title": ["\u003ch4\u003eConcept: \u0027relational database\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 8\u003cbr\u003eScore avg: 0.6825"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 6, "id": "SPARQL queries", "label": "SPARQL queries", "score_avg": 0.6615, "score_bucket": 2, "shape": "dot", "size": 12, "title": ["\u003ch4\u003eConcept: \u0027SPARQL queries\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 6\u003cbr\u003eScore avg: 0.6615"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 6, "id": "RDF graphs", "label": "RDF graphs", "score_avg": 0.62833, "score_bucket": 2, "shape": "dot", "size": 12, "title": ["\u003ch4\u003eConcept: \u0027RDF graphs\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 6\u003cbr\u003eScore avg: 0.62833"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 5, "id": "Semantic Web applications", "label": "Semantic Web applications", "score_avg": 0.6388, "score_bucket": 2, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027Semantic Web applications\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.6388"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 15, "id": "web application", "label": "web application", "score_avg": 0.64193, "score_bucket": 2, "shape": "dot", "size": 30, "title": ["\u003ch4\u003eConcept: \u0027web application\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 15\u003cbr\u003eScore avg: 0.64193"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 5, "id": "structured information", "label": "structured information", "score_avg": 0.6532, "score_bucket": 2, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027structured information\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.6532"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 6, "id": "large-scale datasets", "label": "large-scale datasets", "score_avg": 0.6665, "score_bucket": 2, "shape": "dot", "size": 12, "title": ["\u003ch4\u003eConcept: \u0027large-scale datasets\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 6\u003cbr\u003eScore avg: 0.6665"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 13, "id": "Web service composition", "label": "Web service composition", "score_avg": 0.76246, "score_bucket": 1, "shape": "dot", "size": 26, "title": ["\u003ch4\u003eConcept: \u0027Web service composition\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 13\u003cbr\u003eScore avg: 0.76246"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "Web service discovery", "label": "Web service discovery", "score_avg": 0.71025, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027Web service discovery\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.71025"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "agent technology", "label": "agent technology", "score_avg": 0.721, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027agent technology\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.721"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 4, "id": "application integration", "label": "application integration", "score_avg": 0.63175, "score_bucket": 2, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027application integration\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.63175"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "QoS constraints", "label": "QoS constraints", "score_avg": 0.67575, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027QoS constraints\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.67575"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 4, "id": "software components", "label": "software components", "score_avg": 0.666, "score_bucket": 2, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027software components\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.666"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "service selection", "label": "service selection", "score_avg": 0.7185, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027service selection\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.7185"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 6, "id": "such applications", "label": "such applications", "score_avg": 0.61983, "score_bucket": 2, "shape": "dot", "size": 12, "title": ["\u003ch4\u003eConcept: \u0027such applications\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 6\u003cbr\u003eScore avg: 0.61983"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "new computing paradigm", "label": "new computing paradigm", "score_avg": 0.71875, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027new computing paradigm\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.71875"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 5, "id": "cloud manufacturing", "label": "cloud manufacturing", "score_avg": 0.6394, "score_bucket": 2, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027cloud manufacturing\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.6394"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "manufacturing systems", "label": "manufacturing systems", "score_avg": 0.66975, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027manufacturing systems\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.66975"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 6, "id": "query processing", "label": "query processing", "score_avg": 0.69917, "score_bucket": 1, "shape": "dot", "size": 12, "title": ["\u003ch4\u003eConcept: \u0027query processing\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 6\u003cbr\u003eScore avg: 0.69917"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 6, "id": "RDF data", "label": "RDF data", "score_avg": 0.68783, "score_bucket": 1, "shape": "dot", "size": 12, "title": ["\u003ch4\u003eConcept: \u0027RDF data\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 6\u003cbr\u003eScore avg: 0.68783"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 20, "id": "data management", "label": "data management", "score_avg": 0.66665, "score_bucket": 2, "shape": "dot", "size": 40, "title": ["\u003ch4\u003eConcept: \u0027data management\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 20\u003cbr\u003eScore avg: 0.66665"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 13, "id": "data model", "label": "data model", "score_avg": 0.629, "score_bucket": 2, "shape": "dot", "size": 26, "title": ["\u003ch4\u003eConcept: \u0027data model\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 13\u003cbr\u003eScore avg: 0.629"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "data mining methods", "label": "data mining methods", "score_avg": 0.7085, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027data mining methods\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.7085"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 4, "id": "mining methods", "label": "mining methods", "score_avg": 0.648, "score_bucket": 2, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027mining methods\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.648"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 4, "id": "unstructured data", "label": "unstructured data", "score_avg": 0.66275, "score_bucket": 2, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027unstructured data\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.66275"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "deep learning models", "label": "deep learning models", "score_avg": 0.67225, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027deep learning models\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.67225"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 5, "id": "cognitive science", "label": "cognitive science", "score_avg": 0.6532, "score_bucket": 2, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027cognitive science\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.6532"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 9, "id": "data mining techniques", "label": "data mining techniques", "score_avg": 0.70133, "score_bucket": 1, "shape": "dot", "size": 18, "title": ["\u003ch4\u003eConcept: \u0027data mining techniques\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 9\u003cbr\u003eScore avg: 0.70133"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "advanced-level students", "label": "advanced-level students", "score_avg": 0.688, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027advanced-level students\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.688"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 6, "id": "educational data mining", "label": "educational data mining", "score_avg": 0.8055, "score_bucket": 1, "shape": "dot", "size": 12, "title": ["\u003ch4\u003eConcept: \u0027educational data mining\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 6\u003cbr\u003eScore avg: 0.8055"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "association rule mining", "label": "association rule mining", "score_avg": 0.7355, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027association rule mining\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.7355"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 5, "id": "rule mining", "label": "rule mining", "score_avg": 0.6526, "score_bucket": 2, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027rule mining\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.6526"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "data mining algorithms", "label": "data mining algorithms", "score_avg": 0.7455, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027data mining algorithms\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.7455"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "mining algorithms", "label": "mining algorithms", "score_avg": 0.69025, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027mining algorithms\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.69025"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 6, "id": "information security", "label": "information security", "score_avg": 0.66617, "score_bucket": 2, "shape": "dot", "size": 12, "title": ["\u003ch4\u003eConcept: \u0027information security\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 6\u003cbr\u003eScore avg: 0.66617"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 6, "id": "systems biology", "label": "systems biology", "score_avg": 0.61167, "score_bucket": 2, "shape": "dot", "size": 12, "title": ["\u003ch4\u003eConcept: \u0027systems biology\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 6\u003cbr\u003eScore avg: 0.61167"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 6, "id": "Extensive experiments", "label": "Extensive experiments", "score_avg": 0.62017, "score_bucket": 2, "shape": "dot", "size": 12, "title": ["\u003ch4\u003eConcept: \u0027Extensive experiments\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 6\u003cbr\u003eScore avg: 0.62017"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 5, "id": "mobile computing", "label": "mobile computing", "score_avg": 0.6542, "score_bucket": 2, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027mobile computing\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.6542"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 5, "id": "mobile devices", "label": "mobile devices", "score_avg": 0.602, "score_bucket": 2, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027mobile devices\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.602"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 8, "id": "security issues", "label": "security issues", "score_avg": 0.69325, "score_bucket": 1, "shape": "dot", "size": 16, "title": ["\u003ch4\u003eConcept: \u0027security issues\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 8\u003cbr\u003eScore avg: 0.69325"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 4, "id": "third party", "label": "third party", "score_avg": 0.6065, "score_bucket": 2, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027third party\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.6065"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 9, "id": "data streams", "label": "data streams", "score_avg": 0.60844, "score_bucket": 2, "shape": "dot", "size": 18, "title": ["\u003ch4\u003eConcept: \u0027data streams\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 9\u003cbr\u003eScore avg: 0.60844"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 5, "id": "computing environment", "label": "computing environment", "score_avg": 0.6858, "score_bucket": 1, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027computing environment\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.6858"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 4, "id": "future Internet", "label": "future Internet", "score_avg": 0.66475, "score_bucket": 2, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027future Internet\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.66475"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 5, "id": "geographic information", "label": "geographic information", "score_avg": 0.6656, "score_bucket": 2, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027geographic information\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.6656"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 6, "id": "user-generated content", "label": "user-generated content", "score_avg": 0.623, "score_bucket": 2, "shape": "dot", "size": 12, "title": ["\u003ch4\u003eConcept: \u0027user-generated content\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 6\u003cbr\u003eScore avg: 0.623"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 5, "id": "social network information", "label": "social network information", "score_avg": 0.7218, "score_bucket": 1, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027social network information\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.7218"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 5, "id": "network information", "label": "network information", "score_avg": 0.6374, "score_bucket": 2, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027network information\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.6374"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 15, "id": "collaborative filtering", "label": "collaborative filtering", "score_avg": 0.684, "score_bucket": 1, "shape": "dot", "size": 30, "title": ["\u003ch4\u003eConcept: \u0027collaborative filtering\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 15\u003cbr\u003eScore avg: 0.684"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 10, "id": "social network analysis", "label": "social network analysis", "score_avg": 0.6493, "score_bucket": 2, "shape": "dot", "size": 20, "title": ["\u003ch4\u003eConcept: \u0027social network analysis\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 10\u003cbr\u003eScore avg: 0.6493"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 6, "id": "user profiles", "label": "user profiles", "score_avg": 0.6645, "score_bucket": 2, "shape": "dot", "size": 12, "title": ["\u003ch4\u003eConcept: \u0027user profiles\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 6\u003cbr\u003eScore avg: 0.6645"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "art approaches", "label": "art approaches", "score_avg": 0.66975, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027art approaches\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.66975"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 5, "id": "recommendation techniques", "label": "recommendation techniques", "score_avg": 0.647, "score_bucket": 2, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027recommendation techniques\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.647"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "recommendation method", "label": "recommendation method", "score_avg": 0.69575, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027recommendation method\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.69575"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 5, "id": "application platform", "label": "application platform", "score_avg": 0.6542, "score_bucket": 2, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027application platform\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.6542"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 4, "id": "e-learning", "label": "e-learning", "score_avg": 0.6085, "score_bucket": 2, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027e-learning\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.6085"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 4, "id": "trust information", "label": "trust information", "score_avg": 0.66675, "score_bucket": 2, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027trust information\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.66675"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 5, "id": "trust metrics", "label": "trust metrics", "score_avg": 0.6888, "score_bucket": 1, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027trust metrics\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.6888"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 4, "id": "trust network", "label": "trust network", "score_avg": 0.602, "score_bucket": 2, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027trust network\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.602"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 5, "id": "real-world datasets", "label": "real-world datasets", "score_avg": 0.6112, "score_bucket": 2, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027real-world datasets\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.6112"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 4, "id": "recommendation algorithm", "label": "recommendation algorithm", "score_avg": 0.6065, "score_bucket": 2, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027recommendation algorithm\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.6065"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 6, "id": "business process management", "label": "business process management", "score_avg": 0.859, "score_bucket": 1, "shape": "dot", "size": 12, "title": ["\u003ch4\u003eConcept: \u0027business process management\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 6\u003cbr\u003eScore avg: 0.859"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 7, "id": "process management", "label": "process management", "score_avg": 0.71943, "score_bucket": 1, "shape": "dot", "size": 14, "title": ["\u003ch4\u003eConcept: \u0027process management\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 7\u003cbr\u003eScore avg: 0.71943"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "workflow systems", "label": "workflow systems", "score_avg": 0.72925, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027workflow systems\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.72925"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "workflow management system", "label": "workflow management system", "score_avg": 0.745, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027workflow management system\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.745"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 6, "id": "social networking", "label": "social networking", "score_avg": 0.64967, "score_bucket": 2, "shape": "dot", "size": 12, "title": ["\u003ch4\u003eConcept: \u0027social networking\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 6\u003cbr\u003eScore avg: 0.64967"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 5, "id": "wireless networks", "label": "wireless networks", "score_avg": 0.6658, "score_bucket": 2, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027wireless networks\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.6658"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "search results", "label": "search results", "score_avg": 0.70375, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027search results\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.70375"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 4, "id": "online information", "label": "online information", "score_avg": 0.623, "score_bucket": 2, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027online information\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.623"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 8, "id": "trust relationships", "label": "trust relationships", "score_avg": 0.62525, "score_bucket": 2, "shape": "dot", "size": 16, "title": ["\u003ch4\u003eConcept: \u0027trust relationships\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 8\u003cbr\u003eScore avg: 0.62525"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "database management system", "label": "database management system", "score_avg": 0.70775, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027database management system\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.70775"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 5, "id": "learning techniques", "label": "learning techniques", "score_avg": 0.657, "score_bucket": 2, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027learning techniques\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.657"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 4, "id": "learning approach", "label": "learning approach", "score_avg": 0.63375, "score_bucket": 2, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027learning approach\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.63375"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "wireless communication systems", "label": "wireless communication systems", "score_avg": 0.72425, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027wireless communication systems\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.72425"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 8, "id": "communication systems", "label": "communication systems", "score_avg": 0.635, "score_bucket": 2, "shape": "dot", "size": 16, "title": ["\u003ch4\u003eConcept: \u0027communication systems\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 8\u003cbr\u003eScore avg: 0.635"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 5, "id": "privacy concerns", "label": "privacy concerns", "score_avg": 0.6466, "score_bucket": 2, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027privacy concerns\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.6466"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "Web 2.0 technologies", "label": "Web 2.0 technologies", "score_avg": 0.7705, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027Web 2.0 technologies\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.7705"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 8, "id": "Web 2.0", "label": "Web 2.0", "score_avg": 0.6085, "score_bucket": 2, "shape": "dot", "size": 16, "title": ["\u003ch4\u003eConcept: \u0027Web 2.0\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 8\u003cbr\u003eScore avg: 0.6085"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 5, "id": "e-Science", "label": "e-Science", "score_avg": 0.6462, "score_bucket": 2, "shape": "dot", "size": 10, "title": ["\u003ch4\u003eConcept: \u0027e-Science\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 5\u003cbr\u003eScore avg: 0.6462"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 4, "id": "information management", "label": "information management", "score_avg": 0.6195, "score_bucket": 2, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027information management\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.6195"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "sensor nodes", "label": "sensor nodes", "score_avg": 0.71575, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027sensor nodes\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.71575"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "social networking services", "label": "social networking services", "score_avg": 0.722, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027social networking services\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.722"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "networking services", "label": "networking services", "score_avg": 0.67275, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027networking services\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.67275"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "context reasoning", "label": "context reasoning", "score_avg": 0.722, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027context reasoning\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.722"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "web-based social networks", "label": "web-based social networks", "score_avg": 0.78875, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027web-based social networks\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.78875"]}, {"borderWidthSelected": 5, "color": "rgb(233, 226, 156)", "frequency": 4, "id": "natural language text", "label": "natural language text", "score_avg": 0.7105, "score_bucket": 1, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027natural language text\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.7105"]}, {"borderWidthSelected": 5, "color": "rgb(207, 89, 126)", "frequency": 4, "id": "language text", "label": "language text", "score_avg": 0.65225, "score_bucket": 2, "shape": "dot", "size": 8, "title": ["\u003ch4\u003eConcept: \u0027language text\u0027\u003c/h4\u003e\u003chr\u003eFrequency: 4\u003cbr\u003eScore avg: 0.65225"]}]);
+                  edges = new vis.DataSet([{"from": "Semantic Web", "to": "heterogeneous data", "value": 2, "width": 2}, {"from": "Semantic Web", "to": "Web Ontology Language", "value": 3, "width": 3}, {"from": "Semantic Web", "to": "e-commerce", "value": 8, "width": 8}, {"from": "Semantic Web", "to": "web content", "value": 4, "width": 4}, {"from": "Semantic Web", "to": "World Wide Web", "value": 4, "width": 4}, {"from": "Semantic Web", "to": "web services", "value": 13, "width": 13}, {"from": "Semantic Web", "to": "Wide Web", "value": 4, "width": 4}, {"from": "Semantic Web", "to": "data processing", "value": 2, "width": 2}, {"from": "Semantic Web", "to": "schema matching", "value": 2, "width": 2}, {"from": "Semantic Web", "to": "different ontologies", "value": 4, "width": 4}, {"from": "Semantic Web", "to": "Semantic Web Services", "value": 3, "width": 3}, {"from": "Semantic Web", "to": "peer systems", "value": 2, "width": 2}, {"from": "Semantic Web", "to": "information systems", "value": 6, "width": 6}, {"from": "Semantic Web", "to": "service descriptions", "value": 4, "width": 4}, {"from": "Semantic Web", "to": "composite services", "value": 2, "width": 2}, {"from": "Semantic Web", "to": "application areas", "value": 3, "width": 3}, {"from": "Semantic Web", "to": "semantic mapping", "value": 3, "width": 3}, {"from": "Semantic Web", "to": "similarity measure", "value": 3, "width": 3}, {"from": "Semantic Web", "to": "matching process", "value": 3, "width": 3}, {"from": "Semantic Web", "to": "Web services technology", "value": 2, "width": 2}, {"from": "Semantic Web", "to": "Semantic Web technologies", "value": 3, "width": 3}, {"from": "Semantic Web", "to": "service technology", "value": 2, "width": 2}, {"from": "Semantic Web", "to": "computer science", "value": 2, "width": 2}, {"from": "Semantic Web", "to": "process model", "value": 2, "width": 2}, {"from": "Semantic Web", "to": "Web service descriptions", "value": 2, "width": 2}, {"from": "Semantic Web", "to": "natural language processing", "value": 3, "width": 3}, {"from": "Semantic Web", "to": "information retrieval", "value": 5, "width": 5}, {"from": "Semantic Web", "to": "service composition", "value": 2, "width": 2}, {"from": "Semantic Web", "to": "service discovery", "value": 2, "width": 2}, {"from": "Semantic Web", "to": "semantic annotation", "value": 5, "width": 5}, {"from": "Semantic Web", "to": "knowledge bases", "value": 2, "width": 2}, {"from": "Semantic Web", "to": "management system", "value": 3, "width": 3}, {"from": "Semantic Web", "to": "use of ontologies", "value": 4, "width": 4}, {"from": "Semantic Web", "to": "web resources", "value": 4, "width": 4}, {"from": "Semantic Web", "to": "search engines", "value": 2, "width": 2}, {"from": "World Wide Web", "to": "Wide Web", "value": 14, "width": 14}, {"from": "World Wide Web", "to": "search engines", "value": 2, "width": 2}, {"from": "World Wide Web", "to": "heterogeneous data", "value": 2, "width": 2}, {"from": "World Wide Web", "to": "web services", "value": 3, "width": 3}, {"from": "World Wide Web", "to": "information retrieval", "value": 2, "width": 2}, {"from": "Wide Web", "to": "search engines", "value": 2, "width": 2}, {"from": "Wide Web", "to": "heterogeneous data", "value": 2, "width": 2}, {"from": "Wide Web", "to": "web services", "value": 3, "width": 3}, {"from": "neural network", "to": "knowledge graph", "value": 3, "width": 3}, {"from": "neural network", "to": "network architecture", "value": 2, "width": 2}, {"from": "neural network", "to": "deep learning", "value": 5, "width": 5}, {"from": "neural network", "to": "natural language processing", "value": 3, "width": 3}, {"from": "neural network", "to": "recurrent neural network", "value": 4, "width": 4}, {"from": "neural network", "to": "convolutional neural network", "value": 4, "width": 4}, {"from": "neural network", "to": "genetic algorithm", "value": 3, "width": 3}, {"from": "neural network", "to": "support vector machine", "value": 3, "width": 3}, {"from": "neural network", "to": "computer vision", "value": 3, "width": 3}, {"from": "neural network", "to": "machine learning", "value": 2, "width": 2}, {"from": "neural network", "to": "learning model", "value": 2, "width": 2}, {"from": "big data analytics", "to": "Internet of Things", "value": 3, "width": 3}, {"from": "big data analytics", "to": "data analytics", "value": 12, "width": 12}, {"from": "big data analytics", "to": "communication technologies", "value": 2, "width": 2}, {"from": "big data analytics", "to": "cyber-physical systems", "value": 2, "width": 2}, {"from": "big data analytics", "to": "big data", "value": 5, "width": 5}, {"from": "big data analytics", "to": "supply chain management", "value": 2, "width": 2}, {"from": "big data analytics", "to": "chain management", "value": 2, "width": 2}, {"from": "big data analytics", "to": "data storage", "value": 2, "width": 2}, {"from": "Internet of Things", "to": "fog computing", "value": 5, "width": 5}, {"from": "Internet of Things", "to": "data analytics", "value": 6, "width": 6}, {"from": "Internet of Things", "to": "communication technologies", "value": 5, "width": 5}, {"from": "Internet of Things", "to": "Enabling Technologies", "value": 3, "width": 3}, {"from": "Internet of Things", "to": "IoT applications", "value": 9, "width": 9}, {"from": "Internet of Things", "to": "sensor data", "value": 3, "width": 3}, {"from": "Internet of Things", "to": "edge computing", "value": 3, "width": 3}, {"from": "Internet of Things", "to": "privacy issues", "value": 2, "width": 2}, {"from": "Internet of Things", "to": "cyber-physical systems", "value": 2, "width": 2}, {"from": "Internet of Things", "to": "smart cities", "value": 7, "width": 7}, {"from": "Internet of Things", "to": "smart grid", "value": 2, "width": 2}, {"from": "Internet of Things", "to": "cloud computing", "value": 7, "width": 7}, {"from": "Internet of Things", "to": "key technologies", "value": 3, "width": 3}, {"from": "Internet of Things", "to": "access control", "value": 2, "width": 2}, {"from": "Internet of Things", "to": "IoT technology", "value": 4, "width": 4}, {"from": "Internet of Things", "to": "security threats", "value": 3, "width": 3}, {"from": "Internet of Things", "to": "dynamic environment", "value": 2, "width": 2}, {"from": "Internet of Things", "to": "research challenges", "value": 7, "width": 7}, {"from": "Internet of Things", "to": "IoT devices", "value": 4, "width": 4}, {"from": "Internet of Things", "to": "Ambient Intelligence", "value": 2, "width": 2}, {"from": "Internet of Things", "to": "Social Internet", "value": 3, "width": 3}, {"from": "Internet of Things", "to": "open research issues", "value": 3, "width": 3}, {"from": "Internet of Things", "to": "human intervention", "value": 2, "width": 2}, {"from": "Internet of Things", "to": "wireless sensor networks", "value": 2, "width": 2}, {"from": "Internet of Things", "to": "sensor networks", "value": 7, "width": 7}, {"from": "Internet of Things", "to": "application layer", "value": 2, "width": 2}, {"from": "Internet of Things", "to": "big data", "value": 6, "width": 6}, {"from": "Internet of Things", "to": "IoT data", "value": 2, "width": 2}, {"from": "Internet of Things", "to": "cyber world", "value": 4, "width": 4}, {"from": "Internet of Things", "to": "physical world", "value": 6, "width": 6}, {"from": "Internet of Things", "to": "blockchain technology", "value": 3, "width": 3}, {"from": "Internet of Things", "to": "computing paradigm", "value": 2, "width": 2}, {"from": "Internet of Things", "to": "end users", "value": 2, "width": 2}, {"from": "Internet of Things", "to": "smart contracts", "value": 2, "width": 2}, {"from": "Internet of Things", "to": "security requirements", "value": 3, "width": 3}, {"from": "Internet of Things", "to": "IoT environment", "value": 4, "width": 4}, {"from": "Internet of Things", "to": "IoT systems", "value": 3, "width": 3}, {"from": "Internet of Things", "to": "knowledge discovery", "value": 2, "width": 2}, {"from": "Internet of Things", "to": "open challenges", "value": 4, "width": 4}, {"from": "Internet of Things", "to": "data processing", "value": 2, "width": 2}, {"from": "Internet of Things", "to": "business processes", "value": 2, "width": 2}, {"from": "Internet of Things", "to": "service providers", "value": 2, "width": 2}, {"from": "Internet of Things", "to": "smart objects", "value": 4, "width": 4}, {"from": "fog computing", "to": "data analytics", "value": 2, "width": 2}, {"from": "fog computing", "to": "cloud computing", "value": 4, "width": 4}, {"from": "fog computing", "to": "research challenges", "value": 3, "width": 3}, {"from": "fog computing", "to": "computing paradigm", "value": 3, "width": 3}, {"from": "fog computing", "to": "application scenarios", "value": 2, "width": 2}, {"from": "fog computing", "to": "edge computing", "value": 3, "width": 3}, {"from": "fog computing", "to": "computing applications", "value": 2, "width": 2}, {"from": "fog computing", "to": "smart cities", "value": 2, "width": 2}, {"from": "data analytics", "to": "communication technologies", "value": 3, "width": 3}, {"from": "data analytics", "to": "cyber-physical systems", "value": 2, "width": 2}, {"from": "data analytics", "to": "cloud computing", "value": 2, "width": 2}, {"from": "data analytics", "to": "data infrastructure", "value": 2, "width": 2}, {"from": "data analytics", "to": "big data", "value": 7, "width": 7}, {"from": "data analytics", "to": "IoT applications", "value": 2, "width": 2}, {"from": "data analytics", "to": "smart cities", "value": 3, "width": 3}, {"from": "data analytics", "to": "physical world", "value": 2, "width": 2}, {"from": "data analytics", "to": "knowledge discovery", "value": 2, "width": 2}, {"from": "data analytics", "to": "open challenges", "value": 2, "width": 2}, {"from": "data analytics", "to": "supply chain management", "value": 2, "width": 2}, {"from": "data analytics", "to": "chain management", "value": 2, "width": 2}, {"from": "data analytics", "to": "data storage", "value": 2, "width": 2}, {"from": "data analytics", "to": "computer science", "value": 2, "width": 2}, {"from": "communication technologies", "to": "Enabling Technologies", "value": 2, "width": 2}, {"from": "communication technologies", "to": "cyber-physical systems", "value": 3, "width": 3}, {"from": "communication technologies", "to": "computer science", "value": 3, "width": 3}, {"from": "communication technologies", "to": "physical world", "value": 3, "width": 3}, {"from": "communication technologies", "to": "sensor networks", "value": 2, "width": 2}, {"from": "communication technologies", "to": "big data", "value": 2, "width": 2}, {"from": "communication technologies", "to": "smart cities", "value": 2, "width": 2}, {"from": "Enabling Technologies", "to": "IoT applications", "value": 2, "width": 2}, {"from": "information retrieval", "to": "knowledge bases", "value": 3, "width": 3}, {"from": "information retrieval", "to": "human-computer interaction", "value": 2, "width": 2}, {"from": "information retrieval", "to": "recommender systems", "value": 2, "width": 2}, {"from": "information retrieval", "to": "natural language processing", "value": 4, "width": 4}, {"from": "information retrieval", "to": "computer science", "value": 2, "width": 2}, {"from": "IoT applications", "to": "smart cities", "value": 3, "width": 3}, {"from": "IoT applications", "to": "big data", "value": 3, "width": 3}, {"from": "IoT applications", "to": "cyber world", "value": 3, "width": 3}, {"from": "IoT applications", "to": "physical world", "value": 4, "width": 4}, {"from": "IoT applications", "to": "IoT systems", "value": 2, "width": 2}, {"from": "IoT applications", "to": "IoT devices", "value": 3, "width": 3}, {"from": "IoT applications", "to": "IoT environment", "value": 2, "width": 2}, {"from": "IoT applications", "to": "open challenges", "value": 3, "width": 3}, {"from": "IoT applications", "to": "quality of service", "value": 2, "width": 2}, {"from": "IoT applications", "to": "smart objects", "value": 2, "width": 2}, {"from": "access control", "to": "research challenges", "value": 2, "width": 2}, {"from": "user interface", "to": "recommender systems", "value": 2, "width": 2}, {"from": "user interface", "to": "human-computer interaction", "value": 2, "width": 2}, {"from": "user interface", "to": "real-world applications", "value": 2, "width": 2}, {"from": "user interface", "to": "unified repository", "value": 2, "width": 2}, {"from": "user interface", "to": "data mining", "value": 2, "width": 2}, {"from": "user interface", "to": "online social networks", "value": 2, "width": 2}, {"from": "Twitter users", "to": "event detection", "value": 2, "width": 2}, {"from": "pervasive computing", "to": "Ambient Intelligence", "value": 2, "width": 2}, {"from": "pervasive computing", "to": "sensor networks", "value": 2, "width": 2}, {"from": "event detection", "to": "mining techniques", "value": 2, "width": 2}, {"from": "query language", "to": "RDF Schema", "value": 2, "width": 2}, {"from": "query language", "to": "relational database", "value": 3, "width": 3}, {"from": "query language", "to": "SPARQL queries", "value": 2, "width": 2}, {"from": "query language", "to": "RDF graphs", "value": 3, "width": 3}, {"from": "query language", "to": "Semantic Web applications", "value": 2, "width": 2}, {"from": "query language", "to": "web application", "value": 2, "width": 2}, {"from": "structured information", "to": "large-scale datasets", "value": 2, "width": 2}, {"from": "web services", "to": "composite services", "value": 4, "width": 4}, {"from": "web services", "to": "Web service composition", "value": 10, "width": 10}, {"from": "web services", "to": "service composition", "value": 12, "width": 12}, {"from": "web services", "to": "service descriptions", "value": 6, "width": 6}, {"from": "web services", "to": "Web service discovery", "value": 3, "width": 3}, {"from": "web services", "to": "Semantic Web Services", "value": 5, "width": 5}, {"from": "web services", "to": "service discovery", "value": 4, "width": 4}, {"from": "web services", "to": "agent technology", "value": 2, "width": 2}, {"from": "web services", "to": "application integration", "value": 2, "width": 2}, {"from": "web services", "to": "quality of service", "value": 3, "width": 3}, {"from": "web services", "to": "Web services technology", "value": 4, "width": 4}, {"from": "web services", "to": "service technology", "value": 4, "width": 4}, {"from": "web services", "to": "business processes", "value": 5, "width": 5}, {"from": "web services", "to": "QoS constraints", "value": 3, "width": 3}, {"from": "web services", "to": "software components", "value": 2, "width": 2}, {"from": "web services", "to": "schema matching", "value": 2, "width": 2}, {"from": "web services", "to": "different ontologies", "value": 2, "width": 2}, {"from": "web services", "to": "peer systems", "value": 2, "width": 2}, {"from": "web services", "to": "e-commerce", "value": 4, "width": 4}, {"from": "web services", "to": "information systems", "value": 3, "width": 3}, {"from": "web services", "to": "Web service descriptions", "value": 4, "width": 4}, {"from": "web services", "to": "search engines", "value": 2, "width": 2}, {"from": "web services", "to": "process model", "value": 3, "width": 3}, {"from": "web services", "to": "semantic annotation", "value": 2, "width": 2}, {"from": "web services", "to": "use of ontologies", "value": 2, "width": 2}, {"from": "web services", "to": "management system", "value": 2, "width": 2}, {"from": "composite services", "to": "Web service composition", "value": 3, "width": 3}, {"from": "composite services", "to": "service composition", "value": 5, "width": 5}, {"from": "composite services", "to": "service selection", "value": 2, "width": 2}, {"from": "composite services", "to": "QoS constraints", "value": 2, "width": 2}, {"from": "Web service composition", "to": "service composition", "value": 13, "width": 13}, {"from": "Web service composition", "to": "such applications", "value": 2, "width": 2}, {"from": "service composition", "to": "Web service discovery", "value": 2, "width": 2}, {"from": "service composition", "to": "service discovery", "value": 2, "width": 2}, {"from": "service composition", "to": "service selection", "value": 3, "width": 3}, {"from": "service composition", "to": "QoS constraints", "value": 3, "width": 3}, {"from": "service composition", "to": "business processes", "value": 2, "width": 2}, {"from": "service composition", "to": "service descriptions", "value": 2, "width": 2}, {"from": "service composition", "to": "Web service descriptions", "value": 2, "width": 2}, {"from": "service composition", "to": "such applications", "value": 2, "width": 2}, {"from": "service composition", "to": "computing paradigm", "value": 2, "width": 2}, {"from": "service composition", "to": "new computing paradigm", "value": 2, "width": 2}, {"from": "service composition", "to": "cloud manufacturing", "value": 2, "width": 2}, {"from": "service composition", "to": "computing applications", "value": 2, "width": 2}, {"from": "service composition", "to": "Web services technology", "value": 2, "width": 2}, {"from": "service composition", "to": "service technology", "value": 2, "width": 2}, {"from": "service composition", "to": "cloud computing", "value": 3, "width": 3}, {"from": "service composition", "to": "manufacturing systems", "value": 2, "width": 2}, {"from": "schema matching", "to": "different ontologies", "value": 2, "width": 2}, {"from": "schema matching", "to": "Semantic Web Services", "value": 2, "width": 2}, {"from": "schema matching", "to": "peer systems", "value": 2, "width": 2}, {"from": "schema matching", "to": "e-commerce", "value": 2, "width": 2}, {"from": "schema matching", "to": "information systems", "value": 2, "width": 2}, {"from": "query processing", "to": "RDF data", "value": 2, "width": 2}, {"from": "query processing", "to": "data management", "value": 2, "width": 2}, {"from": "query processing", "to": "data model", "value": 2, "width": 2}, {"from": "smart cities", "to": "edge computing", "value": 2, "width": 2}, {"from": "smart cities", "to": "smart objects", "value": 2, "width": 2}, {"from": "smart cities", "to": "cloud computing", "value": 2, "width": 2}, {"from": "smart cities", "to": "open challenges", "value": 2, "width": 2}, {"from": "privacy issues", "to": "data mining", "value": 2, "width": 2}, {"from": "cyber-physical systems", "to": "smart grid", "value": 2, "width": 2}, {"from": "cyber-physical systems", "to": "cloud manufacturing", "value": 2, "width": 2}, {"from": "cyber-physical systems", "to": "physical world", "value": 5, "width": 5}, {"from": "cyber-physical systems", "to": "computer science", "value": 2, "width": 2}, {"from": "real-world applications", "to": "recommender systems", "value": 3, "width": 3}, {"from": "real-world applications", "to": "human-computer interaction", "value": 2, "width": 2}, {"from": "real-world applications", "to": "unified repository", "value": 2, "width": 2}, {"from": "real-world applications", "to": "data mining", "value": 3, "width": 3}, {"from": "machine learning", "to": "data mining methods", "value": 3, "width": 3}, {"from": "machine learning", "to": "data mining", "value": 10, "width": 10}, {"from": "machine learning", "to": "mining methods", "value": 3, "width": 3}, {"from": "machine learning", "to": "computer science", "value": 2, "width": 2}, {"from": "machine learning", "to": "big data", "value": 2, "width": 2}, {"from": "machine learning", "to": "unstructured data", "value": 2, "width": 2}, {"from": "machine learning", "to": "deep learning", "value": 5, "width": 5}, {"from": "machine learning", "to": "deep learning models", "value": 2, "width": 2}, {"from": "machine learning", "to": "learning model", "value": 3, "width": 3}, {"from": "machine learning", "to": "natural language processing", "value": 3, "width": 3}, {"from": "machine learning", "to": "support vector machine", "value": 2, "width": 2}, {"from": "machine learning", "to": "computer vision", "value": 4, "width": 4}, {"from": "machine learning", "to": "cognitive science", "value": 2, "width": 2}, {"from": "machine learning", "to": "data mining techniques", "value": 2, "width": 2}, {"from": "machine learning", "to": "mining techniques", "value": 2, "width": 2}, {"from": "data mining methods", "to": "data mining", "value": 4, "width": 4}, {"from": "data mining methods", "to": "mining methods", "value": 4, "width": 4}, {"from": "data mining", "to": "mining methods", "value": 4, "width": 4}, {"from": "data mining", "to": "recommender systems", "value": 3, "width": 3}, {"from": "data mining", "to": "human-computer interaction", "value": 2, "width": 2}, {"from": "data mining", "to": "advanced-level students", "value": 3, "width": 3}, {"from": "data mining", "to": "unified repository", "value": 4, "width": 4}, {"from": "data mining", "to": "computer science", "value": 4, "width": 4}, {"from": "data mining", "to": "educational data mining", "value": 6, "width": 6}, {"from": "data mining", "to": "data mining techniques", "value": 5, "width": 5}, {"from": "data mining", "to": "association rule mining", "value": 2, "width": 2}, {"from": "data mining", "to": "mining techniques", "value": 4, "width": 4}, {"from": "data mining", "to": "rule mining", "value": 2, "width": 2}, {"from": "data mining", "to": "management system", "value": 2, "width": 2}, {"from": "data mining", "to": "data mining algorithms", "value": 3, "width": 3}, {"from": "data mining", "to": "mining algorithms", "value": 3, "width": 3}, {"from": "data mining", "to": "knowledge discovery", "value": 2, "width": 2}, {"from": "data mining", "to": "big data", "value": 3, "width": 3}, {"from": "data mining", "to": "information security", "value": 3, "width": 3}, {"from": "data mining", "to": "data management", "value": 2, "width": 2}, {"from": "data mining", "to": "natural language processing", "value": 2, "width": 2}, {"from": "data mining", "to": "search engines", "value": 2, "width": 2}, {"from": "data mining", "to": "computer vision", "value": 3, "width": 3}, {"from": "data mining", "to": "deep learning", "value": 2, "width": 2}, {"from": "knowledge graph", "to": "knowledge bases", "value": 2, "width": 2}, {"from": "knowledge graph", "to": "recommender systems", "value": 2, "width": 2}, {"from": "knowledge bases", "to": "systems biology", "value": 2, "width": 2}, {"from": "knowledge bases", "to": "web content", "value": 2, "width": 2}, {"from": "knowledge bases", "to": "rule mining", "value": 2, "width": 2}, {"from": "knowledge bases", "to": "Extensive experiments", "value": 2, "width": 2}, {"from": "service descriptions", "to": "Web services technology", "value": 2, "width": 2}, {"from": "service descriptions", "to": "Semantic Web technologies", "value": 2, "width": 2}, {"from": "service descriptions", "to": "service technology", "value": 2, "width": 2}, {"from": "service descriptions", "to": "Web service descriptions", "value": 4, "width": 4}, {"from": "service descriptions", "to": "semantic annotation", "value": 2, "width": 2}, {"from": "supply chain management", "to": "chain management", "value": 4, "width": 4}, {"from": "supply chain management", "to": "data storage", "value": 2, "width": 2}, {"from": "chain management", "to": "data storage", "value": 2, "width": 2}, {"from": "blockchain technology", "to": "smart contracts", "value": 4, "width": 4}, {"from": "data model", "to": "RDF data", "value": 2, "width": 2}, {"from": "data model", "to": "data management", "value": 2, "width": 2}, {"from": "cloud computing", "to": "cloud manufacturing", "value": 3, "width": 3}, {"from": "cloud computing", "to": "key technologies", "value": 4, "width": 4}, {"from": "cloud computing", "to": "mobile computing", "value": 2, "width": 2}, {"from": "cloud computing", "to": "mobile devices", "value": 2, "width": 2}, {"from": "cloud computing", "to": "information security", "value": 2, "width": 2}, {"from": "cloud computing", "to": "security issues", "value": 3, "width": 3}, {"from": "cloud computing", "to": "third party", "value": 2, "width": 2}, {"from": "cloud computing", "to": "research challenges", "value": 2, "width": 2}, {"from": "cloud computing", "to": "big data", "value": 4, "width": 4}, {"from": "cloud computing", "to": "new computing paradigm", "value": 2, "width": 2}, {"from": "cloud computing", "to": "computing paradigm", "value": 3, "width": 3}, {"from": "cloud computing", "to": "open challenges", "value": 3, "width": 3}, {"from": "cloud computing", "to": "Semantic Web technologies", "value": 2, "width": 2}, {"from": "cloud computing", "to": "data streams", "value": 2, "width": 2}, {"from": "cloud computing", "to": "computing applications", "value": 3, "width": 3}, {"from": "cloud computing", "to": "computing environment", "value": 2, "width": 2}, {"from": "cloud computing", "to": "data management", "value": 2, "width": 2}, {"from": "cloud manufacturing", "to": "key technologies", "value": 2, "width": 2}, {"from": "key technologies", "to": "application layer", "value": 2, "width": 2}, {"from": "physical world", "to": "computer science", "value": 2, "width": 2}, {"from": "physical world", "to": "future Internet", "value": 2, "width": 2}, {"from": "physical world", "to": "IoT data", "value": 2, "width": 2}, {"from": "physical world", "to": "cyber world", "value": 3, "width": 3}, {"from": "physical world", "to": "open research issues", "value": 2, "width": 2}, {"from": "physical world", "to": "IoT systems", "value": 2, "width": 2}, {"from": "physical world", "to": "IoT devices", "value": 3, "width": 3}, {"from": "physical world", "to": "smart objects", "value": 2, "width": 2}, {"from": "relational database", "to": "SPARQL queries", "value": 2, "width": 2}, {"from": "geographic information", "to": "user-generated content", "value": 2, "width": 2}, {"from": "Web service discovery", "to": "service discovery", "value": 4, "width": 4}, {"from": "Web service discovery", "to": "Web services technology", "value": 2, "width": 2}, {"from": "Web service discovery", "to": "service technology", "value": 2, "width": 2}, {"from": "Semantic Web Services", "to": "different ontologies", "value": 2, "width": 2}, {"from": "Semantic Web Services", "to": "peer systems", "value": 2, "width": 2}, {"from": "Semantic Web Services", "to": "e-commerce", "value": 2, "width": 2}, {"from": "Semantic Web Services", "to": "information systems", "value": 2, "width": 2}, {"from": "service discovery", "to": "Web services technology", "value": 2, "width": 2}, {"from": "service discovery", "to": "service technology", "value": 2, "width": 2}, {"from": "research challenges", "to": "end users", "value": 2, "width": 2}, {"from": "research challenges", "to": "big data", "value": 2, "width": 2}, {"from": "recommender systems", "to": "human-computer interaction", "value": 2, "width": 2}, {"from": "recommender systems", "to": "unified repository", "value": 2, "width": 2}, {"from": "recommender systems", "to": "social network information", "value": 4, "width": 4}, {"from": "recommender systems", "to": "network information", "value": 4, "width": 4}, {"from": "recommender systems", "to": "online social networks", "value": 3, "width": 3}, {"from": "recommender systems", "to": "collaborative filtering", "value": 12, "width": 12}, {"from": "recommender systems", "to": "social network analysis", "value": 2, "width": 2}, {"from": "recommender systems", "to": "user profiles", "value": 2, "width": 2}, {"from": "recommender systems", "to": "art approaches", "value": 2, "width": 2}, {"from": "recommender systems", "to": "recommendation techniques", "value": 5, "width": 5}, {"from": "recommender systems", "to": "recommendation method", "value": 4, "width": 4}, {"from": "recommender systems", "to": "application platform", "value": 2, "width": 2}, {"from": "recommender systems", "to": "e-learning", "value": 2, "width": 2}, {"from": "recommender systems", "to": "trust information", "value": 2, "width": 2}, {"from": "recommender systems", "to": "trust metrics", "value": 2, "width": 2}, {"from": "recommender systems", "to": "trust network", "value": 2, "width": 2}, {"from": "recommender systems", "to": "real-world datasets", "value": 3, "width": 3}, {"from": "recommender systems", "to": "Extensive experiments", "value": 2, "width": 2}, {"from": "recommender systems", "to": "recommendation algorithm", "value": 4, "width": 4}, {"from": "human-computer interaction", "to": "unified repository", "value": 2, "width": 2}, {"from": "advanced-level students", "to": "unified repository", "value": 2, "width": 2}, {"from": "advanced-level students", "to": "computer science", "value": 4, "width": 4}, {"from": "unified repository", "to": "computer science", "value": 3, "width": 3}, {"from": "unified repository", "to": "knowledge discovery", "value": 2, "width": 2}, {"from": "computer science", "to": "e-commerce", "value": 2, "width": 2}, {"from": "computer science", "to": "business process management", "value": 2, "width": 2}, {"from": "computer science", "to": "process management", "value": 2, "width": 2}, {"from": "computer science", "to": "knowledge discovery", "value": 2, "width": 2}, {"from": "e-commerce", "to": "management system", "value": 2, "width": 2}, {"from": "e-commerce", "to": "different ontologies", "value": 2, "width": 2}, {"from": "e-commerce", "to": "peer systems", "value": 2, "width": 2}, {"from": "e-commerce", "to": "information systems", "value": 3, "width": 3}, {"from": "e-commerce", "to": "Semantic Web technologies", "value": 2, "width": 2}, {"from": "workflow systems", "to": "workflow management system", "value": 2, "width": 2}, {"from": "workflow systems", "to": "management system", "value": 2, "width": 2}, {"from": "online social networks", "to": "social network analysis", "value": 4, "width": 4}, {"from": "online social networks", "to": "social network information", "value": 2, "width": 2}, {"from": "online social networks", "to": "network information", "value": 2, "width": 2}, {"from": "online social networks", "to": "social networking", "value": 2, "width": 2}, {"from": "mobile computing", "to": "mobile devices", "value": 2, "width": 2}, {"from": "mobile computing", "to": "wireless networks", "value": 2, "width": 2}, {"from": "search engines", "to": "search results", "value": 2, "width": 2}, {"from": "support vector machine", "to": "deep learning", "value": 2, "width": 2}, {"from": "support vector machine", "to": "natural language processing", "value": 2, "width": 2}, {"from": "support vector machine", "to": "computer vision", "value": 2, "width": 2}, {"from": "security requirements", "to": "information systems", "value": 2, "width": 2}, {"from": "security issues", "to": "third party", "value": 2, "width": 2}, {"from": "information systems", "to": "business processes", "value": 3, "width": 3}, {"from": "information systems", "to": "different ontologies", "value": 2, "width": 2}, {"from": "information systems", "to": "peer systems", "value": 2, "width": 2}, {"from": "information systems", "to": "process model", "value": 2, "width": 2}, {"from": "information systems", "to": "natural language processing", "value": 2, "width": 2}, {"from": "information systems", "to": "management system", "value": 2, "width": 2}, {"from": "social network information", "to": "network information", "value": 5, "width": 5}, {"from": "data infrastructure", "to": "big data", "value": 3, "width": 3}, {"from": "big data", "to": "data processing", "value": 5, "width": 5}, {"from": "big data", "to": "data storage", "value": 2, "width": 2}, {"from": "big data", "to": "IoT systems", "value": 2, "width": 2}, {"from": "big data", "to": "sensor networks", "value": 3, "width": 3}, {"from": "computing applications", "to": "data management", "value": 2, "width": 2}, {"from": "educational data mining", "to": "data mining techniques", "value": 3, "width": 3}, {"from": "educational data mining", "to": "association rule mining", "value": 2, "width": 2}, {"from": "educational data mining", "to": "mining techniques", "value": 2, "width": 2}, {"from": "educational data mining", "to": "rule mining", "value": 2, "width": 2}, {"from": "educational data mining", "to": "management system", "value": 2, "width": 2}, {"from": "data mining techniques", "to": "association rule mining", "value": 3, "width": 3}, {"from": "data mining techniques", "to": "mining techniques", "value": 8, "width": 8}, {"from": "data mining techniques", "to": "rule mining", "value": 3, "width": 3}, {"from": "data mining techniques", "to": "management system", "value": 2, "width": 2}, {"from": "data mining techniques", "to": "social network analysis", "value": 2, "width": 2}, {"from": "collaborative filtering", "to": "online information", "value": 2, "width": 2}, {"from": "collaborative filtering", "to": "trust information", "value": 2, "width": 2}, {"from": "collaborative filtering", "to": "trust metrics", "value": 2, "width": 2}, {"from": "collaborative filtering", "to": "trust network", "value": 2, "width": 2}, {"from": "collaborative filtering", "to": "real-world datasets", "value": 3, "width": 3}, {"from": "collaborative filtering", "to": "recommendation method", "value": 2, "width": 2}, {"from": "social network analysis", "to": "mining techniques", "value": 2, "width": 2}, {"from": "social network analysis", "to": "trust relationships", "value": 2, "width": 2}, {"from": "IoT devices", "to": "IoT systems", "value": 2, "width": 2}, {"from": "IoT devices", "to": "application scenarios", "value": 2, "width": 2}, {"from": "IoT devices", "to": "smart objects", "value": 2, "width": 2}, {"from": "Ambient Intelligence", "to": "sensor networks", "value": 2, "width": 2}, {"from": "web application", "to": "Semantic Web applications", "value": 5, "width": 5}, {"from": "web application", "to": "web content", "value": 2, "width": 2}, {"from": "trust network", "to": "trust information", "value": 2, "width": 2}, {"from": "trust network", "to": "trust relationships", "value": 2, "width": 2}, {"from": "recommendation techniques", "to": "recommendation method", "value": 2, "width": 2}, {"from": "recommendation techniques", "to": "e-learning", "value": 2, "width": 2}, {"from": "recommendation method", "to": "real-world datasets", "value": 2, "width": 2}, {"from": "recommendation method", "to": "Extensive experiments", "value": 2, "width": 2}, {"from": "web resources", "to": "Semantic Web technologies", "value": 2, "width": 2}, {"from": "web resources", "to": "Web Ontology Language", "value": 2, "width": 2}, {"from": "open challenges", "to": "smart objects", "value": 2, "width": 2}, {"from": "association rule mining", "to": "mining techniques", "value": 3, "width": 3}, {"from": "association rule mining", "to": "rule mining", "value": 4, "width": 4}, {"from": "association rule mining", "to": "management system", "value": 2, "width": 2}, {"from": "mining techniques", "to": "rule mining", "value": 3, "width": 3}, {"from": "mining techniques", "to": "management system", "value": 2, "width": 2}, {"from": "rule mining", "to": "management system", "value": 2, "width": 2}, {"from": "rule mining", "to": "Extensive experiments", "value": 2, "width": 2}, {"from": "management system", "to": "workflow management system", "value": 4, "width": 4}, {"from": "management system", "to": "business processes", "value": 2, "width": 2}, {"from": "management system", "to": "business process management", "value": 3, "width": 3}, {"from": "management system", "to": "process management", "value": 3, "width": 3}, {"from": "management system", "to": "database management system", "value": 4, "width": 4}, {"from": "management system", "to": "SPARQL queries", "value": 2, "width": 2}, {"from": "management system", "to": "data management", "value": 3, "width": 3}, {"from": "management system", "to": "semantic mapping", "value": 2, "width": 2}, {"from": "peer systems", "to": "different ontologies", "value": 2, "width": 2}, {"from": "network architecture", "to": "natural language processing", "value": 2, "width": 2}, {"from": "deep learning", "to": "natural language processing", "value": 4, "width": 4}, {"from": "deep learning", "to": "recurrent neural network", "value": 2, "width": 2}, {"from": "deep learning", "to": "learning techniques", "value": 2, "width": 2}, {"from": "deep learning", "to": "deep learning models", "value": 3, "width": 3}, {"from": "deep learning", "to": "learning model", "value": 4, "width": 4}, {"from": "deep learning", "to": "convolutional neural network", "value": 2, "width": 2}, {"from": "deep learning", "to": "computer vision", "value": 3, "width": 3}, {"from": "deep learning", "to": "learning approach", "value": 2, "width": 2}, {"from": "trust metrics", "to": "trust relationships", "value": 2, "width": 2}, {"from": "wireless communication systems", "to": "wireless networks", "value": 2, "width": 2}, {"from": "wireless communication systems", "to": "communication systems", "value": 4, "width": 4}, {"from": "wireless networks", "to": "communication systems", "value": 2, "width": 2}, {"from": "data mining algorithms", "to": "mining algorithms", "value": 4, "width": 4}, {"from": "data mining algorithms", "to": "privacy concerns", "value": 2, "width": 2}, {"from": "mining algorithms", "to": "privacy concerns", "value": 2, "width": 2}, {"from": "web content", "to": "Semantic Web applications", "value": 2, "width": 2}, {"from": "service selection", "to": "QoS constraints", "value": 2, "width": 2}, {"from": "QoS constraints", "to": "business processes", "value": 2, "width": 2}, {"from": "Web 2.0 technologies", "to": "Web 2.0", "value": 2, "width": 2}, {"from": "e-Science", "to": "data management", "value": 2, "width": 2}, {"from": "data management", "to": "information management", "value": 2, "width": 2}, {"from": "data management", "to": "RDF data", "value": 3, "width": 3}, {"from": "data management", "to": "Semantic Web technologies", "value": 3, "width": 3}, {"from": "business process management", "to": "process management", "value": 6, "width": 6}, {"from": "business process management", "to": "workflow management system", "value": 2, "width": 2}, {"from": "business process management", "to": "business processes", "value": 3, "width": 3}, {"from": "process management", "to": "workflow management system", "value": 2, "width": 2}, {"from": "process management", "to": "business processes", "value": 3, "width": 3}, {"from": "business processes", "to": "workflow management system", "value": 2, "width": 2}, {"from": "business processes", "to": "process model", "value": 2, "width": 2}, {"from": "business processes", "to": "Web 2.0", "value": 2, "width": 2}, {"from": "Semantic Web technologies", "to": "Web services technology", "value": 2, "width": 2}, {"from": "Semantic Web technologies", "to": "service technology", "value": 2, "width": 2}, {"from": "Semantic Web technologies", "to": "sensor networks", "value": 2, "width": 2}, {"from": "Web services technology", "to": "service technology", "value": 5, "width": 5}, {"from": "wireless sensor networks", "to": "sensor networks", "value": 6, "width": 6}, {"from": "wireless sensor networks", "to": "sensor nodes", "value": 2, "width": 2}, {"from": "sensor networks", "to": "sensor nodes", "value": 3, "width": 3}, {"from": "sensor networks", "to": "data processing", "value": 2, "width": 2}, {"from": "sensor networks", "to": "data streams", "value": 2, "width": 2}, {"from": "natural language processing", "to": "recurrent neural network", "value": 2, "width": 2}, {"from": "natural language processing", "to": "learning model", "value": 2, "width": 2}, {"from": "natural language processing", "to": "computer vision", "value": 2, "width": 2}, {"from": "IoT data", "to": "cyber world", "value": 2, "width": 2}, {"from": "social networking services", "to": "networking services", "value": 4, "width": 4}, {"from": "context reasoning", "to": "computing environment", "value": 3, "width": 3}, {"from": "RDF data", "to": "SPARQL queries", "value": 2, "width": 2}, {"from": "SPARQL queries", "to": "RDF graphs", "value": 2, "width": 2}, {"from": "different ontologies", "to": "semantic mapping", "value": 2, "width": 2}, {"from": "different ontologies", "to": "similarity measure", "value": 2, "width": 2}, {"from": "different ontologies", "to": "matching process", "value": 2, "width": 2}, {"from": "new computing paradigm", "to": "computing paradigm", "value": 4, "width": 4}, {"from": "semantic mapping", "to": "similarity measure", "value": 2, "width": 2}, {"from": "semantic mapping", "to": "matching process", "value": 3, "width": 3}, {"from": "similarity measure", "to": "matching process", "value": 2, "width": 2}, {"from": "computer vision", "to": "learning model", "value": 2, "width": 2}, {"from": "Web service descriptions", "to": "semantic annotation", "value": 2, "width": 2}, {"from": "deep learning models", "to": "learning model", "value": 4, "width": 4}, {"from": "web-based social networks", "to": "trust relationships", "value": 2, "width": 2}, {"from": "natural language text", "to": "language text", "value": 4, "width": 4}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": true,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "barnesHut": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.3,
+            "damping": 0.09,
+            "gravitationalConstant": -80000,
+            "springConstant": 0.001,
+            "springLength": 250
+        },
+        "enabled": true,
+        "repulsion": {
+            "centralGravity": 0.2,
+            "damping": 0.09,
+            "nodeDistance": 300,
+            "springConstant": 0.05,
+            "springLength": 200
+        },
+        "solver": "repulsion",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+                    network.on("click", neighbourhoodHighlight);
+                  
+
+                  
+                    network.on("selectNode", neighbourhoodHighlight);
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
