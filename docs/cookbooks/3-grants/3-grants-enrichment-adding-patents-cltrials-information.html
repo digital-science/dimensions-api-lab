@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Enriching Grants part 3: adding related Patents and Clinical Trials data &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
   
@@ -19,10 +19,7 @@
   
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   
-
   
-  
-
   
 
   
@@ -38,9 +35,9 @@
         <script src="../../_static/language_data.js"></script>
         <script src="../../_static/js/custom.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
-        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -75,7 +72,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> DSL
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> DSL
           
 
           
@@ -939,8 +936,6 @@
 
 
 
-
-
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -1166,7 +1161,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt .copybtn {
+.prompt a.copybtn {
     display: none;
 }
 
@@ -1239,7 +1234,8 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">datetime</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">CHANGELOG</span><span class="se">\n</span><span class="s2">This notebook was last run on </span><span class="si">%s</span><span class="se">\n</span><span class="s2">==&quot;</span> <span class="o">%</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">, %Y&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1262,7 +1258,8 @@ This notebook was last run on Sep 22, 2022
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install dimcli tqdm plotly -U --quiet
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>dimcli<span class="w"> </span>tqdm<span class="w"> </span>plotly<span class="w"> </span>-U<span class="w"> </span>--quiet
 
 <span class="kn">import</span> <span class="nn">dimcli</span>
 <span class="kn">from</span> <span class="nn">dimcli.utils</span> <span class="kn">import</span> <span class="o">*</span>
@@ -1339,7 +1336,8 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grants</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;http://api-sample-data.dimensions.ai/data/vaccines-grants-sample-part-2.csv&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">grants</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;http://api-sample-data.dimensions.ai/data/vaccines-grants-sample-part-2.csv&quot;</span><span class="p">)</span>
 <span class="c1"># pull out the grant IDs as a list</span>
 <span class="n">grantsids</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">grants</span><span class="p">[</span><span class="s1">&#39;Dimensions ID&#39;</span><span class="p">])</span>
 </pre></div>
@@ -1350,7 +1348,8 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grants</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">grants</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1526,11 +1525,12 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
 <span class="c1"># the main query</span>
 <span class="c1">#</span>
 <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search patents</span>
-<span class="s2">        where associated_grant_ids in </span><span class="si">{}</span><span class="s2"></span>
+<span class="s2">        where associated_grant_ids in </span><span class="si">{}</span>
 <span class="s2">      return patents[basics+associated_grant_ids]&quot;&quot;&quot;</span>
 
 
@@ -1626,7 +1626,8 @@ Done
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">patents</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">patents</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1745,7 +1746,8 @@ Done
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grants</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;Associated Patents&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">grants</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;Associated Patents&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1863,11 +1865,12 @@ Done
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
 <span class="c1"># the main query</span>
 <span class="c1">#</span>
 <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search clinical_trials</span>
-<span class="s2">        where associated_grant_ids in </span><span class="si">{}</span><span class="s2"></span>
+<span class="s2">        where associated_grant_ids in </span><span class="si">{}</span>
 <span class="s2">      return clinical_trials[basics+associated_grant_ids]&quot;&quot;&quot;</span>
 
 
@@ -1961,7 +1964,8 @@ Done
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clinical_trials</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">clinical_trials</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2044,7 +2048,8 @@ Done
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grants</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;Associated Clinical Trials&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">grants</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;Associated Clinical Trials&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2164,7 +2169,8 @@ Done
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># uncommment next line to save the data locally</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># uncommment next line to save the data locally</span>
 <span class="c1"># grants.to_csv(&quot;vaccines-grants-sample-part-3.csv&quot;, index=False)</span>
 <span class="n">grants</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
@@ -2291,7 +2297,8 @@ Done
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
     <span class="s1">&#39;measure&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Grants&#39;</span><span class="p">,</span> <span class="s1">&#39;Grants with pubs&#39;</span><span class="p">,</span> <span class="s1">&#39;Grants with Patents&#39;</span><span class="p">,</span> <span class="s1">&#39;Grants with Clinical Trials&#39;</span><span class="p">],</span>
     <span class="s1">&#39;count&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">grants</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">grants</span><span class="p">[</span><span class="n">grants</span><span class="p">[</span><span class="s1">&#39;Resulting Publications&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><span class="n">grants</span><span class="p">[</span><span class="n">grants</span><span class="p">[</span><span class="s1">&#39;Associated Patents&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><span class="n">grants</span><span class="p">[</span><span class="n">grants</span><span class="p">[</span><span class="s1">&#39;Associated Clinical Trials&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">])],</span>
 <span class="p">})</span>
@@ -2339,7 +2346,8 @@ if (outputEl) {{
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">grants</span><span class="p">,</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">grants</span><span class="p">,</span>
        <span class="n">x</span><span class="o">=</span><span class="s2">&quot;End Year&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Associated Patents&quot;</span><span class="p">,</span>
        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;Funding Amount in USD&quot;</span><span class="p">,</span>
        <span class="n">hover_name</span><span class="o">=</span><span class="s2">&quot;Title&quot;</span><span class="p">,</span>
@@ -2382,7 +2390,8 @@ if (outputEl) {{
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">grants</span><span class="p">,</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">grants</span><span class="p">,</span>
        <span class="n">x</span><span class="o">=</span><span class="s2">&quot;End Year&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Associated Clinical Trials&quot;</span><span class="p">,</span>
        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;Funding Amount in USD&quot;</span><span class="p">,</span>
        <span class="n">hover_name</span><span class="o">=</span><span class="s2">&quot;Title&quot;</span><span class="p">,</span>
@@ -2428,7 +2437,8 @@ if (outputEl) {{
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">funders_patents</span> <span class="o">=</span> <span class="n">grants</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;`Associated Patents` &gt; 0&#39;</span><span class="p">)</span>\
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">funders_patents</span> <span class="o">=</span> <span class="n">grants</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;`Associated Patents` &gt; 0&#39;</span><span class="p">)</span>\
     <span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Funder&#39;</span><span class="p">,</span> <span class="s1">&#39;Funder Country&#39;</span><span class="p">],</span> <span class="n">as_index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>\
     <span class="o">.</span><span class="n">sum</span><span class="p">()</span>\
     <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Associated Patents&quot;</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -2444,7 +2454,8 @@ if (outputEl) {{
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">funders_patents</span><span class="p">,</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">funders_patents</span><span class="p">,</span>
        <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Associated Patents&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Funder&quot;</span><span class="p">,</span>
        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;Funder Country&quot;</span><span class="p">,</span>
        <span class="n">hover_name</span><span class="o">=</span><span class="s2">&quot;Funder&quot;</span><span class="p">,</span>
@@ -2487,7 +2498,8 @@ if (outputEl) {{
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">funders_trials</span><span class="p">,</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">funders_trials</span><span class="p">,</span>
        <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Associated Clinical Trials&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Funder&quot;</span><span class="p">,</span>
        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;Funder Country&quot;</span><span class="p">,</span>
        <span class="n">hover_name</span><span class="o">=</span><span class="s2">&quot;Funder&quot;</span><span class="p">,</span>
@@ -2534,7 +2546,8 @@ if (outputEl) {{
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">scatter_matrix</span><span class="p">(</span><span class="n">grants</span><span class="p">,</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">px</span><span class="o">.</span><span class="n">scatter_matrix</span><span class="p">(</span><span class="n">grants</span><span class="p">,</span>
                   <span class="n">dimensions</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Associated Patents&quot;</span><span class="p">,</span> <span class="s2">&quot;Associated Clinical Trials&quot;</span><span class="p">,</span> <span class="s2">&quot;Resulting Publications&quot;</span><span class="p">],</span>
                   <span class="n">color</span><span class="o">=</span><span class="s2">&quot;Funder Country&quot;</span><span class="p">)</span>
 </pre></div>
@@ -2593,6 +2606,7 @@ if (outputEl) {{
            
           </div>
           <footer>
+  
 
   <hr/>
 
@@ -2611,6 +2625,7 @@ if (outputEl) {{
 
 
 </footer>
+
         </div>
       </div>
 

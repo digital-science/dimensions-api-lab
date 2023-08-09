@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>The Dimcli Python library: Working with Pandas Dataframes &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
   
@@ -19,10 +19,7 @@
   
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   
-
   
-  
-
   
 
   
@@ -38,9 +35,9 @@
         <script src="../../_static/language_data.js"></script>
         <script src="../../_static/js/custom.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
-        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -75,7 +72,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> DSL
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> DSL
           
 
           
@@ -939,8 +936,6 @@
 
 
 
-
-
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -1166,7 +1161,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt .copybtn {
+.prompt a.copybtn {
     display: none;
 }
 
@@ -1241,7 +1236,8 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">datetime</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">CHANGELOG</span><span class="se">\n</span><span class="s2">This notebook was last run on </span><span class="si">%s</span><span class="se">\n</span><span class="s2">==&quot;</span> <span class="o">%</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">, %Y&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1253,7 +1249,7 @@ div.rendered_html tbody tr:hover {
 <div class="highlight"><pre>
 ==
 CHANGELOG
-This notebook was last run on Jan 24, 2022
+This notebook was last run on Jul 28, 2023
 ==
 </pre></div></div>
 </div>
@@ -1261,10 +1257,11 @@ This notebook was last run on Jan 24, 2022
 <h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
 <p>This notebook assumes you have installed the <a class="reference external" href="https://pypi.org/project/dimcli/">Dimcli</a> library and are familiar with the <a class="reference external" href="https://api-lab.dimensions.ai/cookbooks/1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html">‘Getting Started’ tutorial</a>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install dimcli --quiet
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>dimcli<span class="w"> </span>--quiet
 
 <span class="kn">import</span> <span class="nn">dimcli</span>
 <span class="kn">from</span> <span class="nn">dimcli.utils</span> <span class="kn">import</span> <span class="o">*</span>
@@ -1287,24 +1284,20 @@ This notebook was last run on Jan 24, 2022
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-Searching config file credentials for &#39;https://app.dimensions.ai&#39; endpoint..
-</pre></div></div>
-</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
+     <span class="ansi-black-intense-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">240.6/240.6 kB</span> <span class="ansi-red-fg">3.1 MB/s</span> eta <span class="ansi-cyan-fg">0:00:00</span>
+     <span class="ansi-black-intense-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">1.6/1.6 MB</span> <span class="ansi-red-fg">41.3 MB/s</span> eta <span class="ansi-cyan-fg">0:00:00</span>
+     <span class="ansi-black-intense-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">51.1/51.1 kB</span> <span class="ansi-red-fg">4.0 MB/s</span> eta <span class="ansi-cyan-fg">0:00:00</span>
 ==
 Logging in..
-Dimcli - Dimensions API Client (v0.9.6)
-Connected to: &lt;https://app.dimensions.ai/api/dsl&gt; - DSL v2.0
-Method: dsl.ini file
+API Key: ··········
+Dimcli - Dimensions API Client (v1.1)
+Connected to: &lt;https://app.dimensions.ai/api/dsl&gt; - DSL v2.7
+Method: manual login
 </pre></div></div>
 </div>
 </div>
@@ -1312,10 +1305,11 @@ Method: dsl.ini file
 <h2>1. General method to transform JSON query results into a dataframe<a class="headerlink" href="#1.-General-method-to-transform-JSON-query-results-into-a-dataframe" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">DslDataset.as_dataframe</span></code> method allows to quickly turn any query results into a dataframe.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># we&#39;ll reuse this query later on</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># we&#39;ll reuse this query later on</span>
 <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search publications for &quot;graphene&quot;</span>
 <span class="s2">            where year in [2013:2019]</span>
 <span class="s2">            return publications[id+type+volume+year+issue+title+journal+authors] sort by times_cited limit 1000&quot;&quot;&quot;</span>
@@ -1328,25 +1322,30 @@ Method: dsl.ini file
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 1000 (total = 484143)
-Time: 4.79s
+Returned Publications: 1000 (total = 504784)
+Time: 3.92s
+WARNINGS [1]
+Field current_organization_id of the authors field is deprecated and will be removed in the next major release.
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">df</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
-<div>
+  <div id="df-ada638f9-6d93-4735-99ab-7c385606992d">
+    <div class="colab-df-container">
+      <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -1364,10 +1363,10 @@ Time: 4.79s
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>authors</th>
       <th>id</th>
-      <th>issue</th>
       <th>title</th>
+      <th>authors</th>
+      <th>issue</th>
       <th>type</th>
       <th>volume</th>
       <th>year</th>
@@ -1378,22 +1377,10 @@ Time: 4.79s
   <tbody>
     <tr>
       <th>0</th>
-      <td>[{'affiliations': [{'city': 'New Brunswick', '...</td>
-      <td>pub.1050119463</td>
-      <td>4</td>
-      <td>The chemistry of two-dimensional layered trans...</td>
-      <td>article</td>
-      <td>5</td>
-      <td>2013</td>
-      <td>jour.1041224</td>
-      <td>Nature Chemistry</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>[{'affiliations': [{'city': 'Manchester', 'cit...</td>
       <td>pub.1024857999</td>
-      <td>7459</td>
       <td>Van der Waals heterostructures</td>
+      <td>[{'affiliations': [{'city': 'Manchester', 'cit...</td>
+      <td>7459</td>
       <td>article</td>
       <td>499</td>
       <td>2013</td>
@@ -1401,23 +1388,35 @@ Time: 4.79s
       <td>Nature</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>[{'affiliations': [{'city': 'Shanghai', 'city_...</td>
-      <td>pub.1032956475</td>
-      <td>5</td>
-      <td>Black phosphorus field-effect transistors</td>
+      <th>1</th>
+      <td>pub.1050119463</td>
+      <td>The chemistry of two-dimensional layered trans...</td>
+      <td>[{'affiliations': [{'city': 'New Brunswick', '...</td>
+      <td>4</td>
       <td>article</td>
-      <td>9</td>
-      <td>2014</td>
-      <td>jour.1037429</td>
-      <td>Nature Nanotechnology</td>
+      <td>5</td>
+      <td>2013</td>
+      <td>jour.1041224</td>
+      <td>Nature Chemistry</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>pub.1007330696</td>
+      <td>Combining theory and experiment in electrocata...</td>
+      <td>[{'affiliations': [{'city': 'Stanford', 'city_...</td>
+      <td>6321</td>
+      <td>article</td>
+      <td>355</td>
+      <td>2017</td>
+      <td>jour.1346339</td>
+      <td>Science</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>[{'affiliations': [{'city': 'Austin', 'city_id...</td>
       <td>pub.1019126274</td>
-      <td>4</td>
       <td>The Li-Ion Rechargeable Battery: A Perspective</td>
+      <td>[{'affiliations': [{'city': 'Austin', 'city_id...</td>
+      <td>4</td>
       <td>article</td>
       <td>135</td>
       <td>2013</td>
@@ -1426,34 +1425,34 @@ Time: 4.79s
     </tr>
     <tr>
       <th>4</th>
-      <td>[{'affiliations': [{'city': 'Los Angeles', 'ci...</td>
-      <td>pub.1004394295</td>
-      <td>6196</td>
-      <td>Interface engineering of highly efficient pero...</td>
+      <td>pub.1032956475</td>
+      <td>Black phosphorus field-effect transistors</td>
+      <td>[{'affiliations': [{'city': 'Shanghai', 'city_...</td>
+      <td>5</td>
       <td>article</td>
-      <td>345</td>
+      <td>9</td>
       <td>2014</td>
-      <td>jour.1346339</td>
-      <td>Science</td>
+      <td>jour.1037429</td>
+      <td>Nature Nanotechnology</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>[{'affiliations': [{'city': 'Stanford', 'city_...</td>
-      <td>pub.1007330696</td>
-      <td>6321</td>
-      <td>Combining theory and experiment in electrocata...</td>
+      <td>pub.1036410643</td>
+      <td>Review of Particle Physics</td>
+      <td>[{'affiliations': [], 'corresponding': '', 'cu...</td>
+      <td>9</td>
       <td>article</td>
-      <td>355</td>
-      <td>2017</td>
-      <td>jour.1346339</td>
-      <td>Science</td>
+      <td>38</td>
+      <td>2014</td>
+      <td>jour.1327822</td>
+      <td>Chinese Physics C</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>[{'affiliations': [{'city': 'Nanshan', 'city_i...</td>
       <td>pub.1055085164</td>
-      <td>21</td>
       <td>Aggregation-Induced Emission: Together We Shin...</td>
+      <td>[{'affiliations': [{'city': 'Shenzhen', 'city_...</td>
+      <td>21</td>
       <td>article</td>
       <td>115</td>
       <td>2015</td>
@@ -1462,22 +1461,22 @@ Time: 4.79s
     </tr>
     <tr>
       <th>7</th>
-      <td>[{'affiliations': [], 'corresponding': '', 'cu...</td>
-      <td>pub.1009826879</td>
-      <td>4</td>
-      <td>Phosphorene: An Unexplored 2D Semiconductor wi...</td>
+      <td>pub.1004394295</td>
+      <td>Interface engineering of highly efficient pero...</td>
+      <td>[{'affiliations': [{'city': 'Los Angeles', 'ci...</td>
+      <td>6196</td>
       <td>article</td>
-      <td>8</td>
+      <td>345</td>
       <td>2014</td>
-      <td>jour.1038917</td>
-      <td>ACS Nano</td>
+      <td>jour.1346339</td>
+      <td>Science</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>[{'affiliations': [{'city': 'Sydney', 'city_id...</td>
       <td>pub.1045181228</td>
-      <td>7</td>
       <td>The emergence of perovskite solar cells</td>
+      <td>[{'affiliations': [{'city': 'Sydney', 'city_id...</td>
+      <td>7</td>
       <td>article</td>
       <td>8</td>
       <td>2014</td>
@@ -1486,10 +1485,10 @@ Time: 4.79s
     </tr>
     <tr>
       <th>9</th>
-      <td>[{'affiliations': [{'city': 'Cambridge', 'city...</td>
       <td>pub.1015305822</td>
-      <td>4</td>
       <td>Raman spectroscopy as a versatile tool for stu...</td>
+      <td>[{'affiliations': [{'city': 'Cambridge', 'city...</td>
+      <td>4</td>
       <td>article</td>
       <td>8</td>
       <td>2013</td>
@@ -1498,20 +1497,163 @@ Time: 4.79s
     </tr>
   </tbody>
 </table>
-</div></div>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-ada638f9-6d93-4735-99ab-7c385606992d')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+
+
+    <div id="df-fdd158ac-f1c6-4534-8653-b2a76b55c148">
+      <button class="colab-df-quickchart" onclick="quickchart('df-fdd158ac-f1c6-4534-8653-b2a76b55c148')"
+              title="Suggest charts."
+              style="display:none;">
+
+<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+     width="24px">
+    <g>
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+    </g>
+</svg>
+      </button>
+    </div>
+
+<style>
+  .colab-df-quickchart {
+    background-color: #E8F0FE;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    fill: #1967D2;
+    height: 32px;
+    padding: 0 0 0 0;
+    width: 32px;
+  }
+
+  .colab-df-quickchart:hover {
+    background-color: #E2EBFA;
+    box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+    fill: #174EA6;
+  }
+
+  [theme=dark] .colab-df-quickchart {
+    background-color: #3B4455;
+    fill: #D2E3FC;
+  }
+
+  [theme=dark] .colab-df-quickchart:hover {
+    background-color: #434B5C;
+    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+    filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+    fill: #FFFFFF;
+  }
+</style>
+
+    <script>
+      async function quickchart(key) {
+        const containerElement = document.querySelector('#' + key);
+        const charts = await google.colab.kernel.invokeFunction(
+            'suggestCharts', [key], {});
+      }
+    </script>
+
+      <script>
+
+function displayQuickchartButton(domScope) {
+  let quickchartButtonEl =
+    domScope.querySelector('#df-fdd158ac-f1c6-4534-8653-b2a76b55c148 button.colab-df-quickchart');
+  quickchartButtonEl.style.display =
+    google.colab.kernel.accessAllowed ? 'block' : 'none';
+}
+
+        displayQuickchartButton(document);
+      </script>
+      <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-ada638f9-6d93-4735-99ab-7c385606992d button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-ada638f9-6d93-4735-99ab-7c385606992d');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div></div>
 </div>
 <p>Pandas dataframes offer a myriad of utilities for inspecting data. Check out the <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/getting_started/10min.html">official docs</a> or google a <a class="reference external" href="https://www.google.com/search?q=pandas+tutorial">pandas tutorial</a> to lean more about it.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the table shape</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># the table shape</span>
 <span class="n">df</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -1520,48 +1662,50 @@ Time: 4.79s
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the &#39;value_counts&#39; method returns the distribution of a specific field eg publication [years]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># the &#39;value_counts&#39; method returns the distribution of a specific field eg publication [years]</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-2014    256
-2013    236
-2015    192
-2016    151
-2017     99
-2018     50
-2019     16
+2014    225
+2013    183
+2015    173
+2016    155
+2017    124
+2018     83
+2019     57
 Name: year, dtype: int64
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># eg distribution of publication [type]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># eg distribution of publication [type]</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-article      996
-book           2
-monograph      2
+article      995
+monograph      4
+book           1
 Name: type, dtype: int64
 </pre></div></div>
 </div>
@@ -1577,20 +1721,23 @@ Name: type, dtype: int64
 </div></blockquote>
 <p>This methods allows to quickly extract that data and return a dataframe with <strong>one row per author</strong>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">authors</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">as_dataframe_authors</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">authors</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">as_dataframe_authors</span><span class="p">()</span>
 <span class="n">authors</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
-<div>
+  <div id="df-fc6ab4e2-4127-47d1-b71b-e2900c8d1ded">
+    <div class="colab-df-container">
+      <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -1622,6 +1769,30 @@ Name: type, dtype: int64
   <tbody>
     <tr>
       <th>0</th>
+      <td>[{'city': 'Manchester', 'city_id': 2643123, 'c...</td>
+      <td></td>
+      <td>grid.5379.8</td>
+      <td>A. K.</td>
+      <td>Geim</td>
+      <td>[0000-0003-2861-8331]</td>
+      <td>[School of Physics and Astronomy, University o...</td>
+      <td>ur.0721730631.45</td>
+      <td>pub.1024857999</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>[{'city': 'Manchester', 'city_id': 2643123, 'c...</td>
+      <td>True</td>
+      <td>grid.5379.8</td>
+      <td>I. V.</td>
+      <td>Grigorieva</td>
+      <td>[0000-0001-5991-7778]</td>
+      <td>[School of Physics and Astronomy, University o...</td>
+      <td>ur.0767105504.29</td>
+      <td>pub.1024857999</td>
+    </tr>
+    <tr>
+      <th>2</th>
       <td>[{'city': 'New Brunswick', 'city_id': 5101717,...</td>
       <td>True</td>
       <td>grid.5335.0</td>
@@ -1633,7 +1804,7 @@ Name: type, dtype: int64
       <td>pub.1050119463</td>
     </tr>
     <tr>
-      <th>1</th>
+      <th>3</th>
       <td>[{'city': 'Ulsan', 'city_id': 1833747, 'countr...</td>
       <td></td>
       <td>grid.42687.3f</td>
@@ -1645,7 +1816,7 @@ Name: type, dtype: int64
       <td>pub.1050119463</td>
     </tr>
     <tr>
-      <th>2</th>
+      <th>4</th>
       <td>[{'city': 'Singapore', 'city_id': 1880252, 'co...</td>
       <td></td>
       <td>grid.4280.e</td>
@@ -1656,59 +1827,178 @@ Name: type, dtype: int64
       <td>ur.01150450507.27</td>
       <td>pub.1050119463</td>
     </tr>
-    <tr>
-      <th>3</th>
-      <td>[{'city': 'Taipei', 'city_id': 1668341, 'count...</td>
-      <td></td>
-      <td>grid.45672.32</td>
-      <td>Lain-Jong</td>
-      <td>Li</td>
-      <td>[0000-0002-4059-7783]</td>
-      <td>[Institute of Atomic and Molecular Sciences, A...</td>
-      <td>ur.01313340113.13</td>
-      <td>pub.1050119463</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>[{'city': 'Singapore', 'city_id': 1880252, 'co...</td>
-      <td></td>
-      <td>grid.4280.e</td>
-      <td>Kian Ping</td>
-      <td>Loh</td>
-      <td>[0000-0002-1491-743X]</td>
-      <td>[Department of Chemistry, National University ...</td>
-      <td>ur.0752174033.73</td>
-      <td>pub.1050119463</td>
-    </tr>
   </tbody>
 </table>
-</div></div>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-fc6ab4e2-4127-47d1-b71b-e2900c8d1ded')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+
+
+    <div id="df-ce5ac896-3ac2-409e-b292-a40600a3671e">
+      <button class="colab-df-quickchart" onclick="quickchart('df-ce5ac896-3ac2-409e-b292-a40600a3671e')"
+              title="Suggest charts."
+              style="display:none;">
+
+<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+     width="24px">
+    <g>
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+    </g>
+</svg>
+      </button>
+    </div>
+
+<style>
+  .colab-df-quickchart {
+    background-color: #E8F0FE;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    fill: #1967D2;
+    height: 32px;
+    padding: 0 0 0 0;
+    width: 32px;
+  }
+
+  .colab-df-quickchart:hover {
+    background-color: #E2EBFA;
+    box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+    fill: #174EA6;
+  }
+
+  [theme=dark] .colab-df-quickchart {
+    background-color: #3B4455;
+    fill: #D2E3FC;
+  }
+
+  [theme=dark] .colab-df-quickchart:hover {
+    background-color: #434B5C;
+    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+    filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+    fill: #FFFFFF;
+  }
+</style>
+
+    <script>
+      async function quickchart(key) {
+        const containerElement = document.querySelector('#' + key);
+        const charts = await google.colab.kernel.invokeFunction(
+            'suggestCharts', [key], {});
+      }
+    </script>
+
+      <script>
+
+function displayQuickchartButton(domScope) {
+  let quickchartButtonEl =
+    domScope.querySelector('#df-ce5ac896-3ac2-409e-b292-a40600a3671e button.colab-df-quickchart');
+  quickchartButtonEl.style.display =
+    google.colab.kernel.accessAllowed ? 'block' : 'none';
+}
+
+        displayQuickchartButton(document);
+      </script>
+      <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-fc6ab4e2-4127-47d1-b71b-e2900c8d1ded button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-fc6ab4e2-4127-47d1-b71b-e2900c8d1ded');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div></div>
 </div>
 <p>Using the authors dataframe, we can easily get the top ten values for <code class="docutils literal notranslate"><span class="pre">current_organization_id</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">authors</span><span class="p">[</span><span class="s1">&#39;current_organization_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[:</span><span class="mi">10</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">authors</span><span class="p">[</span><span class="s1">&#39;current_organization_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[:</span><span class="mi">10</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-grid.168010.e    157
-                 148
-grid.59053.3a     96
-grid.19006.3e     95
-grid.59025.3b     92
-grid.12527.33     82
-grid.41156.37     70
-grid.116068.8     69
-grid.47840.3f     59
-grid.166341.7     58
+grid.168010.e    146
+                 133
+grid.59025.3b     83
+grid.12527.33     81
+grid.19006.3e     78
+grid.59053.3a     78
+grid.166341.7     65
+grid.41156.37     64
+grid.89336.37     63
+grid.116068.8     59
 Name: current_organization_id, dtype: int64
 </pre></div></div>
 </div>
@@ -1725,20 +2015,23 @@ Name: current_organization_id, dtype: int64
 <p>The <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors_affiliations</span></code> method allows to quickly extract that affiliations data and return a dataframe with <strong>one row per affiliation</strong>.</p>
 <p>This can be useful e.g. if one wants to count research organizations at <em>the time of writing</em> (as opposed to <code class="docutils literal notranslate"><span class="pre">current_organization_id</span></code>, which is the <em>most recent organization</em> of a researcher).</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">affiliations</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">as_dataframe_authors_affiliations</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">affiliations</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">as_dataframe_authors_affiliations</span><span class="p">()</span>
 <span class="n">affiliations</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
-<div>
+  <div id="df-1c68ce58-87db-453d-bd62-5620ad108e12">
+    <div class="colab-df-container">
+      <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -1774,6 +2067,54 @@ Name: current_organization_id, dtype: int64
   <tbody>
     <tr>
       <th>0</th>
+      <td>Manchester</td>
+      <td>2643123.0</td>
+      <td>United Kingdom</td>
+      <td>GB</td>
+      <td>grid.5379.8</td>
+      <td>University of Manchester</td>
+      <td>School of Physics and Astronomy, University of...</td>
+      <td></td>
+      <td></td>
+      <td>pub.1024857999</td>
+      <td>ur.0721730631.45</td>
+      <td>A. K.</td>
+      <td>Geim</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Manchester</td>
+      <td>2643123.0</td>
+      <td>United Kingdom</td>
+      <td>GB</td>
+      <td>grid.5379.8</td>
+      <td>University of Manchester</td>
+      <td>Centre for Mesoscience and Nanotechnology, Uni...</td>
+      <td></td>
+      <td></td>
+      <td>pub.1024857999</td>
+      <td>ur.0721730631.45</td>
+      <td>A. K.</td>
+      <td>Geim</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Manchester</td>
+      <td>2643123.0</td>
+      <td>United Kingdom</td>
+      <td>GB</td>
+      <td>grid.5379.8</td>
+      <td>University of Manchester</td>
+      <td>School of Physics and Astronomy, University of...</td>
+      <td></td>
+      <td></td>
+      <td>pub.1024857999</td>
+      <td>ur.0767105504.29</td>
+      <td>I. V.</td>
+      <td>Grigorieva</td>
+    </tr>
+    <tr>
+      <th>3</th>
       <td>New Brunswick</td>
       <td>5101717.0</td>
       <td>United States</td>
@@ -1789,7 +2130,7 @@ Name: current_organization_id, dtype: int64
       <td>Chhowalla</td>
     </tr>
     <tr>
-      <th>1</th>
+      <th>4</th>
       <td>Ulsan</td>
       <td>1833747.0</td>
       <td>South Korea</td>
@@ -1804,72 +2145,169 @@ Name: current_organization_id, dtype: int64
       <td>Hyeon Suk</td>
       <td>Shin</td>
     </tr>
-    <tr>
-      <th>2</th>
-      <td>Singapore</td>
-      <td>1880252.0</td>
-      <td>Singapore</td>
-      <td>SG</td>
-      <td>grid.4280.e</td>
-      <td>National University of Singapore</td>
-      <td>Department of Physics, National University of ...</td>
-      <td></td>
-      <td></td>
-      <td>pub.1050119463</td>
-      <td>ur.01150450507.27</td>
-      <td>Goki</td>
-      <td>Eda</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Singapore</td>
-      <td>1880252.0</td>
-      <td>Singapore</td>
-      <td>SG</td>
-      <td>grid.4280.e</td>
-      <td>National University of Singapore</td>
-      <td>Department of Chemistry, National University o...</td>
-      <td></td>
-      <td></td>
-      <td>pub.1050119463</td>
-      <td>ur.01150450507.27</td>
-      <td>Goki</td>
-      <td>Eda</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Singapore</td>
-      <td>1880252.0</td>
-      <td>Singapore</td>
-      <td>SG</td>
-      <td>grid.4280.e</td>
-      <td>National University of Singapore</td>
-      <td>Graphene Research Centre, National University ...</td>
-      <td></td>
-      <td></td>
-      <td>pub.1050119463</td>
-      <td>ur.01150450507.27</td>
-      <td>Goki</td>
-      <td>Eda</td>
-    </tr>
   </tbody>
 </table>
-</div></div>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-1c68ce58-87db-453d-bd62-5620ad108e12')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+
+
+    <div id="df-5f2a2a89-8643-4c8b-b143-19d2c3ad29c7">
+      <button class="colab-df-quickchart" onclick="quickchart('df-5f2a2a89-8643-4c8b-b143-19d2c3ad29c7')"
+              title="Suggest charts."
+              style="display:none;">
+
+<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+     width="24px">
+    <g>
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+    </g>
+</svg>
+      </button>
+    </div>
+
+<style>
+  .colab-df-quickchart {
+    background-color: #E8F0FE;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    fill: #1967D2;
+    height: 32px;
+    padding: 0 0 0 0;
+    width: 32px;
+  }
+
+  .colab-df-quickchart:hover {
+    background-color: #E2EBFA;
+    box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+    fill: #174EA6;
+  }
+
+  [theme=dark] .colab-df-quickchart {
+    background-color: #3B4455;
+    fill: #D2E3FC;
+  }
+
+  [theme=dark] .colab-df-quickchart:hover {
+    background-color: #434B5C;
+    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+    filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+    fill: #FFFFFF;
+  }
+</style>
+
+    <script>
+      async function quickchart(key) {
+        const containerElement = document.querySelector('#' + key);
+        const charts = await google.colab.kernel.invokeFunction(
+            'suggestCharts', [key], {});
+      }
+    </script>
+
+      <script>
+
+function displayQuickchartButton(domScope) {
+  let quickchartButtonEl =
+    domScope.querySelector('#df-5f2a2a89-8643-4c8b-b143-19d2c3ad29c7 button.colab-df-quickchart');
+  quickchartButtonEl.style.display =
+    google.colab.kernel.accessAllowed ? 'block' : 'none';
+}
+
+        displayQuickchartButton(document);
+      </script>
+      <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-1c68ce58-87db-453d-bd62-5620ad108e12 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-1c68ce58-87db-453d-bd62-5620ad108e12');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">affiliations</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">affiliations</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
-<div>
+  <div id="df-d974d297-75da-43c4-9bb1-62023d32a6ed">
+    <div class="colab-df-container">
+      <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -1905,45 +2343,45 @@ Name: current_organization_id, dtype: int64
   <tbody>
     <tr>
       <th>count</th>
-      <td>8240</td>
-      <td>8240.0</td>
-      <td>8240</td>
-      <td>8240</td>
-      <td>8240</td>
-      <td>8240</td>
-      <td>8240</td>
-      <td>8240</td>
-      <td>8240</td>
-      <td>8240</td>
-      <td>8240</td>
-      <td>8240</td>
-      <td>8240</td>
+      <td>8335</td>
+      <td>8335</td>
+      <td>8335</td>
+      <td>8335</td>
+      <td>8335</td>
+      <td>8335</td>
+      <td>8335</td>
+      <td>8335</td>
+      <td>8335</td>
+      <td>8335</td>
+      <td>8335</td>
+      <td>8335</td>
+      <td>8335</td>
     </tr>
     <tr>
       <th>unique</th>
-      <td>519</td>
-      <td>522.0</td>
-      <td>56</td>
-      <td>56</td>
-      <td>816</td>
-      <td>1161</td>
-      <td>3008</td>
-      <td>108</td>
-      <td>55</td>
+      <td>523</td>
+      <td>526</td>
+      <td>52</td>
+      <td>52</td>
+      <td>852</td>
+      <td>1131</td>
+      <td>3149</td>
+      <td>106</td>
+      <td>53</td>
       <td>990</td>
-      <td>4506</td>
-      <td>3568</td>
-      <td>2287</td>
+      <td>4608</td>
+      <td>3635</td>
+      <td>2403</td>
     </tr>
     <tr>
       <th>top</th>
-      <td>Beijing</td>
-      <td>1816670.0</td>
+      <td></td>
+      <td></td>
       <td>United States</td>
       <td>US</td>
       <td></td>
       <td>Stanford University</td>
-      <td></td>
+      <td>Department of Materials Science and Engineerin...</td>
       <td></td>
       <td></td>
       <td>pub.1019661721</td>
@@ -1953,77 +2391,221 @@ Name: current_organization_id, dtype: int64
     </tr>
     <tr>
       <th>freq</th>
-      <td>604</td>
-      <td>604.0</td>
-      <td>2664</td>
-      <td>2664</td>
-      <td>944</td>
-      <td>280</td>
-      <td>263</td>
-      <td>5084</td>
-      <td>5278</td>
+      <td>555</td>
+      <td>555</td>
+      <td>2736</td>
+      <td>2736</td>
+      <td>828</td>
+      <td>297</td>
+      <td>48</td>
+      <td>5133</td>
+      <td>5337</td>
       <td>108</td>
-      <td>172</td>
-      <td>70</td>
-      <td>331</td>
+      <td>161</td>
+      <td>68</td>
+      <td>307</td>
     </tr>
   </tbody>
 </table>
-</div></div>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-d974d297-75da-43c4-9bb1-62023d32a6ed')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+
+
+    <div id="df-f646824d-db4a-4fb8-a0a6-4eb2ad66d04b">
+      <button class="colab-df-quickchart" onclick="quickchart('df-f646824d-db4a-4fb8-a0a6-4eb2ad66d04b')"
+              title="Suggest charts."
+              style="display:none;">
+
+<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+     width="24px">
+    <g>
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+    </g>
+</svg>
+      </button>
+    </div>
+
+<style>
+  .colab-df-quickchart {
+    background-color: #E8F0FE;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    fill: #1967D2;
+    height: 32px;
+    padding: 0 0 0 0;
+    width: 32px;
+  }
+
+  .colab-df-quickchart:hover {
+    background-color: #E2EBFA;
+    box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+    fill: #174EA6;
+  }
+
+  [theme=dark] .colab-df-quickchart {
+    background-color: #3B4455;
+    fill: #D2E3FC;
+  }
+
+  [theme=dark] .colab-df-quickchart:hover {
+    background-color: #434B5C;
+    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+    filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+    fill: #FFFFFF;
+  }
+</style>
+
+    <script>
+      async function quickchart(key) {
+        const containerElement = document.querySelector('#' + key);
+        const charts = await google.colab.kernel.invokeFunction(
+            'suggestCharts', [key], {});
+      }
+    </script>
+
+      <script>
+
+function displayQuickchartButton(domScope) {
+  let quickchartButtonEl =
+    domScope.querySelector('#df-f646824d-db4a-4fb8-a0a6-4eb2ad66d04b button.colab-df-quickchart');
+  quickchartButtonEl.style.display =
+    google.colab.kernel.accessAllowed ? 'block' : 'none';
+}
+
+        displayQuickchartButton(document);
+      </script>
+      <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-d974d297-75da-43c4-9bb1-62023d32a6ed button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-d974d297-75da-43c4-9bb1-62023d32a6ed');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div></div>
 </div>
 <p>Let’s get the top ten values for <code class="docutils literal notranslate"><span class="pre">aff_id</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">affiliations</span><span class="p">[</span><span class="s1">&#39;aff_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[:</span><span class="mi">10</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">affiliations</span><span class="p">[</span><span class="s1">&#39;aff_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[:</span><span class="mi">10</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-                 944
-grid.168010.e    280
-grid.59025.3b    195
-grid.166341.7    129
-grid.19006.3e    121
-grid.8217.c      112
-grid.12527.33    106
+                 828
+grid.168010.e    297
+grid.59025.3b    185
+grid.166341.7    146
+grid.8217.c      130
+grid.19006.3e    119
+grid.12527.33    105
 grid.21729.3f     99
-grid.5379.8       91
-grid.116068.8     91
+grid.5379.8       94
+grid.116068.8     93
 Name: aff_id, dtype: int64
 </pre></div></div>
 </div>
 <p>Another example: we can now easily analyze the data by country too.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">affiliations</span><span class="p">[</span><span class="s1">&#39;aff_country&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[:</span><span class="mi">10</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">affiliations</span><span class="p">[</span><span class="s1">&#39;aff_country&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[:</span><span class="mi">10</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-United States     2664
-China             2021
-                   451
-United Kingdom     395
-Singapore          310
-Germany            286
-South Korea        282
-Japan              212
-Australia          170
-Canada             167
+United States     2736
+China             2078
+United Kingdom     377
+                   375
+Germany            311
+Singapore          298
+South Korea        231
+Japan              225
+Australia          187
+Switzerland        140
 Name: aff_country, dtype: int64
 </pre></div></div>
 </div>
@@ -2039,10 +2621,11 @@ Name: aff_country, dtype: int64
 <p>Grant funders authors are usually returned by the Dimensions API inside a nested JSON object in the <code class="docutils literal notranslate"><span class="pre">funders</span></code> sub-key.</p>
 <p>This methods allows to quickly extract that data and return a dataframe with <strong>one row per funder</strong>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get a sample list of grants</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># get a sample list of grants</span>
 <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search grants for &quot;malaria&quot; return grants limit 1000&quot;&quot;&quot;</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
 </pre></div>
@@ -2053,24 +2636,27 @@ Name: aff_country, dtype: int64
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Grants: 1000 (total = 12941)
-Time: 1.52s
+Returned Grants: 1000 (total = 14738)
+Time: 2.23s
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span><span class="o">.</span><span class="n">as_dataframe_funders</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">res</span><span class="o">.</span><span class="n">as_dataframe_funders</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
-<div>
+  <div id="df-92f01145-58c8-42a1-820a-620a78a5a70c">
+    <div class="colab-df-container">
+      <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -2088,16 +2674,6 @@ Time: 1.52s
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>acronym</th>
-      <th>city_name</th>
-      <th>country_name</th>
-      <th>id</th>
-      <th>latitude</th>
-      <th>linkout</th>
-      <th>longitude</th>
-      <th>name</th>
-      <th>types</th>
-      <th>state_name</th>
       <th>grant_id</th>
       <th>grant_title</th>
       <th>grant_start_date</th>
@@ -2105,179 +2681,151 @@ Time: 1.52s
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th>0</th>
-      <td>EC</td>
-      <td>Brussels</td>
-      <td>Belgium</td>
-      <td>grid.270680.b</td>
-      <td>50.851650</td>
-      <td>[http://ec.europa.eu/index_en.htm]</td>
-      <td>4.363670</td>
-      <td>European Commission</td>
-      <td>[Government]</td>
-      <td>NaN</td>
-      <td>grant.9661764</td>
-      <td>In vitro brain microvascular model to tackle f...</td>
-      <td>2022-09-01</td>
-      <td>2024-08-31</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>EDCTP</td>
-      <td>The Hague</td>
-      <td>Netherlands</td>
-      <td>grid.453375.3</td>
-      <td>52.080574</td>
-      <td>[http://www.edctp.org/]</td>
-      <td>4.344426</td>
-      <td>European &amp; Developing Countries Clinical Trial...</td>
-      <td>[Nonprofit]</td>
-      <td>NaN</td>
-      <td>grant.9764814</td>
-      <td>Role of host immune responses in Plasmodium fa...</td>
-      <td>2022-04-01</td>
-      <td>2024-01-29</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>FRQS</td>
-      <td>Montreal</td>
-      <td>Canada</td>
-      <td>grid.453037.6</td>
-      <td>45.506490</td>
-      <td>[http://www.frqs.gouv.qc.ca/en/]</td>
-      <td>-73.572200</td>
-      <td>Fonds de Recherche du Québec - Santé</td>
-      <td>[Government]</td>
-      <td>Quebec</td>
-      <td>grant.9721403</td>
-      <td>Elucidation of the mechanisms controlling prot...</td>
-      <td>2022-04-01</td>
-      <td>2025-03-31</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>BBSRC</td>
-      <td>Swindon</td>
-      <td>United Kingdom</td>
-      <td>grid.418100.c</td>
-      <td>51.566742</td>
-      <td>[http://www.bbsrc.ac.uk/]</td>
-      <td>-1.784771</td>
-      <td>Biotechnology and Biological Sciences Research...</td>
-      <td>[Government]</td>
-      <td>Wiltshire</td>
-      <td>grant.9779816</td>
-      <td>BBSRC-NSF/BIO - Host immune suppression as a k...</td>
-      <td>2022-03-01</td>
-      <td>2025-02-28</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>ANR</td>
-      <td>Paris</td>
-      <td>France</td>
-      <td>grid.22058.3d</td>
-      <td>48.845260</td>
-      <td>[http://www.agence-nationale-recherche.fr/en/p...</td>
-      <td>2.377769</td>
-      <td>National Agency for Research</td>
-      <td>[Government]</td>
-      <td>NaN</td>
-      <td>grant.9947992</td>
-      <td>Ivermectin Fluorescent drug to decipher molecu...</td>
-      <td>2022-01-20</td>
-      <td>2025-07-19</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>ANR</td>
-      <td>Paris</td>
-      <td>France</td>
-      <td>grid.22058.3d</td>
-      <td>48.845260</td>
-      <td>[http://www.agence-nationale-recherche.fr/en/p...</td>
-      <td>2.377769</td>
-      <td>National Agency for Research</td>
-      <td>[Government]</td>
-      <td>NaN</td>
-      <td>grant.9947714</td>
-      <td>Setting boundaries: Cohesin and mutually exclu...</td>
-      <td>2022-01-20</td>
-      <td>2025-01-19</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>ANR</td>
-      <td>Paris</td>
-      <td>France</td>
-      <td>grid.22058.3d</td>
-      <td>48.845260</td>
-      <td>[http://www.agence-nationale-recherche.fr/en/p...</td>
-      <td>2.377769</td>
-      <td>National Agency for Research</td>
-      <td>[Government]</td>
-      <td>NaN</td>
-      <td>grant.9947606</td>
-      <td>The epigenetic role of MORC in apicomplexan li...</td>
-      <td>2022-01-20</td>
-      <td>2026-01-19</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>FCT</td>
-      <td>Lisbon</td>
-      <td>Portugal</td>
-      <td>grid.22919.31</td>
-      <td>38.709667</td>
-      <td>[http://www.fct.pt/]</td>
-      <td>-9.153090</td>
-      <td>Foundation for Science and Technology</td>
-      <td>[Nonprofit]</td>
-      <td>NaN</td>
-      <td>grant.9951207</td>
-      <td>Plasmodium exploitation of host immune complem...</td>
-      <td>2022-01-03</td>
-      <td>2023-07-02</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>SNF</td>
-      <td>Bern</td>
-      <td>Switzerland</td>
-      <td>grid.425888.b</td>
-      <td>46.949230</td>
-      <td>[http://www.snf.ch/en]</td>
-      <td>7.432395</td>
-      <td>Swiss National Science Foundation</td>
-      <td>[Government]</td>
-      <td>NaN</td>
-      <td>grant.9959780</td>
-      <td>Structural basis of erythrocyte invasion by Pl...</td>
-      <td>2022-01-01</td>
-      <td>2023-12-31</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>NHMRC</td>
-      <td>Canberra</td>
-      <td>Australia</td>
-      <td>grid.431143.0</td>
-      <td>-35.281240</td>
-      <td>[https://www.nhmrc.gov.au/]</td>
-      <td>149.123730</td>
-      <td>National Health and Medical Research Council</td>
-      <td>[Government]</td>
-      <td>Australian Capital Territory</td>
-      <td>grant.9707893</td>
-      <td>Intermittent preventive treatment in pregnancy...</td>
-      <td>2022-01-01</td>
-      <td>2025-12-31</td>
-    </tr>
   </tbody>
 </table>
-</div></div>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-92f01145-58c8-42a1-820a-620a78a5a70c')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+
+
+    <div id="df-bc302e28-68df-4821-b071-ab388ed86788">
+      <button class="colab-df-quickchart" onclick="quickchart('df-bc302e28-68df-4821-b071-ab388ed86788')"
+              title="Suggest charts."
+              style="display:none;">
+
+<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+     width="24px">
+    <g>
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+    </g>
+</svg>
+      </button>
+    </div>
+
+<style>
+  .colab-df-quickchart {
+    background-color: #E8F0FE;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    fill: #1967D2;
+    height: 32px;
+    padding: 0 0 0 0;
+    width: 32px;
+  }
+
+  .colab-df-quickchart:hover {
+    background-color: #E2EBFA;
+    box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+    fill: #174EA6;
+  }
+
+  [theme=dark] .colab-df-quickchart {
+    background-color: #3B4455;
+    fill: #D2E3FC;
+  }
+
+  [theme=dark] .colab-df-quickchart:hover {
+    background-color: #434B5C;
+    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+    filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+    fill: #FFFFFF;
+  }
+</style>
+
+    <script>
+      async function quickchart(key) {
+        const containerElement = document.querySelector('#' + key);
+        const charts = await google.colab.kernel.invokeFunction(
+            'suggestCharts', [key], {});
+      }
+    </script>
+
+      <script>
+
+function displayQuickchartButton(domScope) {
+  let quickchartButtonEl =
+    domScope.querySelector('#df-bc302e28-68df-4821-b071-ab388ed86788 button.colab-df-quickchart');
+  quickchartButtonEl.style.display =
+    google.colab.kernel.accessAllowed ? 'block' : 'none';
+}
+
+        displayQuickchartButton(document);
+      </script>
+      <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-92f01145-58c8-42a1-820a-620a78a5a70c button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-92f01145-58c8-42a1-820a-620a78a5a70c');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div></div>
 </div>
 </div>
 <div class="section" id="Extracting-investigators:-as_dataframe_investigators">
@@ -2291,7 +2839,8 @@ Time: 1.52s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get a sample list of grants</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># get a sample list of grants</span>
 <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search grants for &quot;malaria&quot; return grants[basics+investigators] limit 1000&quot;&quot;&quot;</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
 </pre></div>
@@ -2302,15 +2851,18 @@ Time: 1.52s
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Grants: 1000 (total = 12941)
-Time: 2.29s
+Returned Grants: 1000 (total = 14738)
+Time: 1.77s
+WARNINGS [1]
+Field &#39;grant_number&#39; is deprecated in favor of project_numbers. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span><span class="o">.</span><span class="n">as_dataframe_investigators</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">res</span><span class="o">.</span><span class="n">as_dataframe_investigators</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2319,7 +2871,9 @@ Time: 2.29s
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
-<div>
+  <div id="df-79ac3e5e-b812-461d-97cf-653d54293ab3">
+    <div class="colab-df-container">
+      <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -2337,6 +2891,12 @@ Time: 2.29s
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>affiliations</th>
+      <th>first_name</th>
+      <th>id</th>
+      <th>last_name</th>
+      <th>middle_name</th>
+      <th>role</th>
       <th>grant_id</th>
       <th>grant_title</th>
       <th>grant_start_date</th>
@@ -2344,9 +2904,281 @@ Time: 2.29s
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <th>0</th>
+      <td>[{'city': 'Melbourne', 'city_id': '2158177', '...</td>
+      <td>Coralie</td>
+      <td>None</td>
+      <td>Boulet</td>
+      <td></td>
+      <td>PI</td>
+      <td>grant.13535694</td>
+      <td>Regulation of Plasmodium falciparum egress fro...</td>
+      <td>2024-02-01</td>
+      <td>2026-01-31</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>[{'city': 'São Paulo', 'city_id': '3448439', '...</td>
+      <td>Célia</td>
+      <td>ur.01311140517.22</td>
+      <td>da Silva Garcia</td>
+      <td>Regina</td>
+      <td>PI</td>
+      <td>grant.9698278</td>
+      <td>Calcium signaling in Plasmodium falciparum gam...</td>
+      <td>2023-11-01</td>
+      <td>2023-12-15</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>[{'city': 'Allschwil 3', 'city_id': '2661604',...</td>
+      <td>Penelope</td>
+      <td>ur.01356421006.17</td>
+      <td>Vounatsou</td>
+      <td></td>
+      <td>PI</td>
+      <td>grant.13219531</td>
+      <td>Spatio-temporal modelling of climate variabili...</td>
+      <td>2023-10-01</td>
+      <td>2026-09-30</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>[{'city': 'Heidelberg', 'city_id': '2907911', ...</td>
+      <td>Ina</td>
+      <td>ur.01006224125.53</td>
+      <td>Danquah</td>
+      <td></td>
+      <td>PI</td>
+      <td>grant.13219531</td>
+      <td>Spatio-temporal modelling of climate variabili...</td>
+      <td>2023-10-01</td>
+      <td>2026-09-30</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>[{'city': None, 'city_id': '184745', 'country'...</td>
+      <td>Stephen</td>
+      <td>ur.01363557726.68</td>
+      <td>Munga</td>
+      <td></td>
+      <td>Co-PI</td>
+      <td>grant.13219531</td>
+      <td>Spatio-temporal modelling of climate variabili...</td>
+      <td>2023-10-01</td>
+      <td>2026-09-30</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>[{'city': None, 'city_id': '2357163', 'country...</td>
+      <td>Ali</td>
+      <td>ur.01057017117.60</td>
+      <td>Sié</td>
+      <td></td>
+      <td>Co-PI</td>
+      <td>grant.13219531</td>
+      <td>Spatio-temporal modelling of climate variabili...</td>
+      <td>2023-10-01</td>
+      <td>2026-09-30</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>[{'city': 'SAN ANTONIO', 'city_id': '4726206',...</td>
+      <td>Zhuolin</td>
+      <td>None</td>
+      <td>Qu</td>
+      <td>None</td>
+      <td>PI</td>
+      <td>grant.13535333</td>
+      <td>LEAPS-MPS: Development of Novel Multistage Mod...</td>
+      <td>2023-09-01</td>
+      <td>2025-08-31</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>[{'city': None, 'city_id': '2648579', 'country...</td>
+      <td>Matthias</td>
+      <td>ur.01315014330.55</td>
+      <td>Marti</td>
+      <td></td>
+      <td>PI</td>
+      <td>grant.13306682</td>
+      <td>Defining molecular determinants of Plasmodium ...</td>
+      <td>2023-08-31</td>
+      <td>2025-08-30</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>[{'city': None, 'city_id': '2648579', 'country...</td>
+      <td>Barbara</td>
+      <td>ur.013052533674.51</td>
+      <td>Stokes</td>
+      <td>Hoyt</td>
+      <td>PI</td>
+      <td>grant.13306682</td>
+      <td>Defining molecular determinants of Plasmodium ...</td>
+      <td>2023-08-31</td>
+      <td>2025-08-30</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>NaN</td>
+      <td>Victor</td>
+      <td>None</td>
+      <td>Yman</td>
+      <td></td>
+      <td>PI</td>
+      <td>grant.13528667</td>
+      <td>Integrated serological surveillance of malaria...</td>
+      <td>2023-07-01</td>
+      <td>2026-06-30</td>
+    </tr>
   </tbody>
 </table>
-</div></div>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-79ac3e5e-b812-461d-97cf-653d54293ab3')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+
+
+    <div id="df-2c9b7c9f-388a-466a-a6e4-3938c73725be">
+      <button class="colab-df-quickchart" onclick="quickchart('df-2c9b7c9f-388a-466a-a6e4-3938c73725be')"
+              title="Suggest charts."
+              style="display:none;">
+
+<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+     width="24px">
+    <g>
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+    </g>
+</svg>
+      </button>
+    </div>
+
+<style>
+  .colab-df-quickchart {
+    background-color: #E8F0FE;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    fill: #1967D2;
+    height: 32px;
+    padding: 0 0 0 0;
+    width: 32px;
+  }
+
+  .colab-df-quickchart:hover {
+    background-color: #E2EBFA;
+    box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+    fill: #174EA6;
+  }
+
+  [theme=dark] .colab-df-quickchart {
+    background-color: #3B4455;
+    fill: #D2E3FC;
+  }
+
+  [theme=dark] .colab-df-quickchart:hover {
+    background-color: #434B5C;
+    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+    filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+    fill: #FFFFFF;
+  }
+</style>
+
+    <script>
+      async function quickchart(key) {
+        const containerElement = document.querySelector('#' + key);
+        const charts = await google.colab.kernel.invokeFunction(
+            'suggestCharts', [key], {});
+      }
+    </script>
+
+      <script>
+
+function displayQuickchartButton(domScope) {
+  let quickchartButtonEl =
+    domScope.querySelector('#df-2c9b7c9f-388a-466a-a6e4-3938c73725be button.colab-df-quickchart');
+  quickchartButtonEl.style.display =
+    google.colab.kernel.accessAllowed ? 'block' : 'none';
+}
+
+        displayQuickchartButton(document);
+      </script>
+      <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-79ac3e5e-b812-461d-97cf-653d54293ab3 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-79ac3e5e-b812-461d-97cf-653d54293ab3');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div></div>
 </div>
 </div>
 </div>
@@ -2372,7 +3204,8 @@ Time: 2.29s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search publications for &quot;graphene&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search publications for &quot;graphene&quot;</span>
 <span class="s2">            where year=2019</span>
 <span class="s2">       return publications[id+title+year+concepts_scores] limit 100&quot;&quot;&quot;</span>
 
@@ -2390,10 +3223,10 @@ Time: 2.29s
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 100 (total = 116623)
-Time: 1.15s
-Concepts found:  5346
-Unique:  3339
+Returned Publications: 100 (total = 119841)
+Time: 0.63s
+Concepts found:  5076
+Unique:  3233
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -2401,7 +3234,9 @@ Unique:  3339
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
-<div>
+  <div id="df-4d6ef860-a792-499e-89ec-bbddf71d3706">
+    <div class="colab-df-container">
+      <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -2432,68 +3267,211 @@ Unique:  3339
   <tbody>
     <tr>
       <th>0</th>
-      <td>pub.1129328198</td>
-      <td>Study of mechanochemistry of carbon nanotube u...</td>
+      <td>pub.1146069136</td>
+      <td>Physical Characteristics of Cement Mortar Prep...</td>
       <td>2019</td>
-      <td>6</td>
-      <td>study</td>
-      <td>0.088</td>
-      <td>31</td>
-      <td>0.21619</td>
+      <td>7</td>
+      <td>characteristics</td>
+      <td>0.070</td>
+      <td>10</td>
+      <td>0.30910</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>pub.1129328198</td>
-      <td>Study of mechanochemistry of carbon nanotube u...</td>
+      <td>pub.1146069136</td>
+      <td>Physical Characteristics of Cement Mortar Prep...</td>
       <td>2019</td>
-      <td>6</td>
-      <td>principles</td>
-      <td>0.047</td>
-      <td>2</td>
-      <td>0.13200</td>
+      <td>7</td>
+      <td>physical characteristics</td>
+      <td>0.068</td>
+      <td>1</td>
+      <td>0.06800</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>pub.1129328198</td>
-      <td>Study of mechanochemistry of carbon nanotube u...</td>
+      <td>pub.1146069136</td>
+      <td>Physical Characteristics of Cement Mortar Prep...</td>
       <td>2019</td>
-      <td>6</td>
-      <td>mechanochemistry</td>
-      <td>0.015</td>
-      <td>1</td>
-      <td>0.01500</td>
+      <td>7</td>
+      <td>oxide</td>
+      <td>0.058</td>
+      <td>13</td>
+      <td>0.42938</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>pub.1129328198</td>
-      <td>Study of mechanochemistry of carbon nanotube u...</td>
+      <td>pub.1146069136</td>
+      <td>Physical Characteristics of Cement Mortar Prep...</td>
       <td>2019</td>
-      <td>6</td>
-      <td>first principles</td>
-      <td>0.012</td>
+      <td>7</td>
+      <td>Prepared</td>
+      <td>0.046</td>
       <td>1</td>
-      <td>0.01200</td>
+      <td>0.04600</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>pub.1129328198</td>
-      <td>Study of mechanochemistry of carbon nanotube u...</td>
+      <td>pub.1146069136</td>
+      <td>Physical Characteristics of Cement Mortar Prep...</td>
       <td>2019</td>
-      <td>6</td>
-      <td>carbon nanotubes</td>
-      <td>0.010</td>
-      <td>6</td>
-      <td>0.38033</td>
+      <td>7</td>
+      <td>glass</td>
+      <td>0.026</td>
+      <td>2</td>
+      <td>0.22250</td>
     </tr>
   </tbody>
 </table>
-</div></div>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-4d6ef860-a792-499e-89ec-bbddf71d3706')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+
+
+    <div id="df-779b9d48-29c5-4745-91f0-8cd358b11a17">
+      <button class="colab-df-quickchart" onclick="quickchart('df-779b9d48-29c5-4745-91f0-8cd358b11a17')"
+              title="Suggest charts."
+              style="display:none;">
+
+<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+     width="24px">
+    <g>
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+    </g>
+</svg>
+      </button>
+    </div>
+
+<style>
+  .colab-df-quickchart {
+    background-color: #E8F0FE;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    fill: #1967D2;
+    height: 32px;
+    padding: 0 0 0 0;
+    width: 32px;
+  }
+
+  .colab-df-quickchart:hover {
+    background-color: #E2EBFA;
+    box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+    fill: #174EA6;
+  }
+
+  [theme=dark] .colab-df-quickchart {
+    background-color: #3B4455;
+    fill: #D2E3FC;
+  }
+
+  [theme=dark] .colab-df-quickchart:hover {
+    background-color: #434B5C;
+    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+    filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+    fill: #FFFFFF;
+  }
+</style>
+
+    <script>
+      async function quickchart(key) {
+        const containerElement = document.querySelector('#' + key);
+        const charts = await google.colab.kernel.invokeFunction(
+            'suggestCharts', [key], {});
+      }
+    </script>
+
+      <script>
+
+function displayQuickchartButton(domScope) {
+  let quickchartButtonEl =
+    domScope.querySelector('#df-779b9d48-29c5-4745-91f0-8cd358b11a17 button.colab-df-quickchart');
+  quickchartButtonEl.style.display =
+    google.colab.kernel.accessAllowed ? 'block' : 'none';
+}
+
+        displayQuickchartButton(document);
+      </script>
+      <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-4d6ef860-a792-499e-89ec-bbddf71d3706 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-4d6ef860-a792-499e-89ec-bbddf71d3706');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div></div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">concepts</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s2">&quot;concept&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;score_avg&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)[[</span><span class="s1">&#39;concept&#39;</span><span class="p">,</span> <span class="s1">&#39;score_avg&#39;</span><span class="p">]]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">concepts</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s2">&quot;concept&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;score_avg&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)[[</span><span class="s1">&#39;concept&#39;</span><span class="p">,</span> <span class="s1">&#39;score_avg&#39;</span><span class="p">]]</span>
 </pre></div>
 </div>
 </div>
@@ -2502,7 +3480,9 @@ Unique:  3339
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
-<div>
+  <div id="df-84812cbf-3411-4016-9af6-ddd295bfbf34">
+    <div class="colab-df-container">
+      <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -2526,58 +3506,200 @@ Unique:  3339
   </thead>
   <tbody>
     <tr>
-      <th>1660</th>
+      <th>1693</th>
       <td>mesoporous silica nanoparticles</td>
-      <td>0.919</td>
-    </tr>
-    <tr>
-      <th>550</th>
-      <td>two-dimensional transition metal dichalcogenides</td>
       <td>0.918</td>
     </tr>
     <tr>
-      <th>551</th>
+      <th>558</th>
+      <td>two-dimensional transition metal dichalcogenides</td>
+      <td>0.916</td>
+    </tr>
+    <tr>
+      <th>3216</th>
+      <td>quantum state transfer</td>
+      <td>0.906</td>
+    </tr>
+    <tr>
+      <th>559</th>
       <td>spin-orbit coupling</td>
-      <td>0.903</td>
+      <td>0.901</td>
     </tr>
     <tr>
-      <th>4333</th>
-      <td>fiber Bragg grating</td>
-      <td>0.885</td>
-    </tr>
-    <tr>
-      <th>2793</th>
-      <td>oxygen reduction reaction</td>
-      <td>0.882</td>
-    </tr>
-    <tr>
-      <th>3465</th>
+      <th>4377</th>
       <td>MoP/SiO2 catalyst</td>
-      <td>0.878</td>
+      <td>0.886</td>
     </tr>
     <tr>
-      <th>2335</th>
+      <th>3699</th>
+      <td>hydrogen evolution reaction</td>
+      <td>0.884</td>
+    </tr>
+    <tr>
+      <th>3700</th>
+      <td>oxygen reduction reaction</td>
+      <td>0.879</td>
+    </tr>
+    <tr>
+      <th>2862</th>
       <td>silica nano particles</td>
-      <td>0.874</td>
+      <td>0.871</td>
     </tr>
     <tr>
-      <th>552</th>
+      <th>560</th>
       <td>quantum spin Hall effect</td>
-      <td>0.872</td>
-    </tr>
-    <tr>
-      <th>2794</th>
-      <td>oxygen evolution reaction</td>
       <td>0.870</td>
     </tr>
     <tr>
-      <th>553</th>
+      <th>561</th>
       <td>Ising spin-orbit coupling</td>
-      <td>0.869</td>
+      <td>0.868</td>
     </tr>
   </tbody>
 </table>
-</div></div>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-84812cbf-3411-4016-9af6-ddd295bfbf34')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+
+
+    <div id="df-3d07bacf-5e1e-4c59-9128-0675612d52d4">
+      <button class="colab-df-quickchart" onclick="quickchart('df-3d07bacf-5e1e-4c59-9128-0675612d52d4')"
+              title="Suggest charts."
+              style="display:none;">
+
+<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+     width="24px">
+    <g>
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+    </g>
+</svg>
+      </button>
+    </div>
+
+<style>
+  .colab-df-quickchart {
+    background-color: #E8F0FE;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    fill: #1967D2;
+    height: 32px;
+    padding: 0 0 0 0;
+    width: 32px;
+  }
+
+  .colab-df-quickchart:hover {
+    background-color: #E2EBFA;
+    box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+    fill: #174EA6;
+  }
+
+  [theme=dark] .colab-df-quickchart {
+    background-color: #3B4455;
+    fill: #D2E3FC;
+  }
+
+  [theme=dark] .colab-df-quickchart:hover {
+    background-color: #434B5C;
+    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+    filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+    fill: #FFFFFF;
+  }
+</style>
+
+    <script>
+      async function quickchart(key) {
+        const containerElement = document.querySelector('#' + key);
+        const charts = await google.colab.kernel.invokeFunction(
+            'suggestCharts', [key], {});
+      }
+    </script>
+
+      <script>
+
+function displayQuickchartButton(domScope) {
+  let quickchartButtonEl =
+    domScope.querySelector('#df-3d07bacf-5e1e-4c59-9128-0675612d52d4 button.colab-df-quickchart');
+  quickchartButtonEl.style.display =
+    google.colab.kernel.accessAllowed ? 'block' : 'none';
+}
+
+        displayQuickchartButton(document);
+      </script>
+      <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-84812cbf-3411-4016-9af6-ddd295bfbf34 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-84812cbf-3411-4016-9af6-ddd295bfbf34');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div></div>
 </div>
 <p>Please note that (as of version 1.25 of the DSL API) it is possible to return either <code class="docutils literal notranslate"><span class="pre">concepts_scores</span></code> or <code class="docutils literal notranslate"><span class="pre">concepts</span></code> with Publications queries, but only <code class="docutils literal notranslate"><span class="pre">concepts</span></code> with Grants queries.</p>
 <p>If a relevancy score is not available, the <code class="docutils literal notranslate"><span class="pre">as_dataframe_concepts</span></code> function will simulate one based on the concept rank (=its position in the document-concepts list).</p>
@@ -2608,6 +3730,7 @@ Unique:  3339
            
           </div>
           <footer>
+  
 
   <hr/>
 
@@ -2626,6 +3749,7 @@ Unique:  3339
 
 
 </footer>
+
         </div>
       </div>
 
