@@ -1,6 +1,11 @@
 # Changelog - Dimensions API Lab 
 
 
+### 2023-08-10
+
+Internal refactoring of folders and build strategy.
+
+
 ### 2023-04-20
 
 New notebooks:
