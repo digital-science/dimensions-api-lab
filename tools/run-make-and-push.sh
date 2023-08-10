@@ -3,17 +3,22 @@
 # prerequisites: chmod u+x <filename>
 
 
-source ./tools/set-envs.sh
+#################
+# This script is meant to be used from the top level folder 
+# $ ./tools/run-make-and-push
+#################
 
-# syncronize folders first
-./tools/run-make-html.sh
 
+echo "=================="
+echo "Building LIVE documentation in main /docs folder ..."
+echo "=================="
+echo ""
+
+make html
 
 echo "=================="
 echo "Pushing to Github..."
 echo "=================="
-
-break
 
 cd "$TARGETDIR"
 
@@ -22,7 +27,6 @@ git add -A
 git commit -m "misc updates"
 
 git push
-
 
 
 echo "=================="
