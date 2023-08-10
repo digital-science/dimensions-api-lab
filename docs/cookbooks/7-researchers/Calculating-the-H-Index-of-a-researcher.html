@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Calculating the H-index of a researcher &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
   
@@ -19,7 +19,10 @@
   
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   
+
   
+  
+
   
 
   
@@ -35,9 +38,9 @@
         <script src="../../_static/language_data.js"></script>
         <script src="../../_static/js/custom.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
-        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -72,7 +75,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> DSL
+            <a href="../../index.html" class="icon icon-home"> DSL
           
 
           
@@ -936,6 +939,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -1161,7 +1166,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt a.copybtn {
+.prompt .copybtn {
     display: none;
 }
 
@@ -1246,8 +1251,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">CHANGELOG</span><span class="se">\n</span><span class="s2">This notebook was last run on </span><span class="si">%s</span><span class="se">\n</span><span class="s2">==&quot;</span> <span class="o">%</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">, %Y&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1270,8 +1274,7 @@ This notebook was last run on Jan 25, 2022
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>dimcli<span class="w"> </span>-U<span class="w"> </span>--quiet
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install dimcli -U --quiet
 
 <span class="kn">import</span> <span class="nn">dimcli</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -1322,8 +1325,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">RESEARCHER</span> <span class="o">=</span> <span class="s2">&quot;ur.01357111535.49&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">RESEARCHER</span> <span class="o">=</span> <span class="s2">&quot;ur.01357111535.49&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -1335,9 +1337,8 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="k">def</span> <span class="nf">the_H_function</span><span class="p">(</span><span class="n">sorted_citations_list</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;from a list of integers [n1, n2 ..] representing publications citations,</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">the_H_function</span><span class="p">(</span><span class="n">sorted_citations_list</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;from a list of integers [n1, n2 ..] representing publications citations,</span>
 <span class="sd">    return the max list-position which is &gt;= integer</span>
 
 <span class="sd">    eg</span>
@@ -1360,8 +1361,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="k">def</span> <span class="nf">get_pubs_citations</span><span class="p">(</span><span class="n">researcher_id</span><span class="p">):</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_pubs_citations</span><span class="p">(</span><span class="n">researcher_id</span><span class="p">):</span>
     <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search publications where researchers.id = &quot;</span><span class="si">{}</span><span class="s2">&quot; return publications[times_cited] sort by times_cited limit 1000&quot;&quot;&quot;</span>
     <span class="n">pubs</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">researcher_id</span><span class="p">))</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">pubs</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="s1">&#39;times_cited&#39;</span><span class="p">])</span>
@@ -1376,8 +1376,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;H_index is:&quot;</span><span class="p">,</span> <span class="n">the_H_function</span><span class="p">(</span><span class="n">get_pubs_citations</span><span class="p">(</span><span class="n">RESEARCHER</span><span class="p">)))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;H_index is:&quot;</span><span class="p">,</span> <span class="n">the_H_function</span><span class="p">(</span><span class="n">get_pubs_citations</span><span class="p">(</span><span class="n">RESEARCHER</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
@@ -1414,7 +1413,6 @@ H_index is: 63
            
           </div>
           <footer>
-  
 
   <hr/>
 
@@ -1433,7 +1431,6 @@ H_index is: 63
 
 
 </footer>
-
         </div>
       </div>
 

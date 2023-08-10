@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Journal Profiling Part 1: Getting the Data &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
   
@@ -19,7 +19,10 @@
   
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   
+
   
+  
+
   
 
   
@@ -35,9 +38,9 @@
         <script src="../../_static/language_data.js"></script>
         <script src="../../_static/js/custom.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
-        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -72,7 +75,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> DSL
+            <a href="../../index.html" class="icon icon-home"> DSL
           
 
           
@@ -936,6 +939,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -1161,7 +1166,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt a.copybtn {
+.prompt .copybtn {
     display: none;
 }
 
@@ -1240,8 +1245,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">CHANGELOG</span><span class="se">\n</span><span class="s2">This notebook was last run on </span><span class="si">%s</span><span class="se">\n</span><span class="s2">==&quot;</span> <span class="o">%</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">, %Y&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1264,8 +1268,7 @@ This notebook was last run on Jan 24, 2022
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>dimcli<span class="w"> </span>plotly<span class="w"> </span>tqdm<span class="w"> </span>-U<span class="w"> </span>--quiet
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install dimcli plotly tqdm -U --quiet
 
 <span class="kn">import</span> <span class="nn">dimcli</span>
 <span class="kn">from</span> <span class="nn">dimcli.utils</span> <span class="kn">import</span> <span class="o">*</span>
@@ -1338,8 +1341,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># create output data folder</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create output data folder</span>
 <span class="n">FOLDER_NAME</span> <span class="o">=</span> <span class="s2">&quot;journal-profile-data&quot;</span>
 <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">FOLDER_NAME</span><span class="p">)):</span>
     <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">FOLDER_NAME</span><span class="p">)</span>
@@ -1356,8 +1358,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1">#@title Select a journal from the dropdown</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#@title Select a journal from the dropdown</span>
 <span class="c1">#@markdown If the journal isn&#39;t there, you can try type in the exact name instead.</span>
 
 <span class="n">journal_title</span> <span class="o">=</span> <span class="s2">&quot;Nature Genetics&quot;</span> <span class="c1">#@param [&#39;Nature&#39;, &#39;Nature Communications&#39;, &#39;Nature Biotechnology&#39;, &#39;Nature Medicine&#39;, &#39;Nature Genetics&#39;, &#39;Nature Neuroscience&#39;, &#39;Nature Structural &amp; Molecular Biology&#39;, &#39;Nature Methods&#39;, &#39;Nature Cell Biology&#39;, &#39;Nature Immunology&#39;, &#39;Nature Reviews Drug Discovery&#39;, &#39;Nature Materials&#39;, &#39;Nature Physics&#39;, &#39;Nature Reviews Neuroscience&#39;, &#39;Nature Nanotechnology&#39;, &#39;Nature Reviews Genetics&#39;, &#39;Nature Reviews Urology&#39;, &#39;Nature Reviews Molecular Cell Biology&#39;, &#39;Nature Precedings&#39;, &#39;Nature Reviews Cancer&#39;, &#39;Nature Photonics&#39;, &#39;Nature Reviews Immunology&#39;, &#39;Nature Reviews Cardiology&#39;, &#39;Nature Reviews Gastroenterology &amp; Hepatology&#39;, &#39;Nature Reviews Clinical Oncology&#39;, &#39;Nature Reviews Endocrinology&#39;, &#39;Nature Reviews Neurology&#39;, &#39;Nature Chemical Biology&#39;, &#39;Nature Reviews Microbiology&#39;, &#39;Nature Geoscience&#39;, &#39;Nature Reviews Rheumatology&#39;, &#39;Nature Climate Change&#39;, &#39;Nature Reviews Nephrology&#39;, &#39;Nature Chemistry&#39;, &#39;Nature Digest&#39;, &#39;Nature Protocols&#39;, &#39;Nature Middle East&#39;, &#39;Nature India&#39;, &#39;Nature China&#39;, &#39;Nature Plants&#39;, &#39;Nature Microbiology&#39;, &#39;Nature Ecology &amp; Evolution&#39;, &#39;Nature Astronomy&#39;, &#39;Nature Energy&#39;, &#39;Nature Human Behaviour&#39;, &#39;AfCS-Nature Molecule Pages&#39;, &#39;Human Nature&#39;, &#39;Nature Reviews Disease Primers&#39;, &#39;Nature Biomedical Engineering&#39;, &#39;Nature Reports Stem Cells&#39;, &#39;Nature Reviews Materials&#39;, &#39;Nature Sustainability&#39;, &#39;Nature Catalysis&#39;, &#39;Nature Electronics&#39;, &#39;Nature Reviews Chemistry&#39;, &#39;Nature Metabolism&#39;, &#39;Nature Reviews Physics&#39;, &#39;Nature Machine Intelligence&#39;, &#39;NCI Nature Pathway Interaction Database&#39;, &#39;Nature Reports: Climate Change&#39;] {allow-input: true}</span>
@@ -1372,13 +1373,12 @@ Method: dsl.ini file
 
 <span class="n">q_template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search publications where</span>
 <span class="s2">    journal.title=&quot;</span><span class="si">{}</span><span class="s2">&quot; and</span>
-<span class="s2">    year&gt;=</span><span class="si">{}</span>
+<span class="s2">    year&gt;=</span><span class="si">{}</span><span class="s2"></span>
 <span class="s2">    return publications[id+title+doi+year+authors+type+pages+journal+issue+volume+altmetric+times_cited]&quot;&quot;&quot;</span>
 <span class="n">q</span> <span class="o">=</span> <span class="n">q_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">journal_title</span><span class="p">,</span> <span class="n">start_year</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DSL Query:</span><span class="se">\n</span><span class="s2">----</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">----&quot;</span><span class="p">)</span>
 <span class="n">pubs</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query_iterative</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">journal_title</span><span class="p">,</span> <span class="n">start_year</span><span class="p">),</span> <span class="n">limit</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
-
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
@@ -1421,8 +1421,7 @@ Records extracted: 1820
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">dfpubs</span> <span class="o">=</span> <span class="n">pubs</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfpubs</span> <span class="o">=</span> <span class="n">pubs</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
 <span class="n">save</span><span class="p">(</span><span class="n">dfpubs</span><span class="p">,</span><span class="s2">&quot;1_publications.csv&quot;</span><span class="p">)</span>
 <span class="c1"># preview the publications</span>
 <span class="n">dfpubs</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
@@ -1637,8 +1636,7 @@ Records extracted: 1820
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># preview the authors data</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># preview the authors data</span>
 <span class="n">authors</span> <span class="o">=</span> <span class="n">pubs</span><span class="o">.</span><span class="n">as_dataframe_authors</span><span class="p">()</span>
 <span class="n">save</span><span class="p">(</span><span class="n">authors</span><span class="p">,</span><span class="s2">&quot;1_publications_authors.csv&quot;</span><span class="p">)</span>
 <span class="n">authors</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
@@ -1809,8 +1807,7 @@ Records extracted: 1820
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">affiliations</span> <span class="o">=</span> <span class="n">pubs</span><span class="o">.</span><span class="n">as_dataframe_authors_affiliations</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">affiliations</span> <span class="o">=</span> <span class="n">pubs</span><span class="o">.</span><span class="n">as_dataframe_authors_affiliations</span><span class="p">()</span>
 <span class="n">save</span><span class="p">(</span><span class="n">affiliations</span><span class="p">,</span><span class="s2">&quot;1_publications_affiliations.csv&quot;</span><span class="p">)</span>
 <span class="n">affiliations</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
@@ -2031,8 +2028,7 @@ Records extracted: 1820
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">researchers</span> <span class="o">=</span> <span class="n">authors</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;researcher_id!=&#39;&#39;&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">researchers</span> <span class="o">=</span> <span class="n">authors</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;researcher_id!=&#39;&#39;&quot;</span><span class="p">)</span>
 <span class="c1">#</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
     <span class="s1">&#39;measure&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Authors in total (non unique)&#39;</span><span class="p">,</span> <span class="s1">&#39;Authors with a researcher ID&#39;</span><span class="p">,</span> <span class="s1">&#39;Authors with a researcher ID (unique)&#39;</span><span class="p">],</span>
@@ -2076,8 +2072,7 @@ if (outputEl) {{
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># save the researchers data to a file</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># save the researchers data to a file</span>
 <span class="n">save</span><span class="p">(</span><span class="n">researchers</span><span class="p">,</span> <span class="s2">&quot;1_authors_with_researchers_id.csv&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -2091,8 +2086,7 @@ if (outputEl) {{
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">authors_without_id</span> <span class="o">=</span> <span class="n">authors</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;researcher_id==&#39;&#39;&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">authors_without_id</span> <span class="o">=</span> <span class="n">authors</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;researcher_id==&#39;&#39;&quot;</span><span class="p">)</span>
 <span class="n">authors_without_id</span><span class="p">[[</span><span class="s1">&#39;first_name&#39;</span><span class="p">,</span> <span class="s1">&#39;last_name&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -2154,8 +2148,7 @@ if (outputEl) {{
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">authors_without_id</span><span class="p">[</span><span class="s1">&#39;last_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[:</span><span class="mi">10</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">authors_without_id</span><span class="p">[</span><span class="s1">&#39;last_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[:</span><span class="mi">10</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -2189,8 +2182,7 @@ Name: last_name, dtype: int64
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">authors_without_id</span> <span class="o">=</span> <span class="n">authors_without_id</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;first_name&quot;</span><span class="p">,</span> <span class="s2">&quot;last_name&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;frequency&quot;</span><span class="p">})</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">authors_without_id</span> <span class="o">=</span> <span class="n">authors_without_id</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;first_name&quot;</span><span class="p">,</span> <span class="s2">&quot;last_name&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;frequency&quot;</span><span class="p">})</span>
 <span class="n">authors_without_id</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;frequency&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">authors_without_id</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
 </pre></div>
@@ -2310,8 +2302,7 @@ Name: last_name, dtype: int64
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">dimcli.shortcuts</span> <span class="kn">import</span> <span class="n">google_url</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dimcli.shortcuts</span> <span class="kn">import</span> <span class="n">google_url</span>
 
 <span class="n">authors_without_id</span><span class="p">[</span><span class="s1">&#39;search_url&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">authors_without_id</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">google_url</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;first_name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;last_name&#39;</span><span class="p">]</span> <span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
@@ -2449,8 +2440,7 @@ WARNING: the `shortcuts` module is deprecated. Use instead ``from dimcli.utils i
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># save the data</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># save the data</span>
 <span class="n">save</span><span class="p">(</span><span class="n">authors_without_id</span><span class="p">,</span> <span class="s2">&quot;1_authors_without_researchers_id.csv&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -2461,8 +2451,7 @@ WARNING: the `shortcuts` module is deprecated. Use instead ``from dimcli.utils i
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># for colab users: download everything</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># for colab users: download everything</span>
 <span class="k">if</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">auth</span>
     <span class="n">auth</span><span class="o">.</span><span class="n">authenticate_user</span><span class="p">()</span>
@@ -2500,7 +2489,6 @@ WARNING: the `shortcuts` module is deprecated. Use instead ``from dimcli.utils i
            
           </div>
           <footer>
-  
 
   <hr/>
 
@@ -2519,7 +2507,6 @@ WARNING: the `shortcuts` module is deprecated. Use instead ``from dimcli.utils i
 
 
 </footer>
-
         </div>
       </div>
 

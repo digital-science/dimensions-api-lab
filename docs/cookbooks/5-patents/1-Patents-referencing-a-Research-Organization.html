@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Measuring the Innovation Impact of an Organization using Patents Citations &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
   
@@ -19,7 +19,10 @@
   
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   
+
   
+  
+
   
 
   
@@ -35,9 +38,9 @@
         <script src="../../_static/language_data.js"></script>
         <script src="../../_static/js/custom.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
-        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -72,7 +75,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> DSL
+            <a href="../../index.html" class="icon icon-home"> DSL
           
 
           
@@ -936,6 +939,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -1161,7 +1166,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt a.copybtn {
+.prompt .copybtn {
     display: none;
 }
 
@@ -1252,8 +1257,7 @@ Returned Patents: 192
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">CHANGELOG</span><span class="se">\n</span><span class="s2">This notebook was last run on </span><span class="si">%s</span><span class="se">\n</span><span class="s2">==&quot;</span> <span class="o">%</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">, %Y&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1276,8 +1280,7 @@ This notebook was last run on Jan 25, 2022
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>dimcli<span class="w"> </span>plotly<span class="w"> </span>tqdm<span class="w"> </span>-U<span class="w"> </span>--quiet
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install dimcli plotly tqdm -U --quiet
 
 <span class="kn">import</span> <span class="nn">dimcli</span>
 <span class="kn">from</span> <span class="nn">dimcli.utils</span> <span class="kn">import</span> <span class="o">*</span>
@@ -1356,9 +1359,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-
-<span></span><span class="n">GRIDID</span> <span class="o">=</span> <span class="s2">&quot;grid.10837.3d&quot;</span> <span class="c1">#@param {type:&quot;string&quot;}</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><br/><span></span><span class="n">GRIDID</span> <span class="o">=</span> <span class="s2">&quot;grid.10837.3d&quot;</span> <span class="c1">#@param {type:&quot;string&quot;}</span>
 
 <span class="c1">#@markdown The start/end year of publications used to extract patents</span>
 <span class="n">YEAR_START</span> <span class="o">=</span> <span class="mi">2005</span> <span class="c1">#@param {type: &quot;slider&quot;, min: 1950, max: 2020}</span>
@@ -1389,8 +1390,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># Get full list of publications linked to this organization for the selected time frame</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get full list of publications linked to this organization for the selected time frame</span>
 
 <span class="n">q</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;search publications</span>
 <span class="s2">        where research_orgs.id=&quot;</span><span class="si">{</span><span class="n">GRIDID</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -1446,8 +1446,7 @@ Records extracted: 9751
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">pubs</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pubs</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1568,8 +1567,7 @@ Records extracted: 9751
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">pubs</span><span class="p">,</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">pubs</span><span class="p">,</span>
              <span class="n">x</span><span class="o">=</span><span class="s2">&quot;year&quot;</span><span class="p">,</span>
              <span class="n">color</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">,</span>
              <span class="n">barmode</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span>
@@ -1616,8 +1614,7 @@ if (outputEl) {{
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">pubs_categories</span> <span class="o">=</span> <span class="n">pubs</span><span class="o">.</span><span class="n">explode</span><span class="p">(</span><span class="s1">&#39;category_for&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pubs_categories</span> <span class="o">=</span> <span class="n">pubs</span><span class="o">.</span><span class="n">explode</span><span class="p">(</span><span class="s1">&#39;category_for&#39;</span><span class="p">)</span>
 <span class="n">pubs_categories</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;category_for&quot;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">for_nice_name</span><span class="p">(</span><span class="n">for_dict</span><span class="p">):</span>
@@ -1640,8 +1637,7 @@ if (outputEl) {{
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">categories</span> <span class="o">=</span> <span class="n">pubs_categories</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="s2">&quot;category_for_name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;count_pubs&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)[[</span><span class="s1">&#39;category_for_name&#39;</span><span class="p">,</span> <span class="s1">&#39;count_pubs&#39;</span><span class="p">]]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">categories</span> <span class="o">=</span> <span class="n">pubs_categories</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="s2">&quot;category_for_name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;count_pubs&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)[[</span><span class="s1">&#39;category_for_name&#39;</span><span class="p">,</span> <span class="s1">&#39;count_pubs&#39;</span><span class="p">]]</span>
 
 <span class="n">px</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">categories</span><span class="p">[:</span><span class="mi">20</span><span class="p">],</span>
        <span class="n">names</span><span class="o">=</span><span class="s2">&quot;category_for_name&quot;</span><span class="p">,</span> <span class="c1"># the dimension for the slices</span>
@@ -1695,12 +1691,11 @@ if (outputEl) {{
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1">#</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
 <span class="c1"># the main patents query</span>
 <span class="c1">#</span>
 <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search patents</span>
-<span class="s2">        where publication_ids in </span><span class="si">{}</span>
+<span class="s2">        where publication_ids in </span><span class="si">{}</span><span class="s2"></span>
 <span class="s2">      return patents[basics+publication_ids+category_for]&quot;&quot;&quot;</span>
 
 <span class="n">BATCHSIZE</span> <span class="o">=</span> <span class="mi">400</span>
@@ -1754,8 +1749,7 @@ Patents found:  210
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">patents</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">patents</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1883,8 +1877,7 @@ Patents found:  210
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="k">def</span> <span class="nf">count_patents_per_pub</span><span class="p">(</span><span class="n">pubid</span><span class="p">):</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">count_patents_per_pub</span><span class="p">(</span><span class="n">pubid</span><span class="p">):</span>
   <span class="k">global</span> <span class="n">patents</span>
   <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">patents</span><span class="p">[</span><span class="n">patents</span><span class="p">[</span><span class="s1">&#39;publication_ids&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">pubid</span><span class="p">)])</span>
 
@@ -1908,8 +1901,7 @@ Patents found:  210
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">pubs</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;patents&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pubs</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;patents&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -2041,8 +2033,7 @@ Patents found:  210
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">patents</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;year&quot;</span><span class="p">,</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">patents</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;year&quot;</span><span class="p">,</span>
              <span class="n">color</span><span class="o">=</span><span class="s2">&quot;filing_status&quot;</span><span class="p">,</span>
              <span class="n">barmode</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span>
              <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Patents referencing publications from </span><span class="si">{</span><span class="n">GRIDID</span><span class="si">}</span><span class="s2"> - by year&quot;</span><span class="p">)</span>
@@ -2087,8 +2078,7 @@ if (outputEl) {{
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># ensure the key exists in all rows (even if empty)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ensure the key exists in all rows (even if empty)</span>
 <span class="kn">from</span> <span class="nn">dimcli.shortcuts</span> <span class="kn">import</span> <span class="n">normalize_key</span>
 <span class="n">normalize_key</span><span class="p">(</span><span class="s1">&#39;assignees&#39;</span><span class="p">,</span> <span class="n">patents_json</span><span class="p">)</span>
 <span class="c1"># explode assigness into separate table</span>
@@ -2179,8 +2169,7 @@ WARNING: the `shortcuts` module is deprecated. Use instead ``from dimcli.utils i
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">top_assignees</span><span class="p">,</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">top_assignees</span><span class="p">,</span>
        <span class="n">x</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;patent_id&quot;</span><span class="p">,</span>
        <span class="n">hover_name</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;country_name&quot;</span><span class="p">,</span>
        <span class="n">height</span><span class="o">=</span><span class="mi">900</span><span class="p">,</span>
@@ -2222,8 +2211,7 @@ if (outputEl) {{
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">patents_assignees</span><span class="p">,</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">patents_assignees</span><span class="p">,</span>
            <span class="n">x</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;country_name&quot;</span><span class="p">,</span>
            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;patent_year&quot;</span><span class="p">,</span> <span class="n">hover_name</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">,</span>
            <span class="n">height</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
@@ -2269,8 +2257,7 @@ if (outputEl) {{
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">pubs_cited</span> <span class="o">=</span> <span class="n">pubs</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;patents &gt; 0 &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;patents&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pubs_cited</span> <span class="o">=</span> <span class="n">pubs</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;patents &gt; 0 &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;patents&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="n">pubs_cited</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -2396,8 +2383,7 @@ if (outputEl) {{
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">pubs_cited</span><span class="p">[:</span><span class="mi">1000</span><span class="p">],</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">pubs_cited</span><span class="p">[:</span><span class="mi">1000</span><span class="p">],</span>
        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">,</span>
        <span class="n">x</span><span class="o">=</span><span class="s2">&quot;year&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;patents&quot;</span><span class="p">,</span>
        <span class="n">hover_name</span><span class="o">=</span><span class="s2">&quot;title&quot;</span><span class="p">,</span>  <span class="n">hover_data</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;journal.title&quot;</span><span class="p">],</span>
@@ -2442,8 +2428,7 @@ if (outputEl) {{
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">THRESHOLD_PUBS</span> <span class="o">=</span> <span class="mi">1000</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">THRESHOLD_PUBS</span> <span class="o">=</span> <span class="mi">1000</span>
 <span class="n">citedids</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">pubs_cited</span><span class="p">[:</span><span class="n">THRESHOLD_PUBS</span><span class="p">][</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
 <span class="n">pubs_categories_cited</span> <span class="o">=</span> <span class="n">pubs_categories</span><span class="p">[</span><span class="n">pubs_categories</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">citedids</span><span class="p">)]</span>
 </pre></div>
@@ -2453,8 +2438,7 @@ if (outputEl) {{
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">pubs_categories_cited</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;year&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;category_for_name&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">,</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">pubs_categories_cited</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;year&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;category_for_name&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">,</span>
            <span class="n">hover_name</span><span class="o">=</span><span class="s2">&quot;title&quot;</span><span class="p">,</span>
            <span class="n">hover_data</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;doi&quot;</span><span class="p">,</span> <span class="s2">&quot;year&quot;</span><span class="p">,</span> <span class="s2">&quot;journal.title&quot;</span><span class="p">],</span>
            <span class="n">height</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
@@ -2501,8 +2485,7 @@ if (outputEl) {{
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">pubs</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;patents&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;times_cited&quot;</span><span class="p">,</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">pubs</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;patents&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;times_cited&quot;</span><span class="p">,</span>
            <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Patents citations VS Publication citations&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -2566,7 +2549,6 @@ if (outputEl) {{
            
           </div>
           <footer>
-  
 
   <hr/>
 
@@ -2585,7 +2567,6 @@ if (outputEl) {{
 
 
 </footer>
-
         </div>
       </div>
 
