@@ -1,0 +1,77 @@
+{% extends "!layout.html" %}
+
+<!-- EG https://github.com/readthedocs/sphinx_rtd_theme/blob/master/sphinx_rtd_theme/layout.html -->
+
+{%- block extrahead %}
+   {{ super() }}
+
+   <!-- Global site tag (gtag.js) - Google Analytics -->
+   <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y26MGCNDNL"></script>
+   <script>
+   window.dataLayer = window.dataLayer || [];
+   function gtag(){dataLayer.push(arguments);}
+   gtag('js', new Date());
+
+   gtag('config', 'G-Y26MGCNDNL');
+   </script>
+
+{% endblock %}
+
+
+
+{% block menu %}
+
+   <p class="">
+      <h3 id="cookbooks_title">API COOKBOOKS</h3>
+   </p>
+
+
+   {{ super() }}
+
+
+   <div id="sidebar_github" style="margin-top: 12px;">
+   <h3>Github Source</h3>
+
+      <div style="margin: 10px 20px;">
+      
+         <iframe src="https://ghbtns.com/github-btn.html?user=digital-science&repo=dimensions-api-lab&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+
+         <iframe src="https://ghbtns.com/github-btn.html?user=digital-science&repo=dimensions-api-lab&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe> 
+      
+      </div>
+
+   </div>
+
+{% endblock %}
+
+
+
+
+
+
+{%- block footer %}
+   {{ super() }}
+
+    <!-- Adds target=_blank to external links -->
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('a[href^="http://"], a[href^="https://"]').not('a[class*=internal]').attr('target', '_blank');
+    });
+  </script>
+
+
+  <!-- OneTrust Cookies Consent Notice start for dimensions.ai -->
+   <script type="text/javascript" src="https://cdn.cookielaw.org/consent/3329b668-7887-4dba-9bee-c3853a706e6f/OtAutoBlock.js" ></script>
+   <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="3329b668-7887-4dba-9bee-c3853a706e6f" ></script>
+   <script type="text/javascript">
+   function OptanonWrapper() { }
+   </script>
+   <!-- OneTrust Cookies Consent Notice end for dimensions.ai -->
+  
+{% endblock %}
+
+
+
+
+

@@ -1253,7 +1253,7 @@ div.rendered_html tbody tr:hover {
 <div class="highlight"><pre>
 ==
 CHANGELOG
-This notebook was last run on Jan 24, 2022
+This notebook was last run on Aug 10, 2023
 ==
 </pre></div></div>
 </div>
@@ -1261,7 +1261,7 @@ This notebook was last run on Jan 24, 2022
 <h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
 <p>This notebook assumes you have installed the <a class="reference external" href="https://pypi.org/project/dimcli/">Dimcli</a> library and are familiar with the <a class="reference external" href="https://api-lab.dimensions.ai/cookbooks/1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html">‘Getting Started’ tutorial</a>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install dimcli --quiet
@@ -1302,8 +1302,8 @@ Searching config file credentials for &#39;https://app.dimensions.ai&#39; endpoi
 <div class="highlight"><pre>
 ==
 Logging in..
-Dimcli - Dimensions API Client (v0.9.6)
-Connected to: &lt;https://app.dimensions.ai/api/dsl&gt; - DSL v2.0
+Dimcli - Dimensions API Client (v1.1)
+Connected to: &lt;https://app.dimensions.ai/api/dsl&gt; - DSL v2.7
 Method: dsl.ini file
 </pre></div></div>
 </div>
@@ -1312,7 +1312,7 @@ Method: dsl.ini file
 <h2>1. General method to transform JSON query results into a dataframe<a class="headerlink" href="#1.-General-method-to-transform-JSON-query-results-into-a-dataframe" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">DslDataset.as_dataframe</span></code> method allows to quickly turn any query results into a dataframe.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># we&#39;ll reuse this query later on</span>
@@ -1328,12 +1328,14 @@ Method: dsl.ini file
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 1000 (total = 484143)
-Time: 4.79s
+Returned Publications: 1000 (total = 504501)
+Time: 2.52s
+WARNINGS [1]
+Field current_organization_id of the authors field is deprecated and will be removed in the next major release.
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
@@ -1342,7 +1344,7 @@ Time: 4.79s
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1364,10 +1366,10 @@ Time: 4.79s
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>authors</th>
       <th>id</th>
-      <th>issue</th>
       <th>title</th>
+      <th>authors</th>
+      <th>issue</th>
       <th>type</th>
       <th>volume</th>
       <th>year</th>
@@ -1378,22 +1380,10 @@ Time: 4.79s
   <tbody>
     <tr>
       <th>0</th>
-      <td>[{'affiliations': [{'city': 'New Brunswick', '...</td>
-      <td>pub.1050119463</td>
-      <td>4</td>
-      <td>The chemistry of two-dimensional layered trans...</td>
-      <td>article</td>
-      <td>5</td>
-      <td>2013</td>
-      <td>jour.1041224</td>
-      <td>Nature Chemistry</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>[{'affiliations': [{'city': 'Manchester', 'cit...</td>
       <td>pub.1024857999</td>
-      <td>7459</td>
       <td>Van der Waals heterostructures</td>
+      <td>[{'affiliations': [{'city': 'Manchester', 'cit...</td>
+      <td>7459</td>
       <td>article</td>
       <td>499</td>
       <td>2013</td>
@@ -1401,23 +1391,35 @@ Time: 4.79s
       <td>Nature</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>[{'affiliations': [{'city': 'Shanghai', 'city_...</td>
-      <td>pub.1032956475</td>
-      <td>5</td>
-      <td>Black phosphorus field-effect transistors</td>
+      <th>1</th>
+      <td>pub.1050119463</td>
+      <td>The chemistry of two-dimensional layered trans...</td>
+      <td>[{'affiliations': [{'city': 'New Brunswick', '...</td>
+      <td>4</td>
       <td>article</td>
-      <td>9</td>
-      <td>2014</td>
-      <td>jour.1037429</td>
-      <td>Nature Nanotechnology</td>
+      <td>5</td>
+      <td>2013</td>
+      <td>jour.1041224</td>
+      <td>Nature Chemistry</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>pub.1007330696</td>
+      <td>Combining theory and experiment in electrocata...</td>
+      <td>[{'affiliations': [{'city': 'Stanford', 'city_...</td>
+      <td>6321</td>
+      <td>article</td>
+      <td>355</td>
+      <td>2017</td>
+      <td>jour.1346339</td>
+      <td>Science</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>[{'affiliations': [{'city': 'Austin', 'city_id...</td>
       <td>pub.1019126274</td>
-      <td>4</td>
       <td>The Li-Ion Rechargeable Battery: A Perspective</td>
+      <td>[{'affiliations': [{'city': 'Austin', 'city_id...</td>
+      <td>4</td>
       <td>article</td>
       <td>135</td>
       <td>2013</td>
@@ -1426,34 +1428,34 @@ Time: 4.79s
     </tr>
     <tr>
       <th>4</th>
-      <td>[{'affiliations': [{'city': 'Los Angeles', 'ci...</td>
-      <td>pub.1004394295</td>
-      <td>6196</td>
-      <td>Interface engineering of highly efficient pero...</td>
+      <td>pub.1032956475</td>
+      <td>Black phosphorus field-effect transistors</td>
+      <td>[{'affiliations': [{'city': 'Shanghai', 'city_...</td>
+      <td>5</td>
       <td>article</td>
-      <td>345</td>
+      <td>9</td>
       <td>2014</td>
-      <td>jour.1346339</td>
-      <td>Science</td>
+      <td>jour.1037429</td>
+      <td>Nature Nanotechnology</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>[{'affiliations': [{'city': 'Stanford', 'city_...</td>
-      <td>pub.1007330696</td>
-      <td>6321</td>
-      <td>Combining theory and experiment in electrocata...</td>
+      <td>pub.1036410643</td>
+      <td>Review of Particle Physics</td>
+      <td>[{'affiliations': [], 'corresponding': '', 'cu...</td>
+      <td>9</td>
       <td>article</td>
-      <td>355</td>
-      <td>2017</td>
-      <td>jour.1346339</td>
-      <td>Science</td>
+      <td>38</td>
+      <td>2014</td>
+      <td>jour.1327822</td>
+      <td>Chinese Physics C</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>[{'affiliations': [{'city': 'Nanshan', 'city_i...</td>
       <td>pub.1055085164</td>
-      <td>21</td>
       <td>Aggregation-Induced Emission: Together We Shin...</td>
+      <td>[{'affiliations': [{'city': 'Shenzhen', 'city_...</td>
+      <td>21</td>
       <td>article</td>
       <td>115</td>
       <td>2015</td>
@@ -1462,22 +1464,22 @@ Time: 4.79s
     </tr>
     <tr>
       <th>7</th>
-      <td>[{'affiliations': [], 'corresponding': '', 'cu...</td>
-      <td>pub.1009826879</td>
-      <td>4</td>
-      <td>Phosphorene: An Unexplored 2D Semiconductor wi...</td>
+      <td>pub.1004394295</td>
+      <td>Interface engineering of highly efficient pero...</td>
+      <td>[{'affiliations': [{'city': 'Los Angeles', 'ci...</td>
+      <td>6196</td>
       <td>article</td>
-      <td>8</td>
+      <td>345</td>
       <td>2014</td>
-      <td>jour.1038917</td>
-      <td>ACS Nano</td>
+      <td>jour.1346339</td>
+      <td>Science</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>[{'affiliations': [{'city': 'Sydney', 'city_id...</td>
       <td>pub.1045181228</td>
-      <td>7</td>
       <td>The emergence of perovskite solar cells</td>
+      <td>[{'affiliations': [{'city': 'Sydney', 'city_id...</td>
+      <td>7</td>
       <td>article</td>
       <td>8</td>
       <td>2014</td>
@@ -1486,10 +1488,10 @@ Time: 4.79s
     </tr>
     <tr>
       <th>9</th>
-      <td>[{'affiliations': [{'city': 'Cambridge', 'city...</td>
       <td>pub.1015305822</td>
-      <td>4</td>
       <td>Raman spectroscopy as a versatile tool for stu...</td>
+      <td>[{'affiliations': [{'city': 'Cambridge', 'city...</td>
+      <td>4</td>
       <td>article</td>
       <td>8</td>
       <td>2013</td>
@@ -1502,7 +1504,7 @@ Time: 4.79s
 </div>
 <p>Pandas dataframes offer a myriad of utilities for inspecting data. Check out the <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/getting_started/10min.html">official docs</a> or google a <a class="reference external" href="https://www.google.com/search?q=pandas+tutorial">pandas tutorial</a> to lean more about it.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the table shape</span>
@@ -1511,7 +1513,7 @@ Time: 4.79s
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -1520,7 +1522,7 @@ Time: 4.79s
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the &#39;value_counts&#39; method returns the distribution of a specific field eg publication [years]</span>
@@ -1529,23 +1531,23 @@ Time: 4.79s
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-2014    256
-2013    236
-2015    192
-2016    151
-2017     99
-2018     50
-2019     16
+2014    222
+2013    183
+2015    173
+2016    155
+2017    125
+2018     83
+2019     59
 Name: year, dtype: int64
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># eg distribution of publication [type]</span>
@@ -1554,14 +1556,14 @@ Name: year, dtype: int64
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-article      996
-book           2
-monograph      2
+article      995
+monograph      4
+book           1
 Name: type, dtype: int64
 </pre></div></div>
 </div>
@@ -1577,7 +1579,7 @@ Name: type, dtype: int64
 </div></blockquote>
 <p>This methods allows to quickly extract that data and return a dataframe with <strong>one row per author</strong>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">authors</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">as_dataframe_authors</span><span class="p">()</span>
@@ -1586,7 +1588,7 @@ Name: type, dtype: int64
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1622,6 +1624,30 @@ Name: type, dtype: int64
   <tbody>
     <tr>
       <th>0</th>
+      <td>[{'city': 'Manchester', 'city_id': 2643123, 'c...</td>
+      <td></td>
+      <td>grid.5379.8</td>
+      <td>A. K.</td>
+      <td>Geim</td>
+      <td>[0000-0003-2861-8331]</td>
+      <td>[School of Physics and Astronomy, University o...</td>
+      <td>ur.0721730631.45</td>
+      <td>pub.1024857999</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>[{'city': 'Manchester', 'city_id': 2643123, 'c...</td>
+      <td>True</td>
+      <td>grid.5379.8</td>
+      <td>I. V.</td>
+      <td>Grigorieva</td>
+      <td>[0000-0001-5991-7778]</td>
+      <td>[School of Physics and Astronomy, University o...</td>
+      <td>ur.0767105504.29</td>
+      <td>pub.1024857999</td>
+    </tr>
+    <tr>
+      <th>2</th>
       <td>[{'city': 'New Brunswick', 'city_id': 5101717,...</td>
       <td>True</td>
       <td>grid.5335.0</td>
@@ -1633,7 +1659,7 @@ Name: type, dtype: int64
       <td>pub.1050119463</td>
     </tr>
     <tr>
-      <th>1</th>
+      <th>3</th>
       <td>[{'city': 'Ulsan', 'city_id': 1833747, 'countr...</td>
       <td></td>
       <td>grid.42687.3f</td>
@@ -1645,7 +1671,7 @@ Name: type, dtype: int64
       <td>pub.1050119463</td>
     </tr>
     <tr>
-      <th>2</th>
+      <th>4</th>
       <td>[{'city': 'Singapore', 'city_id': 1880252, 'co...</td>
       <td></td>
       <td>grid.4280.e</td>
@@ -1656,37 +1682,13 @@ Name: type, dtype: int64
       <td>ur.01150450507.27</td>
       <td>pub.1050119463</td>
     </tr>
-    <tr>
-      <th>3</th>
-      <td>[{'city': 'Taipei', 'city_id': 1668341, 'count...</td>
-      <td></td>
-      <td>grid.45672.32</td>
-      <td>Lain-Jong</td>
-      <td>Li</td>
-      <td>[0000-0002-4059-7783]</td>
-      <td>[Institute of Atomic and Molecular Sciences, A...</td>
-      <td>ur.01313340113.13</td>
-      <td>pub.1050119463</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>[{'city': 'Singapore', 'city_id': 1880252, 'co...</td>
-      <td></td>
-      <td>grid.4280.e</td>
-      <td>Kian Ping</td>
-      <td>Loh</td>
-      <td>[0000-0002-1491-743X]</td>
-      <td>[Department of Chemistry, National University ...</td>
-      <td>ur.0752174033.73</td>
-      <td>pub.1050119463</td>
-    </tr>
   </tbody>
 </table>
 </div></div>
 </div>
 <p>Using the authors dataframe, we can easily get the top ten values for <code class="docutils literal notranslate"><span class="pre">current_organization_id</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">authors</span><span class="p">[</span><span class="s1">&#39;current_organization_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[:</span><span class="mi">10</span><span class="p">]</span>
@@ -1694,21 +1696,21 @@ Name: type, dtype: int64
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-grid.168010.e    157
-                 148
-grid.59053.3a     96
-grid.19006.3e     95
-grid.59025.3b     92
-grid.12527.33     82
-grid.41156.37     70
-grid.116068.8     69
-grid.47840.3f     59
-grid.166341.7     58
+grid.168010.e    148
+                 133
+grid.59025.3b     83
+grid.12527.33     81
+grid.59053.3a     78
+grid.19006.3e     78
+grid.166341.7     65
+grid.41156.37     64
+grid.89336.37     63
+grid.116068.8     60
 Name: current_organization_id, dtype: int64
 </pre></div></div>
 </div>
@@ -1725,7 +1727,7 @@ Name: current_organization_id, dtype: int64
 <p>The <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors_affiliations</span></code> method allows to quickly extract that affiliations data and return a dataframe with <strong>one row per affiliation</strong>.</p>
 <p>This can be useful e.g. if one wants to count research organizations at <em>the time of writing</em> (as opposed to <code class="docutils literal notranslate"><span class="pre">current_organization_id</span></code>, which is the <em>most recent organization</em> of a researcher).</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">affiliations</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">as_dataframe_authors_affiliations</span><span class="p">()</span>
@@ -1734,7 +1736,7 @@ Name: current_organization_id, dtype: int64
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1774,6 +1776,54 @@ Name: current_organization_id, dtype: int64
   <tbody>
     <tr>
       <th>0</th>
+      <td>Manchester</td>
+      <td>2643123.0</td>
+      <td>United Kingdom</td>
+      <td>GB</td>
+      <td>grid.5379.8</td>
+      <td>University of Manchester</td>
+      <td>School of Physics and Astronomy, University of...</td>
+      <td></td>
+      <td></td>
+      <td>pub.1024857999</td>
+      <td>ur.0721730631.45</td>
+      <td>A. K.</td>
+      <td>Geim</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Manchester</td>
+      <td>2643123.0</td>
+      <td>United Kingdom</td>
+      <td>GB</td>
+      <td>grid.5379.8</td>
+      <td>University of Manchester</td>
+      <td>Centre for Mesoscience and Nanotechnology, Uni...</td>
+      <td></td>
+      <td></td>
+      <td>pub.1024857999</td>
+      <td>ur.0721730631.45</td>
+      <td>A. K.</td>
+      <td>Geim</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Manchester</td>
+      <td>2643123.0</td>
+      <td>United Kingdom</td>
+      <td>GB</td>
+      <td>grid.5379.8</td>
+      <td>University of Manchester</td>
+      <td>School of Physics and Astronomy, University of...</td>
+      <td></td>
+      <td></td>
+      <td>pub.1024857999</td>
+      <td>ur.0767105504.29</td>
+      <td>I. V.</td>
+      <td>Grigorieva</td>
+    </tr>
+    <tr>
+      <th>3</th>
       <td>New Brunswick</td>
       <td>5101717.0</td>
       <td>United States</td>
@@ -1789,7 +1839,7 @@ Name: current_organization_id, dtype: int64
       <td>Chhowalla</td>
     </tr>
     <tr>
-      <th>1</th>
+      <th>4</th>
       <td>Ulsan</td>
       <td>1833747.0</td>
       <td>South Korea</td>
@@ -1804,60 +1854,12 @@ Name: current_organization_id, dtype: int64
       <td>Hyeon Suk</td>
       <td>Shin</td>
     </tr>
-    <tr>
-      <th>2</th>
-      <td>Singapore</td>
-      <td>1880252.0</td>
-      <td>Singapore</td>
-      <td>SG</td>
-      <td>grid.4280.e</td>
-      <td>National University of Singapore</td>
-      <td>Department of Physics, National University of ...</td>
-      <td></td>
-      <td></td>
-      <td>pub.1050119463</td>
-      <td>ur.01150450507.27</td>
-      <td>Goki</td>
-      <td>Eda</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Singapore</td>
-      <td>1880252.0</td>
-      <td>Singapore</td>
-      <td>SG</td>
-      <td>grid.4280.e</td>
-      <td>National University of Singapore</td>
-      <td>Department of Chemistry, National University o...</td>
-      <td></td>
-      <td></td>
-      <td>pub.1050119463</td>
-      <td>ur.01150450507.27</td>
-      <td>Goki</td>
-      <td>Eda</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Singapore</td>
-      <td>1880252.0</td>
-      <td>Singapore</td>
-      <td>SG</td>
-      <td>grid.4280.e</td>
-      <td>National University of Singapore</td>
-      <td>Graphene Research Centre, National University ...</td>
-      <td></td>
-      <td></td>
-      <td>pub.1050119463</td>
-      <td>ur.01150450507.27</td>
-      <td>Goki</td>
-      <td>Eda</td>
-    </tr>
   </tbody>
 </table>
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">affiliations</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>
@@ -1865,7 +1867,7 @@ Name: current_organization_id, dtype: int64
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1905,45 +1907,45 @@ Name: current_organization_id, dtype: int64
   <tbody>
     <tr>
       <th>count</th>
-      <td>8240</td>
-      <td>8240.0</td>
-      <td>8240</td>
-      <td>8240</td>
-      <td>8240</td>
-      <td>8240</td>
-      <td>8240</td>
-      <td>8240</td>
-      <td>8240</td>
-      <td>8240</td>
-      <td>8240</td>
-      <td>8240</td>
-      <td>8240</td>
+      <td>8353</td>
+      <td>8353</td>
+      <td>8353</td>
+      <td>8353</td>
+      <td>8353</td>
+      <td>8353</td>
+      <td>8353</td>
+      <td>8353</td>
+      <td>8353</td>
+      <td>8353</td>
+      <td>8353</td>
+      <td>8353</td>
+      <td>8353</td>
     </tr>
     <tr>
       <th>unique</th>
-      <td>519</td>
-      <td>522.0</td>
-      <td>56</td>
-      <td>56</td>
-      <td>816</td>
-      <td>1161</td>
-      <td>3008</td>
-      <td>108</td>
-      <td>55</td>
+      <td>524</td>
+      <td>527</td>
+      <td>52</td>
+      <td>52</td>
+      <td>852</td>
+      <td>1132</td>
+      <td>3155</td>
+      <td>106</td>
+      <td>53</td>
       <td>990</td>
-      <td>4506</td>
-      <td>3568</td>
-      <td>2287</td>
+      <td>4619</td>
+      <td>3645</td>
+      <td>2406</td>
     </tr>
     <tr>
       <th>top</th>
-      <td>Beijing</td>
-      <td>1816670.0</td>
+      <td></td>
+      <td></td>
       <td>United States</td>
       <td>US</td>
       <td></td>
       <td>Stanford University</td>
-      <td></td>
+      <td>Department of Materials Science and Engineerin...</td>
       <td></td>
       <td></td>
       <td>pub.1019661721</td>
@@ -1953,19 +1955,19 @@ Name: current_organization_id, dtype: int64
     </tr>
     <tr>
       <th>freq</th>
-      <td>604</td>
-      <td>604.0</td>
-      <td>2664</td>
-      <td>2664</td>
-      <td>944</td>
-      <td>280</td>
-      <td>263</td>
-      <td>5084</td>
-      <td>5278</td>
+      <td>555</td>
+      <td>555</td>
+      <td>2758</td>
+      <td>2758</td>
+      <td>830</td>
+      <td>300</td>
+      <td>48</td>
+      <td>5129</td>
+      <td>5333</td>
       <td>108</td>
-      <td>172</td>
+      <td>161</td>
       <td>70</td>
-      <td>331</td>
+      <td>308</td>
     </tr>
   </tbody>
 </table>
@@ -1973,7 +1975,7 @@ Name: current_organization_id, dtype: int64
 </div>
 <p>Let’s get the top ten values for <code class="docutils literal notranslate"><span class="pre">aff_id</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">affiliations</span><span class="p">[</span><span class="s1">&#39;aff_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[:</span><span class="mi">10</span><span class="p">]</span>
@@ -1981,27 +1983,27 @@ Name: current_organization_id, dtype: int64
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-                 944
-grid.168010.e    280
-grid.59025.3b    195
-grid.166341.7    129
-grid.19006.3e    121
-grid.8217.c      112
-grid.12527.33    106
+                 830
+grid.168010.e    300
+grid.59025.3b    185
+grid.166341.7    146
+grid.8217.c      130
+grid.19006.3e    119
+grid.12527.33    105
 grid.21729.3f     99
-grid.5379.8       91
-grid.116068.8     91
+grid.5379.8       94
+grid.116068.8     93
 Name: aff_id, dtype: int64
 </pre></div></div>
 </div>
 <p>Another example: we can now easily analyze the data by country too.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">affiliations</span><span class="p">[</span><span class="s1">&#39;aff_country&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[:</span><span class="mi">10</span><span class="p">]</span>
@@ -2009,21 +2011,21 @@ Name: aff_id, dtype: int64
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-United States     2664
-China             2021
-                   451
-United Kingdom     395
-Singapore          310
-Germany            286
-South Korea        282
-Japan              212
-Australia          170
-Canada             167
+United States     2758
+China             2072
+United Kingdom     377
+                   375
+Germany            311
+Singapore          298
+South Korea        231
+Japan              225
+Australia          187
+Switzerland        140
 Name: aff_country, dtype: int64
 </pre></div></div>
 </div>
@@ -2039,7 +2041,7 @@ Name: aff_country, dtype: int64
 <p>Grant funders authors are usually returned by the Dimensions API inside a nested JSON object in the <code class="docutils literal notranslate"><span class="pre">funders</span></code> sub-key.</p>
 <p>This methods allows to quickly extract that data and return a dataframe with <strong>one row per funder</strong>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get a sample list of grants</span>
@@ -2053,12 +2055,12 @@ Name: aff_country, dtype: int64
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Grants: 1000 (total = 12941)
-Time: 1.52s
+Returned Grants: 1000 (total = 14738)
+Time: 1.13s
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span><span class="o">.</span><span class="n">as_dataframe_funders</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
@@ -2066,7 +2068,7 @@ Time: 1.52s
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -2088,16 +2090,6 @@ Time: 1.52s
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>acronym</th>
-      <th>city_name</th>
-      <th>country_name</th>
-      <th>id</th>
-      <th>latitude</th>
-      <th>linkout</th>
-      <th>longitude</th>
-      <th>name</th>
-      <th>types</th>
-      <th>state_name</th>
       <th>grant_id</th>
       <th>grant_title</th>
       <th>grant_start_date</th>
@@ -2105,176 +2097,6 @@ Time: 1.52s
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th>0</th>
-      <td>EC</td>
-      <td>Brussels</td>
-      <td>Belgium</td>
-      <td>grid.270680.b</td>
-      <td>50.851650</td>
-      <td>[http://ec.europa.eu/index_en.htm]</td>
-      <td>4.363670</td>
-      <td>European Commission</td>
-      <td>[Government]</td>
-      <td>NaN</td>
-      <td>grant.9661764</td>
-      <td>In vitro brain microvascular model to tackle f...</td>
-      <td>2022-09-01</td>
-      <td>2024-08-31</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>EDCTP</td>
-      <td>The Hague</td>
-      <td>Netherlands</td>
-      <td>grid.453375.3</td>
-      <td>52.080574</td>
-      <td>[http://www.edctp.org/]</td>
-      <td>4.344426</td>
-      <td>European &amp; Developing Countries Clinical Trial...</td>
-      <td>[Nonprofit]</td>
-      <td>NaN</td>
-      <td>grant.9764814</td>
-      <td>Role of host immune responses in Plasmodium fa...</td>
-      <td>2022-04-01</td>
-      <td>2024-01-29</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>FRQS</td>
-      <td>Montreal</td>
-      <td>Canada</td>
-      <td>grid.453037.6</td>
-      <td>45.506490</td>
-      <td>[http://www.frqs.gouv.qc.ca/en/]</td>
-      <td>-73.572200</td>
-      <td>Fonds de Recherche du Québec - Santé</td>
-      <td>[Government]</td>
-      <td>Quebec</td>
-      <td>grant.9721403</td>
-      <td>Elucidation of the mechanisms controlling prot...</td>
-      <td>2022-04-01</td>
-      <td>2025-03-31</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>BBSRC</td>
-      <td>Swindon</td>
-      <td>United Kingdom</td>
-      <td>grid.418100.c</td>
-      <td>51.566742</td>
-      <td>[http://www.bbsrc.ac.uk/]</td>
-      <td>-1.784771</td>
-      <td>Biotechnology and Biological Sciences Research...</td>
-      <td>[Government]</td>
-      <td>Wiltshire</td>
-      <td>grant.9779816</td>
-      <td>BBSRC-NSF/BIO - Host immune suppression as a k...</td>
-      <td>2022-03-01</td>
-      <td>2025-02-28</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>ANR</td>
-      <td>Paris</td>
-      <td>France</td>
-      <td>grid.22058.3d</td>
-      <td>48.845260</td>
-      <td>[http://www.agence-nationale-recherche.fr/en/p...</td>
-      <td>2.377769</td>
-      <td>National Agency for Research</td>
-      <td>[Government]</td>
-      <td>NaN</td>
-      <td>grant.9947992</td>
-      <td>Ivermectin Fluorescent drug to decipher molecu...</td>
-      <td>2022-01-20</td>
-      <td>2025-07-19</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>ANR</td>
-      <td>Paris</td>
-      <td>France</td>
-      <td>grid.22058.3d</td>
-      <td>48.845260</td>
-      <td>[http://www.agence-nationale-recherche.fr/en/p...</td>
-      <td>2.377769</td>
-      <td>National Agency for Research</td>
-      <td>[Government]</td>
-      <td>NaN</td>
-      <td>grant.9947714</td>
-      <td>Setting boundaries: Cohesin and mutually exclu...</td>
-      <td>2022-01-20</td>
-      <td>2025-01-19</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>ANR</td>
-      <td>Paris</td>
-      <td>France</td>
-      <td>grid.22058.3d</td>
-      <td>48.845260</td>
-      <td>[http://www.agence-nationale-recherche.fr/en/p...</td>
-      <td>2.377769</td>
-      <td>National Agency for Research</td>
-      <td>[Government]</td>
-      <td>NaN</td>
-      <td>grant.9947606</td>
-      <td>The epigenetic role of MORC in apicomplexan li...</td>
-      <td>2022-01-20</td>
-      <td>2026-01-19</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>FCT</td>
-      <td>Lisbon</td>
-      <td>Portugal</td>
-      <td>grid.22919.31</td>
-      <td>38.709667</td>
-      <td>[http://www.fct.pt/]</td>
-      <td>-9.153090</td>
-      <td>Foundation for Science and Technology</td>
-      <td>[Nonprofit]</td>
-      <td>NaN</td>
-      <td>grant.9951207</td>
-      <td>Plasmodium exploitation of host immune complem...</td>
-      <td>2022-01-03</td>
-      <td>2023-07-02</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>SNF</td>
-      <td>Bern</td>
-      <td>Switzerland</td>
-      <td>grid.425888.b</td>
-      <td>46.949230</td>
-      <td>[http://www.snf.ch/en]</td>
-      <td>7.432395</td>
-      <td>Swiss National Science Foundation</td>
-      <td>[Government]</td>
-      <td>NaN</td>
-      <td>grant.9959780</td>
-      <td>Structural basis of erythrocyte invasion by Pl...</td>
-      <td>2022-01-01</td>
-      <td>2023-12-31</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>NHMRC</td>
-      <td>Canberra</td>
-      <td>Australia</td>
-      <td>grid.431143.0</td>
-      <td>-35.281240</td>
-      <td>[https://www.nhmrc.gov.au/]</td>
-      <td>149.123730</td>
-      <td>National Health and Medical Research Council</td>
-      <td>[Government]</td>
-      <td>Australian Capital Territory</td>
-      <td>grant.9707893</td>
-      <td>Intermittent preventive treatment in pregnancy...</td>
-      <td>2022-01-01</td>
-      <td>2025-12-31</td>
-    </tr>
   </tbody>
 </table>
 </div></div>
@@ -2288,7 +2110,7 @@ Time: 1.52s
 <div><p>NOTE: <code class="docutils literal notranslate"><span class="pre">investigators</span></code> are not returned by default in a grants query hence one must specify this in the query results</p>
 </div></blockquote>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get a sample list of grants</span>
@@ -2302,12 +2124,14 @@ Time: 1.52s
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Grants: 1000 (total = 12941)
-Time: 2.29s
+Returned Grants: 1000 (total = 14738)
+Time: 1.74s
+WARNINGS [1]
+Field &#39;grant_number&#39; is deprecated in favor of project_numbers. Please refer to https://docs.dimensions.ai/dsl/releasenotes.html for more details
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span><span class="o">.</span><span class="n">as_dataframe_investigators</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
@@ -2315,7 +2139,7 @@ Time: 2.29s
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -2337,6 +2161,12 @@ Time: 2.29s
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>affiliations</th>
+      <th>first_name</th>
+      <th>id</th>
+      <th>last_name</th>
+      <th>middle_name</th>
+      <th>role</th>
       <th>grant_id</th>
       <th>grant_title</th>
       <th>grant_start_date</th>
@@ -2344,6 +2174,136 @@ Time: 2.29s
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <th>0</th>
+      <td>[{'city': 'Melbourne', 'city_id': '2158177', '...</td>
+      <td>Coralie</td>
+      <td>None</td>
+      <td>Boulet</td>
+      <td></td>
+      <td>PI</td>
+      <td>grant.13535694</td>
+      <td>Regulation of Plasmodium falciparum egress fro...</td>
+      <td>2024-02-01</td>
+      <td>2026-01-31</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>[{'city': 'São Paulo', 'city_id': '3448439', '...</td>
+      <td>Célia</td>
+      <td>ur.01311140517.22</td>
+      <td>da Silva Garcia</td>
+      <td>Regina</td>
+      <td>PI</td>
+      <td>grant.9698278</td>
+      <td>Calcium signaling in Plasmodium falciparum gam...</td>
+      <td>2023-11-01</td>
+      <td>2023-12-15</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>[{'city': 'Allschwil 3', 'city_id': '2661604',...</td>
+      <td>Penelope</td>
+      <td>ur.01356421006.17</td>
+      <td>Vounatsou</td>
+      <td></td>
+      <td>PI</td>
+      <td>grant.13219531</td>
+      <td>Spatio-temporal modelling of climate variabili...</td>
+      <td>2023-10-01</td>
+      <td>2026-09-30</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>[{'city': 'Heidelberg', 'city_id': '2907911', ...</td>
+      <td>Ina</td>
+      <td>ur.01006224125.53</td>
+      <td>Danquah</td>
+      <td></td>
+      <td>PI</td>
+      <td>grant.13219531</td>
+      <td>Spatio-temporal modelling of climate variabili...</td>
+      <td>2023-10-01</td>
+      <td>2026-09-30</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>[{'city': None, 'city_id': '184745', 'country'...</td>
+      <td>Stephen</td>
+      <td>ur.01363557726.68</td>
+      <td>Munga</td>
+      <td></td>
+      <td>Co-PI</td>
+      <td>grant.13219531</td>
+      <td>Spatio-temporal modelling of climate variabili...</td>
+      <td>2023-10-01</td>
+      <td>2026-09-30</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>[{'city': None, 'city_id': '2357163', 'country...</td>
+      <td>Ali</td>
+      <td>ur.01057017117.60</td>
+      <td>Sié</td>
+      <td></td>
+      <td>Co-PI</td>
+      <td>grant.13219531</td>
+      <td>Spatio-temporal modelling of climate variabili...</td>
+      <td>2023-10-01</td>
+      <td>2026-09-30</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>[{'city': 'SAN ANTONIO', 'city_id': '4726206',...</td>
+      <td>Zhuolin</td>
+      <td>None</td>
+      <td>Qu</td>
+      <td>None</td>
+      <td>PI</td>
+      <td>grant.13535333</td>
+      <td>LEAPS-MPS: Development of Novel Multistage Mod...</td>
+      <td>2023-09-01</td>
+      <td>2025-08-31</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>[{'city': None, 'city_id': '2648579', 'country...</td>
+      <td>Matthias</td>
+      <td>ur.01315014330.55</td>
+      <td>Marti</td>
+      <td></td>
+      <td>PI</td>
+      <td>grant.13306682</td>
+      <td>Defining molecular determinants of Plasmodium ...</td>
+      <td>2023-08-31</td>
+      <td>2025-08-30</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>[{'city': None, 'city_id': '2648579', 'country...</td>
+      <td>Barbara</td>
+      <td>ur.013052533674.51</td>
+      <td>Stokes</td>
+      <td>Hoyt</td>
+      <td>PI</td>
+      <td>grant.13306682</td>
+      <td>Defining molecular determinants of Plasmodium ...</td>
+      <td>2023-08-31</td>
+      <td>2025-08-30</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>NaN</td>
+      <td>Victor</td>
+      <td>None</td>
+      <td>Yman</td>
+      <td></td>
+      <td>PI</td>
+      <td>grant.13528667</td>
+      <td>Integrated serological surveillance of malaria...</td>
+      <td>2023-07-01</td>
+      <td>2026-06-30</td>
+    </tr>
   </tbody>
 </table>
 </div></div>
@@ -2369,7 +2329,7 @@ Time: 2.29s
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">as_dataframe_concepts</span></code> extracts all concepts data from JSON to a dataframe (ps this is functionally similarly to pandas’s <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.explode.html">explode method</a>). Moreover, it automatically creates a number of metrics that can be used to carry out further analyses, like <code class="docutils literal notranslate"><span class="pre">frequency</span></code> and <code class="docutils literal notranslate"><span class="pre">score_avg</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search publications for &quot;graphene&quot;</span>
@@ -2390,14 +2350,14 @@ Time: 2.29s
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Publications: 100 (total = 116623)
-Time: 1.15s
-Concepts found:  5346
-Unique:  3339
+Returned Publications: 100 (total = 119693)
+Time: 5.27s
+Concepts found:  5053
+Unique:  3213
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -2432,65 +2392,65 @@ Unique:  3339
   <tbody>
     <tr>
       <th>0</th>
-      <td>pub.1129328198</td>
-      <td>Study of mechanochemistry of carbon nanotube u...</td>
+      <td>pub.1146069136</td>
+      <td>Physical Characteristics of Cement Mortar Prep...</td>
       <td>2019</td>
-      <td>6</td>
-      <td>study</td>
-      <td>0.088</td>
-      <td>31</td>
-      <td>0.21619</td>
+      <td>7</td>
+      <td>characteristics</td>
+      <td>0.070</td>
+      <td>10</td>
+      <td>0.30910</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>pub.1129328198</td>
-      <td>Study of mechanochemistry of carbon nanotube u...</td>
+      <td>pub.1146069136</td>
+      <td>Physical Characteristics of Cement Mortar Prep...</td>
       <td>2019</td>
-      <td>6</td>
-      <td>principles</td>
-      <td>0.047</td>
-      <td>2</td>
-      <td>0.13200</td>
+      <td>7</td>
+      <td>physical characteristics</td>
+      <td>0.068</td>
+      <td>1</td>
+      <td>0.06800</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>pub.1129328198</td>
-      <td>Study of mechanochemistry of carbon nanotube u...</td>
+      <td>pub.1146069136</td>
+      <td>Physical Characteristics of Cement Mortar Prep...</td>
       <td>2019</td>
-      <td>6</td>
-      <td>mechanochemistry</td>
-      <td>0.015</td>
-      <td>1</td>
-      <td>0.01500</td>
+      <td>7</td>
+      <td>oxide</td>
+      <td>0.058</td>
+      <td>14</td>
+      <td>0.42843</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>pub.1129328198</td>
-      <td>Study of mechanochemistry of carbon nanotube u...</td>
+      <td>pub.1146069136</td>
+      <td>Physical Characteristics of Cement Mortar Prep...</td>
       <td>2019</td>
-      <td>6</td>
-      <td>first principles</td>
-      <td>0.012</td>
+      <td>7</td>
+      <td>Prepared</td>
+      <td>0.046</td>
       <td>1</td>
-      <td>0.01200</td>
+      <td>0.04600</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>pub.1129328198</td>
-      <td>Study of mechanochemistry of carbon nanotube u...</td>
+      <td>pub.1146069136</td>
+      <td>Physical Characteristics of Cement Mortar Prep...</td>
       <td>2019</td>
-      <td>6</td>
-      <td>carbon nanotubes</td>
-      <td>0.010</td>
-      <td>6</td>
-      <td>0.38033</td>
+      <td>7</td>
+      <td>glass</td>
+      <td>0.026</td>
+      <td>2</td>
+      <td>0.22250</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">concepts</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s2">&quot;concept&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;score_avg&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)[[</span><span class="s1">&#39;concept&#39;</span><span class="p">,</span> <span class="s1">&#39;score_avg&#39;</span><span class="p">]]</span>
@@ -2498,7 +2458,7 @@ Unique:  3339
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -2526,54 +2486,54 @@ Unique:  3339
   </thead>
   <tbody>
     <tr>
-      <th>1660</th>
+      <th>1693</th>
       <td>mesoporous silica nanoparticles</td>
-      <td>0.919</td>
-    </tr>
-    <tr>
-      <th>550</th>
-      <td>two-dimensional transition metal dichalcogenides</td>
       <td>0.918</td>
     </tr>
     <tr>
-      <th>551</th>
+      <th>558</th>
+      <td>two-dimensional transition metal dichalcogenides</td>
+      <td>0.916</td>
+    </tr>
+    <tr>
+      <th>3216</th>
+      <td>quantum state transfer</td>
+      <td>0.906</td>
+    </tr>
+    <tr>
+      <th>559</th>
       <td>spin-orbit coupling</td>
-      <td>0.903</td>
+      <td>0.901</td>
     </tr>
     <tr>
-      <th>4333</th>
-      <td>fiber Bragg grating</td>
-      <td>0.885</td>
-    </tr>
-    <tr>
-      <th>2793</th>
-      <td>oxygen reduction reaction</td>
-      <td>0.882</td>
-    </tr>
-    <tr>
-      <th>3465</th>
+      <th>4377</th>
       <td>MoP/SiO2 catalyst</td>
-      <td>0.878</td>
+      <td>0.886</td>
     </tr>
     <tr>
-      <th>2335</th>
+      <th>3699</th>
+      <td>hydrogen evolution reaction</td>
+      <td>0.884</td>
+    </tr>
+    <tr>
+      <th>3700</th>
+      <td>oxygen reduction reaction</td>
+      <td>0.879</td>
+    </tr>
+    <tr>
+      <th>2862</th>
       <td>silica nano particles</td>
-      <td>0.874</td>
+      <td>0.871</td>
     </tr>
     <tr>
-      <th>552</th>
+      <th>560</th>
       <td>quantum spin Hall effect</td>
-      <td>0.872</td>
-    </tr>
-    <tr>
-      <th>2794</th>
-      <td>oxygen evolution reaction</td>
       <td>0.870</td>
     </tr>
     <tr>
-      <th>553</th>
+      <th>561</th>
       <td>Ising spin-orbit coupling</td>
-      <td>0.869</td>
+      <td>0.868</td>
     </tr>
   </tbody>
 </table>
