@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Exploring The Dimensions Search Language (DSL) - Deep Dive &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
   
@@ -19,10 +19,7 @@
   
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   
-
   
-  
-
   
 
   
@@ -38,9 +35,9 @@
         <script src="../../_static/language_data.js"></script>
         <script src="../../_static/js/custom.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
-        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -75,7 +72,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> DSL
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> DSL
           
 
           
@@ -939,8 +936,6 @@
 
 
 
-
-
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -1166,7 +1161,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt .copybtn {
+.prompt a.copybtn {
     display: none;
 }
 
@@ -1242,7 +1237,8 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">datetime</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">CHANGELOG</span><span class="se">\n</span><span class="s2">This notebook was last run on </span><span class="si">%s</span><span class="se">\n</span><span class="s2">==&quot;</span> <span class="o">%</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">, %Y&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1266,7 +1262,8 @@ This notebook was last run on Jan 26, 2022
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install dimcli --quiet
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>dimcli<span class="w"> </span>--quiet
 
 <span class="kn">import</span> <span class="nn">dimcli</span>
 <span class="kn">from</span> <span class="nn">dimcli.utils</span> <span class="kn">import</span> <span class="o">*</span>
@@ -1329,7 +1326,8 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search grants return  grants limit 5
 </pre></div>
 </div>
@@ -1463,7 +1461,8 @@ Time: 0.73s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;describe schema&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;describe schema&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1481,7 +1480,8 @@ Time: 0.73s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search grants  for &quot;lung cancer&quot;
     where active_year=2000
 return  grants  limit 5
@@ -1617,7 +1617,8 @@ Time: 0.69s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search grants for &quot;laryngectomy&quot;
 return grants limit 5
 </pre></div>
@@ -1748,7 +1749,8 @@ Time: 0.54s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fields</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;describe schema&quot;</span><span class="p">)[</span><span class="s1">&#39;sources&#39;</span><span class="p">][</span><span class="s1">&#39;grants&#39;</span><span class="p">][</span><span class="s1">&#39;fields&#39;</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fields</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;describe schema&quot;</span><span class="p">)[</span><span class="s1">&#39;sources&#39;</span><span class="p">][</span><span class="s1">&#39;grants&#39;</span><span class="p">][</span><span class="s1">&#39;fields&#39;</span><span class="p">]</span>
 <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">fields</span> <span class="k">if</span> <span class="n">fields</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="s1">&#39;is_facet&#39;</span><span class="p">]]</span>
 </pre></div>
 </div>
@@ -1796,7 +1798,8 @@ Time: 0.54s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
     in full_data for &quot;moon landing&quot;
 return publications limit 5
@@ -1924,7 +1927,8 @@ Time: 1.49s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search grants
     in title_abstract_only for &quot;something&quot;
 return grants limit 5
@@ -2056,7 +2060,8 @@ Time: 0.54s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;describe schema&quot;</span><span class="p">)[</span><span class="s1">&#39;sources&#39;</span><span class="p">][</span><span class="s1">&#39;grants&#39;</span><span class="p">][</span><span class="s1">&#39;search_fields&#39;</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;describe schema&quot;</span><span class="p">)[</span><span class="s1">&#39;sources&#39;</span><span class="p">][</span><span class="s1">&#39;grants&#39;</span><span class="p">][</span><span class="s1">&#39;search_fields&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -2073,7 +2078,8 @@ Time: 0.54s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search grants
     in full_data for &quot;graphene AND computer AND iron&quot;
 return grants limit 5
@@ -2205,7 +2211,8 @@ Time: 0.55s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">dsldf</span> search publications in authors for &quot;\&quot;Jennifer A Doudna\&quot;&quot; return publications limit 5
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">dsldf</span> search publications in authors for &quot;\&quot;Jennifer A Doudna\&quot;&quot; return publications limit 5
 </pre></div>
 </div>
 </div>
@@ -2333,7 +2340,8 @@ Time: 0.69s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">dsldf</span> search publications for &quot;\&quot;Machine Learning\&quot;&quot; return publications limit 5
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">dsldf</span> search publications for &quot;\&quot;Machine Learning\&quot;&quot; return publications limit 5
 </pre></div>
 </div>
 </div>
@@ -2456,7 +2464,8 @@ Time: 1.20s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">dsldf</span> search publications for &quot;Machine Learning&quot; return publications limit 5
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">dsldf</span> search publications for &quot;Machine Learning&quot; return publications limit 5
 </pre></div>
 </div>
 </div>
@@ -2585,7 +2594,8 @@ Time: 0.71s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">dsldf</span> search publications for &quot;(dose AND concentration)&quot; return publications limit 5
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">dsldf</span> search publications for &quot;(dose AND concentration)&quot; return publications limit 5
 </pre></div>
 </div>
 </div>
@@ -2738,7 +2748,8 @@ Time: 0.99s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">dsldf</span> search publications for &quot;(dose OR concentration) AND (-malaria +africa)&quot; return publications limit 5
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">dsldf</span> search publications for &quot;(dose OR concentration) AND (-malaria +africa)&quot; return publications limit 5
 </pre></div>
 </div>
 </div>
@@ -2861,7 +2872,8 @@ Time: 0.88s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">q_inner</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot; &quot;2019-nCoV&quot; OR &quot;COVID-19&quot; OR &quot;SARS-CoV-2&quot; OR &quot;HCoV-2019&quot; OR &quot;hcov&quot; OR &quot;NCOVID-19&quot; OR</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">q_inner</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot; &quot;2019-nCoV&quot; OR &quot;COVID-19&quot; OR &quot;SARS-CoV-2&quot; OR &quot;HCoV-2019&quot; OR &quot;hcov&quot; OR &quot;NCOVID-19&quot; OR</span>
 <span class="s2">    &quot;severe acute respiratory syndrome coronavirus 2&quot; OR &quot;severe acute respiratory syndrome corona virus 2&quot;</span>
 <span class="s2">    OR ((&quot;coronavirus&quot;  OR &quot;corona virus&quot;) AND (Wuhan OR China OR novel)) &quot;&quot;&quot;</span>
 
@@ -2902,7 +2914,8 @@ Time: 4.56s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">dsldf</span> search publications in title_only for &quot;ital? malaria&quot; return publications limit 5
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">dsldf</span> search publications in title_only for &quot;ital? malaria&quot; return publications limit 5
 </pre></div>
 </div>
 </div>
@@ -3024,7 +3037,8 @@ Time: 0.90s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">dsldf</span> search publications in title_only for &quot;it* malaria&quot; return publications limit 5
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">dsldf</span> search publications in title_only for &quot;it* malaria&quot; return publications limit 5
 </pre></div>
 </div>
 </div>
@@ -3174,7 +3188,8 @@ Time: 0.65s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">dsldf</span> search publications for &quot;\&quot;formal model\&quot;~10&quot; return publications limit 5
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">dsldf</span> search publications for &quot;\&quot;formal model\&quot;~10&quot; return publications limit 5
 </pre></div>
 </div>
 </div>
@@ -3296,7 +3311,8 @@ Time: 1.48s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">dsldf</span> search publications for &quot;\&quot;digital humanities\&quot;~5  +ontology&quot; return publications limit 5
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">dsldf</span> search publications for &quot;\&quot;digital humanities\&quot;~5  +ontology&quot; return publications limit 5
 </pre></div>
 </div>
 </div>
@@ -3429,7 +3445,8 @@ Time: 1.04s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">dsldocs</span> publications
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">dsldocs</span> publications
 </pre></div>
 </div>
 </div>
@@ -3588,7 +3605,8 @@ Time: 1.04s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">dsldf</span> search publications where type = &quot;book&quot; return publications limit 5
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">dsldf</span> search publications where type = &quot;book&quot; return publications limit 5
 </pre></div>
 </div>
 </div>
@@ -3675,7 +3693,8 @@ Time: 0.56s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">dsldf</span> search publications for &quot;malaria&quot; where type = &quot;book&quot; return publications limit 5
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">dsldf</span> search publications for &quot;malaria&quot; where type = &quot;book&quot; return publications limit 5
 </pre></div>
 </div>
 </div>
@@ -3772,7 +3791,8 @@ Time: 0.61s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search grants
     for &quot;malaria&quot;
     where start_year in [ 2010 : 2015 ]
@@ -3905,7 +3925,8 @@ Time: 0.60s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search grants
     for &quot;malaria&quot;
     where research_org_names in [ &quot;UC Berkeley&quot;, &quot;UC Davis&quot;, &quot;UCLA&quot;  ]
@@ -3961,7 +3982,8 @@ Time: 0.68s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
     for &quot;malaria&quot;
     where count(research_orgs) &gt; 5
@@ -4094,7 +4116,8 @@ Time: 0.81s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
     for &quot;malaria&quot;
     where count(researchers) &gt; 50
@@ -4221,7 +4244,8 @@ Time: 1.16s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
 where count(researchers) &gt; 1
 return funders limit 5
@@ -4353,7 +4377,8 @@ Time: 2.10s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
 where count(researchers) &gt; 1
 and count(research_org_countries) &gt; 1
@@ -4480,7 +4505,8 @@ Time: 1.00s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
 where count(researchers) &gt; 1
 and count(research_org_countries) = 1
@@ -4659,7 +4685,8 @@ Time: 1.82s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">dsldf</span> search datasets where year &gt; 2010 and year &lt; 2012 return datasets limit 5
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">dsldf</span> search datasets where year &gt; 2010 and year &lt; 2012 return datasets limit 5
 </pre></div>
 </div>
 </div>
@@ -4745,7 +4772,8 @@ Time: 0.65s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">dsldf</span> search patents where assignees != &quot;grid.410484.d&quot; return patents limit 5
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">dsldf</span> search patents where assignees != &quot;grid.410484.d&quot; return patents limit 5
 </pre></div>
 </div>
 </div>
@@ -4860,7 +4888,8 @@ Time: 1.21s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search patents
     where assignee_names ~ &quot;IBM&quot;
 return assignees limit 5
@@ -4989,7 +5018,8 @@ Time: 4.83s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
     for &quot;iron graphene&quot;
     where researchers is empty
@@ -5094,7 +5124,8 @@ Time: 1.45s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">dsldf</span> search publications in authors for &quot;\&quot;Charles Peirce\&quot;&quot; return publications limit 5
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">dsldf</span> search publications in authors for &quot;\&quot;Charles Peirce\&quot;&quot; return publications limit 5
 </pre></div>
 </div>
 </div>
@@ -5231,7 +5262,8 @@ Time: 0.54s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search clinical_trials in investigators for &quot;\&quot;John Smith\&quot;&quot;
 return clinical_trials limit 5
 </pre></div>
@@ -5319,7 +5351,8 @@ Time: 1.00s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search grants in investigators for &quot;\&quot;Satoko Shimazaki\&quot;&quot;
 return grants limit 5
 </pre></div>
@@ -5435,7 +5468,8 @@ Time: 0.54s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search patents in inventors for &quot;\&quot;John Smith\&quot;&quot;
 return patents limit 5
 </pre></div>
@@ -5559,7 +5593,8 @@ Time: 0.72s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications where authors = &quot;Hawking&quot;
 return publications[id+doi+title+authors] limit 5
 </pre></div>
@@ -5650,7 +5685,8 @@ Time: 2.69s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
     in title_abstract_only for &quot;dna replication&quot;
     where authors = &quot;smith&quot;
@@ -5784,7 +5820,8 @@ Time: 1.14s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search researchers for &quot;\&quot;Satoko Shimazaki\&quot;&quot;
 return researchers[basics+obsolete]
 </pre></div>
@@ -5872,7 +5909,8 @@ Time: 0.61s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search researchers where obsolete=0 for &quot;\&quot;Satoko Shimazaki\&quot;&quot;
 return researchers[basics+obsolete]
 </pre></div>
@@ -5951,7 +5989,8 @@ Time: 1.00s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search researchers
     where obsolete=0 and last_name=&quot;Shimazaki&quot;
 return researchers[basics] limit 5
@@ -6048,7 +6087,8 @@ Time: 0.70s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
 return funders limit 5
 return research_orgs limit 5
@@ -6188,7 +6228,8 @@ Time: 3.56s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search grants
 return grants[grant_number + title + language] limit 5
 </pre></div>
@@ -6270,7 +6311,8 @@ Time: 0.59s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search clinical_trials
 return clinical_trials [id+ title + acronym + phase] limit 5
 </pre></div>
@@ -6361,7 +6403,8 @@ Time: 0.53s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search grants
 return grants [basics] limit 5
 </pre></div>
@@ -6491,7 +6534,8 @@ Time: 0.57s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
 return publications [basics+times_cited] limit 5
 </pre></div>
@@ -6622,7 +6666,8 @@ Time: 1.29s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
 return publications [all] limit 5
 </pre></div>
@@ -6649,7 +6694,8 @@ Semantic errors found:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
     for &quot;coronavirus&quot;
 return research_orgs limit 5
@@ -6780,7 +6826,8 @@ Time: 0.59s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
     for &quot;coronavirus&quot;
 return research_org_countries limit 5
@@ -6871,7 +6918,8 @@ Time: 0.91s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsl</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsl</span>
 search publications
 return in &quot;facets&quot; funders
 return in &quot;facets&quot; research_orgs
@@ -6904,7 +6952,8 @@ Time: 2.74s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
   where year in [2013:2018] and research_orgs=&quot;grid.258806.1&quot;
 return publications limit 5
@@ -7031,7 +7080,8 @@ Time: 0.68s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
   where year in [2013:2018] and research_orgs=&quot;grid.258806.1&quot;
 return researchers limit 5
@@ -7138,7 +7188,8 @@ Time: 0.77s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications return publications limit 10
 </pre></div>
 </div>
@@ -7338,7 +7389,8 @@ return grants limit 10 skip 20   =&gt; get another 10 for page 3, for a total of
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search grants
     for &quot;nanomaterials&quot;
 return grants sort by title desc limit 5
@@ -7469,7 +7521,8 @@ Time: 0.71s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search grants
     for &quot;nanomaterials&quot;
 return grants  sort by relevance desc limit 5
@@ -7601,7 +7654,8 @@ Time: 0.56s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[59]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
 return publications  [doi + times_cited]
     sort by times_cited limit 5
@@ -7679,7 +7733,8 @@ Time: 1.27s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
 return publications [doi + recent_citations]
     sort by recent_citations limit 5
@@ -7757,7 +7812,8 @@ Time: 1.21s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[61]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
     for &quot;nanomaterials&quot;
 return research_orgs
@@ -7908,7 +7964,8 @@ objects, not the unnested one. If multiple fields are being unnested, then a car
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[62]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 
 search publications for &quot;Japan AND Buddhism&quot;
     where researchers is not empty
@@ -8220,7 +8277,8 @@ Time: 1.38s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[63]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 
 search publications for &quot;Japan AND Buddhism&quot;
 return publications[id+year+title+unnest(category_for)] limit 5
@@ -8372,7 +8430,8 @@ Time: 1.00s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[64]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 
 search publications for &quot;Japan AND Buddhism&quot;
 return publications[id+year+title+unnest(category_for)+unnest(researchers)+unnest(research_orgs)] limit 5
@@ -8999,7 +9058,8 @@ Time: 0.70s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[65]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
     where year &gt; 2010
 return research_orgs
@@ -9145,7 +9205,8 @@ Time: 19.81s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[66]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">schema</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;describe schema&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">schema</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;describe schema&quot;</span><span class="p">)</span>
 <span class="n">sources</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">schema</span><span class="p">[</span><span class="s1">&#39;sources&#39;</span><span class="p">]]</span>
 <span class="c1"># for each source name, extract metrics info</span>
 <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sources</span><span class="p">:</span>
@@ -9196,7 +9257,8 @@ SOURCE: source_titles
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[67]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search grants
     for &quot;5g network&quot;
 return funders
@@ -9335,7 +9397,8 @@ Time: 0.63s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[68]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
     for &quot;ontologies&quot;
 return funders
@@ -9475,7 +9538,8 @@ Time: 1.09s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[69]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
 return funders
     aggregate citations_avg
@@ -9614,7 +9678,8 @@ Time: 2.75s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[70]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
 return funders
     aggregate fcr_gavg limit 5
@@ -9752,7 +9817,8 @@ Time: 4.59s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[71]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
 return funders aggregate altmetric_median
     sort by altmetric_median limit 5
@@ -9896,7 +9962,8 @@ Time: 8.40s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[72]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 
 search publications for &quot;brexit&quot;
 return citations_per_year(2010, 2020)
@@ -9996,11 +10063,13 @@ Time: 1.07s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[73]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
 
 search grants for &quot;brexit&quot;
 return funding_per_year(2010, 2020, &quot;USD&quot;)
-<br/></pre></div>
+
+</pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
@@ -10106,6 +10175,7 @@ Time: 0.57s
            
           </div>
           <footer>
+  
 
   <hr/>
 
@@ -10124,6 +10194,7 @@ Time: 0.57s
 
 
 </footer>
+
         </div>
       </div>
 

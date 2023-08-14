@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Citation Analysis: an Introduction &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
   
@@ -19,10 +19,7 @@
   
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   
-
   
-  
-
   
 
   
@@ -38,9 +35,9 @@
         <script src="../../_static/language_data.js"></script>
         <script src="../../_static/js/custom.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
-        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -75,7 +72,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> DSL
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> DSL
           
 
           
@@ -939,8 +936,6 @@
 
 
 
-
-
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -1166,7 +1161,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt .copybtn {
+.prompt a.copybtn {
     display: none;
 }
 
@@ -1238,7 +1233,8 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">datetime</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">CHANGELOG</span><span class="se">\n</span><span class="s2">This notebook was last run on </span><span class="si">%s</span><span class="se">\n</span><span class="s2">==&quot;</span> <span class="o">%</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">, %Y&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1265,7 +1261,8 @@ This notebook was last run on Aug 08, 2023
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install dimcli pyvis -U --quiet
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>dimcli<span class="w"> </span>pyvis<span class="w"> </span>-U<span class="w"> </span>--quiet
 
 <span class="kn">import</span> <span class="nn">dimcli</span>
 <span class="kn">from</span> <span class="nn">dimcli.utils</span> <span class="kn">import</span> <span class="o">*</span>
@@ -1323,7 +1320,8 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">dsldf</span> search publications where reference_ids in [ &quot;pub.1053279155&quot; ] return publications[id+doi+title+year]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">dsldf</span> search publications where reference_ids in [ &quot;pub.1053279155&quot; ] return publications[id+doi+title+year]
 </pre></div>
 </div>
 </div>
@@ -1424,7 +1422,8 @@ Time: 6.00s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">dsldf</span> search publications where reference_ids in [ &quot;pub.1103275659&quot; ] return publications[id+doi+title+year]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">dsldf</span> search publications where reference_ids in [ &quot;pub.1103275659&quot; ] return publications[id+doi+title+year]
 </pre></div>
 </div>
 </div>
@@ -1607,7 +1606,8 @@ Time: 0.97s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seed</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;pub.1053279155&quot;</span> <span class="p">,</span> <span class="s2">&quot;pub.1103275659&quot;</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">seed</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;pub.1053279155&quot;</span> <span class="p">,</span> <span class="s2">&quot;pub.1103275659&quot;</span><span class="p">]</span>
 <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search publications where reference_ids in [</span><span class="si">{}</span><span class="s2">] return publications[id+doi+title+year]&quot;&quot;&quot;</span>
 <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">seed</span><span class="p">:</span>
@@ -1631,7 +1631,8 @@ Time: 0.72s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">results</span>
 </pre></div>
 </div>
 </div>
@@ -1686,7 +1687,8 @@ Time: 0.72s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">dsldf</span> search publications where reference_ids in [ &quot;pub.1053279155&quot; , &quot;pub.1103275659&quot;] return publications[id+doi+title+year]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">dsldf</span> search publications where reference_ids in [ &quot;pub.1053279155&quot; , &quot;pub.1103275659&quot;] return publications[id+doi+title+year]
 </pre></div>
 </div>
 </div>
@@ -1878,7 +1880,8 @@ Time: 5.26s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seed</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;pub.1053279155&quot;</span> <span class="p">,</span> <span class="s2">&quot;pub.1103275659&quot;</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">seed</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;pub.1053279155&quot;</span> <span class="p">,</span> <span class="s2">&quot;pub.1103275659&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1886,7 +1889,8 @@ Time: 5.26s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;search publications where reference_ids in </span><span class="si">{</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span><span class="si">}</span><span class="s2"> return publications[id+doi+title+year+reference_ids]&quot;&quot;&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;search publications where reference_ids in </span><span class="si">{</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span><span class="si">}</span><span class="s2"> return publications[id+doi+title+year+reference_ids]&quot;&quot;&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1903,7 +1907,8 @@ Time: 0.96s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">build_network_dict</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">pubs_list</span><span class="p">):</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">build_network_dict</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">pubs_list</span><span class="p">):</span>
   <span class="n">network</span><span class="o">=</span><span class="p">{</span><span class="n">x</span><span class="p">:[]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">seed</span><span class="p">}</span> <span class="c1"># seed a dictionary</span>
   <span class="k">for</span> <span class="n">pub</span> <span class="ow">in</span> <span class="n">pubs_list</span><span class="p">:</span>
     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">network</span><span class="p">:</span>
@@ -1918,7 +1923,8 @@ Time: 0.96s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">network1</span> <span class="o">=</span> <span class="n">build_network_dict</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">publications</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">network1</span> <span class="o">=</span> <span class="n">build_network_dict</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">publications</span><span class="p">)</span>
 <span class="n">network1</span>
 </pre></div>
 </div>
@@ -1959,7 +1965,8 @@ Time: 0.96s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_citing_papers</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">all_citing_papers</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">network1</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
   <span class="n">all_citing_papers</span> <span class="o">+=</span> <span class="n">x</span>
 <span class="n">all_citing_papers</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">all_citing_papers</span><span class="p">))</span>
@@ -1970,7 +1977,8 @@ Time: 0.96s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_citing_papers</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">all_citing_papers</span>
 </pre></div>
 </div>
 </div>
@@ -2007,7 +2015,8 @@ Time: 0.96s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data2</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;search publications where reference_ids in </span><span class="si">{</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">all_citing_papers</span><span class="p">)</span><span class="si">}</span><span class="s2"> return publications[id+doi+title+year+reference_ids]&quot;&quot;&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data2</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;search publications where reference_ids in </span><span class="si">{</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">all_citing_papers</span><span class="p">)</span><span class="si">}</span><span class="s2"> return publications[id+doi+title+year+reference_ids]&quot;&quot;&quot;</span><span class="p">)</span>
 <span class="n">network2</span> <span class="o">=</span> <span class="n">build_network_dict</span><span class="p">(</span><span class="n">all_citing_papers</span><span class="p">,</span> <span class="n">data2</span><span class="o">.</span><span class="n">publications</span><span class="p">)</span>
 <span class="n">network2</span>
 </pre></div>
@@ -2065,7 +2074,8 @@ Time: 4.97s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">network1</span><span class="p">,</span> <span class="o">**</span><span class="n">network2</span> <span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">final</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">network1</span><span class="p">,</span> <span class="o">**</span><span class="n">network2</span> <span class="p">)</span>
 <span class="n">final</span>
 </pre></div>
 </div>
@@ -2117,7 +2127,8 @@ Time: 4.97s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load custom version of pyvis</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># load custom version of pyvis</span>
 <span class="kn">from</span> <span class="nn">pyvis.network</span> <span class="kn">import</span> <span class="n">Network</span>
 </pre></div>
 </div>
@@ -2126,7 +2137,8 @@ Time: 4.97s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">net</span> <span class="o">=</span> <span class="n">Network</span><span class="p">(</span><span class="n">notebook</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;100%&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s2">&quot;800px&quot;</span><span class="p">,</span><span class="n">cdn_resources</span><span class="o">=</span><span class="s2">&quot;remote&quot;</span><span class="p">,</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">net</span> <span class="o">=</span> <span class="n">Network</span><span class="p">(</span><span class="n">notebook</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;100%&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s2">&quot;800px&quot;</span><span class="p">,</span><span class="n">cdn_resources</span><span class="o">=</span><span class="s2">&quot;remote&quot;</span><span class="p">,</span>
             <span class="n">neighborhood_highlight</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">select_menu</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
@@ -2208,6 +2220,7 @@ citation.html
            
           </div>
           <footer>
+  
 
   <hr/>
 
@@ -2226,6 +2239,7 @@ citation.html
 
 
 </footer>
+
         </div>
       </div>
 

@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Generating a report that monitors research topics across Dimensions sources &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
   
@@ -19,10 +19,7 @@
   
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   
-
   
-  
-
   
 
   
@@ -38,9 +35,9 @@
         <script src="../../_static/language_data.js"></script>
         <script src="../../_static/js/custom.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
-        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -75,7 +72,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> DSL
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> DSL
           
 
           
@@ -939,8 +936,6 @@
 
 
 
-
-
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -1166,7 +1161,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt .copybtn {
+.prompt a.copybtn {
     display: none;
 }
 
@@ -1242,7 +1237,8 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">datetime</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">CHANGELOG</span><span class="se">\n</span><span class="s2">This notebook was last run on </span><span class="si">%s</span><span class="se">\n</span><span class="s2">==&quot;</span> <span class="o">%</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">, %Y&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1265,7 +1261,8 @@ This notebook was last run on Jan 24, 2022
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install dimcli tqdm plotly -U --quiet
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>dimcli<span class="w"> </span>tqdm<span class="w"> </span>plotly<span class="w"> </span>-U<span class="w"> </span>--quiet
 
 <span class="kn">import</span> <span class="nn">dimcli</span>
 <span class="kn">from</span> <span class="nn">dimcli.utils</span> <span class="kn">import</span> <span class="o">*</span>
@@ -1344,7 +1341,8 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#@title Enter a Search Term</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1">#@title Enter a Search Term</span>
 
 <span class="n">search_term</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">peanut allergy</span><span class="se">\&quot;</span><span class="s2"> AND children&quot;</span>  <span class="c1">#@param {type: &quot;string&quot;}</span>
 <span class="c1">#@markdown ---</span>
@@ -1366,17 +1364,17 @@ Method: dsl.ini file
 
 <span class="n">q_template_sources</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;clinical_trials&#39;</span> <span class="p">:</span>
-      <span class="sd">&quot;&quot;&quot;search {} for \&quot;{}\&quot; where active_years={} {} return {} limit 1&quot;&quot;&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="sd">&quot;&quot;&quot;search {} for \&quot;{}\&quot; where active_years={} {} return {} limit 1&quot;&quot;&quot;</span><span class="p">,</span>
     <span class="s1">&#39;grants&#39;</span> <span class="p">:</span>
-      <span class="sd">&quot;&quot;&quot;search {} for \&quot;{}\&quot; where active_year={} {} return {} limit 1&quot;&quot;&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="sd">&quot;&quot;&quot;search {} for \&quot;{}\&quot; where active_year={} {} return {} limit 1&quot;&quot;&quot;</span><span class="p">,</span>
     <span class="s1">&#39;patents&#39;</span> <span class="p">:</span>
-      <span class="sd">&quot;&quot;&quot;search {} for \&quot;{}\&quot; where granted_year={} {} return {} limit 1&quot;&quot;&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="sd">&quot;&quot;&quot;search {} for \&quot;{}\&quot; where granted_year={} {} return {} limit 1&quot;&quot;&quot;</span><span class="p">,</span>
     <span class="s1">&#39;policy_documents&#39;</span> <span class="p">:</span>
-      <span class="sd">&quot;&quot;&quot;search {} for \&quot;{}\&quot; where year={} {} return {} limit 1&quot;&quot;&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="sd">&quot;&quot;&quot;search {} for \&quot;{}\&quot; where year={} {} return {} limit 1&quot;&quot;&quot;</span><span class="p">,</span>
     <span class="s1">&#39;datasets&#39;</span> <span class="p">:</span>
-      <span class="sd">&quot;&quot;&quot;search {} for \&quot;{}\&quot; where year={} {} return {} limit 1&quot;&quot;&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="sd">&quot;&quot;&quot;search {} for \&quot;{}\&quot; where year={} {} return {} limit 1&quot;&quot;&quot;</span><span class="p">,</span>
     <span class="s1">&#39;publications&#39;</span> <span class="p">:</span>
-      <span class="sd">&quot;&quot;&quot;search {} for \&quot;{}\&quot; where year={} {} return {} limit 1&quot;&quot;&quot;</span>
+<span class="w">      </span><span class="sd">&quot;&quot;&quot;search {} for \&quot;{}\&quot; where year={} {} return {} limit 1&quot;&quot;&quot;</span>
 <span class="p">}</span>
 
 <span class="c1"># fix Python escapes</span>
@@ -1430,7 +1428,8 @@ Subject:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The next function runs a query against each Dimensions sources</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># The next function runs a query against each Dimensions sources</span>
 
 <span class="k">def</span> <span class="nf">multi_search</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
   <span class="s2">&quot;Launch multiple keyword searches across DSL sources&quot;</span>
@@ -1605,7 +1604,8 @@ Searching in document types: [&#39;clinical_trials&#39;, &#39;grants&#39;, &#39;
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="n">as_index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">px</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="n">as_index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span>
        <span class="n">names</span><span class="o">=</span><span class="s2">&quot;source&quot;</span><span class="p">,</span>
        <span class="n">values</span><span class="o">=</span><span class="s2">&quot;objects&quot;</span><span class="p">,</span>
        <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Total documents matching the query: </span><span class="se">\&quot;</span><span class="si">{</span><span class="n">keywords</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -1646,13 +1646,15 @@ if (outputEl) {{
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">df</span><span class="p">,</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">df</span><span class="p">,</span>
         <span class="n">x</span><span class="o">=</span><span class="s2">&quot;year&quot;</span><span class="p">,</span>
         <span class="n">y</span><span class="o">=</span><span class="s2">&quot;objects&quot;</span><span class="p">,</span>
         <span class="n">line_group</span><span class="o">=</span><span class="s2">&quot;source&quot;</span><span class="p">,</span>
         <span class="n">color</span><span class="o">=</span><span class="s2">&quot;source&quot;</span><span class="p">,</span>
         <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Yearly breakdown of documents matching the query: </span><span class="se">\&quot;</span><span class="si">{</span><span class="n">keywords</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
-<br/></pre></div>
+
+</pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1713,6 +1715,7 @@ if (outputEl) {{
            
           </div>
           <footer>
+  
 
   <hr/>
 
@@ -1731,6 +1734,7 @@ if (outputEl) {{
 
 
 </footer>
+
         </div>
       </div>
 
