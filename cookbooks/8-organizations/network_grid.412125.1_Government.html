@@ -1,62 +1,357 @@
 <html>
-<head>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+    <head>
+        <meta charset="utf-8">
+        
+            <script>function neighbourhoodHighlight(params) {
+  // console.log("in nieghbourhoodhighlight");
+  allNodes = nodes.get({ returnType: "Object" });
+  // originalNodes = JSON.parse(JSON.stringify(allNodes));
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    highlightActive = true;
+    var i, j;
+    var selectedNode = params.nodes[0];
+    var degrees = 2;
+
+    // mark all nodes as hard to read.
+    for (let nodeId in allNodes) {
+      // nodeColors[nodeId] = allNodes[nodeId].color;
+      allNodes[nodeId].color = "rgba(200,200,200,0.5)";
+      if (allNodes[nodeId].hiddenLabel === undefined) {
+        allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+    var connectedNodes = network.getConnectedNodes(selectedNode);
+    var allConnectedNodes = [];
+
+    // get the second degree nodes
+    for (i = 1; i < degrees; i++) {
+      for (j = 0; j < connectedNodes.length; j++) {
+        allConnectedNodes = allConnectedNodes.concat(
+          network.getConnectedNodes(connectedNodes[j])
+        );
+      }
+    }
+
+    // all second degree nodes get a different color and their label back
+    for (i = 0; i < allConnectedNodes.length; i++) {
+      // allNodes[allConnectedNodes[i]].color = "pink";
+      allNodes[allConnectedNodes[i]].color = "rgba(150,150,150,0.75)";
+      if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[allConnectedNodes[i]].label =
+          allNodes[allConnectedNodes[i]].hiddenLabel;
+        allNodes[allConnectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // all first degree nodes get their own color and their label back
+    for (i = 0; i < connectedNodes.length; i++) {
+      // allNodes[connectedNodes[i]].color = undefined;
+      allNodes[connectedNodes[i]].color = nodeColors[connectedNodes[i]];
+      if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[connectedNodes[i]].label =
+          allNodes[connectedNodes[i]].hiddenLabel;
+        allNodes[connectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // the main node gets its own color and its label back.
+    // allNodes[selectedNode].color = undefined;
+    allNodes[selectedNode].color = nodeColors[selectedNode];
+    if (allNodes[selectedNode].hiddenLabel !== undefined) {
+      allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;
+      allNodes[selectedNode].hiddenLabel = undefined;
+    }
+  } else if (highlightActive === true) {
+    // console.log("highlightActive was true");
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      // allNodes[nodeId].color = "purple";
+      allNodes[nodeId].color = nodeColors[nodeId];
+      // delete allNodes[nodeId].color;
+      if (allNodes[nodeId].hiddenLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;
+        allNodes[nodeId].hiddenLabel = undefined;
+      }
+    }
+    highlightActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    // console.log("Nothing was selected");
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        // allNodes[nodeId].color = {};
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function filterHighlight(params) {
+  allNodes = nodes.get({ returnType: "Object" });
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    filterActive = true;
+    let selectedNodes = params.nodes;
+
+    // hiding all nodes and saving the label
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = true;
+      if (allNodes[nodeId].savedLabel === undefined) {
+        allNodes[nodeId].savedLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+
+    for (let i=0; i < selectedNodes.length; i++) {
+      allNodes[selectedNodes[i]].hidden = false;
+      if (allNodes[selectedNodes[i]].savedLabel !== undefined) {
+        allNodes[selectedNodes[i]].label = allNodes[selectedNodes[i]].savedLabel;
+        allNodes[selectedNodes[i]].savedLabel = undefined;
+      }
+    }
+
+  } else if (filterActive === true) {
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = false;
+      if (allNodes[nodeId].savedLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].savedLabel;
+        allNodes[nodeId].savedLabel = undefined;
+      }
+    }
+    filterActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function selectNode(nodes) {
+  network.selectNodes(nodes);
+  neighbourhoodHighlight({ nodes: nodes });
+  return nodes;
+}
+
+function selectNodes(nodes) {
+  network.selectNodes(nodes);
+  filterHighlight({nodes: nodes});
+  return nodes;
+}
+
+function highlightFilter(filter) {
+  let selectedNodes = []
+  let selectedProp = filter['property']
+  if (filter['item'] === 'node') {
+    let allNodes = nodes.get({ returnType: "Object" });
+    for (let nodeId in allNodes) {
+      if (allNodes[nodeId][selectedProp] && filter['value'].includes((allNodes[nodeId][selectedProp]).toString())) {
+        selectedNodes.push(nodeId)
+      }
+    }
+  }
+  else if (filter['item'] === 'edge'){
+    let allEdges = edges.get({returnType: 'object'});
+    // check if the selected property exists for selected edge and select the nodes connected to the edge
+    for (let edge in allEdges) {
+      if (allEdges[edge][selectedProp] && filter['value'].includes((allEdges[edge][selectedProp]).toString())) {
+        selectedNodes.push(allEdges[edge]['from'])
+        selectedNodes.push(allEdges[edge]['to'])
+      }
+    }
+  }
+  selectNodes(selectedNodes)
+}</script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+            
+            
+            
+            
+            
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/css/tom-select.min.css" integrity="sha512-43fHB3GLgZfz8QXl1RPQ8O66oIgv3po9cJ5erMt1c4QISq9dYb195T3vr5ImnJPXuVroKcGBPXBFKETW8jrPNQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/js/tom-select.complete.js" integrity="sha512-jeF9CfnvzDiw9G9xiksVjxR2lib44Gnovvkv+3CgCG6NXCD4gqlA5nDAVW5WjpA+i+/zKsUWV5xNEbW1X/HH0Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+
+        
 <center>
-<h1>Collaboration network for 'grid.412125.1 - King Abdulaziz University'</h1>
+<h1></h1>
 </center>
 
 <!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
 <script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
 
-<style type="text/css">
 
-        #mynetwork {
-            width: 100%;
-            height: 800px;
-            background-color: #ffffff;
-            border: 1px solid lightgray;
-            position: relative;
-            float: left;
-        }
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 800px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+                <div id="select-menu" class="card-header">
+                    <div class="row no-gutters">
+                        <div class="col-10 pb-2">
+                            <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="selectNode([value]);"
+                            id="select-node"
+                            placeholder="Select node..."
+                            >
+                                <option selected>Select a Node by ID</option>
+                                
+                                    <option value="grid.412125.1">grid.412125.1</option>
+                                
+                                    <option value="grid.7327.1">grid.7327.1</option>
+                                
+                                    <option value="grid.9227.e">grid.9227.e</option>
+                                
+                                    <option value="grid.20256.33">grid.20256.33</option>
+                                
+                                    <option value="grid.1089.0">grid.1089.0</option>
+                                
+                                    <option value="grid.14467.30">grid.14467.30</option>
+                                
+                                    <option value="grid.424109.a">grid.424109.a</option>
+                                
+                                    <option value="grid.425534.1">grid.425534.1</option>
+                                
+                                    <option value="grid.415021.3">grid.415021.3</option>
+                                
+                                    <option value="grid.208504.b">grid.208504.b</option>
+                                
+                                    <option value="grid.419082.6">grid.419082.6</option>
+                                
+                                    <option value="grid.94225.38">grid.94225.38</option>
+                                
+                                    <option value="grid.1016.6">grid.1016.6</option>
+                                
+                            </select>
+                        </div>
+                        <div class="col-2 pb-2">
+                            <button type="button" class="btn btn-primary btn-block" onclick="neighbourhoodHighlight({nodes: []});">Reset Selection</button>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
 
         
-
         
 
-        
-</style>
+        <script type="text/javascript">
 
-</head>
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
 
-<body>
-<div id = "mynetwork"></div>
+              
+                  new TomSelect("#select-node",{
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      }
+                  });
+              
 
+              
 
-<script type="text/javascript">
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
 
-    // initialize global variables.
-    var edges;
-    var nodes;
-    var network; 
-    var container;
-    var options, data;
+                  
 
-    
-    // This method is responsible for drawing the graph, returns the drawn network
-    function drawGraph() {
-        var container = document.getElementById('mynetwork');
-        
-        
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"borderWidthSelected": 5, "color": "rgb(0, 147, 146)", "id": "grid.412125.1", "label": "King Abdulaziz University", "shape": "dot", "title": "\u003ch4\u003eKing Abdulaziz University\u003cbr\u003eJeddah, Saudi Arabia\u003cbr\u003e - grid.412125.1\u003c/h4\u003eLinks:\u003cli\u003eAustralian Nuclear Science and Technology Organisation\u003c/li\u003e\u003cli\u003eJapan Atomic Energy Agency\u003c/li\u003e\u003cli\u003eCouncil for Scientific and Industrial Research\u003c/li\u003e\u003cli\u003eChinese Academy of Sciences\u003c/li\u003e\u003cli\u003eScience and Technology Facilities Council", "value": 3}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.7327.1", "label": "Council for Scientific and Industrial Research", "shape": "dot", "title": "\u003ch4\u003eCouncil for Scientific and Industrial Research\u003cbr\u003ePretoria, South Africa\u003cbr\u003e - grid.7327.1\u003c/h4\u003eLinks:\u003cli\u003eDepartment of Science and Technology\u003c/li\u003e\u003cli\u003eNational Research Foundation\u003c/li\u003e\u003cli\u003eSouth African Medical Research Council\u003c/li\u003e\u003cli\u003eKing Abdulaziz University", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.9227.e", "label": "Chinese Academy of Sciences", "shape": "dot", "title": "\u003ch4\u003eChinese Academy of Sciences\u003cbr\u003eBeijing, China\u003cbr\u003e - grid.9227.e\u003c/h4\u003eLinks:\u003cli\u003eKing Abdulaziz University", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.20256.33", "label": "Japan Atomic Energy Agency", "shape": "dot", "title": "\u003ch4\u003eJapan Atomic Energy Agency\u003cbr\u003eT\u014dkai-mura, Japan\u003cbr\u003e - grid.20256.33\u003c/h4\u003eLinks:\u003cli\u003eNational Institute of Advanced Industrial Science and Technology\u003c/li\u003e\u003cli\u003eKing Abdulaziz University\u003c/li\u003e\u003cli\u003eJapan Science and Technology Agency", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.1089.0", "label": "Australian Nuclear Science and Technology Organisation", "shape": "dot", "title": "\u003ch4\u003eAustralian Nuclear Science and Technology Organisation\u003cbr\u003eSydney, Australia\u003cbr\u003e - grid.1089.0\u003c/h4\u003eLinks:\u003cli\u003eCommonwealth Scientific and Industrial Research Organisation\u003c/li\u003e\u003cli\u003eNational Institute of Standards and Technology\u003c/li\u003e\u003cli\u003eKing Abdulaziz University\u003c/li\u003e\u003cli\u003eJapan Science and Technology Agency", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.14467.30", "label": "Science and Technology Facilities Council", "shape": "dot", "title": "\u003ch4\u003eScience and Technology Facilities Council\u003cbr\u003eSwindon, United Kingdom\u003cbr\u003e - grid.14467.30\u003c/h4\u003eLinks:\u003cli\u003eKing Abdulaziz University", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.424109.a", "label": "Department of Science and Technology", "shape": "dot", "title": "\u003ch4\u003eDepartment of Science and Technology\u003cbr\u003ePretoria, South Africa\u003cbr\u003e - grid.424109.a\u003c/h4\u003eLinks:\u003cli\u003eCouncil for Scientific and Industrial Research", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.425534.1", "label": "National Research Foundation", "shape": "dot", "title": "\u003ch4\u003eNational Research Foundation\u003cbr\u003ePretoria, South Africa\u003cbr\u003e - grid.425534.1\u003c/h4\u003eLinks:\u003cli\u003eCouncil for Scientific and Industrial Research", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.415021.3", "label": "South African Medical Research Council", "shape": "dot", "title": "\u003ch4\u003eSouth African Medical Research Council\u003cbr\u003eCape Town, South Africa\u003cbr\u003e - grid.415021.3\u003c/h4\u003eLinks:\u003cli\u003eCouncil for Scientific and Industrial Research", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.208504.b", "label": "National Institute of Advanced Industrial Science and Technology", "shape": "dot", "title": "\u003ch4\u003eNational Institute of Advanced Industrial Science and Technology\u003cbr\u003eTsukuba, Japan\u003cbr\u003e - grid.208504.b\u003c/h4\u003eLinks:\u003cli\u003eJapan Atomic Energy Agency", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.419082.6", "label": "Japan Science and Technology Agency", "shape": "dot", "title": "\u003ch4\u003eJapan Science and Technology Agency\u003cbr\u003eTokyo, Japan\u003cbr\u003e - grid.419082.6\u003c/h4\u003eLinks:\u003cli\u003eJapan Atomic Energy Agency\u003c/li\u003e\u003cli\u003eAustralian Nuclear Science and Technology Organisation", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.94225.38", "label": "National Institute of Standards and Technology", "shape": "dot", "title": "\u003ch4\u003eNational Institute of Standards and Technology\u003cbr\u003eGaithersburg, United States\u003cbr\u003e - grid.94225.38\u003c/h4\u003eLinks:\u003cli\u003eAustralian Nuclear Science and Technology Organisation", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.1016.6", "label": "Commonwealth Scientific and Industrial Research Organisation", "shape": "dot", "title": "\u003ch4\u003eCommonwealth Scientific and Industrial Research Organisation\u003cbr\u003eCanberra, Australia\u003cbr\u003e - grid.1016.6\u003c/h4\u003eLinks:\u003cli\u003eAustralian Nuclear Science and Technology Organisation", "value": 1}]);
+                  edges = new vis.DataSet([{"arrows": "none", "from": "grid.412125.1", "label": 4, "to": "grid.7327.1", "value": 0.16}, {"arrows": "none", "from": "grid.412125.1", "label": 3, "to": "grid.9227.e", "value": 0.12}, {"arrows": "none", "from": "grid.412125.1", "label": 2, "to": "grid.20256.33", "value": 0.08}, {"arrows": "none", "from": "grid.412125.1", "label": 1, "to": "grid.1089.0", "value": 0.04}, {"arrows": "none", "from": "grid.412125.1", "label": 1, "to": "grid.14467.30", "value": 0.04}, {"arrows": "none", "from": "grid.7327.1", "label": 3, "to": "grid.424109.a", "value": 0.12}, {"arrows": "none", "from": "grid.7327.1", "label": 3, "to": "grid.425534.1", "value": 0.12}, {"arrows": "none", "from": "grid.7327.1", "label": 2, "to": "grid.415021.3", "value": 0.08}, {"arrows": "none", "from": "grid.20256.33", "label": 25, "to": "grid.208504.b", "value": 1.0}, {"arrows": "none", "from": "grid.20256.33", "label": 24, "to": "grid.419082.6", "value": 0.96}, {"arrows": "none", "from": "grid.1089.0", "label": 6, "to": "grid.94225.38", "value": 0.24}, {"arrows": "none", "from": "grid.1089.0", "label": 4, "to": "grid.1016.6", "value": 0.16}, {"arrows": "none", "from": "grid.1089.0", "label": 3, "to": "grid.419082.6", "value": 0.12}]);
 
-        // parsing and collecting nodes and edges from the python
-        nodes = new vis.DataSet([{"borderWidthSelected": 5, "color": "rgb(0, 147, 146)", "id": "grid.412125.1", "label": "King Abdulaziz University", "shape": "dot", "title": "\u003ch4\u003eKing Abdulaziz University\u003cbr\u003eJeddah, Saudi Arabia\u003cbr\u003e - grid.412125.1\u003c/h4\u003eLinks:\u003cli\u003eScience and Technology Facilities Council\u003c/li\u003e\u003cli\u003eIndian Space Research Organisation\u003c/li\u003e\u003cli\u003eCouncil for Scientific and Industrial Research\u003c/li\u003e\u003cli\u003eMinistry of Agriculture and Rural Affairs\u003c/li\u003e\u003cli\u003eChinese Academy of Sciences\u003c/li\u003e\u003cli\u003eJapan Atomic Energy Agency\u003c/li\u003e\u003cli\u003eAustralian Nuclear Science and Technology Organisation", "value": 3}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.9227.e", "label": "Chinese Academy of Sciences", "shape": "dot", "title": "\u003ch4\u003eChinese Academy of Sciences\u003cbr\u003eBeijing, China\u003cbr\u003e - grid.9227.e\u003c/h4\u003eLinks:\u003cli\u003eKing Abdulaziz University", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.20256.33", "label": "Japan Atomic Energy Agency", "shape": "dot", "title": "\u003ch4\u003eJapan Atomic Energy Agency\u003cbr\u003eT\u014dkai-mura, Japan\u003cbr\u003e - grid.20256.33\u003c/h4\u003eLinks:\u003cli\u003eKing Abdulaziz University\u003c/li\u003e\u003cli\u003eJapan Science and Technology Agency\u003c/li\u003e\u003cli\u003eNational Institute of Advanced Industrial Science and Technology", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.418524.e", "label": "Ministry of Agriculture and Rural Affairs", "shape": "dot", "title": "\u003ch4\u003eMinistry of Agriculture and Rural Affairs\u003cbr\u003eBeijing, China\u003cbr\u003e - grid.418524.e\u003c/h4\u003eLinks:\u003cli\u003eKing Abdulaziz University\u003c/li\u003e\u003cli\u003eChinese Academy of Agricultural Sciences", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.418654.a", "label": "Indian Space Research Organisation", "shape": "dot", "title": "\u003ch4\u003eIndian Space Research Organisation\u003cbr\u003eBengaluru, India\u003cbr\u003e - grid.418654.a\u003c/h4\u003eLinks:\u003cli\u003eKing Abdulaziz University", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.7327.1", "label": "Council for Scientific and Industrial Research", "shape": "dot", "title": "\u003ch4\u003eCouncil for Scientific and Industrial Research\u003cbr\u003ePretoria, South Africa\u003cbr\u003e - grid.7327.1\u003c/h4\u003eLinks:\u003cli\u003eKing Abdulaziz University\u003c/li\u003e\u003cli\u003eDepartment of Science and Technology", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.1089.0", "label": "Australian Nuclear Science and Technology Organisation", "shape": "dot", "title": "\u003ch4\u003eAustralian Nuclear Science and Technology Organisation\u003cbr\u003eSydney, Australia\u003cbr\u003e - grid.1089.0\u003c/h4\u003eLinks:\u003cli\u003eCommonwealth Scientific and Industrial Research Organisation\u003c/li\u003e\u003cli\u003eNational Institute of Standards and Technology\u003c/li\u003e\u003cli\u003eKing Abdulaziz University\u003c/li\u003e\u003cli\u003eJapan Science and Technology Agency", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.14467.30", "label": "Science and Technology Facilities Council", "shape": "dot", "title": "\u003ch4\u003eScience and Technology Facilities Council\u003cbr\u003eSwindon, United Kingdom\u003cbr\u003e - grid.14467.30\u003c/h4\u003eLinks:\u003cli\u003eKing Abdulaziz University", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.208504.b", "label": "National Institute of Advanced Industrial Science and Technology", "shape": "dot", "title": "\u003ch4\u003eNational Institute of Advanced Industrial Science and Technology\u003cbr\u003eTsukuba, Japan\u003cbr\u003e - grid.208504.b\u003c/h4\u003eLinks:\u003cli\u003eJapan Atomic Energy Agency", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.419082.6", "label": "Japan Science and Technology Agency", "shape": "dot", "title": "\u003ch4\u003eJapan Science and Technology Agency\u003cbr\u003eTokyo, Japan\u003cbr\u003e - grid.419082.6\u003c/h4\u003eLinks:\u003cli\u003eJapan Atomic Energy Agency\u003c/li\u003e\u003cli\u003eAustralian Nuclear Science and Technology Organisation", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.410727.7", "label": "Chinese Academy of Agricultural Sciences", "shape": "dot", "title": "\u003ch4\u003eChinese Academy of Agricultural Sciences\u003cbr\u003eBeijing, China\u003cbr\u003e - grid.410727.7\u003c/h4\u003eLinks:\u003cli\u003eMinistry of Agriculture and Rural Affairs", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.424109.a", "label": "Department of Science and Technology", "shape": "dot", "title": "\u003ch4\u003eDepartment of Science and Technology\u003cbr\u003ePretoria, South Africa\u003cbr\u003e - grid.424109.a\u003c/h4\u003eLinks:\u003cli\u003eCouncil for Scientific and Industrial Research", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.94225.38", "label": "National Institute of Standards and Technology", "shape": "dot", "title": "\u003ch4\u003eNational Institute of Standards and Technology\u003cbr\u003eGaithersburg, United States\u003cbr\u003e - grid.94225.38\u003c/h4\u003eLinks:\u003cli\u003eAustralian Nuclear Science and Technology Organisation", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.1016.6", "label": "Commonwealth Scientific and Industrial Research Organisation", "shape": "dot", "title": "\u003ch4\u003eCommonwealth Scientific and Industrial Research Organisation\u003cbr\u003eCanberra, Australia\u003cbr\u003e - grid.1016.6\u003c/h4\u003eLinks:\u003cli\u003eAustralian Nuclear Science and Technology Organisation", "value": 1}]);
-        edges = new vis.DataSet([{"arrows": "none", "from": "grid.412125.1", "label": 3, "to": "grid.9227.e", "value": 0.12}, {"arrows": "none", "from": "grid.412125.1", "label": 2, "to": "grid.20256.33", "value": 0.08}, {"arrows": "none", "from": "grid.412125.1", "label": 2, "to": "grid.418524.e", "value": 0.08}, {"arrows": "none", "from": "grid.412125.1", "label": 2, "to": "grid.418654.a", "value": 0.08}, {"arrows": "none", "from": "grid.412125.1", "label": 2, "to": "grid.7327.1", "value": 0.08}, {"arrows": "none", "from": "grid.412125.1", "label": 1, "to": "grid.1089.0", "value": 0.04}, {"arrows": "none", "from": "grid.412125.1", "label": 1, "to": "grid.14467.30", "value": 0.04}, {"arrows": "none", "from": "grid.20256.33", "label": 25, "to": "grid.208504.b", "value": 1.0}, {"arrows": "none", "from": "grid.20256.33", "label": 19, "to": "grid.419082.6", "value": 0.76}, {"arrows": "none", "from": "grid.418524.e", "label": 2, "to": "grid.410727.7", "value": 0.08}, {"arrows": "none", "from": "grid.7327.1", "label": 3, "to": "grid.424109.a", "value": 0.12}, {"arrows": "none", "from": "grid.1089.0", "label": 7, "to": "grid.94225.38", "value": 0.28}, {"arrows": "none", "from": "grid.1089.0", "label": 4, "to": "grid.1016.6", "value": 0.16}, {"arrows": "none", "from": "grid.1089.0", "label": 3, "to": "grid.419082.6", "value": 0.12}]);
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
 
-        // adding nodes and edges to the graph
-        data = {nodes: nodes, edges: edges};
-
-        var options = {
+                  var options = {
     "configure": {
         "enabled": false
     },
@@ -65,8 +360,8 @@
             "inherit": true
         },
         "smooth": {
-            "enabled": false,
-            "type": "continuous"
+            "enabled": true,
+            "type": "dynamic"
         }
     },
     "interaction": {
@@ -101,24 +396,31 @@
         }
     }
 };
-        
-        
 
-        
-
-        network = new vis.Network(container, data, options);
-	 
-        
+                  
 
 
-        
+                  
 
-        return network;
+                  network = new vis.Network(container, data, options);
 
-    }
+                  
+                    network.on("click", neighbourhoodHighlight);
+                  
 
-    drawGraph();
+                  
+                    network.on("selectNode", neighbourhoodHighlight);
+                  
 
-</script>
-</body>
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
 </html>

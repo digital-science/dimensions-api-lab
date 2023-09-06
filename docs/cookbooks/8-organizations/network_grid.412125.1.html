@@ -1,62 +1,477 @@
 <html>
-<head>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+    <head>
+        <meta charset="utf-8">
+        
+            <script>function neighbourhoodHighlight(params) {
+  // console.log("in nieghbourhoodhighlight");
+  allNodes = nodes.get({ returnType: "Object" });
+  // originalNodes = JSON.parse(JSON.stringify(allNodes));
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    highlightActive = true;
+    var i, j;
+    var selectedNode = params.nodes[0];
+    var degrees = 2;
+
+    // mark all nodes as hard to read.
+    for (let nodeId in allNodes) {
+      // nodeColors[nodeId] = allNodes[nodeId].color;
+      allNodes[nodeId].color = "rgba(200,200,200,0.5)";
+      if (allNodes[nodeId].hiddenLabel === undefined) {
+        allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+    var connectedNodes = network.getConnectedNodes(selectedNode);
+    var allConnectedNodes = [];
+
+    // get the second degree nodes
+    for (i = 1; i < degrees; i++) {
+      for (j = 0; j < connectedNodes.length; j++) {
+        allConnectedNodes = allConnectedNodes.concat(
+          network.getConnectedNodes(connectedNodes[j])
+        );
+      }
+    }
+
+    // all second degree nodes get a different color and their label back
+    for (i = 0; i < allConnectedNodes.length; i++) {
+      // allNodes[allConnectedNodes[i]].color = "pink";
+      allNodes[allConnectedNodes[i]].color = "rgba(150,150,150,0.75)";
+      if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[allConnectedNodes[i]].label =
+          allNodes[allConnectedNodes[i]].hiddenLabel;
+        allNodes[allConnectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // all first degree nodes get their own color and their label back
+    for (i = 0; i < connectedNodes.length; i++) {
+      // allNodes[connectedNodes[i]].color = undefined;
+      allNodes[connectedNodes[i]].color = nodeColors[connectedNodes[i]];
+      if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[connectedNodes[i]].label =
+          allNodes[connectedNodes[i]].hiddenLabel;
+        allNodes[connectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // the main node gets its own color and its label back.
+    // allNodes[selectedNode].color = undefined;
+    allNodes[selectedNode].color = nodeColors[selectedNode];
+    if (allNodes[selectedNode].hiddenLabel !== undefined) {
+      allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;
+      allNodes[selectedNode].hiddenLabel = undefined;
+    }
+  } else if (highlightActive === true) {
+    // console.log("highlightActive was true");
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      // allNodes[nodeId].color = "purple";
+      allNodes[nodeId].color = nodeColors[nodeId];
+      // delete allNodes[nodeId].color;
+      if (allNodes[nodeId].hiddenLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;
+        allNodes[nodeId].hiddenLabel = undefined;
+      }
+    }
+    highlightActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    // console.log("Nothing was selected");
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        // allNodes[nodeId].color = {};
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function filterHighlight(params) {
+  allNodes = nodes.get({ returnType: "Object" });
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    filterActive = true;
+    let selectedNodes = params.nodes;
+
+    // hiding all nodes and saving the label
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = true;
+      if (allNodes[nodeId].savedLabel === undefined) {
+        allNodes[nodeId].savedLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+
+    for (let i=0; i < selectedNodes.length; i++) {
+      allNodes[selectedNodes[i]].hidden = false;
+      if (allNodes[selectedNodes[i]].savedLabel !== undefined) {
+        allNodes[selectedNodes[i]].label = allNodes[selectedNodes[i]].savedLabel;
+        allNodes[selectedNodes[i]].savedLabel = undefined;
+      }
+    }
+
+  } else if (filterActive === true) {
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = false;
+      if (allNodes[nodeId].savedLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].savedLabel;
+        allNodes[nodeId].savedLabel = undefined;
+      }
+    }
+    filterActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function selectNode(nodes) {
+  network.selectNodes(nodes);
+  neighbourhoodHighlight({ nodes: nodes });
+  return nodes;
+}
+
+function selectNodes(nodes) {
+  network.selectNodes(nodes);
+  filterHighlight({nodes: nodes});
+  return nodes;
+}
+
+function highlightFilter(filter) {
+  let selectedNodes = []
+  let selectedProp = filter['property']
+  if (filter['item'] === 'node') {
+    let allNodes = nodes.get({ returnType: "Object" });
+    for (let nodeId in allNodes) {
+      if (allNodes[nodeId][selectedProp] && filter['value'].includes((allNodes[nodeId][selectedProp]).toString())) {
+        selectedNodes.push(nodeId)
+      }
+    }
+  }
+  else if (filter['item'] === 'edge'){
+    let allEdges = edges.get({returnType: 'object'});
+    // check if the selected property exists for selected edge and select the nodes connected to the edge
+    for (let edge in allEdges) {
+      if (allEdges[edge][selectedProp] && filter['value'].includes((allEdges[edge][selectedProp]).toString())) {
+        selectedNodes.push(allEdges[edge]['from'])
+        selectedNodes.push(allEdges[edge]['to'])
+      }
+    }
+  }
+  selectNodes(selectedNodes)
+}</script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+            
+            
+            
+            
+            
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/css/tom-select.min.css" integrity="sha512-43fHB3GLgZfz8QXl1RPQ8O66oIgv3po9cJ5erMt1c4QISq9dYb195T3vr5ImnJPXuVroKcGBPXBFKETW8jrPNQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/js/tom-select.complete.js" integrity="sha512-jeF9CfnvzDiw9G9xiksVjxR2lib44Gnovvkv+3CgCG6NXCD4gqlA5nDAVW5WjpA+i+/zKsUWV5xNEbW1X/HH0Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+
+        
 <center>
-<h1>Collaboration network for 'grid.412125.1 - King Abdulaziz University'</h1>
+<h1></h1>
 </center>
 
 <!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
 <script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
 
-<style type="text/css">
 
-        #mynetwork {
-            width: 100%;
-            height: 800px;
-            background-color: #ffffff;
-            border: 1px solid lightgray;
-            position: relative;
-            float: left;
-        }
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 800px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+                <div id="select-menu" class="card-header">
+                    <div class="row no-gutters">
+                        <div class="col-10 pb-2">
+                            <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="selectNode([value]);"
+                            id="select-node"
+                            placeholder="Select node..."
+                            >
+                                <option selected>Select a Node by ID</option>
+                                
+                                    <option value="grid.412125.1">grid.412125.1</option>
+                                
+                                    <option value="grid.261112.7">grid.261112.7</option>
+                                
+                                    <option value="grid.38142.3c">grid.38142.3c</option>
+                                
+                                    <option value="grid.116068.8">grid.116068.8</option>
+                                
+                                    <option value="grid.16753.36">grid.16753.36</option>
+                                
+                                    <option value="grid.413735.7">grid.413735.7</option>
+                                
+                                    <option value="grid.411340.3">grid.411340.3</option>
+                                
+                                    <option value="grid.412621.2">grid.412621.2</option>
+                                
+                                    <option value="grid.33003.33">grid.33003.33</option>
+                                
+                                    <option value="grid.411818.5">grid.411818.5</option>
+                                
+                                    <option value="grid.56302.32">grid.56302.32</option>
+                                
+                                    <option value="grid.17089.37">grid.17089.37</option>
+                                
+                                    <option value="grid.32224.35">grid.32224.35</option>
+                                
+                                    <option value="grid.40263.33">grid.40263.33</option>
+                                
+                                    <option value="grid.62560.37">grid.62560.37</option>
+                                
+                                    <option value="grid.225262.3">grid.225262.3</option>
+                                
+                                    <option value="grid.5808.5">grid.5808.5</option>
+                                
+                                    <option value="grid.65499.37">grid.65499.37</option>
+                                
+                                    <option value="grid.516087.d">grid.516087.d</option>
+                                
+                                    <option value="grid.239395.7">grid.239395.7</option>
+                                
+                                    <option value="grid.2515.3">grid.2515.3</option>
+                                
+                                    <option value="grid.168010.e">grid.168010.e</option>
+                                
+                                    <option value="grid.4280.e">grid.4280.e</option>
+                                
+                                    <option value="grid.429485.6">grid.429485.6</option>
+                                
+                                    <option value="grid.512167.6">grid.512167.6</option>
+                                
+                                    <option value="grid.418830.6">grid.418830.6</option>
+                                
+                                    <option value="grid.59025.3b">grid.59025.3b</option>
+                                
+                                    <option value="grid.187073.a">grid.187073.a</option>
+                                
+                                    <option value="grid.35403.31">grid.35403.31</option>
+                                
+                                    <option value="grid.516096.d">grid.516096.d</option>
+                                
+                                    <option value="grid.12527.33">grid.12527.33</option>
+                                
+                                    <option value="grid.19006.3e">grid.19006.3e</option>
+                                
+                                    <option value="grid.169077.e">grid.169077.e</option>
+                                
+                                    <option value="grid.37172.30">grid.37172.30</option>
+                                
+                                    <option value="grid.170205.1">grid.170205.1</option>
+                                
+                                    <option value="grid.69566.3a">grid.69566.3a</option>
+                                
+                                    <option value="grid.258676.8">grid.258676.8</option>
+                                
+                                    <option value="grid.289247.2">grid.289247.2</option>
+                                
+                                    <option value="grid.466808.4">grid.466808.4</option>
+                                
+                                    <option value="grid.412135.0">grid.412135.0</option>
+                                
+                                    <option value="grid.417641.1">grid.417641.1</option>
+                                
+                                    <option value="grid.419701.a">grid.419701.a</option>
+                                
+                                    <option value="grid.411723.2">grid.411723.2</option>
+                                
+                                    <option value="grid.410877.d">grid.410877.d</option>
+                                
+                                    <option value="grid.10706.30">grid.10706.30</option>
+                                
+                                    <option value="grid.411214.3">grid.411214.3</option>
+                                
+                                    <option value="grid.418920.6">grid.418920.6</option>
+                                
+                                    <option value="grid.440530.6">grid.440530.6</option>
+                                
+                                    <option value="grid.411727.6">grid.411727.6</option>
+                                
+                                    <option value="grid.412117.0">grid.412117.0</option>
+                                
+                                    <option value="grid.466924.b">grid.466924.b</option>
+                                
+                                    <option value="grid.412782.a">grid.412782.a</option>
+                                
+                                    <option value="grid.420113.5">grid.420113.5</option>
+                                
+                                    <option value="grid.10347.31">grid.10347.31</option>
+                                
+                                    <option value="grid.411320.5">grid.411320.5</option>
+                                
+                                    <option value="grid.5491.9">grid.5491.9</option>
+                                
+                                    <option value="grid.29980.3a">grid.29980.3a</option>
+                                
+                                    <option value="grid.440760.1">grid.440760.1</option>
+                                
+                                    <option value="grid.412895.3">grid.412895.3</option>
+                                
+                                    <option value="grid.8905.4">grid.8905.4</option>
+                                
+                                    <option value="grid.419725.c">grid.419725.c</option>
+                                
+                                    <option value="grid.7269.a">grid.7269.a</option>
+                                
+                                    <option value="grid.417967.a">grid.417967.a</option>
+                                
+                                    <option value="grid.8195.5">grid.8195.5</option>
+                                
+                                    <option value="grid.262671.6">grid.262671.6</option>
+                                
+                                    <option value="grid.411529.a">grid.411529.a</option>
+                                
+                                    <option value="grid.444644.2">grid.444644.2</option>
+                                
+                                    <option value="grid.411545.0">grid.411545.0</option>
+                                
+                                    <option value="grid.452562.2">grid.452562.2</option>
+                                
+                                    <option value="grid.442508.f">grid.442508.f</option>
+                                
+                                    <option value="grid.1003.2">grid.1003.2</option>
+                                
+                                    <option value="grid.145695.a">grid.145695.a</option>
+                                
+                                    <option value="grid.412258.8">grid.412258.8</option>
+                                
+                            </select>
+                        </div>
+                        <div class="col-2 pb-2">
+                            <button type="button" class="btn btn-primary btn-block" onclick="neighbourhoodHighlight({nodes: []});">Reset Selection</button>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
 
         
-
         
 
-        
-</style>
+        <script type="text/javascript">
 
-</head>
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
 
-<body>
-<div id = "mynetwork"></div>
+              
+                  new TomSelect("#select-node",{
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      }
+                  });
+              
 
+              
 
-<script type="text/javascript">
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
 
-    // initialize global variables.
-    var edges;
-    var nodes;
-    var network; 
-    var container;
-    var options, data;
+                  
 
-    
-    // This method is responsible for drawing the graph, returns the drawn network
-    function drawGraph() {
-        var container = document.getElementById('mynetwork');
-        
-        
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"borderWidthSelected": 5, "color": "rgb(0, 147, 146)", "id": "grid.412125.1", "label": "King Abdulaziz University", "shape": "dot", "title": "\u003ch4\u003eKing Abdulaziz University\u003cbr\u003eJeddah, Saudi Arabia\u003cbr\u003e - grid.412125.1\u003c/h4\u003eLinks:\u003cli\u003eNortheastern University\u003c/li\u003e\u003cli\u003eJamia Millia Islamia\u003c/li\u003e\u003cli\u003eNorthwestern University\u003c/li\u003e\u003cli\u003eAligarh Muslim University\u003c/li\u003e\u003cli\u003eHarvard\u2013MIT Division of Health Sciences and Technology\u003c/li\u003e\u003cli\u003eSuez Canal University\u003c/li\u003e\u003cli\u003eKing Saud University\u003c/li\u003e\u003cli\u003eQuaid-i-Azam University\u003c/li\u003e\u003cli\u003eHarvard University\u003c/li\u003e\u003cli\u003eMassachusetts Institute of Technology", "value": 3}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.261112.7", "label": "Northeastern University", "shape": "dot", "title": "\u003ch4\u003eNortheastern University\u003cbr\u003eBoston, United States\u003cbr\u003e - grid.261112.7\u003c/h4\u003eLinks:\u003cli\u003eUniversity of Porto\u003c/li\u003e\u003cli\u003eKing Abdulaziz University\u003c/li\u003e\u003cli\u003eMassachusetts General Hospital\u003c/li\u003e\u003cli\u003eBrown University\u003c/li\u003e\u003cli\u003eUniversity of Alberta\u003c/li\u003e\u003cli\u003eHarvard\u2013MIT Division of Health Sciences and Technology\u003c/li\u003e\u003cli\u003eUniversity of Massachusetts Lowell\u003c/li\u003e\u003cli\u003eBrigham and Women\u0027s Hospital\u003c/li\u003e\u003cli\u003eHarvard University\u003c/li\u003e\u003cli\u003eMassachusetts Institute of Technology", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.38142.3c", "label": "Harvard University", "shape": "dot", "title": "\u003ch4\u003eHarvard University\u003cbr\u003eCambridge, United States\u003cbr\u003e - grid.38142.3c\u003c/h4\u003eLinks:\u003cli\u003eBeth Israel Deaconess Medical Center\u003c/li\u003e\u003cli\u003eKing Abdulaziz University\u003c/li\u003e\u003cli\u003eMassachusetts General Hospital\u003c/li\u003e\u003cli\u003eBoston Children\u0027s Hospital\u003c/li\u003e\u003cli\u003eNortheastern University\u003c/li\u003e\u003cli\u003eStanford University\u003c/li\u003e\u003cli\u003eKoch Institute for Integrative Cancer Research\u003c/li\u003e\u003cli\u003eHarvard\u2013MIT Division of Health Sciences and Technology\u003c/li\u003e\u003cli\u003eBrigham and Women\u0027s Hospital\u003c/li\u003e\u003cli\u003eMassachusetts Institute of Technology\u003c/li\u003e\u003cli\u003eDana-Farber Cancer Institute", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.116068.8", "label": "Massachusetts Institute of Technology", "shape": "dot", "title": "\u003ch4\u003eMassachusetts Institute of Technology\u003cbr\u003eCambridge, United States\u003cbr\u003e - grid.116068.8\u003c/h4\u003eLinks:\u003cli\u003eInstitute of Bioengineering and Nanotechnology\u003c/li\u003e\u003cli\u003eInstitute for Soldier Nanotechnologies\u003c/li\u003e\u003cli\u003eKing Abdulaziz University\u003c/li\u003e\u003cli\u003eMassachusetts General Hospital\u003c/li\u003e\u003cli\u003eNanyang Technological University\u003c/li\u003e\u003cli\u003eNortheastern University\u003c/li\u003e\u003cli\u003eNational University of Singapore\u003c/li\u003e\u003cli\u003eKoch Institute for Integrative Cancer Research\u003c/li\u003e\u003cli\u003eSingapore-MIT Alliance for Research and Technology\u003c/li\u003e\u003cli\u003eNorthwestern University\u003c/li\u003e\u003cli\u003eBrigham and Women\u0027s Hospital\u003c/li\u003e\u003cli\u003eHarvard University\u003c/li\u003e\u003cli\u003eHarvard\u2013MIT Division of Health Sciences and Technology", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.16753.36", "label": "Northwestern University", "shape": "dot", "title": "\u003ch4\u003eNorthwestern University\u003cbr\u003eEvanston, United States\u003cbr\u003e - grid.16753.36\u003c/h4\u003eLinks:\u003cli\u003eKorea Advanced Institute of Science and Technology\u003c/li\u003e\u003cli\u003ePurdue University West Lafayette\u003c/li\u003e\u003cli\u003eKing Abdulaziz University\u003c/li\u003e\u003cli\u003eUniversity of Illinois Urbana-Champaign\u003c/li\u003e\u003cli\u003eUniversity of California, Los Angeles\u003c/li\u003e\u003cli\u003eTsinghua University\u003c/li\u003e\u003cli\u003eArgonne National Laboratory\u003c/li\u003e\u003cli\u003eRobert H. Lurie Comprehensive Cancer Center\u003c/li\u003e\u003cli\u003eUniversity of Chicago\u003c/li\u003e\u003cli\u003eMassachusetts Institute of Technology", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.413735.7", "label": "Harvard\u2013MIT Division of Health Sciences and Technology", "shape": "dot", "title": "\u003ch4\u003eHarvard\u2013MIT Division of Health Sciences and Technology\u003cbr\u003eCambridge, United States\u003cbr\u003e - grid.413735.7\u003c/h4\u003eLinks:\u003cli\u003eKing Abdulaziz University\u003c/li\u003e\u003cli\u003eMassachusetts General Hospital\u003c/li\u003e\u003cli\u003eNortheastern University\u003c/li\u003e\u003cli\u003eKyung Hee University\u003c/li\u003e\u003cli\u003eKoch Institute for Integrative Cancer Research\u003c/li\u003e\u003cli\u003eKonkuk University\u003c/li\u003e\u003cli\u003eBrigham and Women\u0027s Hospital\u003c/li\u003e\u003cli\u003eHarvard University\u003c/li\u003e\u003cli\u003eMassachusetts Institute of Technology\u003c/li\u003e\u003cli\u003eTohoku University", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.411340.3", "label": "Aligarh Muslim University", "shape": "dot", "title": "\u003ch4\u003eAligarh Muslim University\u003cbr\u003eAligarh, India\u003cbr\u003e - grid.411340.3\u003c/h4\u003eLinks:\u003cli\u003eChangwon National University\u003c/li\u003e\u003cli\u003eJawaharlal Nehru Medical College Hospital\u003c/li\u003e\u003cli\u003eKing Abdulaziz University\u003c/li\u003e\u003cli\u003eInstitute of Microbial Technology\u003c/li\u003e\u003cli\u003eUniversity of Technology Malaysia\u003c/li\u003e\u003cli\u003eJamia Millia Islamia\u003c/li\u003e\u003cli\u003eNational Physical Laboratory of India\u003c/li\u003e\u003cli\u003eKing Fahd University of Petroleum and Minerals\u003c/li\u003e\u003cli\u003eJawaharlal Nehru University\u003c/li\u003e\u003cli\u003eKing Saud University\u003c/li\u003e\u003cli\u003eIntegral University", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.412621.2", "label": "Quaid-i-Azam University", "shape": "dot", "title": "\u003ch4\u003eQuaid-i-Azam University\u003cbr\u003eIslamabad, Pakistan\u003cbr\u003e - grid.412621.2\u003c/h4\u003eLinks:\u003cli\u003eKing Abdulaziz University\u003c/li\u003e\u003cli\u003eUniversity of Malaya\u003c/li\u003e\u003cli\u003eUniversity of Sargodha\u003c/li\u003e\u003cli\u003eAbdus Salam Centre for Physics\u003c/li\u003e\u003cli\u003eNational University of Sciences and Technology\u003c/li\u003e\u003cli\u003eCOMSATS University Islamabad\u003c/li\u003e\u003cli\u003eKing Fahd University of Petroleum and Minerals\u003c/li\u003e\u003cli\u003eHazara University\u003c/li\u003e\u003cli\u003ePakistan Institute of Nuclear Science and Technology\u003c/li\u003e\u003cli\u003eInternational Islamic University, Islamabad", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.33003.33", "label": "Suez Canal University", "shape": "dot", "title": "\u003ch4\u003eSuez Canal University\u003cbr\u003eIsmailia, Egypt\u003cbr\u003e - grid.33003.33\u003c/h4\u003eLinks:\u003cli\u003eUniversity of Otago\u003c/li\u003e\u003cli\u003eNational Research Centre\u003c/li\u003e\u003cli\u003eKing Abdulaziz University\u003c/li\u003e\u003cli\u003eF\u0131rat University\u003c/li\u003e\u003cli\u003eAin Shams University\u003c/li\u003e\u003cli\u003eUniversity of Chemical Technology and Metallurgy\u003c/li\u003e\u003cli\u003eUniversity of Tabuk\u003c/li\u003e\u003cli\u003eUniversity of Southampton\u003c/li\u003e\u003cli\u003eTaif University\u003c/li\u003e\u003cli\u003eKing Saud University", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.411818.5", "label": "Jamia Millia Islamia", "shape": "dot", "title": "\u003ch4\u003eJamia Millia Islamia\u003cbr\u003eNew Delhi, India\u003cbr\u003e - grid.411818.5\u003c/h4\u003eLinks:\u003cli\u003eKing Abdulaziz University\u003c/li\u003e\u003cli\u003eUniversity of Delhi\u003c/li\u003e\u003cli\u003eUniversity of Technology Malaysia\u003c/li\u003e\u003cli\u003eAmity University\u003c/li\u003e\u003cli\u003eNational Physical Laboratory of India\u003c/li\u003e\u003cli\u003eIndian Institute of Technology Delhi\u003c/li\u003e\u003cli\u003eAligarh Muslim University\u003c/li\u003e\u003cli\u003eRowan University\u003c/li\u003e\u003cli\u003eM.J.P. Rohilkhand University\u003c/li\u003e\u003cli\u003eKing Saud University", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.56302.32", "label": "King Saud University", "shape": "dot", "title": "\u003ch4\u003eKing Saud University\u003cbr\u003eRiyadh, Saudi Arabia\u003cbr\u003e - grid.56302.32\u003c/h4\u003eLinks:\u003cli\u003eNational Research Centre\u003c/li\u003e\u003cli\u003eKing Abdulaziz University\u003c/li\u003e\u003cli\u003eUniversity of Gab\u00e8s\u003c/li\u003e\u003cli\u003eUniversity of Queensland\u003c/li\u003e\u003cli\u003eTanta University\u003c/li\u003e\u003cli\u003eNational University of Singapore\u003c/li\u003e\u003cli\u003eJamia Millia Islamia\u003c/li\u003e\u003cli\u003eChang Gung University\u003c/li\u003e\u003cli\u003eAligarh Muslim University\u003c/li\u003e\u003cli\u003eSuez Canal University\u003c/li\u003e\u003cli\u003eJeonbuk National University\u003c/li\u003e\u003cli\u003eKing Abdulaziz City for Science and Technology", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.17089.37", "label": "University of Alberta", "shape": "dot", "title": "\u003ch4\u003eUniversity of Alberta\u003cbr\u003eEdmonton, Canada\u003cbr\u003e - grid.17089.37\u003c/h4\u003eLinks:\u003cli\u003eNortheastern University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.32224.35", "label": "Massachusetts General Hospital", "shape": "dot", "title": "\u003ch4\u003eMassachusetts General Hospital\u003cbr\u003eBoston, United States\u003cbr\u003e - grid.32224.35\u003c/h4\u003eLinks:\u003cli\u003eNortheastern University\u003c/li\u003e\u003cli\u003eHarvard University\u003c/li\u003e\u003cli\u003eMassachusetts Institute of Technology\u003c/li\u003e\u003cli\u003eHarvard\u2013MIT Division of Health Sciences and Technology", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.40263.33", "label": "Brown University", "shape": "dot", "title": "\u003ch4\u003eBrown University\u003cbr\u003eProvidence, United States\u003cbr\u003e - grid.40263.33\u003c/h4\u003eLinks:\u003cli\u003eNortheastern University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.62560.37", "label": "Brigham and Women\u0027s Hospital", "shape": "dot", "title": "\u003ch4\u003eBrigham and Women\u0027s Hospital\u003cbr\u003eBoston, United States\u003cbr\u003e - grid.62560.37\u003c/h4\u003eLinks:\u003cli\u003eNortheastern University\u003c/li\u003e\u003cli\u003eHarvard University\u003c/li\u003e\u003cli\u003eMassachusetts Institute of Technology\u003c/li\u003e\u003cli\u003eHarvard\u2013MIT Division of Health Sciences and Technology", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.225262.3", "label": "University of Massachusetts Lowell", "shape": "dot", "title": "\u003ch4\u003eUniversity of Massachusetts Lowell\u003cbr\u003eLowell, United States\u003cbr\u003e - grid.225262.3\u003c/h4\u003eLinks:\u003cli\u003eNortheastern University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.5808.5", "label": "University of Porto", "shape": "dot", "title": "\u003ch4\u003eUniversity of Porto\u003cbr\u003ePorto, Portugal\u003cbr\u003e - grid.5808.5\u003c/h4\u003eLinks:\u003cli\u003eNortheastern University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.65499.37", "label": "Dana-Farber Cancer Institute", "shape": "dot", "title": "\u003ch4\u003eDana-Farber Cancer Institute\u003cbr\u003eBoston, United States\u003cbr\u003e - grid.65499.37\u003c/h4\u003eLinks:\u003cli\u003eHarvard University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.516087.d", "label": "Koch Institute for Integrative Cancer Research", "shape": "dot", "title": "\u003ch4\u003eKoch Institute for Integrative Cancer Research\u003cbr\u003eCambridge, United States\u003cbr\u003e - grid.516087.d\u003c/h4\u003eLinks:\u003cli\u003eHarvard University\u003c/li\u003e\u003cli\u003eMassachusetts Institute of Technology\u003c/li\u003e\u003cli\u003eHarvard\u2013MIT Division of Health Sciences and Technology", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.239395.7", "label": "Beth Israel Deaconess Medical Center", "shape": "dot", "title": "\u003ch4\u003eBeth Israel Deaconess Medical Center\u003cbr\u003eBoston, United States\u003cbr\u003e - grid.239395.7\u003c/h4\u003eLinks:\u003cli\u003eHarvard University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.2515.3", "label": "Boston Children\u0027s Hospital", "shape": "dot", "title": "\u003ch4\u003eBoston Children\u0027s Hospital\u003cbr\u003eBoston, United States\u003cbr\u003e - grid.2515.3\u003c/h4\u003eLinks:\u003cli\u003eHarvard University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.168010.e", "label": "Stanford University", "shape": "dot", "title": "\u003ch4\u003eStanford University\u003cbr\u003eStanford, United States\u003cbr\u003e - grid.168010.e\u003c/h4\u003eLinks:\u003cli\u003eHarvard University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.4280.e", "label": "National University of Singapore", "shape": "dot", "title": "\u003ch4\u003eNational University of Singapore\u003cbr\u003eSingapore, Singapore\u003cbr\u003e - grid.4280.e\u003c/h4\u003eLinks:\u003cli\u003eKing Saud University\u003c/li\u003e\u003cli\u003eMassachusetts Institute of Technology", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.429485.6", "label": "Singapore-MIT Alliance for Research and Technology", "shape": "dot", "title": "\u003ch4\u003eSingapore-MIT Alliance for Research and Technology\u003cbr\u003eSingapore, Singapore\u003cbr\u003e - grid.429485.6\u003c/h4\u003eLinks:\u003cli\u003eMassachusetts Institute of Technology", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.512167.6", "label": "Institute for Soldier Nanotechnologies", "shape": "dot", "title": "\u003ch4\u003eInstitute for Soldier Nanotechnologies\u003cbr\u003eCambridge, United States\u003cbr\u003e - grid.512167.6\u003c/h4\u003eLinks:\u003cli\u003eMassachusetts Institute of Technology", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.418830.6", "label": "Institute of Bioengineering and Nanotechnology", "shape": "dot", "title": "\u003ch4\u003eInstitute of Bioengineering and Nanotechnology\u003cbr\u003eSingapore, Singapore\u003cbr\u003e - grid.418830.6\u003c/h4\u003eLinks:\u003cli\u003eMassachusetts Institute of Technology", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.59025.3b", "label": "Nanyang Technological University", "shape": "dot", "title": "\u003ch4\u003eNanyang Technological University\u003cbr\u003eSingapore, Singapore\u003cbr\u003e - grid.59025.3b\u003c/h4\u003eLinks:\u003cli\u003eMassachusetts Institute of Technology", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.187073.a", "label": "Argonne National Laboratory", "shape": "dot", "title": "\u003ch4\u003eArgonne National Laboratory\u003cbr\u003eLemont, United States\u003cbr\u003e - grid.187073.a\u003c/h4\u003eLinks:\u003cli\u003eNorthwestern University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.35403.31", "label": "University of Illinois Urbana-Champaign", "shape": "dot", "title": "\u003ch4\u003eUniversity of Illinois Urbana-Champaign\u003cbr\u003eUrbana, United States\u003cbr\u003e - grid.35403.31\u003c/h4\u003eLinks:\u003cli\u003eNorthwestern University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.516096.d", "label": "Robert H. Lurie Comprehensive Cancer Center", "shape": "dot", "title": "\u003ch4\u003eRobert H. Lurie Comprehensive Cancer Center\u003cbr\u003eChicago, United States\u003cbr\u003e - grid.516096.d\u003c/h4\u003eLinks:\u003cli\u003eNorthwestern University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.12527.33", "label": "Tsinghua University", "shape": "dot", "title": "\u003ch4\u003eTsinghua University\u003cbr\u003eBeijing, China\u003cbr\u003e - grid.12527.33\u003c/h4\u003eLinks:\u003cli\u003eNorthwestern University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.19006.3e", "label": "University of California, Los Angeles", "shape": "dot", "title": "\u003ch4\u003eUniversity of California, Los Angeles\u003cbr\u003eLos Angeles, United States\u003cbr\u003e - grid.19006.3e\u003c/h4\u003eLinks:\u003cli\u003eNorthwestern University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.169077.e", "label": "Purdue University West Lafayette", "shape": "dot", "title": "\u003ch4\u003ePurdue University West Lafayette\u003cbr\u003eWest Lafayette, United States\u003cbr\u003e - grid.169077.e\u003c/h4\u003eLinks:\u003cli\u003eNorthwestern University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.37172.30", "label": "Korea Advanced Institute of Science and Technology", "shape": "dot", "title": "\u003ch4\u003eKorea Advanced Institute of Science and Technology\u003cbr\u003eDaejeon, South Korea\u003cbr\u003e - grid.37172.30\u003c/h4\u003eLinks:\u003cli\u003eNorthwestern University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.170205.1", "label": "University of Chicago", "shape": "dot", "title": "\u003ch4\u003eUniversity of Chicago\u003cbr\u003eChicago, United States\u003cbr\u003e - grid.170205.1\u003c/h4\u003eLinks:\u003cli\u003eNorthwestern University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.69566.3a", "label": "Tohoku University", "shape": "dot", "title": "\u003ch4\u003eTohoku University\u003cbr\u003eSendai, Japan\u003cbr\u003e - grid.69566.3a\u003c/h4\u003eLinks:\u003cli\u003eHarvard\u2013MIT Division of Health Sciences and Technology", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.258676.8", "label": "Konkuk University", "shape": "dot", "title": "\u003ch4\u003eKonkuk University\u003cbr\u003eSeoul, South Korea\u003cbr\u003e - grid.258676.8\u003c/h4\u003eLinks:\u003cli\u003eHarvard\u2013MIT Division of Health Sciences and Technology", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.289247.2", "label": "Kyung Hee University", "shape": "dot", "title": "\u003ch4\u003eKyung Hee University\u003cbr\u003eSeoul, South Korea\u003cbr\u003e - grid.289247.2\u003c/h4\u003eLinks:\u003cli\u003eHarvard\u2013MIT Division of Health Sciences and Technology", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.466808.4", "label": "Jawaharlal Nehru Medical College Hospital", "shape": "dot", "title": "\u003ch4\u003eJawaharlal Nehru Medical College Hospital\u003cbr\u003eAligarh, India\u003cbr\u003e - grid.466808.4\u003c/h4\u003eLinks:\u003cli\u003eAligarh Muslim University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.412135.0", "label": "King Fahd University of Petroleum and Minerals", "shape": "dot", "title": "\u003ch4\u003eKing Fahd University of Petroleum and Minerals\u003cbr\u003eDhahran, Saudi Arabia\u003cbr\u003e - grid.412135.0\u003c/h4\u003eLinks:\u003cli\u003eQuaid-i-Azam University\u003c/li\u003e\u003cli\u003eAligarh Muslim University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.417641.1", "label": "Institute of Microbial Technology", "shape": "dot", "title": "\u003ch4\u003eInstitute of Microbial Technology\u003cbr\u003eChandigarh, India\u003cbr\u003e - grid.417641.1\u003c/h4\u003eLinks:\u003cli\u003eAligarh Muslim University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.419701.a", "label": "National Physical Laboratory of India", "shape": "dot", "title": "\u003ch4\u003eNational Physical Laboratory of India\u003cbr\u003eNew Delhi, India\u003cbr\u003e - grid.419701.a\u003c/h4\u003eLinks:\u003cli\u003eAligarh Muslim University\u003c/li\u003e\u003cli\u003eJamia Millia Islamia", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.411723.2", "label": "Integral University", "shape": "dot", "title": "\u003ch4\u003eIntegral University\u003cbr\u003eLucknow, India\u003cbr\u003e - grid.411723.2\u003c/h4\u003eLinks:\u003cli\u003eAligarh Muslim University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.410877.d", "label": "University of Technology Malaysia", "shape": "dot", "title": "\u003ch4\u003eUniversity of Technology Malaysia\u003cbr\u003eJohor Bahru, Malaysia\u003cbr\u003e - grid.410877.d\u003c/h4\u003eLinks:\u003cli\u003eAligarh Muslim University\u003c/li\u003e\u003cli\u003eJamia Millia Islamia", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.10706.30", "label": "Jawaharlal Nehru University", "shape": "dot", "title": "\u003ch4\u003eJawaharlal Nehru University\u003cbr\u003eNew Delhi, India\u003cbr\u003e - grid.10706.30\u003c/h4\u003eLinks:\u003cli\u003eAligarh Muslim University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.411214.3", "label": "Changwon National University", "shape": "dot", "title": "\u003ch4\u003eChangwon National University\u003cbr\u003eChangwon, South Korea\u003cbr\u003e - grid.411214.3\u003c/h4\u003eLinks:\u003cli\u003eAligarh Muslim University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.418920.6", "label": "COMSATS University Islamabad", "shape": "dot", "title": "\u003ch4\u003eCOMSATS University Islamabad\u003cbr\u003eIslamabad, Pakistan\u003cbr\u003e - grid.418920.6\u003c/h4\u003eLinks:\u003cli\u003eQuaid-i-Azam University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.440530.6", "label": "Hazara University", "shape": "dot", "title": "\u003ch4\u003eHazara University\u003cbr\u003eBaffa, Pakistan\u003cbr\u003e - grid.440530.6\u003c/h4\u003eLinks:\u003cli\u003eQuaid-i-Azam University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.411727.6", "label": "International Islamic University, Islamabad", "shape": "dot", "title": "\u003ch4\u003eInternational Islamic University, Islamabad\u003cbr\u003eIslamabad, Pakistan\u003cbr\u003e - grid.411727.6\u003c/h4\u003eLinks:\u003cli\u003eQuaid-i-Azam University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.412117.0", "label": "National University of Sciences and Technology", "shape": "dot", "title": "\u003ch4\u003eNational University of Sciences and Technology\u003cbr\u003eIslamabad, Pakistan\u003cbr\u003e - grid.412117.0\u003c/h4\u003eLinks:\u003cli\u003eQuaid-i-Azam University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.466924.b", "label": "Abdus Salam Centre for Physics", "shape": "dot", "title": "\u003ch4\u003eAbdus Salam Centre for Physics\u003cbr\u003eIslamabad, Pakistan\u003cbr\u003e - grid.466924.b\u003c/h4\u003eLinks:\u003cli\u003eQuaid-i-Azam University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.412782.a", "label": "University of Sargodha", "shape": "dot", "title": "\u003ch4\u003eUniversity of Sargodha\u003cbr\u003eSargodha, Pakistan\u003cbr\u003e - grid.412782.a\u003c/h4\u003eLinks:\u003cli\u003eQuaid-i-Azam University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.420113.5", "label": "Pakistan Institute of Nuclear Science and Technology", "shape": "dot", "title": "\u003ch4\u003ePakistan Institute of Nuclear Science and Technology\u003cbr\u003eIslamabad, Pakistan\u003cbr\u003e - grid.420113.5\u003c/h4\u003eLinks:\u003cli\u003eQuaid-i-Azam University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.10347.31", "label": "University of Malaya", "shape": "dot", "title": "\u003ch4\u003eUniversity of Malaya\u003cbr\u003eKuala Lumpur, Malaysia\u003cbr\u003e - grid.10347.31\u003c/h4\u003eLinks:\u003cli\u003eQuaid-i-Azam University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.411320.5", "label": "F\u0131rat University", "shape": "dot", "title": "\u003ch4\u003eF\u0131rat University\u003cbr\u003eEl\u00e2z\u0131\u011f, Turkey\u003cbr\u003e - grid.411320.5\u003c/h4\u003eLinks:\u003cli\u003eSuez Canal University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.5491.9", "label": "University of Southampton", "shape": "dot", "title": "\u003ch4\u003eUniversity of Southampton\u003cbr\u003eSouthampton, United Kingdom\u003cbr\u003e - grid.5491.9\u003c/h4\u003eLinks:\u003cli\u003eSuez Canal University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.29980.3a", "label": "University of Otago", "shape": "dot", "title": "\u003ch4\u003eUniversity of Otago\u003cbr\u003eDunedin, New Zealand\u003cbr\u003e - grid.29980.3a\u003c/h4\u003eLinks:\u003cli\u003eSuez Canal University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.440760.1", "label": "University of Tabuk", "shape": "dot", "title": "\u003ch4\u003eUniversity of Tabuk\u003cbr\u003eTabuk, Saudi Arabia\u003cbr\u003e - grid.440760.1\u003c/h4\u003eLinks:\u003cli\u003eSuez Canal University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.412895.3", "label": "Taif University", "shape": "dot", "title": "\u003ch4\u003eTaif University\u003cbr\u003eTa\u0027if, Saudi Arabia\u003cbr\u003e - grid.412895.3\u003c/h4\u003eLinks:\u003cli\u003eSuez Canal University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.8905.4", "label": "University of Chemical Technology and Metallurgy", "shape": "dot", "title": "\u003ch4\u003eUniversity of Chemical Technology and Metallurgy\u003cbr\u003eSofia, Bulgaria\u003cbr\u003e - grid.8905.4\u003c/h4\u003eLinks:\u003cli\u003eSuez Canal University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.419725.c", "label": "National Research Centre", "shape": "dot", "title": "\u003ch4\u003eNational Research Centre\u003cbr\u003eCairo, Egypt\u003cbr\u003e - grid.419725.c\u003c/h4\u003eLinks:\u003cli\u003eKing Saud University\u003c/li\u003e\u003cli\u003eSuez Canal University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.7269.a", "label": "Ain Shams University", "shape": "dot", "title": "\u003ch4\u003eAin Shams University\u003cbr\u003eCairo, Egypt\u003cbr\u003e - grid.7269.a\u003c/h4\u003eLinks:\u003cli\u003eSuez Canal University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.417967.a", "label": "Indian Institute of Technology Delhi", "shape": "dot", "title": "\u003ch4\u003eIndian Institute of Technology Delhi\u003cbr\u003eNew Delhi, India\u003cbr\u003e - grid.417967.a\u003c/h4\u003eLinks:\u003cli\u003eJamia Millia Islamia", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.8195.5", "label": "University of Delhi", "shape": "dot", "title": "\u003ch4\u003eUniversity of Delhi\u003cbr\u003eNew Delhi, India\u003cbr\u003e - grid.8195.5\u003c/h4\u003eLinks:\u003cli\u003eJamia Millia Islamia", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.262671.6", "label": "Rowan University", "shape": "dot", "title": "\u003ch4\u003eRowan University\u003cbr\u003eGlassboro, United States\u003cbr\u003e - grid.262671.6\u003c/h4\u003eLinks:\u003cli\u003eJamia Millia Islamia", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.411529.a", "label": "M.J.P. Rohilkhand University", "shape": "dot", "title": "\u003ch4\u003eM.J.P. Rohilkhand University\u003cbr\u003eBareilly, India\u003cbr\u003e - grid.411529.a\u003c/h4\u003eLinks:\u003cli\u003eJamia Millia Islamia", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.444644.2", "label": "Amity University", "shape": "dot", "title": "\u003ch4\u003eAmity University\u003cbr\u003eNoida, India\u003cbr\u003e - grid.444644.2\u003c/h4\u003eLinks:\u003cli\u003eJamia Millia Islamia", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.411545.0", "label": "Jeonbuk National University", "shape": "dot", "title": "\u003ch4\u003eJeonbuk National University\u003cbr\u003eJeonju, South Korea\u003cbr\u003e - grid.411545.0\u003c/h4\u003eLinks:\u003cli\u003eKing Saud University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.452562.2", "label": "King Abdulaziz City for Science and Technology", "shape": "dot", "title": "\u003ch4\u003eKing Abdulaziz City for Science and Technology\u003cbr\u003eRiyadh, Saudi Arabia\u003cbr\u003e - grid.452562.2\u003c/h4\u003eLinks:\u003cli\u003eKing Saud University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.442508.f", "label": "University of Gab\u00e8s", "shape": "dot", "title": "\u003ch4\u003eUniversity of Gab\u00e8s\u003cbr\u003eGab\u00e8s, Tunisia\u003cbr\u003e - grid.442508.f\u003c/h4\u003eLinks:\u003cli\u003eKing Saud University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.1003.2", "label": "University of Queensland", "shape": "dot", "title": "\u003ch4\u003eUniversity of Queensland\u003cbr\u003eBrisbane, Australia\u003cbr\u003e - grid.1003.2\u003c/h4\u003eLinks:\u003cli\u003eKing Saud University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.145695.a", "label": "Chang Gung University", "shape": "dot", "title": "\u003ch4\u003eChang Gung University\u003cbr\u003eTaoyuan City, Taiwan\u003cbr\u003e - grid.145695.a\u003c/h4\u003eLinks:\u003cli\u003eKing Saud University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.412258.8", "label": "Tanta University", "shape": "dot", "title": "\u003ch4\u003eTanta University\u003cbr\u003eTanta, Egypt\u003cbr\u003e - grid.412258.8\u003c/h4\u003eLinks:\u003cli\u003eKing Saud University", "value": 1}]);
+                  edges = new vis.DataSet([{"arrows": "none", "from": "grid.412125.1", "label": 106, "to": "grid.261112.7", "value": 0.16459627329192547}, {"arrows": "none", "from": "grid.412125.1", "label": 98, "to": "grid.38142.3c", "value": 0.15217391304347827}, {"arrows": "none", "from": "grid.412125.1", "label": 73, "to": "grid.116068.8", "value": 0.11335403726708075}, {"arrows": "none", "from": "grid.412125.1", "label": 59, "to": "grid.16753.36", "value": 0.09161490683229814}, {"arrows": "none", "from": "grid.412125.1", "label": 58, "to": "grid.413735.7", "value": 0.09006211180124224}, {"arrows": "none", "from": "grid.412125.1", "label": 47, "to": "grid.411340.3", "value": 0.07298136645962733}, {"arrows": "none", "from": "grid.412125.1", "label": 47, "to": "grid.412621.2", "value": 0.07298136645962733}, {"arrows": "none", "from": "grid.412125.1", "label": 42, "to": "grid.33003.33", "value": 0.06521739130434782}, {"arrows": "none", "from": "grid.412125.1", "label": 42, "to": "grid.411818.5", "value": 0.06521739130434782}, {"arrows": "none", "from": "grid.412125.1", "label": 42, "to": "grid.56302.32", "value": 0.06521739130434782}, {"arrows": "none", "from": "grid.261112.7", "label": 68, "to": "grid.38142.3c", "value": 0.10559006211180125}, {"arrows": "none", "from": "grid.261112.7", "label": 56, "to": "grid.116068.8", "value": 0.08695652173913043}, {"arrows": "none", "from": "grid.261112.7", "label": 53, "to": "grid.17089.37", "value": 0.08229813664596274}, {"arrows": "none", "from": "grid.261112.7", "label": 28, "to": "grid.32224.35", "value": 0.043478260869565216}, {"arrows": "none", "from": "grid.261112.7", "label": 21, "to": "grid.40263.33", "value": 0.03260869565217391}, {"arrows": "none", "from": "grid.261112.7", "label": 19, "to": "grid.62560.37", "value": 0.029503105590062112}, {"arrows": "none", "from": "grid.261112.7", "label": 17, "to": "grid.225262.3", "value": 0.026397515527950312}, {"arrows": "none", "from": "grid.261112.7", "label": 17, "to": "grid.413735.7", "value": 0.026397515527950312}, {"arrows": "none", "from": "grid.261112.7", "label": 15, "to": "grid.5808.5", "value": 0.023291925465838508}, {"arrows": "none", "from": "grid.38142.3c", "label": 644, "to": "grid.116068.8", "value": 1.0}, {"arrows": "none", "from": "grid.38142.3c", "label": 556, "to": "grid.32224.35", "value": 0.8633540372670807}, {"arrows": "none", "from": "grid.38142.3c", "label": 486, "to": "grid.62560.37", "value": 0.7546583850931677}, {"arrows": "none", "from": "grid.38142.3c", "label": 360, "to": "grid.413735.7", "value": 0.5590062111801242}, {"arrows": "none", "from": "grid.38142.3c", "label": 132, "to": "grid.65499.37", "value": 0.20496894409937888}, {"arrows": "none", "from": "grid.38142.3c", "label": 105, "to": "grid.516087.d", "value": 0.16304347826086957}, {"arrows": "none", "from": "grid.38142.3c", "label": 104, "to": "grid.239395.7", "value": 0.16149068322981366}, {"arrows": "none", "from": "grid.38142.3c", "label": 79, "to": "grid.2515.3", "value": 0.12267080745341614}, {"arrows": "none", "from": "grid.38142.3c", "label": 69, "to": "grid.168010.e", "value": 0.10714285714285714}, {"arrows": "none", "from": "grid.116068.8", "label": 335, "to": "grid.413735.7", "value": 0.5201863354037267}, {"arrows": "none", "from": "grid.116068.8", "label": 209, "to": "grid.62560.37", "value": 0.3245341614906832}, {"arrows": "none", "from": "grid.116068.8", "label": 191, "to": "grid.516087.d", "value": 0.296583850931677}, {"arrows": "none", "from": "grid.116068.8", "label": 152, "to": "grid.4280.e", "value": 0.2360248447204969}, {"arrows": "none", "from": "grid.116068.8", "label": 147, "to": "grid.429485.6", "value": 0.22826086956521738}, {"arrows": "none", "from": "grid.116068.8", "label": 110, "to": "grid.512167.6", "value": 0.17080745341614906}, {"arrows": "none", "from": "grid.116068.8", "label": 95, "to": "grid.418830.6", "value": 0.14751552795031056}, {"arrows": "none", "from": "grid.116068.8", "label": 90, "to": "grid.32224.35", "value": 0.13975155279503104}, {"arrows": "none", "from": "grid.116068.8", "label": 88, "to": "grid.59025.3b", "value": 0.13664596273291926}, {"arrows": "none", "from": "grid.16753.36", "label": 240, "to": "grid.187073.a", "value": 0.37267080745341613}, {"arrows": "none", "from": "grid.16753.36", "label": 142, "to": "grid.35403.31", "value": 0.2204968944099379}, {"arrows": "none", "from": "grid.16753.36", "label": 83, "to": "grid.516096.d", "value": 0.12888198757763975}, {"arrows": "none", "from": "grid.16753.36", "label": 56, "to": "grid.12527.33", "value": 0.08695652173913043}, {"arrows": "none", "from": "grid.16753.36", "label": 52, "to": "grid.19006.3e", "value": 0.08074534161490683}, {"arrows": "none", "from": "grid.16753.36", "label": 51, "to": "grid.169077.e", "value": 0.07919254658385093}, {"arrows": "none", "from": "grid.16753.36", "label": 44, "to": "grid.37172.30", "value": 0.06832298136645963}, {"arrows": "none", "from": "grid.16753.36", "label": 42, "to": "grid.170205.1", "value": 0.06521739130434782}, {"arrows": "none", "from": "grid.16753.36", "label": 38, "to": "grid.116068.8", "value": 0.059006211180124224}, {"arrows": "none", "from": "grid.413735.7", "label": 125, "to": "grid.62560.37", "value": 0.19409937888198758}, {"arrows": "none", "from": "grid.413735.7", "label": 97, "to": "grid.32224.35", "value": 0.15062111801242237}, {"arrows": "none", "from": "grid.413735.7", "label": 84, "to": "grid.516087.d", "value": 0.13043478260869565}, {"arrows": "none", "from": "grid.413735.7", "label": 31, "to": "grid.69566.3a", "value": 0.04813664596273292}, {"arrows": "none", "from": "grid.413735.7", "label": 25, "to": "grid.258676.8", "value": 0.03881987577639751}, {"arrows": "none", "from": "grid.413735.7", "label": 22, "to": "grid.289247.2", "value": 0.034161490683229816}, {"arrows": "none", "from": "grid.411340.3", "label": 61, "to": "grid.56302.32", "value": 0.09472049689440994}, {"arrows": "none", "from": "grid.411340.3", "label": 19, "to": "grid.466808.4", "value": 0.029503105590062112}, {"arrows": "none", "from": "grid.411340.3", "label": 10, "to": "grid.412135.0", "value": 0.015527950310559006}, {"arrows": "none", "from": "grid.411340.3", "label": 9, "to": "grid.417641.1", "value": 0.013975155279503106}, {"arrows": "none", "from": "grid.411340.3", "label": 9, "to": "grid.419701.a", "value": 0.013975155279503106}, {"arrows": "none", "from": "grid.411340.3", "label": 8, "to": "grid.411723.2", "value": 0.012422360248447204}, {"arrows": "none", "from": "grid.411340.3", "label": 7, "to": "grid.410877.d", "value": 0.010869565217391304}, {"arrows": "none", "from": "grid.411340.3", "label": 6, "to": "grid.10706.30", "value": 0.009316770186335404}, {"arrows": "none", "from": "grid.411340.3", "label": 6, "to": "grid.411214.3", "value": 0.009316770186335404}, {"arrows": "none", "from": "grid.412621.2", "label": 39, "to": "grid.418920.6", "value": 0.06055900621118013}, {"arrows": "none", "from": "grid.412621.2", "label": 36, "to": "grid.440530.6", "value": 0.055900621118012424}, {"arrows": "none", "from": "grid.412621.2", "label": 18, "to": "grid.411727.6", "value": 0.027950310559006212}, {"arrows": "none", "from": "grid.412621.2", "label": 18, "to": "grid.412117.0", "value": 0.027950310559006212}, {"arrows": "none", "from": "grid.412621.2", "label": 15, "to": "grid.466924.b", "value": 0.023291925465838508}, {"arrows": "none", "from": "grid.412621.2", "label": 14, "to": "grid.412782.a", "value": 0.021739130434782608}, {"arrows": "none", "from": "grid.412621.2", "label": 14, "to": "grid.420113.5", "value": 0.021739130434782608}, {"arrows": "none", "from": "grid.412621.2", "label": 11, "to": "grid.10347.31", "value": 0.017080745341614908}, {"arrows": "none", "from": "grid.412621.2", "label": 11, "to": "grid.412135.0", "value": 0.017080745341614908}, {"arrows": "none", "from": "grid.33003.33", "label": 18, "to": "grid.411320.5", "value": 0.027950310559006212}, {"arrows": "none", "from": "grid.33003.33", "label": 13, "to": "grid.5491.9", "value": 0.020186335403726708}, {"arrows": "none", "from": "grid.33003.33", "label": 11, "to": "grid.29980.3a", "value": 0.017080745341614908}, {"arrows": "none", "from": "grid.33003.33", "label": 11, "to": "grid.440760.1", "value": 0.017080745341614908}, {"arrows": "none", "from": "grid.33003.33", "label": 11, "to": "grid.56302.32", "value": 0.017080745341614908}, {"arrows": "none", "from": "grid.33003.33", "label": 8, "to": "grid.412895.3", "value": 0.012422360248447204}, {"arrows": "none", "from": "grid.33003.33", "label": 7, "to": "grid.8905.4", "value": 0.010869565217391304}, {"arrows": "none", "from": "grid.33003.33", "label": 6, "to": "grid.419725.c", "value": 0.009316770186335404}, {"arrows": "none", "from": "grid.33003.33", "label": 5, "to": "grid.7269.a", "value": 0.007763975155279503}, {"arrows": "none", "from": "grid.411818.5", "label": 34, "to": "grid.419701.a", "value": 0.052795031055900624}, {"arrows": "none", "from": "grid.411818.5", "label": 15, "to": "grid.417967.a", "value": 0.023291925465838508}, {"arrows": "none", "from": "grid.411818.5", "label": 15, "to": "grid.56302.32", "value": 0.023291925465838508}, {"arrows": "none", "from": "grid.411818.5", "label": 9, "to": "grid.8195.5", "value": 0.013975155279503106}, {"arrows": "none", "from": "grid.411818.5", "label": 8, "to": "grid.262671.6", "value": 0.012422360248447204}, {"arrows": "none", "from": "grid.411818.5", "label": 7, "to": "grid.410877.d", "value": 0.010869565217391304}, {"arrows": "none", "from": "grid.411818.5", "label": 7, "to": "grid.411529.a", "value": 0.010869565217391304}, {"arrows": "none", "from": "grid.411818.5", "label": 7, "to": "grid.444644.2", "value": 0.010869565217391304}, {"arrows": "none", "from": "grid.411818.5", "label": 6, "to": "grid.411340.3", "value": 0.009316770186335404}, {"arrows": "none", "from": "grid.56302.32", "label": 60, "to": "grid.4280.e", "value": 0.09316770186335403}, {"arrows": "none", "from": "grid.56302.32", "label": 54, "to": "grid.411545.0", "value": 0.08385093167701864}, {"arrows": "none", "from": "grid.56302.32", "label": 48, "to": "grid.452562.2", "value": 0.07453416149068323}, {"arrows": "none", "from": "grid.56302.32", "label": 43, "to": "grid.419725.c", "value": 0.06677018633540373}, {"arrows": "none", "from": "grid.56302.32", "label": 42, "to": "grid.442508.f", "value": 0.06521739130434782}, {"arrows": "none", "from": "grid.56302.32", "label": 34, "to": "grid.1003.2", "value": 0.052795031055900624}, {"arrows": "none", "from": "grid.56302.32", "label": 31, "to": "grid.145695.a", "value": 0.04813664596273292}, {"arrows": "none", "from": "grid.56302.32", "label": 31, "to": "grid.412258.8", "value": 0.04813664596273292}]);
 
-        // parsing and collecting nodes and edges from the python
-        nodes = new vis.DataSet([{"borderWidthSelected": 5, "color": "rgb(0, 147, 146)", "id": "grid.412125.1", "label": "King Abdulaziz University", "shape": "dot", "title": "\u003ch4\u003eKing Abdulaziz University\u003cbr\u003eJeddah, Saudi Arabia\u003cbr\u003e - grid.412125.1\u003c/h4\u003eLinks:\u003cli\u003eKing Saud University\u003c/li\u003e\u003cli\u003eMassachusetts Institute of Technology\u003c/li\u003e\u003cli\u003eAligarh Muslim University\u003c/li\u003e\u003cli\u003eSuez Canal University\u003c/li\u003e\u003cli\u003eHarvard\u2013MIT Division of Health Sciences and Technology\u003c/li\u003e\u003cli\u003eBrigham and Women\u0027s Hospital\u003c/li\u003e\u003cli\u003eNortheastern University\u003c/li\u003e\u003cli\u003eNorthwestern University\u003c/li\u003e\u003cli\u003eHarvard University\u003c/li\u003e\u003cli\u003eQuaid-i-Azam University", "value": 3}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.38142.3c", "label": "Harvard University", "shape": "dot", "title": "\u003ch4\u003eHarvard University\u003cbr\u003eCambridge, United States\u003cbr\u003e - grid.38142.3c\u003c/h4\u003eLinks:\u003cli\u003eBoston Children\u0027s Hospital\u003c/li\u003e\u003cli\u003eMassachusetts Institute of Technology\u003c/li\u003e\u003cli\u003eHarvard\u2013MIT Division of Health Sciences and Technology\u003c/li\u003e\u003cli\u003eDana-Farber Cancer Institute\u003c/li\u003e\u003cli\u003eMassachusetts General Hospital\u003c/li\u003e\u003cli\u003eBrigham and Women\u0027s Hospital\u003c/li\u003e\u003cli\u003eNortheastern University\u003c/li\u003e\u003cli\u003eNorthwestern University\u003c/li\u003e\u003cli\u003eKing Abdulaziz University\u003c/li\u003e\u003cli\u003eStanford University\u003c/li\u003e\u003cli\u003eBeth Israel Deaconess Medical Center", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.261112.7", "label": "Northeastern University", "shape": "dot", "title": "\u003ch4\u003eNortheastern University\u003cbr\u003eBoston, United States\u003cbr\u003e - grid.261112.7\u003c/h4\u003eLinks:\u003cli\u003eUniversity of Alberta\u003c/li\u003e\u003cli\u003eMassachusetts Institute of Technology\u003c/li\u003e\u003cli\u003eBrown University\u003c/li\u003e\u003cli\u003eHarvard\u2013MIT Division of Health Sciences and Technology\u003c/li\u003e\u003cli\u003eMassachusetts General Hospital\u003c/li\u003e\u003cli\u003eBrigham and Women\u0027s Hospital\u003c/li\u003e\u003cli\u003eUniversity of Massachusetts Lowell\u003c/li\u003e\u003cli\u003eKing Abdulaziz University\u003c/li\u003e\u003cli\u003eHarvard University\u003c/li\u003e\u003cli\u003eUniversity of Porto", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.116068.8", "label": "Massachusetts Institute of Technology", "shape": "dot", "title": "\u003ch4\u003eMassachusetts Institute of Technology\u003cbr\u003eCambridge, United States\u003cbr\u003e - grid.116068.8\u003c/h4\u003eLinks:\u003cli\u003eInstitute for Soldier Nanotechnologies\u003c/li\u003e\u003cli\u003eInstitute of Bioengineering and Nanotechnology\u003c/li\u003e\u003cli\u003eHarvard\u2013MIT Division of Health Sciences and Technology\u003c/li\u003e\u003cli\u003eBrigham and Women\u0027s Hospital\u003c/li\u003e\u003cli\u003eNortheastern University\u003c/li\u003e\u003cli\u003eMassachusetts General Hospital\u003c/li\u003e\u003cli\u003eNorthwestern University\u003c/li\u003e\u003cli\u003eKing Abdulaziz University\u003c/li\u003e\u003cli\u003eNational University of Singapore\u003c/li\u003e\u003cli\u003eStanford University\u003c/li\u003e\u003cli\u003eSingapore-MIT Alliance for Research and Technology\u003c/li\u003e\u003cli\u003eHarvard University\u003c/li\u003e\u003cli\u003eNanyang Technological University", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.413735.7", "label": "Harvard\u2013MIT Division of Health Sciences and Technology", "shape": "dot", "title": "\u003ch4\u003eHarvard\u2013MIT Division of Health Sciences and Technology\u003cbr\u003eCambridge, United States\u003cbr\u003e - grid.413735.7\u003c/h4\u003eLinks:\u003cli\u003eMassachusetts Institute of Technology\u003c/li\u003e\u003cli\u003eKyung Hee University\u003c/li\u003e\u003cli\u003eQueen Mary University of London\u003c/li\u003e\u003cli\u003eBrigham and Women\u0027s Hospital\u003c/li\u003e\u003cli\u003eNortheastern University\u003c/li\u003e\u003cli\u003eMassachusetts General Hospital\u003c/li\u003e\u003cli\u003eKonkuk University\u003c/li\u003e\u003cli\u003eKing Abdulaziz University\u003c/li\u003e\u003cli\u003eTohoku University\u003c/li\u003e\u003cli\u003eHarvard University", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.16753.36", "label": "Northwestern University", "shape": "dot", "title": "\u003ch4\u003eNorthwestern University\u003cbr\u003eEvanston, United States\u003cbr\u003e - grid.16753.36\u003c/h4\u003eLinks:\u003cli\u003eUniversity of Chicago\u003c/li\u003e\u003cli\u003eUniversity of Illinois Urbana-Champaign\u003c/li\u003e\u003cli\u003eMassachusetts Institute of Technology\u003c/li\u003e\u003cli\u003ePurdue University West Lafayette\u003c/li\u003e\u003cli\u003eTel Aviv University\u003c/li\u003e\u003cli\u003eHarvard University\u003c/li\u003e\u003cli\u003eTsinghua University\u003c/li\u003e\u003cli\u003eKing Abdulaziz University\u003c/li\u003e\u003cli\u003eUniversity of California, Los Angeles\u003c/li\u003e\u003cli\u003eArgonne National Laboratory", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.412621.2", "label": "Quaid-i-Azam University", "shape": "dot", "title": "\u003ch4\u003eQuaid-i-Azam University\u003cbr\u003eIslamabad, Pakistan\u003cbr\u003e - grid.412621.2\u003c/h4\u003eLinks:\u003cli\u003eKing Fahd University of Petroleum and Minerals\u003c/li\u003e\u003cli\u003ePakistan Institute of Nuclear Science and Technology\u003c/li\u003e\u003cli\u003eInternational Islamic University, Islamabad\u003c/li\u003e\u003cli\u003eHazara University\u003c/li\u003e\u003cli\u003eUniversity of Malakand\u003c/li\u003e\u003cli\u003eCOMSATS University Islamabad\u003c/li\u003e\u003cli\u003eKing Abdulaziz University\u003c/li\u003e\u003cli\u003eUniversity of Sargodha\u003c/li\u003e\u003cli\u003eAbdus Salam Centre for Physics\u003c/li\u003e\u003cli\u003eNational University of Sciences and Technology", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.411340.3", "label": "Aligarh Muslim University", "shape": "dot", "title": "\u003ch4\u003eAligarh Muslim University\u003cbr\u003eAligarh, India\u003cbr\u003e - grid.411340.3\u003c/h4\u003eLinks:\u003cli\u003eKing Saud University\u003c/li\u003e\u003cli\u003eIntegral University\u003c/li\u003e\u003cli\u003eChangwon National University\u003c/li\u003e\u003cli\u003eKing Fahd University of Petroleum and Minerals\u003c/li\u003e\u003cli\u003eNational Physical Laboratory of India\u003c/li\u003e\u003cli\u003eInstitute of Microbial Technology\u003c/li\u003e\u003cli\u003eUniversity of Technology Malaysia\u003c/li\u003e\u003cli\u003eNational Islamic University\u003c/li\u003e\u003cli\u003eKing Abdulaziz University\u003c/li\u003e\u003cli\u003eJawaharlal Nehru Medical College Hospital", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.56302.32", "label": "King Saud University", "shape": "dot", "title": "\u003ch4\u003eKing Saud University\u003cbr\u003eRiyadh, Saudi Arabia\u003cbr\u003e - grid.56302.32\u003c/h4\u003eLinks:\u003cli\u003eUniversity of Queensland\u003c/li\u003e\u003cli\u003eJeonbuk National University\u003c/li\u003e\u003cli\u003eChang Gung University\u003c/li\u003e\u003cli\u003eUniversity of Gab\u00e8s\u003c/li\u003e\u003cli\u003eBharathiar University\u003c/li\u003e\u003cli\u003eAligarh Muslim University\u003c/li\u003e\u003cli\u003eNational Research Centre\u003c/li\u003e\u003cli\u003eSuez Canal University\u003c/li\u003e\u003cli\u003eKing Abdulaziz City for Science and Technology\u003c/li\u003e\u003cli\u003eKing Abdulaziz University\u003c/li\u003e\u003cli\u003eNational University of Singapore", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.62560.37", "label": "Brigham and Women\u0027s Hospital", "shape": "dot", "title": "\u003ch4\u003eBrigham and Women\u0027s Hospital\u003cbr\u003eBoston, United States\u003cbr\u003e - grid.62560.37\u003c/h4\u003eLinks:\u003cli\u003eBoston Children\u0027s Hospital\u003c/li\u003e\u003cli\u003eMassachusetts Institute of Technology\u003c/li\u003e\u003cli\u003eHarvard\u2013MIT Division of Health Sciences and Technology\u003c/li\u003e\u003cli\u003eDana-Farber Cancer Institute\u003c/li\u003e\u003cli\u003eMassachusetts General Hospital\u003c/li\u003e\u003cli\u003eNortheastern University\u003c/li\u003e\u003cli\u003eKing Abdulaziz University\u003c/li\u003e\u003cli\u003eBoston University\u003c/li\u003e\u003cli\u003eStanford University\u003c/li\u003e\u003cli\u003eHarvard University", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(156, 203, 134)", "id": "grid.33003.33", "label": "Suez Canal University", "shape": "dot", "title": "\u003ch4\u003eSuez Canal University\u003cbr\u003eIsmailia, Egypt\u003cbr\u003e - grid.33003.33\u003c/h4\u003eLinks:\u003cli\u003eUniversity of Otago\u003c/li\u003e\u003cli\u003eUniversity of Southampton\u003c/li\u003e\u003cli\u003eKing Saud University\u003c/li\u003e\u003cli\u003eAin Shams University\u003c/li\u003e\u003cli\u003eNational Research Centre\u003c/li\u003e\u003cli\u003eGazi University\u003c/li\u003e\u003cli\u003eF\u0131rat University\u003c/li\u003e\u003cli\u003eKing Abdulaziz University\u003c/li\u003e\u003cli\u003eUniversity of Tabuk\u003c/li\u003e\u003cli\u003eTaif University", "value": 2}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.32224.35", "label": "Massachusetts General Hospital", "shape": "dot", "title": "\u003ch4\u003eMassachusetts General Hospital\u003cbr\u003eBoston, United States\u003cbr\u003e - grid.32224.35\u003c/h4\u003eLinks:\u003cli\u003eMassachusetts Institute of Technology\u003c/li\u003e\u003cli\u003eHarvard\u2013MIT Division of Health Sciences and Technology\u003c/li\u003e\u003cli\u003eBrigham and Women\u0027s Hospital\u003c/li\u003e\u003cli\u003eNortheastern University\u003c/li\u003e\u003cli\u003eHarvard University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.65499.37", "label": "Dana-Farber Cancer Institute", "shape": "dot", "title": "\u003ch4\u003eDana-Farber Cancer Institute\u003cbr\u003eBoston, United States\u003cbr\u003e - grid.65499.37\u003c/h4\u003eLinks:\u003cli\u003eHarvard University\u003c/li\u003e\u003cli\u003eBrigham and Women\u0027s Hospital", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.239395.7", "label": "Beth Israel Deaconess Medical Center", "shape": "dot", "title": "\u003ch4\u003eBeth Israel Deaconess Medical Center\u003cbr\u003eBoston, United States\u003cbr\u003e - grid.239395.7\u003c/h4\u003eLinks:\u003cli\u003eHarvard University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.2515.3", "label": "Boston Children\u0027s Hospital", "shape": "dot", "title": "\u003ch4\u003eBoston Children\u0027s Hospital\u003cbr\u003eBoston, United States\u003cbr\u003e - grid.2515.3\u003c/h4\u003eLinks:\u003cli\u003eHarvard University\u003c/li\u003e\u003cli\u003eBrigham and Women\u0027s Hospital", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.168010.e", "label": "Stanford University", "shape": "dot", "title": "\u003ch4\u003eStanford University\u003cbr\u003eStanford, United States\u003cbr\u003e - grid.168010.e\u003c/h4\u003eLinks:\u003cli\u003eHarvard University\u003c/li\u003e\u003cli\u003eBrigham and Women\u0027s Hospital\u003c/li\u003e\u003cli\u003eMassachusetts Institute of Technology", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.17089.37", "label": "University of Alberta", "shape": "dot", "title": "\u003ch4\u003eUniversity of Alberta\u003cbr\u003eEdmonton, Canada\u003cbr\u003e - grid.17089.37\u003c/h4\u003eLinks:\u003cli\u003eNortheastern University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.40263.33", "label": "Brown University", "shape": "dot", "title": "\u003ch4\u003eBrown University\u003cbr\u003eProvidence, United States\u003cbr\u003e - grid.40263.33\u003c/h4\u003eLinks:\u003cli\u003eNortheastern University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.225262.3", "label": "University of Massachusetts Lowell", "shape": "dot", "title": "\u003ch4\u003eUniversity of Massachusetts Lowell\u003cbr\u003eLowell, United States\u003cbr\u003e - grid.225262.3\u003c/h4\u003eLinks:\u003cli\u003eNortheastern University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.5808.5", "label": "University of Porto", "shape": "dot", "title": "\u003ch4\u003eUniversity of Porto\u003cbr\u003ePorto, Portugal\u003cbr\u003e - grid.5808.5\u003c/h4\u003eLinks:\u003cli\u003eNortheastern University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.4280.e", "label": "National University of Singapore", "shape": "dot", "title": "\u003ch4\u003eNational University of Singapore\u003cbr\u003eSingapore, Singapore\u003cbr\u003e - grid.4280.e\u003c/h4\u003eLinks:\u003cli\u003eKing Saud University\u003c/li\u003e\u003cli\u003eMassachusetts Institute of Technology", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.429485.6", "label": "Singapore-MIT Alliance for Research and Technology", "shape": "dot", "title": "\u003ch4\u003eSingapore-MIT Alliance for Research and Technology\u003cbr\u003eSingapore, Singapore\u003cbr\u003e - grid.429485.6\u003c/h4\u003eLinks:\u003cli\u003eMassachusetts Institute of Technology", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.512167.6", "label": "Institute for Soldier Nanotechnologies", "shape": "dot", "title": "\u003ch4\u003eInstitute for Soldier Nanotechnologies\u003cbr\u003eCambridge, United States\u003cbr\u003e - grid.512167.6\u003c/h4\u003eLinks:\u003cli\u003eMassachusetts Institute of Technology", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.418830.6", "label": "Institute of Bioengineering and Nanotechnology", "shape": "dot", "title": "\u003ch4\u003eInstitute of Bioengineering and Nanotechnology\u003cbr\u003eSingapore, Singapore\u003cbr\u003e - grid.418830.6\u003c/h4\u003eLinks:\u003cli\u003eMassachusetts Institute of Technology", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.59025.3b", "label": "Nanyang Technological University", "shape": "dot", "title": "\u003ch4\u003eNanyang Technological University\u003cbr\u003eSingapore, Singapore\u003cbr\u003e - grid.59025.3b\u003c/h4\u003eLinks:\u003cli\u003eMassachusetts Institute of Technology", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.69566.3a", "label": "Tohoku University", "shape": "dot", "title": "\u003ch4\u003eTohoku University\u003cbr\u003eSendai, Japan\u003cbr\u003e - grid.69566.3a\u003c/h4\u003eLinks:\u003cli\u003eHarvard\u2013MIT Division of Health Sciences and Technology", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.258676.8", "label": "Konkuk University", "shape": "dot", "title": "\u003ch4\u003eKonkuk University\u003cbr\u003eSeoul, South Korea\u003cbr\u003e - grid.258676.8\u003c/h4\u003eLinks:\u003cli\u003eHarvard\u2013MIT Division of Health Sciences and Technology", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.289247.2", "label": "Kyung Hee University", "shape": "dot", "title": "\u003ch4\u003eKyung Hee University\u003cbr\u003eSeoul, South Korea\u003cbr\u003e - grid.289247.2\u003c/h4\u003eLinks:\u003cli\u003eHarvard\u2013MIT Division of Health Sciences and Technology", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.4868.2", "label": "Queen Mary University of London", "shape": "dot", "title": "\u003ch4\u003eQueen Mary University of London\u003cbr\u003eLondon, United Kingdom\u003cbr\u003e - grid.4868.2\u003c/h4\u003eLinks:\u003cli\u003eHarvard\u2013MIT Division of Health Sciences and Technology", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.187073.a", "label": "Argonne National Laboratory", "shape": "dot", "title": "\u003ch4\u003eArgonne National Laboratory\u003cbr\u003eLemont, United States\u003cbr\u003e - grid.187073.a\u003c/h4\u003eLinks:\u003cli\u003eNorthwestern University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.35403.31", "label": "University of Illinois Urbana-Champaign", "shape": "dot", "title": "\u003ch4\u003eUniversity of Illinois Urbana-Champaign\u003cbr\u003eUrbana, United States\u003cbr\u003e - grid.35403.31\u003c/h4\u003eLinks:\u003cli\u003eNorthwestern University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.12527.33", "label": "Tsinghua University", "shape": "dot", "title": "\u003ch4\u003eTsinghua University\u003cbr\u003eBeijing, China\u003cbr\u003e - grid.12527.33\u003c/h4\u003eLinks:\u003cli\u003eNorthwestern University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.19006.3e", "label": "University of California, Los Angeles", "shape": "dot", "title": "\u003ch4\u003eUniversity of California, Los Angeles\u003cbr\u003eLos Angeles, United States\u003cbr\u003e - grid.19006.3e\u003c/h4\u003eLinks:\u003cli\u003eNorthwestern University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.169077.e", "label": "Purdue University West Lafayette", "shape": "dot", "title": "\u003ch4\u003ePurdue University West Lafayette\u003cbr\u003eWest Lafayette, United States\u003cbr\u003e - grid.169077.e\u003c/h4\u003eLinks:\u003cli\u003eNorthwestern University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.170205.1", "label": "University of Chicago", "shape": "dot", "title": "\u003ch4\u003eUniversity of Chicago\u003cbr\u003eChicago, United States\u003cbr\u003e - grid.170205.1\u003c/h4\u003eLinks:\u003cli\u003eNorthwestern University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.12136.37", "label": "Tel Aviv University", "shape": "dot", "title": "\u003ch4\u003eTel Aviv University\u003cbr\u003eTel Aviv, Israel\u003cbr\u003e - grid.12136.37\u003c/h4\u003eLinks:\u003cli\u003eNorthwestern University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.418920.6", "label": "COMSATS University Islamabad", "shape": "dot", "title": "\u003ch4\u003eCOMSATS University Islamabad\u003cbr\u003eIslamabad, Pakistan\u003cbr\u003e - grid.418920.6\u003c/h4\u003eLinks:\u003cli\u003eQuaid-i-Azam University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.440530.6", "label": "Hazara University", "shape": "dot", "title": "\u003ch4\u003eHazara University\u003cbr\u003eBaffa, Pakistan\u003cbr\u003e - grid.440530.6\u003c/h4\u003eLinks:\u003cli\u003eQuaid-i-Azam University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.412117.0", "label": "National University of Sciences and Technology", "shape": "dot", "title": "\u003ch4\u003eNational University of Sciences and Technology\u003cbr\u003eIslamabad, Pakistan\u003cbr\u003e - grid.412117.0\u003c/h4\u003eLinks:\u003cli\u003eQuaid-i-Azam University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.411727.6", "label": "International Islamic University, Islamabad", "shape": "dot", "title": "\u003ch4\u003eInternational Islamic University, Islamabad\u003cbr\u003eIslamabad, Pakistan\u003cbr\u003e - grid.411727.6\u003c/h4\u003eLinks:\u003cli\u003eQuaid-i-Azam University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.466924.b", "label": "Abdus Salam Centre for Physics", "shape": "dot", "title": "\u003ch4\u003eAbdus Salam Centre for Physics\u003cbr\u003eIslamabad, Pakistan\u003cbr\u003e - grid.466924.b\u003c/h4\u003eLinks:\u003cli\u003eQuaid-i-Azam University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.412782.a", "label": "University of Sargodha", "shape": "dot", "title": "\u003ch4\u003eUniversity of Sargodha\u003cbr\u003eSargodha, Pakistan\u003cbr\u003e - grid.412782.a\u003c/h4\u003eLinks:\u003cli\u003eQuaid-i-Azam University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.420113.5", "label": "Pakistan Institute of Nuclear Science and Technology", "shape": "dot", "title": "\u003ch4\u003ePakistan Institute of Nuclear Science and Technology\u003cbr\u003eIslamabad, Pakistan\u003cbr\u003e - grid.420113.5\u003c/h4\u003eLinks:\u003cli\u003eQuaid-i-Azam University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.412135.0", "label": "King Fahd University of Petroleum and Minerals", "shape": "dot", "title": "\u003ch4\u003eKing Fahd University of Petroleum and Minerals\u003cbr\u003eDhahran, Saudi Arabia\u003cbr\u003e - grid.412135.0\u003c/h4\u003eLinks:\u003cli\u003eAligarh Muslim University\u003c/li\u003e\u003cli\u003eQuaid-i-Azam University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.440567.4", "label": "University of Malakand", "shape": "dot", "title": "\u003ch4\u003eUniversity of Malakand\u003cbr\u003eMalakand, Pakistan\u003cbr\u003e - grid.440567.4\u003c/h4\u003eLinks:\u003cli\u003eQuaid-i-Azam University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.466808.4", "label": "Jawaharlal Nehru Medical College Hospital", "shape": "dot", "title": "\u003ch4\u003eJawaharlal Nehru Medical College Hospital\u003cbr\u003eAligarh, India\u003cbr\u003e - grid.466808.4\u003c/h4\u003eLinks:\u003cli\u003eAligarh Muslim University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.419701.a", "label": "National Physical Laboratory of India", "shape": "dot", "title": "\u003ch4\u003eNational Physical Laboratory of India\u003cbr\u003eNew Delhi, India\u003cbr\u003e - grid.419701.a\u003c/h4\u003eLinks:\u003cli\u003eAligarh Muslim University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.411723.2", "label": "Integral University", "shape": "dot", "title": "\u003ch4\u003eIntegral University\u003cbr\u003eLucknow, India\u003cbr\u003e - grid.411723.2\u003c/h4\u003eLinks:\u003cli\u003eAligarh Muslim University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.417641.1", "label": "Institute of Microbial Technology", "shape": "dot", "title": "\u003ch4\u003eInstitute of Microbial Technology\u003cbr\u003eChandigarh, India\u003cbr\u003e - grid.417641.1\u003c/h4\u003eLinks:\u003cli\u003eAligarh Muslim University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.410877.d", "label": "University of Technology Malaysia", "shape": "dot", "title": "\u003ch4\u003eUniversity of Technology Malaysia\u003cbr\u003eJohor Bahru, Malaysia\u003cbr\u003e - grid.410877.d\u003c/h4\u003eLinks:\u003cli\u003eAligarh Muslim University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.411214.3", "label": "Changwon National University", "shape": "dot", "title": "\u003ch4\u003eChangwon National University\u003cbr\u003eChangwon, South Korea\u003cbr\u003e - grid.411214.3\u003c/h4\u003eLinks:\u003cli\u003eAligarh Muslim University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.411818.5", "label": "National Islamic University", "shape": "dot", "title": "\u003ch4\u003eNational Islamic University\u003cbr\u003eNew Delhi, India\u003cbr\u003e - grid.411818.5\u003c/h4\u003eLinks:\u003cli\u003eAligarh Muslim University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.411545.0", "label": "Jeonbuk National University", "shape": "dot", "title": "\u003ch4\u003eJeonbuk National University\u003cbr\u003eJeonju, South Korea\u003cbr\u003e - grid.411545.0\u003c/h4\u003eLinks:\u003cli\u003eKing Saud University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.442508.f", "label": "University of Gab\u00e8s", "shape": "dot", "title": "\u003ch4\u003eUniversity of Gab\u00e8s\u003cbr\u003eGab\u00e8s, Tunisia\u003cbr\u003e - grid.442508.f\u003c/h4\u003eLinks:\u003cli\u003eKing Saud University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.452562.2", "label": "King Abdulaziz City for Science and Technology", "shape": "dot", "title": "\u003ch4\u003eKing Abdulaziz City for Science and Technology\u003cbr\u003eRiyadh, Saudi Arabia\u003cbr\u003e - grid.452562.2\u003c/h4\u003eLinks:\u003cli\u003eKing Saud University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.419725.c", "label": "National Research Centre", "shape": "dot", "title": "\u003ch4\u003eNational Research Centre\u003cbr\u003eCairo, Egypt\u003cbr\u003e - grid.419725.c\u003c/h4\u003eLinks:\u003cli\u003eKing Saud University\u003c/li\u003e\u003cli\u003eSuez Canal University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.1003.2", "label": "University of Queensland", "shape": "dot", "title": "\u003ch4\u003eUniversity of Queensland\u003cbr\u003eBrisbane, Australia\u003cbr\u003e - grid.1003.2\u003c/h4\u003eLinks:\u003cli\u003eKing Saud University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.145695.a", "label": "Chang Gung University", "shape": "dot", "title": "\u003ch4\u003eChang Gung University\u003cbr\u003eTaoyuan City, Taiwan\u003cbr\u003e - grid.145695.a\u003c/h4\u003eLinks:\u003cli\u003eKing Saud University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.411677.2", "label": "Bharathiar University", "shape": "dot", "title": "\u003ch4\u003eBharathiar University\u003cbr\u003eCoimbatore, India\u003cbr\u003e - grid.411677.2\u003c/h4\u003eLinks:\u003cli\u003eKing Saud University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.189504.1", "label": "Boston University", "shape": "dot", "title": "\u003ch4\u003eBoston University\u003cbr\u003eBoston, United States\u003cbr\u003e - grid.189504.1\u003c/h4\u003eLinks:\u003cli\u003eBrigham and Women\u0027s Hospital", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.411320.5", "label": "F\u0131rat University", "shape": "dot", "title": "\u003ch4\u003eF\u0131rat University\u003cbr\u003eEl\u00e2z\u0131\u011f, Turkey\u003cbr\u003e - grid.411320.5\u003c/h4\u003eLinks:\u003cli\u003eSuez Canal University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.5491.9", "label": "University of Southampton", "shape": "dot", "title": "\u003ch4\u003eUniversity of Southampton\u003cbr\u003eSouthampton, United Kingdom\u003cbr\u003e - grid.5491.9\u003c/h4\u003eLinks:\u003cli\u003eSuez Canal University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.29980.3a", "label": "University of Otago", "shape": "dot", "title": "\u003ch4\u003eUniversity of Otago\u003cbr\u003eDunedin, New Zealand\u003cbr\u003e - grid.29980.3a\u003c/h4\u003eLinks:\u003cli\u003eSuez Canal University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.412895.3", "label": "Taif University", "shape": "dot", "title": "\u003ch4\u003eTaif University\u003cbr\u003eTa\u0027if, Saudi Arabia\u003cbr\u003e - grid.412895.3\u003c/h4\u003eLinks:\u003cli\u003eSuez Canal University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.440760.1", "label": "University of Tabuk", "shape": "dot", "title": "\u003ch4\u003eUniversity of Tabuk\u003cbr\u003eTabuk, Saudi Arabia\u003cbr\u003e - grid.440760.1\u003c/h4\u003eLinks:\u003cli\u003eSuez Canal University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.7269.a", "label": "Ain Shams University", "shape": "dot", "title": "\u003ch4\u003eAin Shams University\u003cbr\u003eCairo, Egypt\u003cbr\u003e - grid.7269.a\u003c/h4\u003eLinks:\u003cli\u003eSuez Canal University", "value": 1}, {"borderWidthSelected": 5, "color": "rgb(238, 180, 121)", "id": "grid.25769.3f", "label": "Gazi University", "shape": "dot", "title": "\u003ch4\u003eGazi University\u003cbr\u003eAnkara, Turkey\u003cbr\u003e - grid.25769.3f\u003c/h4\u003eLinks:\u003cli\u003eSuez Canal University", "value": 1}]);
-        edges = new vis.DataSet([{"arrows": "none", "from": "grid.412125.1", "label": 99, "to": "grid.38142.3c", "value": 0.15865384615384615}, {"arrows": "none", "from": "grid.412125.1", "label": 95, "to": "grid.261112.7", "value": 0.15224358974358973}, {"arrows": "none", "from": "grid.412125.1", "label": 70, "to": "grid.116068.8", "value": 0.11217948717948718}, {"arrows": "none", "from": "grid.412125.1", "label": 59, "to": "grid.413735.7", "value": 0.09455128205128205}, {"arrows": "none", "from": "grid.412125.1", "label": 49, "to": "grid.16753.36", "value": 0.07852564102564102}, {"arrows": "none", "from": "grid.412125.1", "label": 46, "to": "grid.412621.2", "value": 0.07371794871794872}, {"arrows": "none", "from": "grid.412125.1", "label": 45, "to": "grid.411340.3", "value": 0.07211538461538461}, {"arrows": "none", "from": "grid.412125.1", "label": 39, "to": "grid.56302.32", "value": 0.0625}, {"arrows": "none", "from": "grid.412125.1", "label": 39, "to": "grid.62560.37", "value": 0.0625}, {"arrows": "none", "from": "grid.412125.1", "label": 37, "to": "grid.33003.33", "value": 0.05929487179487179}, {"arrows": "none", "from": "grid.38142.3c", "label": 624, "to": "grid.116068.8", "value": 1.0}, {"arrows": "none", "from": "grid.38142.3c", "label": 523, "to": "grid.32224.35", "value": 0.8381410256410257}, {"arrows": "none", "from": "grid.38142.3c", "label": 453, "to": "grid.62560.37", "value": 0.7259615384615384}, {"arrows": "none", "from": "grid.38142.3c", "label": 335, "to": "grid.413735.7", "value": 0.5368589743589743}, {"arrows": "none", "from": "grid.38142.3c", "label": 122, "to": "grid.65499.37", "value": 0.1955128205128205}, {"arrows": "none", "from": "grid.38142.3c", "label": 95, "to": "grid.239395.7", "value": 0.15224358974358973}, {"arrows": "none", "from": "grid.38142.3c", "label": 79, "to": "grid.2515.3", "value": 0.1266025641025641}, {"arrows": "none", "from": "grid.38142.3c", "label": 66, "to": "grid.261112.7", "value": 0.10576923076923077}, {"arrows": "none", "from": "grid.38142.3c", "label": 65, "to": "grid.168010.e", "value": 0.10416666666666667}, {"arrows": "none", "from": "grid.261112.7", "label": 53, "to": "grid.116068.8", "value": 0.08493589743589744}, {"arrows": "none", "from": "grid.261112.7", "label": 53, "to": "grid.17089.37", "value": 0.08493589743589744}, {"arrows": "none", "from": "grid.261112.7", "label": 28, "to": "grid.32224.35", "value": 0.04487179487179487}, {"arrows": "none", "from": "grid.261112.7", "label": 20, "to": "grid.40263.33", "value": 0.03205128205128205}, {"arrows": "none", "from": "grid.261112.7", "label": 18, "to": "grid.62560.37", "value": 0.028846153846153848}, {"arrows": "none", "from": "grid.261112.7", "label": 17, "to": "grid.225262.3", "value": 0.027243589743589744}, {"arrows": "none", "from": "grid.261112.7", "label": 15, "to": "grid.413735.7", "value": 0.02403846153846154}, {"arrows": "none", "from": "grid.261112.7", "label": 14, "to": "grid.5808.5", "value": 0.022435897435897436}, {"arrows": "none", "from": "grid.116068.8", "label": 318, "to": "grid.413735.7", "value": 0.5096153846153846}, {"arrows": "none", "from": "grid.116068.8", "label": 202, "to": "grid.62560.37", "value": 0.32371794871794873}, {"arrows": "none", "from": "grid.116068.8", "label": 149, "to": "grid.4280.e", "value": 0.2387820512820513}, {"arrows": "none", "from": "grid.116068.8", "label": 139, "to": "grid.429485.6", "value": 0.22275641025641027}, {"arrows": "none", "from": "grid.116068.8", "label": 101, "to": "grid.512167.6", "value": 0.16185897435897437}, {"arrows": "none", "from": "grid.116068.8", "label": 90, "to": "grid.32224.35", "value": 0.14423076923076922}, {"arrows": "none", "from": "grid.116068.8", "label": 87, "to": "grid.418830.6", "value": 0.13942307692307693}, {"arrows": "none", "from": "grid.116068.8", "label": 85, "to": "grid.59025.3b", "value": 0.1362179487179487}, {"arrows": "none", "from": "grid.116068.8", "label": 73, "to": "grid.168010.e", "value": 0.11698717948717949}, {"arrows": "none", "from": "grid.413735.7", "label": 114, "to": "grid.62560.37", "value": 0.18269230769230768}, {"arrows": "none", "from": "grid.413735.7", "label": 88, "to": "grid.32224.35", "value": 0.14102564102564102}, {"arrows": "none", "from": "grid.413735.7", "label": 29, "to": "grid.69566.3a", "value": 0.046474358974358976}, {"arrows": "none", "from": "grid.413735.7", "label": 24, "to": "grid.258676.8", "value": 0.038461538461538464}, {"arrows": "none", "from": "grid.413735.7", "label": 22, "to": "grid.289247.2", "value": 0.035256410256410256}, {"arrows": "none", "from": "grid.413735.7", "label": 15, "to": "grid.4868.2", "value": 0.02403846153846154}, {"arrows": "none", "from": "grid.16753.36", "label": 186, "to": "grid.187073.a", "value": 0.2980769230769231}, {"arrows": "none", "from": "grid.16753.36", "label": 129, "to": "grid.35403.31", "value": 0.20673076923076922}, {"arrows": "none", "from": "grid.16753.36", "label": 53, "to": "grid.12527.33", "value": 0.08493589743589744}, {"arrows": "none", "from": "grid.16753.36", "label": 49, "to": "grid.19006.3e", "value": 0.07852564102564102}, {"arrows": "none", "from": "grid.16753.36", "label": 44, "to": "grid.169077.e", "value": 0.07051282051282051}, {"arrows": "none", "from": "grid.16753.36", "label": 39, "to": "grid.170205.1", "value": 0.0625}, {"arrows": "none", "from": "grid.16753.36", "label": 35, "to": "grid.116068.8", "value": 0.05608974358974359}, {"arrows": "none", "from": "grid.16753.36", "label": 35, "to": "grid.38142.3c", "value": 0.05608974358974359}, {"arrows": "none", "from": "grid.16753.36", "label": 34, "to": "grid.12136.37", "value": 0.05448717948717949}, {"arrows": "none", "from": "grid.412621.2", "label": 39, "to": "grid.418920.6", "value": 0.0625}, {"arrows": "none", "from": "grid.412621.2", "label": 34, "to": "grid.440530.6", "value": 0.05448717948717949}, {"arrows": "none", "from": "grid.412621.2", "label": 18, "to": "grid.412117.0", "value": 0.028846153846153848}, {"arrows": "none", "from": "grid.412621.2", "label": 17, "to": "grid.411727.6", "value": 0.027243589743589744}, {"arrows": "none", "from": "grid.412621.2", "label": 15, "to": "grid.466924.b", "value": 0.02403846153846154}, {"arrows": "none", "from": "grid.412621.2", "label": 14, "to": "grid.412782.a", "value": 0.022435897435897436}, {"arrows": "none", "from": "grid.412621.2", "label": 13, "to": "grid.420113.5", "value": 0.020833333333333332}, {"arrows": "none", "from": "grid.412621.2", "label": 11, "to": "grid.412135.0", "value": 0.017628205128205128}, {"arrows": "none", "from": "grid.412621.2", "label": 9, "to": "grid.440567.4", "value": 0.014423076923076924}, {"arrows": "none", "from": "grid.411340.3", "label": 59, "to": "grid.56302.32", "value": 0.09455128205128205}, {"arrows": "none", "from": "grid.411340.3", "label": 13, "to": "grid.466808.4", "value": 0.020833333333333332}, {"arrows": "none", "from": "grid.411340.3", "label": 10, "to": "grid.412135.0", "value": 0.016025641025641024}, {"arrows": "none", "from": "grid.411340.3", "label": 9, "to": "grid.419701.a", "value": 0.014423076923076924}, {"arrows": "none", "from": "grid.411340.3", "label": 8, "to": "grid.411723.2", "value": 0.01282051282051282}, {"arrows": "none", "from": "grid.411340.3", "label": 8, "to": "grid.417641.1", "value": 0.01282051282051282}, {"arrows": "none", "from": "grid.411340.3", "label": 7, "to": "grid.410877.d", "value": 0.011217948717948718}, {"arrows": "none", "from": "grid.411340.3", "label": 6, "to": "grid.411214.3", "value": 0.009615384615384616}, {"arrows": "none", "from": "grid.411340.3", "label": 6, "to": "grid.411818.5", "value": 0.009615384615384616}, {"arrows": "none", "from": "grid.56302.32", "label": 56, "to": "grid.4280.e", "value": 0.08974358974358974}, {"arrows": "none", "from": "grid.56302.32", "label": 54, "to": "grid.411545.0", "value": 0.08653846153846154}, {"arrows": "none", "from": "grid.56302.32", "label": 42, "to": "grid.442508.f", "value": 0.0673076923076923}, {"arrows": "none", "from": "grid.56302.32", "label": 42, "to": "grid.452562.2", "value": 0.0673076923076923}, {"arrows": "none", "from": "grid.56302.32", "label": 36, "to": "grid.419725.c", "value": 0.057692307692307696}, {"arrows": "none", "from": "grid.56302.32", "label": 34, "to": "grid.1003.2", "value": 0.05448717948717949}, {"arrows": "none", "from": "grid.56302.32", "label": 30, "to": "grid.145695.a", "value": 0.04807692307692308}, {"arrows": "none", "from": "grid.56302.32", "label": 30, "to": "grid.411677.2", "value": 0.04807692307692308}, {"arrows": "none", "from": "grid.62560.37", "label": 48, "to": "grid.32224.35", "value": 0.07692307692307693}, {"arrows": "none", "from": "grid.62560.37", "label": 30, "to": "grid.189504.1", "value": 0.04807692307692308}, {"arrows": "none", "from": "grid.62560.37", "label": 26, "to": "grid.65499.37", "value": 0.041666666666666664}, {"arrows": "none", "from": "grid.62560.37", "label": 15, "to": "grid.168010.e", "value": 0.02403846153846154}, {"arrows": "none", "from": "grid.62560.37", "label": 15, "to": "grid.2515.3", "value": 0.02403846153846154}, {"arrows": "none", "from": "grid.33003.33", "label": 17, "to": "grid.411320.5", "value": 0.027243589743589744}, {"arrows": "none", "from": "grid.33003.33", "label": 12, "to": "grid.5491.9", "value": 0.019230769230769232}, {"arrows": "none", "from": "grid.33003.33", "label": 11, "to": "grid.29980.3a", "value": 0.017628205128205128}, {"arrows": "none", "from": "grid.33003.33", "label": 11, "to": "grid.56302.32", "value": 0.017628205128205128}, {"arrows": "none", "from": "grid.33003.33", "label": 8, "to": "grid.412895.3", "value": 0.01282051282051282}, {"arrows": "none", "from": "grid.33003.33", "label": 8, "to": "grid.440760.1", "value": 0.01282051282051282}, {"arrows": "none", "from": "grid.33003.33", "label": 6, "to": "grid.419725.c", "value": 0.009615384615384616}, {"arrows": "none", "from": "grid.33003.33", "label": 5, "to": "grid.7269.a", "value": 0.008012820512820512}, {"arrows": "none", "from": "grid.33003.33", "label": 4, "to": "grid.25769.3f", "value": 0.00641025641025641}]);
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
 
-        // adding nodes and edges to the graph
-        data = {nodes: nodes, edges: edges};
-
-        var options = {
+                  var options = {
     "configure": {
         "enabled": false
     },
@@ -65,8 +480,8 @@
             "inherit": true
         },
         "smooth": {
-            "enabled": false,
-            "type": "continuous"
+            "enabled": true,
+            "type": "dynamic"
         }
     },
     "interaction": {
@@ -101,24 +516,31 @@
         }
     }
 };
-        
-        
 
-        
-
-        network = new vis.Network(container, data, options);
-	 
-        
+                  
 
 
-        
+                  
 
-        return network;
+                  network = new vis.Network(container, data, options);
 
-    }
+                  
+                    network.on("click", neighbourhoodHighlight);
+                  
 
-    drawGraph();
+                  
+                    network.on("selectNode", neighbourhoodHighlight);
+                  
 
-</script>
-</body>
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
 </html>
