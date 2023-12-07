@@ -2,6 +2,16 @@
 
 Various useful tips for running the API LAB in development mode.
 
+## Setup
+
+Before trying to do any development work, you will need to create a `set-envs.sh` file in the `tools` folder.
+
+The purpose of this file is to define the local directories you would like to use for building test and staging versions of site, to ensure the site renders as expected before pushing to production.
+
+Example directories are given in `tools/set-envs-sample.sh`. Replace the values for the stated variables with those you desire.
+
+Note the `.gitignore` file is set to ignore `set-envs.sh`.
+
 ## Workflow
 
 ### 1. Adding new notebooks
