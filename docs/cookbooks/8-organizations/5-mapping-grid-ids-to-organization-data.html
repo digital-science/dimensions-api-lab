@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Mapping GRID IDs to Organization Data &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
   
@@ -19,7 +19,10 @@
   
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   
+
   
+  
+
   
 
   
@@ -35,9 +38,9 @@
         <script src="../../_static/language_data.js"></script>
         <script src="../../_static/js/custom.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
-        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -72,7 +75,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> DSL
+            <a href="../../index.html" class="icon icon-home"> DSL
           
 
           
@@ -466,6 +469,18 @@
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Concepts-network-graph.html#Step-2:-Building-a-concepts-co-occurrence-network">Step 2: Building a concepts co-occurrence network</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Concepts-network-graph.html#Step-3:-Visualizing-the-network">Step 3: Visualizing the network</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Concepts-network-graph.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html">Rejected Article tracker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html#1.-Get-an-example-data-set">1. Get an example data set</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html#2.-Define-the-search-template">2. Define the search template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html#3.-Iteratively-Query-the-Dimensions-API-for-the-retracted-articles">3. Iteratively Query the Dimensions API for the retracted articles</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html#4.-Join-together-the-input-and-output-data">4. Join together the input and output data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html#5.-Add-Matching-Score">5. Add Matching Score</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html#6.-Conclusion">6. Conclusion</a></li>
 </ul>
 </li>
 </ul>
@@ -936,6 +951,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -1161,7 +1178,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt a.copybtn {
+.prompt .copybtn {
     display: none;
 }
 
@@ -1238,8 +1255,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">CHANGELOG</span><span class="se">\n</span><span class="s2">This notebook was last run on </span><span class="si">%s</span><span class="se">\n</span><span class="s2">==&quot;</span> <span class="o">%</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">, %Y&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1263,8 +1279,7 @@ This notebook was last run on Jan 25, 2022
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>dimcli<span class="w"> </span>--quiet
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install dimcli --quiet
 
 <span class="kn">import</span> <span class="nn">dimcli</span>
 <span class="kn">from</span> <span class="nn">dimcli.utils</span> <span class="kn">import</span> <span class="o">*</span>
@@ -1338,8 +1353,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># The following generates a table of organization data with 4 columns</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The following generates a table of organization data with 4 columns</span>
 <span class="n">organization_names</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;Augusta Univeristy&#39;</span><span class="p">,</span> <span class="s1">&#39;Baylor College of Medicine&#39;</span><span class="p">,</span> <span class="s1">&#39;Brown University&#39;</span><span class="p">,</span> <span class="s1">&#39;California Institute of Technology&#39;</span><span class="p">,</span> <span class="s1">&#39;Duke Univerisity&#39;</span><span class="p">,</span>
                                 <span class="s1">&#39;Emory University&#39;</span><span class="p">,</span> <span class="s1">&#39;Florida State University&#39;</span><span class="p">,</span> <span class="s1">&#39;Harvard Medical School&#39;</span><span class="p">,</span> <span class="s1">&#39;Kent State University&#39;</span><span class="p">,</span> <span class="s1">&#39;New York University&#39;</span><span class="p">,</span> <span class="s1">&#39;Mayo Clinic&#39;</span><span class="p">])</span>
 <span class="n">organization_cities</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;Augusta&#39;</span><span class="p">,</span> <span class="s1">&#39;Houston&#39;</span><span class="p">,</span> <span class="s1">&#39;Providence&#39;</span><span class="p">,</span> <span class="s1">&#39;Pasadena&#39;</span><span class="p">,</span> <span class="s1">&#39;Durham&#39;</span><span class="p">,</span>
@@ -1477,8 +1491,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># # Upload the organization dataset from local machine</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># # Upload the organization dataset from local machine</span>
 
 <span class="c1"># from google.colab import files</span>
 <span class="c1"># uploaded = files.upload()</span>
@@ -1489,8 +1502,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># # Load and preview the organization dataset into a pandas dataframe</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># # Load and preview the organization dataset into a pandas dataframe</span>
 
 <span class="c1"># import io</span>
 <span class="c1"># import pandas as pd</span>
@@ -1511,8 +1523,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># First, we replace empty data with &#39;null&#39; to satisfy mapping specifications</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># First, we replace empty data with &#39;null&#39; to satisfy mapping specifications</span>
 
 <span class="n">orgs</span> <span class="o">=</span> <span class="n">orgs</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s1">&#39;null&#39;</span><span class="p">)</span>
 </pre></div>
@@ -1522,8 +1533,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># Second, we will convert organization data from a dataframe to a dictionary (json) for GRID mapping</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Second, we will convert organization data from a dataframe to a dictionary (json) for GRID mapping</span>
 
 <span class="n">recs</span> <span class="o">=</span> <span class="n">orgs</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s1">&#39;records&#39;</span><span class="p">)</span>
 </pre></div>
@@ -1533,8 +1543,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># Then we will take the organization data, run it through the API and return GRID IDs</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Then we will take the organization data, run it through the API and return GRID IDs</span>
 
 <span class="c1"># Chunk records to batches, API takes up to 200 records at a time.</span>
 <span class="k">def</span> <span class="nf">chunk_records</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
@@ -1566,8 +1575,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># Preview the extracted GRID ID dataframe</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Preview the extracted GRID ID dataframe</span>
 <span class="c1"># Note: data columns labeled with &quot;input&quot; are the original organization data supplied to the API</span>
 
 <span class="n">grid</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -1732,8 +1740,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">grid</span><span class="p">[</span><span class="s1">&#39;requires_review&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">grid</span><span class="p">[</span><span class="s1">&#39;requires_review&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grid</span><span class="p">[</span><span class="s1">&#39;requires_review&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">grid</span><span class="p">[</span><span class="s1">&#39;requires_review&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
 <span class="n">grid_review</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">grid</span><span class="p">[</span><span class="s1">&#39;requires_review&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;True&#39;</span><span class="p">]</span>
 <span class="n">grid_review</span>
 </pre></div>
@@ -1963,8 +1970,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># temporarily save pandas dataframe as file in colab environment</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># temporarily save pandas dataframe as file in colab environment</span>
 <span class="n">grid</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;file_name.csv&#39;</span><span class="p">)</span>
 
 <span class="k">if</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
@@ -1998,7 +2004,6 @@ Method: dsl.ini file
            
           </div>
           <footer>
-  
 
   <hr/>
 
@@ -2017,7 +2022,6 @@ Method: dsl.ini file
 
 
 </footer>
-
         </div>
       </div>
 

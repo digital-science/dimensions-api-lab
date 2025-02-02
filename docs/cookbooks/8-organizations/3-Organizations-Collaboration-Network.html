@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Building an Organizations Collaboration Network Diagram &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
   
@@ -19,7 +19,10 @@
   
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   
+
   
+  
+
   
 
   
@@ -35,9 +38,9 @@
         <script src="../../_static/language_data.js"></script>
         <script src="../../_static/js/custom.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
-        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -72,7 +75,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> DSL
+            <a href="../../index.html" class="icon icon-home"> DSL
           
 
           
@@ -466,6 +469,18 @@
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Concepts-network-graph.html#Step-2:-Building-a-concepts-co-occurrence-network">Step 2: Building a concepts co-occurrence network</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Concepts-network-graph.html#Step-3:-Visualizing-the-network">Step 3: Visualizing the network</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Concepts-network-graph.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html">Rejected Article tracker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html#1.-Get-an-example-data-set">1. Get an example data set</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html#2.-Define-the-search-template">2. Define the search template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html#3.-Iteratively-Query-the-Dimensions-API-for-the-retracted-articles">3. Iteratively Query the Dimensions API for the retracted articles</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html#4.-Join-together-the-input-and-output-data">4. Join together the input and output data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html#5.-Add-Matching-Score">5. Add Matching Score</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html#6.-Conclusion">6. Conclusion</a></li>
 </ul>
 </li>
 </ul>
@@ -936,6 +951,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -1161,7 +1178,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt a.copybtn {
+.prompt .copybtn {
     display: none;
 }
 
@@ -1235,8 +1252,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">CHANGELOG</span><span class="se">\n</span><span class="s2">This notebook was last run on </span><span class="si">%s</span><span class="se">\n</span><span class="s2">==&quot;</span> <span class="o">%</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">, %Y&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1259,8 +1275,7 @@ This notebook was last run on Aug 22, 2023
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>dimcli<span class="w"> </span>plotly<span class="w"> </span>tqdm<span class="w"> </span>pyvis<span class="w"> </span>-U<span class="w"> </span>--quiet
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install dimcli plotly tqdm pyvis -U --quiet
 
 <span class="c1">#</span>
 <span class="c1"># load libraries</span>
@@ -1351,8 +1366,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">GRIDID</span> <span class="o">=</span> <span class="s2">&quot;grid.412125.1&quot;</span> <span class="c1">#@param {type:&quot;string&quot;}</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">GRIDID</span> <span class="o">=</span> <span class="s2">&quot;grid.412125.1&quot;</span> <span class="c1">#@param {type:&quot;string&quot;}</span>
 
 <span class="c1">#@markdown The start/end year of publications used to extract patents</span>
 <span class="n">YEAR_START</span> <span class="o">=</span> <span class="mi">2000</span> <span class="c1">#@param {type: &quot;slider&quot;, min: 1950, max: 2020}</span>
@@ -1376,8 +1390,7 @@ Method: dsl.ini file
 <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s1">&#39;GRID: &lt;a href=&quot;</span><span class="si">{}</span><span class="s1">&quot; title=&quot;View selected organization in Dimensions&quot;&gt;</span><span class="si">{}</span><span class="s1"> - </span><span class="si">{}</span><span class="s1"> &amp;#x29c9;&lt;/a&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dimensions_url</span><span class="p">(</span><span class="n">GRIDID</span><span class="p">),</span> <span class="n">GRIDID</span><span class="p">,</span> <span class="n">gridname</span><span class="p">)))</span>
 <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s1">&#39;Time period: </span><span class="si">{}</span><span class="s1"> to </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">YEAR_START</span><span class="p">,</span> <span class="n">YEAR_END</span><span class="p">)))</span>
 <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s1">&#39;Topic: &quot;</span><span class="si">{}</span><span class="s1">&quot; &lt;br /&gt;&lt;br /&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">TOPIC</span><span class="p">)))</span>
-
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
@@ -1407,8 +1420,7 @@ Topic: "nanotechnology" <br /><br /></div>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">query_template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search publications </span><span class="si">{}</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query_template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search publications </span><span class="si">{}</span><span class="s2"></span>
 <span class="s2">                   where year in [</span><span class="si">{}</span><span class="s2">:</span><span class="si">{}</span><span class="s2">]</span>
 <span class="s2">                   and research_orgs.id=&quot;</span><span class="si">{}</span><span class="s2">&quot;</span>
 <span class="s2">                return research_orgs limit 11&quot;&quot;&quot;</span>
@@ -1440,8 +1452,7 @@ Topic: "nanotechnology" <br /><br /></div>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">get_collaborators</span><span class="p">(</span><span class="n">GRIDID</span><span class="p">,</span> <span class="n">printquery</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">get_collaborators</span><span class="p">(</span><span class="n">GRIDID</span><span class="p">,</span> <span class="n">printquery</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1686,8 +1697,7 @@ search publications for &#34;nanotechnology&#34;
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="k">def</span> <span class="nf">recursive_network</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">maxlevel</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">thislevel</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">recursive_network</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">maxlevel</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">thislevel</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="s2">&quot;Recursive function for building an organization collaboration network&quot;</span>
     <span class="n">results</span> <span class="o">=</span> <span class="n">get_collaborators</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">thislevel</span><span class="p">)</span>
     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
@@ -1717,8 +1727,7 @@ search publications for &#34;nanotechnology&#34;
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">collaborators</span> <span class="o">=</span> <span class="n">recursive_network</span><span class="p">(</span><span class="n">GRIDID</span><span class="p">,</span> <span class="n">maxlevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">collaborators</span> <span class="o">=</span> <span class="n">recursive_network</span><span class="p">(</span><span class="n">GRIDID</span><span class="p">,</span> <span class="n">maxlevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="c1"># change column order for readability purposes</span>
 <span class="n">collaborators</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;id_to&quot;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">collaborators</span> <span class="o">=</span> <span class="n">collaborators</span><span class="p">[[</span><span class="s1">&#39;id_from&#39;</span><span class="p">,</span> <span class="s1">&#39;id_to&#39;</span><span class="p">,</span> <span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;acronym&#39;</span><span class="p">,</span> <span class="s1">&#39;city_name&#39;</span><span class="p">,</span> <span class="s1">&#39;state_name&#39;</span><span class="p">,</span> <span class="s1">&#39;country_name&#39;</span><span class="p">,</span> <span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="s1">&#39;longitude&#39;</span><span class="p">,</span> <span class="s1">&#39;linkout&#39;</span><span class="p">,</span>  <span class="s1">&#39;types&#39;</span> <span class="p">]]</span>
@@ -1887,13 +1896,12 @@ search publications for &#34;nanotechnology&#34;
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># load pyvis</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load pyvis</span>
 <span class="kn">from</span> <span class="nn">pyvis.network</span> <span class="kn">import</span> <span class="n">Network</span>
 
 
 <span class="k">def</span> <span class="nf">build_visualization</span><span class="p">(</span><span class="n">collaborator_df</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return a network visualization object from a collaborators dataframe</span>
 <span class="sd">    The object can be then displayed/saved with `g.show(f&quot;network.html&quot;)`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -2011,8 +2019,7 @@ network_grid.412125.1.html
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%</span><span class="k">dsldf</span> search organizations return types
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">dsldf</span> search organizations return types
 </pre></div>
 </div>
 </div>
@@ -2113,12 +2120,11 @@ Time: 1.00s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1">#@markdown Try using one of the organization types from the list above</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#@markdown Try using one of the organization types from the list above</span>
 
 <span class="n">GRID_TYPE</span> <span class="o">=</span> <span class="s2">&quot;Government&quot;</span> <span class="c1">#@param {type:&quot;string&quot;}</span>
 
-<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search publications </span><span class="si">{}</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search publications </span><span class="si">{}</span><span class="s2"></span>
 <span class="s2">               where year in [</span><span class="si">{}</span><span class="s2">:</span><span class="si">{}</span><span class="s2">]</span>
 <span class="s2">               and research_orgs.id=&quot;</span><span class="si">{}</span><span class="s2">&quot;</span>
 <span class="s2">               and research_orgs.types in [&quot;</span><span class="si">{}</span><span class="s2">&quot;]</span>
@@ -2164,9 +2170,7 @@ Time: 1.00s
 <span class="c1">#</span>
 <span class="n">g</span> <span class="o">=</span> <span class="n">build_visualization</span><span class="p">(</span><span class="n">collaborators</span><span class="p">)</span>
 <span class="n">g</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;network_</span><span class="si">{</span><span class="n">GRIDID</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">GRID_TYPE</span><span class="si">}</span><span class="s2">.html&quot;</span><span class="p">)</span>
-
-
-</pre></div>
+<br/><br/></pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
@@ -2225,7 +2229,6 @@ network_grid.412125.1_Government.html
            
           </div>
           <footer>
-  
 
   <hr/>
 
@@ -2244,7 +2247,6 @@ network_grid.412125.1_Government.html
 
 
 </footer>
-
         </div>
       </div>
 

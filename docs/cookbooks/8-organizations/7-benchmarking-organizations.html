@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Benchmarking organizations with the Dimensions API &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
   
@@ -19,7 +19,10 @@
   
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   
+
   
+  
+
   
 
   
@@ -35,9 +38,9 @@
         <script src="../../_static/language_data.js"></script>
         <script src="../../_static/js/custom.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
-        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -72,7 +75,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> DSL
+            <a href="../../index.html" class="icon icon-home"> DSL
           
 
           
@@ -466,6 +469,18 @@
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Concepts-network-graph.html#Step-2:-Building-a-concepts-co-occurrence-network">Step 2: Building a concepts co-occurrence network</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Concepts-network-graph.html#Step-3:-Visualizing-the-network">Step 3: Visualizing the network</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Concepts-network-graph.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html">Rejected Article tracker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html#1.-Get-an-example-data-set">1. Get an example data set</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html#2.-Define-the-search-template">2. Define the search template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html#3.-Iteratively-Query-the-Dimensions-API-for-the-retracted-articles">3. Iteratively Query the Dimensions API for the retracted articles</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html#4.-Join-together-the-input-and-output-data">4. Join together the input and output data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html#5.-Add-Matching-Score">5. Add Matching Score</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html#6.-Conclusion">6. Conclusion</a></li>
 </ul>
 </li>
 </ul>
@@ -936,6 +951,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -1161,7 +1178,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt a.copybtn {
+.prompt .copybtn {
     display: none;
 }
 
@@ -1237,8 +1254,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">CHANGELOG</span><span class="se">\n</span><span class="s2">This notebook was last run on </span><span class="si">%s</span><span class="se">\n</span><span class="s2">==&quot;</span> <span class="o">%</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">, %Y&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1261,8 +1277,7 @@ This notebook was last run on Feb 21, 2022
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>dimcli<span class="w"> </span>-U<span class="w"> </span>--quiet
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install dimcli -U --quiet
 
 <span class="kn">import</span> <span class="nn">dimcli</span>
 <span class="kn">from</span> <span class="nn">dimcli.utils</span> <span class="kn">import</span> <span class="o">*</span>
@@ -1311,8 +1326,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
 return research_orgs[name] aggregate altmetric_median
 </pre></div>
@@ -1505,8 +1519,7 @@ Time: 21.14s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
 return research_orgs[name] aggregate citations_total
 </pre></div>
@@ -1699,8 +1712,7 @@ Time: 6.63s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
 return research_orgs[name] aggregate recent_citations_total
 </pre></div>
@@ -1894,8 +1906,7 @@ Time: 6.54s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
 search publications
 return year aggregate recent_citations_total
 </pre></div>
@@ -2067,8 +2078,7 @@ Time: 4.06s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">dsl_last_results</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;recent_citations_total&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dsl_last_results</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;recent_citations_total&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -2092,8 +2102,7 @@ Time: 4.06s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">recent_citations</span> <span class="o">=</span> <span class="n">dsl_last_results</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">recent_citations</span> <span class="o">=</span> <span class="n">dsl_last_results</span>
 </pre></div>
 </div>
 </div>
@@ -2101,8 +2110,7 @@ Time: 4.06s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">recent_citations</span><span class="p">[</span><span class="s1">&#39;recent_ratio&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">recent_citations</span><span class="p">[</span><span class="s1">&#39;recent_citations_total&#39;</span><span class="p">]</span><span class="o">/</span><span class="n">recent_citations</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">recent_citations</span><span class="p">[</span><span class="s1">&#39;recent_ratio&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">recent_citations</span><span class="p">[</span><span class="s1">&#39;recent_citations_total&#39;</span><span class="p">]</span><span class="o">/</span><span class="n">recent_citations</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span>
 <span class="n">recent_citations</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">recent_citations</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -2111,8 +2119,7 @@ Time: 4.06s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">recent_citations</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;year&#39;</span><span class="p">)</span><span class="o">.</span>\
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">recent_citations</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;year&#39;</span><span class="p">)</span><span class="o">.</span>\
     <span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;year&#39;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;recent_ratio&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -2143,8 +2150,7 @@ Time: 4.06s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
 
 search publications
 where year=2018
@@ -2267,8 +2273,7 @@ Time: 1.02s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">result</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">      search publications</span>
 <span class="s2">      where year=2018</span>
 <span class="s2">      return category_for limit 1000</span>
@@ -2290,8 +2295,7 @@ Time: 0.84s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]))</span>
 </pre></div>
 </div>
 </div>
@@ -2299,8 +2303,7 @@ Time: 0.84s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">result</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span>
 </pre></div>
 </div>
 </div>
@@ -2420,8 +2423,7 @@ Time: 0.84s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">result</span><span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">2</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span><span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">2</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -2622,8 +2624,7 @@ Time: 0.84s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;cutoff&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">.01</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;cutoff&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">.01</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2631,8 +2632,7 @@ Time: 0.84s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">result</span><span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">2</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span><span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">2</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -2862,8 +2862,7 @@ Time: 0.84s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">dfl</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfl</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
 
@@ -2875,7 +2874,7 @@ Time: 0.84s
 <span class="s2">           return publications[field_citation_ratio]</span>
 <span class="s2">               sort by field_citation_ratio</span>
 <span class="s2">               limit 1</span>
-<span class="s2">               skip </span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;cutoff&#39;</span><span class="p">]</span><span class="si">}</span>
+<span class="s2">               skip </span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;cutoff&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"></span>
 
 <span class="s2">      &quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
 
@@ -2940,8 +2939,7 @@ Time: 0.82s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">cutoffs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfl</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cutoffs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfl</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2949,8 +2947,7 @@ Time: 0.82s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">cutoffs</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cutoffs</span>
 </pre></div>
 </div>
 </div>
@@ -3125,8 +3122,7 @@ Time: 0.82s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">cutoffs</span><span class="o">.</span><span class="n">field_citation_ratio</span> <span class="o">=</span>  <span class="n">cutoffs</span><span class="o">.</span><span class="n">field_citation_ratio</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cutoffs</span><span class="o">.</span><span class="n">field_citation_ratio</span> <span class="o">=</span>  <span class="n">cutoffs</span><span class="o">.</span><span class="n">field_citation_ratio</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -3134,8 +3130,7 @@ Time: 0.82s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">cutoffs</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cutoffs</span>
 </pre></div>
 </div>
 </div>
@@ -3312,8 +3307,7 @@ Time: 0.82s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">dfl</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfl</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">cutoffs</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
 
@@ -3323,7 +3317,7 @@ Time: 0.82s
 <span class="s2">     where</span>
 <span class="s2">         year=2018</span>
 <span class="s2">         and category_for.id = &quot;</span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="s2">         and field_citation_ratio &gt;= </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;field_citation_ratio&#39;</span><span class="p">])</span><span class="si">}</span>
+<span class="s2">         and field_citation_ratio &gt;= </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;field_citation_ratio&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2"></span>
 <span class="s2">    return research_orgs limit 1000</span>
 
 <span class="s2">  &quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
@@ -3331,9 +3325,7 @@ Time: 0.82s
   <span class="n">result</span><span class="p">[</span><span class="s1">&#39;for_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
   <span class="n">result</span><span class="p">[</span><span class="s1">&#39;for_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
   <span class="n">dfl</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-
-
-</pre></div>
+<br/><br/></pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -3392,8 +3384,7 @@ Time: 0.77s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">top_insts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfl</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">top_insts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfl</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -3404,8 +3395,7 @@ Time: 0.77s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">top_insts</span><span class="p">[</span><span class="s1">&#39;rank&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">top_insts</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;for_name&#39;</span><span class="p">)[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rank</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">top_insts</span><span class="p">[</span><span class="s1">&#39;rank&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">top_insts</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;for_name&#39;</span><span class="p">)[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rank</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -3413,8 +3403,7 @@ Time: 0.77s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">top_insts</span><span class="p">[</span><span class="n">top_insts</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;University of Melbourne&#39;</span><span class="p">][[</span><span class="s1">&#39;for_name&#39;</span><span class="p">,</span><span class="s1">&#39;rank&#39;</span><span class="p">]]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">top_insts</span><span class="p">[</span><span class="n">top_insts</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;University of Melbourne&#39;</span><span class="p">][[</span><span class="s1">&#39;for_name&#39;</span><span class="p">,</span><span class="s1">&#39;rank&#39;</span><span class="p">]]</span>
 </pre></div>
 </div>
 </div>
@@ -3565,8 +3554,7 @@ Time: 0.77s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">dfl</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfl</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">cutoffs</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
 
@@ -3583,9 +3571,7 @@ Time: 0.77s
   <span class="n">result</span><span class="p">[</span><span class="s1">&#39;for_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
   <span class="n">result</span><span class="p">[</span><span class="s1">&#39;for_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
   <span class="n">dfl</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-
-
-</pre></div>
+<br/><br/></pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -3643,8 +3629,7 @@ Time: 0.96s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">all_publications</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfl</span><span class="p">)[[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span><span class="s1">&#39;for_id&#39;</span><span class="p">,</span><span class="s1">&#39;count&#39;</span><span class="p">]]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_publications</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfl</span><span class="p">)[[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span><span class="s1">&#39;for_id&#39;</span><span class="p">,</span><span class="s1">&#39;count&#39;</span><span class="p">]]</span>
 </pre></div>
 </div>
 </div>
@@ -3652,8 +3637,7 @@ Time: 0.96s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">top_insts_all</span> <span class="o">=</span> <span class="n">all_publications</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;count&#39;</span><span class="p">:</span><span class="s1">&#39;count all&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">top_insts</span><span class="p">,</span> <span class="n">on</span> <span class="o">=</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span><span class="s1">&#39;for_id&#39;</span><span class="p">])</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">top_insts_all</span> <span class="o">=</span> <span class="n">all_publications</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;count&#39;</span><span class="p">:</span><span class="s1">&#39;count all&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">top_insts</span><span class="p">,</span> <span class="n">on</span> <span class="o">=</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span><span class="s1">&#39;for_id&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -3661,8 +3645,7 @@ Time: 0.96s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">top_insts_all</span><span class="p">[[</span><span class="s1">&#39;for_name&#39;</span><span class="p">,</span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="s1">&#39;count&#39;</span><span class="p">,</span><span class="s1">&#39;count all&#39;</span><span class="p">]]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">top_insts_all</span><span class="p">[[</span><span class="s1">&#39;for_name&#39;</span><span class="p">,</span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="s1">&#39;count&#39;</span><span class="p">,</span><span class="s1">&#39;count all&#39;</span><span class="p">]]</span>
 </pre></div>
 </div>
 </div>
@@ -3785,8 +3768,7 @@ Time: 0.96s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">top_insts_all</span><span class="p">[</span><span class="s1">&#39;percentage top 1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">top_insts_all</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span><span class="o">/</span><span class="n">top_insts_all</span><span class="p">[</span><span class="s1">&#39;count all&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">top_insts_all</span><span class="p">[</span><span class="s1">&#39;percentage top 1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">top_insts_all</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span><span class="o">/</span><span class="n">top_insts_all</span><span class="p">[</span><span class="s1">&#39;count all&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -3794,8 +3776,7 @@ Time: 0.96s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">top_insts_all</span><span class="p">[</span><span class="s1">&#39;percent rank&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">top_insts_all</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;for_name&#39;</span><span class="p">)[</span><span class="s1">&#39;percentage top 1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rank</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">top_insts_all</span><span class="p">[</span><span class="s1">&#39;percent rank&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">top_insts_all</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;for_name&#39;</span><span class="p">)[</span><span class="s1">&#39;percentage top 1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rank</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -3805,8 +3786,7 @@ Time: 0.96s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">top_insts_all</span><span class="p">[</span><span class="n">top_insts_all</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;University of Cambridge&#39;</span><span class="p">][[</span><span class="s1">&#39;for_name&#39;</span><span class="p">,</span><span class="s1">&#39;percent rank&#39;</span><span class="p">]]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">top_insts_all</span><span class="p">[</span><span class="n">top_insts_all</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;University of Cambridge&#39;</span><span class="p">][[</span><span class="s1">&#39;for_name&#39;</span><span class="p">,</span><span class="s1">&#39;percent rank&#39;</span><span class="p">]]</span>
 </pre></div>
 </div>
 </div>
@@ -3951,8 +3931,7 @@ Time: 0.96s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">top_insts_all</span><span class="p">[</span><span class="n">top_insts_all</span><span class="p">[</span><span class="s1">&#39;for_name&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;11 Medical and Health Sciences&#39;</span><span class="p">][[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="s1">&#39;percent rank&#39;</span><span class="p">]]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">top_insts_all</span><span class="p">[</span><span class="n">top_insts_all</span><span class="p">[</span><span class="s1">&#39;for_name&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;11 Medical and Health Sciences&#39;</span><span class="p">][[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="s1">&#39;percent rank&#39;</span><span class="p">]]</span>
 </pre></div>
 </div>
 </div>
@@ -4052,8 +4031,7 @@ Time: 0.96s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">reference_institutions</span> <span class="o">=</span> <span class="n">top_insts_all</span><span class="p">[[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="s1">&#39;for_id&#39;</span><span class="p">,</span><span class="s1">&#39;count all&#39;</span><span class="p">]]</span><span class="o">.</span>\
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reference_institutions</span> <span class="o">=</span> <span class="n">top_insts_all</span><span class="p">[[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="s1">&#39;for_id&#39;</span><span class="p">,</span><span class="s1">&#39;count all&#39;</span><span class="p">]]</span><span class="o">.</span>\
      <span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span>
             <span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="s1">&#39;reference id&#39;</span><span class="p">,</span>
             <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;reference name&#39;</span><span class="p">,</span>
@@ -4066,8 +4044,7 @@ Time: 0.96s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">relative_ranking</span> <span class="o">=</span> <span class="n">reference_institutions</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">top_insts_all</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;for_id&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">relative_ranking</span> <span class="o">=</span> <span class="n">reference_institutions</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">top_insts_all</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;for_id&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -4075,8 +4052,7 @@ Time: 0.96s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">relative_ranking</span><span class="p">[</span><span class="n">relative_ranking</span><span class="p">[</span><span class="s1">&#39;reference name&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;University of Melbourne&#39;</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">relative_ranking</span><span class="p">[</span><span class="n">relative_ranking</span><span class="p">[</span><span class="s1">&#39;reference name&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;University of Melbourne&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -4388,8 +4364,7 @@ Time: 0.96s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">filtered_relative_ranking</span> <span class="o">=</span> <span class="n">relative_ranking</span><span class="p">[</span><span class="n">relative_ranking</span><span class="p">[</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filtered_relative_ranking</span> <span class="o">=</span> <span class="n">relative_ranking</span><span class="p">[</span><span class="n">relative_ranking</span><span class="p">[</span>
                                       <span class="s1">&#39;reference count all&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">relative_ranking</span><span class="p">[</span><span class="s1">&#39;count all&#39;</span><span class="p">]</span>
                                       <span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 </pre></div>
@@ -4399,8 +4374,7 @@ Time: 0.96s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">filtered_relative_ranking</span><span class="p">[</span><span class="s1">&#39;filtered percent rank&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">filtered_relative_ranking</span><span class="o">.</span>\
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filtered_relative_ranking</span><span class="p">[</span><span class="s1">&#39;filtered percent rank&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">filtered_relative_ranking</span><span class="o">.</span>\
                                                    <span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;reference id&#39;</span><span class="p">,</span><span class="s1">&#39;for_name&#39;</span><span class="p">])[</span><span class="s1">&#39;percentage top 1&#39;</span><span class="p">]</span><span class="o">.</span>\
                                                    <span class="n">rank</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
@@ -4410,8 +4384,7 @@ Time: 0.96s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">inst</span> <span class="o">=</span> <span class="s1">&#39;University of Melbourne&#39;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inst</span> <span class="o">=</span> <span class="s1">&#39;University of Melbourne&#39;</span>
 
 <span class="n">filtered_relative_ranking</span><span class="p">[</span>
 
@@ -4629,8 +4602,7 @@ Time: 0.96s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
 </div>
@@ -4642,8 +4614,7 @@ Time: 0.96s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">rank_cutoffs</span> <span class="o">=</span> <span class="n">filtered_relative_ranking</span><span class="p">[</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rank_cutoffs</span> <span class="o">=</span> <span class="n">filtered_relative_ranking</span><span class="p">[</span>
 
                           <span class="p">(</span><span class="n">filtered_relative_ranking</span><span class="p">[</span><span class="s1">&#39;reference name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">filtered_relative_ranking</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="p">)</span>
 
@@ -4657,8 +4628,7 @@ Time: 0.96s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">filtered_relative_ranking_final</span> <span class="o">=</span> <span class="n">rank_cutoffs</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">filtered_relative_ranking</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;reference id&#39;</span><span class="p">,</span><span class="s1">&#39;for_id&#39;</span><span class="p">])</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filtered_relative_ranking_final</span> <span class="o">=</span> <span class="n">rank_cutoffs</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">filtered_relative_ranking</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;reference id&#39;</span><span class="p">,</span><span class="s1">&#39;for_id&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -4666,8 +4636,7 @@ Time: 0.96s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">filtered_relative_ranking_final</span><span class="p">[</span><span class="s1">&#39;rank_difference&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">filtered_relative_ranking_final</span><span class="p">[</span><span class="s1">&#39;filtered percent rank&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">filtered_relative_ranking_final</span><span class="p">[</span><span class="s1">&#39;reference filtered percent rank&#39;</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filtered_relative_ranking_final</span><span class="p">[</span><span class="s1">&#39;rank_difference&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">filtered_relative_ranking_final</span><span class="p">[</span><span class="s1">&#39;filtered percent rank&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">filtered_relative_ranking_final</span><span class="p">[</span><span class="s1">&#39;reference filtered percent rank&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -4675,8 +4644,7 @@ Time: 0.96s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">inst</span> <span class="o">=</span> <span class="s1">&#39;Monash University&#39;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inst</span> <span class="o">=</span> <span class="s1">&#39;Monash University&#39;</span>
 <span class="n">forname</span> <span class="o">=</span> <span class="s1">&#39;11 Medical and Health Sciences&#39;</span>
 
 <span class="n">filtered_relative_ranking_final</span><span class="p">[</span>
@@ -4686,10 +4654,7 @@ Time: 0.96s
                                  <span class="p">(</span><span class="n">filtered_relative_ranking_final</span><span class="p">[</span><span class="s1">&#39;for_name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">forname</span><span class="p">)</span>
 
                                  <span class="p">][[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="s1">&#39;filtered percent rank&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;filtered percent rank&#39;</span><span class="p">)</span>
-
-
-
-</pre></div>
+<br/><br/><br/></pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -4773,8 +4738,7 @@ Time: 0.96s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">filtered_relative_ranking_final</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filtered_relative_ranking_final</span>
 </pre></div>
 </div>
 </div>
@@ -5112,7 +5076,6 @@ Time: 0.96s
            
           </div>
           <footer>
-  
 
   <hr/>
 
@@ -5131,7 +5094,6 @@ Time: 0.96s
 
 
 </footer>
-
         </div>
       </div>
 
