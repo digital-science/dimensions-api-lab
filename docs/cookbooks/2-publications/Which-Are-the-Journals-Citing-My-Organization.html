@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Citation Analysis: Journals Citing a Research Organization &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
   
@@ -19,7 +19,10 @@
   
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   
+
   
+  
+
   
 
   
@@ -35,9 +38,9 @@
         <script src="../../_static/language_data.js"></script>
         <script src="../../_static/js/custom.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
-        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -72,7 +75,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> DSL
+            <a href="../../index.html" class="icon icon-home"> DSL
           
 
           
@@ -466,6 +469,18 @@
 <li class="toctree-l2"><a class="reference internal" href="Concepts-network-graph.html#Step-2:-Building-a-concepts-co-occurrence-network">Step 2: Building a concepts co-occurrence network</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Concepts-network-graph.html#Step-3:-Visualizing-the-network">Step 3: Visualizing the network</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Concepts-network-graph.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Rejected_Article_Tracker.html">Rejected Article tracker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Rejected_Article_Tracker.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Rejected_Article_Tracker.html#1.-Get-an-example-data-set">1. Get an example data set</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Rejected_Article_Tracker.html#2.-Define-the-search-template">2. Define the search template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Rejected_Article_Tracker.html#3.-Iteratively-Query-the-Dimensions-API-for-the-retracted-articles">3. Iteratively Query the Dimensions API for the retracted articles</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Rejected_Article_Tracker.html#4.-Join-together-the-input-and-output-data">4. Join together the input and output data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Rejected_Article_Tracker.html#5.-Add-Matching-Score">5. Add Matching Score</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Rejected_Article_Tracker.html#6.-Conclusion">6. Conclusion</a></li>
 </ul>
 </li>
 </ul>
@@ -936,6 +951,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -1161,7 +1178,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt a.copybtn {
+.prompt .copybtn {
     display: none;
 }
 
@@ -1237,8 +1254,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">CHANGELOG</span><span class="se">\n</span><span class="s2">This notebook was last run on </span><span class="si">%s</span><span class="se">\n</span><span class="s2">==&quot;</span> <span class="o">%</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">, %Y&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1261,8 +1277,7 @@ This notebook was last run on Jan 24, 2022
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>dimcli<span class="w"> </span>plotly<span class="w"> </span>tqdm<span class="w"> </span>-U<span class="w"> </span>--quiet
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install dimcli plotly tqdm -U --quiet
 
 <span class="kn">import</span> <span class="nn">dimcli</span>
 <span class="kn">from</span> <span class="nn">dimcli.utils</span> <span class="kn">import</span> <span class="o">*</span>
@@ -1287,8 +1302,7 @@ This notebook was last run on Jan 24, 2022
   <span class="n">KEY</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
   <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">KEY</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="n">ENDPOINT</span><span class="p">)</span>
 <span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
-
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
@@ -1336,15 +1350,14 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1">#</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
 <span class="c1"># data-saving utils</span>
 <span class="c1">#</span>
 <span class="n">DATAFOLDER</span> <span class="o">=</span> <span class="s2">&quot;extraction1&quot;</span>
 <span class="c1">#</span>
 
 <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">DATAFOLDER</span><span class="p">):</span>
-  <span class="o">!</span>mkdir<span class="w"> </span><span class="nv">$DATAFOLDER</span>
+  <span class="o">!</span>mkdir <span class="nv">$DATAFOLDER</span>
   <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">Created data folder:&quot;</span><span class="p">,</span> <span class="n">DATAFOLDER</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span>
 <span class="c1">#</span>
 <span class="k">def</span> <span class="nf">save_as_csv</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">save_name_without_extension</span><span class="p">):</span>
@@ -1362,8 +1375,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">GRIDID</span> <span class="o">=</span> <span class="s2">&quot;grid.414299.3&quot;</span> <span class="c1">#@param {type:&quot;string&quot;}</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">GRIDID</span> <span class="o">=</span> <span class="s2">&quot;grid.414299.3&quot;</span> <span class="c1">#@param {type:&quot;string&quot;}</span>
 
 
 <span class="c1">#@markdown The start/end year of publications used to extract patents</span>
@@ -1400,8 +1412,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">publications</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query_iterative</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">publications</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query_iterative</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">search publications</span>
 <span class="s2">    where research_orgs.id = &quot;</span><span class="si">{</span><span class="n">GRIDID</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="s2">    and year in [</span><span class="si">{</span><span class="n">YEAR_START</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">YEAR_END</span><span class="si">}</span><span class="s2">]</span>
@@ -1461,10 +1472,9 @@ Saved:  extraction1/pubs_grid.414299.3.csv
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">query_template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search publications</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query_template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search publications</span>
 <span class="s2">                    where journal is not empty</span>
-<span class="s2">                    and reference_ids in </span><span class="si">{}</span>
+<span class="s2">                    and reference_ids in </span><span class="si">{}</span><span class="s2"></span>
 <span class="s2">                    return publications[id+journal+issn+year+publisher]&quot;&quot;&quot;</span>
 </pre></div>
 </div>
@@ -1474,8 +1484,7 @@ Saved:  extraction1/pubs_grid.414299.3.csv
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">pubids</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">pubs_cited</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pubids</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">pubs_cited</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
 
 <span class="c1">#</span>
 <span class="c1"># loop through all source-publications IDs in chunks and query Dimensions</span>
@@ -1684,8 +1693,7 @@ Preview:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">pubs_citing</span><span class="p">[</span><span class="s1">&#39;journal.id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pubs_citing</span><span class="p">[</span><span class="s1">&#39;journal.id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1709,8 +1717,7 @@ Name: journal.id, dtype: object
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># count journals and rename columns</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># count journals and rename columns</span>
 <span class="n">journals</span> <span class="o">=</span> <span class="n">pubs_citing</span><span class="p">[</span><span class="s1">&#39;journal.title&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 <span class="n">journals</span> <span class="o">=</span> <span class="n">journals</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span> <span class="p">{</span><span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="s1">&#39;journal.title&#39;</span><span class="p">,</span> <span class="s1">&#39;journal.title&#39;</span><span class="p">:</span> <span class="s1">&#39;count&#39;</span><span class="p">})</span>
 <span class="n">journals</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;index&#39;</span>
@@ -1833,8 +1840,7 @@ Saved:  extraction1/top_journals_citing_grid.414299.3.csv
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">journals</span><span class="p">[:</span><span class="mi">100</span><span class="p">],</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">journals</span><span class="p">[:</span><span class="mi">100</span><span class="p">],</span>
        <span class="n">x</span><span class="o">=</span><span class="s2">&quot;journal.title&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;count&quot;</span><span class="p">,</span>
        <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Top 100 journals citing publications from </span><span class="si">{</span><span class="n">GRIDID</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1877,9 +1883,7 @@ if (outputEl) {{
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-
-<span></span><span class="n">THRESHOLD</span> <span class="o">=</span> <span class="mi">20</span>  <span class="c1">#@param {type: &quot;slider&quot;, min: 10, max: 100}</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><br/><span></span><span class="n">THRESHOLD</span> <span class="o">=</span> <span class="mi">20</span>  <span class="c1">#@param {type: &quot;slider&quot;, min: 10, max: 100}</span>
 
 <span class="c1"># suppress empty values</span>
 <span class="n">pubs_citing</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s2">&quot;-no value-&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1943,7 +1947,6 @@ if (outputEl) {{
            
           </div>
           <footer>
-  
 
   <hr/>
 
@@ -1962,7 +1965,6 @@ if (outputEl) {{
 
 
 </footer>
-
         </div>
       </div>
 

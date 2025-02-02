@@ -31,6 +31,7 @@ html_favicon = "_static/img/favicon.ico"
 # ones.
 extensions = [
     'nbsphinx',
+    'sphinx_rtd_theme'
 ]
 
 

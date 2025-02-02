@@ -12,6 +12,12 @@ Example directories are given in `tools/set-envs-sample.sh`. Replace the values 
 
 Note the `.gitignore` file is set to ignore `set-envs.sh`.
 
+You will also need to install the requirements in `requirements.txt`. The recommended way to do this is to create a conda (or other similar) python environment (Python 3.8 is known to work well), activate it, navigate to the top level folder in the repository, and then run
+
+`pip install -r requirements.txt`
+
+Also install Pandoc by getting an installer from https://pandoc.org/installing.html. Officially you should choose version >1.12.1 and < 3.0.0, but everything seems to work fine with the current version as of January 2025.
+
 ## Workflow
 
 ### 1. Adding new notebooks

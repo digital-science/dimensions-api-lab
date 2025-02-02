@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Enriching Grants part 1: Matching your grants records to Dimensions &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
   
@@ -19,7 +19,10 @@
   
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   
+
   
+  
+
   
 
   
@@ -35,9 +38,9 @@
         <script src="../../_static/language_data.js"></script>
         <script src="../../_static/js/custom.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
-        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -45,7 +48,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Enriching Grants part 2: Adding Publications Information from Dimensions" href="2-grants-enrichment-adding-publications-information.html" />
-    <link rel="prev" title="Building a concepts co-occurence network" href="../2-publications/Concepts-network-graph.html" />
+    <link rel="prev" title="Rejected Article tracker" href="../2-publications/Rejected_Article_Tracker.html" />
     
 
    <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -72,7 +75,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> DSL
+            <a href="../../index.html" class="icon icon-home"> DSL
           
 
           
@@ -466,6 +469,18 @@
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Concepts-network-graph.html#Step-2:-Building-a-concepts-co-occurrence-network">Step 2: Building a concepts co-occurrence network</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Concepts-network-graph.html#Step-3:-Visualizing-the-network">Step 3: Visualizing the network</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Concepts-network-graph.html#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html">Rejected Article tracker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html#1.-Get-an-example-data-set">1. Get an example data set</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html#2.-Define-the-search-template">2. Define the search template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html#3.-Iteratively-Query-the-Dimensions-API-for-the-retracted-articles">3. Iteratively Query the Dimensions API for the retracted articles</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html#4.-Join-together-the-input-and-output-data">4. Join together the input and output data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html#5.-Add-Matching-Score">5. Add Matching Score</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Rejected_Article_Tracker.html#6.-Conclusion">6. Conclusion</a></li>
 </ul>
 </li>
 </ul>
@@ -936,6 +951,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -1161,7 +1178,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt a.copybtn {
+.prompt .copybtn {
     display: none;
 }
 
@@ -1237,8 +1254,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">CHANGELOG</span><span class="se">\n</span><span class="s2">This notebook was last run on </span><span class="si">%s</span><span class="se">\n</span><span class="s2">==&quot;</span> <span class="o">%</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">, %Y&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1262,8 +1278,7 @@ This notebook was last run on Apr 19, 2023
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>dimcli<span class="w"> </span>tqdm<span class="w"> </span>-U<span class="w"> </span>--quiet
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install dimcli tqdm -U --quiet
 
 <span class="kn">import</span> <span class="nn">dimcli</span>
 <span class="kn">from</span> <span class="nn">dimcli.utils</span> <span class="kn">import</span> <span class="o">*</span>
@@ -1314,8 +1329,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">grants_source</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;http://api-sample-data.dimensions.ai/data/vaccines-grants-sample-part-0.csv&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grants_source</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;http://api-sample-data.dimensions.ai/data/vaccines-grants-sample-part-0.csv&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1324,8 +1338,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">grants_source</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grants_source</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1428,8 +1441,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;extract_grants(grant_number=&quot;30410203277&quot;,</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;extract_grants(grant_number=&quot;30410203277&quot;,</span>
 <span class="s2">    funder_name=&quot;National Natural Science Foundation of China&quot;)&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span>
 </pre></div>
 </div>
@@ -1447,8 +1459,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;extract_grants(grant_number=&quot;334174&quot;,</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;extract_grants(grant_number=&quot;334174&quot;,</span>
 <span class="s2">    funder_name=&quot;National Health and Medical Research Council&quot;)&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span>
 </pre></div>
 </div>
@@ -1467,8 +1478,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;extract_grants(grant_number=&quot;30410203277&quot;,</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;extract_grants(grant_number=&quot;30410203277&quot;,</span>
 <span class="s2">    funder_name=&quot;&quot;)&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span>
 </pre></div>
 </div>
@@ -1487,8 +1497,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;extract_grants(grant_number=&quot;30410203277&quot;,</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;extract_grants(grant_number=&quot;30410203277&quot;,</span>
 <span class="s2">    fundref=&quot;501100001809&quot;)&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span>
 </pre></div>
 </div>
@@ -1516,8 +1525,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">grants_without_number</span> <span class="o">=</span> <span class="n">grants_source</span><span class="p">[</span><span class="n">grants_source</span><span class="p">[</span><span class="s1">&#39;Grant Number&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grants_without_number</span> <span class="o">=</span> <span class="n">grants_source</span><span class="p">[</span><span class="n">grants_source</span><span class="p">[</span><span class="s1">&#39;Grant Number&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()]</span>
 </pre></div>
 </div>
 </div>
@@ -1525,8 +1533,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">grants_without_number</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grants_without_number</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1622,8 +1629,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%%</span><span class="k">dsldf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">dsldf</span>
 
 search grants
     in title_only for &quot;Vaccine Production in Plants&quot;
@@ -1702,8 +1708,7 @@ Field &#39;funder_countries&#39; is deprecated in favor of funder_org_countries.
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># we&#39;re in luck! only one record found</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># we&#39;re in luck! only one record found</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The Dimensions ID is: &quot;</span><span class="p">,</span> <span class="n">dsl_last_results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
@@ -1735,8 +1740,7 @@ The Dimensions ID is:  grant.9923948
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">grants</span> <span class="o">=</span> <span class="n">grants_source</span><span class="p">[:</span><span class="mi">100</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grants</span> <span class="o">=</span> <span class="n">grants_source</span><span class="p">[:</span><span class="mi">100</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1744,8 +1748,7 @@ The Dimensions ID is:  grant.9923948
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">grants</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grants</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1891,8 +1894,7 @@ The Dimensions ID is:  grant.9923948
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># load the progress bar widget for jupyter</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load the progress bar widget for jupyter</span>
 <span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span> <span class="k">as</span> <span class="n">progressbar</span>
 
 <span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1927,8 +1929,7 @@ The Dimensions ID is:  grant.9923948
       <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Failed - skipping&quot;</span><span class="p">)</span>
   <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">grant_id</span><span class="p">)</span>
   <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
@@ -2103,8 +2104,7 @@ Found a match with method 1:  grant.7752982
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">grants</span><span class="p">[</span><span class="s2">&quot;Dimensions ID&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">output</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grants</span><span class="p">[</span><span class="s2">&quot;Dimensions ID&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">output</span>
 </pre></div>
 </div>
 </div>
@@ -2112,8 +2112,7 @@ Found a match with method 1:  grant.7752982
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">grants</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grants</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2283,7 +2282,6 @@ Found a match with method 1:  grant.7752982
            
           </div>
           <footer>
-  
 
   <hr/>
 
@@ -2302,7 +2300,6 @@ Found a match with method 1:  grant.7752982
 
 
 </footer>
-
         </div>
       </div>
 
