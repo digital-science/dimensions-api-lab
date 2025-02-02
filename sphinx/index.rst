@@ -61,6 +61,7 @@ API Cookbooks
    cookbooks/2-publications/Journal-Profile-5-Competitive-Analysis.ipynb
    cookbooks/2-publications/Simple-topic-analysis.ipynb
    cookbooks/2-publications/Concepts-network-graph.ipynb
+   cookbooks/2-publications/Rejected_Article_Tracker.ipynb
 
 
 .. toctree::
