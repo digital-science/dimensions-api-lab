@@ -1,7 +1,6 @@
 # Fraunhofer Demo 
 
-Starting from one of the research organizations which are part of the Fraunhofer Society, this [collection of notebooks](https://github.com/digital-science/dimensions-api-lab/tree/master/demos/2019-11-Fraunhofer) demostrate how to carry out research analytics tasks using the Dimensions Analytics API. 
-
+Starting from one of the research organizations which are part of the Fraunhofer Society, this [collection of notebooks](https://github.com/digital-science/dimensions-api-lab/tree/master/demos/2019-11-Fraunhofer) demonstrate how to carry out research analytics tasks using the Dimensions Analytics API.
 Notebooks available in this collection: 
 
 1. Detailed analysis of the patents referencing the Fraunhofer publications 
