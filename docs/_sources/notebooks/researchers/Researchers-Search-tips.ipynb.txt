@@ -1,0 +1,1395 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "<a href=\"https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/1-getting-started/Researchers-Search-tips.ipynb\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open Dimensions API Lab In Google Colab\"/></a>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "# Goal: extracting all researchers affiliated to a certain university, who published in a specific time-frame\n",
+    "The purpose of this notebook is to show how to extract this data using the Dimensions API. \n",
+    "\n",
+    "Specifically, we will look at a concrete use case. We want to find out about all reseachers known to Dimensions, who: \n",
+    "\n",
+    "* have an affiliation to __Kyushu Institute of Technology__ ([grid.258806.1](https://grid.ac/institutes/grid.258806.1))\n",
+    "* have published in the time frame __2013-2018__\n",
+    "\n",
+    "NOTE: something to clarify right away is whether we want affiliations *at the time of speaking*, **or** *at the time of publishing*. For the sake of this exercise, we will get both."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 101,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [],
+   "source": [
+    "# constants\n",
+    "GRIDID = \"grid.258806.1\"\n",
+    "YEARS = \"[2013:2018]\""
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "## Methodology"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "There are 2 ways to tackle this problem.\n",
+    "\n",
+    "#### Approach 1. Starting from the _publications_ database:\n",
+    "\n",
+    "1. Filter publications for year range [2013-2018] and research_orgs=\"grid.258806.1\"\n",
+    "    * i.e. `search publications where year in [2013:2018] and research_orgs=\"grid.258806.1\" return publications`\n",
+    "2. Loop over publications' authors and extract relevant reasearchers\n",
+    "    * if `['current_organization_id'] == \"grid.258806.1\"`\n",
+    "        * => **that gives us the affiliations at the time of speaking**\n",
+    "    * or if `['affiliation']['id'] == \"grid.258806.1\"` \n",
+    "        * => **that gives us the affiliations at the time of publishing**\n",
+    "\n",
+    "#### Approach 2. Starting from the _researchers_ database:\n",
+    "\n",
+    "1. Filter researchers with research_orgs=\"grid.258806.1\" (note: this gives us affiliated researches *at any point in time*)\n",
+    "    * `search researchers where research_orgs=\"grid.258806.1\" return researchers`\n",
+    "2. Search for publications linked to these researchers and linked to \"grid.258806.1\", which have been published in the time frame `[2013-2018]`\n",
+    "    * `search publications where researchers.id in {LIST OF IDS} and year in [2013:2018] and research_orgs=\"grid.258806.1\" return publications`\n",
+    "    * NOTE: this a variation of query 1.1 above: we have just added the researchers IDs filter (thus reducing the search space)\n",
+    "3. Extract relevant researchers from publications, using the same exact steps as in 1.2 above"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "## Results \n",
+    "\n",
+    "As explained in the analysis section, both approaches return the same number of results (with some minor variations). Note: the three figures respectively are the a) researchers affiliated to the organization currently b) at the time of writing and c) and any time. \n",
+    "\n",
+    "| Method | Main Query                                                                                                                                        | Researchers Found |\n",
+    "|--------|----------------------------------------------------------------------------------------------------------------------------------------------|-------------------|\n",
+    "| A    | `search publications where year in [2013:2018] and research_orgs=\"grid.258806.1\" return publications`                                        | 1308 / 1587 / 1588              |\n",
+    "| B    | `search researchers where research_orgs=\"grid.258806.1\" return researchers` --- then --- `search publications where researchers.id in {IDS} and year in [2013:2018] and research_orgs={GRIDID} return publications limit 1000`   | 1309 / 1584 / 1585             |\n",
+    "\n",
+    "#### Why the different numbers?\n",
+    "\n",
+    "* The 'researchers' database collects information from both publications and grants data. Hence since some of the results may come from grants, the total number of researchers can be different from publications data.\n",
+    "* The 'researchers' database is generated by periodically extracting and disambiguating data from the the publications information and other sources. So sometime it can be less up to date compared to the other databases.  \n",
+    "\n",
+    "#### So which one is better? \n",
+    "\n",
+    "In this case, approach 1 is quicker to implement. However approach 2 could be better in some cases, e.g. if the first publicatons query would return a very large number of results. So it's good to keep them both in mind and judge case by case. \n",
+    "\n",
+    "---"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "# Analysis "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 102,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "DimCli v0.4.12 - Succesfully connected to <https://app.dimensions.ai> (method: dsl.ini file)\n"
+     ]
+    }
+   ],
+   "source": [
+    "import json \n",
+    "import pandas as pd\n",
+    "from pandas.io.json import json_normalize\n",
+    "import numpy as np\n",
+    "from tqdm import tnrange, tqdm_notebook as bar\n",
+    "from time import sleep\n",
+    "import dimcli \n",
+    "from dimcli.shortcuts import dslquery, dslqueryall\n",
+    "dimcli.login()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "____\n",
+    "# Method 1: Search from publications \n",
+    "\n",
+    "The basic idea of this approach is to get all the relevant publications based on our search criteria. \n",
+    "1. Extract all publications based on the criteria above\n",
+    "2. From each publication, extract all researchers where either the `current_organization_id` or one of the `affiliations/id` are matching the GRIDID\n",
+    "3. Remove duplicate researchers "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "\n",
+    "By looking at one single record we can see how the data is organized: authors are stored in a nested list/dictionary with the key `author_affiliations`. For example, in order to extract for example the second author of the tenth publication we could do the following: `res.publications[10]['author_affiliations'][0][1]`: \n",
+    "\n",
+    "```\n",
+    "{'first_name': 'Noboru',\n",
+    " 'last_name': 'Sebe',\n",
+    " 'orcid': '',\n",
+    " 'current_organization_id': 'grid.258806.1',\n",
+    " 'researcher_id': 'ur.010647607673.28',\n",
+    " 'affiliations': [{'id': 'grid.258806.1',\n",
+    "   'name': 'Kyushu Institute of Technology',\n",
+    "   'city': 'Kitakyushu',\n",
+    "   'city_id': 1859307,\n",
+    "   'country': 'Japan',\n",
+    "   'country_code': 'JP',\n",
+    "   'state': None,\n",
+    "   'state_code': None}]}\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "First off, we can to get all publications based on our search criteria by using a `loop` query."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 103,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "1000 / 4070\n",
+      "2000 / 4070\n",
+      "3000 / 4070\n",
+      "4000 / 4070\n",
+      "4070 / 4070\n"
+     ]
+    }
+   ],
+   "source": [
+    "m1_pubs_api_data = dslqueryall(f\"\"\"search publications where year in {YEARS} and research_orgs=\"{GRIDID}\" return publications\"\"\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "#### How many relevant researchers are there (with affiliation at the time of speaking)? "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 104,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>affiliations</th>\n",
+       "      <th>current_organization_id</th>\n",
+       "      <th>first_name</th>\n",
+       "      <th>last_name</th>\n",
+       "      <th>orcid</th>\n",
+       "      <th>researcher_id</th>\n",
+       "      <th>id</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>\n",
+       "      <td></td>\n",
+       "      <td>Siewteng</td>\n",
+       "      <td>Sim</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>pub.1110885950</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>\n",
+       "      <td>grid.258806.1</td>\n",
+       "      <td>Yoshito</td>\n",
+       "      <td>Andou</td>\n",
+       "      <td></td>\n",
+       "      <td>ur.01116323260.31</td>\n",
+       "      <td>pub.1110885950</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>[{'id': 'grid.11142.37', 'name': 'Universiti P...</td>\n",
+       "      <td>grid.11142.37</td>\n",
+       "      <td>Hamra A. A.</td>\n",
+       "      <td>Bashid</td>\n",
+       "      <td></td>\n",
+       "      <td>ur.016617033322.44</td>\n",
+       "      <td>pub.1110885950</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>[{'id': 'grid.11142.37', 'name': 'Universiti P...</td>\n",
+       "      <td>grid.11142.37</td>\n",
+       "      <td>Hongngee</td>\n",
+       "      <td>Lim</td>\n",
+       "      <td>['0000-0003-2436-8953']</td>\n",
+       "      <td>ur.010703155721.11</td>\n",
+       "      <td>pub.1110885950</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>[{'id': 'grid.1025.6', 'name': 'Murdoch Univer...</td>\n",
+       "      <td>grid.1025.6</td>\n",
+       "      <td>Mohammednoor</td>\n",
+       "      <td>Altarawneh</td>\n",
+       "      <td></td>\n",
+       "      <td>ur.01137010426.42</td>\n",
+       "      <td>pub.1110885950</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                                        affiliations current_organization_id  \\\n",
+       "0  [{'id': 'grid.258806.1', 'name': 'Kyushu Insti...                           \n",
+       "1  [{'id': 'grid.258806.1', 'name': 'Kyushu Insti...           grid.258806.1   \n",
+       "2  [{'id': 'grid.11142.37', 'name': 'Universiti P...           grid.11142.37   \n",
+       "3  [{'id': 'grid.11142.37', 'name': 'Universiti P...           grid.11142.37   \n",
+       "4  [{'id': 'grid.1025.6', 'name': 'Murdoch Univer...             grid.1025.6   \n",
+       "\n",
+       "     first_name   last_name                    orcid       researcher_id  \\\n",
+       "0      Siewteng         Sim                                                \n",
+       "1       Yoshito       Andou                            ur.01116323260.31   \n",
+       "2   Hamra A. A.      Bashid                           ur.016617033322.44   \n",
+       "3      Hongngee         Lim  ['0000-0003-2436-8953']  ur.010703155721.11   \n",
+       "4  Mohammednoor  Altarawneh                            ur.01137010426.42   \n",
+       "\n",
+       "               id  \n",
+       "0  pub.1110885950  \n",
+       "1  pub.1110885950  \n",
+       "2  pub.1110885950  \n",
+       "3  pub.1110885950  \n",
+       "4  pub.1110885950  "
+      ]
+     },
+     "execution_count": 104,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# simplify dict structure nesting PS careful about running this twice!\n",
+    "for x in m1_pubs_api_data.publications:\n",
+    "    if 'author_affiliations' in x:\n",
+    "        x['author_affiliations'] = x['author_affiliations'][0]\n",
+    "    else:\n",
+    "        x['author_affiliations'] = []\n",
+    "\n",
+    "m1_authors = json_normalize(m1_pubs_api_data.publications, record_path=['author_affiliations'], meta=[\"id\"], errors='ignore')\n",
+    "m1_authors.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 105,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "1308"
+      ]
+     },
+     "execution_count": 105,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "m1_authors[m1_authors['current_organization_id'] == GRIDID].researcher_id.nunique()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "#### How many relevant researchers are there (with affiliation at the time of writing)? "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "Now let's look into the historical affiliations data too.. for that we need to break down the an inner list of dict object. We can simply reuse `json_normalize` for that, by running it again on a JSON version of the authors dataframe. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 106,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>aff_city</th>\n",
+       "      <th>aff_city_id</th>\n",
+       "      <th>aff_country</th>\n",
+       "      <th>aff_country_code</th>\n",
+       "      <th>aff_id</th>\n",
+       "      <th>aff_name</th>\n",
+       "      <th>aff_state</th>\n",
+       "      <th>aff_state_code</th>\n",
+       "      <th>id</th>\n",
+       "      <th>researcher_id</th>\n",
+       "      <th>first_name</th>\n",
+       "      <th>last_name</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>Kitakyushu</td>\n",
+       "      <td>1859307.0</td>\n",
+       "      <td>Japan</td>\n",
+       "      <td>JP</td>\n",
+       "      <td>grid.258806.1</td>\n",
+       "      <td>Kyushu Institute of Technology</td>\n",
+       "      <td>None</td>\n",
+       "      <td>None</td>\n",
+       "      <td>pub.1110885950</td>\n",
+       "      <td></td>\n",
+       "      <td>Siewteng</td>\n",
+       "      <td>Sim</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>Kitakyushu</td>\n",
+       "      <td>1859307.0</td>\n",
+       "      <td>Japan</td>\n",
+       "      <td>JP</td>\n",
+       "      <td>grid.258806.1</td>\n",
+       "      <td>Kyushu Institute of Technology</td>\n",
+       "      <td>None</td>\n",
+       "      <td>None</td>\n",
+       "      <td>pub.1110885950</td>\n",
+       "      <td>ur.01116323260.31</td>\n",
+       "      <td>Yoshito</td>\n",
+       "      <td>Andou</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>Seri Kembangan</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>Malaysia</td>\n",
+       "      <td>MY</td>\n",
+       "      <td>grid.11142.37</td>\n",
+       "      <td>Universiti Putra Malaysia</td>\n",
+       "      <td>None</td>\n",
+       "      <td>None</td>\n",
+       "      <td>pub.1110885950</td>\n",
+       "      <td>ur.016617033322.44</td>\n",
+       "      <td>Hamra A. A.</td>\n",
+       "      <td>Bashid</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>Seri Kembangan</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>Malaysia</td>\n",
+       "      <td>MY</td>\n",
+       "      <td>grid.11142.37</td>\n",
+       "      <td>Universiti Putra Malaysia</td>\n",
+       "      <td>None</td>\n",
+       "      <td>None</td>\n",
+       "      <td>pub.1110885950</td>\n",
+       "      <td>ur.010703155721.11</td>\n",
+       "      <td>Hongngee</td>\n",
+       "      <td>Lim</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>Perth</td>\n",
+       "      <td>2063523.0</td>\n",
+       "      <td>Australia</td>\n",
+       "      <td>AU</td>\n",
+       "      <td>grid.1025.6</td>\n",
+       "      <td>Murdoch University</td>\n",
+       "      <td>Western Australia</td>\n",
+       "      <td>AU-WA</td>\n",
+       "      <td>pub.1110885950</td>\n",
+       "      <td>ur.01137010426.42</td>\n",
+       "      <td>Mohammednoor</td>\n",
+       "      <td>Altarawneh</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "         aff_city  aff_city_id aff_country aff_country_code         aff_id  \\\n",
+       "0      Kitakyushu    1859307.0       Japan               JP  grid.258806.1   \n",
+       "1      Kitakyushu    1859307.0       Japan               JP  grid.258806.1   \n",
+       "2  Seri Kembangan          NaN    Malaysia               MY  grid.11142.37   \n",
+       "3  Seri Kembangan          NaN    Malaysia               MY  grid.11142.37   \n",
+       "4           Perth    2063523.0   Australia               AU    grid.1025.6   \n",
+       "\n",
+       "                         aff_name          aff_state aff_state_code  \\\n",
+       "0  Kyushu Institute of Technology               None           None   \n",
+       "1  Kyushu Institute of Technology               None           None   \n",
+       "2       Universiti Putra Malaysia               None           None   \n",
+       "3       Universiti Putra Malaysia               None           None   \n",
+       "4              Murdoch University  Western Australia          AU-WA   \n",
+       "\n",
+       "               id       researcher_id    first_name   last_name  \n",
+       "0  pub.1110885950                          Siewteng         Sim  \n",
+       "1  pub.1110885950   ur.01116323260.31       Yoshito       Andou  \n",
+       "2  pub.1110885950  ur.016617033322.44   Hamra A. A.      Bashid  \n",
+       "3  pub.1110885950  ur.010703155721.11      Hongngee         Lim  \n",
+       "4  pub.1110885950   ur.01137010426.42  Mohammednoor  Altarawneh  "
+      ]
+     },
+     "execution_count": 106,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "m1_affiliations = json_normalize(json.loads(m1_authors.to_json(orient='records')), record_path=['affiliations'], \n",
+    "               meta=['id', 'researcher_id', 'first_name', 'last_name'], record_prefix='aff_')\n",
+    "m1_affiliations.head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "How many unique researchers are there (this time based on the affiliation data)? "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 107,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "1587"
+      ]
+     },
+     "execution_count": 107,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "m1_affiliations[m1_affiliations['aff_id'] == GRIDID].researcher_id.nunique()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "#### How many relevant researchers, in total? "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "How many unique researchers are there, by combining both `affiliation` and `current_organization` data? "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 108,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Results\n",
+      "1588 researchers linked to grid.258806.1 in total\n"
+     ]
+    }
+   ],
+   "source": [
+    "m1_researchers = m1_affiliations[m1_affiliations['aff_id'] == GRIDID].researcher_id\n",
+    "m1_researchers = m1_researchers.append(m1_authors[m1_authors['current_organization_id'] == GRIDID].researcher_id)\n",
+    "# Drop empty values and duplicates\n",
+    "m1_researchers = m1_researchers.replace('', np.nan, inplace=False).dropna().drop_duplicates()\n",
+    "m1_researchers.reset_index()\n",
+    "print(\"Results\")\n",
+    "print(f\"{m1_researchers.count()} researchers linked to {GRIDID} in total\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 109,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [],
+   "source": [
+    "# finally, save the data locally\n",
+    "m1_authors.to_csv(\"data/method1_researchers_current_affiliation.csv\")\n",
+    "m1_affiliations.to_csv(\"data/method1_researchers_historical_affiliation.csv\")\n",
+    "m1_researchers.to_csv(\"data/method1_researchers_combined.csv\", header=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "---\n",
+    "# Method 2: Search from researchers\n",
+    "\n",
+    "With this approach, we start our search from the 'researchers' database (instead of the 'publications' database). \n",
+    "1. First, we extract all researchers affiliated to \"grid.258806.1\". \n",
+    "2. Second, we get the publications from these researchers, filtering on the selecter year-range and organization \n",
+    "3. Third, we pull out all relevant researchers from the publications list"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 110,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "1000 / 6752\n",
+      "2000 / 6752\n",
+      "3000 / 6752\n",
+      "4000 / 6752\n",
+      "5000 / 6752\n",
+      "6000 / 6752\n",
+      "6752 / 6752\n"
+     ]
+    },
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>current_research_org</th>\n",
+       "      <th>first_grant_year</th>\n",
+       "      <th>first_name</th>\n",
+       "      <th>first_publication_year</th>\n",
+       "      <th>id</th>\n",
+       "      <th>last_grant_year</th>\n",
+       "      <th>last_name</th>\n",
+       "      <th>last_publication_year</th>\n",
+       "      <th>obsolete</th>\n",
+       "      <th>orcid_id</th>\n",
+       "      <th>redirect</th>\n",
+       "      <th>research_orgs</th>\n",
+       "      <th>total_grants</th>\n",
+       "      <th>total_publications</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>{'id': 'grid.258806.1', 'acronym': 'KIT', 'nam...</td>\n",
+       "      <td>1997.0</td>\n",
+       "      <td>Tetsuji</td>\n",
+       "      <td>1992.0</td>\n",
+       "      <td>ur.013506011335.42</td>\n",
+       "      <td>2018.0</td>\n",
+       "      <td>Moriguchi</td>\n",
+       "      <td>2018.0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>[0000-0002-2362-0590]</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>[{'id': 'grid.258806.1', 'acronym': 'KIT', 'na...</td>\n",
+       "      <td>10</td>\n",
+       "      <td>99</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>Ivan</td>\n",
+       "      <td>1991.0</td>\n",
+       "      <td>ur.01306536423.46</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>Godler</td>\n",
+       "      <td>2017.0</td>\n",
+       "      <td>1</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>[ur.012100442163.84]</td>\n",
+       "      <td>[{'id': 'grid.412586.c', 'name': 'The Universi...</td>\n",
+       "      <td>0</td>\n",
+       "      <td>50</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>Ivan</td>\n",
+       "      <td>1991.0</td>\n",
+       "      <td>ur.012424620305.51</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>Godler</td>\n",
+       "      <td>2017.0</td>\n",
+       "      <td>1</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>[ur.012100442163.84]</td>\n",
+       "      <td>[{'id': 'grid.412586.c', 'name': 'The Universi...</td>\n",
+       "      <td>0</td>\n",
+       "      <td>50</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>Ivan</td>\n",
+       "      <td>1991.0</td>\n",
+       "      <td>ur.010716033531.51</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>Godler</td>\n",
+       "      <td>2017.0</td>\n",
+       "      <td>1</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>[ur.012100442163.84]</td>\n",
+       "      <td>[{'id': 'grid.412586.c', 'name': 'The Universi...</td>\n",
+       "      <td>0</td>\n",
+       "      <td>50</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>{'id': 'grid.258806.1', 'acronym': 'KIT', 'nam...</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>Daisuke</td>\n",
+       "      <td>2005.0</td>\n",
+       "      <td>ur.015547663323.73</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>Makino</td>\n",
+       "      <td>2006.0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>[{'id': 'grid.258806.1', 'acronym': 'KIT', 'na...</td>\n",
+       "      <td>0</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                                current_research_org  first_grant_year  \\\n",
+       "0  {'id': 'grid.258806.1', 'acronym': 'KIT', 'nam...            1997.0   \n",
+       "1                                                NaN               NaN   \n",
+       "2                                                NaN               NaN   \n",
+       "3                                                NaN               NaN   \n",
+       "4  {'id': 'grid.258806.1', 'acronym': 'KIT', 'nam...               NaN   \n",
+       "\n",
+       "  first_name  first_publication_year                  id  last_grant_year  \\\n",
+       "0    Tetsuji                  1992.0  ur.013506011335.42           2018.0   \n",
+       "1       Ivan                  1991.0   ur.01306536423.46              NaN   \n",
+       "2       Ivan                  1991.0  ur.012424620305.51              NaN   \n",
+       "3       Ivan                  1991.0  ur.010716033531.51              NaN   \n",
+       "4    Daisuke                  2005.0  ur.015547663323.73              NaN   \n",
+       "\n",
+       "   last_name  last_publication_year  obsolete               orcid_id  \\\n",
+       "0  Moriguchi                 2018.0         0  [0000-0002-2362-0590]   \n",
+       "1     Godler                 2017.0         1                    NaN   \n",
+       "2     Godler                 2017.0         1                    NaN   \n",
+       "3     Godler                 2017.0         1                    NaN   \n",
+       "4     Makino                 2006.0         0                    NaN   \n",
+       "\n",
+       "               redirect                                      research_orgs  \\\n",
+       "0                   NaN  [{'id': 'grid.258806.1', 'acronym': 'KIT', 'na...   \n",
+       "1  [ur.012100442163.84]  [{'id': 'grid.412586.c', 'name': 'The Universi...   \n",
+       "2  [ur.012100442163.84]  [{'id': 'grid.412586.c', 'name': 'The Universi...   \n",
+       "3  [ur.012100442163.84]  [{'id': 'grid.412586.c', 'name': 'The Universi...   \n",
+       "4                   NaN  [{'id': 'grid.258806.1', 'acronym': 'KIT', 'na...   \n",
+       "\n",
+       "   total_grants  total_publications  \n",
+       "0            10                  99  \n",
+       "1             0                  50  \n",
+       "2             0                  50  \n",
+       "3             0                  50  \n",
+       "4             0                   2  "
+      ]
+     },
+     "execution_count": 110,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "m2_researchers_api_data = dslqueryall(f\"\"\"search researchers where research_orgs=\"{GRIDID}\" return researchers[all]\"\"\")\n",
+    "m2_researchers_for_grid = m2_researchers_api_data.as_dataframe()\n",
+    "m2_researchers_for_grid.head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "Now we need to select only the researchers who have published in the time frame [2013:2018]. So for each researcher ID we must extract the full publication history in order to verify their relevance. \n",
+    "\n",
+    "The most efficient way to do this is to use a query that **extracts the publication history for several researchers at the same time** (so to avoid overruning our API quota), then, as a second step, producing a clean list of relevant researchers from it."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 111,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "{'total_count': 318, 'limit': 1000, 'offset': 0}\n",
+      "{'total_count': 396, 'limit': 1000, 'offset': 0}\n",
+      "{'total_count': 388, 'limit': 1000, 'offset': 0}\n",
+      "{'total_count': 601, 'limit': 1000, 'offset': 0}\n",
+      "{'total_count': 269, 'limit': 1000, 'offset': 0}\n",
+      "{'total_count': 404, 'limit': 1000, 'offset': 0}\n",
+      "{'total_count': 310, 'limit': 1000, 'offset': 0}\n",
+      "{'total_count': 503, 'limit': 1000, 'offset': 0}\n",
+      "{'total_count': 268, 'limit': 1000, 'offset': 0}\n",
+      "{'total_count': 308, 'limit': 1000, 'offset': 0}\n",
+      "{'total_count': 414, 'limit': 1000, 'offset': 0}\n",
+      "{'total_count': 659, 'limit': 1000, 'offset': 0}\n",
+      "{'total_count': 390, 'limit': 1000, 'offset': 0}\n",
+      "{'total_count': 451, 'limit': 1000, 'offset': 0}\n",
+      "{'total_count': 298, 'limit': 1000, 'offset': 0}\n",
+      "{'total_count': 494, 'limit': 1000, 'offset': 0}\n",
+      "{'total_count': 334, 'limit': 1000, 'offset': 0}\n",
+      "{'total_count': 395, 'limit': 1000, 'offset': 0}\n",
+      "{'total_count': 321, 'limit': 1000, 'offset': 0}\n",
+      "{'total_count': 479, 'limit': 1000, 'offset': 0}\n",
+      "{'total_count': 402, 'limit': 1000, 'offset': 0}\n",
+      "{'total_count': 269, 'limit': 1000, 'offset': 0}\n",
+      "{'total_count': 121, 'limit': 1000, 'offset': 0}\n",
+      "---\n",
+      "Found 8792 publications for the given criteria (including duplicates)\n",
+      "Final result: 3809 unique publications\n"
+     ]
+    }
+   ],
+   "source": [
+    "m2_pubs_for_researchers = []\n",
+    "\n",
+    "def get_pubs_from_ids(ids_list):\n",
+    "    IDS = json.dumps(ids_list)\n",
+    "    q = f\"\"\"search publications \n",
+    "                where researchers.id in {IDS}\n",
+    "                and year in {YEARS}\n",
+    "                and research_orgs=\"{GRIDID}\"\n",
+    "            return publications limit 1000\"\"\"\n",
+    "    return dslquery(q)\n",
+    "\n",
+    "CHUNKS_SIZE = 300 # to ensure we never hit the 1000 limit\n",
+    "\n",
+    "for chunk in m2_researchers_api_data.chunks(size=CHUNKS_SIZE):\n",
+    "    ids = [x['id'] for x in chunk]\n",
+    "    temp = get_pubs_from_ids(ids)\n",
+    "    m2_pubs_for_researchers += temp.publications\n",
+    "    print(temp['stats']) # visual check \n",
+    "\n",
+    "print(\"---\\nFound\", len(m2_pubs_for_researchers), \"publications for the given criteria (including duplicates)\")\n",
+    "\n",
+    "idx, m2_pubs_for_researchers_unique = [], []\n",
+    "for x in m2_pubs_for_researchers:\n",
+    "    if x['id'] not in idx:\n",
+    "        idx.append(x['id'])\n",
+    "        m2_pubs_for_researchers_unique.append(x)\n",
+    "\n",
+    "        len(m2_pubs_for_researchers_unique)\n",
+    "\n",
+    "print(\"Final result:\", len(m2_pubs_for_researchers_unique), \"unique publications\")        "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "#### How many relevant researchers are there (with affiliation at the time of speaking)? "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 112,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>affiliations</th>\n",
+       "      <th>current_organization_id</th>\n",
+       "      <th>first_name</th>\n",
+       "      <th>last_name</th>\n",
+       "      <th>orcid</th>\n",
+       "      <th>researcher_id</th>\n",
+       "      <th>id</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>[{'id': 'grid.8536.8', 'name': 'Federal Univer...</td>\n",
+       "      <td></td>\n",
+       "      <td>C. C.</td>\n",
+       "      <td>Soares</td>\n",
+       "      <td></td>\n",
+       "      <td></td>\n",
+       "      <td>pub.1103719897</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>[{'id': 'grid.8536.8', 'name': 'Federal Univer...</td>\n",
+       "      <td>grid.8536.8</td>\n",
+       "      <td>M.</td>\n",
+       "      <td>ElMassalami</td>\n",
+       "      <td>['0000-0003-3543-1946']</td>\n",
+       "      <td>ur.01175272515.05</td>\n",
+       "      <td>pub.1103719897</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>[{'id': 'grid.21941.3f', 'name': 'National Ins...</td>\n",
+       "      <td>grid.21941.3f</td>\n",
+       "      <td>Y.</td>\n",
+       "      <td>Yanagisawa</td>\n",
+       "      <td></td>\n",
+       "      <td>ur.013116001105.24</td>\n",
+       "      <td>pub.1103719897</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>[{'id': 'grid.21941.3f', 'name': 'National Ins...</td>\n",
+       "      <td>grid.258806.1</td>\n",
+       "      <td>M.</td>\n",
+       "      <td>Tanaka</td>\n",
+       "      <td>['0000-0002-4323-5999']</td>\n",
+       "      <td>ur.014310336431.75</td>\n",
+       "      <td>pub.1103719897</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>[{'id': 'grid.21941.3f', 'name': 'National Ins...</td>\n",
+       "      <td>grid.21941.3f</td>\n",
+       "      <td>H.</td>\n",
+       "      <td>Takeya</td>\n",
+       "      <td></td>\n",
+       "      <td>ur.010212206615.18</td>\n",
+       "      <td>pub.1103719897</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                                        affiliations current_organization_id  \\\n",
+       "0  [{'id': 'grid.8536.8', 'name': 'Federal Univer...                           \n",
+       "1  [{'id': 'grid.8536.8', 'name': 'Federal Univer...             grid.8536.8   \n",
+       "2  [{'id': 'grid.21941.3f', 'name': 'National Ins...           grid.21941.3f   \n",
+       "3  [{'id': 'grid.21941.3f', 'name': 'National Ins...           grid.258806.1   \n",
+       "4  [{'id': 'grid.21941.3f', 'name': 'National Ins...           grid.21941.3f   \n",
+       "\n",
+       "  first_name    last_name                    orcid       researcher_id  \\\n",
+       "0      C. C.       Soares                                                \n",
+       "1         M.  ElMassalami  ['0000-0003-3543-1946']   ur.01175272515.05   \n",
+       "2         Y.   Yanagisawa                           ur.013116001105.24   \n",
+       "3         M.       Tanaka  ['0000-0002-4323-5999']  ur.014310336431.75   \n",
+       "4         H.       Takeya                           ur.010212206615.18   \n",
+       "\n",
+       "               id  \n",
+       "0  pub.1103719897  \n",
+       "1  pub.1103719897  \n",
+       "2  pub.1103719897  \n",
+       "3  pub.1103719897  \n",
+       "4  pub.1103719897  "
+      ]
+     },
+     "execution_count": 112,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# simplify dict structure like above /  PS careful about running this twice!\n",
+    "for x in m2_pubs_for_researchers:\n",
+    "    if 'author_affiliations' in x:\n",
+    "        x['author_affiliations'] = x['author_affiliations'][0]\n",
+    "    else:\n",
+    "        x['author_affiliations'] = []\n",
+    "\n",
+    "m2_pubs_authors = json_normalize(m2_pubs_for_researchers_unique, record_path=['author_affiliations'], meta=[\"id\"], errors='ignore')\n",
+    "m2_pubs_authors.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 113,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "1309"
+      ]
+     },
+     "execution_count": 113,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "m2_pubs_authors[m2_pubs_authors['current_organization_id'] == GRIDID].researcher_id.nunique()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "#### How many relevant researchers are there (with affiliation at the time of writing)? "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 114,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>aff_city</th>\n",
+       "      <th>aff_city_id</th>\n",
+       "      <th>aff_country</th>\n",
+       "      <th>aff_country_code</th>\n",
+       "      <th>aff_id</th>\n",
+       "      <th>aff_name</th>\n",
+       "      <th>aff_state</th>\n",
+       "      <th>aff_state_code</th>\n",
+       "      <th>id</th>\n",
+       "      <th>researcher_id</th>\n",
+       "      <th>first_name</th>\n",
+       "      <th>last_name</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>Rio de Janeiro</td>\n",
+       "      <td>3451190.0</td>\n",
+       "      <td>Brazil</td>\n",
+       "      <td>BR</td>\n",
+       "      <td>grid.8536.8</td>\n",
+       "      <td>Federal University of Rio de Janeiro</td>\n",
+       "      <td>None</td>\n",
+       "      <td>None</td>\n",
+       "      <td>pub.1103719897</td>\n",
+       "      <td></td>\n",
+       "      <td>C. C.</td>\n",
+       "      <td>Soares</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>Rio de Janeiro</td>\n",
+       "      <td>3451190.0</td>\n",
+       "      <td>Brazil</td>\n",
+       "      <td>BR</td>\n",
+       "      <td>grid.8536.8</td>\n",
+       "      <td>Federal University of Rio de Janeiro</td>\n",
+       "      <td>None</td>\n",
+       "      <td>None</td>\n",
+       "      <td>pub.1103719897</td>\n",
+       "      <td>ur.01175272515.05</td>\n",
+       "      <td>M.</td>\n",
+       "      <td>ElMassalami</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>Tsukuba</td>\n",
+       "      <td>2110683.0</td>\n",
+       "      <td>Japan</td>\n",
+       "      <td>JP</td>\n",
+       "      <td>grid.21941.3f</td>\n",
+       "      <td>National Institute for Materials Science</td>\n",
+       "      <td>None</td>\n",
+       "      <td>None</td>\n",
+       "      <td>pub.1103719897</td>\n",
+       "      <td>ur.013116001105.24</td>\n",
+       "      <td>Y.</td>\n",
+       "      <td>Yanagisawa</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>Tsukuba</td>\n",
+       "      <td>2110683.0</td>\n",
+       "      <td>Japan</td>\n",
+       "      <td>JP</td>\n",
+       "      <td>grid.21941.3f</td>\n",
+       "      <td>National Institute for Materials Science</td>\n",
+       "      <td>None</td>\n",
+       "      <td>None</td>\n",
+       "      <td>pub.1103719897</td>\n",
+       "      <td>ur.014310336431.75</td>\n",
+       "      <td>M.</td>\n",
+       "      <td>Tanaka</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>Kitakyushu</td>\n",
+       "      <td>1859307.0</td>\n",
+       "      <td>Japan</td>\n",
+       "      <td>JP</td>\n",
+       "      <td>grid.258806.1</td>\n",
+       "      <td>Kyushu Institute of Technology</td>\n",
+       "      <td>None</td>\n",
+       "      <td>None</td>\n",
+       "      <td>pub.1103719897</td>\n",
+       "      <td>ur.014310336431.75</td>\n",
+       "      <td>M.</td>\n",
+       "      <td>Tanaka</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "         aff_city  aff_city_id aff_country aff_country_code         aff_id  \\\n",
+       "0  Rio de Janeiro    3451190.0      Brazil               BR    grid.8536.8   \n",
+       "1  Rio de Janeiro    3451190.0      Brazil               BR    grid.8536.8   \n",
+       "2         Tsukuba    2110683.0       Japan               JP  grid.21941.3f   \n",
+       "3         Tsukuba    2110683.0       Japan               JP  grid.21941.3f   \n",
+       "4      Kitakyushu    1859307.0       Japan               JP  grid.258806.1   \n",
+       "\n",
+       "                                   aff_name aff_state aff_state_code  \\\n",
+       "0      Federal University of Rio de Janeiro      None           None   \n",
+       "1      Federal University of Rio de Janeiro      None           None   \n",
+       "2  National Institute for Materials Science      None           None   \n",
+       "3  National Institute for Materials Science      None           None   \n",
+       "4            Kyushu Institute of Technology      None           None   \n",
+       "\n",
+       "               id       researcher_id first_name    last_name  \n",
+       "0  pub.1103719897                          C. C.       Soares  \n",
+       "1  pub.1103719897   ur.01175272515.05         M.  ElMassalami  \n",
+       "2  pub.1103719897  ur.013116001105.24         Y.   Yanagisawa  \n",
+       "3  pub.1103719897  ur.014310336431.75         M.       Tanaka  \n",
+       "4  pub.1103719897  ur.014310336431.75         M.       Tanaka  "
+      ]
+     },
+     "execution_count": 114,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "m2_affiliations = json_normalize(json.loads(m2_pubs_authors.to_json(orient='records')), record_path=['affiliations'], \n",
+    "               meta=['id', 'researcher_id', 'first_name', 'last_name'], record_prefix='aff_')\n",
+    "m2_affiliations.head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "How many unique researchers are there (this time based on the affiliation data)? "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 115,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "1584"
+      ]
+     },
+     "execution_count": 115,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "m2_affiliations[m2_affiliations['aff_id'] == GRIDID].researcher_id.nunique()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "#### How many relevant researchers, in total? "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "How many unique researchers are there, by combining both `affiliation` and `current_organization` data? "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 116,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Results\n",
+      "1585 researchers linked to grid.258806.1 in total\n"
+     ]
+    }
+   ],
+   "source": [
+    "m2_researchers = m2_affiliations[m2_affiliations['aff_id'] == GRIDID].researcher_id\n",
+    "m2_researchers = m2_researchers.append(m2_pubs_authors[m2_pubs_authors['current_organization_id'] == GRIDID].researcher_id)\n",
+    "# Drop empty values and duplicates\n",
+    "m2_researchers = m2_researchers.replace('', np.nan, inplace=False).dropna().drop_duplicates()\n",
+    "m2_researchers.reset_index()\n",
+    "print(\"Results\")\n",
+    "print(f\"{m2_researchers.count()} researchers linked to {GRIDID} in total\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 117,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [],
+   "source": [
+    "# finally, save the data locally\n",
+    "m2_pubs_authors.to_csv(\"data/method2_researchers_current_affiliation.csv\")\n",
+    "m2_affiliations.to_csv(\"data/method2_researchers_historical_affiliation.csv\")\n",
+    "m2_researchers.to_csv(\"data/method2_researchers_combined.csv\", header=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "---\n",
+    "# Want to learn more?\n",
+    "\n",
+    "Check out the [Dimensions API Lab](https://digital-science.github.io/dimensions-api-lab/) website, which contains many tutorials and reusable Jupyter notebooks for scholarly data analytics. "
+   ]
+  }
+ ],
+ "metadata": {
+  "kernel_info": {
+   "name": "python3"
+  },
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.4"
+  },
+  "nteract": {
+   "version": "0.14.5"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

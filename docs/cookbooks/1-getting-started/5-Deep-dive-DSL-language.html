@@ -1,50 +1,30 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>Exploring The Dimensions Search Language (DSL) - Deep Dive &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
-  
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=30f05f40" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=92c5fb9b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
 
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
-
-  
   
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-  
-
-  
-  
-
-  
-
-  
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
-        <script src="../../_static/js/custom.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
-        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
-    
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
-    
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=b489f392"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/js/custom.js?v=1456d934"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Working with lists in the Dimensions API" href="6-Working-with-lists.html" />
@@ -64,46 +44,26 @@
 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="../../index.html" class="icon icon-home"> DSL
           
-
-          
-            
-            <img src="../../_static/dimensions-logo@2x.png" class="logo" alt="Logo"/>
-          
+          <a href="../../index.html" class="icon icon-home">
+            DSL
+              <img src="../../_static/dimensions-logo@2x.png" class="logo" alt="Logo"/>
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
 
    <p class="">
       <h3 id="cookbooks_title">API COOKBOOKS</h3>
@@ -111,12 +71,7 @@
 
 
    
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">Getting Started</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="0-Verifying-your-connection.html">Verifying Your API Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="0-Verifying-your-connection.html#Technical-prerequisites">Technical prerequisites</a></li>
@@ -145,17 +100,17 @@
 <li class="toctree-l1"><a class="reference internal" href="3-Working-with-dataframes.html">The Dimcli Python library: Working with Pandas Dataframes</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="3-Working-with-dataframes.html#Prerequisites">Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="3-Working-with-dataframes.html#1.-General-method-to-transform-JSON-query-results-into-a-dataframe">1. General method to transform JSON query results into a dataframe</a></li>
-<li class="toctree-l2"><a class="reference internal" href="3-Working-with-dataframes.html#2.-Dataframe-Methods-for-‘Publications’-queries">2. Dataframe Methods for ‘Publications’ queries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="3-Working-with-dataframes.html#2.-Dataframe-Methods-for-'Publications'-queries">2. Dataframe Methods for ‘Publications’ queries</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="3-Working-with-dataframes.html#Extracting-authors:-as_dataframe_authors">Extracting authors: <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="3-Working-with-dataframes.html#Extracting-Affiliations:-as_dataframe_authors_affiliations">Extracting Affiliations: <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors_affiliations</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="3-Working-with-dataframes.html#3.-Dataframe-Methods-for-‘Grants’-queries">3. Dataframe Methods for ‘Grants’ queries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="3-Working-with-dataframes.html#3.-Dataframe-Methods-for-'Grants'-queries">3. Dataframe Methods for ‘Grants’ queries</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="3-Working-with-dataframes.html#Extracting-Funders:-as_dataframe_funders">Extracting Funders: <code class="docutils literal notranslate"><span class="pre">as_dataframe_funders</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="3-Working-with-dataframes.html#Extracting-investigators:-as_dataframe_investigators">Extracting investigators: <code class="docutils literal notranslate"><span class="pre">as_dataframe_investigators</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="3-Working-with-dataframes.html#4.-Dataframe-Methods-for-‘Concepts’-queries">4. Dataframe Methods for ‘Concepts’ queries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="3-Working-with-dataframes.html#4.-Dataframe-Methods-for-'Concepts'-queries">4. Dataframe Methods for ‘Concepts’ queries</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="3-Working-with-dataframes.html#Extracting-Concepts:-as_dataframe_concepts">Extracting Concepts: <code class="docutils literal notranslate"><span class="pre">as_dataframe_concepts</span></code></a></li>
 </ul>
 </li>
@@ -164,7 +119,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="4-Dimcli-magic-commands.html">The Dimcli Python library: Magic Commands</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="4-Dimcli-magic-commands.html#Prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="4-Dimcli-magic-commands.html#Dimcli-‘magic’-commands">Dimcli ‘magic’ commands</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="4-Dimcli-magic-commands.html#Dimcli-'magic'-commands">Dimcli ‘magic’ commands</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="4-Dimcli-magic-commands.html#Tip:-Accessing-data-returned-by-magic-queries">Tip: Accessing data returned by magic queries</a></li>
 </ul>
 </li>
@@ -207,7 +162,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#2.-Full-text-Searching">2. Full-text Searching</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#2.1-in-[search-index]">2.1 <code class="docutils literal notranslate"><span class="pre">in</span> <span class="pre">[search</span> <span class="pre">index]</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#2.2-for-&quot;search-term&quot;">2.2 <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">&quot;search</span> <span class="pre">term&quot;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#2.2-for-%22search-term%22">2.2 <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">&quot;search</span> <span class="pre">term&quot;</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#2.3-Boolean-Operators">2.3 Boolean Operators</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#2.4-Wildcard-Searches">2.4 Wildcard Searches</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#2.5-Proximity-Searches">2.5 Proximity Searches</a></li>
@@ -263,7 +218,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="6-Working-with-lists.html#5.-How-Long-can-lists-get?">5. How Long can lists get?</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="6-Working-with-lists.html#This-won’t-work">This won’t work</a></li>
+<li class="toctree-l3"><a class="reference internal" href="6-Working-with-lists.html#This-won't-work">This won’t work</a></li>
 <li class="toctree-l3"><a class="reference internal" href="6-Working-with-lists.html#This-will">This will</a></li>
 <li class="toctree-l3"><a class="reference internal" href="6-Working-with-lists.html#What-if-I-need-a-very-long-list?">What if I need a very long list?</a></li>
 </ul>
@@ -280,7 +235,7 @@
 <li class="toctree-l1"><a class="reference internal" href="7-Working-with-concepts.html">Working with <em>concepts</em> in the Dimensions API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="7-Working-with-concepts.html#Prerequisites">Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="7-Working-with-concepts.html#1.-Background:-What-are-concepts?">1. Background: What are <code class="docutils literal notranslate"><span class="pre">concepts</span></code>?</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="7-Working-with-concepts.html#1.1-From-concepts-to-dataframes:-Dimcli’s-as_dataframe_concepts-method">1.1 From concepts to dataframes: Dimcli’s <code class="docutils literal notranslate"><span class="pre">as_dataframe_concepts</span></code> method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="7-Working-with-concepts.html#1.1-From-concepts-to-dataframes:-Dimcli's-as_dataframe_concepts-method">1.1 From concepts to dataframes: Dimcli’s <code class="docutils literal notranslate"><span class="pre">as_dataframe_concepts</span></code> method</a></li>
 <li class="toctree-l3"><a class="reference internal" href="7-Working-with-concepts.html#1.2-Extracting-concepts-from-any-text">1.2 Extracting concepts from any text</a></li>
 </ul>
 </li>
@@ -296,7 +251,7 @@
 <li class="toctree-l3"><a class="reference internal" href="7-Working-with-concepts.html#3.5-Yearly-breakdown:-unique-VS-repeated-concepts">3.5 Yearly breakdown: unique VS repeated concepts</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="7-Working-with-concepts.html#4.-Isolating-‘interesting’-concepts-using-frequency-and-score_avg">4. Isolating ‘interesting’ concepts using <code class="docutils literal notranslate"><span class="pre">frequency</span></code> and <code class="docutils literal notranslate"><span class="pre">score_avg</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="7-Working-with-concepts.html#4.-Isolating-'interesting'-concepts-using-frequency-and-score_avg">4. Isolating ‘interesting’ concepts using <code class="docutils literal notranslate"><span class="pre">frequency</span></code> and <code class="docutils literal notranslate"><span class="pre">score_avg</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="7-Working-with-concepts.html#4.1-The-problem:-frequent-concepts-are-not-that-interesting!">4.1 The problem: frequent concepts are not <em>that</em> interesting!</a></li>
 <li class="toctree-l3"><a class="reference internal" href="7-Working-with-concepts.html#4.2-Solution-1:-prefiltering-by-score_avg-and-sorting-by-frequency">4.2 Solution 1: prefiltering by <code class="docutils literal notranslate"><span class="pre">score_avg</span></code> and sorting by <code class="docutils literal notranslate"><span class="pre">frequency</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="7-Working-with-concepts.html#4.3-Solution-2:-prefiltering-by-frequency-and-sorting-by-score_avg">4.3 Solution 2: prefiltering by <code class="docutils literal notranslate"><span class="pre">frequency</span></code> and sorting by <code class="docutils literal notranslate"><span class="pre">score_avg</span></code></a></li>
@@ -315,7 +270,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Publications</span></p>
+<p class="caption" role="heading"><span class="caption-text">Publications</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../2-publications/General-statistics.html">General Publication Statistics about a Research Organization</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/General-statistics.html#Prerequisites">Prerequisites</a></li>
@@ -421,12 +376,12 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-3-Funding-of-Researchers.html#Adding-another-impact-measure:-funding">Adding another impact measure: funding</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-3-Funding-of-Researchers.html#We’ll-have-to-do-it-in-two-steps">We’ll have to do it in two steps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-3-Funding-of-Researchers.html#We'll-have-to-do-it-in-two-steps">We’ll have to do it in two steps</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-3-Funding-of-Researchers.html#Next:-full-data-for-step-1">Next: full data for step 1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-3-Funding-of-Researchers.html#Next:-full-data-for-step-2">Next: full data for step 2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-3-Funding-of-Researchers.html#Finally:-let’s-merge-the-new-data-into-the-‘researchers-impact’-table">Finally: let’s merge the new data into the ‘researchers-impact’ table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-3-Funding-of-Researchers.html#Finally:-let's-merge-the-new-data-into-the-'researchers-impact'-table">Finally: let’s merge the new data into the ‘researchers-impact’ table</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-3-Funding-of-Researchers.html#Couple-of-Dataviz">Couple of Dataviz</a></li>
 </ul>
 </li>
@@ -444,7 +399,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../2-publications/Journal-Profile-5-Competitive-Analysis.html">Journal Profiling Part 5: Competing Journals Analysis</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-5-Competitive-Analysis.html#Prerequisites">Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-5-Competitive-Analysis.html#Competing-Journals">Competing Journals</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-5-Competitive-Analysis.html#First-let’s-reload-the-data-obtained-in-previous-steps">First let’s reload the data obtained in previous steps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-5-Competitive-Analysis.html#First-let's-reload-the-data-obtained-in-previous-steps">First let’s reload the data obtained in previous steps</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../2-publications/Journal-Profile-5-Competitive-Analysis.html#What-the-query-looks-like">What the query looks like</a></li>
 </ul>
 </li>
@@ -454,10 +409,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../2-publications/Simple-topic-analysis.html">Topic Modeling Analysis for a Set of Publications: Basic Workflow</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Simple-topic-analysis.html#Prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../2-publications/Simple-topic-analysis.html#1.-Creating-a-Dataset:-e.g. Publications-from-a-Research-Organization">1. Creating a Dataset: e.g. Publications from a Research Organization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Simple-topic-analysis.html#1.-Creating-a-Dataset:-e.g.-Publications-from-a-Research-Organization">1. Creating a Dataset: e.g. Publications from a Research Organization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Simple-topic-analysis.html#2.-Concepts:-exploratory-analysis">2. Concepts: exploratory analysis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Simple-topic-analysis.html#3.-Building-a-word-cloud-visualization">3. Building a word-cloud visualization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../2-publications/Simple-topic-analysis.html#4.-Trend-analysis---‘emerging’-new-topics-each-year">4. Trend analysis - ‘emerging’ new topics each year</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Simple-topic-analysis.html#4.-Trend-analysis---'emerging'-new-topics-each-year">4. Trend analysis - ‘emerging’ new topics each year</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Simple-topic-analysis.html#5.-Trend-Analysis:-topics-growth">5. Trend Analysis: topics growth</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Simple-topic-analysis.html#6.-Trend-analysis:-growth-distribution-based-on-selected-years">6. Trend analysis: growth distribution based on selected years</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Simple-topic-analysis.html#7.-Conclusion">7. Conclusion</a></li>
@@ -484,7 +439,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Grants</span></p>
+<p class="caption" role="heading"><span class="caption-text">Grants</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html">Enriching Grants part 1: Matching your grants records to Dimensions</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#A-sample-grants-list">A sample grants list</a></li>
@@ -492,7 +447,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#Loading-the-sample-grants-data">Loading the sample grants data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#Matching-grants-data">Matching grants data</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#A)-Matching-grants-when-we-have-a-grant-number">A) Matching grants when we have a grant number</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#B)-What-if-we-don’t-have-a-grant-number?">B) What if we don’t have a grant number?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#B)-What-if-we-don't-have-a-grant-number?">B) What if we don’t have a grant number?</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../3-grants/1-grants-enrichment-matching-records-to-dimensions.html#Back-to-our-grants-list">Back to our grants list</a><ul>
@@ -537,10 +492,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../3-grants/4-grants-topic-analysis.html">Identifying emerging topics in grants using ‘concepts’</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../3-grants/4-grants-topic-analysis.html#Prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../3-grants/4-grants-topic-analysis.html#1.-Creating-a-Dataset:-e.g. Grants-from-a-Funder">1. Creating a Dataset: e.g. Grants from a Funder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/4-grants-topic-analysis.html#1.-Creating-a-Dataset:-e.g.-Grants-from-a-Funder">1. Creating a Dataset: e.g. Grants from a Funder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../3-grants/4-grants-topic-analysis.html#2.-A-first-look-at-the-concepts-we-extracted">2. A first look at the concepts we extracted</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../3-grants/4-grants-topic-analysis.html#3.-Building-a-word-cloud-visualization">3. Building a word-cloud visualization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../3-grants/4-grants-topic-analysis.html#4.-Trend-analysis---‘emerging’-new-topics-each-year">4. Trend analysis - ‘emerging’ new topics each year</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3-grants/4-grants-topic-analysis.html#4.-Trend-analysis---'emerging'-new-topics-each-year">4. Trend analysis - ‘emerging’ new topics each year</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../3-grants/4-grants-topic-analysis.html#5.-Segmenting-results-using-the-fields-of-research-categories">5. Segmenting results using the fields of research categories</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../3-grants/4-grants-topic-analysis.html#6.-Conclusion">6. Conclusion</a></li>
 </ul>
@@ -558,7 +513,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Datasets</span></p>
+<p class="caption" role="heading"><span class="caption-text">Datasets</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html">The Datasets API: Features Overview</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../9-datasets/1-introducing-datasets.html#Prerequisites">Prerequisites</a></li>
@@ -586,7 +541,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Clinical Trials</span></p>
+<p class="caption" role="heading"><span class="caption-text">Clinical Trials</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.html">Clinical Trials by Volume of Publications</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../4-clinical-trials/Clinical_Trials_by_Volume_of_Pubs.html#Prerequisites">Prerequisites</a></li>
@@ -595,7 +550,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Patents</span></p>
+<p class="caption" role="heading"><span class="caption-text">Patents</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../5-patents/0-introducing-patents.html">The Patents API: Features Overview</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../5-patents/0-introducing-patents.html#Prerequisites">Prerequisites</a></li>
@@ -661,11 +616,11 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Policy Documents</span></p>
+<p class="caption" role="heading"><span class="caption-text">Policy Documents</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../6-policy-documents/Policy_Documents_referencing_a_Research_Organization.html">Measuring the policy impact of an organization using policy document citations</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../6-policy-documents/Policy_Documents_referencing_a_Research_Organization.html#Prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../6-policy-documents/Policy_Documents_referencing_a_Research_Organization.html#1.-Choosing-a-research-organization’s-GRID-identifier">1. Choosing a research organization’s GRID identifier</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6-policy-documents/Policy_Documents_referencing_a_Research_Organization.html#1.-Choosing-a-research-organization's-GRID-identifier">1. Choosing a research organization’s GRID identifier</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../6-policy-documents/Policy_Documents_referencing_a_Research_Organization.html#2.-Extracting-publications-data">2. Extracting publications data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../6-policy-documents/Policy_Documents_referencing_a_Research_Organization.html#3.-Extracting-policy-documents-linked-to-publications">3. Extracting policy documents linked to publications</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../6-policy-documents/Policy_Documents_referencing_a_Research_Organization.html#Enriching-publications-with-policy-document-citation-metrics">Enriching publications with policy document citation metrics</a></li>
@@ -682,7 +637,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Researchers</span></p>
+<p class="caption" role="heading"><span class="caption-text">Researchers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html">Calculating the H-index of a researcher</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../7-researchers/Calculating-the-H-Index-of-a-researcher.html#Background">Background</a><ul>
@@ -766,7 +721,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Organizations</span></p>
+<p class="caption" role="heading"><span class="caption-text">Organizations</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../8-organizations/1-GRID-preview.html">The Organizations API: Features Overview</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Prerequisites">Prerequisites</a></li>
@@ -779,7 +734,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#3.-A-closer-look-at-the-organizations-data-statistics">3. A closer look at the organizations data statistics</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Let’s-visualize-the-data-with-plotly">Let’s visualize the data with plotly</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Let's-visualize-the-data-with-plotly">Let’s visualize the data with plotly</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../8-organizations/1-GRID-preview.html#Where-to-find-out-more">Where to find out more</a></li>
@@ -805,21 +760,21 @@
 <li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#2.-Building-a-one-degree-network-of-collaborating-institutions">2. Building a one-degree network of collaborating institutions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#3.-Building-a-network-of-any-size">3. Building a network of any size</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#4.-Visualizing-the-network">4. Visualizing the network</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#5.-Addendum:-showing-only-‘Government’-collaborators">5. Addendum: showing only ‘Government’ collaborators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#5.-Addendum:-showing-only-'Government'-collaborators">5. Addendum: showing only ‘Government’ collaborators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../8-organizations/3-Organizations-Collaboration-Network.html#Conclusions">Conclusions</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html">Collaboration Patterns By Year (International, Domestic, Internal)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#Prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#1.-Lookup-the-University-that-you-are-interested-in">1. Lookup the University that you are interested in</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#2.-Publications-output-by-year">2. Publications output by year</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#3.-International-publications">3. International publications</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#4.-Domestic">4. Domestic</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#5.-Internal">5. Internal</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#6.-Joining-up-All-metrics-together">6. Joining up All metrics together</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#7.-How-does-this-compare-to-Australia?">7. How does this compare to Australia?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#8.-How-does-this-compare-to-a-different-Institution-(University-of-Toronto)?">8. How does this compare to a different Institution (University of Toronto)?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-international-collaboration-by-year.html#Want-to-learn-more?">Want to learn more?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../8-organizations/4-International-collaboration-by-year.html">Collaboration Patterns By Year (International, Domestic, Internal)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-International-collaboration-by-year.html#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-International-collaboration-by-year.html#1.-Lookup-the-University-that-you-are-interested-in">1. Lookup the University that you are interested in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-International-collaboration-by-year.html#2.-Publications-output-by-year">2. Publications output by year</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-International-collaboration-by-year.html#3.-International-publications">3. International publications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-International-collaboration-by-year.html#4.-Domestic">4. Domestic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-International-collaboration-by-year.html#5.-Internal">5. Internal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-International-collaboration-by-year.html#6.-Joining-up-All-metrics-together">6. Joining up All metrics together</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-International-collaboration-by-year.html#7.-How-does-this-compare-to-Australia?">7. How does this compare to Australia?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-International-collaboration-by-year.html#8.-How-does-this-compare-to-a-different-Institution-(University-of-Toronto)?">8. How does this compare to a different Institution (University of Toronto)?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/4-International-collaboration-by-year.html#Want-to-learn-more?">Want to learn more?</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../8-organizations/5-mapping-grid-ids-to-organization-data.html">Mapping GRID IDs to Organization Data</a><ul>
@@ -846,9 +801,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html">Benchmarking organizations with the Dimensions API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Prerequisites">Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#1.-Quick-benchmarking-using-the-API">1. Quick benchmarking using the API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#2.-Calculating-more-complex-‘Quality’-Benchmarking-indicators:-Number-of-articles-in-the-top-X-percent-of-research-their-category">2. Calculating more complex ‘Quality’ Benchmarking indicators: Number of articles in the top X percent of research their category</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#2.-Calculating-more-complex-'Quality'-Benchmarking-indicators:-Number-of-articles-in-the-top-X-percent-of-research-their-category">2. Calculating more complex ‘Quality’ Benchmarking indicators: Number of articles in the top X percent of research their category</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Step-1.-retrieve-the-total-volume-of-publications-by-volume.-(focusing-on-Fields-of-Research)">Step 1. retrieve the total volume of publications by volume. (focusing on Fields of Research)</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Step-1.2.-…-Need-to-filter-for-level-2-codes">Step 1.2. … Need to filter for level 2 codes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Step-1.2.-...-Need-to-filter-for-level-2-codes">Step 1.2. … Need to filter for level 2 codes</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Step-2.-calculate-1%-of-the-total-number-of-records-by-category.-This-will-be-used-to-retrieve-the-1%-boundary-record..">Step 2. calculate 1% of the total number of records by category. This will be used to retrieve the 1% boundary record..</a></li>
@@ -858,13 +813,13 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Step-4.-Now-get-the-number-of-publications-by-organisation,-filtered-by-category-that-have-a-field_citation_ratio-&gt;-the-boundary-score">Step 4. Now get the number of publications by organisation, filtered by category that have a field_citation_ratio &gt; the boundary score</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Step-5.-Rank-the-results">Step 5. Rank the results</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#We-should-probably-control-for-Volume-though…">We should probably control for Volume though…</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#We-should-probably-control-for-Volume-though...">We should probably control for Volume though…</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Step-6.-Get-the-total-paper-counts-for-each-organisation">Step 6. Get the total paper counts for each organisation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Step-7.-calculate-the-percentage-of-local-papers-in-the-top-1%-of-global-publications-(in-2018)">Step 7. calculate the percentage of local papers in the top 1% of global publications (in 2018)</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Now-the-results-are-going-to-look-a-little-strange…">Now the results are going to look a little strange…</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Need-to-control-for-size…">Need to control for size…</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Now-the-results-are-going-to-look-a-little-strange...">Now the results are going to look a little strange…</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Need-to-control-for-size...">Need to control for size…</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../8-organizations/7-benchmarking-organizations.html#Final-step.-Show-me-the-institutions-that-I-should-be-most-interested-in-(Five-above)">Final step. Show me the institutions that I should be most interested in (Five above)</a></li>
@@ -873,7 +828,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Miscellaneous</span></p>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../10-misc/1-report-content-volumes-per-year.html">Generating a report that monitors research topics across Dimensions sources</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../10-misc/1-report-content-volumes-per-year.html#Prerequisites">Prerequisites</a></li>
@@ -897,8 +852,6 @@
 </li>
 </ul>
 
-            
-          
 
 
    <div id="sidebar_github" style="margin-top: 12px;">
@@ -916,345 +869,45 @@
 
 
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">DSL</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
 
-    
 
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  
-<style>
-/* CSS for nbsphinx extension */
-
-/* remove conflicting styling from Sphinx themes */
-div.nbinput.container div.prompt *,
-div.nboutput.container div.prompt *,
-div.nbinput.container div.input_area pre,
-div.nboutput.container div.output_area pre,
-div.nbinput.container div.input_area .highlight,
-div.nboutput.container div.output_area .highlight {
-    border: none;
-    padding: 0;
-    margin: 0;
-    box-shadow: none;
-}
-
-div.nbinput.container > div[class*=highlight],
-div.nboutput.container > div[class*=highlight] {
-    margin: 0;
-}
-
-div.nbinput.container div.prompt *,
-div.nboutput.container div.prompt * {
-    background: none;
-}
-
-div.nboutput.container div.output_area .highlight,
-div.nboutput.container div.output_area pre {
-    background: unset;
-}
-
-div.nboutput.container div.output_area div.highlight {
-    color: unset;  /* override Pygments text color */
-}
-
-/* avoid gaps between output lines */
-div.nboutput.container div[class*=highlight] pre {
-    line-height: normal;
-}
-
-/* input/output containers */
-div.nbinput.container,
-div.nboutput.container {
-    display: -webkit-flex;
-    display: flex;
-    align-items: flex-start;
-    margin: 0;
-    width: 100%;
-}
-@media (max-width: 540px) {
-    div.nbinput.container,
-    div.nboutput.container {
-        flex-direction: column;
-    }
-}
-
-/* input container */
-div.nbinput.container {
-    padding-top: 5px;
-}
-
-/* last container */
-div.nblast.container {
-    padding-bottom: 5px;
-}
-
-/* input prompt */
-div.nbinput.container div.prompt pre {
-    color: #307FC1;
-}
-
-/* output prompt */
-div.nboutput.container div.prompt pre {
-    color: #BF5B3D;
-}
-
-/* all prompts */
-div.nbinput.container div.prompt,
-div.nboutput.container div.prompt {
-    width: 4.5ex;
-    padding-top: 5px;
-    position: relative;
-    user-select: none;
-}
-
-div.nbinput.container div.prompt > div,
-div.nboutput.container div.prompt > div {
-    position: absolute;
-    right: 0;
-    margin-right: 0.3ex;
-}
-
-@media (max-width: 540px) {
-    div.nbinput.container div.prompt,
-    div.nboutput.container div.prompt {
-        width: unset;
-        text-align: left;
-        padding: 0.4em;
-    }
-    div.nboutput.container div.prompt.empty {
-        padding: 0;
-    }
-
-    div.nbinput.container div.prompt > div,
-    div.nboutput.container div.prompt > div {
-        position: unset;
-    }
-}
-
-/* disable scrollbars on prompts */
-div.nbinput.container div.prompt pre,
-div.nboutput.container div.prompt pre {
-    overflow: hidden;
-}
-
-/* input/output area */
-div.nbinput.container div.input_area,
-div.nboutput.container div.output_area {
-    -webkit-flex: 1;
-    flex: 1;
-    overflow: auto;
-}
-@media (max-width: 540px) {
-    div.nbinput.container div.input_area,
-    div.nboutput.container div.output_area {
-        width: 100%;
-    }
-}
-
-/* input area */
-div.nbinput.container div.input_area {
-    border: 1px solid #e0e0e0;
-    border-radius: 2px;
-    /*background: #f5f5f5;*/
-}
-
-/* override MathJax center alignment in output cells */
-div.nboutput.container div[class*=MathJax] {
-    text-align: left !important;
-}
-
-/* override sphinx.ext.imgmath center alignment in output cells */
-div.nboutput.container div.math p {
-    text-align: left;
-}
-
-/* standard error */
-div.nboutput.container div.output_area.stderr {
-    background: #fdd;
-}
-
-/* ANSI colors */
-.ansi-black-fg { color: #3E424D; }
-.ansi-black-bg { background-color: #3E424D; }
-.ansi-black-intense-fg { color: #282C36; }
-.ansi-black-intense-bg { background-color: #282C36; }
-.ansi-red-fg { color: #E75C58; }
-.ansi-red-bg { background-color: #E75C58; }
-.ansi-red-intense-fg { color: #B22B31; }
-.ansi-red-intense-bg { background-color: #B22B31; }
-.ansi-green-fg { color: #00A250; }
-.ansi-green-bg { background-color: #00A250; }
-.ansi-green-intense-fg { color: #007427; }
-.ansi-green-intense-bg { background-color: #007427; }
-.ansi-yellow-fg { color: #DDB62B; }
-.ansi-yellow-bg { background-color: #DDB62B; }
-.ansi-yellow-intense-fg { color: #B27D12; }
-.ansi-yellow-intense-bg { background-color: #B27D12; }
-.ansi-blue-fg { color: #208FFB; }
-.ansi-blue-bg { background-color: #208FFB; }
-.ansi-blue-intense-fg { color: #0065CA; }
-.ansi-blue-intense-bg { background-color: #0065CA; }
-.ansi-magenta-fg { color: #D160C4; }
-.ansi-magenta-bg { background-color: #D160C4; }
-.ansi-magenta-intense-fg { color: #A03196; }
-.ansi-magenta-intense-bg { background-color: #A03196; }
-.ansi-cyan-fg { color: #60C6C8; }
-.ansi-cyan-bg { background-color: #60C6C8; }
-.ansi-cyan-intense-fg { color: #258F8F; }
-.ansi-cyan-intense-bg { background-color: #258F8F; }
-.ansi-white-fg { color: #C5C1B4; }
-.ansi-white-bg { background-color: #C5C1B4; }
-.ansi-white-intense-fg { color: #A1A6B2; }
-.ansi-white-intense-bg { background-color: #A1A6B2; }
-
-.ansi-default-inverse-fg { color: #FFFFFF; }
-.ansi-default-inverse-bg { background-color: #000000; }
-
-.ansi-bold { font-weight: bold; }
-.ansi-underline { text-decoration: underline; }
-
-
-div.nbinput.container div.input_area div[class*=highlight] > pre,
-div.nboutput.container div.output_area div[class*=highlight] > pre,
-div.nboutput.container div.output_area div[class*=highlight].math,
-div.nboutput.container div.output_area.rendered_html,
-div.nboutput.container div.output_area > div.output_javascript,
-div.nboutput.container div.output_area:not(.rendered_html) > img{
-    padding: 5px;
-    margin: 0;
-}
-
-/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
-div.nbinput.container div.input_area > div[class^='highlight'],
-div.nboutput.container div.output_area > div[class^='highlight']{
-    overflow-y: hidden;
-}
-
-/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt .copybtn {
-    display: none;
-}
-
-/* Some additional styling taken form the Jupyter notebook CSS */
-div.rendered_html table {
-  border: none;
-  border-collapse: collapse;
-  border-spacing: 0;
-  color: black;
-  font-size: 12px;
-  table-layout: fixed;
-}
-div.rendered_html thead {
-  border-bottom: 1px solid black;
-  vertical-align: bottom;
-}
-div.rendered_html tr,
-div.rendered_html th,
-div.rendered_html td {
-  text-align: right;
-  vertical-align: middle;
-  padding: 0.5em 0.5em;
-  line-height: normal;
-  white-space: normal;
-  max-width: none;
-  border: none;
-}
-div.rendered_html th {
-  font-weight: bold;
-}
-div.rendered_html tbody tr:nth-child(odd) {
-  background: #f5f5f5;
-}
-div.rendered_html tbody tr:hover {
-  background: rgba(66, 165, 245, 0.2);
-}
-
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js'></script>
-<script>require=requirejs;</script><a class="reference external image-reference" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/cookbooks/1-getting-started/5-Deep-dive-DSL-language.ipynb"><img alt="../../_images/badge-colab.svg" src="../../_images/badge-colab.svg" /></a>
-<a class="reference external image-reference" href="https://github.com/digital-science/dimensions-api-lab/blob/master/cookbooks/1-getting-started/5-Deep-dive-DSL-language.ipynb"><img alt="../../_images/badge-github-custom.svg" src="../../_images/badge-github-custom.svg" /></a>
+             
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js'></script>
+<script>require=requirejs;</script><a class="reference external image-reference" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/cookbooks/1-getting-started/5-Deep-dive-DSL-language.ipynb"><img alt="../../_images/badge-colab.svg" src="../../_images/badge-colab.svg" />
+</a>
+<a class="reference external image-reference" href="https://github.com/digital-science/dimensions-api-lab/blob/master/cookbooks/1-getting-started/5-Deep-dive-DSL-language.ipynb"><img alt="../../_images/badge-github-custom.svg" src="../../_images/badge-github-custom.svg" />
+</a>
 <hr class="docutils" />
-<div class="section" id="Exploring-The-Dimensions-Search-Language-(DSL)---Deep-Dive">
-<h1>Exploring The Dimensions Search Language (DSL) - Deep Dive<a class="headerlink" href="#Exploring-The-Dimensions-Search-Language-(DSL)---Deep-Dive" title="Permalink to this headline">¶</a></h1>
+<section id="Exploring-The-Dimensions-Search-Language-(DSL)---Deep-Dive">
+<h1>Exploring The Dimensions Search Language (DSL) - Deep Dive<a class="headerlink" href="#Exploring-The-Dimensions-Search-Language-(DSL)---Deep-Dive" title="Link to this heading"></a></h1>
 <p>This tutorial provides a detailed walkthrough of the most important features of the <a class="reference external" href="https://docs.dimensions.ai/dsl/">Dimensions Search Language</a>.</p>
 <p>This tutorial is based on the <a class="reference external" href="https://docs.dimensions.ai/dsl/language.html">Query Syntax</a> section of the official documentation. So, it can be used as an interactive version of the documentation, as it allows to try out the various DSL queries presented there.</p>
-<div class="section" id="What-is-the-Dimensions-Search-Language?">
-<h2>What is the Dimensions Search Language?<a class="headerlink" href="#What-is-the-Dimensions-Search-Language?" title="Permalink to this headline">¶</a></h2>
+<section id="What-is-the-Dimensions-Search-Language?">
+<h2>What is the Dimensions Search Language?<a class="headerlink" href="#What-is-the-Dimensions-Search-Language?" title="Link to this heading"></a></h2>
 <p>The DSL aims to capture the type of interaction with Dimensions data that users are accustomed to performing graphically via the <a class="reference external" href="https://app.dimensions.ai/">web application</a>, and enable web app developers, power users, and others to carry out such interactions by writing query statements in a syntax loosely inspired by SQL but particularly suited to our specific domain and data organization.</p>
 <p><strong>Note:</strong> this notebook uses the Python programming language, however all the <strong>DSL queries are not Python-specific</strong> and can in fact be reused with any other API client.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">CHANGELOG</span><span class="se">\n</span><span class="s2">This notebook was last run on </span><span class="si">%s</span><span class="se">\n</span><span class="s2">==&quot;</span> <span class="o">%</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">, %Y&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1270,28 +923,28 @@ This notebook was last run on Jan 26, 2022
 ==
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Prerequisites">
-<h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="Prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Link to this heading"></a></h2>
 <p>This notebook assumes you have installed the <a class="reference external" href="https://pypi.org/project/dimcli/">Dimcli</a> library and are familiar with the <a class="reference external" href="https://api-lab.dimensions.ai/cookbooks/1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html">‘Getting Started’ tutorial</a>.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install dimcli --quiet
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>dimcli<span class="w"> </span>--quiet
 
-<span class="kn">import</span> <span class="nn">dimcli</span>
-<span class="kn">from</span> <span class="nn">dimcli.utils</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">dimcli</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dimcli.utils</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="c1">#</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==</span><span class="se">\n</span><span class="s2">Logging in..&quot;</span><span class="p">)</span>
 <span class="c1"># https://digital-science.github.io/dimcli/getting-started.html#authentication</span>
 <span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;https://app.dimensions.ai&quot;</span>
 <span class="k">if</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
-  <span class="kn">import</span> <span class="nn">getpass</span>
+  <span class="kn">import</span><span class="w"> </span><span class="nn">getpass</span>
   <span class="n">KEY</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;API Key: &#39;</span><span class="p">)</span>
   <span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">KEY</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="n">ENDPOINT</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
@@ -1321,9 +974,9 @@ Connected to: &lt;https://app.dimensions.ai/api/dsl&gt; - DSL v2.0
 Method: dsl.ini file
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Sections-Index">
-<h2>Sections Index<a class="headerlink" href="#Sections-Index" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="Sections-Index">
+<h2>Sections Index<a class="headerlink" href="#Sections-Index" title="Link to this heading"></a></h2>
 <ol class="arabic simple">
 <li><p>Basic query structure</p></li>
 <li><p>Full-text searching</p></li>
@@ -1332,9 +985,9 @@ Method: dsl.ini file
 <li><p>Returning results</p></li>
 <li><p>Aggregations</p></li>
 </ol>
-</div>
-<div class="section" id="1.-Basic-query-structure">
-<h2>1. Basic query structure<a class="headerlink" href="#1.-Basic-query-structure" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="1.-Basic-query-structure">
+<h2>1. Basic query structure<a class="headerlink" href="#1.-Basic-query-structure" title="Link to this heading"></a></h2>
 <p>DSL queries consist of two required components: a <code class="docutils literal notranslate"><span class="pre">search</span></code> phrase that indicates the scientific records to be searched, and one or more <code class="docutils literal notranslate"><span class="pre">return</span></code> phrases which specify the contents and structure of the desired results.</p>
 <p>The simplest valid DSL query is of the form <code class="docutils literal notranslate"><span class="pre">search</span> <span class="pre">&lt;source&gt;|return</span> <span class="pre">&lt;result&gt;</span></code>:</p>
 <div class="nbinput docutils container">
@@ -1466,9 +1119,9 @@ Time: 0.73s
 </table>
 </div></div>
 </div>
-<div class="section" id="search-source">
-<h3><code class="docutils literal notranslate"><span class="pre">search</span> <span class="pre">source</span></code><a class="headerlink" href="#search-source" title="Permalink to this headline">¶</a></h3>
-<p>A query must begin with the word <code class="docutils literal notranslate"><span class="pre">search</span></code> followed by a <code class="docutils literal notranslate"><span class="pre">source</span></code> name, i.e. the name of a type of scientific <code class="docutils literal notranslate"><span class="pre">record</span></code>, such as <code class="docutils literal notranslate"><span class="pre">grants</span></code> or <code class="docutils literal notranslate"><span class="pre">publications</span></code>.</p>
+<section id="search-source">
+<h3><code class="docutils literal notranslate"><span class="pre">search</span> <span class="pre">source</span></code><a class="headerlink" href="#search-source" title="Link to this heading"></a></h3>
+<p>A query must begin with the word <code class="docutils literal notranslate"><span class="pre">search</span></code> followed by a <code class="docutils literal notranslate"><span class="pre">source</span></code> name, i.e. the name of a type of scientific <code class="docutils literal notranslate"><span class="pre">record</span></code>, such as <code class="docutils literal notranslate"><span class="pre">grants</span></code> or <code class="docutils literal notranslate"><span class="pre">publications</span></code>.</p>
 <p><strong>What are the sources available?</strong> See the <a class="reference external" href="https://docs.dimensions.ai/dsl/data-sources.html">data sources</a> section of the documentation.</p>
 <p>Alternatively, we can use the ‘schema’ API (<a class="reference external" href="https://docs.dimensions.ai/dsl/data-sources.html#metadata-api">describe</a>) to return this information programmatically:</p>
 <div class="nbinput docutils container">
@@ -1620,9 +1273,9 @@ Time: 0.69s
 </table>
 </div></div>
 </div>
-</div>
-<div class="section" id="return-result-(source-or-facet)">
-<h3><code class="docutils literal notranslate"><span class="pre">return</span></code> result (source or facet)<a class="headerlink" href="#return-result-(source-or-facet)" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="return-result-(source-or-facet)">
+<h3><code class="docutils literal notranslate"><span class="pre">return</span></code> result (source or facet)<a class="headerlink" href="#return-result-(source-or-facet)" title="Link to this heading"></a></h3>
 <p>The most basic <code class="docutils literal notranslate"><span class="pre">return</span></code> phrase consists of the keyword <code class="docutils literal notranslate"><span class="pre">return</span></code> followed by the name of a <code class="docutils literal notranslate"><span class="pre">record</span></code> or <code class="docutils literal notranslate"><span class="pre">facet</span></code> to be returned.</p>
 <p>This must be the name of the <code class="docutils literal notranslate"><span class="pre">source</span></code> used in the <code class="docutils literal notranslate"><span class="pre">search</span></code> phrase, or the name of a <code class="docutils literal notranslate"><span class="pre">facet</span></code> of that source.</p>
 <div class="nbinput docutils container">
@@ -1798,12 +1451,12 @@ Time: 0.54s
  &#39;start_year&#39;]
 </pre></div></div>
 </div>
-</div>
-</div>
-<div class="section" id="2.-Full-text-Searching">
-<h2>2. Full-text Searching<a class="headerlink" href="#2.-Full-text-Searching" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="2.-Full-text-Searching">
+<h2>2. Full-text Searching<a class="headerlink" href="#2.-Full-text-Searching" title="Link to this heading"></a></h2>
 <p>Full-text search or keyword search finds all instances of a term (keyword) in a document, or group of documents.</p>
-<p>Full text search works by using search indexes, which can be targeting specific sections of a document e.g. its <span class="math notranslate nohighlight">\(abstract\)</span>, <span class="math notranslate nohighlight">\(authors\)</span>, <span class="math notranslate nohighlight">\(full text\)</span> etc…</p>
+<p>Full text search works by using search indexes, which can be targeting specific sections of a document e.g. its <span class="math notranslate nohighlight">\(abstract\)</span>, <span class="math notranslate nohighlight">\(authors\)</span>, <span class="math notranslate nohighlight">\(full text\)</span> etc…</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
@@ -1929,8 +1582,8 @@ Time: 1.49s
 </table>
 </div></div>
 </div>
-<div class="section" id="2.1-in-[search-index]">
-<h3>2.1 <code class="docutils literal notranslate"><span class="pre">in</span> <span class="pre">[search</span> <span class="pre">index]</span></code><a class="headerlink" href="#2.1-in-[search-index]" title="Permalink to this headline">¶</a></h3>
+<section id="2.1-in-[search-index]">
+<h3>2.1 <code class="docutils literal notranslate"><span class="pre">in</span> <span class="pre">[search</span> <span class="pre">index]</span></code><a class="headerlink" href="#2.1-in-[search-index]" title="Link to this heading"></a></h3>
 <p>This optional phrase consists of the particle <code class="docutils literal notranslate"><span class="pre">in</span></code> followed by a term indicating a <code class="docutils literal notranslate"><span class="pre">search</span> <span class="pre">index</span></code>, specifying for example whether the search is limited to full text, title and abstract only, or title only.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
@@ -2335,9 +1988,9 @@ Time: 0.69s
 </table>
 </div></div>
 </div>
-</div>
-<div class="section" id="2.2-for-&quot;search-term&quot;">
-<h3>2.2 <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">&quot;search</span> <span class="pre">term&quot;</span></code><a class="headerlink" href="#2.2-for-"search-term"" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="2.2-for-%22search-term%22">
+<h3>2.2 <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">&quot;search</span> <span class="pre">term&quot;</span></code><a class="headerlink" href="#2.2-for-%22search-term%22" title="Link to this heading"></a></h3>
 <p>This optional phrase consists of the keyword <code class="docutils literal notranslate"><span class="pre">for</span></code> followed by a <code class="docutils literal notranslate"><span class="pre">search</span> <span class="pre">term</span></code> <code class="docutils literal notranslate"><span class="pre">string</span></code>, enclosed in double quotes (<code class="docutils literal notranslate"><span class="pre">&quot;</span></code>).</p>
 <p>Strings in double quotes can contain nested quotes escaped by a backslash <code class="docutils literal notranslate"><span class="pre">\</span></code>. This will ensure that the string in nested double quotes is searched for as if it was a single phrase, not multiple words.</p>
 <p>An example of a phrase: <code class="docutils literal notranslate"><span class="pre">&quot;\&quot;Machine</span> <span class="pre">Learning\&quot;&quot;</span></code> : results must contain <code class="docutils literal notranslate"><span class="pre">Machine</span> <span class="pre">Learning</span></code> as a phrase.</p>
@@ -2589,10 +2242,10 @@ Time: 0.71s
 <p>Note: Special characters, such as any of <code class="docutils literal notranslate"><span class="pre">^</span> <span class="pre">&quot;</span> <span class="pre">:</span> <span class="pre">~</span> <span class="pre">\</span> <span class="pre">[</span> <span class="pre">]</span> <span class="pre">{</span> <span class="pre">}</span> <span class="pre">(</span> <span class="pre">)</span> <span class="pre">!</span> <span class="pre">|</span> <span class="pre">&amp;</span> <span class="pre">+</span></code> must be escaped by a backslash <code class="docutils literal notranslate"><span class="pre">\</span></code>. Also, please note escaping rules in <a class="reference external" href="http://python-reference.readthedocs.io/en/latest/docs/str/escapes.html">Python</a> (or other languages). For example, when writing a query with escaped quotes, such as <code class="docutils literal notranslate"><span class="pre">search</span> <span class="pre">publications</span> <span class="pre">for</span> <span class="pre">&quot;\&quot;phrase</span> <span class="pre">1\&quot;</span> <span class="pre">AND</span> <span class="pre">\&quot;phrase</span> <span class="pre">2\&quot;&quot;</span></code>, in Python, it is necessary to escape the backslashes as well, so it would look like:
 <code class="docutils literal notranslate"><span class="pre">'search</span> <span class="pre">publications</span> <span class="pre">for</span> <span class="pre">&quot;\\&quot;phrase</span> <span class="pre">1\\&quot;</span> <span class="pre">AND</span> <span class="pre">\\&quot;phrase</span> <span class="pre">2\\&quot;&quot;'</span></code>.</p>
 <p>See the <a class="reference external" href="https://docs.dimensions.ai/dsl/language.html#for-search-term">official docs</a> for more details.</p>
-</div>
-<div class="section" id="2.3-Boolean-Operators">
-<h3>2.3 Boolean Operators<a class="headerlink" href="#2.3-Boolean-Operators" title="Permalink to this headline">¶</a></h3>
-<p>Search term can consist of multiple keywords or phrases connected using boolean logic operators, e.g. <code class="docutils literal notranslate"><span class="pre">AND</span></code>, <code class="docutils literal notranslate"><span class="pre">OR</span></code> and <code class="docutils literal notranslate"><span class="pre">NOT</span></code>.</p>
+</section>
+<section id="2.3-Boolean-Operators">
+<h3>2.3 Boolean Operators<a class="headerlink" href="#2.3-Boolean-Operators" title="Link to this heading"></a></h3>
+<p>Search term can consist of multiple keywords or phrases connected using boolean logic operators, e.g. <code class="docutils literal notranslate"><span class="pre">AND</span></code>, <code class="docutils literal notranslate"><span class="pre">OR</span></code> and <code class="docutils literal notranslate"><span class="pre">NOT</span></code>.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
@@ -2712,11 +2365,6 @@ Time: 0.99s
 <p>When specifying Boolean operators with keywords such as <code class="docutils literal notranslate"><span class="pre">AND</span></code>, <code class="docutils literal notranslate"><span class="pre">OR</span></code> and <code class="docutils literal notranslate"><span class="pre">NOT</span></code>, the keywords must appear in all uppercase.</p>
 <p>The operators available are shown in the table below. .</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 8%" />
-<col style="width: 9%" />
-<col style="width: 82%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Boolean Operator</p></th>
 <th class="head"><p>Alternative Symbol</p></th>
@@ -2906,9 +2554,9 @@ Time: 4.56s
 &lt;dimcli.DslDataset object #4644757408. Records: 20/937518&gt;
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="2.4-Wildcard-Searches">
-<h3>2.4 Wildcard Searches<a class="headerlink" href="#2.4-Wildcard-Searches" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="2.4-Wildcard-Searches">
+<h3>2.4 Wildcard Searches<a class="headerlink" href="#2.4-Wildcard-Searches" title="Link to this heading"></a></h3>
 <p>The DSL supports single and multiple character wildcard searches within single terms. Wildcard characters can be applied to single terms, but not to search phrases.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
@@ -3155,11 +2803,6 @@ Time: 0.65s
 </div></div>
 </div>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 21%" />
-<col style="width: 6%" />
-<col style="width: 73%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Wildcard Search Type</p></th>
 <th class="head"><p>Special Character</p></th>
@@ -3177,9 +2820,9 @@ Time: 0.65s
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="2.5-Proximity-Searches">
-<h3>2.5 Proximity Searches<a class="headerlink" href="#2.5-Proximity-Searches" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="2.5-Proximity-Searches">
+<h3>2.5 Proximity Searches<a class="headerlink" href="#2.5-Proximity-Searches" title="Link to this heading"></a></h3>
 <p>A proximity search looks for terms that are within a specific distance from one another.</p>
 <p>To perform a proximity search, add the tilde character <code class="docutils literal notranslate"><span class="pre">~</span></code> and a numeric value to the end of a search phrase. For example, to search for a <code class="docutils literal notranslate"><span class="pre">formal</span></code> and <code class="docutils literal notranslate"><span class="pre">model</span></code> within 10 words of each other in a document, use the search:</p>
 <div class="nbinput docutils container">
@@ -3430,10 +3073,10 @@ Time: 1.04s
 <div class="line">The distance referred to here is the number of term movements needed to match the specified phrase.</div>
 <div class="line">In the example above, if <code class="docutils literal notranslate"><span class="pre">formal</span></code> and <code class="docutils literal notranslate"><span class="pre">model</span></code> were 10 spaces apart in a field, but <code class="docutils literal notranslate"><span class="pre">formal</span></code> appeared before <code class="docutils literal notranslate"><span class="pre">model</span></code>, more than 10 term movements would be required to move the terms together and position <code class="docutils literal notranslate"><span class="pre">formal</span></code> to the right of <code class="docutils literal notranslate"><span class="pre">model</span></code> with a space in between.</div>
 </div>
-</div>
-</div>
-<div class="section" id="3.-Field-Searching">
-<h2>3. Field Searching<a class="headerlink" href="#3.-Field-Searching" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="3.-Field-Searching">
+<h2>3. Field Searching<a class="headerlink" href="#3.-Field-Searching" title="Link to this heading"></a></h2>
 <p>Field searching allows to use a specific <code class="docutils literal notranslate"><span class="pre">field</span></code> of a <code class="docutils literal notranslate"><span class="pre">source</span></code> as a query filter. For example, this can be a Literal field such as the <span class="math notranslate nohighlight">\(type\)</span> of a publication, its <span class="math notranslate nohighlight">\(date\)</span>, <span class="math notranslate nohighlight">\(mesh terms\)</span>, etc.. Or it can be an Entity field, such as the <span class="math notranslate nohighlight">\(journal title\)</span> for a publication, the <span class="math notranslate nohighlight">\(country name\)</span> of its author affiliations, etc..</p>
 <p><strong>What are the fields available for each source?</strong> See the <a class="reference external" href="https://docs.dimensions.ai/dsl/data-sources.html">data sources</a> section of the documentation.</p>
 <p>Alternatively, we can use the ‘schema’ API (<a class="reference external" href="https://docs.dimensions.ai/dsl/data-sources.html#metadata-api">describe</a>) to return this information programmatically:</p>
@@ -3593,8 +3236,8 @@ Time: 1.04s
 <p>67 rows × 7 columns</p>
 </div></div>
 </div>
-<div class="section" id="3.1-where">
-<h3>3.1 <code class="docutils literal notranslate"><span class="pre">where</span></code><a class="headerlink" href="#3.1-where" title="Permalink to this headline">¶</a></h3>
+<section id="3.1-where">
+<h3>3.1 <code class="docutils literal notranslate"><span class="pre">where</span></code><a class="headerlink" href="#3.1-where" title="Link to this heading"></a></h3>
 <p>This optional phrase consists of the keyword <code class="docutils literal notranslate"><span class="pre">where</span></code> followed by a <code class="docutils literal notranslate"><span class="pre">filters</span></code> phrase consisting of DSL filter expressions, as described below.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
@@ -3775,9 +3418,9 @@ Time: 0.61s
 </table>
 </div></div>
 </div>
-</div>
-<div class="section" id="3.2-in">
-<h3>3.2 <code class="docutils literal notranslate"><span class="pre">in</span></code><a class="headerlink" href="#3.2-in" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="3.2-in">
+<h3>3.2 <code class="docutils literal notranslate"><span class="pre">in</span></code><a class="headerlink" href="#3.2-in" title="Link to this heading"></a></h3>
 <p>For convenience, the DSL also supports shorthand notation for filters where a particular field should be restricted to a specified range or list of values (although the same logic may be expressed using complex filters as shown below).</p>
 <p>Syntax: a <strong>range filter</strong> consists of the <code class="docutils literal notranslate"><span class="pre">field</span></code> name, the keyword <code class="docutils literal notranslate"><span class="pre">in</span></code>, and a range of values enclosed in square brackets (<code class="docutils literal notranslate"><span class="pre">[]</span></code>), where the range consists of a <code class="docutils literal notranslate"><span class="pre">low</span></code> value, colon <code class="docutils literal notranslate"><span class="pre">:</span></code>, and a <code class="docutils literal notranslate"><span class="pre">high</span></code> value.</p>
 <div class="nbinput docutils container">
@@ -3964,10 +3607,10 @@ Time: 0.68s
 </table>
 </div></div>
 </div>
-</div>
-<div class="section" id="3.3-count---filter-function">
-<h3>3.3 <code class="docutils literal notranslate"><span class="pre">count</span></code> - filter function<a class="headerlink" href="#3.3-count---filter-function" title="Permalink to this headline">¶</a></h3>
-<p>The filter function <code class="docutils literal notranslate"><span class="pre">count</span></code> is supported on some fields in publications (e.g. <code class="docutils literal notranslate"><span class="pre">researchers</span></code> and <code class="docutils literal notranslate"><span class="pre">research_orgs</span></code>).</p>
+</section>
+<section id="3.3-count---filter-function">
+<h3>3.3 <code class="docutils literal notranslate"><span class="pre">count</span></code> - filter function<a class="headerlink" href="#3.3-count---filter-function" title="Link to this heading"></a></h3>
+<p>The filter function <code class="docutils literal notranslate"><span class="pre">count</span></code> is supported on some fields in publications (e.g. <code class="docutils literal notranslate"><span class="pre">researchers</span></code> and <code class="docutils literal notranslate"><span class="pre">research_orgs</span></code>).</p>
 <p>Use of this filter is shown on the example below:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
@@ -4620,17 +4263,13 @@ Time: 1.82s
 </table>
 </div></div>
 </div>
-</div>
-<div class="section" id="3.4-Filter-Operators">
-<h3>3.4 Filter Operators<a class="headerlink" href="#3.4-Filter-Operators" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="3.4-Filter-Operators">
+<h3>3.4 Filter Operators<a class="headerlink" href="#3.4-Filter-Operators" title="Link to this heading"></a></h3>
 <p>A simple filter expression consists of a <code class="docutils literal notranslate"><span class="pre">field</span></code> name, an in-/equality operator <code class="docutils literal notranslate"><span class="pre">op</span></code>, and the desired field <code class="docutils literal notranslate"><span class="pre">value</span></code>.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">value</span></code> must be a <code class="docutils literal notranslate"><span class="pre">string</span></code> enclosed in double quotes (<code class="docutils literal notranslate"><span class="pre">&quot;</span></code>) or an integer (e.g. <code class="docutils literal notranslate"><span class="pre">1234</span></code>).</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">value</span></code> must be a <code class="docutils literal notranslate"><span class="pre">string</span></code> enclosed in double quotes (<code class="docutils literal notranslate"><span class="pre">&quot;</span></code>) or an integer (e.g. <code class="docutils literal notranslate"><span class="pre">1234</span></code>).</p>
 <p>The available operators are:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 15%" />
-<col style="width: 85%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p><code class="docutils literal notranslate"><span class="pre">op</span></code></p></th>
 <th class="head"><p>meaning</p></th>
@@ -4863,9 +4502,9 @@ Time: 1.21s
 </table>
 </div></div>
 </div>
-</div>
-<div class="section" id="3.5-Partial-string-matching-with-~">
-<h3>3.5 Partial string matching with <code class="docutils literal notranslate"><span class="pre">~</span></code><a class="headerlink" href="#3.5-Partial-string-matching-with-~" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="3.5-Partial-string-matching-with-~">
+<h3>3.5 Partial string matching with <code class="docutils literal notranslate"><span class="pre">~</span></code><a class="headerlink" href="#3.5-Partial-string-matching-with-~" title="Link to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">~</span></code> operator indicates that the given <code class="docutils literal notranslate"><span class="pre">field</span></code> need only partially, instead of exactly, match the given <code class="docutils literal notranslate"><span class="pre">string</span></code> (the <code class="docutils literal notranslate"><span class="pre">value</span></code> used with this operator must be a <code class="docutils literal notranslate"><span class="pre">string</span></code>, not an integer).</p>
 <p>For example, the filter <code class="docutils literal notranslate"><span class="pre">where</span> <span class="pre">research_orgs.name~&quot;Saarland</span> <span class="pre">Uni&quot;</span></code> would match both the organization named “Saarland University” and the one named “Universitätsklinikum des Saarlandes”, and any other organization whose name includes the terms “Saarland” and “Uni” (the order is unimportant).</p>
 <div class="nbinput docutils container">
@@ -4993,9 +4632,9 @@ Time: 4.83s
 </table>
 </div></div>
 </div>
-</div>
-<div class="section" id="3.6-Emptiness-filters-is-empty">
-<h3>3.6 Emptiness filters <code class="docutils literal notranslate"><span class="pre">is</span> <span class="pre">empty</span></code><a class="headerlink" href="#3.6-Emptiness-filters-is-empty" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="3.6-Emptiness-filters-is-empty">
+<h3>3.6 Emptiness filters <code class="docutils literal notranslate"><span class="pre">is</span> <span class="pre">empty</span></code><a class="headerlink" href="#3.6-Emptiness-filters-is-empty" title="Link to this heading"></a></h3>
 <p>To filter records which contain specific field or to filter those which contain an empty field, it is possible to use something like <code class="docutils literal notranslate"><span class="pre">where</span> <span class="pre">research_orgs</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">empty</span></code> or <code class="docutils literal notranslate"><span class="pre">where</span> <span class="pre">issn</span> <span class="pre">is</span> <span class="pre">empty</span></code>.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
@@ -5088,13 +4727,13 @@ Time: 1.45s
 </table>
 </div></div>
 </div>
-</div>
-</div>
-<div class="section" id="4.-Searching-for-Researchers">
-<h2>4. Searching for Researchers<a class="headerlink" href="#4.-Searching-for-Researchers" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="4.-Searching-for-Researchers">
+<h2>4. Searching for Researchers<a class="headerlink" href="#4.-Searching-for-Researchers" title="Link to this heading"></a></h2>
 <p>The DSL offers different mechanisms for searching for researchers (e.g. publication authors, grant investigators), each of them presenting specific advantages.</p>
-<div class="section" id="4.1-Exact-name-searches">
-<h3>4.1 Exact name searches<a class="headerlink" href="#4.1-Exact-name-searches" title="Permalink to this headline">¶</a></h3>
+<section id="4.1-Exact-name-searches">
+<h3>4.1 Exact name searches<a class="headerlink" href="#4.1-Exact-name-searches" title="Link to this heading"></a></h3>
 <p>Special full-text indices allows to look up a researcher’s name and surname <strong>exactly as they appear in the source documents</strong> they derive from.</p>
 <p>This approach has a broad scope, as it allows to search the full collection of Dimensions documents irrespectively of whether a researcher was succesfully disambiguated (and hence given a Dimensions ID). On the other hand, this approach will only match names as they appear in the source document, so different spellings or initials are not necessarily returned via a single query.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>search in [authors|investigators|inventors]
@@ -5561,10 +5200,10 @@ Time: 0.72s
 </table>
 </div></div>
 </div>
-</div>
-<div class="section" id="4.2-Fuzzy-Searches">
-<h3>4.2 Fuzzy Searches<a class="headerlink" href="#4.2-Fuzzy-Searches" title="Permalink to this headline">¶</a></h3>
-<p>This type of search is similar to <em>full-text search</em>, with the difference that it allows searching by only a part of a name, e.g. only the ‘last name’ of a person, by using the <code class="docutils literal notranslate"><span class="pre">where</span></code> clause.</p>
+</section>
+<section id="4.2-Fuzzy-Searches">
+<h3>4.2 Fuzzy Searches<a class="headerlink" href="#4.2-Fuzzy-Searches" title="Link to this heading"></a></h3>
+<p>This type of search is similar to <em>full-text search</em>, with the difference that it allows searching by only a part of a name, e.g. only the ‘last name’ of a person, by using the <code class="docutils literal notranslate"><span class="pre">where</span></code> clause.</p>
 <p><strong>Note</strong> At this moment, this type of search is only available for <code class="docutils literal notranslate"><span class="pre">publications</span></code>. Other sources will add this option in the future.</p>
 <p>For example:</p>
 <div class="nbinput docutils container">
@@ -5784,9 +5423,9 @@ Time: 1.14s
 </table>
 </div></div>
 </div>
-</div>
-<div class="section" id="4.3-Using-the-disambiguated-Researchers-database">
-<h3>4.3 Using the disambiguated Researchers database<a class="headerlink" href="#4.3-Using-the-disambiguated-Researchers-database" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="4.3-Using-the-disambiguated-Researchers-database">
+<h3>4.3 Using the disambiguated Researchers database<a class="headerlink" href="#4.3-Using-the-disambiguated-Researchers-database" title="Link to this heading"></a></h3>
 <p>The Dimensions <a class="reference external" href="https://docs.dimensions.ai/dsl/datasource-researchers.html">Researchers</a> source is a database of researchers information algorithmically extracted and disambiguated from all of the other content sources (publications, grants, clinical trials etc..).</p>
 <p>By using the <code class="docutils literal notranslate"><span class="pre">researchers</span></code> source it is possible to match an ‘aggregated’ person object linking together multiple publication authors, grant investigators etc.. irrespectively of the form their names can take in the original source documents.</p>
 <p>However, since database does not contain all authors and investigators information available in Dimensions.</p>
@@ -6048,13 +5687,13 @@ Time: 0.70s
 </table>
 </div></div>
 </div>
-</div>
-</div>
-<div class="section" id="5.-Returning-results">
-<h2>5. Returning results<a class="headerlink" href="#5.-Returning-results" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="5.-Returning-results">
+<h2>5. Returning results<a class="headerlink" href="#5.-Returning-results" title="Link to this heading"></a></h2>
 <p>After the <code class="docutils literal notranslate"><span class="pre">search</span></code> phrase, a query must contain one or more <code class="docutils literal notranslate"><span class="pre">return</span></code> phrases, specifying the content and format of the information that should be returned.</p>
-<div class="section" id="5.1-Returning-Multiple-Sources">
-<h3>5.1 Returning Multiple Sources<a class="headerlink" href="#5.1-Returning-Multiple-Sources" title="Permalink to this headline">¶</a></h3>
+<section id="5.1-Returning-Multiple-Sources">
+<h3>5.1 Returning Multiple Sources<a class="headerlink" href="#5.1-Returning-Multiple-Sources" title="Link to this heading"></a></h3>
 <p>Multiple results may not be returned in a single <code class="docutils literal notranslate"><span class="pre">return</span></code> phrase.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
@@ -6191,9 +5830,9 @@ Time: 3.56s
 </table>
 </div></div>
 </div>
-</div>
-<div class="section" id="5.2-Returning-Specific-Fields">
-<h3>5.2 Returning Specific Fields<a class="headerlink" href="#5.2-Returning-Specific-Fields" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="5.2-Returning-Specific-Fields">
+<h3>5.2 Returning Specific Fields<a class="headerlink" href="#5.2-Returning-Specific-Fields" title="Link to this heading"></a></h3>
 <p>For control over which information from each given <code class="docutils literal notranslate"><span class="pre">record</span></code> will be returned, a <code class="docutils literal notranslate"><span class="pre">source</span></code> or <code class="docutils literal notranslate"><span class="pre">entity</span></code> name in the <code class="docutils literal notranslate"><span class="pre">results</span></code> phrase can be optionally followed by a specification of <code class="docutils literal notranslate"><span class="pre">fields</span></code> and <code class="docutils literal notranslate"><span class="pre">fieldsets</span></code> to be included in the JSON results for each retrieved record.</p>
 <p>The fields specification may be an arbitrary list of <code class="docutils literal notranslate"><span class="pre">field</span></code> names enclosed in brackets (<code class="docutils literal notranslate"><span class="pre">[</span></code>, <code class="docutils literal notranslate"><span class="pre">]</span></code>), with field names separated by a plus sign (<code class="docutils literal notranslate"><span class="pre">+</span></code>). Minus sign (<code class="docutils literal notranslate"><span class="pre">-</span></code>) can be used to exclude <code class="docutils literal notranslate"><span class="pre">field</span></code> or a <code class="docutils literal notranslate"><span class="pre">fieldset</span></code> from the result. Field names thus listed within brackets must be “known” to the DSL, and therefore only a subset of fields may be used in this syntax (see note below).</p>
 <div class="nbinput docutils container">
@@ -6367,7 +6006,7 @@ Time: 0.53s
 </div></div>
 </div>
 <p><strong>Shortcuts: ``fieldsets``</strong></p>
-<p>The fields specification may be the name of a pre-defined <code class="docutils literal notranslate"><span class="pre">fieldset</span></code> (e.g. <code class="docutils literal notranslate"><span class="pre">extras</span></code>, <code class="docutils literal notranslate"><span class="pre">basics</span></code>). These are shortcuts that can be handy when testing out new queries, for example.</p>
+<p>The fields specification may be the name of a pre-defined <code class="docutils literal notranslate"><span class="pre">fieldset</span></code> (e.g. <code class="docutils literal notranslate"><span class="pre">extras</span></code>, <code class="docutils literal notranslate"><span class="pre">basics</span></code>). These are shortcuts that can be handy when testing out new queries, for example.</p>
 <p>NOTE In general when writing code used in integrations or long-standing extraction scripts it is <strong>best to return specific fields rather that a predefined set</strong>. This has also the advantage of making queries faster by avoiding the extraction of unnecessary data.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
@@ -6652,9 +6291,9 @@ Semantic errors found:
         Field / Fieldset &#39;all&#39; is not present in Source &#39;publications&#39;. Available fields: abstract,acknowledgements,altmetric,altmetric_id,arxiv_id,authors,authors_count,book_doi,book_series_title,book_title,category_bra,category_for,category_hra,category_hrcs_hc,category_hrcs_rac,category_icrp_cso,category_icrp_ct,category_rcdc,category_sdg,category_uoa,clinical_trial_ids,concepts,concepts_scores,date,date_inserted,date_online,date_print,dimensions_url,doi,field_citation_ratio,funder_countries,funders,id,issn,issue,journal,journal_lists,journal_title_raw,linkout,mesh_terms,open_access,pages,pmcid,pmid,proceedings_title,publisher,recent_citations,reference_ids,referenced_pubs,relative_citation_ratio,research_org_cities,research_org_countries,research_org_country_names,research_org_names,research_org_state_codes,research_org_state_names,research_orgs,researchers,resulting_publication_doi,source_title,subtitles,supporting_grant_ids,times_cited,title,type,volume,year and available fieldsets: basics,book,categories,extras
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="5.3-Returning-Facets">
-<h3>5.3 Returning Facets<a class="headerlink" href="#5.3-Returning-Facets" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="5.3-Returning-Facets">
+<h3>5.3 Returning Facets<a class="headerlink" href="#5.3-Returning-Facets" title="Link to this heading"></a></h3>
 <p>In addition to returning source records matching a query, it is possible to <span class="math notranslate nohighlight">\(facet\)</span> on the entity fields related to a particular source and return only those entity values as an aggregrated view of the related source data. This operation is similar to a <span class="math notranslate nohighlight">\(group by\)</span> or <span class="math notranslate nohighlight">\(pivot table\)</span>.</p>
 <p><strong>Warning</strong> Faceting can return up to a maximum of 1000 results. This is to ensure adequate performance with all queries. Furthemore, although the <code class="docutils literal notranslate"><span class="pre">limit</span></code> operator is allowed, the <code class="docutils literal notranslate"><span class="pre">skip</span></code> operator cannot be used.</p>
 <div class="nbinput docutils container">
@@ -6908,9 +6547,9 @@ Time: 2.74s
 &lt;dimcli.DslDataset object #4694861376. Records: 2/124848001&gt;
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="5.4-What-the-query-statistics-refer-to---sources-VS-facets">
-<h3>5.4 What the query statistics refer to - sources VS facets<a class="headerlink" href="#5.4-What-the-query-statistics-refer-to---sources-VS-facets" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="5.4-What-the-query-statistics-refer-to---sources-VS-facets">
+<h3>5.4 What the query statistics refer to - sources VS facets<a class="headerlink" href="#5.4-What-the-query-statistics-refer-to---sources-VS-facets" title="Link to this heading"></a></h3>
 <p>When performing a DSL search, a <code class="docutils literal notranslate"><span class="pre">_stats</span></code> object is return which contains some useful info eg the total number of records available for a search.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
@@ -7141,10 +6780,10 @@ Time: 0.77s
 </div></div>
 </div>
 <p>NOTE: facet results can be 1000 at most (due to performance limitations) so if there are more than 1000 it is not possible to know the total number.</p>
-</div>
-<div class="section" id="5.5-Paginating-Results">
-<h3>5.5 Paginating Results<a class="headerlink" href="#5.5-Paginating-Results" title="Permalink to this headline">¶</a></h3>
-<p>At the end of a <code class="docutils literal notranslate"><span class="pre">return</span></code> phrase, the user can specify the maximum number of results to be returned and the number of top records to skip over before returning the first result record, for e.g. returning large result sets page-by-page (i.e. “paging” results) as described below.</p>
+</section>
+<section id="5.5-Paginating-Results">
+<h3>5.5 Paginating Results<a class="headerlink" href="#5.5-Paginating-Results" title="Link to this heading"></a></h3>
+<p>At the end of a <code class="docutils literal notranslate"><span class="pre">return</span></code> phrase, the user can specify the maximum number of results to be returned and the number of top records to skip over before returning the first result record, for e.g. returning large result sets page-by-page (i.e. “paging” results) as described below.</p>
 <p>This is done using the keyword <code class="docutils literal notranslate"><span class="pre">limit</span></code> followed by the maximum number of results to return, optionally followed by the keyword <code class="docutils literal notranslate"><span class="pre">skip</span></code> and the number of results to skip (the offset).</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
@@ -7335,16 +6974,20 @@ Time: 0.59s
 </div></div>
 </div>
 <p>If paging information is not provided, the default values <code class="docutils literal notranslate"><span class="pre">limit</span> <span class="pre">20</span> <span class="pre">skip</span> <span class="pre">0</span></code> are used, so the two following queries are equivalent:</p>
-<p>Combining <code class="docutils literal notranslate"><span class="pre">limit</span></code> and <code class="docutils literal notranslate"><span class="pre">skip</span></code> across multiple queries enables paging or batching of results; e.g. to retrieve 30 grant records divided into 3 pages of 10 records each, the following three queries could be used:</p>
+<p>Combining <code class="docutils literal notranslate"><span class="pre">limit</span></code> and <code class="docutils literal notranslate"><span class="pre">skip</span></code> across multiple queries enables paging or batching of results; e.g. to retrieve 30 grant records divided into 3 pages of 10 records each, the following three queries could be used:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>return grants limit 10           =&gt; get 1st 10 records for page 1 (skip 0, by default)
 return grants limit 10 skip 10   =&gt; get next 10 for page 2; skip the 10 we already have
 return grants limit 10 skip 20   =&gt; get another 10 for page 3, for a total of 30
 </pre></div>
 </div>
-</div>
-<div class="section" id="5.6-Sorting-Results">
-<h3>5.6 Sorting Results<a class="headerlink" href="#5.6-Sorting-Results" title="Permalink to this headline">¶</a></h3>
-<p>A sort order for the results in a given <code class="docutils literal notranslate"><span class="pre">return</span></code> phrase can be specified with the keyword <code class="docutils literal notranslate"><span class="pre">sort</span> <span class="pre">by</span></code> followed by the name of * a <code class="docutils literal notranslate"><span class="pre">field</span></code> (in the case that a <code class="docutils literal notranslate"><span class="pre">source</span></code> is being requested) * an <code class="docutils literal notranslate"><span class="pre">indicator</span> <span class="pre">(aggregation)</span></code> (in the case that one or more facets are being requested).</p>
+</section>
+<section id="5.6-Sorting-Results">
+<h3>5.6 Sorting Results<a class="headerlink" href="#5.6-Sorting-Results" title="Link to this heading"></a></h3>
+<p>A sort order for the results in a given <code class="docutils literal notranslate"><span class="pre">return</span></code> phrase can be specified with the keyword <code class="docutils literal notranslate"><span class="pre">sort</span> <span class="pre">by</span></code> followed by the name of</p>
+<ul class="simple">
+<li><p>a <code class="docutils literal notranslate"><span class="pre">field</span></code> (in the case that a <code class="docutils literal notranslate"><span class="pre">source</span></code> is being requested)</p></li>
+<li><p>an <code class="docutils literal notranslate"><span class="pre">indicator</span> <span class="pre">(aggregation)</span></code> (in the case that one or more facets are being requested).</p></li>
+</ul>
 <p>By default, the result set of full text queries (<span class="math notranslate nohighlight">\(search ... for &quot;full text query&quot;\)</span>) is sorted by “relevance”. Additionally, it is possible to specify the sort order, using <code class="docutils literal notranslate"><span class="pre">asc</span></code> or <code class="docutils literal notranslate"><span class="pre">desc</span></code> keywords. By default, descending order is selected.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
@@ -7764,7 +7407,7 @@ Time: 1.21s
 </table>
 </div></div>
 </div>
-<p>When a facet is being returned, the <code class="docutils literal notranslate"><span class="pre">indicator</span></code> used in the <code class="docutils literal notranslate"><span class="pre">sort</span></code> phrase must either be <code class="docutils literal notranslate"><span class="pre">count</span></code> (the default, such that <code class="docutils literal notranslate"><span class="pre">sort</span> <span class="pre">by</span> <span class="pre">count</span></code> is unnecessary), or one of the indicators specified in the <code class="docutils literal notranslate"><span class="pre">aggregate</span></code> phrase, i.e. one whose values are being computed in the faceting operation.</p>
+<p>When a facet is being returned, the <code class="docutils literal notranslate"><span class="pre">indicator</span></code> used in the <code class="docutils literal notranslate"><span class="pre">sort</span></code> phrase must either be <code class="docutils literal notranslate"><span class="pre">count</span></code> (the default, such that <code class="docutils literal notranslate"><span class="pre">sort</span> <span class="pre">by</span> <span class="pre">count</span></code> is unnecessary), or one of the indicators specified in the <code class="docutils literal notranslate"><span class="pre">aggregate</span></code> phrase, i.e. one whose values are being computed in the faceting operation.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[61]:
 </pre></div>
@@ -7909,11 +7552,11 @@ Time: 3.38s
 </table>
 </div></div>
 </div>
-</div>
-<div class="section" id="5.7-Unnesting-results">
-<h3>5.7 Unnesting results<a class="headerlink" href="#5.7-Unnesting-results" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="5.7-Unnesting-results">
+<h3>5.7 Unnesting results<a class="headerlink" href="#5.7-Unnesting-results" title="Link to this heading"></a></h3>
 <p>Multi-value entity and JSON fields, such as <code class="docutils literal notranslate"><span class="pre">researchers</span></code>, <code class="docutils literal notranslate"><span class="pre">authors</span></code> or <code class="docutils literal notranslate"><span class="pre">research_orgs</span></code> or any of <code class="docutils literal notranslate"><span class="pre">category_*</span></code> fields may be unnested into top level objects.</p>
-<p>This operation makes it easier to do further operations on these objects e.g. counting or processing them further.</p>
+<p>This operation makes it easier to do further operations on these objects e.g. counting or processing them further.</p>
 <p>This functionality will transform all of the returned multi-value data and turn them into top level keys, such as <code class="docutils literal notranslate"><span class="pre">researchers.id</span></code>, <code class="docutils literal notranslate"><span class="pre">researchers.first_name</span></code>, <code class="docutils literal notranslate"><span class="pre">researchers.last_name</span></code>, while copying other, non-unnested fields, such as <code class="docutils literal notranslate"><span class="pre">id</span></code> or <code class="docutils literal notranslate"><span class="pre">title</span></code> of publication for each of them. Returned results are therefore multiplied by as many researchers and categories each original publication has, so they will likely be more than the overall query limit, as the limit applies on the source
 objects, not the unnested one. If multiple fields are being unnested, then a cartesian product of all unnested fields is being returned.</p>
 <div class="nbinput docutils container">
@@ -9002,10 +8645,10 @@ Time: 0.70s
 </table>
 </div></div>
 </div>
-</div>
-</div>
-<div class="section" id="6.-Aggregations">
-<h2>6. Aggregations<a class="headerlink" href="#6.-Aggregations" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="6.-Aggregations">
+<h2>6. Aggregations<a class="headerlink" href="#6.-Aggregations" title="Link to this heading"></a></h2>
 <p>In a <code class="docutils literal notranslate"><span class="pre">return</span></code> phrase requesting one or more <code class="docutils literal notranslate"><span class="pre">facet</span></code> results, aggregation operations to perform during faceting can be specified after the facet name(s) by using the keyword <code class="docutils literal notranslate"><span class="pre">aggregate</span></code> followed by a comma-separated list of one or more <code class="docutils literal notranslate"><span class="pre">indicator</span></code> names corresponding to the <code class="docutils literal notranslate"><span class="pre">source</span></code> being searched.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[65]:
@@ -9897,12 +9540,12 @@ Time: 8.40s
 </table>
 </div></div>
 </div>
-<div class="section" id="6.1-Complex-aggregations">
-<h3>6.1 Complex aggregations<a class="headerlink" href="#6.1-Complex-aggregations" title="Permalink to this headline">¶</a></h3>
+<section id="6.1-Complex-aggregations">
+<h3>6.1 Complex aggregations<a class="headerlink" href="#6.1-Complex-aggregations" title="Link to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">return</span></code> phrase may be followed by a function expression, to return additional calculations, such as per year funding or citations statistics. These functions may take their own arguments, and are calculated using the source data as specified in the <code class="docutils literal notranslate"><span class="pre">search</span> <span class="pre">part</span></code> of the query.</p>
 <p>At the time of writing, there are two functions available: Publications <code class="docutils literal notranslate"><span class="pre">citations_per_year</span></code> and Grants <code class="docutils literal notranslate"><span class="pre">funding_per_year</span></code></p>
-<div class="section" id="Publications-citations_per_year">
-<h4>Publications <code class="docutils literal notranslate"><span class="pre">citations_per_year</span></code><a class="headerlink" href="#Publications-citations_per_year" title="Permalink to this headline">¶</a></h4>
+<section id="Publications-citations_per_year">
+<h4>Publications <code class="docutils literal notranslate"><span class="pre">citations_per_year</span></code><a class="headerlink" href="#Publications-citations_per_year" title="Link to this heading"></a></h4>
 <p>Publication citations is the number of times that publications have been cited by other publications in the database. This function returns the number of citations received in each year.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[72]:
@@ -9999,9 +9642,9 @@ Time: 1.07s
 </table>
 </div></div>
 </div>
-</div>
-<div class="section" id="Grants-funding_per_year">
-<h4>Grants <code class="docutils literal notranslate"><span class="pre">funding_per_year</span></code><a class="headerlink" href="#Grants-funding_per_year" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="Grants-funding_per_year">
+<h4>Grants <code class="docutils literal notranslate"><span class="pre">funding_per_year</span></code><a class="headerlink" href="#Grants-funding_per_year" title="Link to this heading"></a></h4>
 <p>Returns grant funding per year in the given currency, starting from specified year, ending in specified year (including).</p>
 <p>Supported currencies are: CAD,USD,JPY,GBP,CHF,CNY,EUR,NZD,AUD</p>
 <div class="nbinput docutils container">
@@ -10099,10 +9742,10 @@ Time: 0.57s
 </table>
 </div></div>
 </div>
-</div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
+</section>
 <hr class="docutils" />
 <div class="line-block">
 <div class="line"><br /></div>
@@ -10111,21 +9754,21 @@ Time: 0.57s
 <p class="admonition-title">Note</p>
 <p>The <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> allows to carry out sophisticated research data analytics tasks like the ones described on this website. Check out also the associated <a class="reference external" href="https://github.com/digital-science/dimensions-api-lab">Github repository</a> for examples, the source code of these tutorials and much more.</p>
 </div>
-<a class="reference external image-reference" href="https://www.dimensions.ai/dimensions-apis/"><img alt="../../_images/badge-dimensions-api.svg" src="../../_images/badge-dimensions-api.svg" /></a>
+<a class="reference external image-reference" href="https://www.dimensions.ai/dimensions-apis/"><img alt="../../_images/badge-dimensions-api.svg" src="../../_images/badge-dimensions-api.svg" />
+</a>
 
 
            </div>
-           
           </div>
           <footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-
-    </p>
+    <p></p>
   </div>
+
+  
     <p>© Copyright 2020 Digital Science & Research Solutions, Inc. All Rights Reserved | <a href="https://www.dimensions.ai/">About us</a> · <a href="https://www.dimensions.ai/privacy/">Privacy policy</a> · <a href="https://www.dimensions.ai/website-terms/">Legal terms</a></p>
      
 
@@ -10138,22 +9781,13 @@ Time: 0.57s
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
-
-  
-  
-    
-  
     
 
     <!-- Adds target=_blank to external links -->

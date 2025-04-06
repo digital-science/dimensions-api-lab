@@ -1,0 +1,557 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "<a href=\"https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/2-sample-applications/Which-Are-the-Journals-Citing-My-Organization/Which-Are-the-Journals-Citing-My-Organization.ipynb\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open Dimensions API Lab In Google Colab\"/></a>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "# What Journals Have Been Citing My Organization? \n",
+    "\n",
+    "This notebook shows how to use the [Dimensions Analytics API](https://www.dimensions.ai/dimensions-apis/) to discover what academic journals are most frequenlty citing publications from a selected research organization. \n",
+    "\n",
+    "We start from a [GRID](https://grid.ac/) identifier (representing a research organization in Dimensions) and then select all publications citing research where at least one author is/as affiliated to that GRID ID. We then group this publications by source (journal) and sort them by frequency.  \n",
+    "\n",
+    "For the purpose of this exercise, we will look at **University of Bologna** in Italy: [grid.6292.f](https://grid.ac/institutes/grid.6292.f) and publications from 2018. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 67,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [],
+   "source": [
+    "GRID_ORG = \"grid.6292.f\"\n",
+    "YEAR = 2018"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "> **Customize this notebook:** simply change the GRID ID to try out this example for your institution. You can also add more contraints to the `publications` query below e.g. filtering by subject area in order to obtain a different segmentation of these results. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 65,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [],
+   "source": [
+    "# data analysis libraries\n",
+    "import json\n",
+    "import pandas as pd\n",
+    "from pandas.io.json import json_normalize\n",
+    "from tqdm import tqdm\n",
+    "# Dimensions API query helper\n",
+    "import dimcli\n",
+    "from dimcli.shortcuts import chunks_of\n",
+    "dsl = dimcli.Dsl()\n",
+    "# "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "## 1. Getting all publications from the GRID org\n",
+    "\n",
+    "First we extract all publications where at least one of the authors is affiliated to GRID_ORG. \n",
+    "\n",
+    "By saying `return publications[reference_ids]` we can only select the field we are interested in."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 68,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "1000 / 4765\n",
+      "2000 / 4765\n",
+      "3000 / 4765\n",
+      "4000 / 4765\n",
+      "4765 / 4765\n"
+     ]
+    }
+   ],
+   "source": [
+    "publications = dsl.query_iterative(f\"\"\"\n",
+    "search publications \n",
+    "    where research_orgs.id = \"{GRID_ORG}\" and year in [{YEAR}] and reference_ids is not empty\n",
+    "    return publications[reference_ids] sort by id \n",
+    "\"\"\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "Let's remove duplicates from the references data and save it into a list."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 69,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [],
+   "source": [
+    "references = set()\n",
+    "\n",
+    "for publication in publications.publications:\n",
+    "    for ref_id in publication['reference_ids']:\n",
+    "        references.add(ref_id)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 81,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "162291"
+      ]
+     },
+     "execution_count": 81,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "len(references)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "## 2. Getting all referencing publications\n",
+    "\n",
+    "In the next step we extract all publications corresponding to these references. This query will return JSON data which can be further analyzed e.g. to count the unique number of journals they were published in.\n",
+    "\n",
+    "E.g.:\n",
+    "\n",
+    "```\n",
+    "'publications': [\n",
+    "  {'journal': {'id': 'jour.1295784',\n",
+    "    'title': 'IEEE Transactions on Cognitive and Developmental Systems'},\n",
+    "   'publisher': 'Institute of Electrical and Electronics Engineers (IEEE)',\n",
+    "   'year': 2018,\n",
+    "   'id': 'pub.1061542201',\n",
+    "   'issn': ['2379-8920', '2379-8939']},\n",
+    "  {'journal': {'id': 'jour.1043581', 'title': 'International Geology Review'},\n",
+    "   'publisher': 'Taylor & Francis',\n",
+    "   'year': 2018,\n",
+    "   'id': 'pub.1087302818',\n",
+    "   'issn': ['0020-6814', '1938-2839']}, etc..\n",
+    "```\n",
+    "\n",
+    "This is query template we use. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 71,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [],
+   "source": [
+    "query = \"\"\"search publications where journal is not empty and id in {} \n",
+    "return publications[journal+issn+id+year+publisher] limit 1000\"\"\""
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "Note the `{}` part which is where we will put lists of publication IDs during each iteration. This is to ensure our query is never too long (<400 IDs is a good way to ensure we never get an API error)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [],
+   "source": [
+    "pub_journals = []\n",
+    "for chunk in tqdm(list(chunks_of(list(references), 400))):\n",
+    "    pub_journals += (dsl.query(query.format(json.dumps(chunk))).publications)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "## 3. Grouping References by Journals\n",
+    "We are going to analyze the referencing publications, in particular by grouping them by source journal, after loading the JSON data into a pandas Dataframe.  \n",
+    "\n",
+    "> [pandas](https://pandas.pydata.org/pandas-docs/stable/) is a popular software library written for the Python programming language for data manipulation and analysis"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 83,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>id</th>\n",
+       "      <th>issn</th>\n",
+       "      <th>journal.id</th>\n",
+       "      <th>journal.title</th>\n",
+       "      <th>publisher</th>\n",
+       "      <th>year</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>pub.1104882405</td>\n",
+       "      <td>[0962-8436, 1471-2970]</td>\n",
+       "      <td>jour.1032123</td>\n",
+       "      <td>Philosophical Transactions of the Royal Societ...</td>\n",
+       "      <td>The Royal Society</td>\n",
+       "      <td>2018</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>pub.1106384345</td>\n",
+       "      <td>[0885-3185, 1531-8257]</td>\n",
+       "      <td>jour.1096585</td>\n",
+       "      <td>Movement Disorders</td>\n",
+       "      <td>Wiley</td>\n",
+       "      <td>2018</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>pub.1103832990</td>\n",
+       "      <td>[0100-879X, 1414-431X]</td>\n",
+       "      <td>jour.1009158</td>\n",
+       "      <td>Brazilian Journal of Medical and Biological Re...</td>\n",
+       "      <td>FapUNIFESP (SciELO)</td>\n",
+       "      <td>2018</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>pub.1092079480</td>\n",
+       "      <td>[1551-3203, 1941-0050]</td>\n",
+       "      <td>jour.1045705</td>\n",
+       "      <td>IEEE Transactions on Industrial Informatics</td>\n",
+       "      <td>Institute of Electrical and Electronics Engine...</td>\n",
+       "      <td>2018</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>pub.1092550561</td>\n",
+       "      <td>[0001-5148, 1398-9995]</td>\n",
+       "      <td>jour.1358083</td>\n",
+       "      <td>Allergy</td>\n",
+       "      <td>Wiley</td>\n",
+       "      <td>2018</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "               id                    issn    journal.id  \\\n",
+       "0  pub.1104882405  [0962-8436, 1471-2970]  jour.1032123   \n",
+       "1  pub.1106384345  [0885-3185, 1531-8257]  jour.1096585   \n",
+       "2  pub.1103832990  [0100-879X, 1414-431X]  jour.1009158   \n",
+       "3  pub.1092079480  [1551-3203, 1941-0050]  jour.1045705   \n",
+       "4  pub.1092550561  [0001-5148, 1398-9995]  jour.1358083   \n",
+       "\n",
+       "                                       journal.title  \\\n",
+       "0  Philosophical Transactions of the Royal Societ...   \n",
+       "1                                 Movement Disorders   \n",
+       "2  Brazilian Journal of Medical and Biological Re...   \n",
+       "3        IEEE Transactions on Industrial Informatics   \n",
+       "4                                            Allergy   \n",
+       "\n",
+       "                                           publisher  year  \n",
+       "0                                  The Royal Society  2018  \n",
+       "1                                              Wiley  2018  \n",
+       "2                                FapUNIFESP (SciELO)  2018  \n",
+       "3  Institute of Electrical and Electronics Engine...  2018  \n",
+       "4                                              Wiley  2018  "
+      ]
+     },
+     "execution_count": 83,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df = json_normalize(pub_journals)\n",
+    "df.head(5)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "Dataframes provide many ways to analyze the data further.\n",
+    "\n",
+    "### How many unique journals do we have?"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 84,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "count           153549\n",
+       "unique           11985\n",
+       "top       jour.1037553\n",
+       "freq              1622\n",
+       "Name: journal.id, dtype: object"
+      ]
+     },
+     "execution_count": 84,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df['journal.id'].describe()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "### What are the most frequent journals?\n",
+    "\n",
+    "We set a threshold of >100 citations to identify journals that are most relevant, and sort them by tot number of publications citing research from our chosen GRID ID. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 86,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "PLoS ONE                                                             1622\n",
+       "The Astrophysical Journal                                            1490\n",
+       "Physical Review D                                                    1454\n",
+       "Monthly Notices of the Royal Astronomical Society                    1327\n",
+       "Proceedings of the National Academy of Sciences                      1151\n",
+       "Nature                                                               1097\n",
+       "Science                                                               998\n",
+       "Physical Review Letters                                               943\n",
+       "Journal of High Energy Physics                                        935\n",
+       "Journal of the American Chemical Society                              661\n",
+       "Blood                                                                 651\n",
+       "Astronomy and Astrophysics                                            633\n",
+       "Physics Letters B                                                     622\n",
+       "New England Journal of Medicine                                       609\n",
+       "Scientific Reports                                                    580\n",
+       "Journal of Biological Chemistry                                       574\n",
+       "Journal of Clinical Oncology                                          496\n",
+       "Angewandte Chemie International Edition                               456\n",
+       "The Lancet                                                            423\n",
+       "The European Physical Journal C                                       420\n",
+       "Journal of Neuroscience                                               410\n",
+       "Neurology                                                             390\n",
+       "Journal of Agricultural and Food Chemistry                            382\n",
+       "Oncotarget                                                            364\n",
+       "The Journal of Chemical Physics                                       357\n",
+       "Journal of Geophysical Research                                       345\n",
+       "American Journal of Cancer                                            336\n",
+       "Biochimica et Biophysica Acta (BBA) - Lipids and Lipid Metabolism     327\n",
+       "Cell                                                                  322\n",
+       "Food Chemistry                                                        317\n",
+       "                                                                     ... \n",
+       "Journal of Neurology Neurosurgery & Psychiatry                        108\n",
+       "Physical Review E                                                     108\n",
+       "Organometallics                                                       107\n",
+       "Frontiers in Plant Science                                            107\n",
+       "Bioresource Technology                                                107\n",
+       "IEEE Transactions on Industrial Electronics                           106\n",
+       "BioMed Research International                                         106\n",
+       "Annals of Surgery                                                     106\n",
+       "Epilepsia                                                             105\n",
+       "Chemistry of Materials                                                105\n",
+       "IEEE Transactions on Dielectrics and Electrical Insulation            105\n",
+       "Journal of Virology                                                   104\n",
+       "Personality and Individual Differences                                104\n",
+       "British Journal of Dermatology                                        104\n",
+       "Journal of Endodontics                                                104\n",
+       "Journal of Bacteriology                                               103\n",
+       "Macromolecules                                                        103\n",
+       "Journal of Organometallic Chemistry                                   102\n",
+       "Applied Physics Letters                                               102\n",
+       "Nature Reviews Cancer                                                 102\n",
+       "Econometrica                                                          102\n",
+       "LWT                                                                   102\n",
+       "Journal of Applied Polymer Science                                    102\n",
+       "Pediatrics                                                            101\n",
+       "European Respiratory Journal                                          101\n",
+       "PLoS Genetics                                                         101\n",
+       "ACS Applied Materials & Interfaces                                    101\n",
+       "JAMA Psychiatry                                                       101\n",
+       "Journal of Cultural Heritage                                          101\n",
+       "Journal of Biomechanics                                               101\n",
+       "Name: journal.title, Length: 205, dtype: int64"
+      ]
+     },
+     "execution_count": 86,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "counts = df['journal.title'].value_counts()\n",
+    "counts[counts>100]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 88,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "/usr/local/lib/python3.7/site-packages/ipykernel_launcher.py:2: FutureWarning:\n",
+      "\n",
+      "The signature of `Series.to_csv` was aligned to that of `DataFrame.to_csv`, and argument 'header' will change its default value from False to True: please pass an explicit value to suppress this warning.\n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "# finally we can save the data to a CSV file\n",
+    "counts[counts>100].to_csv(\"top_journals_citing_\" + GRID_ORG + \"id.csv\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "---\n",
+    "# Want to learn more?\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "Make sure you check out the [Dimensions API Lab](https://digital-science.github.io/dimensions-api-lab/) website, which many tutorials and reusable Jupyter notebooks for scholarly data analytics. "
+   ]
+  }
+ ],
+ "metadata": {
+  "kernel_info": {
+   "name": "python3"
+  },
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.4"
+  },
+  "nteract": {
+   "version": "0.15.0"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

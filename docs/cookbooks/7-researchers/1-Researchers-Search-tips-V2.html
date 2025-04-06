@@ -1,0 +1,1626 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Extracting researchers based on affiliations and publications history &#8212; Dimensions API Lab - Reusable Solutions for Scholarly Data Analytics</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Calculating the H-index of a researcher" href="2-Calculating-the-H-Index-of-a-researcher.html" />
+    <link rel="prev" title="Extracting Patents that cite Publications from a chosen Research Organization" href="../5-patents/1-Patents-referencing-a-Research-Organization.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="2-Calculating-the-H-Index-of-a-researcher.html" title="Calculating the H-index of a researcher"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../5-patents/1-Patents-referencing-a-Research-Organization.html" title="Extracting Patents that cite Publications from a chosen Research Organization"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Dimensions API Lab - Reusable Solutions for Scholarly Data Analytics</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 5ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/cookbooks/7-researchers/1-Researchers-Search-tips-V2.ipynb">Open this notebook in Google Colab</a>, a free cloud-based environment that allows to run Jupyter notebooks, or <a class="reference external" href="https://digital-science.github.io/dimensions-api-lab/blob/master/cookbooks/7-researchers/1-Researchers-Search-tips-V2.ipynb">download it from Github</a> to run it on your local computer.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="Extracting-researchers-based-on-affiliations-and-publications-history">
+<h1>Extracting researchers based on affiliations and publications history<a class="headerlink" href="#Extracting-researchers-based-on-affiliations-and-publications-history" title="Permalink to this headline">¶</a></h1>
+<p>The purpose of this notebook is to demonstrate how to extract researchers data using the Dimensions API.</p>
+<p>Specifically, we will look at a concrete use case. We want to find out about all researchers based on these two criteria:</p>
+<ol class="arabic simple">
+<li><p>they are or have been <strong>affiliated</strong> to a specific <strong>GRID</strong> organization</p></li>
+<li><p>they have <strong>published</strong> within a chosen <strong>time frame</strong></p></li>
+</ol>
+<p>For the purpose of this exercise, we will are going to use <a class="reference external" href="https://grid.ac/institutes/grid.258806.1">grid.258806.1</a> and the time frame <strong>2013-2018</strong>. Feel free though to change the parameters below as you want, eg by <a class="reference external" href="https://grid.ac/institutes">choosing another GRID organization</a>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># constants  grid.258806.1</span>
+<span class="n">GRIDID</span> <span class="o">=</span> <span class="s2">&quot;grid.258806.1&quot;</span> <span class="c1">#@param {type:&quot;string&quot;}</span>
+<span class="n">START_YEAR</span> <span class="o">=</span> <span class="mi">2013</span> <span class="c1">#@param {type:&quot;slider&quot;, min:1900, max:2020, step: 1}</span>
+<span class="n">END_YEAR</span> <span class="o">=</span> <span class="mi">2018</span> <span class="c1">#@param {type:&quot;slider&quot;, min:1900, max:2020, step: 1}</span>
+
+<span class="k">if</span> <span class="n">START_YEAR</span> <span class="o">&lt;</span> <span class="n">END_YEAR</span><span class="p">:</span> <span class="n">START_YEAR</span> <span class="o">=</span> <span class="n">END_YEAR</span>
+<span class="n">YEARS</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;[</span><span class="si">{START_YEAR}</span><span class="s2">:</span><span class="si">{END_YEAR}</span><span class="s2">]&quot;</span>
+</pre></div>
+</div>
+</div>
+<p>Before we start, let’s also load some useful libraries and login with the Dimensions API.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># @markdown Click the &#39;play&#39; button on the left (or shift+enter) after entering your API credentials</span>
+
+<span class="n">username</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1">#@param {type: &quot;string&quot;}</span>
+<span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1">#@param {type: &quot;string&quot;}</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;https://app.dimensions.ai&quot;</span>
+
+<span class="o">!</span>pip install dimcli -U --quiet
+
+<span class="c1"># import all libraries and login</span>
+<span class="kn">import</span> <span class="nn">dimcli</span>
+<span class="kn">from</span> <span class="nn">dimcli.shortcuts</span> <span class="k">import</span> <span class="o">*</span>
+<span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">)</span>
+<span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
+
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pandas.io.json</span> <span class="k">import</span> <span class="n">json_normalize</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="k">import</span> <span class="n">tnrange</span><span class="p">,</span> <span class="n">tqdm_notebook</span> <span class="k">as</span> <span class="n">bar</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">sleep</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="k">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">IPython.core.display</span> <span class="k">import</span> <span class="n">HTML</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+DimCli v0.6.1.2 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (method: manual login)
+</pre></div></div>
+</div>
+<div class="section" id="Background:-understanding-the-data-model">
+<h2>Background: understanding the data model<a class="headerlink" href="#Background:-understanding-the-data-model" title="Permalink to this headline">¶</a></h2>
+<p>In order to process researchers affiliation data in the context of publications, we should first take the time to understand how this data is structured in Dimensions.</p>
+<p>The JSON results of any query with shape <code class="docutils literal notranslate"><span class="pre">search</span> <span class="pre">publications</span> <span class="pre">where</span> <span class="pre">....</span> <span class="pre">return</span> <span class="pre">publications</span></code> are composed by a list of publications. If we open up one single publication record we will immediately see that authors are stored in a nested object <code class="docutils literal notranslate"><span class="pre">author_affiliations</span></code> that contains a list of dictionaries. Each element in this dictionary represents <strong>one single publication author</strong> and includes other information e.g. name, surname, ID, the organizations he/she is affiliated with etc..</p>
+<p>For example, in order to extract the second author of the tenth publication from our results we would do the following: <code class="docutils literal notranslate"><span class="pre">results.publications[10]['author_affiliations'][0][1]</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># author info</span>
+<span class="o">...</span>
+    <span class="p">{</span><span class="s1">&#39;first_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Noboru&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;last_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Sebe&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;orcid&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;current_organization_id&#39;</span><span class="p">:</span> <span class="s1">&#39;grid.258806.1&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;researcher_id&#39;</span><span class="p">:</span> <span class="s1">&#39;ur.010647607673.28&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;affiliations&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;grid.258806.1&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Kyushu Institute of Technology&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;city&#39;</span><span class="p">:</span> <span class="s1">&#39;Kitakyushu&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;city_id&#39;</span><span class="p">:</span> <span class="mi">1859307</span><span class="p">,</span>
+       <span class="s1">&#39;country&#39;</span><span class="p">:</span> <span class="s1">&#39;Japan&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;country_code&#39;</span><span class="p">:</span> <span class="s1">&#39;JP&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;state&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+       <span class="s1">&#39;state_code&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}]}</span>
+ <span class="o">...</span>
+</pre></div>
+</div>
+<p>Here’s a object model diagram summing up how data is structured.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">Image</span><span class="p">(</span><span class="n">url</span><span class="o">=</span> <span class="s2">&quot;http://api-sample-data.dimensions.ai/diagrams/data_model_researchers_publications1.jpg&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<img src="http://api-sample-data.dimensions.ai/diagrams/data_model_researchers_publications1.jpg" width="800"/></div>
+</div>
+<p>There are a few important things to keep in mind:</p>
+<ul class="simple">
+<li><p><strong>Publication Authors VS Researchers</strong>. In Dimensions, <code class="docutils literal notranslate"><span class="pre">authors</span></code> don’t necessarily have a <code class="docutils literal notranslate"><span class="pre">researcher</span></code> ID (eg because they haven’t been disambiguated yet). So a publication may have N authors (stored in JSON within the <code class="docutils literal notranslate"><span class="pre">author_affiliations</span></code> key), but only a subset of these include a <code class="docutils literal notranslate"><span class="pre">researcher_id</span></code> link. PS see also the <a class="reference external" href="https://docs.dimensions.ai/dsl/language.html#searching-for-researchers-authors">searching for researchers</a> section of the API docs for more info on this topic.</p></li>
+<li><p><strong>Time of the affiliation</strong>. Researchers can be affiliated to a specific GRID organization either <em>at the time of speaking</em> (now), <strong>or</strong> <em>at the time of writing</em> (i.e. when the article was published). The DSL uses different properties to express this fact: <code class="docutils literal notranslate"><span class="pre">current_research_org</span></code> or simply <code class="docutils literal notranslate"><span class="pre">research_orgs</span></code>. For the sake of this exercise, we will look at both.</p></li>
+<li><p><strong>Denormalized fields</strong>. Both the <a class="reference external" href="https://docs.dimensions.ai/dsl/data-sources.html#publications">Publication</a> and <a class="reference external" href="https://docs.dimensions.ai/dsl/data-sources.html#researchers">Researcher</a> sources include a <code class="docutils literal notranslate"><span class="pre">research_orgs</span></code> field - both are ‘denormalized’ shortcut versions of the data you’d find via the <code class="docutils literal notranslate"><span class="pre">author_affiliations</span></code> structure in publications. However they don’t have the same meaning: for publications, the field contains the sum of all authors’ research organizations, while
+for researchers, that’s the sum of all research organizations a single individual has been affiliated to throught his career (as far as Dimensions knows, of course!).</p></li>
+</ul>
+<p>So, in the real world we often have scenarios like the following one:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">Image</span><span class="p">(</span><span class="n">url</span><span class="o">=</span> <span class="s2">&quot;http://api-sample-data.dimensions.ai/diagrams/data_model_researchers_publications2.jpg&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<img src="http://api-sample-data.dimensions.ai/diagrams/data_model_researchers_publications2.jpg" width="1000"/></div>
+</div>
+</div>
+<div class="section" id="Methodology:-two-options-available">
+<h2>Methodology: two options available<a class="headerlink" href="#Methodology:-two-options-available" title="Permalink to this headline">¶</a></h2>
+<p>It turns out that there are two possible ways to extract these data, depending on whether we start our queries from Publications or from Researchers.</p>
+<ol class="arabic simple">
+<li><p><strong>Starting from the Publication source</strong>, we can first filter publications based on our constraints (eg year range [2013-2018] and research_orgs=“grid.258806.1” - but it could be any other query parameters); second, we would loop over all of these publications so to extract all relevant reasearchers using the <code class="docutils literal notranslate"><span class="pre">affiliation</span></code> data.</p></li>
+<li><p><strong>Starting from the Researcher source</strong>, we would first filter researchers based on our constraints (eg with research_orgs=“grid.258806.1”); second, we would search for publications linked to these researchers, which have been published in the time frame [2013-2018]; lastly, we extract all relevant reasearchers using the <code class="docutils literal notranslate"><span class="pre">affiliation</span></code> data.</p></li>
+</ol>
+<p>As we will find out later, both approaches are perfectly valid and return the same results.</p>
+<p>The first apporach is generally quicker as it has only two steps (the second one has threed).</p>
+<p>In real world situations though, deciding which approach is best depends on the specific query filters being used and on the impact these filters have on the overall performance/speed of the data extraction. There is no fixed rule and a bit of trial &amp; error can go a long way in helping you optimize your data extraction algorithm!</p>
+</div>
+<div class="section" id="Approach-1.-From-publications-to-researchers">
+<h2>Approach 1. From publications to researchers<a class="headerlink" href="#Approach-1.-From-publications-to-researchers" title="Permalink to this headline">¶</a></h2>
+<p>Starting from the <em>publications</em> source, the steps are as follows:</p>
+<ol class="arabic simple">
+<li><p>Filtering publications for year range [2013-2018] and research_orgs=“grid.258806.1”</p>
+<ul class="simple">
+<li><p>i.e. <code class="docutils literal notranslate"><span class="pre">search</span> <span class="pre">publications</span> <span class="pre">where</span> <span class="pre">year</span> <span class="pre">in</span> <span class="pre">[2013:2018]</span> <span class="pre">and</span> <span class="pre">research_orgs=&quot;grid.258806.1&quot;</span> <span class="pre">return</span> <span class="pre">publications</span></code></p></li>
+</ul>
+</li>
+<li><p>Looping over publications’ authors and extracting relevant researchers</p>
+<ul class="simple">
+<li><p>if <code class="docutils literal notranslate"><span class="pre">['current_organization_id']</span> <span class="pre">==</span> <span class="pre">&quot;grid.258806.1&quot;</span></code></p>
+<ul>
+<li><p>=&gt; <strong>that gives us the affiliations at the time of speaking</strong></p></li>
+</ul>
+</li>
+<li><p>or if <code class="docutils literal notranslate"><span class="pre">['affiliation']['id']</span> <span class="pre">==</span> <span class="pre">&quot;grid.258806.1&quot;</span></code></p>
+<ul>
+<li><p>=&gt; <strong>that gives us the affiliations at the time of publishing</strong></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p>First off, we can to get all publications based on our search criteria by using a <code class="docutils literal notranslate"><span class="pre">loop</span></code> query.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[59]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pubs</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query_iterative</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;&quot;&quot;search publications</span>
+<span class="s2">                                where year in </span><span class="si">{YEARS}</span><span class="s2"> and research_orgs=&quot;</span><span class="si">{GRIDID}</span><span class="s2">&quot;</span>
+<span class="s2">                            return publications&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+693 / 693
+</pre></div></div>
+</div>
+<div class="section" id="Researchers-affiliated-to-the-GRID-ID-at-the-time-of-writing">
+<h3>Researchers affiliated to the GRID-ID <strong>at the time of writing</strong><a class="headerlink" href="#Researchers-affiliated-to-the-GRID-ID-at-the-time-of-writing" title="Permalink to this headline">¶</a></h3>
+<p>First we want to know how many researchers linked to these publications were affiliated to the GRID organization <em>when the publication was created</em> (note: they may be at at a different institution right now).</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">affiliation</span></code> data in publications represent exactly that: we can thus loop over them (for each publication/researcher) and keep only the ones matching our GRID ID.</p>
+<p><strong>TIP</strong> affiliations can be extracted easily thanks one of the ‘dataframe’ transformation methods in <a class="reference external" href="https://github.com/digital-science/dimcli">Dimcli</a>: <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors_affiliations</span></code></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># extract affiliations from a publications list</span>
+<span class="n">affiliations</span> <span class="o">=</span> <span class="n">pubs</span><span class="o">.</span><span class="n">as_dataframe_authors_affiliations</span><span class="p">()</span>
+<span class="c1"># select only affiliations for GRIDID</span>
+<span class="n">authors_historical</span> <span class="o">=</span> <span class="n">affiliations</span><span class="p">[</span><span class="n">affiliations</span><span class="p">[</span><span class="s1">&#39;aff_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">GRIDID</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="c1"># remove duplicates by eliminating publication-specific data</span>
+<span class="n">authors_historical</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pub_id&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">authors_historical</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s1">&#39;researcher_id&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;===</span><span class="se">\n</span><span class="s2">Researchers with affiliation to </span><span class="si">{GRIDID}</span><span class="s2"> at time of writing:&quot;</span><span class="p">,</span> <span class="n">authors_historical</span><span class="o">.</span><span class="n">researcher_id</span><span class="o">.</span><span class="n">nunique</span><span class="p">(),</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">===&quot;</span><span class="p">)</span>
+<span class="c1"># preview the data</span>
+<span class="n">authors_historical</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+===
+Researchers with affiliation to grid.258806.1 at time of writing: 528
+===
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>aff_id</th>
+      <th>aff_name</th>
+      <th>aff_city</th>
+      <th>aff_city_id</th>
+      <th>aff_country</th>
+      <th>aff_country_code</th>
+      <th>aff_state</th>
+      <th>aff_state_code</th>
+      <th>researcher_id</th>
+      <th>first_name</th>
+      <th>last_name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>Siewteng</td>
+      <td>Sim</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td></td>
+      <td></td>
+      <td>ur.01116323260.31</td>
+      <td>Yoshito</td>
+      <td>Andou</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td></td>
+      <td></td>
+      <td>ur.010362311021.55</td>
+      <td>Kubra</td>
+      <td>Eksiler</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td></td>
+      <td></td>
+      <td>ur.011724474721.84</td>
+      <td>Satoshi</td>
+      <td>Iikubo</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td></td>
+      <td></td>
+      <td>ur.01055753603.27</td>
+      <td>Shuzi</td>
+      <td>Hayase</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>3908</th>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td></td>
+      <td></td>
+      <td>ur.010170714165.07</td>
+      <td>Koichi</td>
+      <td>YONEMOTO</td>
+    </tr>
+    <tr>
+      <th>3909</th>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td></td>
+      <td></td>
+      <td>ur.010201401200.87</td>
+      <td>Takahiro</td>
+      <td>FUJIKAWA</td>
+    </tr>
+    <tr>
+      <th>3910</th>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td></td>
+      <td></td>
+      <td>ur.015542442300.36</td>
+      <td>Yusuke</td>
+      <td>URA</td>
+    </tr>
+    <tr>
+      <th>3911</th>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td></td>
+      <td></td>
+      <td>ur.013375341064.50</td>
+      <td>Junichi</td>
+      <td>SUGIMOTO</td>
+    </tr>
+    <tr>
+      <th>3980</th>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td></td>
+      <td></td>
+      <td>ur.010735656764.15</td>
+      <td>Yuji</td>
+      <td>Fujita</td>
+    </tr>
+  </tbody>
+</table>
+<p>528 rows × 11 columns</p>
+</div></div>
+</div>
+<p>Note: * The first ‘publication-affiliations’ dataframe we get may contain duplicate records - eg if an author has more than one publication it’ll be listed twice. That’s why we have an extra step where we drop the <code class="docutils literal notranslate"><span class="pre">pub_id</span></code> column and simply count unique researchers, based on their researcher ID.</p>
+</div>
+<div class="section" id="Researchers-affiliated-to-the-GRIDID-at-the-time-of-speaking-ie-now">
+<h3>Researchers affiliated to the GRIDID <strong>at the time of speaking</strong> ie now<a class="headerlink" href="#Researchers-affiliated-to-the-GRIDID-at-the-time-of-speaking-ie-now" title="Permalink to this headline">¶</a></h3>
+<p>This can be achieved simply by taking into consideration a different field, called <code class="docutils literal notranslate"><span class="pre">current_organization_id</span></code>, available at the outer level of the JSON author structure (see the data model section above) - outside the <code class="docutils literal notranslate"><span class="pre">affiliations</span></code> list.</p>
+<p>Luckily Dimcli includes another handy method for umpacking authors into a dataframe: <code class="docutils literal notranslate"><span class="pre">as_dataframe_authors</span></code></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[61]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">authors_current</span> <span class="o">=</span> <span class="n">pubs</span><span class="o">.</span><span class="n">as_dataframe_authors</span><span class="p">()</span>
+<span class="n">authors_current</span> <span class="o">=</span> <span class="n">authors_current</span><span class="p">[</span><span class="n">authors_current</span><span class="p">[</span><span class="s1">&#39;current_organization_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">GRIDID</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">authors_current</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pub_id&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">authors_current</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s1">&#39;researcher_id&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;===</span><span class="se">\n</span><span class="s2">Researchers with affiliation to </span><span class="si">{GRIDID}</span><span class="s2"> at the time of speaking:&quot;</span><span class="p">,</span> <span class="n">authors_current</span><span class="o">.</span><span class="n">researcher_id</span><span class="o">.</span><span class="n">nunique</span><span class="p">(),</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">===&quot;</span><span class="p">)</span>
+<span class="n">authors_current</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+===
+Researchers with affiliation to grid.258806.1 at the time of speaking: 505
+===
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[61]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>corresponding</th>
+      <th>orcid</th>
+      <th>current_organization_id</th>
+      <th>researcher_id</th>
+      <th>affiliations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>Yoshito</td>
+      <td>Andou</td>
+      <td></td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>ur.01116323260.31</td>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Kubra</td>
+      <td>Eksiler</td>
+      <td></td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>ur.010362311021.55</td>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Satoshi</td>
+      <td>Iikubo</td>
+      <td></td>
+      <td>['0000-0002-5186-4058']</td>
+      <td>grid.258806.1</td>
+      <td>ur.011724474721.84</td>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Shuzi</td>
+      <td>Hayase</td>
+      <td></td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>ur.01055753603.27</td>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>R.</td>
+      <td>Okamoto</td>
+      <td></td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>ur.016307426665.31</td>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>3475</th>
+      <td>Koichi</td>
+      <td>YONEMOTO</td>
+      <td></td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>ur.010170714165.07</td>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+    </tr>
+    <tr>
+      <th>3476</th>
+      <td>Takahiro</td>
+      <td>FUJIKAWA</td>
+      <td></td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>ur.010201401200.87</td>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+    </tr>
+    <tr>
+      <th>3477</th>
+      <td>Yusuke</td>
+      <td>URA</td>
+      <td></td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>ur.015542442300.36</td>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+    </tr>
+    <tr>
+      <th>3478</th>
+      <td>Junichi</td>
+      <td>SUGIMOTO</td>
+      <td></td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>ur.013375341064.50</td>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+    </tr>
+    <tr>
+      <th>3509</th>
+      <td>Yuji</td>
+      <td>Fujita</td>
+      <td></td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>ur.010735656764.15</td>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+    </tr>
+  </tbody>
+</table>
+<p>505 rows × 7 columns</p>
+</div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Approach-2.-From-researchers-to-publications">
+<h2>Approach 2. From researchers to publications<a class="headerlink" href="#Approach-2.-From-researchers-to-publications" title="Permalink to this headline">¶</a></h2>
+<p>Using this approach, we start our search from the ‘researchers’ database (instead of the ‘publications’ database).</p>
+<p>There are 3 main steps:</p>
+<ol class="arabic simple">
+<li><p>Filtering researchers with research_orgs=GRID-ID (note: this gives us affiliated researches <em>at any point in time</em>)</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">search</span> <span class="pre">researchers</span> <span class="pre">where</span> <span class="pre">research_orgs=&quot;grid.258806.1&quot;</span> <span class="pre">return</span> <span class="pre">researchers</span></code></p></li>
+</ul>
+</li>
+<li><p>Searching for publications linked to these researchers and linked to GRID-ID, which have been published in the time frame <code class="docutils literal notranslate"><span class="pre">[2013-2018]</span></code></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">search</span> <span class="pre">publications</span> <span class="pre">where</span> <span class="pre">researchers.id</span> <span class="pre">in</span> <span class="pre">{LIST</span> <span class="pre">OF</span> <span class="pre">IDS}</span> <span class="pre">and</span> <span class="pre">year</span> <span class="pre">in</span> <span class="pre">[2013:2018]</span> <span class="pre">and</span> <span class="pre">research_orgs=&quot;grid.258806.1&quot;</span> <span class="pre">return</span> <span class="pre">publications</span></code></p></li>
+<li><p>NOTE: this a variation of the Approach-1 query above: we have just added the researchers IDs filter (thus reducing the search space)</p></li>
+</ul>
+</li>
+<li><p>Extracting relevant researchers from publications, using the same exact steps as in approach 1 above.</p>
+<ul class="simple">
+<li><p>if <code class="docutils literal notranslate"><span class="pre">['current_organization_id']</span> <span class="pre">==</span> <span class="pre">&quot;grid.258806.1&quot;</span></code></p>
+<ul>
+<li><p>=&gt; <strong>that gives us the affiliations at the time of speaking</strong></p></li>
+</ul>
+</li>
+<li><p>or if <code class="docutils literal notranslate"><span class="pre">['affiliation']['id']</span> <span class="pre">==</span> <span class="pre">&quot;grid.258806.1&quot;</span></code></p>
+<ul>
+<li><p>=&gt; <strong>that gives us the affiliations at the time of publishing</strong></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[62]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">q</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;search researchers where research_orgs=&quot;</span><span class="si">{GRIDID}</span><span class="s2">&quot;</span>
+<span class="s2">        return researchers[basics]&quot;&quot;&quot;</span>
+<span class="n">researchers_json</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query_iterative</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+<span class="n">researchers</span> <span class="o">=</span> <span class="n">researchers_json</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
+<span class="n">researchers</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1000 / 7369
+2000 / 7369
+3000 / 7369
+4000 / 7369
+5000 / 7369
+6000 / 7369
+7000 / 7369
+7369 / 7369
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[62]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>research_orgs</th>
+      <th>id</th>
+      <th>last_name</th>
+      <th>first_name</th>
+      <th>orcid_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>[{'id': 'grid.430387.b', 'city_name': 'New Bru...</td>
+      <td>ur.01266467252.06</td>
+      <td>Horibe</td>
+      <td>Yoichi</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>[{'id': 'grid.9435.b', 'city_name': 'Reading',...</td>
+      <td>ur.01274574426.61</td>
+      <td>Wang</td>
+      <td>Shufeng</td>
+      <td>[0000-0003-3536-8000]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>[{'id': 'grid.9435.b', 'city_name': 'Reading',...</td>
+      <td>ur.012326321631.34</td>
+      <td>Wang</td>
+      <td>Shufeng</td>
+      <td>[0000-0003-3536-8000]</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>[{'id': 'grid.258806.1', 'city_name': 'Kitakyu...</td>
+      <td>ur.01104616261.40</td>
+      <td>Kinoshita</td>
+      <td>Noriaki</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>[{'id': 'grid.258806.1', 'city_name': 'Kitakyu...</td>
+      <td>ur.01250743274.97</td>
+      <td>Li</td>
+      <td>Xuesong</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Now we need to select only the researchers who have <strong>published in the time frame [2013:2018]</strong>. So for each researcher ID we must extract the full publication history in order to verify their relevance.</p>
+<p>The most efficient way to do this is to use a query that <strong>extracts the publication history for several researchers at the same time</strong> (so to avoid overruning our API quota), then, as a second step, producing a clean list of relevant researchers from it.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[63]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">researchers_ids</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">researchers</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+<span class="c1"># no of researchers IDs per query: so to ensure we never hit the 1000 records limit per query</span>
+<span class="n">CHUNKS_SIZE</span> <span class="o">=</span> <span class="mi">300</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search publications</span>
+<span class="s2">                where researchers.id in </span><span class="si">{}</span><span class="s2"></span>
+<span class="s2">                and year in </span><span class="si">{}</span><span class="s2"></span>
+<span class="s2">                and research_orgs=&quot;</span><span class="si">{}</span><span class="s2">&quot;</span>
+<span class="s2">            return publications limit 1000&quot;&quot;&quot;</span>
+
+
+<span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">chunks_of</span><span class="p">(</span><span class="n">researchers_ids</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">CHUNKS_SIZE</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">chunk</span><span class="p">),</span> <span class="n">YEARS</span><span class="p">,</span> <span class="n">GRIDID</span><span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">results</span> <span class="o">+=</span> <span class="n">data</span><span class="o">.</span><span class="n">publications</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;---</span><span class="se">\n</span><span class="s2">Found&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">),</span> <span class="s2">&quot;publications for the given criteria (including duplicates)&quot;</span><span class="p">)</span>
+
+<span class="c1"># simulate a DSL payload using Dimcli</span>
+<span class="kn">from</span> <span class="nn">dimcli.core</span> <span class="k">import</span> <span class="n">api</span>
+<span class="n">pubs_v2</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">Result</span><span class="p">({</span><span class="s2">&quot;publications&quot;</span> <span class="p">:</span> <span class="n">results</span><span class="p">})</span>
+
+<span class="c1"># transform to a dataframe to remove duplicates quickly</span>
+<span class="n">pubs_v2_df</span> <span class="o">=</span> <span class="n">pubs_v2</span><span class="o">.</span><span class="n">as_dataframe</span><span class="p">()</span>
+<span class="n">pubs_v2_df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Final result:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">pubs_v2_df</span><span class="p">),</span> <span class="s2">&quot;unique publications&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Returned Publications: 23 (total = 23)
+Returned Publications: 75 (total = 75)
+Returned Publications: 37 (total = 37)
+Returned Publications: 91 (total = 91)
+Returned Publications: 100 (total = 100)
+Returned Publications: 87 (total = 87)
+Returned Publications: 53 (total = 53)
+Returned Publications: 48 (total = 48)
+Returned Publications: 69 (total = 69)
+Returned Publications: 50 (total = 50)
+Returned Publications: 57 (total = 57)
+Returned Publications: 86 (total = 86)
+Returned Publications: 28 (total = 28)
+Returned Publications: 38 (total = 38)
+Returned Publications: 27 (total = 27)
+Returned Publications: 91 (total = 91)
+Returned Publications: 61 (total = 61)
+Returned Publications: 86 (total = 86)
+Returned Publications: 32 (total = 32)
+Returned Publications: 51 (total = 51)
+Returned Publications: 62 (total = 62)
+Returned Publications: 68 (total = 68)
+Returned Publications: 108 (total = 108)
+Returned Publications: 46 (total = 46)
+Returned Publications: 65 (total = 65)
+---
+Found 1539 publications for the given criteria (including duplicates)
+Final result: 665 unique publications
+</pre></div></div>
+</div>
+<div class="section" id="Researchers-affiliated-to-the-GRID-ID-at-the-time-of-writing">
+<h3>Researchers affiliated to the GRID-ID <strong>at the time of writing</strong><a class="headerlink" href="#Researchers-affiliated-to-the-GRID-ID-at-the-time-of-writing" title="Permalink to this headline">¶</a></h3>
+<p>This step is basically the same as in approach 1 above.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[64]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># extract affiliations from a publications list</span>
+<span class="n">affiliations_v2</span> <span class="o">=</span> <span class="n">pubs_v2</span><span class="o">.</span><span class="n">as_dataframe_authors_affiliations</span><span class="p">()</span>
+<span class="c1"># select only affiliations for GRIDID</span>
+<span class="n">authors_historical_v2</span> <span class="o">=</span> <span class="n">affiliations_v2</span><span class="p">[</span><span class="n">affiliations_v2</span><span class="p">[</span><span class="s1">&#39;aff_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">GRIDID</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="c1"># remove duplicates by eliminating publication-specific data</span>
+<span class="n">authors_historical_v2</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pub_id&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">authors_historical_v2</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s1">&#39;researcher_id&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;===</span><span class="se">\n</span><span class="s2">Researchers with affiliation to </span><span class="si">{GRIDID}</span><span class="s2"> at time of writing:&quot;</span><span class="p">,</span> <span class="n">authors_historical_v2</span><span class="o">.</span><span class="n">researcher_id</span><span class="o">.</span><span class="n">nunique</span><span class="p">(),</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">===&quot;</span><span class="p">)</span>
+<span class="c1"># preview the data</span>
+<span class="n">authors_historical_v2</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+===
+Researchers with affiliation to grid.258806.1 at time of writing: 526
+===
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[64]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>aff_id</th>
+      <th>aff_name</th>
+      <th>aff_city</th>
+      <th>aff_city_id</th>
+      <th>aff_country</th>
+      <th>aff_country_code</th>
+      <th>aff_state</th>
+      <th>aff_state_code</th>
+      <th>researcher_id</th>
+      <th>first_name</th>
+      <th>last_name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3</th>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td></td>
+      <td></td>
+      <td>ur.07545333321.42</td>
+      <td>Rahmi</td>
+      <td>Rahmatillah</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td></td>
+      <td></td>
+      <td>ur.014623572367.39</td>
+      <td>Kateryna</td>
+      <td>Aheieva</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td></td>
+      <td></td>
+      <td>ur.013152112405.28</td>
+      <td>Mengu</td>
+      <td>Cho</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td></td>
+      <td></td>
+      <td>ur.07706074430.00</td>
+      <td>Zhanglin</td>
+      <td>Guo</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td></td>
+      <td></td>
+      <td>ur.012076416030.50</td>
+      <td>Zhenhua</td>
+      <td>Xu</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>7870</th>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td></td>
+      <td></td>
+      <td>ur.015112126061.65</td>
+      <td>Kenji</td>
+      <td>Matsuda</td>
+    </tr>
+    <tr>
+      <th>8596</th>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td></td>
+      <td></td>
+      <td>ur.0775361534.49</td>
+      <td>Ken'ichi</td>
+      <td>Yokoyama</td>
+    </tr>
+    <tr>
+      <th>8723</th>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td></td>
+      <td></td>
+      <td>ur.010324112575.69</td>
+      <td>Yoshiki</td>
+      <td>Sato</td>
+    </tr>
+    <tr>
+      <th>8826</th>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td></td>
+      <td></td>
+      <td>ur.011176635061.41</td>
+      <td>Takao</td>
+      <td>Kodama</td>
+    </tr>
+    <tr>
+      <th>9194</th>
+      <td>grid.258806.1</td>
+      <td>Kyushu Institute of Technology</td>
+      <td>Kitakyushu</td>
+      <td>1.85931e+06</td>
+      <td>Japan</td>
+      <td>JP</td>
+      <td></td>
+      <td></td>
+      <td>ur.010647607673.28</td>
+      <td>Noboru</td>
+      <td>Sebe</td>
+    </tr>
+  </tbody>
+</table>
+<p>526 rows × 11 columns</p>
+</div></div>
+</div>
+</div>
+<div class="section" id="Researchers-affiliated-to-the-GRIDID-at-the-time-of-speaking-ie-now">
+<h3>Researchers affiliated to the GRIDID <strong>at the time of speaking</strong> ie now<a class="headerlink" href="#Researchers-affiliated-to-the-GRIDID-at-the-time-of-speaking-ie-now" title="Permalink to this headline">¶</a></h3>
+<p>Also here, the procedure is exactly the same as in approach 1.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[65]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">authors_current_v2</span> <span class="o">=</span> <span class="n">pubs_v2</span><span class="o">.</span><span class="n">as_dataframe_authors</span><span class="p">()</span>
+<span class="n">authors_current_v2</span> <span class="o">=</span> <span class="n">authors_current_v2</span><span class="p">[</span><span class="n">authors_current_v2</span><span class="p">[</span><span class="s1">&#39;current_organization_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">GRIDID</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">authors_current_v2</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pub_id&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">authors_current_v2</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s1">&#39;researcher_id&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;===</span><span class="se">\n</span><span class="s2">Researchers with affiliation to </span><span class="si">{GRIDID}</span><span class="s2"> at the time of speaking:&quot;</span><span class="p">,</span> <span class="n">authors_current_v2</span><span class="o">.</span><span class="n">researcher_id</span><span class="o">.</span><span class="n">nunique</span><span class="p">(),</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">===&quot;</span><span class="p">)</span>
+<span class="n">authors_current_v2</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+===
+Researchers with affiliation to grid.258806.1 at the time of speaking: 503
+===
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[65]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>corresponding</th>
+      <th>orcid</th>
+      <th>current_organization_id</th>
+      <th>researcher_id</th>
+      <th>affiliations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3</th>
+      <td>Rahmi</td>
+      <td>Rahmatillah</td>
+      <td></td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>ur.07545333321.42</td>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Kateryna</td>
+      <td>Aheieva</td>
+      <td></td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>ur.014623572367.39</td>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Mengu</td>
+      <td>Cho</td>
+      <td></td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>ur.013152112405.28</td>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Zhanglin</td>
+      <td>Guo</td>
+      <td></td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>ur.07706074430.00</td>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Zhenhua</td>
+      <td>Xu</td>
+      <td></td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>ur.012076416030.50</td>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>6790</th>
+      <td>Hiroki</td>
+      <td>Obata</td>
+      <td></td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>ur.01156670436.97</td>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+    </tr>
+    <tr>
+      <th>6979</th>
+      <td>Kenji</td>
+      <td>Matsuda</td>
+      <td>True</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>ur.015112126061.65</td>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+    </tr>
+    <tr>
+      <th>7646</th>
+      <td>Ken'ichi</td>
+      <td>Yokoyama</td>
+      <td>True</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>ur.0775361534.49</td>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+    </tr>
+    <tr>
+      <th>7859</th>
+      <td>Takao</td>
+      <td>Kodama</td>
+      <td>True</td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>ur.011176635061.41</td>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+    </tr>
+    <tr>
+      <th>8148</th>
+      <td>Noboru</td>
+      <td>Sebe</td>
+      <td></td>
+      <td></td>
+      <td>grid.258806.1</td>
+      <td>ur.010647607673.28</td>
+      <td>[{'id': 'grid.258806.1', 'name': 'Kyushu Insti...</td>
+    </tr>
+  </tbody>
+</table>
+<p>503 rows × 7 columns</p>
+</div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Conclusions">
+<h2>Conclusions<a class="headerlink" href="#Conclusions" title="Permalink to this headline">¶</a></h2>
+<p>As anticipated above, <strong>both approaches are equally valid</strong> and in fact they return the same (or very similar) number of results. Let’s compare them:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[66]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># create summary table</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">authors_current</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">authors_historical</span><span class="p">),</span>
+         <span class="sd">&quot;&quot;&quot;search publications where year in [2013:2018] and research_orgs=&quot;grid.258806.1&quot; return publication&quot;&quot;&quot;</span><span class="p">,</span>
+         <span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">authors_current_v2</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">authors_historical_v2</span><span class="p">),</span>
+         <span class="sd">&quot;&quot;&quot;search researchers where research_orgs=&quot;grid.258806.1&quot; return researchers --- then --- search publications where researchers.id in {IDS} and year in [2013:2018] and research_orgs={GRIDID} return publications&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="p">]]</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Method&#39;</span><span class="p">,</span> <span class="s1">&#39;Authors (current)&#39;</span><span class="p">,</span> <span class="s1">&#39;Authors (historical)&#39;</span><span class="p">,</span>  <span class="s1">&#39;Query&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[66]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Method</th>
+      <th>Authors (current)</th>
+      <th>Authors (historical)</th>
+      <th>Query</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>505</td>
+      <td>528</td>
+      <td>search publications where year in [2013:2018] ...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>503</td>
+      <td>526</td>
+      <td>search researchers where research_orgs="grid.2...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="section" id="Why-are-the-total-counts-different?">
+<h3>Why are the total counts different?<a class="headerlink" href="#Why-are-the-total-counts-different?" title="Permalink to this headline">¶</a></h3>
+<p>In some cases you might encounter small differences in the total number of records returned by the two approaches (eg one method returns 1-2 extra records than the other one).</p>
+<p>This is usually due to a synchronization delay between Dimensions databases (e.g. publications and researchers). The differences are negligible in most cases, but in general it’s enough to run same extraction again after a day or two for the problem to disappear.</p>
+</div>
+<div class="section" id="So-which-method-should-I-choose?">
+<h3>So which method should I choose?<a class="headerlink" href="#So-which-method-should-I-choose?" title="Permalink to this headline">¶</a></h3>
+<p>It depends on which/how many filters are being used in order to identify a suitable results set for your research question.</p>
+<ul class="simple">
+<li><p>The first approach is generally quicker as it has only two steps, as opposed to the second method that has three.</p></li>
+<li><p>However if your initial <code class="docutils literal notranslate"><span class="pre">publications</span></code> query returns lots of results (eg for a large institution or big time frame), it may be quicker to try out method 2 instead.</p></li>
+<li><p>The second approach can be handy if one wants to pre-filter researchers using one of the <a class="reference external" href="https://docs.dimensions.ai/dsl/data-sources.html#researchers">ther available properties</a> (e.g. <code class="docutils literal notranslate"><span class="pre">last_grant_year</span></code>)</p></li>
+</ul>
+<p>So, in general, deciding which approach is best depends on the specific query filters being used and on the impact these filters have on the overall performance/speed of the data extraction.</p>
+<p>There is no fixed rule and a bit of trial &amp; error can go a long way in helping you optimize your data extraction algorithm!</p>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <a class="reference external" href="https://digital-science.github.io/dimensions-api-lab/">Dimensions API Lab</a> contains many notebooks like this one, demonstrating how to carry out useful scholarly analytics tasks using the <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Analytics API</a>. Check out also the associated <a class="reference external" href="https://github.com/digital-science/dimensions-api-lab">Github repository</a> for all the source code files and much more.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Extracting researchers based on affiliations and publications history</a><ul>
+<li><a class="reference internal" href="#Background:-understanding-the-data-model">Background: understanding the data model</a></li>
+<li><a class="reference internal" href="#Methodology:-two-options-available">Methodology: two options available</a></li>
+<li><a class="reference internal" href="#Approach-1.-From-publications-to-researchers">Approach 1. From publications to researchers</a><ul>
+<li><a class="reference internal" href="#Researchers-affiliated-to-the-GRID-ID-at-the-time-of-writing">Researchers affiliated to the GRID-ID <strong>at the time of writing</strong></a></li>
+<li><a class="reference internal" href="#Researchers-affiliated-to-the-GRIDID-at-the-time-of-speaking-ie-now">Researchers affiliated to the GRIDID <strong>at the time of speaking</strong> ie now</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#Approach-2.-From-researchers-to-publications">Approach 2. From researchers to publications</a><ul>
+<li><a class="reference internal" href="#Researchers-affiliated-to-the-GRID-ID-at-the-time-of-writing">Researchers affiliated to the GRID-ID <strong>at the time of writing</strong></a></li>
+<li><a class="reference internal" href="#Researchers-affiliated-to-the-GRIDID-at-the-time-of-speaking-ie-now">Researchers affiliated to the GRIDID <strong>at the time of speaking</strong> ie now</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#Conclusions">Conclusions</a><ul>
+<li><a class="reference internal" href="#Why-are-the-total-counts-different?">Why are the total counts different?</a></li>
+<li><a class="reference internal" href="#So-which-method-should-I-choose?">So which method should I choose?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../5-patents/1-Patents-referencing-a-Research-Organization.html"
+                        title="previous chapter">Extracting Patents that cite Publications from a chosen Research Organization</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="2-Calculating-the-H-Index-of-a-researcher.html"
+                        title="next chapter">Calculating the H-index of a researcher</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/cookbooks/7-researchers/1-Researchers-Search-tips-V2.ipynb.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="2-Calculating-the-H-Index-of-a-researcher.html" title="Calculating the H-index of a researcher"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../5-patents/1-Patents-referencing-a-Research-Organization.html" title="Extracting Patents that cite Publications from a chosen Research Organization"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Dimensions API Lab - Reusable Solutions for Scholarly Data Analytics</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dimensions API Team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

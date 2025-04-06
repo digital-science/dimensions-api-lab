@@ -1,0 +1,1973 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Searching GRID organizations using the Dimensions API &#8212; Dimensions API Lab</title>
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Dimensions API Lab</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 5ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="Searching-GRID-organizations-using-the-Dimensions-API">
+<h1>Searching GRID organizations using the Dimensions API<a class="headerlink" href="#Searching-GRID-organizations-using-the-Dimensions-API" title="Permalink to this headline">¶</a></h1>
+<p>The purpose of this notebook is to demostrate the integration of <a class="reference external" href="https://grid.ac/">GRID</a> - the Global Research Identifiers Database - within the <a class="reference external" href="https://docs.dimensions.ai/dsl/">Dimensions Analytics API</a>.</p>
+<div class="section" id="Prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>Please install the latest versions of these libraries to run this notebook.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span>pip install dimcli -U --quiet
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">dimcli</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="k">import</span> <span class="n">tqdm_notebook</span> <span class="k">as</span> <span class="n">pbar</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># AUTHENTICATION</span>
+<span class="c1"># https://github.com/digital-science/dimcli#authentication</span>
+<span class="c1">#</span>
+<span class="c1"># == Google Colab users ==</span>
+<span class="c1"># The interactive setup assistant `dimcli --init` can be called directly from a cell</span>
+<span class="c1"># PS: since the colab environment is transient, credentials need to be set up at each run</span>
+<span class="c1">#</span>
+<span class="c1"># == Jupyter Notebook users ==</span>
+<span class="c1"># Open a terminal (File/New/Terminal) and run `dimcli --init` from there</span>
+<span class="c1"># PS: credentials are saved and become available to all of your notebooks</span>
+<span class="c1">#</span>
+<span class="c1">#</span>
+<span class="n">IN_COLAB</span> <span class="o">=</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span>
+<span class="k">if</span> <span class="n">IN_COLAB</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Environment: Google Colab</span><span class="se">\n</span><span class="s2">..launching interactive setup assistant&quot;</span><span class="p">)</span>
+  <span class="o">!</span>dimcli --init
+<span class="k">else</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Environment: Jupyter Notebook</span><span class="se">\n</span><span class="s2">Please ensure you have setup an API credentials file.&quot;</span><span class="p">)</span>
+
+<span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">()</span>
+<span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Environment: Jupyter Notebook
+Please ensure you have setup an API credentials file.
+DimCli v0.6.1 - Succesfully connected to &lt;https://app.dimensions.ai&gt; (method: dsl.ini file)
+</pre></div></div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="Matching-affiliation-data-to-GRID-IDs-using-extract_affiliations">
+<h2>Matching affiliation data to GRID IDs using <code class="docutils literal notranslate"><span class="pre">extract_affiliations</span></code><a class="headerlink" href="#Matching-affiliation-data-to-GRID-IDs-using-extract_affiliations" title="Permalink to this headline">¶</a></h2>
+<p>The API function <code class="docutils literal notranslate"><span class="pre">extract_affiliations</span></code> (<a class="reference external" href="https://docs.dimensions.ai/dsl/1.21.0-preview/functions.html#function-extract-affiliations">docs</a>) can be used to enrich private datasets including non-disambiguated organizations data with Dimensions IDs, so to then take advantage of the wealth of linked data available in Dimensions.</p>
+<p>For example, let’s assume our dataset has four columns (<em>affiliation name</em>, <em>city</em>, <em>state</em> and <em>country</em>) - any of which can be empty of course. Like this:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">affiliations</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">[</span><span class="s1">&#39;University of Nebraska–Lincoln&#39;</span><span class="p">,</span> <span class="s1">&#39;Lincoln&#39;</span><span class="p">,</span> <span class="s1">&#39;Nebraska&#39;</span><span class="p">,</span> <span class="s1">&#39;United States&#39;</span><span class="p">],</span>
+                <span class="p">[</span><span class="s1">&#39;Tarbiat Modares University&#39;</span><span class="p">,</span> <span class="s1">&#39;Tehran&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;Iran&#39;</span><span class="p">],</span>
+                <span class="p">[</span><span class="s1">&#39;Harvard University&#39;</span><span class="p">,</span> <span class="s1">&#39;Cambridge&#39;</span><span class="p">,</span> <span class="s1">&#39;Massachusetts&#39;</span><span class="p">,</span> <span class="s1">&#39;United States&#39;</span><span class="p">],</span>
+                <span class="p">[</span><span class="s1">&#39;China Academy of Chinese Medical Sciences&#39;</span><span class="p">,</span> <span class="s1">&#39;Beijing&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;China&#39;</span><span class="p">],</span>
+                <span class="p">[</span><span class="s1">&#39;Liaoning University&#39;</span><span class="p">,</span> <span class="s1">&#39;Shenyang&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;China&#39;</span><span class="p">],</span>
+                <span class="p">[</span><span class="s1">&#39;Liaoning Normal University&#39;</span><span class="p">,</span> <span class="s1">&#39;Dalian&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;China&#39;</span><span class="p">],</span>
+                <span class="p">[</span><span class="s1">&#39;P.G. Department of Zoology and Research Centre, Shri Shiv Chhatrapati College of Arts, Commerce and Science, Junnar 410502, Pune, India.&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">],</span>
+                <span class="p">[</span><span class="s1">&#39;Sungkyunkwan University&#39;</span><span class="p">,</span> <span class="s1">&#39;Seoul&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;South Korea&#39;</span><span class="p">],</span>
+                <span class="p">[</span><span class="s1">&#39;Centre for Materials for Electronics Technology&#39;</span><span class="p">,</span> <span class="s1">&#39;Pune&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;India&#39;</span><span class="p">],</span>
+                <span class="p">[</span><span class="s1">&#39;Institut Necker-Enfants Malades (INEM), INSERM U1151-CNRS UMR8253, Université de Paris, Faculté de Médecine, 156 rue de Vaugirard, 75730 Paris Cedex 15, France&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">]</span>
+                <span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p>We want to look up GRID identifiers for those affiliations using the <strong>structured</strong> affiliation matching.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">pbar</span><span class="p">(</span><span class="n">affiliations</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;&quot;&quot;extract_affiliations(name=&quot;</span><span class="si">{d[0]}</span><span class="s2">&quot;, city=&quot;</span><span class="si">{d[1]}</span><span class="s2">&quot;, state=&quot;</span><span class="si">{d[2]}</span><span class="s2">&quot;, country=&quot;</span><span class="si">{d[3]}</span><span class="s2">&quot;)&quot;&quot;&quot;</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "6acc771bccb741dd99e17806de50ce8f", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;results&#39;: [{&#39;institutes&#39;: [{&#39;institute&#39;: {&#39;id&#39;: &#39;grid.24434.35&#39;, &#39;name&#39;: &#39;University of Nebraska–Lincoln&#39;, &#39;city&#39;: &#39;Lincoln&#39;, &#39;state&#39;: &#39;Nebraska&#39;, &#39;country&#39;: &#39;United States&#39;}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: False}}], &#39;geo&#39;: {&#39;cities&#39;: [{&#39;geonames_id&#39;: 5072006, &#39;name&#39;: &#39;Lincoln&#39;}], &#39;states&#39;: [{&#39;geonames_id&#39;: 5073708, &#39;name&#39;: &#39;Nebraska&#39;}], &#39;countries&#39;: [{&#39;geonames_id&#39;: 6252001, &#39;name&#39;: &#39;United States&#39;, &#39;code&#39;: &#39;US&#39;}]}, &#39;input&#39;: {&#39;name&#39;: &#39;University of Nebraska–Lincoln&#39;, &#39;city&#39;: &#39;Lincoln&#39;, &#39;state&#39;: &#39;Nebraska&#39;, &#39;country&#39;: &#39;United States&#39;}}]}
+{&#39;results&#39;: [{&#39;institutes&#39;: [{&#39;institute&#39;: {&#39;id&#39;: &#39;grid.412266.5&#39;, &#39;name&#39;: &#39;Tarbiat Modares University&#39;, &#39;city&#39;: &#39;Tehran&#39;, &#39;state&#39;: None, &#39;country&#39;: &#39;Iran&#39;}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: False}}], &#39;geo&#39;: {&#39;cities&#39;: [{&#39;geonames_id&#39;: 112931, &#39;name&#39;: &#39;Tehran&#39;}], &#39;states&#39;: [{&#39;geonames_id&#39;: 110791, &#39;name&#39;: &#39;Tehran&#39;}], &#39;countries&#39;: [{&#39;geonames_id&#39;: 130758, &#39;name&#39;: &#39;Iran&#39;, &#39;code&#39;: &#39;IR&#39;}]}, &#39;input&#39;: {&#39;name&#39;: &#39;Tarbiat Modares University&#39;, &#39;city&#39;: &#39;Tehran&#39;, &#39;state&#39;: &#39;&#39;, &#39;country&#39;: &#39;Iran&#39;}}]}
+{&#39;results&#39;: [{&#39;institutes&#39;: [{&#39;institute&#39;: {&#39;id&#39;: &#39;grid.38142.3c&#39;, &#39;name&#39;: &#39;Harvard University&#39;, &#39;city&#39;: &#39;Cambridge&#39;, &#39;state&#39;: &#39;Massachusetts&#39;, &#39;country&#39;: &#39;United States&#39;}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: False}}], &#39;geo&#39;: {&#39;cities&#39;: [{&#39;geonames_id&#39;: 4931972, &#39;name&#39;: &#39;Cambridge&#39;}], &#39;states&#39;: [{&#39;geonames_id&#39;: 6254926, &#39;name&#39;: &#39;Massachusetts&#39;}], &#39;countries&#39;: [{&#39;geonames_id&#39;: 6252001, &#39;name&#39;: &#39;United States&#39;, &#39;code&#39;: &#39;US&#39;}]}, &#39;input&#39;: {&#39;name&#39;: &#39;Harvard University&#39;, &#39;city&#39;: &#39;Cambridge&#39;, &#39;state&#39;: &#39;Massachusetts&#39;, &#39;country&#39;: &#39;United States&#39;}}]}
+{&#39;results&#39;: [{&#39;institutes&#39;: [{&#39;institute&#39;: {&#39;id&#39;: &#39;grid.410318.f&#39;, &#39;name&#39;: &#39;China Academy of Chinese Medical Sciences&#39;, &#39;city&#39;: &#39;Beijing&#39;, &#39;state&#39;: None, &#39;country&#39;: &#39;China&#39;}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: False}}], &#39;geo&#39;: {&#39;cities&#39;: [{&#39;geonames_id&#39;: 1816670, &#39;name&#39;: &#39;Beijing&#39;}], &#39;states&#39;: [{&#39;geonames_id&#39;: 2038349, &#39;name&#39;: &#39;Beijing&#39;}], &#39;countries&#39;: [{&#39;geonames_id&#39;: 1814991, &#39;name&#39;: &#39;China&#39;, &#39;code&#39;: &#39;CN&#39;}]}, &#39;input&#39;: {&#39;name&#39;: &#39;China Academy of Chinese Medical Sciences&#39;, &#39;city&#39;: &#39;Beijing&#39;, &#39;state&#39;: &#39;&#39;, &#39;country&#39;: &#39;China&#39;}}]}
+{&#39;results&#39;: [{&#39;institutes&#39;: [{&#39;institute&#39;: {&#39;id&#39;: &#39;grid.411356.4&#39;, &#39;name&#39;: &#39;Liaoning University&#39;, &#39;city&#39;: &#39;Shenyang&#39;, &#39;state&#39;: None, &#39;country&#39;: &#39;China&#39;}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: False}}], &#39;geo&#39;: {&#39;cities&#39;: [{&#39;geonames_id&#39;: 2034937, &#39;name&#39;: &#39;Shenyang&#39;}], &#39;states&#39;: [], &#39;countries&#39;: [{&#39;geonames_id&#39;: 1814991, &#39;name&#39;: &#39;China&#39;, &#39;code&#39;: &#39;CN&#39;}]}, &#39;input&#39;: {&#39;name&#39;: &#39;Liaoning University&#39;, &#39;city&#39;: &#39;Shenyang&#39;, &#39;state&#39;: &#39;&#39;, &#39;country&#39;: &#39;China&#39;}}]}
+{&#39;results&#39;: [{&#39;institutes&#39;: [{&#39;institute&#39;: {&#39;id&#39;: &#39;grid.440818.1&#39;, &#39;name&#39;: &#39;Liaoning Normal University&#39;, &#39;city&#39;: &#39;Dalian&#39;, &#39;state&#39;: None, &#39;country&#39;: &#39;China&#39;}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: False}}], &#39;geo&#39;: {&#39;cities&#39;: [{&#39;geonames_id&#39;: 1814087, &#39;name&#39;: &#39;Dalian&#39;}], &#39;states&#39;: [], &#39;countries&#39;: [{&#39;geonames_id&#39;: 1814991, &#39;name&#39;: &#39;China&#39;, &#39;code&#39;: &#39;CN&#39;}]}, &#39;input&#39;: {&#39;name&#39;: &#39;Liaoning Normal University&#39;, &#39;city&#39;: &#39;Dalian&#39;, &#39;state&#39;: &#39;&#39;, &#39;country&#39;: &#39;China&#39;}}]}
+{&#39;results&#39;: [{&#39;institutes&#39;: [], &#39;geo&#39;: {&#39;cities&#39;: [], &#39;states&#39;: [], &#39;countries&#39;: []}, &#39;input&#39;: {&#39;name&#39;: &#39;P.G. Department of Zoology and Research Centre, Shri Shiv Chhatrapati College of Arts, Commerce and Science, Junnar 410502, Pune, India.&#39;, &#39;city&#39;: &#39;&#39;, &#39;state&#39;: &#39;&#39;, &#39;country&#39;: &#39;&#39;}}]}
+{&#39;results&#39;: [{&#39;institutes&#39;: [{&#39;institute&#39;: {&#39;id&#39;: &#39;grid.264381.a&#39;, &#39;name&#39;: &#39;Sungkyunkwan University&#39;, &#39;city&#39;: &#39;Seoul&#39;, &#39;state&#39;: None, &#39;country&#39;: &#39;South Korea&#39;}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: False}}], &#39;geo&#39;: {&#39;cities&#39;: [{&#39;geonames_id&#39;: 1835848, &#39;name&#39;: &#39;Seoul&#39;}], &#39;states&#39;: [], &#39;countries&#39;: [{&#39;geonames_id&#39;: 1835841, &#39;name&#39;: &#39;South Korea&#39;, &#39;code&#39;: &#39;KR&#39;}]}, &#39;input&#39;: {&#39;name&#39;: &#39;Sungkyunkwan University&#39;, &#39;city&#39;: &#39;Seoul&#39;, &#39;state&#39;: &#39;&#39;, &#39;country&#39;: &#39;South Korea&#39;}}]}
+{&#39;results&#39;: [{&#39;institutes&#39;: [{&#39;institute&#39;: {&#39;id&#39;: &#39;grid.494569.3&#39;, &#39;name&#39;: &#39;Centre for Materials for Electronics Technology&#39;, &#39;city&#39;: &#39;Pune&#39;, &#39;state&#39;: None, &#39;country&#39;: &#39;India&#39;}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: False}}], &#39;geo&#39;: {&#39;cities&#39;: [{&#39;geonames_id&#39;: 1259229, &#39;name&#39;: &#39;Pune&#39;}], &#39;states&#39;: [{&#39;geonames_id&#39;: 1264418, &#39;name&#39;: &#39;Maharashtra&#39;}], &#39;countries&#39;: [{&#39;geonames_id&#39;: 1269750, &#39;name&#39;: &#39;India&#39;, &#39;code&#39;: &#39;IN&#39;}]}, &#39;input&#39;: {&#39;name&#39;: &#39;Centre for Materials for Electronics Technology&#39;, &#39;city&#39;: &#39;Pune&#39;, &#39;state&#39;: &#39;&#39;, &#39;country&#39;: &#39;India&#39;}}]}
+{&#39;results&#39;: [{&#39;institutes&#39;: [{&#39;institute&#39;: {&#39;id&#39;: &#39;grid.410511.0&#39;, &#39;name&#39;: &#39;Paris 12 Val de Marne University&#39;, &#39;city&#39;: &#39;Paris&#39;, &#39;state&#39;: None, &#39;country&#39;: &#39;France&#39;}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: True}}, {&#39;institute&#39;: {&#39;id&#39;: &#39;grid.5842.b&#39;, &#39;name&#39;: &#39;University of Paris-Sud&#39;, &#39;city&#39;: &#39;Orsay&#39;, &#39;state&#39;: None, &#39;country&#39;: &#39;France&#39;}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: True}}, {&#39;institute&#39;: {&#39;id&#39;: &#39;grid.11318.3a&#39;, &#39;name&#39;: &#39;Paris 13 University&#39;, &#39;city&#39;: &#39;Villetaneuse&#39;, &#39;state&#39;: None, &#39;country&#39;: &#39;France&#39;}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: True}}], &#39;geo&#39;: {&#39;cities&#39;: [{&#39;geonames_id&#39;: 2989204, &#39;name&#39;: &#39;Orsay&#39;}, {&#39;geonames_id&#39;: 2988507, &#39;name&#39;: &#39;Paris&#39;}, {&#39;geonames_id&#39;: 2968275, &#39;name&#39;: &#39;Villetaneuse&#39;}], &#39;states&#39;: [], &#39;countries&#39;: [{&#39;geonames_id&#39;: 3017382, &#39;name&#39;: &#39;France&#39;, &#39;code&#39;: &#39;FR&#39;}]}, &#39;input&#39;: {&#39;name&#39;: &#39;Institut Necker-Enfants Malades (INEM), INSERM U1151-CNRS UMR8253, Université de Paris, Faculté de Médecine, 156 rue de Vaugirard, 75730 Paris Cedex 15, France&#39;, &#39;city&#39;: &#39;&#39;, &#39;state&#39;: &#39;&#39;, &#39;country&#39;: &#39;&#39;}}]}
+
+</pre></div></div>
+</div>
+<p>If we combine the affiliation data into a single long string, we can also perform the same king of operation using the <strong>unstructured</strong> affiliation matching.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># implicit results</span>
+<span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">pbar</span><span class="p">(</span><span class="n">affiliations</span><span class="p">):</span>
+    <span class="n">merged</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{d[0]}</span><span class="s2"> </span><span class="si">{d[1]}</span><span class="s2"> </span><span class="si">{d[2]}</span><span class="s2"> </span><span class="si">{d[3]}</span><span class="s2">&quot;</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;&quot;&quot;extract_affiliations(affiliation=&quot;</span><span class="si">{merged}</span><span class="s2">&quot;)&quot;&quot;&quot;</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "8d442b1de59548598963e405a23ea88f", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<blockquote>
+<div><div class="highlight"><pre>
+{&#39;results&#39;: [{&#39;matches&#39;: [{&#39;affiliation_part&#39;: &#39;University of Nebraska–Lincoln Lincoln Nebraska United States&#39;, &#39;institutes&#39;: [{&#39;institute&#39;: {&#39;id&#39;: &#39;grid.24434.35&#39;, &#39;name&#39;: &#39;University of Nebraska–Lincoln&#39;, &#39;city&#39;: &#39;Lincoln&#39;, &#39;state&#39;: &#39;Nebraska&#39;, &#39;country&#39;: &#39;United States&#39;}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: False}}], &#39;geo&#39;: {&#39;cities&#39;: [{&#39;geonames_id&#39;: 5072006, &#39;name&#39;: &#39;Lincoln&#39;}], &#39;states&#39;: [{&#39;geonames_id&#39;: 5073708, &#39;name&#39;: &#39;Nebraska&#39;}], &#39;countries&#39;: [{&#39;geonames_id&#39;: 6252001, &#39;name&#39;: &#39;United States&#39;, &#39;code&#39;: &#39;US&#39;}]}}], &#39;input&#39;: {&#39;affiliation&#39;: &#39;University of Nebraska–Lincoln Lincoln Nebraska United States&#39;}}]}
+{&#39;results&#39;: [{&#39;matches&#39;: [{&#39;affiliation_part&#39;: &#39;Tarbiat Modares University Tehran Iran&#39;, &#39;institutes&#39;: [{&#39;institute&#39;: {&#39;id&#39;: &#39;grid.412266.5&#39;, &#39;name&#39;: &#39;Tarbiat Modares University&#39;, &#39;city&#39;: &#39;Tehran&#39;, &#39;state&#39;: None, &#39;country&#39;: &#39;Iran&#39;}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: False}}], &#39;geo&#39;: {&#39;cities&#39;: [{&#39;geonames_id&#39;: 112931, &#39;name&#39;: &#39;Tehran&#39;}], &#39;states&#39;: [{&#39;geonames_id&#39;: 110791, &#39;name&#39;: &#39;Tehran&#39;}], &#39;countries&#39;: [{&#39;geonames_id&#39;: 130758, &#39;name&#39;: &#39;Iran&#39;, &#39;code&#39;: &#39;IR&#39;}]}}], &#39;input&#39;: {&#39;affiliation&#39;: &#39;Tarbiat Modares University Tehran  Iran&#39;}}]}
+{&#39;results&#39;: [{&#39;matches&#39;: [{&#39;affiliation_part&#39;: &#39;Harvard University Cambridge Massachusetts United States&#39;, &#39;institutes&#39;: [{&#39;institute&#39;: {&#39;id&#39;: &#39;grid.38142.3c&#39;, &#39;name&#39;: &#39;Harvard University&#39;, &#39;city&#39;: &#39;Cambridge&#39;, &#39;state&#39;: &#39;Massachusetts&#39;, &#39;country&#39;: &#39;United States&#39;}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: False}}], &#39;geo&#39;: {&#39;cities&#39;: [{&#39;geonames_id&#39;: 4931972, &#39;name&#39;: &#39;Cambridge&#39;}], &#39;states&#39;: [{&#39;geonames_id&#39;: 6254926, &#39;name&#39;: &#39;Massachusetts&#39;}], &#39;countries&#39;: [{&#39;geonames_id&#39;: 6252001, &#39;name&#39;: &#39;United States&#39;, &#39;code&#39;: &#39;US&#39;}]}}], &#39;input&#39;: {&#39;affiliation&#39;: &#39;Harvard University Cambridge Massachusetts United States&#39;}}]}
+{&#39;results&#39;: [{&#39;matches&#39;: [{&#39;affiliation_part&#39;: &#39;China Academy of Chinese Medical Sciences Beijing China&#39;, &#39;institutes&#39;: [{&#39;institute&#39;: {&#39;id&#39;: &#39;grid.410318.f&#39;, &#39;name&#39;: &#39;China Academy of Chinese Medical Sciences&#39;, &#39;city&#39;: &#39;Beijing&#39;, &#39;state&#39;: None, &#39;country&#39;: &#39;China&#39;}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: False}}], &#39;geo&#39;: {&#39;cities&#39;: [{&#39;geonames_id&#39;: 1816670, &#39;name&#39;: &#39;Beijing&#39;}], &#39;states&#39;: [{&#39;geonames_id&#39;: 2038349, &#39;name&#39;: &#39;Beijing&#39;}], &#39;countries&#39;: [{&#39;geonames_id&#39;: 1814991, &#39;name&#39;: &#39;China&#39;, &#39;code&#39;: &#39;CN&#39;}]}}], &#39;input&#39;: {&#39;affiliation&#39;: &#39;China Academy of Chinese Medical Sciences Beijing  China&#39;}}]}
+{&#39;results&#39;: [{&#39;matches&#39;: [{&#39;affiliation_part&#39;: &#39;Liaoning University Shenyang China&#39;, &#39;institutes&#39;: [{&#39;institute&#39;: {&#39;id&#39;: &#39;grid.411356.4&#39;, &#39;name&#39;: &#39;Liaoning University&#39;, &#39;city&#39;: &#39;Shenyang&#39;, &#39;state&#39;: None, &#39;country&#39;: &#39;China&#39;}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: False}}], &#39;geo&#39;: {&#39;cities&#39;: [{&#39;geonames_id&#39;: 2034937, &#39;name&#39;: &#39;Shenyang&#39;}], &#39;states&#39;: [{&#39;geonames_id&#39;: 2036115, &#39;name&#39;: &#39;Liaoning&#39;}], &#39;countries&#39;: [{&#39;geonames_id&#39;: 1814991, &#39;name&#39;: &#39;China&#39;, &#39;code&#39;: &#39;CN&#39;}]}}], &#39;input&#39;: {&#39;affiliation&#39;: &#39;Liaoning University Shenyang  China&#39;}}]}
+{&#39;results&#39;: [{&#39;matches&#39;: [{&#39;affiliation_part&#39;: &#39;Liaoning Normal University Dalian China&#39;, &#39;institutes&#39;: [{&#39;institute&#39;: {&#39;id&#39;: &#39;grid.440818.1&#39;, &#39;name&#39;: &#39;Liaoning Normal University&#39;, &#39;city&#39;: &#39;Dalian&#39;, &#39;state&#39;: None, &#39;country&#39;: &#39;China&#39;}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: False}}], &#39;geo&#39;: {&#39;cities&#39;: [{&#39;geonames_id&#39;: 1814087, &#39;name&#39;: &#39;Dalian&#39;}], &#39;states&#39;: [{&#39;geonames_id&#39;: 2036115, &#39;name&#39;: &#39;Liaoning&#39;}], &#39;countries&#39;: [{&#39;geonames_id&#39;: 1814991, &#39;name&#39;: &#39;China&#39;, &#39;code&#39;: &#39;CN&#39;}]}}], &#39;input&#39;: {&#39;affiliation&#39;: &#39;Liaoning Normal University Dalian  China&#39;}}]}
+{&#39;results&#39;: [{&#39;matches&#39;: [{&#39;affiliation_part&#39;: &#39;P.G. Department of Zoology and Research Centre, Shri Shiv Chhatrapati College of Arts, Commerce and Science, Junnar 410502, Pune, India&#39;, &#39;institutes&#39;: [], &#39;geo&#39;: {&#39;cities&#39;: [{&#39;geonames_id&#39;: 1268761, &#39;name&#39;: &#39;Junnar&#39;}], &#39;states&#39;: [{&#39;geonames_id&#39;: 1264418, &#39;name&#39;: &#39;Maharashtra&#39;}], &#39;countries&#39;: [{&#39;geonames_id&#39;: 1269750, &#39;name&#39;: &#39;India&#39;, &#39;code&#39;: &#39;IN&#39;}]}}], &#39;input&#39;: {&#39;affiliation&#39;: &#39;P.G. Department of Zoology and Research Centre, Shri Shiv Chhatrapati College of Arts, Commerce and Science, Junnar 410502, Pune, India.   &#39;}}]}
+{&#39;results&#39;: [{&#39;matches&#39;: [{&#39;affiliation_part&#39;: &#39;Sungkyunkwan University Seoul South Korea&#39;, &#39;institutes&#39;: [{&#39;institute&#39;: {&#39;id&#39;: &#39;grid.264381.a&#39;, &#39;name&#39;: &#39;Sungkyunkwan University&#39;, &#39;city&#39;: &#39;Seoul&#39;, &#39;state&#39;: None, &#39;country&#39;: &#39;South Korea&#39;}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: False}}], &#39;geo&#39;: {&#39;cities&#39;: [{&#39;geonames_id&#39;: 1835848, &#39;name&#39;: &#39;Seoul&#39;}], &#39;states&#39;: [], &#39;countries&#39;: [{&#39;geonames_id&#39;: 1835841, &#39;name&#39;: &#39;South Korea&#39;, &#39;code&#39;: &#39;KR&#39;}]}}], &#39;input&#39;: {&#39;affiliation&#39;: &#39;Sungkyunkwan University Seoul  South Korea&#39;}}]}
+{&#39;results&#39;: [{&#39;matches&#39;: [{&#39;affiliation_part&#39;: &#39;Centre for Materials for Electronics Technology Pune India&#39;, &#39;institutes&#39;: [{&#39;institute&#39;: {&#39;id&#39;: &#39;grid.494569.3&#39;, &#39;name&#39;: &#39;Centre for Materials for Electronics Technology&#39;, &#39;city&#39;: &#39;Pune&#39;, &#39;state&#39;: None, &#39;country&#39;: &#39;India&#39;}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: False}}], &#39;geo&#39;: {&#39;cities&#39;: [{&#39;geonames_id&#39;: 1259229, &#39;name&#39;: &#39;Pune&#39;}], &#39;states&#39;: [{&#39;geonames_id&#39;: 1264418, &#39;name&#39;: &#39;Maharashtra&#39;}], &#39;countries&#39;: [{&#39;geonames_id&#39;: 1269750, &#39;name&#39;: &#39;India&#39;, &#39;code&#39;: &#39;IN&#39;}]}}], &#39;input&#39;: {&#39;affiliation&#39;: &#39;Centre for Materials for Electronics Technology Pune  India&#39;}}]}
+{&#39;results&#39;: [{&#39;matches&#39;: [{&#39;affiliation_part&#39;: &#39;Institut Necker-Enfants Malades (INEM), INSERM U1151-CNRS UMR8253, Université de Paris, Faculté de Médecine, 156 rue de Vaugirard, 75730 Paris Cedex 15, France&#39;, &#39;institutes&#39;: [{&#39;institute&#39;: {&#39;id&#39;: &#39;grid.11318.3a&#39;, &#39;name&#39;: &#39;Paris 13 University&#39;, &#39;city&#39;: &#39;Villetaneuse&#39;, &#39;state&#39;: None, &#39;country&#39;: &#39;France&#39;}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: True}}, {&#39;institute&#39;: {&#39;id&#39;: &#39;grid.410511.0&#39;, &#39;name&#39;: &#39;Paris 12 Val de Marne University&#39;, &#39;city&#39;: &#39;Paris&#39;, &#39;state&#39;: None, &#39;country&#39;: &#39;France&#39;}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: True}}, {&#39;institute&#39;: {&#39;id&#39;: &#39;grid.5842.b&#39;, &#39;name&#39;: &#39;University of Paris-Sud&#39;, &#39;city&#39;: &#39;Orsay&#39;, &#39;state&#39;: None, &#39;country&#39;: &#39;France&#39;}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: True}}], &#39;geo&#39;: {&#39;cities&#39;: [{&#39;geonames_id&#39;: 2989204, &#39;name&#39;: &#39;Orsay&#39;}, {&#39;geonames_id&#39;: 2988507, &#39;name&#39;: &#39;Paris&#39;}, {&#39;geonames_id&#39;: 2968275, &#39;name&#39;: &#39;Villetaneuse&#39;}], &#39;states&#39;: [], &#39;countries&#39;: [{&#39;geonames_id&#39;: 3017382, &#39;name&#39;: &#39;France&#39;, &#39;code&#39;: &#39;FR&#39;}]}}], &#39;input&#39;: {&#39;affiliation&#39;: &#39;Institut Necker-Enfants Malades (INEM), INSERM U1151-CNRS UMR8253, Université de Paris, Faculté de Médecine, 156 rue de Vaugirard, 75730 Paris Cedex 15, France   &#39;}}]}
+
+</pre></div></div></blockquote>
+<p>NOTE: the above commands also support <strong>bulk querying</strong> e.g. to save up API queries - check out the <a class="reference external" href="https://docs.dimensions.ai/dsl/1.21.0-preview/functions.html#function-extract-affiliations">docs</a> for more info.</p>
+</div>
+</div>
+</div>
+<div class="section" id="Searching-GRID-organizations">
+<h2>Searching GRID organizations<a class="headerlink" href="#Searching-GRID-organizations" title="Permalink to this headline">¶</a></h2>
+<p>This can be done using full text search and/or fielded search.</p>
+<div class="section" id="Full-text-search">
+<h3>Full-text search<a class="headerlink" href="#Full-text-search" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
+search organizations
+  for &quot;new york&quot;
+return organizations limit 10
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Returned Organizations: 10 (total = 227)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>city_name</th>
+      <th>country_name</th>
+      <th>acronym</th>
+      <th>name</th>
+      <th>latitude</th>
+      <th>types</th>
+      <th>state_name</th>
+      <th>linkout</th>
+      <th>longitude</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>grid.454120.6</td>
+      <td>New York</td>
+      <td>United States</td>
+      <td>None</td>
+      <td>New York Sea Grant</td>
+      <td>40.720634</td>
+      <td>[Facility]</td>
+      <td>New York</td>
+      <td>[http://www.seagrant.sunysb.edu/]</td>
+      <td>-73.984740</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>grid.480917.3</td>
+      <td>New York</td>
+      <td>United States</td>
+      <td>None</td>
+      <td>New York Community Trust</td>
+      <td>40.758870</td>
+      <td>[Nonprofit]</td>
+      <td>New York</td>
+      <td>[http://www.nycommunitytrust.org/]</td>
+      <td>-73.968185</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>grid.480921.6</td>
+      <td>New York</td>
+      <td>United States</td>
+      <td>None</td>
+      <td>New York Foundation</td>
+      <td>40.747960</td>
+      <td>[Nonprofit]</td>
+      <td>New York</td>
+      <td>[http://nyf.org/]</td>
+      <td>-73.984010</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>grid.481403.a</td>
+      <td>Manhattan</td>
+      <td>United States</td>
+      <td>None</td>
+      <td>New York Times</td>
+      <td>40.756190</td>
+      <td>[Other]</td>
+      <td>New York</td>
+      <td>[http://www.nytco.com/]</td>
+      <td>-73.990425</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>grid.419997.b</td>
+      <td>New York</td>
+      <td>United States</td>
+      <td>None</td>
+      <td>New York Law School</td>
+      <td>40.718030</td>
+      <td>[Education]</td>
+      <td>New York</td>
+      <td>[http://www.nyls.edu/]</td>
+      <td>-74.007034</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>grid.427147.3</td>
+      <td>New York</td>
+      <td>United States</td>
+      <td>None</td>
+      <td>New York Harbor School</td>
+      <td>NaN</td>
+      <td>[Education]</td>
+      <td>New York</td>
+      <td>None</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>grid.429147.d</td>
+      <td>Buffalo</td>
+      <td>United States</td>
+      <td>None</td>
+      <td>HealthNow New York</td>
+      <td>NaN</td>
+      <td>[Healthcare]</td>
+      <td>New York</td>
+      <td>None</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>grid.429884.b</td>
+      <td>New York</td>
+      <td>United States</td>
+      <td>None</td>
+      <td>New York Genome Center</td>
+      <td>NaN</td>
+      <td>None</td>
+      <td>New York</td>
+      <td>None</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>grid.429893.d</td>
+      <td>New York</td>
+      <td>United States</td>
+      <td>None</td>
+      <td>New York Restoration Project</td>
+      <td>NaN</td>
+      <td>None</td>
+      <td>New York</td>
+      <td>None</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>grid.429894.a</td>
+      <td>New York</td>
+      <td>United States</td>
+      <td>None</td>
+      <td>New York Public Radio</td>
+      <td>40.750397</td>
+      <td>[Other]</td>
+      <td>New York</td>
+      <td>[http://www.nypublicradio.org/]</td>
+      <td>-74.994910</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
+search organizations
+  for &quot;new york AND community&quot;
+return organizations limit 10
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Returned Organizations: 7 (total = 7)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>latitude</th>
+      <th>name</th>
+      <th>state_name</th>
+      <th>linkout</th>
+      <th>country_name</th>
+      <th>longitude</th>
+      <th>city_name</th>
+      <th>types</th>
+      <th>acronym</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>grid.480917.3</td>
+      <td>40.758870</td>
+      <td>New York Community Trust</td>
+      <td>New York</td>
+      <td>[http://www.nycommunitytrust.org/]</td>
+      <td>United States</td>
+      <td>-73.968185</td>
+      <td>New York</td>
+      <td>[Nonprofit]</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>grid.478715.8</td>
+      <td>43.056038</td>
+      <td>Central New York Community Foundation</td>
+      <td>New York</td>
+      <td>[https://www.cnycf.org/]</td>
+      <td>United States</td>
+      <td>-76.148210</td>
+      <td>Syracuse</td>
+      <td>[Nonprofit]</td>
+      <td>CNYCF</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>grid.429257.f</td>
+      <td>NaN</td>
+      <td>Korean Community Services of Metropolitan New ...</td>
+      <td>New York</td>
+      <td>None</td>
+      <td>United States</td>
+      <td>NaN</td>
+      <td>New York</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>grid.475804.a</td>
+      <td>40.749622</td>
+      <td>Community Service Society of New York</td>
+      <td>New York</td>
+      <td>[http://www.cssny.org/]</td>
+      <td>United States</td>
+      <td>-73.974620</td>
+      <td>New York</td>
+      <td>[Other]</td>
+      <td>CSS</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>grid.490742.c</td>
+      <td>42.874810</td>
+      <td>Health Foundation for Western &amp; Central New York</td>
+      <td>New York</td>
+      <td>[https://hfwcny.org/]</td>
+      <td>United States</td>
+      <td>-78.849690</td>
+      <td>Buffalo</td>
+      <td>[Other]</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>grid.475783.a</td>
+      <td>40.751163</td>
+      <td>Long Term Care Community Coalition</td>
+      <td>New York</td>
+      <td>[http://www.ltccc.org/]</td>
+      <td>United States</td>
+      <td>-73.992470</td>
+      <td>New York</td>
+      <td>[Other]</td>
+      <td>LTCCC</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>grid.468887.d</td>
+      <td>42.960820</td>
+      <td>Erie Community College</td>
+      <td>New York</td>
+      <td>[https://www.ecc.edu/]</td>
+      <td>United States</td>
+      <td>-78.721660</td>
+      <td>Williamsville</td>
+      <td>[Education]</td>
+      <td>ECC</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Fielded-search">
+<h3>Fielded search<a class="headerlink" href="#Fielded-search" title="Permalink to this headline">¶</a></h3>
+<p>We can easily look up an organization using its grid ID, eg <a class="reference external" href="https://grid.ac/institutes/grid.468887.d">grid.468887.d</a>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
+search organizations
+  where id=&quot;grid.468887.d&quot;
+return organizations[all]
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Returned Organizations: 1 (total = 1)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>cnrs_ids</th>
+      <th>wikipedia_url</th>
+      <th>ucas_ids</th>
+      <th>state_name</th>
+      <th>longitude</th>
+      <th>external_ids_fundref</th>
+      <th>organization_related_ids</th>
+      <th>types</th>
+      <th>ukprn_ids</th>
+      <th>...</th>
+      <th>organization_parent_ids</th>
+      <th>name</th>
+      <th>organization_child_ids</th>
+      <th>orgref_ids</th>
+      <th>hesa_ids</th>
+      <th>isni_ids</th>
+      <th>linkout</th>
+      <th>country_name</th>
+      <th>city_name</th>
+      <th>acronym</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>grid.468887.d</td>
+      <td>None</td>
+      <td>https://en.wikipedia.org/wiki/Erie_Community_C...</td>
+      <td>None</td>
+      <td>New York</td>
+      <td>-78.72166</td>
+      <td>None</td>
+      <td>None</td>
+      <td>[Education]</td>
+      <td>None</td>
+      <td>...</td>
+      <td>[grid.189747.4]</td>
+      <td>Erie Community College</td>
+      <td>None</td>
+      <td>[529952]</td>
+      <td>None</td>
+      <td>[0000 0004 0447 5070]</td>
+      <td>[https://www.ecc.edu/]</td>
+      <td>United States</td>
+      <td>Williamsville</td>
+      <td>ECC</td>
+    </tr>
+  </tbody>
+</table>
+<p>1 rows × 24 columns</p>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
+search organizations
+  for &quot;new york&quot;
+  where types in [&quot;Education&quot;]
+return organizations limit 10
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Returned Organizations: 10 (total = 69)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>latitude</th>
+      <th>linkout</th>
+      <th>city_name</th>
+      <th>state_name</th>
+      <th>name</th>
+      <th>acronym</th>
+      <th>id</th>
+      <th>types</th>
+      <th>longitude</th>
+      <th>country_name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>40.718030</td>
+      <td>[http://www.nyls.edu/]</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York Law School</td>
+      <td>None</td>
+      <td>grid.419997.b</td>
+      <td>[Education]</td>
+      <td>-74.007034</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>NaN</td>
+      <td>None</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York Harbor School</td>
+      <td>None</td>
+      <td>grid.427147.3</td>
+      <td>[Education]</td>
+      <td>NaN</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>42.101124</td>
+      <td>[http://www.davisny.edu/]</td>
+      <td>Johnson City</td>
+      <td>New York</td>
+      <td>Davis College - New York</td>
+      <td>None</td>
+      <td>grid.454538.b</td>
+      <td>[Education]</td>
+      <td>-75.961510</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>40.942413</td>
+      <td>[http://www.concordia-ny.edu/]</td>
+      <td>Bronxville</td>
+      <td>New York</td>
+      <td>Concordia College - New York</td>
+      <td>None</td>
+      <td>grid.468709.4</td>
+      <td>[Education]</td>
+      <td>-73.821900</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>40.702000</td>
+      <td>[https://www.york.cuny.edu/]</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>York College, City University of New York</td>
+      <td>None</td>
+      <td>grid.268456.b</td>
+      <td>[Education]</td>
+      <td>-73.795000</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>41.085327</td>
+      <td>[http://www.nymc.edu/]</td>
+      <td>Valhalla</td>
+      <td>New York</td>
+      <td>New York Medical College</td>
+      <td>NYMC</td>
+      <td>grid.260917.b</td>
+      <td>[Education]</td>
+      <td>-73.809750</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>40.755123</td>
+      <td>[https://www.artinstitutes.edu/new-york]</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>Art Institute of New York</td>
+      <td>None</td>
+      <td>grid.432135.2</td>
+      <td>[Education]</td>
+      <td>-73.989220</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>NaN</td>
+      <td>None</td>
+      <td>Tirana</td>
+      <td>None</td>
+      <td>University of New York Tirana</td>
+      <td>None</td>
+      <td>grid.444973.9</td>
+      <td>[Education]</td>
+      <td>NaN</td>
+      <td>Albania</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>42.911892</td>
+      <td>[http://www.nycc.edu/]</td>
+      <td>Seneca Falls</td>
+      <td>New York</td>
+      <td>New York Chiropractic College</td>
+      <td>NYCC</td>
+      <td>grid.464639.a</td>
+      <td>[Education]</td>
+      <td>-76.756470</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>40.730000</td>
+      <td>[http://www.nyu.edu/]</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York University</td>
+      <td>NYU</td>
+      <td>grid.137628.9</td>
+      <td>[Education]</td>
+      <td>-73.995000</td>
+      <td>United States</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
+search organizations
+  for &quot;new york&quot;
+  where types in [&quot;Education&quot;]
+  and country_name != &quot;United States&quot;
+return organizations limit 10
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Returned Organizations: 8 (total = 8)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>latitude</th>
+      <th>linkout</th>
+      <th>city_name</th>
+      <th>state_name</th>
+      <th>name</th>
+      <th>acronym</th>
+      <th>id</th>
+      <th>types</th>
+      <th>longitude</th>
+      <th>country_name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>NaN</td>
+      <td>None</td>
+      <td>Tirana</td>
+      <td>None</td>
+      <td>University of New York Tirana</td>
+      <td>None</td>
+      <td>grid.444973.9</td>
+      <td>[Education]</td>
+      <td>NaN</td>
+      <td>Albania</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>NaN</td>
+      <td>None</td>
+      <td>Prague</td>
+      <td>None</td>
+      <td>University of New York in Prague</td>
+      <td>None</td>
+      <td>grid.449989.1</td>
+      <td>[Education]</td>
+      <td>NaN</td>
+      <td>Czechia</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>43.795910</td>
+      <td>[http://www.nyu.edu/florence.html]</td>
+      <td>Florence</td>
+      <td>None</td>
+      <td>New York University</td>
+      <td>NYU</td>
+      <td>grid.473731.5</td>
+      <td>[Education]</td>
+      <td>11.265850</td>
+      <td>Italy</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>48.869614</td>
+      <td>[http://www.nyu.edu/paris.html]</td>
+      <td>Paris</td>
+      <td>None</td>
+      <td>New York University Paris</td>
+      <td>None</td>
+      <td>grid.479986.d</td>
+      <td>[Education]</td>
+      <td>2.346863</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>37.377018</td>
+      <td>[http://www.sunykorea.ac.kr/]</td>
+      <td>Seoul</td>
+      <td>None</td>
+      <td>SUNY Korea</td>
+      <td>None</td>
+      <td>grid.410685.e</td>
+      <td>[Education]</td>
+      <td>126.666770</td>
+      <td>South Korea</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>49.284374</td>
+      <td>[http://nyit.edu/vancouver]</td>
+      <td>Vancouver</td>
+      <td>British Columbia</td>
+      <td>New York Institute of Technology</td>
+      <td>NYIT</td>
+      <td>grid.473728.d</td>
+      <td>[Education]</td>
+      <td>-123.116480</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>31.225506</td>
+      <td>[https://shanghai.nyu.edu/]</td>
+      <td>Shanghai</td>
+      <td>None</td>
+      <td>New York University Shanghai</td>
+      <td>None</td>
+      <td>grid.449457.f</td>
+      <td>[Education]</td>
+      <td>121.533510</td>
+      <td>China</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>24.485000</td>
+      <td>[https://nyuad.nyu.edu/]</td>
+      <td>Abu Dhabi</td>
+      <td>None</td>
+      <td>New York University Abu Dhabi</td>
+      <td>None</td>
+      <td>grid.440573.1</td>
+      <td>[Education]</td>
+      <td>54.353000</td>
+      <td>United Arab Emirates</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Returning-facets">
+<h3>Returning facets<a class="headerlink" href="#Returning-facets" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
+search organizations
+  for &quot;new york&quot;
+return country_name
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Returned Country_name: 10
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>United States</td>
+      <td>218</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Albania</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Canada</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>China</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Czechia</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>France</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Italy</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>South Korea</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>United Arab Emirates</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>United Kingdom</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">dsldf</span>
+search organizations
+  for &quot;new york&quot;
+  where country_name = &quot;United States&quot;
+return types
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Returned Types: 8
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Education</td>
+      <td>61</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Nonprofit</td>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Government</td>
+      <td>38</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Other</td>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Healthcare</td>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Archive</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Facility</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Company</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+</div>
+<div class="section" id="A-closer-look-at-the-organizations-data-statistics">
+<h2>A closer look at the organizations data statistics<a class="headerlink" href="#A-closer-look-at-the-organizations-data-statistics" title="Permalink to this headline">¶</a></h2>
+<p>The Dimensions Search Language <a class="reference external" href="https://docs.dimensions.ai/dsl/data.html#getting-documentation-programmatically">exposes programmatically metadata</a>, such as supported sources and entities, along with their fields, facets, fieldsets, metrics and search fields.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">res</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;describe schema&quot;</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+<span class="n">docs_for</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;organizations&#39;</span><span class="p">]</span>
+<span class="n">header</span> <span class="o">=</span> <span class="s2">&quot;sources&quot;</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;sources&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;field&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;description&#39;</span><span class="p">:[],</span> <span class="s1">&#39;is_filter&#39;</span><span class="p">:[],</span> <span class="s1">&#39;is_entity&#39;</span><span class="p">:</span> <span class="p">[],</span>  <span class="s1">&#39;is_facet&#39;</span><span class="p">:[],}</span>
+<span class="k">for</span> <span class="n">S</span> <span class="ow">in</span> <span class="n">docs_for</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">[</span><span class="n">header</span><span class="p">][</span><span class="n">S</span><span class="p">][</span><span class="s1">&#39;fields&#39;</span><span class="p">]):</span>
+        <span class="n">d</span><span class="p">[</span><span class="n">header</span><span class="p">]</span> <span class="o">+=</span> <span class="p">[</span><span class="n">S</span><span class="p">]</span>
+        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;field&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span>
+        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="p">[</span><span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">[</span><span class="n">header</span><span class="p">][</span><span class="n">S</span><span class="p">][</span><span class="s1">&#39;fields&#39;</span><span class="p">][</span><span class="n">x</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">]]</span>
+        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="p">[</span><span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">[</span><span class="n">header</span><span class="p">][</span><span class="n">S</span><span class="p">][</span><span class="s1">&#39;fields&#39;</span><span class="p">][</span><span class="n">x</span><span class="p">][</span><span class="s1">&#39;description&#39;</span><span class="p">]]</span>
+        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;is_filter&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="p">[</span><span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">[</span><span class="n">header</span><span class="p">][</span><span class="n">S</span><span class="p">][</span><span class="s1">&#39;fields&#39;</span><span class="p">][</span><span class="n">x</span><span class="p">][</span><span class="s1">&#39;is_filter&#39;</span><span class="p">]]</span>
+        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;is_facet&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="p">[</span><span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">[</span><span class="n">header</span><span class="p">][</span><span class="n">S</span><span class="p">][</span><span class="s1">&#39;fields&#39;</span><span class="p">][</span><span class="n">x</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;is_facet&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)]</span>
+        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;is_entity&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="p">[</span><span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">[</span><span class="n">header</span><span class="p">][</span><span class="n">S</span><span class="p">][</span><span class="s1">&#39;fields&#39;</span><span class="p">][</span><span class="n">x</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;is_entity&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)]</span>
+
+<span class="n">fields</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="n">fields</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sources</th>
+      <th>field</th>
+      <th>type</th>
+      <th>description</th>
+      <th>is_filter</th>
+      <th>is_entity</th>
+      <th>is_facet</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>organizations</td>
+      <td>acronym</td>
+      <td>string</td>
+      <td>GRID acronym of the organization. E.g., "UT" f...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>organizations</td>
+      <td>city_name</td>
+      <td>string</td>
+      <td>GRID name of the organization country. E.g., "...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>organizations</td>
+      <td>cnrs_ids</td>
+      <td>string</td>
+      <td>CNRS IDs for this organization</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>organizations</td>
+      <td>country_name</td>
+      <td>string</td>
+      <td>GRID name of the organization country. E.g., "...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>organizations</td>
+      <td>established</td>
+      <td>integer</td>
+      <td>Year when the organization was estabilished</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>organizations</td>
+      <td>external_ids_fundref</td>
+      <td>string</td>
+      <td>Fundref IDs for this organization</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>organizations</td>
+      <td>hesa_ids</td>
+      <td>string</td>
+      <td>HESA IDs for this organization</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>organizations</td>
+      <td>id</td>
+      <td>string</td>
+      <td>GRID ID of the organization. E.g., "grid.26999...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>organizations</td>
+      <td>ificlaims_ids</td>
+      <td>string</td>
+      <td>IFI Claims IDs for this organization</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>organizations</td>
+      <td>isni_ids</td>
+      <td>string</td>
+      <td>ISNI IDs for this organization</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>organizations</td>
+      <td>latitude</td>
+      <td>float</td>
+      <td>None</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>organizations</td>
+      <td>linkout</td>
+      <td>string</td>
+      <td>None</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>organizations</td>
+      <td>longitude</td>
+      <td>float</td>
+      <td>None</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>organizations</td>
+      <td>name</td>
+      <td>string</td>
+      <td>GRID name of the organization. E.g., "Universi...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>organizations</td>
+      <td>organization_child_ids</td>
+      <td>string</td>
+      <td>Child organization IDs</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>organizations</td>
+      <td>organization_parent_ids</td>
+      <td>string</td>
+      <td>Parent organization IDs</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>organizations</td>
+      <td>organization_related_ids</td>
+      <td>string</td>
+      <td>Related organization IDs</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>organizations</td>
+      <td>orgref_ids</td>
+      <td>string</td>
+      <td>OrgRef IDs for this organization</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>organizations</td>
+      <td>state_name</td>
+      <td>string</td>
+      <td>GRID name of the organization country. E.g., "...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>organizations</td>
+      <td>types</td>
+      <td>string</td>
+      <td>Type of an organization. Available types inclu...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>organizations</td>
+      <td>ucas_ids</td>
+      <td>string</td>
+      <td>UCAS IDs for this organization</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>organizations</td>
+      <td>ukprn_ids</td>
+      <td>string</td>
+      <td>UKPRN IDs for this organization</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>organizations</td>
+      <td>wikidata_ids</td>
+      <td>string</td>
+      <td>WikiData IDs for this organization</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>organizations</td>
+      <td>wikipedia_url</td>
+      <td>string</td>
+      <td>Wikipedia URL</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>We can use the fields information above to draw up some quick statistics re. the organizations source.</p>
+<p>In order to do this, we use the operator <code class="docutils literal notranslate"><span class="pre">is</span> <span class="pre">not</span> <span class="pre">empty</span></code> to generate automatically queries like this <code class="docutils literal notranslate"><span class="pre">search</span> <span class="pre">organizations</span> <span class="pre">where</span> <span class="pre">field_name</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">empty</span> <span class="pre">return</span> <span class="pre">organizations</span> <span class="pre">limit</span> <span class="pre">1</span></code> and then use the <code class="docutils literal notranslate"><span class="pre">total_count</span></code> field in the JSON we get back for our statistics.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># one query with `is not empty` for field-filters</span>
+<span class="n">q_template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search organizations where </span><span class="si">{}</span><span class="s2"> is not empty return organizations[id] limit 1&quot;&quot;&quot;</span>
+
+<span class="c1"># seed results with total number of orgs</span>
+<span class="n">totorgs</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;search organizations return organizations[id] limit 1&quot;&quot;&quot;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">count_total</span>
+<span class="n">stats</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s1">&#39;filter_by&#39;</span><span class="p">:</span> <span class="s1">&#39;All Organizations (no filter)&#39;</span><span class="p">,</span> <span class="s1">&#39;results&#39;</span> <span class="p">:</span> <span class="n">totorgs</span><span class="p">}</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">pbar</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">fields</span><span class="o">.</span><span class="n">iterrows</span><span class="p">())):</span>
+    <span class="c1"># print(&quot;\n===&quot;, row[&#39;field&#39;])</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">q_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;field&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;field&#39;</span><span class="p">])</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">stats</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;filter_by&#39;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;field&#39;</span><span class="p">],</span> <span class="s1">&#39;results&#39;</span> <span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">count_total</span><span class="p">})</span>
+
+
+<span class="c1"># save to a dataframe</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "9aba66771f18464e871f42be5f222763", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>filter_by</th>
+      <th>results</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>All Organizations (no filter)</td>
+      <td>97308</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>established</td>
+      <td>97308</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>name</td>
+      <td>97308</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>id</td>
+      <td>97308</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>wikipedia_url</td>
+      <td>97308</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>country_name</td>
+      <td>97306</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>city_name</td>
+      <td>97240</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>types</td>
+      <td>94241</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>latitude</td>
+      <td>80667</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>longitude</td>
+      <td>80667</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>linkout</td>
+      <td>80289</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>isni_ids</td>
+      <td>38286</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>state_name</td>
+      <td>36350</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>acronym</td>
+      <td>33117</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>wikidata_ids</td>
+      <td>27168</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>orgref_ids</td>
+      <td>15047</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>external_ids_fundref</td>
+      <td>10194</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>organization_parent_ids</td>
+      <td>10167</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>ificlaims_ids</td>
+      <td>4859</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>organization_related_ids</td>
+      <td>4070</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>organization_child_ids</td>
+      <td>2690</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>cnrs_ids</td>
+      <td>937</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>ukprn_ids</td>
+      <td>275</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>hesa_ids</td>
+      <td>273</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>ucas_ids</td>
+      <td>258</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Where-to-find-out-more">
+<h2>Where to find out more<a class="headerlink" href="#Where-to-find-out-more" title="Permalink to this headline">¶</a></h2>
+<p>Please have a look at the <a class="reference external" href="https://docs.dimensions.ai/dsl/data-sources.html">official documentation</a> for more information on the GRID source.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Searching GRID organizations using the Dimensions API</a><ul>
+<li><a class="reference internal" href="#Prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#Matching-affiliation-data-to-GRID-IDs-using-extract_affiliations">Matching affiliation data to GRID IDs using <code class="docutils literal notranslate"><span class="pre">extract_affiliations</span></code></a></li>
+<li><a class="reference internal" href="#Searching-GRID-organizations">Searching GRID organizations</a><ul>
+<li><a class="reference internal" href="#Full-text-search">Full-text search</a></li>
+<li><a class="reference internal" href="#Fielded-search">Fielded search</a></li>
+<li><a class="reference internal" href="#Returning-facets">Returning facets</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#A-closer-look-at-the-organizations-data-statistics">A closer look at the organizations data statistics</a></li>
+<li><a class="reference internal" href="#Where-to-find-out-more">Where to find out more</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/notebooks/GRID-preview.ipynb.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Dimensions API Lab</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dimensions API Team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

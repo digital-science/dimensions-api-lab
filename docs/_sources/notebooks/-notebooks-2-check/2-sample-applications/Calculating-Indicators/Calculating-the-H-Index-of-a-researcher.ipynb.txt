@@ -1,0 +1,222 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "<a href=\"https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/2-sample-applications/Calculating-Indicators/Calculating-the-H-Index-of-a-researcher.ipynb\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open Dimensions API Lab In Google Colab\"/></a>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "# Calculating the H-index of a researcher\n",
+    "\n",
+    "This notebook shows how to use Python and the [Dimensions Analytics API](https://www.dimensions.ai/dimensions-apis/) to calculate the H-index of a researcher. \n",
+    "\n",
+    "#### Background\n",
+    "\n",
+    "> The [h-index](https://en.wikipedia.org/wiki/H-index) is an author-level metric that attempts to measure both the productivity and citation impact of the publications of a scientist or scholar. The index is based on the set of the scientist's most cited papers and the number of citations that they have received in other publications.\n",
+    "\n",
+    "A more precise definition:\n",
+    "\n",
+    "> The h-index is defined as the maximum value of h such that the given author/journal has published h papers that have each been cited at least h times.\n",
+    "\n",
+    "How to calculate it:\n",
+    "\n",
+    "> Formally, if f is the function that corresponds to the number of citations for each publication, we compute the h-index as follows. First we order the values of f from the largest to the lowest value. Then, we look for the last position in which f is greater than or equal to the position (we call h this position). For example, if we have a researcher with 5 publications A, B, C, D, and E with 10, 8, 5, 4, and 3 citations, respectively, the h-index is equal to 4 because the 4th publication has 4 citations and the 5th has only 3. In contrast, if the same publications have 25, 8, 5, 3, and 3 citations, then the index is 3 because the fourth paper has only 3 citations ([wikipedia](https://en.wikipedia.org/wiki/H-index))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "#### Prerequisites"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "DimCli v0.5.4 - Succesfully connected to <https://app.dimensions.ai> (method: dsl.ini file)\n"
+     ]
+    }
+   ],
+   "source": [
+    "# data analysis libraries \n",
+    "import pandas as pd\n",
+    "# Dimensions API query helper\n",
+    "import dimcli\n",
+    "dimcli.login()dsl = dimcli.Dsl()\n",
+    "# "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "#### Selecting a researcher\n",
+    "\n",
+    "Let's take a researcher ID eg [Michael Boutros ur.01357111535.49](https://app.dimensions.ai/discover/publication?and_facet_researcher=ur.01357111535.49) and save its ID into a variable that can be referenced later.\n",
+    "\n",
+    "> Try modifying the researcher ID below to get different results! "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [],
+   "source": [
+    "RESEARCHER = \"ur.01357111535.49\""
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "### Calculating the H-Index "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "The h-Index function takes a list of citations and outputs the h-index value as explained above: "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [],
+   "source": [
+    "def the_H_function(sorted_citations_list, n=1):\n",
+    "    \"\"\"from a list of integers [n1, n2 ..] representing publications citations, \n",
+    "    return the max list-position which is >= integer\n",
+    "    \n",
+    "    eg \n",
+    "    >>> the_H_function([10, 8, 5, 4, 3]) => 4\n",
+    "    >>> the_H_function([25, 8, 5, 3, 3]) => 3\n",
+    "    >>> the_H_function([1000, 20]) => 2\n",
+    "    \"\"\"\n",
+    "    if sorted_citations_list and sorted_citations_list[0] >= n:\n",
+    "        return the_H_function(sorted_citations_list[1:], n+1)\n",
+    "    else:\n",
+    "        return n-1"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "The H-index function is generic and can take any list of numbers representing publication citations. \n",
+    "\n",
+    "### Getting citations data from Dimensions\n",
+    "\n",
+    "In order to pass some real-world data to the H-Index function, we can easily use the Dimensions API to extract all publication citations for a researcher, like this: "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [],
+   "source": [
+    "def get_pubs_citations(researcher_id):\n",
+    "    q = \"\"\"search publications where researchers.id = \"{}\" return publications[times_cited] sort by times_cited limit 1000\"\"\"\n",
+    "    pubs = dsl.query(q.format(researcher_id))\n",
+    "    return list(pubs.as_dataframe().fillna(0)['times_cited'])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "Finally, we combine the two functions to calculate the H-Index for a specific researcher:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "H_index is: 53\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(\"H_index is:\", the_H_function(get_pubs_citations(RESEARCHER)))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "---\n",
+    "# Want to learn more?\n",
+    "\n",
+    "Check out the [Dimensions API Lab](https://digital-science.github.io/dimensions-api-lab/) website, which contains many tutorials and reusable Jupyter notebooks for scholarly data analytics. "
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.4"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

@@ -1,0 +1,1097 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "U9KY1CC72gk8"
+   },
+   "source": [
+    "<a href=\"https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/2-sample-applications/Citation-analysis/Citation-Analysis.ipynb\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open Dimensions API Lab In Google Colab\"/></a>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "eV50UGicGoXz"
+   },
+   "source": [
+    "# Citation Analysis using the Dimensions API\n",
+    "\n",
+    "This notebooks shows how to extract citations data using the Dimensions Analytics API. \n",
+    "\n",
+    "Two approached are considered: one that is most suited for smaller analyses, and one which is more query-efficient and hence is more suited for analyses involving lots of publications."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "toc",
+    "id": "tmfOsu-h0OqH"
+   },
+   "source": [
+    ">[Citation Analysis using the Dimensions API](#scrollTo=eV50UGicGoXz)\n",
+    "\n",
+    ">>[Install the Dimensions API library and login](#scrollTo=wbGOYIr6B6lQ)\n",
+    "\n",
+    ">[Method A: getting citations for one publication at a time](#scrollTo=ykHU1pbE9uXt)\n",
+    "\n",
+    ">>[Comments about this method](#scrollTo=y5dPmfV6qn7Y)\n",
+    "\n",
+    ">[Method B: Getting citations for multiple publications via a single query](#scrollTo=hog-cAHvDGNF)\n",
+    "\n",
+    ">>[Creating a second-level citations network](#scrollTo=Eo_2nBQJJBVg)\n",
+    "\n",
+    ">>[Building a Simple dataviz](#scrollTo=Id9h9iXDOVkk)\n",
+    "\n",
+    ">[Final considerations](#scrollTo=Y7pg_VXhVZ2z)\n",
+    "\n",
+    ">>[Querying for more than 1000 results](#scrollTo=Y7pg_VXhVZ2z)\n",
+    "\n",
+    ">>[Querying for more than 50K results](#scrollTo=Y7pg_VXhVZ2z)\n",
+    "\n",
+    ">>[Some publications can have MANY citations](#scrollTo=Y7pg_VXhVZ2z)\n",
+    "\n",
+    ">>[Pre-checking citations counts](#scrollTo=Y7pg_VXhVZ2z)\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "wbGOYIr6B6lQ"
+   },
+   "source": [
+    "## 1. Prerequisites: installing the Dimensions API library "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {},
+    "colab_type": "code",
+    "id": "5C-X3dgwGnuV"
+   },
+   "outputs": [],
+   "source": [
+    "!pip install dimcli -U --quiet \n",
+    "import dimcli\n",
+    "import json\n",
+    "dimcli.login()\n",
+    "dsl = dimcli.Dsl()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "ykHU1pbE9uXt"
+   },
+   "source": [
+    "# 2. Method A: getting citations for one publication at a time\n",
+    "\n",
+    "By using the field `reference_ids` we can easily look up citations for individual publications (= incoming links). For example, here are the papers citing \"pub.1053279155\":"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 242
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 891,
+     "status": "ok",
+     "timestamp": 1571735489179,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "wU5PDBEw-MRN",
+    "outputId": "53662bb2-2615-4a46-d4c0-712aa6421d55"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Returned Publications: 5 (total = 5)\n"
+     ]
+    },
+    {
+     "data": {
+      "application/vnd.google.colaboratory.module+javascript": "\n      import \"https://ssl.gstatic.com/colaboratory/data_table/9e554b27bdd509f3/data_table.js\";\n\n      window.createDataTable({\n        data: [[{\n            'v': 0,\n            'f': \"0\",\n        },\n\"10.1007/s11227-018-2338-1\",\n\"pub.1103275659\",\n\"Towards ontology-based multilingual URL filtering: a big data problem\",\n{\n            'v': 2018,\n            'f': \"2018\",\n        }],\n [{\n            'v': 1,\n            'f': \"1\",\n        },\n\"10.1515/iwp-2015-0057\",\n\"pub.1012651711\",\n\"Das Experteninterview als zentrale Methode der Wissensmodellierung in den Digital Humanities\",\n{\n            'v': 2015,\n            'f': \"2015\",\n        }],\n [{\n            'v': 2,\n            'f': \"2\",\n        },\n\"10.1007/978-3-319-24129-6_3\",\n\"pub.1005502446\",\n\"Challenges for Ontological Engineering in the Humanities \\u2013 A Case Study of Philosophy\",\n{\n            'v': 2015,\n            'f': \"2015\",\n        }],\n [{\n            'v': 3,\n            'f': \"3\",\n        },\n\"10.1007/978-3-642-24809-2_10\",\n\"pub.1008922470\",\n\"Transforming a Flat Metadata Schema to a Semantic Web Ontology: The Polish Digital Libraries Federation and CIDOC CRM Case Study\",\n{\n            'v': 2012,\n            'f': \"2012\",\n        }],\n [{\n            'v': 4,\n            'f': \"4\",\n        },\n\"10.1007/978-3-642-24731-6_38\",\n\"pub.1053157726\",\n\"Practice-Based Ontologies: A New Approach to Address the Challenges of Ontology and Knowledge Representation in History and Archaeology\",\n{\n            'v': 2011,\n            'f': \"2011\",\n        }]],\n        columns: [[\"number\", \"index\"], [\"string\", \"doi\"], [\"string\", \"id\"], [\"string\", \"title\"], [\"number\", \"year\"]],\n        columnOptions: [{\"width\": \"1px\", \"className\": \"index_column\"}],\n        rowsPerPage: 25,\n        helpUrl: \"https://colab.research.google.com/notebooks/data_table.ipynb\",\n      });\n    ",
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>doi</th>\n",
+       "      <th>id</th>\n",
+       "      <th>title</th>\n",
+       "      <th>year</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>10.1007/s11227-018-2338-1</td>\n",
+       "      <td>pub.1103275659</td>\n",
+       "      <td>Towards ontology-based multilingual URL filter...</td>\n",
+       "      <td>2018</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>10.1515/iwp-2015-0057</td>\n",
+       "      <td>pub.1012651711</td>\n",
+       "      <td>Das Experteninterview als zentrale Methode der...</td>\n",
+       "      <td>2015</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>10.1007/978-3-319-24129-6_3</td>\n",
+       "      <td>pub.1005502446</td>\n",
+       "      <td>Challenges for Ontological Engineering in the ...</td>\n",
+       "      <td>2015</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>10.1007/978-3-642-24809-2_10</td>\n",
+       "      <td>pub.1008922470</td>\n",
+       "      <td>Transforming a Flat Metadata Schema to a Seman...</td>\n",
+       "      <td>2012</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>10.1007/978-3-642-24731-6_38</td>\n",
+       "      <td>pub.1053157726</td>\n",
+       "      <td>Practice-Based Ontologies: A New Approach to A...</td>\n",
+       "      <td>2011</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                            doi  ...  year\n",
+       "0     10.1007/s11227-018-2338-1  ...  2018\n",
+       "1         10.1515/iwp-2015-0057  ...  2015\n",
+       "2   10.1007/978-3-319-24129-6_3  ...  2015\n",
+       "3  10.1007/978-3-642-24809-2_10  ...  2012\n",
+       "4  10.1007/978-3-642-24731-6_38  ...  2011\n",
+       "\n",
+       "[5 rows x 4 columns]"
+      ]
+     },
+     "execution_count": 20,
+     "metadata": {
+      "tags": []
+     },
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "%dsldf search publications where reference_ids in [ \"pub.1053279155\" ] return publications[id+doi+title+year]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "SXKXmGM9C0q5"
+   },
+   "source": [
+    "Let's try another paper ie \"pub.1103275659\" - in this case there are 3 citations "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 168
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 1029,
+     "status": "ok",
+     "timestamp": 1571735496705,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "I7kDbaE9-n95",
+    "outputId": "34a21100-ae2a-48b7-da0c-0d8a5a6b98f0"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Returned Publications: 3 (total = 3)\n"
+     ]
+    },
+    {
+     "data": {
+      "application/vnd.google.colaboratory.module+javascript": "\n      import \"https://ssl.gstatic.com/colaboratory/data_table/9e554b27bdd509f3/data_table.js\";\n\n      window.createDataTable({\n        data: [[{\n            'v': 0,\n            'f': \"0\",\n        },\n\"10.1016/j.future.2019.04.038\",\n\"pub.1113878770\",\n\"Perception layer security in Internet of Things\",\n{\n            'v': 2019,\n            'f': \"2019\",\n        }],\n [{\n            'v': 1,\n            'f': \"1\",\n        },\n\"10.1109/isncc.2018.8530984\",\n\"pub.1109815383\",\n\"A Fault Tolerant Approach for Malicious URL Filtering\",\n{\n            'v': 2018,\n            'f': \"2018\",\n        }],\n [{\n            'v': 2,\n            'f': \"2\",\n        },\n\"10.1109/access.2018.2872928\",\n\"pub.1107354292\",\n\"Social Internet of Vehicles: Complexity, Adaptivity, Issues and Beyond\",\n{\n            'v': 2018,\n            'f': \"2018\",\n        }]],\n        columns: [[\"number\", \"index\"], [\"string\", \"doi\"], [\"string\", \"id\"], [\"string\", \"title\"], [\"number\", \"year\"]],\n        columnOptions: [{\"width\": \"1px\", \"className\": \"index_column\"}],\n        rowsPerPage: 25,\n        helpUrl: \"https://colab.research.google.com/notebooks/data_table.ipynb\",\n      });\n    ",
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>doi</th>\n",
+       "      <th>id</th>\n",
+       "      <th>title</th>\n",
+       "      <th>year</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>10.1016/j.future.2019.04.038</td>\n",
+       "      <td>pub.1113878770</td>\n",
+       "      <td>Perception layer security in Internet of Things</td>\n",
+       "      <td>2019</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>10.1109/isncc.2018.8530984</td>\n",
+       "      <td>pub.1109815383</td>\n",
+       "      <td>A Fault Tolerant Approach for Malicious URL Fi...</td>\n",
+       "      <td>2018</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>10.1109/access.2018.2872928</td>\n",
+       "      <td>pub.1107354292</td>\n",
+       "      <td>Social Internet of Vehicles: Complexity, Adapt...</td>\n",
+       "      <td>2018</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                            doi  ...  year\n",
+       "0  10.1016/j.future.2019.04.038  ...  2019\n",
+       "1    10.1109/isncc.2018.8530984  ...  2018\n",
+       "2   10.1109/access.2018.2872928  ...  2018\n",
+       "\n",
+       "[3 rows x 4 columns]"
+      ]
+     },
+     "execution_count": 21,
+     "metadata": {
+      "tags": []
+     },
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "%dsldf search publications where reference_ids in [ \"pub.1103275659\" ] return publications[id+doi+title+year]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "0UoK9zofpeVH"
+   },
+   "source": [
+    "Using this simple approach, if we start with a list of publications (our 'seed') we can set up a simple loop to get through all of them and launch a 'get-citations' query each time. \n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "6pMkMe6jGsj8"
+   },
+   "source": [
+    "TIP \n",
+    "The `json.dumps` function easily transforms a list of objects into a string which can be used directly in our query eg\n",
+    "\n",
+    "```\n",
+    "> json.dumps(seed)\n",
+    "'[\"pub.1053279155\", \"pub.1103275659\"]'\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {},
+    "colab_type": "code",
+    "id": "Qp7iP4FBpaEO"
+   },
+   "outputs": [],
+   "source": [
+    "seed = [ \"pub.1053279155\" , \"pub.1103275659\"]\n",
+    "q = \"\"\"search publications where reference_ids in [{}] return publications[id+doi+title+year]\"\"\"\n",
+    "results = {}\n",
+    "for p in seed:\n",
+    "  data = dsl.query(q.format(json.dumps(p)))\n",
+    "  results[p] = [x['id'] for x in data.publications]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 119
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 646,
+     "status": "ok",
+     "timestamp": 1571735531480,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "MST81jAqqHvA",
+    "outputId": "fd2f5e5d-3064-4642-fd4f-65c8dc456940"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "{'pub.1053279155': ['pub.1103275659',\n",
+       "  'pub.1012651711',\n",
+       "  'pub.1005502446',\n",
+       "  'pub.1008922470',\n",
+       "  'pub.1053157726'],\n",
+       " 'pub.1103275659': ['pub.1113878770', 'pub.1109815383', 'pub.1107354292']}"
+      ]
+     },
+     "execution_count": 23,
+     "metadata": {
+      "tags": []
+     },
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "results"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "y5dPmfV6qn7Y"
+   },
+   "source": [
+    "## Comments about this method\n",
+    "\n",
+    "* this approach is straightforward and quick, but it's better used with small datasets  \n",
+    "* we create one query per publication (and so on, for a N-degree network)\n",
+    "* if you have lots of publicaitons, it'll lead to lots of queries which may not be too efficient\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "hog-cAHvDGNF"
+   },
+   "source": [
+    "# 3. Method B: Getting citations for multiple publications via a single query\n",
+    "\n",
+    "We can use the same query template but instead of looking for a single publication ID, we can put multiple ones in a list. \n",
+    "\n",
+    "So if we combine the two citations list for \"pub.1053279155\" and \"pub.1103275659\", we will get 5 + 3 = 8 results in total. \n",
+    "\n",
+    "*However* then it's down to us to figure out which paper is citing which!"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 273
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 686,
+     "status": "ok",
+     "timestamp": 1571742733747,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "8mXAAjZ4-oPa",
+    "outputId": "d22ff995-020a-4370-843b-97fdd37ea5bb"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Returned Publications: 8 (total = 8)\n"
+     ]
+    },
+    {
+     "data": {
+      "application/vnd.google.colaboratory.module+javascript": "\n      import \"https://ssl.gstatic.com/colaboratory/data_table/9e554b27bdd509f3/data_table.js\";\n\n      window.createDataTable({\n        data: [[{\n            'v': 0,\n            'f': \"0\",\n        },\n\"10.1016/j.future.2019.04.038\",\n\"pub.1113878770\",\n\"Perception layer security in Internet of Things\",\n{\n            'v': 2019,\n            'f': \"2019\",\n        }],\n [{\n            'v': 1,\n            'f': \"1\",\n        },\n\"10.1007/s11227-018-2338-1\",\n\"pub.1103275659\",\n\"Towards ontology-based multilingual URL filtering: a big data problem\",\n{\n            'v': 2018,\n            'f': \"2018\",\n        }],\n [{\n            'v': 2,\n            'f': \"2\",\n        },\n\"10.1109/isncc.2018.8530984\",\n\"pub.1109815383\",\n\"A Fault Tolerant Approach for Malicious URL Filtering\",\n{\n            'v': 2018,\n            'f': \"2018\",\n        }],\n [{\n            'v': 3,\n            'f': \"3\",\n        },\n\"10.1109/access.2018.2872928\",\n\"pub.1107354292\",\n\"Social Internet of Vehicles: Complexity, Adaptivity, Issues and Beyond\",\n{\n            'v': 2018,\n            'f': \"2018\",\n        }],\n [{\n            'v': 4,\n            'f': \"4\",\n        },\n\"10.1515/iwp-2015-0057\",\n\"pub.1012651711\",\n\"Das Experteninterview als zentrale Methode der Wissensmodellierung in den Digital Humanities\",\n{\n            'v': 2015,\n            'f': \"2015\",\n        }],\n [{\n            'v': 5,\n            'f': \"5\",\n        },\n\"10.1007/978-3-319-24129-6_3\",\n\"pub.1005502446\",\n\"Challenges for Ontological Engineering in the Humanities \\u2013 A Case Study of Philosophy\",\n{\n            'v': 2015,\n            'f': \"2015\",\n        }],\n [{\n            'v': 6,\n            'f': \"6\",\n        },\n\"10.1007/978-3-642-24809-2_10\",\n\"pub.1008922470\",\n\"Transforming a Flat Metadata Schema to a Semantic Web Ontology: The Polish Digital Libraries Federation and CIDOC CRM Case Study\",\n{\n            'v': 2012,\n            'f': \"2012\",\n        }],\n [{\n            'v': 7,\n            'f': \"7\",\n        },\n\"10.1007/978-3-642-24731-6_38\",\n\"pub.1053157726\",\n\"Practice-Based Ontologies: A New Approach to Address the Challenges of Ontology and Knowledge Representation in History and Archaeology\",\n{\n            'v': 2011,\n            'f': \"2011\",\n        }]],\n        columns: [[\"number\", \"index\"], [\"string\", \"doi\"], [\"string\", \"id\"], [\"string\", \"title\"], [\"number\", \"year\"]],\n        columnOptions: [{\"width\": \"1px\", \"className\": \"index_column\"}],\n        rowsPerPage: 25,\n        helpUrl: \"https://colab.research.google.com/notebooks/data_table.ipynb\",\n      });\n    ",
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>doi</th>\n",
+       "      <th>id</th>\n",
+       "      <th>title</th>\n",
+       "      <th>year</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>10.1016/j.future.2019.04.038</td>\n",
+       "      <td>pub.1113878770</td>\n",
+       "      <td>Perception layer security in Internet of Things</td>\n",
+       "      <td>2019</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>10.1007/s11227-018-2338-1</td>\n",
+       "      <td>pub.1103275659</td>\n",
+       "      <td>Towards ontology-based multilingual URL filter...</td>\n",
+       "      <td>2018</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>10.1109/isncc.2018.8530984</td>\n",
+       "      <td>pub.1109815383</td>\n",
+       "      <td>A Fault Tolerant Approach for Malicious URL Fi...</td>\n",
+       "      <td>2018</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>10.1109/access.2018.2872928</td>\n",
+       "      <td>pub.1107354292</td>\n",
+       "      <td>Social Internet of Vehicles: Complexity, Adapt...</td>\n",
+       "      <td>2018</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>10.1515/iwp-2015-0057</td>\n",
+       "      <td>pub.1012651711</td>\n",
+       "      <td>Das Experteninterview als zentrale Methode der...</td>\n",
+       "      <td>2015</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td>10.1007/978-3-319-24129-6_3</td>\n",
+       "      <td>pub.1005502446</td>\n",
+       "      <td>Challenges for Ontological Engineering in the ...</td>\n",
+       "      <td>2015</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>6</th>\n",
+       "      <td>10.1007/978-3-642-24809-2_10</td>\n",
+       "      <td>pub.1008922470</td>\n",
+       "      <td>Transforming a Flat Metadata Schema to a Seman...</td>\n",
+       "      <td>2012</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>7</th>\n",
+       "      <td>10.1007/978-3-642-24731-6_38</td>\n",
+       "      <td>pub.1053157726</td>\n",
+       "      <td>Practice-Based Ontologies: A New Approach to A...</td>\n",
+       "      <td>2011</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                            doi  ...  year\n",
+       "0  10.1016/j.future.2019.04.038  ...  2019\n",
+       "1     10.1007/s11227-018-2338-1  ...  2018\n",
+       "2    10.1109/isncc.2018.8530984  ...  2018\n",
+       "3   10.1109/access.2018.2872928  ...  2018\n",
+       "4         10.1515/iwp-2015-0057  ...  2015\n",
+       "5   10.1007/978-3-319-24129-6_3  ...  2015\n",
+       "6  10.1007/978-3-642-24809-2_10  ...  2012\n",
+       "7  10.1007/978-3-642-24731-6_38  ...  2011\n",
+       "\n",
+       "[8 rows x 4 columns]"
+      ]
+     },
+     "execution_count": 3,
+     "metadata": {
+      "tags": []
+     },
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "%dsldf search publications where reference_ids in [ \"pub.1053279155\" , \"pub.1103275659\"] return publications[id+doi+title+year]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "gIBXDJ1GF8bC"
+   },
+   "source": [
+    "In order to resolve the citations data we got above, we must also extract the full references for each citing paper (by including `reference_ids` in the results) and then recreate the citation graph programmatically. EG"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {},
+    "colab_type": "code",
+    "id": "gCZ48gcyGZoK"
+   },
+   "outputs": [],
+   "source": [
+    "seed = [ \"pub.1053279155\" , \"pub.1103275659\"]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {},
+    "colab_type": "code",
+    "id": "UXdacZ0h-oIq"
+   },
+   "outputs": [],
+   "source": [
+    "data = dsl.query(f\"\"\"search publications where reference_ids in {json.dumps(seed)} return publications[id+doi+title+year+reference_ids]\"\"\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {},
+    "colab_type": "code",
+    "id": "UoF3BAueNpXS"
+   },
+   "outputs": [],
+   "source": [
+    "def build_network_dict(seed, pubs_list):\n",
+    "  network={x:[] for x in seed} # seed a dictionary \n",
+    "  for pub in pubs_list:\n",
+    "    for key in network:\n",
+    "      if pub.get('reference_ids') and key in pub['reference_ids']:\n",
+    "        network[key].append(pub['id'])\n",
+    "  return network"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "pCB2LctcLN02"
+   },
+   "source": [
+    "A simple way to represent the citation network is a dictionary data structure with `'cited_paper' : [citing papers]`"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 119
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 485,
+     "status": "ok",
+     "timestamp": 1571735737325,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "RLdMc3ppINxp",
+    "outputId": "3599d791-5b6b-47b7-88f9-a8e20f344812"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "{'pub.1053279155': ['pub.1103275659',\n",
+       "  'pub.1012651711',\n",
+       "  'pub.1005502446',\n",
+       "  'pub.1008922470',\n",
+       "  'pub.1053157726'],\n",
+       " 'pub.1103275659': ['pub.1113878770', 'pub.1109815383', 'pub.1107354292']}"
+      ]
+     },
+     "execution_count": 30,
+     "metadata": {
+      "tags": []
+     },
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "network1 = build_network_dict(seed, data.publications)\n",
+    "network1"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "Eo_2nBQJJBVg"
+   },
+   "source": [
+    "## Creating a second-level citations network\n",
+    "\n",
+    "Let's now create a second level citations network!\n",
+    "\n",
+    "This means going through all pubs citing the two seed-papers, and getting all the citing publications for them as well. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {},
+    "colab_type": "code",
+    "id": "lEi_hNomBOeN"
+   },
+   "outputs": [],
+   "source": [
+    "all_citing_papers = []\n",
+    "for x in network1.values():\n",
+    "  all_citing_papers += x\n",
+    "all_citing_papers = list(set(all_citing_papers))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 153
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 490,
+     "status": "ok",
+     "timestamp": 1571735775957,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "jkU5RZUCAt45",
+    "outputId": "f0d0c67b-6472-4e68-cf75-bd079f7e66f5"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['pub.1005502446',\n",
+       " 'pub.1103275659',\n",
+       " 'pub.1012651711',\n",
+       " 'pub.1107354292',\n",
+       " 'pub.1109815383',\n",
+       " 'pub.1053157726',\n",
+       " 'pub.1113878770',\n",
+       " 'pub.1008922470']"
+      ]
+     },
+     "execution_count": 31,
+     "metadata": {
+      "tags": []
+     },
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "all_citing_papers"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "D-MSRNR2LRd5"
+   },
+   "source": [
+    "Now let's extract the network structure as previously done"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 323
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 481,
+     "status": "ok",
+     "timestamp": 1571735794859,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "I4DiWaZpNX8d",
+    "outputId": "b4146bd2-63ee-4411-bee8-6934d3534679"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "{'pub.1005502446': [],\n",
+       " 'pub.1008922470': ['pub.1089701016',\n",
+       "  'pub.1026187633',\n",
+       "  'pub.1002394460',\n",
+       "  'pub.1012381129',\n",
+       "  'pub.1046653745',\n",
+       "  'pub.1016243129'],\n",
+       " 'pub.1012651711': ['pub.1101318936'],\n",
+       " 'pub.1053157726': ['pub.1109914120',\n",
+       "  'pub.1113063906',\n",
+       "  'pub.1099624152',\n",
+       "  'pub.1104531912',\n",
+       "  'pub.1011868512',\n",
+       "  'pub.1001626874'],\n",
+       " 'pub.1103275659': ['pub.1113878770', 'pub.1109815383', 'pub.1107354292'],\n",
+       " 'pub.1107354292': ['pub.1113878770', 'pub.1113902569', 'pub.1113065837'],\n",
+       " 'pub.1109815383': [],\n",
+       " 'pub.1113878770': ['pub.1121687821', 'pub.1121692873']}"
+      ]
+     },
+     "execution_count": 33,
+     "metadata": {
+      "tags": []
+     },
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "data2 = dsl.query(f\"\"\"search publications where reference_ids in {json.dumps(all_citing_papers)} return publications[id+doi+title+year+reference_ids]\"\"\")\n",
+    "network2 = build_network_dict(all_citing_papers, data2.publications)\n",
+    "network2"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "4aTZRpzaOafc"
+   },
+   "source": [
+    "Finally we can merge the two levels into one single dataset (note: nodes with same data will be merged automatically)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {
+     "base_uri": "https://localhost:8080/",
+     "height": 408
+    },
+    "colab_type": "code",
+    "executionInfo": {
+     "elapsed": 493,
+     "status": "ok",
+     "timestamp": 1571735805829,
+     "user": {
+      "displayName": "Michele Pasin",
+      "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBu8LVjIGgontF2Wax51BoL5KFx8esezX3bUmaa0g=s64",
+      "userId": "10309320684375994511"
+     },
+     "user_tz": -60
+    },
+    "id": "UdvVlXFrNdbY",
+    "outputId": "1281b0c9-792b-411c-8bb2-fd205312aa88"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "{'pub.1005502446': [],\n",
+       " 'pub.1008922470': ['pub.1089701016',\n",
+       "  'pub.1026187633',\n",
+       "  'pub.1002394460',\n",
+       "  'pub.1012381129',\n",
+       "  'pub.1046653745',\n",
+       "  'pub.1016243129'],\n",
+       " 'pub.1012651711': ['pub.1101318936'],\n",
+       " 'pub.1053157726': ['pub.1109914120',\n",
+       "  'pub.1113063906',\n",
+       "  'pub.1099624152',\n",
+       "  'pub.1104531912',\n",
+       "  'pub.1011868512',\n",
+       "  'pub.1001626874'],\n",
+       " 'pub.1053279155': ['pub.1103275659',\n",
+       "  'pub.1012651711',\n",
+       "  'pub.1005502446',\n",
+       "  'pub.1008922470',\n",
+       "  'pub.1053157726'],\n",
+       " 'pub.1103275659': ['pub.1113878770', 'pub.1109815383', 'pub.1107354292'],\n",
+       " 'pub.1107354292': ['pub.1113878770', 'pub.1113902569', 'pub.1113065837'],\n",
+       " 'pub.1109815383': [],\n",
+       " 'pub.1113878770': ['pub.1121687821', 'pub.1121692873']}"
+      ]
+     },
+     "execution_count": 34,
+     "metadata": {
+      "tags": []
+     },
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "final = dict(network1, **network2 )\n",
+    "final"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "Id9h9iXDOVkk"
+   },
+   "source": [
+    "## Building a Simple dataviz\n",
+    "\n",
+    "We can build a simple visualization using the pyvis library. \n",
+    "\n",
+    "NOTE: the 'mygraph.html' file will be saved in the local directory (in Colab, open the 'Files' left panel and download it to your computer to open it)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {},
+    "colab_type": "code",
+    "id": "hrE6KSTLPRCw"
+   },
+   "outputs": [],
+   "source": [
+    "!pip install pyvis --quiet\n",
+    "from pyvis.network import Network"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "Collapsed": "false",
+    "colab": {},
+    "colab_type": "code",
+    "id": "WPAf6zy1Sdr5"
+   },
+   "outputs": [],
+   "source": [
+    "net = Network()\n",
+    "\n",
+    "nodes = []\n",
+    "for x in final:\n",
+    "  nodes.append(x)\n",
+    "  nodes += final[x]\n",
+    "nodes = list(set(nodes))\n",
+    "\n",
+    "net.add_nodes(nodes) # node ids and labels = [\"a\", \"b\", \"c\", \"d\"]\n",
+    "\n",
+    "for x in final:\n",
+    "  for target in final[x]:\n",
+    "    net.add_edge(x, target)\n",
+    "\n",
+    "net.show(\"mygraph.html\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "Y7pg_VXhVZ2z"
+   },
+   "source": [
+    "# Final considerations \n",
+    "\n",
+    "## Querying for more than 1000 results\n",
+    "\n",
+    "Each API query can return a maximum of 1000 records, so you must use the limit/skip syntax to get more. \n",
+    "\n",
+    "See the [paginating results section in the docs](https://docs.dimensions.ai/dsl/language.html#paginating-results) for more info.\n",
+    "\n",
+    "## Querying for more than 50K results\n",
+    "\n",
+    "Even with limit/skip, one can only download 50k records for each single query. \n",
+    "\n",
+    "So if your list of PUB-ids is getting too long (eg > 300) you should consider splitting up the list into chunks create an extra loop to go through all of them without hitting the max upper limit. \n",
+    "\n",
+    "## Some publications can have MANY citations \n",
+    "\n",
+    "For example, we can have a single pub with 200K+ citation: https://app.dimensions.ai/details/publication/pub.1076750128 \n",
+    "\n",
+    "That's quite an exceptional case, but there are several publications with more than 10k citations each. When you encounter such cases, you will hit the 50k limit pretty quickly, so you need to keep an eye out for these and possibly 'slice' the data in different ways eg by year or journal (so to get less results).\n",
+    "\n",
+    "## Pre-checking citations counts \n",
+    "\n",
+    "The `times_cited` and `recent_citations` fields of [publications](https://docs.dimensions.ai/dsl/data-sources.html#publications) can be used to check how many citations a paper has (ps `recent_citations` counts the last two years only). \n",
+    "\n",
+    "So, by using these aggregated figures, it is possible to get a feeling for the size of citations-data we'll have to deal with before setting up a proper data extraction pipeline. \n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false",
+    "colab_type": "text",
+    "id": "Z_YE9HwMz9Pi"
+   },
+   "source": [
+    "---\n",
+    "# Want to learn more?\n",
+    "\n",
+    "Check out the [Dimensions API Lab](https://digital-science.github.io/dimensions-api-lab/) website, which contains many tutorials and reusable Jupyter notebooks for scholarly data analytics. "
+   ]
+  }
+ ],
+ "metadata": {
+  "colab": {
+   "collapsed_sections": [],
+   "name": "Citation-Analysis.ipynb",
+   "provenance": []
+  },
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.4"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

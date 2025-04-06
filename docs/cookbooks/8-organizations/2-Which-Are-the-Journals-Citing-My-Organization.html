@@ -1,0 +1,687 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>What Journals Have Been Citing My Organization? &#8212; Dimensions API Lab - Reusable Solutions for Scholarly Data Analytics</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Searching GRID organizations using the Dimensions API" href="GRID-preview.html" />
+    <link rel="prev" title="Searching GRID organizations using the Dimensions API" href="1-GRID-preview.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="GRID-preview.html" title="Searching GRID organizations using the Dimensions API"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="1-GRID-preview.html" title="Searching GRID organizations using the Dimensions API"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Dimensions API Lab - Reusable Solutions for Scholarly Data Analytics</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 5ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/cookbooks/8-organizations/2-Which-Are-the-Journals-Citing-My-Organization.ipynb">Open this notebook in Google Colab</a>, a free cloud-based environment that allows to run Jupyter notebooks, or <a class="reference external" href="https://digital-science.github.io/dimensions-api-lab/blob/master/cookbooks/8-organizations/2-Which-Are-the-Journals-Citing-My-Organization.ipynb">download it from Github</a> to run it on your local computer.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="What-Journals-Have-Been-Citing-My-Organization?">
+<h1>What Journals Have Been Citing My Organization?<a class="headerlink" href="#What-Journals-Have-Been-Citing-My-Organization?" title="Permalink to this headline">¶</a></h1>
+<p>This notebook shows how to use the <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> to discover what academic journals are most frequenlty citing publications from a selected research organization.</p>
+<p>We start from a <a class="reference external" href="https://grid.ac/">GRID</a> identifier (representing a research organization in Dimensions) and then select all publications citing research where at least one author is/as affiliated to that GRID ID. We then group this publications by source (journal) and sort them by frequency.</p>
+<p>For the purpose of this exercise, we will look at <strong>University of Bologna</strong> in Italy: <a class="reference external" href="https://grid.ac/institutes/grid.6292.f">grid.6292.f</a> and publications from 2018.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[65]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># data analysis libraries</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pandas.io.json</span> <span class="k">import</span> <span class="n">json_normalize</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="k">import</span> <span class="n">tqdm</span>
+<span class="c1"># Dimensions API query helper</span>
+<span class="kn">import</span> <span class="nn">dimcli</span>
+<span class="kn">from</span> <span class="nn">dimcli.shortcuts</span> <span class="k">import</span> <span class="n">chunks_of</span>
+<span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
+<span class="c1">#</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="1.-Getting-all-publications-from-the-GRID-org">
+<h2>1. Getting all publications from the GRID org<a class="headerlink" href="#1.-Getting-all-publications-from-the-GRID-org" title="Permalink to this headline">¶</a></h2>
+<p>First we extract all publications where at least one of the authors is affiliated to GRID_ORG.</p>
+<p>By saying <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">publications[reference_ids]</span></code> we can only select the field we are interested in.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[68]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">publications</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query_iterative</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">search publications</span>
+<span class="s2">    where research_orgs.id = &quot;</span><span class="si">{GRID_ORG}</span><span class="s2">&quot; and year in [</span><span class="si">{YEAR}</span><span class="s2">] and reference_ids is not empty</span>
+<span class="s2">    return publications[reference_ids] sort by id</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1000 / 4765
+2000 / 4765
+3000 / 4765
+4000 / 4765
+4765 / 4765
+</pre></div></div>
+</div>
+<p>Let’s remove duplicates from the references data and save it into a list.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[69]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">references</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">publication</span> <span class="ow">in</span> <span class="n">publications</span><span class="o">.</span><span class="n">publications</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">ref_id</span> <span class="ow">in</span> <span class="n">publication</span><span class="p">[</span><span class="s1">&#39;reference_ids&#39;</span><span class="p">]:</span>
+        <span class="n">references</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ref_id</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[81]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">len</span><span class="p">(</span><span class="n">references</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[81]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>162291
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="2.-Getting-all-referencing-publications">
+<h2>2. Getting all referencing publications<a class="headerlink" href="#2.-Getting-all-referencing-publications" title="Permalink to this headline">¶</a></h2>
+<p>In the next step we extract all publications corresponding to these references. This query will return JSON data which can be further analyzed e.g. to count the unique number of journals they were published in.</p>
+<p>E.g.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;publications&#39;</span><span class="p">:</span> <span class="p">[</span>
+  <span class="p">{</span><span class="s1">&#39;journal&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;jour.1295784&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;IEEE Transactions on Cognitive and Developmental Systems&#39;</span><span class="p">},</span>
+   <span class="s1">&#39;publisher&#39;</span><span class="p">:</span> <span class="s1">&#39;Institute of Electrical and Electronics Engineers (IEEE)&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;year&#39;</span><span class="p">:</span> <span class="mi">2018</span><span class="p">,</span>
+   <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;pub.1061542201&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;issn&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;2379-8920&#39;</span><span class="p">,</span> <span class="s1">&#39;2379-8939&#39;</span><span class="p">]},</span>
+  <span class="p">{</span><span class="s1">&#39;journal&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;jour.1043581&#39;</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;International Geology Review&#39;</span><span class="p">},</span>
+   <span class="s1">&#39;publisher&#39;</span><span class="p">:</span> <span class="s1">&#39;Taylor &amp; Francis&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;year&#39;</span><span class="p">:</span> <span class="mi">2018</span><span class="p">,</span>
+   <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;pub.1087302818&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;issn&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;0020-6814&#39;</span><span class="p">,</span> <span class="s1">&#39;1938-2839&#39;</span><span class="p">]},</span> <span class="n">etc</span><span class="o">..</span>
+</pre></div>
+</div>
+<p>This is query template we use.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[71]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search publications where journal is not empty and id in </span><span class="si">{}</span><span class="s2"></span>
+<span class="s2">return publications[journal+issn+id+year+publisher] limit 1000&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<p>Note the <code class="docutils literal notranslate"><span class="pre">{}</span></code> part which is where we will put lists of publication IDs during each iteration. This is to ensure our query is never too long (&lt;400 IDs is a good way to ensure we never get an API error).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pub_journals</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">chunks_of</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">references</span><span class="p">),</span> <span class="mi">400</span><span class="p">))):</span>
+    <span class="n">pub_journals</span> <span class="o">+=</span> <span class="p">(</span><span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">chunk</span><span class="p">)))</span><span class="o">.</span><span class="n">publications</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="3.-Grouping-References-by-Journals">
+<h2>3. Grouping References by Journals<a class="headerlink" href="#3.-Grouping-References-by-Journals" title="Permalink to this headline">¶</a></h2>
+<p>We are going to analyze the referencing publications, in particular by grouping them by source journal, after loading the JSON data into a pandas Dataframe.</p>
+<blockquote>
+<div><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/">pandas</a> is a popular software library written for the Python programming language for data manipulation and analysis</p>
+</div></blockquote>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[83]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">df</span> <span class="o">=</span> <span class="n">json_normalize</span><span class="p">(</span><span class="n">pub_journals</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[83]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>issn</th>
+      <th>journal.id</th>
+      <th>journal.title</th>
+      <th>publisher</th>
+      <th>year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>pub.1104882405</td>
+      <td>[0962-8436, 1471-2970]</td>
+      <td>jour.1032123</td>
+      <td>Philosophical Transactions of the Royal Societ...</td>
+      <td>The Royal Society</td>
+      <td>2018</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>pub.1106384345</td>
+      <td>[0885-3185, 1531-8257]</td>
+      <td>jour.1096585</td>
+      <td>Movement Disorders</td>
+      <td>Wiley</td>
+      <td>2018</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>pub.1103832990</td>
+      <td>[0100-879X, 1414-431X]</td>
+      <td>jour.1009158</td>
+      <td>Brazilian Journal of Medical and Biological Re...</td>
+      <td>FapUNIFESP (SciELO)</td>
+      <td>2018</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>pub.1092079480</td>
+      <td>[1551-3203, 1941-0050]</td>
+      <td>jour.1045705</td>
+      <td>IEEE Transactions on Industrial Informatics</td>
+      <td>Institute of Electrical and Electronics Engine...</td>
+      <td>2018</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>pub.1092550561</td>
+      <td>[0001-5148, 1398-9995]</td>
+      <td>jour.1358083</td>
+      <td>Allergy</td>
+      <td>Wiley</td>
+      <td>2018</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Dataframes provide many ways to analyze the data further.</p>
+<div class="section" id="How-many-unique-journals-do-we-have?">
+<h3>How many unique journals do we have?<a class="headerlink" href="#How-many-unique-journals-do-we-have?" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[84]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;journal.id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[84]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>count           153549
+unique           11985
+top       jour.1037553
+freq              1622
+Name: journal.id, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="What-are-the-most-frequent-journals?">
+<h3>What are the most frequent journals?<a class="headerlink" href="#What-are-the-most-frequent-journals?" title="Permalink to this headline">¶</a></h3>
+<p>We set a threshold of &gt;100 citations to identify journals that are most relevant, and sort them by tot number of publications citing research from our chosen GRID ID.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[86]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">counts</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;journal.title&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="n">counts</span><span class="p">[</span><span class="n">counts</span><span class="o">&gt;</span><span class="mi">100</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[86]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>PLoS ONE                                                             1622
+The Astrophysical Journal                                            1490
+Physical Review D                                                    1454
+Monthly Notices of the Royal Astronomical Society                    1327
+Proceedings of the National Academy of Sciences                      1151
+Nature                                                               1097
+Science                                                               998
+Physical Review Letters                                               943
+Journal of High Energy Physics                                        935
+Journal of the American Chemical Society                              661
+Blood                                                                 651
+Astronomy and Astrophysics                                            633
+Physics Letters B                                                     622
+New England Journal of Medicine                                       609
+Scientific Reports                                                    580
+Journal of Biological Chemistry                                       574
+Journal of Clinical Oncology                                          496
+Angewandte Chemie International Edition                               456
+The Lancet                                                            423
+The European Physical Journal C                                       420
+Journal of Neuroscience                                               410
+Neurology                                                             390
+Journal of Agricultural and Food Chemistry                            382
+Oncotarget                                                            364
+The Journal of Chemical Physics                                       357
+Journal of Geophysical Research                                       345
+American Journal of Cancer                                            336
+Biochimica et Biophysica Acta (BBA) - Lipids and Lipid Metabolism     327
+Cell                                                                  322
+Food Chemistry                                                        317
+                                                                     ...
+Journal of Neurology Neurosurgery &amp; Psychiatry                        108
+Physical Review E                                                     108
+Organometallics                                                       107
+Frontiers in Plant Science                                            107
+Bioresource Technology                                                107
+IEEE Transactions on Industrial Electronics                           106
+BioMed Research International                                         106
+Annals of Surgery                                                     106
+Epilepsia                                                             105
+Chemistry of Materials                                                105
+IEEE Transactions on Dielectrics and Electrical Insulation            105
+Journal of Virology                                                   104
+Personality and Individual Differences                                104
+British Journal of Dermatology                                        104
+Journal of Endodontics                                                104
+Journal of Bacteriology                                               103
+Macromolecules                                                        103
+Journal of Organometallic Chemistry                                   102
+Applied Physics Letters                                               102
+Nature Reviews Cancer                                                 102
+Econometrica                                                          102
+LWT                                                                   102
+Journal of Applied Polymer Science                                    102
+Pediatrics                                                            101
+European Respiratory Journal                                          101
+PLoS Genetics                                                         101
+ACS Applied Materials &amp; Interfaces                                    101
+JAMA Psychiatry                                                       101
+Journal of Cultural Heritage                                          101
+Journal of Biomechanics                                               101
+Name: journal.title, Length: 205, dtype: int64
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[88]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># finally we can save the data to a CSV file</span>
+<span class="n">counts</span><span class="p">[</span><span class="n">counts</span><span class="o">&gt;</span><span class="mi">100</span><span class="p">]</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;top_journals_citing_&quot;</span> <span class="o">+</span> <span class="n">GRID_ORG</span> <span class="o">+</span> <span class="s2">&quot;id.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/usr/local/lib/python3.7/site-packages/ipykernel_launcher.py:2: FutureWarning:
+
+The signature of `Series.to_csv` was aligned to that of `DataFrame.to_csv`, and argument &#39;header&#39; will change its default value from False to True: please pass an explicit value to suppress this warning.
+
+</pre></div></div>
+</div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="Want-to-learn-more?">
+<h1>Want to learn more?<a class="headerlink" href="#Want-to-learn-more?" title="Permalink to this headline">¶</a></h1>
+<p>Make sure you check out the <a class="reference external" href="https://digital-science.github.io/dimensions-api-lab/">Dimensions API Lab</a> website, which many tutorials and reusable Jupyter notebooks for scholarly data analytics.</p>
+</div>
+<hr class="docutils" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <a class="reference external" href="https://digital-science.github.io/dimensions-api-lab/">Dimensions API Lab</a> contains many notebooks like this one, demonstrating how to carry out useful scholarly analytics tasks using the <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Analytics API</a>. Check out also the associated <a class="reference external" href="https://github.com/digital-science/dimensions-api-lab">Github repository</a> for all the source code files and much more.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">What Journals Have Been Citing My Organization?</a><ul>
+<li><a class="reference internal" href="#1.-Getting-all-publications-from-the-GRID-org">1. Getting all publications from the GRID org</a></li>
+<li><a class="reference internal" href="#2.-Getting-all-referencing-publications">2. Getting all referencing publications</a></li>
+<li><a class="reference internal" href="#3.-Grouping-References-by-Journals">3. Grouping References by Journals</a><ul>
+<li><a class="reference internal" href="#How-many-unique-journals-do-we-have?">How many unique journals do we have?</a></li>
+<li><a class="reference internal" href="#What-are-the-most-frequent-journals?">What are the most frequent journals?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#Want-to-learn-more?">Want to learn more?</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="1-GRID-preview.html"
+                        title="previous chapter">Searching GRID organizations using the Dimensions API</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="GRID-preview.html"
+                        title="next chapter">Searching GRID organizations using the Dimensions API</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/cookbooks/8-organizations/2-Which-Are-the-Journals-Citing-My-Organization.ipynb.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="GRID-preview.html" title="Searching GRID organizations using the Dimensions API"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="1-GRID-preview.html" title="Searching GRID organizations using the Dimensions API"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Dimensions API Lab - Reusable Solutions for Scholarly Data Analytics</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dimensions API Team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

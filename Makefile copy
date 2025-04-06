@@ -1,0 +1,37 @@
+# Minimal makefile for Sphinx documentation
+#
+
+# You can set these variables from the command line.
+SPHINXOPTS    =
+SPHINXBUILD   = sphinx-build
+SOURCEDIR     = sphinx
+# BUILDDIR      = docs
+BUILDDIR      = private/docs
+BUILDDIR_LIVE = docs
+
+# APILAB:
+# when building, make a copy of main tutorials folder so that it's available 
+# within the sphinx/ source dir 
+SOURCEDIR_NOTEBOOKS     = cookbooks   # change as needed
+COPYDIR_NOTEBOOKS      = cookbooks  # don't change  this ideally
+
+# Put it first so that "make" without argument is like "make help".
+help:
+	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+
+.PHONY: help Makefile
+
+# Catch-all target: route all unknown targets to Sphinx using the new
+# "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
+
+# APILAB:
+# 1.copy {SOURCEDIR_NOTEBOOKS} in sphinx source folder {COPYDIR_NOTEBOOKS}, for sphinx to pick up files
+# 2.first delete it, if it exists, to ensure it's always up to date
+# 3.run sphinx-build so to have html output right within {BUILDDIR} top level
+# ...previous code generating inner folders:
+# @$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O) 
+%: Makefile
+	rm -rf $(SOURCEDIR)/$(COPYDIR_NOTEBOOKS)
+	cp -r $(SOURCEDIR_NOTEBOOKS)  $(SOURCEDIR)/$(COPYDIR_NOTEBOOKS)
+	@$(SPHINXBUILD) -b $@ "$(SOURCEDIR)" "$(BUILDDIR)"
+	open $(BUILDDIR)/index.html

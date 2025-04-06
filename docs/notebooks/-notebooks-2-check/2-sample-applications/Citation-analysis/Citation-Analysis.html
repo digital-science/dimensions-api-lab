@@ -1,0 +1,921 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Citation Analysis using the Dimensions API &#8212; Dimensions API Lab 0.1 documentation</title>
+    <link rel="stylesheet" href="../../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">Dimensions API Lab 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 5ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="Citation-Analysis-using-the-Dimensions-API">
+<h1>Citation Analysis using the Dimensions API<a class="headerlink" href="#Citation-Analysis-using-the-Dimensions-API" title="Permalink to this headline">¶</a></h1>
+<p>This notebooks shows how to extract citations data using the Dimensions Analytics API.</p>
+<p>Two approached are considered: one that is most suited for smaller analyses, and one which is more query-efficient and hence is more suited for analyses involving lots of publications.</p>
+<blockquote>
+<div><p><a class="reference external" href="#scrollTo=eV50UGicGoXz">Citation Analysis using the Dimensions API</a></p>
+</div></blockquote>
+<blockquote>
+<div><blockquote>
+<div><p><a class="reference external" href="#scrollTo=wbGOYIr6B6lQ">Install the Dimensions API library and login</a></p>
+</div></blockquote>
+<p><a class="reference external" href="#scrollTo=ykHU1pbE9uXt">Method A: getting citations for one publication at a time</a></p>
+</div></blockquote>
+<blockquote>
+<div><blockquote>
+<div><p><a class="reference external" href="#scrollTo=y5dPmfV6qn7Y">Comments about this method</a></p>
+</div></blockquote>
+<p><a class="reference external" href="#scrollTo=hog-cAHvDGNF">Method B: Getting citations for multiple publications via a single query</a></p>
+</div></blockquote>
+<blockquote>
+<div><p><a class="reference external" href="#scrollTo=Eo_2nBQJJBVg">Creating a second-level citations network</a></p>
+<p><a class="reference external" href="#scrollTo=Id9h9iXDOVkk">Building a Simple dataviz</a></p>
+</div></blockquote>
+<blockquote>
+<div><p><a class="reference external" href="#scrollTo=Y7pg_VXhVZ2z">Final considerations</a></p>
+<blockquote>
+<div><p><a class="reference external" href="#scrollTo=Y7pg_VXhVZ2z">Querying for more than 1000 results</a></p>
+</div></blockquote>
+</div></blockquote>
+<blockquote>
+<div><p><a class="reference external" href="#scrollTo=Y7pg_VXhVZ2z">Querying for more than 50K results</a></p>
+<p><a class="reference external" href="#scrollTo=Y7pg_VXhVZ2z">Some publications can have MANY citations</a></p>
+</div></blockquote>
+<blockquote>
+<div><p><a class="reference external" href="#scrollTo=Y7pg_VXhVZ2z">Pre-checking citations counts</a></p>
+</div></blockquote>
+<div class="section" id="1.-Prerequisites:-installing-the-Dimensions-API-library">
+<h2>1. Prerequisites: installing the Dimensions API library<a class="headerlink" href="#1.-Prerequisites:-installing-the-Dimensions-API-library" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span>pip install dimcli -U --quiet
+<span class="kn">import</span> <span class="nn">dimcli</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="n">dimcli</span><span class="o">.</span><span class="n">login</span><span class="p">()</span>
+<span class="n">dsl</span> <span class="o">=</span> <span class="n">dimcli</span><span class="o">.</span><span class="n">Dsl</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="2.-Method-A:-getting-citations-for-one-publication-at-a-time">
+<h1>2. Method A: getting citations for one publication at a time<a class="headerlink" href="#2.-Method-A:-getting-citations-for-one-publication-at-a-time" title="Permalink to this headline">¶</a></h1>
+<p>By using the field <code class="docutils literal notranslate"><span class="pre">reference_ids</span></code> we can easily look up citations for individual publications (= incoming links). For example, here are the papers citing “pub.1053279155”:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">dsldf</span> search publications where reference_ids in [ &quot;pub.1053279155&quot; ] return publications[id+doi+title+year]
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Returned Publications: 5 (total = 5)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>doi</th>
+      <th>id</th>
+      <th>title</th>
+      <th>year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>10.1007/s11227-018-2338-1</td>
+      <td>pub.1103275659</td>
+      <td>Towards ontology-based multilingual URL filter...</td>
+      <td>2018</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10.1515/iwp-2015-0057</td>
+      <td>pub.1012651711</td>
+      <td>Das Experteninterview als zentrale Methode der...</td>
+      <td>2015</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>10.1007/978-3-319-24129-6_3</td>
+      <td>pub.1005502446</td>
+      <td>Challenges for Ontological Engineering in the ...</td>
+      <td>2015</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>10.1007/978-3-642-24809-2_10</td>
+      <td>pub.1008922470</td>
+      <td>Transforming a Flat Metadata Schema to a Seman...</td>
+      <td>2012</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>10.1007/978-3-642-24731-6_38</td>
+      <td>pub.1053157726</td>
+      <td>Practice-Based Ontologies: A New Approach to A...</td>
+      <td>2011</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Let’s try another paper ie “pub.1103275659” - in this case there are 3 citations</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">dsldf</span> search publications where reference_ids in [ &quot;pub.1103275659&quot; ] return publications[id+doi+title+year]
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Returned Publications: 3 (total = 3)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>doi</th>
+      <th>id</th>
+      <th>title</th>
+      <th>year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>10.1016/j.future.2019.04.038</td>
+      <td>pub.1113878770</td>
+      <td>Perception layer security in Internet of Things</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10.1109/isncc.2018.8530984</td>
+      <td>pub.1109815383</td>
+      <td>A Fault Tolerant Approach for Malicious URL Fi...</td>
+      <td>2018</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>10.1109/access.2018.2872928</td>
+      <td>pub.1107354292</td>
+      <td>Social Internet of Vehicles: Complexity, Adapt...</td>
+      <td>2018</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Using this simple approach, if we start with a list of publications (our ‘seed’) we can set up a simple loop to get through all of them and launch a ‘get-citations’ query each time.</p>
+<p>TIP The <code class="docutils literal notranslate"><span class="pre">json.dumps</span></code> function easily transforms a list of objects into a string which can be used directly in our query eg</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<span class="s1">&#39;[&quot;pub.1053279155&quot;, &quot;pub.1103275659&quot;]&#39;</span>
+</pre></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">seed</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;pub.1053279155&quot;</span> <span class="p">,</span> <span class="s2">&quot;pub.1103275659&quot;</span><span class="p">]</span>
+<span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;search publications where reference_ids in [</span><span class="si">{}</span><span class="s2">] return publications[id+doi+title+year]&quot;&quot;&quot;</span>
+<span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">seed</span><span class="p">:</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">p</span><span class="p">)))</span>
+  <span class="n">results</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">publications</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">results</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>{&#39;pub.1053279155&#39;: [&#39;pub.1103275659&#39;,
+  &#39;pub.1012651711&#39;,
+  &#39;pub.1005502446&#39;,
+  &#39;pub.1008922470&#39;,
+  &#39;pub.1053157726&#39;],
+ &#39;pub.1103275659&#39;: [&#39;pub.1113878770&#39;, &#39;pub.1109815383&#39;, &#39;pub.1107354292&#39;]}
+</pre></div>
+</div>
+</div>
+<div class="section" id="Comments-about-this-method">
+<h2>Comments about this method<a class="headerlink" href="#Comments-about-this-method" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>this approach is straightforward and quick, but it’s better used with small datasets</p></li>
+<li><p>we create one query per publication (and so on, for a N-degree network)</p></li>
+<li><p>if you have lots of publicaitons, it’ll lead to lots of queries which may not be too efficient</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="3.-Method-B:-Getting-citations-for-multiple-publications-via-a-single-query">
+<h1>3. Method B: Getting citations for multiple publications via a single query<a class="headerlink" href="#3.-Method-B:-Getting-citations-for-multiple-publications-via-a-single-query" title="Permalink to this headline">¶</a></h1>
+<p>We can use the same query template but instead of looking for a single publication ID, we can put multiple ones in a list.</p>
+<p>So if we combine the two citations list for “pub.1053279155” and “pub.1103275659”, we will get 5 + 3 = 8 results in total.</p>
+<p><em>However</em> then it’s down to us to figure out which paper is citing which!</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">dsldf</span> search publications where reference_ids in [ &quot;pub.1053279155&quot; , &quot;pub.1103275659&quot;] return publications[id+doi+title+year]
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Returned Publications: 8 (total = 8)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>doi</th>
+      <th>id</th>
+      <th>title</th>
+      <th>year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>10.1016/j.future.2019.04.038</td>
+      <td>pub.1113878770</td>
+      <td>Perception layer security in Internet of Things</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10.1007/s11227-018-2338-1</td>
+      <td>pub.1103275659</td>
+      <td>Towards ontology-based multilingual URL filter...</td>
+      <td>2018</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>10.1109/isncc.2018.8530984</td>
+      <td>pub.1109815383</td>
+      <td>A Fault Tolerant Approach for Malicious URL Fi...</td>
+      <td>2018</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>10.1109/access.2018.2872928</td>
+      <td>pub.1107354292</td>
+      <td>Social Internet of Vehicles: Complexity, Adapt...</td>
+      <td>2018</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>10.1515/iwp-2015-0057</td>
+      <td>pub.1012651711</td>
+      <td>Das Experteninterview als zentrale Methode der...</td>
+      <td>2015</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>10.1007/978-3-319-24129-6_3</td>
+      <td>pub.1005502446</td>
+      <td>Challenges for Ontological Engineering in the ...</td>
+      <td>2015</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>10.1007/978-3-642-24809-2_10</td>
+      <td>pub.1008922470</td>
+      <td>Transforming a Flat Metadata Schema to a Seman...</td>
+      <td>2012</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>10.1007/978-3-642-24731-6_38</td>
+      <td>pub.1053157726</td>
+      <td>Practice-Based Ontologies: A New Approach to A...</td>
+      <td>2011</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>In order to resolve the citations data we got above, we must also extract the full references for each citing paper (by including <code class="docutils literal notranslate"><span class="pre">reference_ids</span></code> in the results) and then recreate the citation graph programmatically. EG</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">seed</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;pub.1053279155&quot;</span> <span class="p">,</span> <span class="s2">&quot;pub.1103275659&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;&quot;&quot;search publications where reference_ids in {json.dumps(seed)} return publications[id+doi+title+year+reference_ids]&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">build_network_dict</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">pubs_list</span><span class="p">):</span>
+  <span class="n">network</span><span class="o">=</span><span class="p">{</span><span class="n">x</span><span class="p">:[]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">seed</span><span class="p">}</span> <span class="c1"># seed a dictionary</span>
+  <span class="k">for</span> <span class="n">pub</span> <span class="ow">in</span> <span class="n">pubs_list</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">network</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">pub</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;reference_ids&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">pub</span><span class="p">[</span><span class="s1">&#39;reference_ids&#39;</span><span class="p">]:</span>
+        <span class="n">network</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pub</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+  <span class="k">return</span> <span class="n">network</span>
+</pre></div>
+</div>
+</div>
+<p>A simple way to represent the citation network is a dictionary data structure with <code class="docutils literal notranslate"><span class="pre">'cited_paper'</span> <span class="pre">:</span> <span class="pre">[citing</span> <span class="pre">papers]</span></code></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">network1</span> <span class="o">=</span> <span class="n">build_network_dict</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">publications</span><span class="p">)</span>
+<span class="n">network1</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>{&#39;pub.1053279155&#39;: [&#39;pub.1103275659&#39;,
+  &#39;pub.1012651711&#39;,
+  &#39;pub.1005502446&#39;,
+  &#39;pub.1008922470&#39;,
+  &#39;pub.1053157726&#39;],
+ &#39;pub.1103275659&#39;: [&#39;pub.1113878770&#39;, &#39;pub.1109815383&#39;, &#39;pub.1107354292&#39;]}
+</pre></div>
+</div>
+</div>
+<div class="section" id="Creating-a-second-level-citations-network">
+<h2>Creating a second-level citations network<a class="headerlink" href="#Creating-a-second-level-citations-network" title="Permalink to this headline">¶</a></h2>
+<p>Let’s now create a second level citations network!</p>
+<p>This means going through all pubs citing the two seed-papers, and getting all the citing publications for them as well.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">all_citing_papers</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">network1</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+  <span class="n">all_citing_papers</span> <span class="o">+=</span> <span class="n">x</span>
+<span class="n">all_citing_papers</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">all_citing_papers</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">all_citing_papers</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>[&#39;pub.1005502446&#39;,
+ &#39;pub.1103275659&#39;,
+ &#39;pub.1012651711&#39;,
+ &#39;pub.1107354292&#39;,
+ &#39;pub.1109815383&#39;,
+ &#39;pub.1053157726&#39;,
+ &#39;pub.1113878770&#39;,
+ &#39;pub.1008922470&#39;]
+</pre></div>
+</div>
+</div>
+<p>Now let’s extract the network structure as previously done</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data2</span> <span class="o">=</span> <span class="n">dsl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;&quot;&quot;search publications where reference_ids in {json.dumps(all_citing_papers)} return publications[id+doi+title+year+reference_ids]&quot;&quot;&quot;</span><span class="p">)</span>
+<span class="n">network2</span> <span class="o">=</span> <span class="n">build_network_dict</span><span class="p">(</span><span class="n">all_citing_papers</span><span class="p">,</span> <span class="n">data2</span><span class="o">.</span><span class="n">publications</span><span class="p">)</span>
+<span class="n">network2</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>{&#39;pub.1005502446&#39;: [],
+ &#39;pub.1008922470&#39;: [&#39;pub.1089701016&#39;,
+  &#39;pub.1026187633&#39;,
+  &#39;pub.1002394460&#39;,
+  &#39;pub.1012381129&#39;,
+  &#39;pub.1046653745&#39;,
+  &#39;pub.1016243129&#39;],
+ &#39;pub.1012651711&#39;: [&#39;pub.1101318936&#39;],
+ &#39;pub.1053157726&#39;: [&#39;pub.1109914120&#39;,
+  &#39;pub.1113063906&#39;,
+  &#39;pub.1099624152&#39;,
+  &#39;pub.1104531912&#39;,
+  &#39;pub.1011868512&#39;,
+  &#39;pub.1001626874&#39;],
+ &#39;pub.1103275659&#39;: [&#39;pub.1113878770&#39;, &#39;pub.1109815383&#39;, &#39;pub.1107354292&#39;],
+ &#39;pub.1107354292&#39;: [&#39;pub.1113878770&#39;, &#39;pub.1113902569&#39;, &#39;pub.1113065837&#39;],
+ &#39;pub.1109815383&#39;: [],
+ &#39;pub.1113878770&#39;: [&#39;pub.1121687821&#39;, &#39;pub.1121692873&#39;]}
+</pre></div>
+</div>
+</div>
+<p>Finally we can merge the two levels into one single dataset (note: nodes with same data will be merged automatically)</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">final</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">network1</span><span class="p">,</span> <span class="o">**</span><span class="n">network2</span> <span class="p">)</span>
+<span class="n">final</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>{&#39;pub.1005502446&#39;: [],
+ &#39;pub.1008922470&#39;: [&#39;pub.1089701016&#39;,
+  &#39;pub.1026187633&#39;,
+  &#39;pub.1002394460&#39;,
+  &#39;pub.1012381129&#39;,
+  &#39;pub.1046653745&#39;,
+  &#39;pub.1016243129&#39;],
+ &#39;pub.1012651711&#39;: [&#39;pub.1101318936&#39;],
+ &#39;pub.1053157726&#39;: [&#39;pub.1109914120&#39;,
+  &#39;pub.1113063906&#39;,
+  &#39;pub.1099624152&#39;,
+  &#39;pub.1104531912&#39;,
+  &#39;pub.1011868512&#39;,
+  &#39;pub.1001626874&#39;],
+ &#39;pub.1053279155&#39;: [&#39;pub.1103275659&#39;,
+  &#39;pub.1012651711&#39;,
+  &#39;pub.1005502446&#39;,
+  &#39;pub.1008922470&#39;,
+  &#39;pub.1053157726&#39;],
+ &#39;pub.1103275659&#39;: [&#39;pub.1113878770&#39;, &#39;pub.1109815383&#39;, &#39;pub.1107354292&#39;],
+ &#39;pub.1107354292&#39;: [&#39;pub.1113878770&#39;, &#39;pub.1113902569&#39;, &#39;pub.1113065837&#39;],
+ &#39;pub.1109815383&#39;: [],
+ &#39;pub.1113878770&#39;: [&#39;pub.1121687821&#39;, &#39;pub.1121692873&#39;]}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Building-a-Simple-dataviz">
+<h2>Building a Simple dataviz<a class="headerlink" href="#Building-a-Simple-dataviz" title="Permalink to this headline">¶</a></h2>
+<p>We can build a simple visualization using the pyvis library.</p>
+<p>NOTE: the ‘mygraph.html’ file will be saved in the local directory (in Colab, open the ‘Files’ left panel and download it to your computer to open it).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span>pip install pyvis --quiet
+<span class="kn">from</span> <span class="nn">pyvis.network</span> <span class="k">import</span> <span class="n">Network</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">net</span> <span class="o">=</span> <span class="n">Network</span><span class="p">()</span>
+
+<span class="n">nodes</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">final</span><span class="p">:</span>
+  <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+  <span class="n">nodes</span> <span class="o">+=</span> <span class="n">final</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+<span class="n">nodes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">nodes</span><span class="p">))</span>
+
+<span class="n">net</span><span class="o">.</span><span class="n">add_nodes</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span> <span class="c1"># node ids and labels = [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;]</span>
+
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">final</span><span class="p">:</span>
+  <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">final</span><span class="p">[</span><span class="n">x</span><span class="p">]:</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+
+<span class="n">net</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s2">&quot;mygraph.html&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="Final-considerations">
+<h1>Final considerations<a class="headerlink" href="#Final-considerations" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Querying-for-more-than-1000-results">
+<h2>Querying for more than 1000 results<a class="headerlink" href="#Querying-for-more-than-1000-results" title="Permalink to this headline">¶</a></h2>
+<p>Each API query can return a maximum of 1000 records, so you must use the limit/skip syntax to get more.</p>
+<p>See the <a class="reference external" href="https://docs.dimensions.ai/dsl/language.html#paginating-results">paginating results section in the docs</a> for more info.</p>
+</div>
+<div class="section" id="Querying-for-more-than-50K-results">
+<h2>Querying for more than 50K results<a class="headerlink" href="#Querying-for-more-than-50K-results" title="Permalink to this headline">¶</a></h2>
+<p>Even with limit/skip, one can only download 50k records for each single query.</p>
+<p>So if your list of PUB-ids is getting too long (eg &gt; 300) you should consider splitting up the list into chunks create an extra loop to go through all of them without hitting the max upper limit.</p>
+</div>
+<div class="section" id="Some-publications-can-have-MANY-citations">
+<h2>Some publications can have MANY citations<a class="headerlink" href="#Some-publications-can-have-MANY-citations" title="Permalink to this headline">¶</a></h2>
+<p>For example, we can have a single pub with 200K+ citation: <a class="reference external" href="https://app.dimensions.ai/details/publication/pub.1076750128">https://app.dimensions.ai/details/publication/pub.1076750128</a></p>
+<p>That’s quite an exceptional case, but there are several publications with more than 10k citations each. When you encounter such cases, you will hit the 50k limit pretty quickly, so you need to keep an eye out for these and possibly ‘slice’ the data in different ways eg by year or journal (so to get less results).</p>
+</div>
+<div class="section" id="Pre-checking-citations-counts">
+<h2>Pre-checking citations counts<a class="headerlink" href="#Pre-checking-citations-counts" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">times_cited</span></code> and <code class="docutils literal notranslate"><span class="pre">recent_citations</span></code> fields of <a class="reference external" href="https://docs.dimensions.ai/dsl/data-sources.html#publications">publications</a> can be used to check how many citations a paper has (ps <code class="docutils literal notranslate"><span class="pre">recent_citations</span></code> counts the last two years only).</p>
+<p>So, by using these aggregated figures, it is possible to get a feeling for the size of citations-data we’ll have to deal with before setting up a proper data extraction pipeline.</p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="Want-to-learn-more?">
+<h1>Want to learn more?<a class="headerlink" href="#Want-to-learn-more?" title="Permalink to this headline">¶</a></h1>
+<p>Check out the <a class="reference external" href="https://digital-science.github.io/dimensions-api-lab/">Dimensions API Lab</a> website, which contains many tutorials and reusable Jupyter notebooks for scholarly data analytics.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Citation Analysis using the Dimensions API</a><ul>
+<li><a class="reference internal" href="#1.-Prerequisites:-installing-the-Dimensions-API-library">1. Prerequisites: installing the Dimensions API library</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#2.-Method-A:-getting-citations-for-one-publication-at-a-time">2. Method A: getting citations for one publication at a time</a><ul>
+<li><a class="reference internal" href="#Comments-about-this-method">Comments about this method</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#3.-Method-B:-Getting-citations-for-multiple-publications-via-a-single-query">3. Method B: Getting citations for multiple publications via a single query</a><ul>
+<li><a class="reference internal" href="#Creating-a-second-level-citations-network">Creating a second-level citations network</a></li>
+<li><a class="reference internal" href="#Building-a-Simple-dataviz">Building a Simple dataviz</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#Final-considerations">Final considerations</a><ul>
+<li><a class="reference internal" href="#Querying-for-more-than-1000-results">Querying for more than 1000 results</a></li>
+<li><a class="reference internal" href="#Querying-for-more-than-50K-results">Querying for more than 50K results</a></li>
+<li><a class="reference internal" href="#Some-publications-can-have-MANY-citations">Some publications can have MANY citations</a></li>
+<li><a class="reference internal" href="#Pre-checking-citations-counts">Pre-checking citations counts</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#Want-to-learn-more?">Want to learn more?</a></li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../../_sources/notebooks/-notebooks-2-check/2-sample-applications/Citation-analysis/Citation-Analysis.ipynb.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">Dimensions API Lab 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dimensions API Team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

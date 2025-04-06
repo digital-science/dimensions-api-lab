@@ -1,0 +1,6502 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "<a href=\"https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/2-sample-applications/Publications-for-European-Cities/Publications-distribution-for-European-Cities.ipynb\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open Dimensions API Lab In Google Colab\"/></a>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "# Comparing the publications volume of cities in Europe\n",
+    "\n",
+    "This notebook shows how to use the [Dimensions Analytics API](https://www.dimensions.ai/dimensions-apis/) to measure the distribution of overall number of publications per European cities. For the purpose of this exercise, we will look at a specific year i.e. 2018.\n",
+    "\n",
+    "This data will allow us to create a nice-looking map where cities producing more research can be identified visually.\n",
+    "\n",
+    "> **Customize this notebook:** simply change the geographical area and time-span to adapt this analysis to your needs! "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "#### Prerequisites"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "DimCli v0.4.3 - Succesfully connected to <https://app.dimensions.ai>\n"
+     ]
+    }
+   ],
+   "source": [
+    "# data analysis libraries \n",
+    "import time \n",
+    "import pandas as pd \n",
+    "import requests  \n",
+    "import json \n",
+    "# Dimensions API query helper\n",
+    "import dimcli\n",
+    "dimcli.login()dsl = dimcli.Dsl()\n",
+    "# "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "## 1. Getting the publications data from Dimensions\n",
+    "\n",
+    "Dimensions DSL API can return a maximim of 1000 results per call, so in order to get the data we are interested in we need to break down the queries into smaller components. \n",
+    "\n",
+    "We can do so by creating a separate query for each EU country, for a full year, and extract all the cities information from it.\n",
+    "\n",
+    "This is what this query would look like:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Tot Publications:  208597\n",
+      "Returned Research_org_cities: 1000\n"
+     ]
+    },
+    {
+     "data": {
+      "application/json": {
+       "_stats": {
+        "total_count": 208597
+       },
+       "research_org_cities": [
+        {
+         "count": 63893,
+         "id": "2643743",
+         "name": "London"
+        },
+        {
+         "count": 16173,
+         "id": "2653941",
+         "name": "Cambridge"
+        },
+        {
+         "count": 16073,
+         "id": "2640729",
+         "name": "Oxford"
+        },
+        {
+         "count": 10695,
+         "id": "2643123",
+         "name": "Manchester"
+        },
+        {
+         "count": 10403,
+         "id": "2650225",
+         "name": "Edinburgh"
+        },
+        {
+         "count": 8846,
+         "id": "2655603",
+         "name": "Birmingham"
+        },
+        {
+         "count": 7972,
+         "id": "2648579",
+         "name": "Glasgow"
+        },
+        {
+         "count": 7381,
+         "id": "2654675",
+         "name": "Bristol"
+        },
+        {
+         "count": 7056,
+         "id": "2644210",
+         "name": "Liverpool"
+        },
+        {
+         "count": 7018,
+         "id": "2641170",
+         "name": "Nottingham"
+        },
+        {
+         "count": 6787,
+         "id": "2644688",
+         "name": "Leeds"
+        },
+        {
+         "count": 6566,
+         "id": "2638077",
+         "name": "Sheffield"
+        },
+        {
+         "count": 6415,
+         "id": "2641673",
+         "name": "Newcastle upon Tyne"
+        },
+        {
+         "count": 5748,
+         "id": "2637487",
+         "name": "Southampton"
+        },
+        {
+         "count": 5635,
+         "id": "2988507",
+         "name": "Paris"
+        },
+        {
+         "count": 5135,
+         "id": "1816670",
+         "name": "Beijing"
+        },
+        {
+         "count": 5056,
+         "id": "2652221",
+         "name": "Coventry"
+        },
+        {
+         "count": 5030,
+         "id": "2653822",
+         "name": "Cardiff"
+        },
+        {
+         "count": 4432,
+         "id": "5128581",
+         "name": "New York City"
+        },
+        {
+         "count": 4249,
+         "id": "2649808",
+         "name": "Exeter"
+        },
+        {
+         "count": 4077,
+         "id": "2158177",
+         "name": "Melbourne"
+        },
+        {
+         "count": 3643,
+         "id": "2147714",
+         "name": "Sydney"
+        },
+        {
+         "count": 3495,
+         "id": "2644668",
+         "name": "Leicester"
+        },
+        {
+         "count": 3489,
+         "id": "3128760",
+         "name": "Barcelona"
+        },
+        {
+         "count": 3478,
+         "id": "3117735",
+         "name": "Madrid"
+        },
+        {
+         "count": 3403,
+         "id": "2655984",
+         "name": "Belfast"
+        },
+        {
+         "count": 3312,
+         "id": "2759794",
+         "name": "Amsterdam"
+        },
+        {
+         "count": 3284,
+         "id": "3169070",
+         "name": "Rome"
+        },
+        {
+         "count": 3196,
+         "id": "3173435",
+         "name": "Milan"
+        },
+        {
+         "count": 3136,
+         "id": "2633352",
+         "name": "York"
+        },
+        {
+         "count": 3098,
+         "id": "4930956",
+         "name": "Boston"
+        },
+        {
+         "count": 2960,
+         "id": "2654710",
+         "name": "Brighton"
+        },
+        {
+         "count": 2916,
+         "id": "4931972",
+         "name": "Cambridge"
+        },
+        {
+         "count": 2867,
+         "id": "6167865",
+         "name": "Toronto"
+        },
+        {
+         "count": 2861,
+         "id": "2673730",
+         "name": "Stockholm"
+        },
+        {
+         "count": 2676,
+         "id": "2657832",
+         "name": "Aberdeen"
+        },
+        {
+         "count": 2646,
+         "id": "2618425",
+         "name": "Copenhagen"
+        },
+        {
+         "count": 2590,
+         "id": "2641181",
+         "name": "Norwich"
+        },
+        {
+         "count": 2548,
+         "id": "2950159",
+         "name": "Berlin"
+        },
+        {
+         "count": 2540,
+         "id": "2650628",
+         "name": "Durham"
+        },
+        {
+         "count": 2521,
+         "id": "2644972",
+         "name": "Lancaster"
+        },
+        {
+         "count": 2463,
+         "id": "2657896",
+         "name": "Zürich"
+        },
+        {
+         "count": 2448,
+         "id": "2964574",
+         "name": "Dublin"
+        },
+        {
+         "count": 2403,
+         "id": "2639577",
+         "name": "Reading"
+        },
+        {
+         "count": 2385,
+         "id": "2650752",
+         "name": "Dundee"
+        },
+        {
+         "count": 2297,
+         "id": "1850147",
+         "name": "Tokyo"
+        },
+        {
+         "count": 2283,
+         "id": "2656173",
+         "name": "Bath"
+        },
+        {
+         "count": 2229,
+         "id": "2867714",
+         "name": "Munich"
+        },
+        {
+         "count": 2226,
+         "id": "2647793",
+         "name": "Guildford"
+        },
+        {
+         "count": 2162,
+         "id": "2174003",
+         "name": "Brisbane"
+        },
+        {
+         "count": 2120,
+         "id": "1796236",
+         "name": "Shanghai"
+        },
+        {
+         "count": 2061,
+         "id": "3143244",
+         "name": "Oslo"
+        },
+        {
+         "count": 2042,
+         "id": "1880252",
+         "name": "Singapore"
+        },
+        {
+         "count": 1951,
+         "id": "2636432",
+         "name": "Swansea"
+        },
+        {
+         "count": 1935,
+         "id": "2660646",
+         "name": "Genève"
+        },
+        {
+         "count": 1931,
+         "id": "2761369",
+         "name": "Vienna"
+        },
+        {
+         "count": 1911,
+         "id": "2745912",
+         "name": "Utrecht"
+        },
+        {
+         "count": 1865,
+         "id": "4140963",
+         "name": "Washington, D.C."
+        },
+        {
+         "count": 1844,
+         "id": "658225",
+         "name": "Helsinki"
+        },
+        {
+         "count": 1826,
+         "id": "5809844",
+         "name": "Seattle"
+        },
+        {
+         "count": 1819,
+         "id": "2638864",
+         "name": "Saint Andrews"
+        },
+        {
+         "count": 1815,
+         "id": "5368361",
+         "name": "Los Angeles"
+        },
+        {
+         "count": 1803,
+         "id": "4560349",
+         "name": "Philadelphia"
+        },
+        {
+         "count": 1801,
+         "id": "2643567",
+         "name": "Loughborough"
+        },
+        {
+         "count": 1795,
+         "id": "2653877",
+         "name": "Canterbury"
+        },
+        {
+         "count": 1794,
+         "id": "4347778",
+         "name": "Baltimore"
+        },
+        {
+         "count": 1770,
+         "id": "264371",
+         "name": "Athens"
+        },
+        {
+         "count": 1740,
+         "id": "2800866",
+         "name": "Brussels"
+        },
+        {
+         "count": 1733,
+         "id": "3448439",
+         "name": "São Paulo"
+        },
+        {
+         "count": 1731,
+         "id": "2640194",
+         "name": "Plymouth"
+        },
+        {
+         "count": 1715,
+         "id": "2792482",
+         "name": "Leuven"
+        },
+        {
+         "count": 1649,
+         "id": "6077243",
+         "name": "Montréal"
+        },
+        {
+         "count": 1628,
+         "id": "2267057",
+         "name": "Lisbon"
+        },
+        {
+         "count": 1590,
+         "id": "2907911",
+         "name": "Heidelberg"
+        },
+        {
+         "count": 1533,
+         "id": "524901",
+         "name": "Moscow"
+        },
+        {
+         "count": 1528,
+         "id": "2651269",
+         "name": "Didcot"
+        },
+        {
+         "count": 1499,
+         "id": "1799962",
+         "name": "Nanjing"
+        },
+        {
+         "count": 1494,
+         "id": "1835848",
+         "name": "Seoul"
+        },
+        {
+         "count": 1489,
+         "id": "2911298",
+         "name": "Hamburg"
+        },
+        {
+         "count": 1467,
+         "id": "4887398",
+         "name": "Chicago"
+        },
+        {
+         "count": 1462,
+         "id": "3067696",
+         "name": "Prague"
+        },
+        {
+         "count": 1428,
+         "id": "4699066",
+         "name": "Houston"
+        },
+        {
+         "count": 1402,
+         "id": "2750053",
+         "name": "Nijmegen"
+        },
+        {
+         "count": 1357,
+         "id": "1819729",
+         "name": "Hong Kong"
+        },
+        {
+         "count": 1353,
+         "id": "2063523",
+         "name": "Perth"
+        },
+        {
+         "count": 1351,
+         "id": "2747891",
+         "name": "Rotterdam"
+        },
+        {
+         "count": 1340,
+         "id": "6173331",
+         "name": "Vancouver"
+        },
+        {
+         "count": 1338,
+         "id": "2797656",
+         "name": "Gent"
+        },
+        {
+         "count": 1330,
+         "id": "2693678",
+         "name": "Lund"
+        },
+        {
+         "count": 1316,
+         "id": "2639996",
+         "name": "Portsmouth"
+        },
+        {
+         "count": 1316,
+         "id": "2661604",
+         "name": "Basel"
+        },
+        {
+         "count": 1306,
+         "id": "2751773",
+         "name": "Leiden"
+        },
+        {
+         "count": 1303,
+         "id": "2172517",
+         "name": "Canberra"
+        },
+        {
+         "count": 1300,
+         "id": "2666199",
+         "name": "Uppsala"
+        },
+        {
+         "count": 1290,
+         "id": "756135",
+         "name": "Warsaw"
+        },
+        {
+         "count": 1251,
+         "id": "6094817",
+         "name": "Ottawa"
+        },
+        {
+         "count": 1237,
+         "id": "5391959",
+         "name": "San Francisco"
+        },
+        {
+         "count": 1224,
+         "id": "3171728",
+         "name": "Padova"
+        },
+        {
+         "count": 1224,
+         "id": "4464368",
+         "name": "Durham"
+        },
+        {
+         "count": 1200,
+         "id": "2645425",
+         "name": "Kingston upon Hull"
+        },
+        {
+         "count": 1195,
+         "id": "2078025",
+         "name": "Adelaide"
+        },
+        {
+         "count": 1195,
+         "id": "5398563",
+         "name": "Stanford"
+        },
+        {
+         "count": 1178,
+         "id": "3181928",
+         "name": "Bologna"
+        },
+        {
+         "count": 1143,
+         "id": "3172394",
+         "name": "Naples"
+        },
+        {
+         "count": 1142,
+         "id": "5391811",
+         "name": "San Diego"
+        },
+        {
+         "count": 1141,
+         "id": "4984247",
+         "name": "Ann Arbor"
+        },
+        {
+         "count": 1136,
+         "id": "2624652",
+         "name": "Århus"
+        },
+        {
+         "count": 1132,
+         "id": "2755251",
+         "name": "Groningen"
+        },
+        {
+         "count": 1121,
+         "id": "2711537",
+         "name": "Göteborg"
+        },
+        {
+         "count": 1117,
+         "id": "3165524",
+         "name": "Turin"
+        },
+        {
+         "count": 1099,
+         "id": "2638671",
+         "name": "Salford"
+        },
+        {
+         "count": 1097,
+         "id": "3054643",
+         "name": "Budapest"
+        },
+        {
+         "count": 1091,
+         "id": "5206379",
+         "name": "Pittsburgh"
+        },
+        {
+         "count": 1082,
+         "id": "2193733",
+         "name": "Auckland"
+        },
+        {
+         "count": 1080,
+         "id": "2652618",
+         "name": "Colchester"
+        },
+        {
+         "count": 1065,
+         "id": "2650188",
+         "name": "Egham"
+        },
+        {
+         "count": 1062,
+         "id": "2642465",
+         "name": "Milton Keynes"
+        },
+        {
+         "count": 1059,
+         "id": "4180439",
+         "name": "Atlanta"
+        },
+        {
+         "count": 1056,
+         "id": "1791247",
+         "name": "Wuhan"
+        },
+        {
+         "count": 1055,
+         "id": "1809858",
+         "name": "Guangzhou"
+        },
+        {
+         "count": 1054,
+         "id": "2659994",
+         "name": "Lausanne"
+        },
+        {
+         "count": 1050,
+         "id": "2641674",
+         "name": "Newcastle under Lyme"
+        },
+        {
+         "count": 1040,
+         "id": "3176219",
+         "name": "Genoa"
+        },
+        {
+         "count": 1031,
+         "id": "2661552",
+         "name": "Bern"
+        },
+        {
+         "count": 1018,
+         "id": "4348599",
+         "name": "Bethesda"
+        },
+        {
+         "count": 1016,
+         "id": "2946447",
+         "name": "Bonn"
+        },
+        {
+         "count": 994,
+         "id": "2652586",
+         "name": "Coleraine"
+        },
+        {
+         "count": 984,
+         "id": "1668341",
+         "name": "Taipei"
+        },
+        {
+         "count": 970,
+         "id": "2751283",
+         "name": "Maastricht"
+        },
+        {
+         "count": 953,
+         "id": "5327684",
+         "name": "Berkeley"
+        },
+        {
+         "count": 951,
+         "id": "4839366",
+         "name": "New Haven"
+        },
+        {
+         "count": 939,
+         "id": "993800",
+         "name": "Johannesburg"
+        },
+        {
+         "count": 934,
+         "id": "3451190",
+         "name": "Rio de Janeiro"
+        },
+        {
+         "count": 929,
+         "id": "2652087",
+         "name": "Cranfield"
+        },
+        {
+         "count": 926,
+         "id": "2995469",
+         "name": "Marseille"
+        },
+        {
+         "count": 908,
+         "id": "1790630",
+         "name": "Xi’an"
+        },
+        {
+         "count": 906,
+         "id": "3170647",
+         "name": "Pisa"
+        },
+        {
+         "count": 905,
+         "id": "3871336",
+         "name": "Santiago"
+        },
+        {
+         "count": 902,
+         "id": "2636910",
+         "name": "Stirling"
+        },
+        {
+         "count": 900,
+         "id": "3176959",
+         "name": "Florence"
+        },
+        {
+         "count": 880,
+         "id": "2972315",
+         "name": "Toulouse"
+        },
+        {
+         "count": 880,
+         "id": "7302802",
+         "name": "Rondebosch"
+        },
+        {
+         "count": 869,
+         "id": "2647349",
+         "name": "Hatfield"
+        },
+        {
+         "count": 865,
+         "id": "2886242",
+         "name": "Köln"
+        },
+        {
+         "count": 864,
+         "id": "1815286",
+         "name": "Chengdu"
+        },
+        {
+         "count": 862,
+         "id": "2646458",
+         "name": "Huddersfield"
+        },
+        {
+         "count": 857,
+         "id": "112931",
+         "name": "Tehran"
+        },
+        {
+         "count": 853,
+         "id": "2656397",
+         "name": "Bangor"
+        },
+        {
+         "count": 850,
+         "id": "4509177",
+         "name": "Columbus"
+        },
+        {
+         "count": 848,
+         "id": "3016078",
+         "name": "Gif-sur-Yvette"
+        },
+        {
+         "count": 843,
+         "id": "3161732",
+         "name": "Bergen"
+        },
+        {
+         "count": 840,
+         "id": "1609350",
+         "name": "Bangkok"
+        },
+        {
+         "count": 839,
+         "id": "2639912",
+         "name": "Preston"
+        },
+        {
+         "count": 833,
+         "id": "2640101",
+         "name": "Poole"
+        },
+        {
+         "count": 825,
+         "id": "2996944",
+         "name": "Lyon"
+        },
+        {
+         "count": 824,
+         "id": "5037649",
+         "name": "Minneapolis"
+        },
+        {
+         "count": 819,
+         "id": "5574991",
+         "name": "Boulder"
+        },
+        {
+         "count": 808,
+         "id": "3530597",
+         "name": "Mexico City"
+        },
+        {
+         "count": 806,
+         "id": "745044",
+         "name": "İstanbul"
+        },
+        {
+         "count": 804,
+         "id": "2155472",
+         "name": "Newcastle"
+        },
+        {
+         "count": 786,
+         "id": "5946768",
+         "name": "Edmonton"
+        },
+        {
+         "count": 783,
+         "id": "2654993",
+         "name": "Bradford"
+        },
+        {
+         "count": 781,
+         "id": "3014728",
+         "name": "Grenoble"
+        },
+        {
+         "count": 776,
+         "id": "5261457",
+         "name": "Madison"
+        },
+        {
+         "count": 774,
+         "id": "2803138",
+         "name": "Antwerpen"
+        },
+        {
+         "count": 770,
+         "id": "2935022",
+         "name": "Dresden"
+        },
+        {
+         "count": 769,
+         "id": "2644487",
+         "name": "Lincoln"
+        },
+        {
+         "count": 765,
+         "id": "1735161",
+         "name": "Kuala Lumpur"
+        },
+        {
+         "count": 765,
+         "id": "5122432",
+         "name": "Ithaca"
+        },
+        {
+         "count": 761,
+         "id": "4049979",
+         "name": "Birmingham"
+        },
+        {
+         "count": 751,
+         "id": "2879139",
+         "name": "Leipzig"
+        },
+        {
+         "count": 746,
+         "id": "323786",
+         "name": "Ankara"
+        },
+        {
+         "count": 743,
+         "id": "1808926",
+         "name": "Hangzhou"
+        },
+        {
+         "count": 732,
+         "id": "4407066",
+         "name": "St. Louis"
+        },
+        {
+         "count": 728,
+         "id": "2918632",
+         "name": "Göttingen"
+        },
+        {
+         "count": 725,
+         "id": "2820860",
+         "name": "Tübingen"
+        },
+        {
+         "count": 724,
+         "id": "3171366",
+         "name": "Pavia"
+        },
+        {
+         "count": 716,
+         "id": "2735943",
+         "name": "Porto"
+        },
+        {
+         "count": 712,
+         "id": "2651347",
+         "name": "Derby"
+        },
+        {
+         "count": 704,
+         "id": "1853909",
+         "name": "Osaka"
+        },
+        {
+         "count": 699,
+         "id": "1261481",
+         "name": "New Delhi"
+        },
+        {
+         "count": 690,
+         "id": "2509954",
+         "name": "Valencia"
+        },
+        {
+         "count": 689,
+         "id": "3165185",
+         "name": "Trieste"
+        },
+        {
+         "count": 684,
+         "id": "2925533",
+         "name": "Frankfurt am Main"
+        },
+        {
+         "count": 684,
+         "id": "2992166",
+         "name": "Montpellier"
+        },
+        {
+         "count": 678,
+         "id": "3186886",
+         "name": "Zagreb"
+        },
+        {
+         "count": 677,
+         "id": "4891382",
+         "name": "Evanston"
+        },
+        {
+         "count": 674,
+         "id": "184745",
+         "name": "Nairobi"
+        },
+        {
+         "count": 665,
+         "id": "4460162",
+         "name": "Chapel Hill"
+        },
+        {
+         "count": 661,
+         "id": "2874225",
+         "name": "Mainz"
+        },
+        {
+         "count": 661,
+         "id": "3094802",
+         "name": "Kraków"
+        },
+        {
+         "count": 658,
+         "id": "293397",
+         "name": "Tel Aviv"
+        },
+        {
+         "count": 653,
+         "id": "734077",
+         "name": "Thessaloníki"
+        },
+        {
+         "count": 641,
+         "id": "2989204",
+         "name": "Orsay"
+        },
+        {
+         "count": 638,
+         "id": "4644585",
+         "name": "Nashville"
+        },
+        {
+         "count": 636,
+         "id": "5102922",
+         "name": "Princeton"
+        },
+        {
+         "count": 631,
+         "id": "5318313",
+         "name": "Tucson"
+        },
+        {
+         "count": 629,
+         "id": "4156404",
+         "name": "Gainesville"
+        },
+        {
+         "count": 628,
+         "id": "108410",
+         "name": "Riyadh"
+        },
+        {
+         "count": 623,
+         "id": "5913490",
+         "name": "Calgary"
+        },
+        {
+         "count": 616,
+         "id": "2910831",
+         "name": "Hannover"
+        },
+        {
+         "count": 615,
+         "id": "2925177",
+         "name": "Freiburg"
+        },
+        {
+         "count": 609,
+         "id": "5150529",
+         "name": "Cleveland"
+        },
+        {
+         "count": 608,
+         "id": "5341704",
+         "name": "Davis"
+        },
+        {
+         "count": 604,
+         "id": "3196359",
+         "name": "Ljubljana"
+        },
+        {
+         "count": 602,
+         "id": "792680",
+         "name": "Belgrade"
+        },
+        {
+         "count": 600,
+         "id": "1275339",
+         "name": "Mumbai"
+        },
+        {
+         "count": 599,
+         "id": "3247449",
+         "name": "Aachen"
+        },
+        {
+         "count": 597,
+         "id": "105343",
+         "name": "Jeddah"
+        },
+        {
+         "count": 593,
+         "id": "1792947",
+         "name": "Tianjin"
+        },
+        {
+         "count": 588,
+         "id": "2852458",
+         "name": "Potsdam"
+        },
+        {
+         "count": 586,
+         "id": "3435910",
+         "name": "Buenos Aires"
+        },
+        {
+         "count": 584,
+         "id": "1176615",
+         "name": "Islamabad"
+        },
+        {
+         "count": 581,
+         "id": "2110683",
+         "name": "Tsukuba"
+        },
+        {
+         "count": 578,
+         "id": "5381396",
+         "name": "Pasadena"
+        },
+        {
+         "count": 574,
+         "id": "1857910",
+         "name": "Kyoto"
+        },
+        {
+         "count": 572,
+         "id": "2892794",
+         "name": "Karlsruhe"
+        },
+        {
+         "count": 570,
+         "id": "2633691",
+         "name": "Wolverhampton"
+        },
+        {
+         "count": 570,
+         "id": "3688689",
+         "name": "Bogotá"
+        },
+        {
+         "count": 570,
+         "id": "5043473",
+         "name": "Rochester"
+        },
+        {
+         "count": 568,
+         "id": "2642607",
+         "name": "Middlesbrough"
+        },
+        {
+         "count": 568,
+         "id": "360630",
+         "name": "Cairo"
+        },
+        {
+         "count": 566,
+         "id": "290030",
+         "name": "Doha"
+        },
+        {
+         "count": 563,
+         "id": "4351977",
+         "name": "College Park"
+        },
+        {
+         "count": 560,
+         "id": "2792073",
+         "name": "Louvain-la-Neuve"
+        },
+        {
+         "count": 557,
+         "id": "2615876",
+         "name": "Odense"
+        },
+        {
+         "count": 550,
+         "id": "4684888",
+         "name": "Dallas"
+        },
+        {
+         "count": 548,
+         "id": "2867543",
+         "name": "Münster"
+        },
+        {
+         "count": 548,
+         "id": "2973783",
+         "name": "Strasbourg"
+        },
+        {
+         "count": 544,
+         "id": "4671654",
+         "name": "Austin"
+        },
+        {
+         "count": 543,
+         "id": "5969782",
+         "name": "Hamilton"
+        },
+        {
+         "count": 542,
+         "id": "2757345",
+         "name": "Delft"
+        },
+        {
+         "count": 541,
+         "id": "2657782",
+         "name": "Aberystwyth"
+        },
+        {
+         "count": 541,
+         "id": "2775220",
+         "name": "Innsbruck"
+        },
+        {
+         "count": 538,
+         "id": "683506",
+         "name": "Bucharest"
+        },
+        {
+         "count": 536,
+         "id": "1818920",
+         "name": "Sha Tin"
+        },
+        {
+         "count": 536,
+         "id": "3133880",
+         "name": "Trondheim"
+        },
+        {
+         "count": 534,
+         "id": "2745088",
+         "name": "Wageningen"
+        },
+        {
+         "count": 531,
+         "id": "1496747",
+         "name": "Novosibirsk"
+        },
+        {
+         "count": 530,
+         "id": "4752031",
+         "name": "Charlottesville"
+        },
+        {
+         "count": 526,
+         "id": "3031582",
+         "name": "Bordeaux"
+        },
+        {
+         "count": 526,
+         "id": "5213681",
+         "name": "State College"
+        },
+        {
+         "count": 523,
+         "id": "964137",
+         "name": "Pretoria"
+        },
+        {
+         "count": 515,
+         "id": "5101717",
+         "name": "New Brunswick"
+        },
+        {
+         "count": 513,
+         "id": "2517117",
+         "name": "Granada"
+        },
+        {
+         "count": 513,
+         "id": "4862034",
+         "name": "Iowa City"
+        },
+        {
+         "count": 511,
+         "id": "3182351",
+         "name": "Bari"
+        },
+        {
+         "count": 509,
+         "id": "2778067",
+         "name": "Graz"
+        },
+        {
+         "count": 508,
+         "id": "4508722",
+         "name": "Cincinnati"
+        },
+        {
+         "count": 506,
+         "id": "2968705",
+         "name": "Villejuif"
+        },
+        {
+         "count": 504,
+         "id": "2740637",
+         "name": "Coimbra"
+        },
+        {
+         "count": 503,
+         "id": "498817",
+         "name": "Saint Petersburg"
+        },
+        {
+         "count": 497,
+         "id": "602150",
+         "name": "Umeå"
+        },
+        {
+         "count": 496,
+         "id": "1815577",
+         "name": "Changsha"
+        },
+        {
+         "count": 494,
+         "id": "2965140",
+         "name": "Cork"
+        },
+        {
+         "count": 490,
+         "id": "1808722",
+         "name": "Hefei"
+        },
+        {
+         "count": 490,
+         "id": "3165243",
+         "name": "Trento"
+        },
+        {
+         "count": 489,
+         "id": "2510911",
+         "name": "Sevilla"
+        },
+        {
+         "count": 489,
+         "id": "2634869",
+         "name": "Wallingford"
+        },
+        {
+         "count": 489,
+         "id": "2636841",
+         "name": "Stoke-on-Trent"
+        },
+        {
+         "count": 484,
+         "id": "146268",
+         "name": "Nicosia"
+        },
+        {
+         "count": 484,
+         "id": "6058560",
+         "name": "London"
+        },
+        {
+         "count": 482,
+         "id": "2929567",
+         "name": "Erlangen"
+        },
+        {
+         "count": 481,
+         "id": "633679",
+         "name": "Turku"
+        },
+        {
+         "count": 479,
+         "id": "2657780",
+         "name": "Abingdon"
+        },
+        {
+         "count": 478,
+         "id": "2968254",
+         "name": "Villeurbanne"
+        },
+        {
+         "count": 475,
+         "id": "1277333",
+         "name": "Bengaluru"
+        },
+        {
+         "count": 475,
+         "id": "3078610",
+         "name": "Brno"
+        },
+        {
+         "count": 475,
+         "id": "5359777",
+         "name": "Irvine"
+        },
+        {
+         "count": 473,
+         "id": "5134086",
+         "name": "Rochester"
+        },
+        {
+         "count": 471,
+         "id": "2805615",
+         "name": "Würzburg"
+        },
+        {
+         "count": 470,
+         "id": "4259418",
+         "name": "Indianapolis"
+        },
+        {
+         "count": 469,
+         "id": "4991640",
+         "name": "East Lansing"
+        },
+        {
+         "count": 465,
+         "id": "2891122",
+         "name": "Kiel"
+        },
+        {
+         "count": 464,
+         "id": "4914570",
+         "name": "Urbana"
+        },
+        {
+         "count": 462,
+         "id": "2643741",
+         "name": "City of London"
+        },
+        {
+         "count": 459,
+         "id": "2655046",
+         "name": "Box"
+        },
+        {
+         "count": 456,
+         "id": "2934246",
+         "name": "Düsseldorf"
+        },
+        {
+         "count": 455,
+         "id": "2998324",
+         "name": "Lille"
+        },
+        {
+         "count": 450,
+         "id": "2640677",
+         "name": "Paisley"
+        },
+        {
+         "count": 449,
+         "id": "2525068",
+         "name": "Catania"
+        },
+        {
+         "count": 449,
+         "id": "294801",
+         "name": "Haifa"
+        },
+        {
+         "count": 448,
+         "id": "2920512",
+         "name": "Gießen"
+        },
+        {
+         "count": 448,
+         "id": "4682464",
+         "name": "College Station"
+        },
+        {
+         "count": 448,
+         "id": "5780993",
+         "name": "Salt Lake City"
+        },
+        {
+         "count": 447,
+         "id": "2037013",
+         "name": "Harbin"
+        },
+        {
+         "count": 442,
+         "id": "5392952",
+         "name": "Santa Barbara"
+        },
+        {
+         "count": 439,
+         "id": "2191562",
+         "name": "Dunedin"
+        },
+        {
+         "count": 439,
+         "id": "4634946",
+         "name": "Knoxville"
+        },
+        {
+         "count": 438,
+         "id": "2895044",
+         "name": "Jena"
+        },
+        {
+         "count": 434,
+         "id": "727011",
+         "name": "Sofia"
+        },
+        {
+         "count": 431,
+         "id": "2618468",
+         "name": "Kongens Lyngby"
+        },
+        {
+         "count": 431,
+         "id": "2928810",
+         "name": "Essen"
+        },
+        {
+         "count": 431,
+         "id": "5746545",
+         "name": "Portland"
+        },
+        {
+         "count": 430,
+         "id": "2640908",
+         "name": "Ormskirk"
+        },
+        {
+         "count": 429,
+         "id": "3369157",
+         "name": "Cape Town"
+        },
+        {
+         "count": 426,
+         "id": "5224151",
+         "name": "Providence"
+        },
+        {
+         "count": 422,
+         "id": "703448",
+         "name": "Kyiv"
+        },
+        {
+         "count": 421,
+         "id": "1264527",
+         "name": "Chennai"
+        },
+        {
+         "count": 421,
+         "id": "2964180",
+         "name": "Gaillimh"
+        },
+        {
+         "count": 415,
+         "id": "1275004",
+         "name": "Kolkata"
+        },
+        {
+         "count": 413,
+         "id": "3133895",
+         "name": "Tromsø"
+        },
+        {
+         "count": 411,
+         "id": "3176589",
+         "name": "Frascati"
+        },
+        {
+         "count": 410,
+         "id": "5992500",
+         "name": "Kingston"
+        },
+        {
+         "count": 404,
+         "id": "2165798",
+         "name": "Geelong"
+        },
+        {
+         "count": 404,
+         "id": "2624886",
+         "name": "Aalborg"
+        },
+        {
+         "count": 402,
+         "id": "1795565",
+         "name": "Shenzhen"
+        },
+        {
+         "count": 402,
+         "id": "3171180",
+         "name": "Perugia"
+        },
+        {
+         "count": 401,
+         "id": "4990729",
+         "name": "Detroit"
+        },
+        {
+         "count": 399,
+         "id": "2653228",
+         "name": "Chester"
+        },
+        {
+         "count": 396,
+         "id": "5110629",
+         "name": "Buffalo"
+        },
+        {
+         "count": 392,
+         "id": "2641430",
+         "name": "Northampton"
+        },
+        {
+         "count": 390,
+         "id": "561887",
+         "name": "Gatchina"
+        },
+        {
+         "count": 389,
+         "id": "3452925",
+         "name": "Porto Alegre"
+        },
+        {
+         "count": 389,
+         "id": "4928096",
+         "name": "West Lafayette"
+        },
+        {
+         "count": 389,
+         "id": "6174041",
+         "name": "Victoria"
+        },
+        {
+         "count": 388,
+         "id": "6325494",
+         "name": "Québec"
+        },
+        {
+         "count": 384,
+         "id": "4164138",
+         "name": "Miami"
+        },
+        {
+         "count": 381,
+         "id": "1805753",
+         "name": "Jinan"
+        },
+        {
+         "count": 381,
+         "id": "1856057",
+         "name": "Nagoya"
+        },
+        {
+         "count": 381,
+         "id": "2636389",
+         "name": "Swindon"
+        },
+        {
+         "count": 380,
+         "id": "1797929",
+         "name": "Qingdao"
+        },
+        {
+         "count": 378,
+         "id": "1489425",
+         "name": "Tomsk"
+        },
+        {
+         "count": 377,
+         "id": "3060972",
+         "name": "Bratislava"
+        },
+        {
+         "count": 373,
+         "id": "3467865",
+         "name": "Campinas"
+        },
+        {
+         "count": 370,
+         "id": "2990969",
+         "name": "Nantes"
+        },
+        {
+         "count": 369,
+         "id": "2163355",
+         "name": "Hobart"
+        },
+        {
+         "count": 363,
+         "id": "2645460",
+         "name": "Kings Langley"
+        },
+        {
+         "count": 360,
+         "id": "2643339",
+         "name": "Luton"
+        },
+        {
+         "count": 360,
+         "id": "564719",
+         "name": "Dubna"
+        },
+        {
+         "count": 356,
+         "id": "6324729",
+         "name": "Halifax"
+        },
+        {
+         "count": 355,
+         "id": "3361025",
+         "name": "Stellenbosch"
+        },
+        {
+         "count": 354,
+         "id": "3164527",
+         "name": "Verona"
+        },
+        {
+         "count": 352,
+         "id": "2192362",
+         "name": "Christchurch"
+        },
+        {
+         "count": 352,
+         "id": "261779",
+         "name": "Ioánnina"
+        },
+        {
+         "count": 352,
+         "id": "281184",
+         "name": "Jerusalem"
+        },
+        {
+         "count": 352,
+         "id": "593116",
+         "name": "Vilnius"
+        },
+        {
+         "count": 351,
+         "id": "1835235",
+         "name": "Daejeon"
+        },
+        {
+         "count": 350,
+         "id": "3114711",
+         "name": "Oviedo"
+        },
+        {
+         "count": 349,
+         "id": "2792413",
+         "name": "Liège"
+        },
+        {
+         "count": 349,
+         "id": "2988758",
+         "name": "Palaiseau"
+        },
+        {
+         "count": 348,
+         "id": "5139865",
+         "name": "Stony Brook"
+        },
+        {
+         "count": 348,
+         "id": "611717",
+         "name": "Tbilisi"
+        },
+        {
+         "count": 344,
+         "id": "2640104",
+         "name": "Pontypridd"
+        },
+        {
+         "count": 341,
+         "id": "625144",
+         "name": "Minsk"
+        },
+        {
+         "count": 340,
+         "id": "616052",
+         "name": "Yerevan"
+        },
+        {
+         "count": 339,
+         "id": "1185241",
+         "name": "Dhaka"
+        },
+        {
+         "count": 339,
+         "id": "1814906",
+         "name": "Chongqing"
+        },
+        {
+         "count": 339,
+         "id": "2647451",
+         "name": "Harpenden"
+        },
+        {
+         "count": 336,
+         "id": "4174715",
+         "name": "Tallahassee"
+        },
+        {
+         "count": 335,
+         "id": "2983990",
+         "name": "Rennes"
+        },
+        {
+         "count": 335,
+         "id": "4145381",
+         "name": "Wilmington"
+        },
+        {
+         "count": 334,
+         "id": "2938913",
+         "name": "Darmstadt"
+        },
+        {
+         "count": 333,
+         "id": "232422",
+         "name": "Kampala"
+        },
+        {
+         "count": 331,
+         "id": "5911606",
+         "name": "Burnaby"
+        },
+        {
+         "count": 330,
+         "id": "3413829",
+         "name": "Reykjavík"
+        },
+        {
+         "count": 329,
+         "id": "1259229",
+         "name": "Pune"
+        },
+        {
+         "count": 328,
+         "id": "2944388",
+         "name": "Bremen"
+        },
+        {
+         "count": 328,
+         "id": "3114472",
+         "name": "Pamplona"
+        },
+        {
+         "count": 327,
+         "id": "6176823",
+         "name": "Waterloo"
+        },
+        {
+         "count": 326,
+         "id": "5393052",
+         "name": "Santa Cruz"
+        },
+        {
+         "count": 325,
+         "id": "2922582",
+         "name": "Garching bei München"
+        },
+        {
+         "count": 324,
+         "id": "643492",
+         "name": "Oulu"
+        },
+        {
+         "count": 322,
+         "id": "1007311",
+         "name": "Durban"
+        },
+        {
+         "count": 317,
+         "id": "3109718",
+         "name": "Santander"
+        },
+        {
+         "count": 316,
+         "id": "5372223",
+         "name": "Menlo Park"
+        },
+        {
+         "count": 316,
+         "id": "5412347",
+         "name": "Aurora"
+        },
+        {
+         "count": 315,
+         "id": "2658120",
+         "name": "Villigen"
+        },
+        {
+         "count": 314,
+         "id": "2947416",
+         "name": "Bochum"
+        },
+        {
+         "count": 314,
+         "id": "4174757",
+         "name": "Tampa"
+        },
+        {
+         "count": 314,
+         "id": "4254679",
+         "name": "Bloomington"
+        },
+        {
+         "count": 313,
+         "id": "3024635",
+         "name": "Clermont-Ferrand"
+        },
+        {
+         "count": 313,
+         "id": "3181554",
+         "name": "Brescia"
+        },
+        {
+         "count": 312,
+         "id": "2694762",
+         "name": "Linköping"
+        },
+        {
+         "count": 310,
+         "id": "5317058",
+         "name": "Tempe"
+        },
+        {
+         "count": 309,
+         "id": "2742032",
+         "name": "Braga"
+        },
+        {
+         "count": 309,
+         "id": "4943629",
+         "name": "Medford"
+        },
+        {
+         "count": 308,
+         "id": "2636531",
+         "name": "Sunderland"
+        },
+        {
+         "count": 308,
+         "id": "3109642",
+         "name": "Santiago de Compostela"
+        },
+        {
+         "count": 307,
+         "id": "4726206",
+         "name": "San Antonio"
+        },
+        {
+         "count": 304,
+         "id": "4367175",
+         "name": "Rockville"
+        },
+        {
+         "count": 304,
+         "id": "4929023",
+         "name": "Amherst Center"
+        },
+        {
+         "count": 301,
+         "id": "2825297",
+         "name": "Stuttgart"
+        },
+        {
+         "count": 300,
+         "id": "5454711",
+         "name": "Albuquerque"
+        },
+        {
+         "count": 298,
+         "id": "2633563",
+         "name": "Worcester"
+        },
+        {
+         "count": 297,
+         "id": "3104324",
+         "name": "Zaragoza"
+        },
+        {
+         "count": 297,
+         "id": "4899581",
+         "name": "Lemont"
+        },
+        {
+         "count": 297,
+         "id": "5367440",
+         "name": "Livermore"
+        },
+        {
+         "count": 296,
+         "id": "1863967",
+         "name": "Fukuoka"
+        },
+        {
+         "count": 295,
+         "id": "504576",
+         "name": "Protvino"
+        },
+        {
+         "count": 295,
+         "id": "6696918",
+         "name": "Taoyuan City"
+        },
+        {
+         "count": 293,
+         "id": "2820256",
+         "name": "Ulm"
+        },
+        {
+         "count": 291,
+         "id": "588335",
+         "name": "Tartu"
+        },
+        {
+         "count": 290,
+         "id": "2306104",
+         "name": "Accra"
+        },
+        {
+         "count": 288,
+         "id": "588409",
+         "name": "Tallinn"
+        },
+        {
+         "count": 285,
+         "id": "2757783",
+         "name": "De Bilt"
+        },
+        {
+         "count": 285,
+         "id": "4274277",
+         "name": "Lawrence"
+        },
+        {
+         "count": 284,
+         "id": "4151871",
+         "name": "Coral Gables"
+        },
+        {
+         "count": 284,
+         "id": "5419384",
+         "name": "Denver"
+        },
+        {
+         "count": 284,
+         "id": "721472",
+         "name": "Debrecen"
+        },
+        {
+         "count": 282,
+         "id": "1859171",
+         "name": "Kobe"
+        },
+        {
+         "count": 282,
+         "id": "2935517",
+         "name": "Dortmund"
+        },
+        {
+         "count": 279,
+         "id": "1274746",
+         "name": "Chandigarh"
+        },
+        {
+         "count": 279,
+         "id": "4846834",
+         "name": "Ames"
+        },
+        {
+         "count": 278,
+         "id": "3088171",
+         "name": "Poznań"
+        },
+        {
+         "count": 278,
+         "id": "3177090",
+         "name": "Ferrara"
+        },
+        {
+         "count": 278,
+         "id": "4356847",
+         "name": "Greenbelt"
+        },
+        {
+         "count": 276,
+         "id": "3081368",
+         "name": "Wrocław"
+        },
+        {
+         "count": 274,
+         "id": "2111149",
+         "name": "Sendai"
+        },
+        {
+         "count": 274,
+         "id": "5856195",
+         "name": "Honolulu"
+        },
+        {
+         "count": 273,
+         "id": "1886760",
+         "name": "Suzhou"
+        },
+        {
+         "count": 271,
+         "id": "1835329",
+         "name": "Daegu"
+        },
+        {
+         "count": 271,
+         "id": "2513416",
+         "name": "Murcia"
+        },
+        {
+         "count": 271,
+         "id": "2742611",
+         "name": "Aveiro"
+        },
+        {
+         "count": 271,
+         "id": "5387877",
+         "name": "Riverside"
+        },
+        {
+         "count": 270,
+         "id": "2034937",
+         "name": "Shenyang"
+        },
+        {
+         "count": 270,
+         "id": "3166548",
+         "name": "Siena"
+        },
+        {
+         "count": 270,
+         "id": "3171457",
+         "name": "Parma"
+        },
+        {
+         "count": 270,
+         "id": "5263045",
+         "name": "Milwaukee"
+        },
+        {
+         "count": 270,
+         "id": "650224",
+         "name": "Kuopio"
+        },
+        {
+         "count": 268,
+         "id": "2633858",
+         "name": "Winchester"
+        },
+        {
+         "count": 265,
+         "id": "1814087",
+         "name": "Dalian"
+        },
+        {
+         "count": 265,
+         "id": "2844588",
+         "name": "Rostock"
+        },
+        {
+         "count": 265,
+         "id": "8469294",
+         "name": "Notre Dame"
+        },
+        {
+         "count": 264,
+         "id": "2151650",
+         "name": "Richmond"
+        },
+        {
+         "count": 263,
+         "id": "4954380",
+         "name": "Waltham"
+        },
+        {
+         "count": 262,
+         "id": "3165072",
+         "name": "Udine"
+        },
+        {
+         "count": 262,
+         "id": "3190261",
+         "name": "Split"
+        },
+        {
+         "count": 261,
+         "id": "293788",
+         "name": "Ramat Gan"
+        },
+        {
+         "count": 260,
+         "id": "2179537",
+         "name": "Wellington"
+        },
+        {
+         "count": 259,
+         "id": "634963",
+         "name": "Tampere"
+        },
+        {
+         "count": 258,
+         "id": "2656192",
+         "name": "Basingstoke"
+        },
+        {
+         "count": 258,
+         "id": "3469058",
+         "name": "Brasília"
+        },
+        {
+         "count": 258,
+         "id": "4884192",
+         "name": "Batavia"
+        },
+        {
+         "count": 257,
+         "id": "2873891",
+         "name": "Mannheim"
+        },
+        {
+         "count": 257,
+         "id": "6183235",
+         "name": "Winnipeg"
+        },
+        {
+         "count": 256,
+         "id": "2038180",
+         "name": "Changchun"
+        },
+        {
+         "count": 256,
+         "id": "2146142",
+         "name": "Townsville"
+        },
+        {
+         "count": 256,
+         "id": "4646571",
+         "name": "Oak Ridge"
+        },
+        {
+         "count": 255,
+         "id": "2756253",
+         "name": "Eindhoven"
+        },
+        {
+         "count": 255,
+         "id": "293725",
+         "name": "Reẖovot"
+        },
+        {
+         "count": 252,
+         "id": "1581130",
+         "name": "Hanoi"
+        },
+        {
+         "count": 252,
+         "id": "3118554",
+         "name": "Leioa"
+        },
+        {
+         "count": 252,
+         "id": "706483",
+         "name": "Kharkiv"
+        },
+        {
+         "count": 250,
+         "id": "1172451",
+         "name": "Lahore"
+        },
+        {
+         "count": 250,
+         "id": "1799397",
+         "name": "Ningbo"
+        },
+        {
+         "count": 250,
+         "id": "2648404",
+         "name": "Gloucester"
+        },
+        {
+         "count": 250,
+         "id": "2756071",
+         "name": "Enschede"
+        },
+        {
+         "count": 250,
+         "id": "2945024",
+         "name": "Braunschweig"
+        },
+        {
+         "count": 250,
+         "id": "3173331",
+         "name": "Modena"
+        },
+        {
+         "count": 250,
+         "id": "565614",
+         "name": "Dolgoprudnyy"
+        },
+        {
+         "count": 249,
+         "id": "2525473",
+         "name": "Cagliari"
+        },
+        {
+         "count": 248,
+         "id": "2511174",
+         "name": "Santa Cruz de Tenerife"
+        },
+        {
+         "count": 248,
+         "id": "2990999",
+         "name": "Nancy"
+        },
+        {
+         "count": 248,
+         "id": "3652462",
+         "name": "Quito"
+        },
+        {
+         "count": 247,
+         "id": "1862415",
+         "name": "Hiroshima"
+        },
+        {
+         "count": 246,
+         "id": "1790645",
+         "name": "Xiamen"
+        },
+        {
+         "count": 246,
+         "id": "344979",
+         "name": "Addis Ababa"
+        },
+        {
+         "count": 245,
+         "id": "3166601",
+         "name": "Sesto Fiorentino"
+        },
+        {
+         "count": 244,
+         "id": "2917788",
+         "name": "Greifswald"
+        },
+        {
+         "count": 244,
+         "id": "292968",
+         "name": "Abu Dhabi"
+        },
+        {
+         "count": 243,
+         "id": "1675151",
+         "name": "Hsinchu"
+        },
+        {
+         "count": 243,
+         "id": "3936456",
+         "name": "Lima"
+        },
+        {
+         "count": 243,
+         "id": "5072006",
+         "name": "Lincoln"
+        },
+        {
+         "count": 242,
+         "id": "255683",
+         "name": "Pátra"
+        },
+        {
+         "count": 240,
+         "id": "2653261",
+         "name": "Cheltenham"
+        },
+        {
+         "count": 240,
+         "id": "2676176",
+         "name": "Södertälje"
+        },
+        {
+         "count": 237,
+         "id": "1566083",
+         "name": "Ho Chi Minh City"
+        },
+        {
+         "count": 237,
+         "id": "5378538",
+         "name": "Oakland"
+        },
+        {
+         "count": 236,
+         "id": "2512862",
+         "name": "Paterna"
+        },
+        {
+         "count": 236,
+         "id": "2894553",
+         "name": "Jülich"
+        },
+        {
+         "count": 235,
+         "id": "5106834",
+         "name": "Albany"
+        },
+        {
+         "count": 234,
+         "id": "2523920",
+         "name": "Palermo"
+        },
+        {
+         "count": 234,
+         "id": "5525577",
+         "name": "Lubbock"
+        },
+        {
+         "count": 232,
+         "id": "2514256",
+         "name": "Málaga"
+        },
+        {
+         "count": 232,
+         "id": "2637627",
+         "name": "Slough"
+        },
+        {
+         "count": 232,
+         "id": "3868626",
+         "name": "Valparaíso"
+        },
+        {
+         "count": 232,
+         "id": "5725846",
+         "name": "Eugene"
+        },
+        {
+         "count": 231,
+         "id": "2962943",
+         "name": "Luimneach"
+        },
+        {
+         "count": 230,
+         "id": "3093133",
+         "name": "Łódź"
+        },
+        {
+         "count": 229,
+         "id": "1269843",
+         "name": "Hyderabad"
+        },
+        {
+         "count": 229,
+         "id": "1275817",
+         "name": "Bhubaneshwar"
+        },
+        {
+         "count": 228,
+         "id": "2634739",
+         "name": "Warrington"
+        },
+        {
+         "count": 228,
+         "id": "3449701",
+         "name": "Santo André"
+        },
+        {
+         "count": 228,
+         "id": "3470127",
+         "name": "Belo Horizonte"
+        },
+        {
+         "count": 227,
+         "id": "2636940",
+         "name": "Stevenage"
+        },
+        {
+         "count": 227,
+         "id": "4274994",
+         "name": "Manhattan"
+        },
+        {
+         "count": 226,
+         "id": "681290",
+         "name": "Cluj-Napoca"
+        },
+        {
+         "count": 223,
+         "id": "1841811",
+         "name": "Gwangju"
+        },
+        {
+         "count": 223,
+         "id": "2190324",
+         "name": "Hamilton"
+        },
+        {
+         "count": 223,
+         "id": "2638664",
+         "name": "Salisbury"
+        },
+        {
+         "count": 223,
+         "id": "2643490",
+         "name": "Lowestoft"
+        },
+        {
+         "count": 221,
+         "id": "3069011",
+         "name": "Olomouc"
+        },
+        {
+         "count": 221,
+         "id": "5100007",
+         "name": "Kenilworth"
+        },
+        {
+         "count": 220,
+         "id": "4487042",
+         "name": "Raleigh"
+        },
+        {
+         "count": 220,
+         "id": "5142042"
+        },
+        {
+         "count": 215,
+         "id": "1856177",
+         "name": "Nagasaki"
+        },
+        {
+         "count": 215,
+         "id": "4543762",
+         "name": "Norman"
+        },
+        {
+         "count": 214,
+         "id": "276781",
+         "name": "Beirut"
+        },
+        {
+         "count": 212,
+         "id": "4641239",
+         "name": "Memphis"
+        },
+        {
+         "count": 211,
+         "id": "1174872",
+         "name": "Karachi"
+        },
+        {
+         "count": 210,
+         "id": "2634677",
+         "name": "Watford"
+        },
+        {
+         "count": 210,
+         "id": "5577147",
+         "name": "Fort Collins"
+        },
+        {
+         "count": 209,
+         "id": "2655095",
+         "name": "Bournemouth"
+        },
+        {
+         "count": 209,
+         "id": "2911522",
+         "name": "Halle (Saale)"
+        },
+        {
+         "count": 208,
+         "id": "2646088",
+         "name": "Inverness"
+        },
+        {
+         "count": 208,
+         "id": "3521081",
+         "name": "Puebla"
+        },
+        {
+         "count": 207,
+         "id": "2747373",
+         "name": "The Hague"
+        },
+        {
+         "count": 207,
+         "id": "5363943",
+         "name": "La Jolla"
+        },
+        {
+         "count": 207,
+         "id": "655194",
+         "name": "Jyväskylä"
+        },
+        {
+         "count": 205,
+         "id": "2171507",
+         "name": "Wollongong"
+        },
+        {
+         "count": 203,
+         "id": "2849483",
+         "name": "Regensburg"
+        },
+        {
+         "count": 203,
+         "id": "5476825",
+         "name": "Los Alamos"
+        },
+        {
+         "count": 201,
+         "id": "2960316",
+         "name": "Luxembourg"
+        },
+        {
+         "count": 200,
+         "id": "1784658",
+         "name": "Zhengzhou"
+        },
+        {
+         "count": 200,
+         "id": "660158",
+         "name": "Espoo"
+        },
+        {
+         "count": 199,
+         "id": "4440076",
+         "name": "Oxford"
+        },
+        {
+         "count": 196,
+         "id": "1804651",
+         "name": "Kunming"
+        },
+        {
+         "count": 196,
+         "id": "2562698",
+         "name": "Imsida"
+        },
+        {
+         "count": 195,
+         "id": "2524907",
+         "name": "Cosenza"
+        },
+        {
+         "count": 195,
+         "id": "3174953",
+         "name": "Lecce"
+        },
+        {
+         "count": 194,
+         "id": "4094455",
+         "name": "Tuscaloosa"
+        },
+        {
+         "count": 194,
+         "id": "456172",
+         "name": "Riga"
+        },
+        {
+         "count": 192,
+         "id": "4722625",
+         "name": "Richardson"
+        },
+        {
+         "count": 192,
+         "id": "5223593",
+         "name": "Newport"
+        },
+        {
+         "count": 191,
+         "id": "2635412",
+         "name": "Truro"
+        },
+        {
+         "count": 191,
+         "id": "2641598",
+         "name": "Newport"
+        },
+        {
+         "count": 191,
+         "id": "2873759",
+         "name": "Marburg an der Lahn"
+        },
+        {
+         "count": 191,
+         "id": "2990440",
+         "name": "Nice"
+        },
+        {
+         "count": 191,
+         "id": "311046",
+         "name": "İzmir"
+        },
+        {
+         "count": 191,
+         "id": "4739526",
+         "name": "Waco"
+        },
+        {
+         "count": 191,
+         "id": "5140405",
+         "name": "Syracuse"
+        },
+        {
+         "count": 190,
+         "id": "1854383",
+         "name": "Okayama"
+        },
+        {
+         "count": 189,
+         "id": "3170027",
+         "name": "Potenza"
+        },
+        {
+         "count": 189,
+         "id": "4781708",
+         "name": "Richmond"
+        },
+        {
+         "count": 189,
+         "id": "724443",
+         "name": "Košice"
+        },
+        {
+         "count": 188,
+         "id": "2633709",
+         "name": "Woking"
+        },
+        {
+         "count": 188,
+         "id": "4747845",
+         "name": "Blacksburg"
+        },
+        {
+         "count": 187,
+         "id": "5720727",
+         "name": "Corvallis"
+        },
+        {
+         "count": 184,
+         "id": "2128295",
+         "name": "Sapporo"
+        },
+        {
+         "count": 184,
+         "id": "254352",
+         "name": "Rethymno"
+        },
+        {
+         "count": 184,
+         "id": "4297983",
+         "name": "Lexington"
+        },
+        {
+         "count": 184,
+         "id": "5102076",
+         "name": "Nutley"
+        },
+        {
+         "count": 183,
+         "id": "2653192",
+         "name": "Chichester"
+        },
+        {
+         "count": 183,
+         "id": "3128026",
+         "name": "Bilbao"
+        },
+        {
+         "count": 182,
+         "id": "418863",
+         "name": "Isfahan"
+        },
+        {
+         "count": 182,
+         "id": "890299",
+         "name": "Harare"
+        },
+        {
+         "count": 181,
+         "id": "124665",
+         "name": "Mashhad"
+        },
+        {
+         "count": 181,
+         "id": "2875601",
+         "name": "Lübeck"
+        },
+        {
+         "count": 181,
+         "id": "3137115",
+         "name": "Stavanger"
+        },
+        {
+         "count": 181,
+         "id": "325363",
+         "name": "Adana"
+        },
+        {
+         "count": 180,
+         "id": "2766824",
+         "name": "Salzburg"
+        },
+        {
+         "count": 180,
+         "id": "3164565",
+         "name": "Vercelli"
+        },
+        {
+         "count": 180,
+         "id": "3176949",
+         "name": "Fisciano"
+        },
+        {
+         "count": 179,
+         "id": "5363859",
+         "name": "La Cañada Flintridge"
+        },
+        {
+         "count": 178,
+         "id": "1907300",
+         "name": "Wako"
+        },
+        {
+         "count": 178,
+         "id": "4574324",
+         "name": "Charleston"
+        },
+        {
+         "count": 178,
+         "id": "4671240",
+         "name": "Arlington"
+        },
+        {
+         "count": 178,
+         "id": "4956184",
+         "name": "Worcester"
+        },
+        {
+         "count": 177,
+         "id": "2805753",
+         "name": "Wuppertal"
+        },
+        {
+         "count": 177,
+         "id": "3175406",
+         "name": "Ispra"
+        },
+        {
+         "count": 177,
+         "id": "360995",
+         "name": "Giza"
+        },
+        {
+         "count": 177,
+         "id": "648900",
+         "name": "Lappeenranta"
+        },
+        {
+         "count": 176,
+         "id": "2657676",
+         "name": "Addlestone"
+        },
+        {
+         "count": 176,
+         "id": "4315588",
+         "name": "Baton Rouge"
+        },
+        {
+         "count": 175,
+         "id": "2746301",
+         "name": "Tilburg"
+        },
+        {
+         "count": 173,
+         "id": "1283240",
+         "name": "Kathmandu"
+        },
+        {
+         "count": 173,
+         "id": "4180386",
+         "name": "Athens"
+        },
+        {
+         "count": 173,
+         "id": "4499612",
+         "name": "Winston-Salem"
+        },
+        {
+         "count": 172,
+         "id": "2646057",
+         "name": "Ipswich"
+        },
+        {
+         "count": 171,
+         "id": "3021372",
+         "name": "Dijon"
+        },
+        {
+         "count": 171,
+         "id": "5110266",
+         "name": "The Bronx"
+        },
+        {
+         "count": 170,
+         "id": "2655237",
+         "name": "Bolton"
+        },
+        {
+         "count": 170,
+         "id": "2978317",
+         "name": "Saint-Martin-d’Hères"
+        },
+        {
+         "count": 170,
+         "id": "3037540",
+         "name": "Annecy-le-Vieux"
+        },
+        {
+         "count": 170,
+         "id": "3110044",
+         "name": "Donostia / San Sebastián"
+        },
+        {
+         "count": 170,
+         "id": "4355843",
+         "name": "Gaithersburg"
+        },
+        {
+         "count": 169,
+         "id": "4369596",
+         "name": "Silver Spring"
+        },
+        {
+         "count": 168,
+         "id": "2660718",
+         "name": "Fribourg"
+        },
+        {
+         "count": 168,
+         "id": "3099434",
+         "name": "Gdańsk"
+        },
+        {
+         "count": 167,
+         "id": "3432043",
+         "name": "La Plata"
+        },
+        {
+         "count": 167,
+         "id": "4552215",
+         "name": "Stillwater"
+        },
+        {
+         "count": 166,
+         "id": "5074472",
+         "name": "Omaha"
+        },
+        {
+         "count": 165,
+         "id": "2686657",
+         "name": "Örebro"
+        },
+        {
+         "count": 165,
+         "id": "5380748",
+         "name": "Palo Alto"
+        },
+        {
+         "count": 164,
+         "id": "1642911",
+         "name": "Jakarta"
+        },
+        {
+         "count": 163,
+         "id": "2639093",
+         "name": "Rotherham"
+        },
+        {
+         "count": 163,
+         "id": "3033123",
+         "name": "Besançon"
+        },
+        {
+         "count": 161,
+         "id": "1804430",
+         "name": "Lanzhou"
+        },
+        {
+         "count": 160,
+         "id": "160263",
+         "name": "Dar es Salaam"
+        },
+        {
+         "count": 160,
+         "id": "1810821",
+         "name": "Fuzhou"
+        },
+        {
+         "count": 160,
+         "id": "587084",
+         "name": "Baku"
+        },
+        {
+         "count": 159,
+         "id": "2796491",
+         "name": "Hasselt"
+        },
+        {
+         "count": 159,
+         "id": "3183089",
+         "name": "Ancona"
+        },
+        {
+         "count": 159,
+         "id": "4163971",
+         "name": "Melbourne"
+        },
+        {
+         "count": 158,
+         "id": "2185018",
+         "name": "Palmerston North"
+        },
+        {
+         "count": 158,
+         "id": "2832495",
+         "name": "Siegen"
+        },
+        {
+         "count": 158,
+         "id": "3168837",
+         "name": "Rozzano"
+        },
+        {
+         "count": 158,
+         "id": "665087",
+         "name": "Timişoara"
+        },
+        {
+         "count": 157,
+         "id": "2636331",
+         "name": "Tadworth"
+        },
+        {
+         "count": 157,
+         "id": "3985606",
+         "name": "San Luis Potosí"
+        },
+        {
+         "count": 157,
+         "id": "675810",
+         "name": "Iaşi"
+        },
+        {
+         "count": 157,
+         "id": "923295",
+         "name": "Zomba"
+        },
+        {
+         "count": 156,
+         "id": "1848354",
+         "name": "Yokohama"
+        },
+        {
+         "count": 156,
+         "id": "2874545",
+         "name": "Magdeburg"
+        },
+        {
+         "count": 155,
+         "id": "2153770",
+         "name": "Parkville"
+        },
+        {
+         "count": 155,
+         "id": "3022530",
+         "name": "Créteil"
+        },
+        {
+         "count": 155,
+         "id": "4744709",
+         "name": "Arlington"
+        },
+        {
+         "count": 154,
+         "id": "4566385",
+         "name": "Mayagüez"
+        },
+        {
+         "count": 153,
+         "id": "2538475",
+         "name": "Rabat"
+        },
+        {
+         "count": 153,
+         "id": "295530",
+         "name": "Beersheba"
+        },
+        {
+         "count": 153,
+         "id": "3178796",
+         "name": "Chieti"
+        },
+        {
+         "count": 152,
+         "id": "3029241",
+         "name": "Caen"
+        },
+        {
+         "count": 152,
+         "id": "683844",
+         "name": "Braşov"
+        },
+        {
+         "count": 150,
+         "id": "2339354",
+         "name": "Ibadan"
+        },
+        {
+         "count": 149,
+         "id": "2641217",
+         "name": "Northwood"
+        },
+        {
+         "count": 149,
+         "id": "4335045",
+         "name": "New Orleans"
+        },
+        {
+         "count": 148,
+         "id": "2524170",
+         "name": "Messina"
+        },
+        {
+         "count": 148,
+         "id": "4167147",
+         "name": "Orlando"
+        },
+        {
+         "count": 147,
+         "id": "2519240",
+         "name": "Córdoba"
+        },
+        {
+         "count": 146,
+         "id": "1793511",
+         "name": "Taiyuan"
+        },
+        {
+         "count": 146,
+         "id": "2635042",
+         "name": "Uxbridge"
+        },
+        {
+         "count": 146,
+         "id": "2661039",
+         "name": "Davos"
+        },
+        {
+         "count": 146,
+         "id": "2972191",
+         "name": "Tours"
+        },
+        {
+         "count": 146,
+         "id": "4575352",
+         "name": "Columbia"
+        },
+        {
+         "count": 146,
+         "id": "964349",
+         "name": "Potchefstroom"
+        },
+        {
+         "count": 145,
+         "id": "2113015",
+         "name": "Chiba"
+        },
+        {
+         "count": 145,
+         "id": "2188371",
+         "name": "Lincoln"
+        },
+        {
+         "count": 145,
+         "id": "2553604",
+         "name": "Casablanca"
+        },
+        {
+         "count": 145,
+         "id": "4299276",
+         "name": "Louisville"
+        },
+        {
+         "count": 145,
+         "id": "5234372",
+         "name": "Burlington"
+        },
+        {
+         "count": 145,
+         "id": "98182",
+         "name": "Baghdad"
+        },
+        {
+         "count": 144,
+         "id": "1857519",
+         "name": "Matsumoto"
+        },
+        {
+         "count": 144,
+         "id": "2633521",
+         "name": "Worthing"
+        },
+        {
+         "count": 143,
+         "id": "1732752",
+         "name": "Johor Bahru"
+        },
+        {
+         "count": 143,
+         "id": "361058",
+         "name": "Alexandria"
+        },
+        {
+         "count": 143,
+         "id": "5313457",
+         "name": "Scottsdale"
+        },
+        {
+         "count": 143,
+         "id": "5967629",
+         "name": "Guelph"
+        },
+        {
+         "count": 142,
+         "id": "3459505",
+         "name": "Juiz de Fora"
+        },
+        {
+         "count": 142,
+         "id": "3464975",
+         "name": "Curitiba"
+        },
+        {
+         "count": 142,
+         "id": "715429",
+         "name": "Szeged"
+        },
+        {
+         "count": 141,
+         "id": "2652730",
+         "name": "Clydebank"
+        },
+        {
+         "count": 140,
+         "id": "2636177",
+         "name": "Taunton"
+        },
+        {
+         "count": 140,
+         "id": "3179866",
+         "name": "Caserta"
+        },
+        {
+         "count": 139,
+         "id": "4781530",
+         "name": "Reston"
+        },
+        {
+         "count": 139,
+         "id": "4843786",
+         "name": "Storrs"
+        },
+        {
+         "count": 139,
+         "id": "4889553",
+         "name": "DeKalb"
+        },
+        {
+         "count": 139,
+         "id": "5375480",
+         "name": "Mountain View"
+        },
+        {
+         "count": 138,
+         "id": "2634552",
+         "name": "Welwyn Garden City"
+        },
+        {
+         "count": 138,
+         "id": "3105976",
+         "name": "Vigo"
+        },
+        {
+         "count": 137,
+         "id": "2949186",
+         "name": "Bielefeld"
+        },
+        {
+         "count": 136,
+         "id": "2944368",
+         "name": "Bremerhaven"
+        },
+        {
+         "count": 136,
+         "id": "5308655",
+         "name": "Phoenix"
+        },
+        {
+         "count": 134,
+         "id": "1668399",
+         "name": "Taichung"
+        },
+        {
+         "count": 133,
+         "id": "251833",
+         "name": "Volos"
+        },
+        {
+         "count": 133,
+         "id": "2649052",
+         "name": "Frimley"
+        },
+        {
+         "count": 133,
+         "id": "2842647",
+         "name": "Saarbrücken"
+        },
+        {
+         "count": 133,
+         "id": "4762894",
+         "name": "Hampton"
+        },
+        {
+         "count": 132,
+         "id": "2511401",
+         "name": "La Laguna"
+        },
+        {
+         "count": 132,
+         "id": "2660971",
+         "name": "Dübendorf"
+        },
+        {
+         "count": 132,
+         "id": "2885679",
+         "name": "Konstanz"
+        },
+        {
+         "count": 132,
+         "id": "292223",
+         "name": "Dubai"
+        },
+        {
+         "count": 132,
+         "id": "3441575",
+         "name": "Montevideo"
+        },
+        {
+         "count": 132,
+         "id": "3893894",
+         "name": "Concepción"
+        },
+        {
+         "count": 132,
+         "id": "6141256",
+         "name": "Saskatoon"
+        },
+        {
+         "count": 131,
+         "id": "2220957",
+         "name": "Yaoundé"
+        },
+        {
+         "count": 131,
+         "id": "6324733",
+         "name": "St. John's"
+        },
+        {
+         "count": 130,
+         "id": "3464688",
+         "name": "Divinópolis"
+        },
+        {
+         "count": 129,
+         "id": "10630003",
+         "name": "Xuzhou"
+        },
+        {
+         "count": 129,
+         "id": "931755",
+         "name": "Blantyre"
+        },
+        {
+         "count": 128,
+         "id": "1838524",
+         "name": "Busan"
+        },
+        {
+         "count": 128,
+         "id": "2861650",
+         "name": "Nürnberg"
+        },
+        {
+         "count": 128,
+         "id": "4381982",
+         "name": "Columbia"
+        },
+        {
+         "count": 127,
+         "id": "1253286",
+         "name": "Vellore"
+        },
+        {
+         "count": 127,
+         "id": "1845457",
+         "name": "Jeonju"
+        },
+        {
+         "count": 127,
+         "id": "250441",
+         "name": "Amman"
+        },
+        {
+         "count": 127,
+         "id": "3027422",
+         "name": "Chambéry"
+        },
+        {
+         "count": 127,
+         "id": "3108288",
+         "name": "Tarragona"
+        },
+        {
+         "count": 126,
+         "id": "2646914",
+         "name": "High Wycombe"
+        },
+        {
+         "count": 126,
+         "id": "2653266",
+         "name": "Chelmsford"
+        },
+        {
+         "count": 126,
+         "id": "285787",
+         "name": "Kuwait City"
+        },
+        {
+         "count": 126,
+         "id": "3111108",
+         "name": "Salamanca"
+        },
+        {
+         "count": 126,
+         "id": "3175121",
+         "name": "L'Aquila"
+        },
+        {
+         "count": 125,
+         "id": "2542997",
+         "name": "Marrakesh"
+        },
+        {
+         "count": 125,
+         "id": "2634894",
+         "name": "Wales"
+        },
+        {
+         "count": 125,
+         "id": "314830",
+         "name": "Gaziantep"
+        },
+        {
+         "count": 124,
+         "id": "261745",
+         "name": "Irákleion"
+        },
+        {
+         "count": 124,
+         "id": "2878234",
+         "name": "Leverkusen"
+        },
+        {
+         "count": 123,
+         "id": "3182164",
+         "name": "Bergamo"
+        },
+        {
+         "count": 123,
+         "id": "5807540",
+         "name": "Pullman"
+        },
+        {
+         "count": 122,
+         "id": "1000501",
+         "name": "Grahamstown"
+        },
+        {
+         "count": 122,
+         "id": "2643266",
+         "name": "Macclesfield"
+        },
+        {
+         "count": 122,
+         "id": "2649692",
+         "name": "Fareham"
+        },
+        {
+         "count": 122,
+         "id": "2802435",
+         "name": "Beerse"
+        },
+        {
+         "count": 122,
+         "id": "3450554",
+         "name": "Salvador"
+        },
+        {
+         "count": 121,
+         "id": "1248991",
+         "name": "Colombo"
+        },
+        {
+         "count": 121,
+         "id": "2962668",
+         "name": "Maynooth"
+        },
+        {
+         "count": 121,
+         "id": "3463237",
+         "name": "Florianópolis"
+        },
+        {
+         "count": 121,
+         "id": "4339348",
+         "name": "Ruston"
+        },
+        {
+         "count": 120,
+         "id": "1273294",
+         "name": "Delhi"
+        },
+        {
+         "count": 120,
+         "id": "3162797",
+         "name": "Ås"
+        },
+        {
+         "count": 119,
+         "id": "1735106",
+         "name": "George Town"
+        },
+        {
+         "count": 119,
+         "id": "2658822",
+         "name": "Sankt Gallen"
+        },
+        {
+         "count": 119,
+         "id": "3003737",
+         "name": "Le Kremlin-Bicêtre"
+        },
+        {
+         "count": 118,
+         "id": "2636671",
+         "name": "Street"
+        },
+        {
+         "count": 118,
+         "id": "2969679",
+         "name": "Versailles"
+        },
+        {
+         "count": 117,
+         "id": "1254163",
+         "name": "Thiruvananthapuram"
+        },
+        {
+         "count": 116,
+         "id": "5808276",
+         "name": "Richland"
+        },
+        {
+         "count": 116,
+         "id": "5861897",
+         "name": "Fairbanks"
+        },
+        {
+         "count": 115,
+         "id": "2169378",
+         "name": "Darlinghurst"
+        },
+        {
+         "count": 115,
+         "id": "2540483",
+         "name": "Oujda-Angad"
+        },
+        {
+         "count": 115,
+         "id": "2648773",
+         "name": "Gateshead"
+        },
+        {
+         "count": 115,
+         "id": "4160021",
+         "name": "Jacksonville"
+        },
+        {
+         "count": 115,
+         "id": "5087168",
+         "name": "Hanover"
+        },
+        {
+         "count": 115,
+         "id": "5294810",
+         "name": "Flagstaff"
+        },
+        {
+         "count": 115,
+         "id": "909137",
+         "name": "Lusaka"
+        },
+        {
+         "count": 114,
+         "id": "2521978",
+         "name": "Alicante"
+        },
+        {
+         "count": 114,
+         "id": "2634910",
+         "name": "Wakefield"
+        },
+        {
+         "count": 114,
+         "id": "3405870",
+         "name": "Belém"
+        },
+        {
+         "count": 114,
+         "id": "4143861",
+         "name": "Newark"
+        },
+        {
+         "count": 113,
+         "id": "2653775",
+         "name": "Carlisle"
+        },
+        {
+         "count": 112,
+         "id": "1848313",
+         "name": "Yokosuka"
+        },
+        {
+         "count": 112,
+         "id": "4936174",
+         "name": "Falmouth"
+        },
+        {
+         "count": 111,
+         "id": "4393217",
+         "name": "Kansas City"
+        },
+        {
+         "count": 110,
+         "id": "2512989",
+         "name": "Palma"
+        },
+        {
+         "count": 110,
+         "id": "2641108",
+         "name": "Oban"
+        },
+        {
+         "count": 110,
+         "id": "2659836",
+         "name": "Lugano"
+        },
+        {
+         "count": 110,
+         "id": "2857458",
+         "name": "Oldenburg"
+        },
+        {
+         "count": 110,
+         "id": "2896020",
+         "name": "Ingelheim am Rhein"
+        },
+        {
+         "count": 110,
+         "id": "292913",
+         "name": "Al Ain"
+        },
+        {
+         "count": 109,
+         "id": "2298890",
+         "name": "Kumasi"
+        },
+        {
+         "count": 109,
+         "id": "2638530",
+         "name": "Sandy"
+        },
+        {
+         "count": 109,
+         "id": "2641616",
+         "name": "Newmarket"
+        },
+        {
+         "count": 109,
+         "id": "2649660",
+         "name": "Farnham"
+        },
+        {
+         "count": 109,
+         "id": "2650839",
+         "name": "Dudley"
+        },
+        {
+         "count": 109,
+         "id": "287286",
+         "name": "Muscat"
+        },
+        {
+         "count": 109,
+         "id": "3037656",
+         "name": "Angers"
+        },
+        {
+         "count": 108,
+         "id": "2633485",
+         "name": "Wrexham"
+        },
+        {
+         "count": 108,
+         "id": "3037543",
+         "name": "Annecy"
+        },
+        {
+         "count": 108,
+         "id": "3096472",
+         "name": "Katowice"
+        },
+        {
+         "count": 108,
+         "id": "3454244",
+         "name": "Pelotas"
+        },
+        {
+         "count": 107,
+         "id": "3164603",
+         "name": "Venice"
+        },
+        {
+         "count": 107,
+         "id": "3164699",
+         "name": "Varese"
+        },
+        {
+         "count": 107,
+         "id": "5139097",
+         "name": "Sparkill"
+        },
+        {
+         "count": 107,
+         "id": "5393212",
+         "name": "Santa Monica"
+        },
+        {
+         "count": 106,
+         "id": "1800163",
+         "name": "Nanchang"
+        },
+        {
+         "count": 105,
+         "id": "1153671",
+         "name": "Chiang Mai"
+        },
+        {
+         "count": 105,
+         "id": "2413876",
+         "name": "Banjul"
+        },
+        {
+         "count": 105,
+         "id": "2641267",
+         "name": "North Shields"
+        },
+        {
+         "count": 105,
+         "id": "2650435",
+         "name": "East Grinstead"
+        },
+        {
+         "count": 105,
+         "id": "3121456",
+         "name": "Girona"
+        },
+        {
+         "count": 105,
+         "id": "4815352",
+         "name": "Morgantown"
+        },
+        {
+         "count": 105,
+         "id": "5389489",
+         "name": "Sacramento"
+        },
+        {
+         "count": 103,
+         "id": "1784642",
+         "name": "Zhenjiang"
+        },
+        {
+         "count": 103,
+         "id": "2073124",
+         "name": "Darwin"
+        },
+        {
+         "count": 102,
+         "id": "2647385",
+         "name": "Harwell"
+        },
+        {
+         "count": 102,
+         "id": "2790869",
+         "name": "Mons"
+        },
+        {
+         "count": 102,
+         "id": "4119403",
+         "name": "Little Rock"
+        },
+        {
+         "count": 102,
+         "id": "5099312",
+         "name": "Hopewell"
+        },
+        {
+         "count": 101,
+         "id": "2620431",
+         "name": "Herlev"
+        },
+        {
+         "count": 101,
+         "id": "2692969",
+         "name": "Malmö"
+        },
+        {
+         "count": 101,
+         "id": "3077916",
+         "name": "České Budějovice"
+        },
+        {
+         "count": 101,
+         "id": "3167096",
+         "name": "Sassari"
+        },
+        {
+         "count": 100,
+         "id": "2332459",
+         "name": "Lagos"
+        },
+        {
+         "count": 100,
+         "id": "2965768",
+         "name": "Carlow"
+        },
+        {
+         "count": 100,
+         "id": "5085618",
+         "name": "Durham"
+        },
+        {
+         "count": 100,
+         "id": "5402405",
+         "name": "Thousand Oaks"
+        },
+        {
+         "count": 100,
+         "id": "5423294",
+         "name": "Golden"
+        },
+        {
+         "count": 99,
+         "id": "2614481",
+         "name": "Roskilde"
+        },
+        {
+         "count": 99,
+         "id": "2651587",
+         "name": "Dalkeith"
+        },
+        {
+         "count": 99,
+         "id": "293918",
+         "name": "Petaẖ Tiqwa"
+        },
+        {
+         "count": 99,
+         "id": "4509884",
+         "name": "Dayton"
+        },
+        {
+         "count": 99,
+         "id": "738743",
+         "name": "Tokat"
+        },
+        {
+         "count": 98,
+         "id": "2640354",
+         "name": "Peterborough"
+        },
+        {
+         "count": 98,
+         "id": "2649000",
+         "name": "Fulbourn"
+        },
+        {
+         "count": 98,
+         "id": "2653225",
+         "name": "Chesterfield"
+        },
+        {
+         "count": 98,
+         "id": "2657908",
+         "name": "Zug"
+        },
+        {
+         "count": 98,
+         "id": "2661496",
+         "name": "Birmensdorf"
+        },
+        {
+         "count": 98,
+         "id": "306571",
+         "name": "Konya"
+        },
+        {
+         "count": 97,
+         "id": "2464470",
+         "name": "Tunis"
+        },
+        {
+         "count": 97,
+         "id": "2636503",
+         "name": "Sutton"
+        },
+        {
+         "count": 97,
+         "id": "2702979",
+         "name": "Jönköping"
+        },
+        {
+         "count": 97,
+         "id": "3012649",
+         "name": "Issy-les-Moulineaux"
+        },
+        {
+         "count": 97,
+         "id": "3030300",
+         "name": "Brest"
+        },
+        {
+         "count": 97,
+         "id": "3390760",
+         "name": "Recife"
+        },
+        {
+         "count": 97,
+         "id": "3703443",
+         "name": "Panamá"
+        },
+        {
+         "count": 97,
+         "id": "5045360",
+         "name": "Saint Paul"
+        },
+        {
+         "count": 97,
+         "id": "5101798",
+         "name": "Newark"
+        },
+        {
+         "count": 96,
+         "id": "2171400",
+         "name": "Clayton"
+        },
+        {
+         "count": 96,
+         "id": "2524084",
+         "name": "Monserrato"
+        },
+        {
+         "count": 96,
+         "id": "5959974",
+         "name": "Gatineau"
+        },
+        {
+         "count": 95,
+         "id": "1673820",
+         "name": "Kaohsiung"
+        },
+        {
+         "count": 95,
+         "id": "2989317",
+         "name": "Orléans"
+        },
+        {
+         "count": 95,
+         "id": "3674962",
+         "name": "Medellín"
+        },
+        {
+         "count": 95,
+         "id": "4460243",
+         "name": "Charlotte"
+        },
+        {
+         "count": 94,
+         "id": "1732891",
+         "name": "Kuala Selangor"
+        },
+        {
+         "count": 94,
+         "id": "1821274",
+         "name": "Macau"
+        },
+        {
+         "count": 94,
+         "id": "2639970",
+         "name": "Potters Bar"
+        },
+        {
+         "count": 93,
+         "id": "2253354",
+         "name": "Dakar"
+        },
+        {
+         "count": 93,
+         "id": "2641595",
+         "name": "Newport"
+        },
+        {
+         "count": 93,
+         "id": "3106672",
+         "name": "Valladolid"
+        },
+        {
+         "count": 93,
+         "id": "4758023",
+         "name": "Fairfax"
+        },
+        {
+         "count": 92,
+         "id": "2522258",
+         "name": "Albacete"
+        },
+        {
+         "count": 92,
+         "id": "2633948",
+         "name": "Wigan"
+        },
+        {
+         "count": 92,
+         "id": "2639545",
+         "name": "Redhill"
+        },
+        {
+         "count": 92,
+         "id": "2643179",
+         "name": "Maidstone"
+        },
+        {
+         "count": 92,
+         "id": "2986495",
+         "name": "Poitiers"
+        },
+        {
+         "count": 92,
+         "id": "3037854",
+         "name": "Amiens"
+        },
+        {
+         "count": 92,
+         "id": "598316",
+         "name": "Kaunas"
+        },
+        {
+         "count": 91,
+         "id": "1833747",
+         "name": "Ulsan"
+        },
+        {
+         "count": 91,
+         "id": "3448636",
+         "name": "São José dos Campos"
+        },
+        {
+         "count": 90,
+         "id": "1733432",
+         "name": "Kota Kinabalu"
+        },
+        {
+         "count": 90,
+         "id": "2656070",
+         "name": "Bebington"
+        },
+        {
+         "count": 89,
+         "id": "113646",
+         "name": "Tabriz"
+        },
+        {
+         "count": 89,
+         "id": "1843564",
+         "name": "Incheon"
+        },
+        {
+         "count": 89,
+         "id": "2177671",
+         "name": "Armidale"
+        },
+        {
+         "count": 89,
+         "id": "2634491",
+         "name": "West Bromwich"
+        },
+        {
+         "count": 89,
+         "id": "2636882",
+         "name": "Stockport"
+        },
+        {
+         "count": 89,
+         "id": "2643186",
+         "name": "Maidenhead"
+        },
+        {
+         "count": 89,
+         "id": "2655524",
+         "name": "Blackburn"
+        },
+        {
+         "count": 89,
+         "id": "2750325",
+         "name": "Nieuwegein"
+        },
+        {
+         "count": 89,
+         "id": "292672",
+         "name": "Sharjah"
+        },
+        {
+         "count": 88,
+         "id": "1279233",
+         "name": "Ahmedabad"
+        },
+        {
+         "count": 88,
+         "id": "1860243",
+         "name": "Kanazawa"
+        },
+        {
+         "count": 88,
+         "id": "2268339",
+         "name": "Faro"
+        },
+        {
+         "count": 88,
+         "id": "2634204",
+         "name": "Weybridge"
+        },
+        {
+         "count": 88,
+         "id": "2772400",
+         "name": "Linz"
+        },
+        {
+         "count": 88,
+         "id": "3130616",
+         "name": "Alcalá de Henares"
+        },
+        {
+         "count": 87,
+         "id": "2651521",
+         "name": "Daresbury"
+        },
+        {
+         "count": 87,
+         "id": "2951825",
+         "name": "Bayreuth"
+        },
+        {
+         "count": 87,
+         "id": "4544349",
+         "name": "Oklahoma City"
+        },
+        {
+         "count": 86,
+         "id": "1701668",
+         "name": "Manila"
+        },
+        {
+         "count": 86,
+         "id": "1734798",
+         "name": "Semenyih"
+        },
+        {
+         "count": 86,
+         "id": "1798524",
+         "name": "Pudong"
+        },
+        {
+         "count": 86,
+         "id": "2176632",
+         "name": "Bathurst"
+        },
+        {
+         "count": 86,
+         "id": "2939811",
+         "name": "Cottbus"
+        },
+        {
+         "count": 86,
+         "id": "3024597",
+         "name": "Clichy"
+        },
+        {
+         "count": 86,
+         "id": "3029931",
+         "name": "Bron"
+        },
+        {
+         "count": 86,
+         "id": "4685907",
+         "name": "Denton"
+        },
+        {
+         "count": 85,
+         "id": "1168197",
+         "name": "Peshawar"
+        },
+        {
+         "count": 85,
+         "id": "1897000",
+         "name": "Seongnam-si"
+        },
+        {
+         "count": 85,
+         "id": "233508",
+         "name": "Entebbe"
+        },
+        {
+         "count": 85,
+         "id": "2647428",
+         "name": "Harrogate"
+        },
+        {
+         "count": 85,
+         "id": "2809346",
+         "name": "Wiesbaden"
+        },
+        {
+         "count": 85,
+         "id": "3036364",
+         "name": "Aubière"
+        },
+        {
+         "count": 85,
+         "id": "4499379",
+         "name": "Wilmington"
+        },
+        {
+         "count": 84,
+         "id": "1790923",
+         "name": "Wuxi"
+        },
+        {
+         "count": 84,
+         "id": "2634725",
+         "name": "Warwick"
+        },
+        {
+         "count": 84,
+         "id": "735640",
+         "name": "Komotiní"
+        },
+        {
+         "count": 83,
+         "id": "1270642",
+         "name": "Gurgaon"
+        },
+        {
+         "count": 83,
+         "id": "2635603",
+         "name": "Totton"
+        },
+        {
+         "count": 83,
+         "id": "2652262",
+         "name": "Cottingham"
+        },
+        {
+         "count": 83,
+         "id": "2749812",
+         "name": "Noordwijk-Binnen"
+        },
+        {
+         "count": 83,
+         "id": "3119841",
+         "name": "A Coruña"
+        },
+        {
+         "count": 83,
+         "id": "3181913",
+         "name": "Bolzano"
+        },
+        {
+         "count": 83,
+         "id": "5110302",
+         "name": "Brooklyn"
+        },
+        {
+         "count": 83,
+         "id": "551487",
+         "name": "Kazan"
+        },
+        {
+         "count": 82,
+         "id": "1668355",
+         "name": "Tainan"
+        },
+        {
+         "count": 82,
+         "id": "2515270",
+         "name": "Las Palmas de Gran Canaria"
+        },
+        {
+         "count": 82,
+         "id": "2640465",
+         "name": "Penicuik"
+        },
+        {
+         "count": 82,
+         "id": "2643736",
+         "name": "Derry"
+        },
+        {
+         "count": 82,
+         "id": "2656719",
+         "name": "Aylesbury"
+        },
+        {
+         "count": 82,
+         "id": "2982652",
+         "name": "Rouen"
+        },
+        {
+         "count": 82,
+         "id": "3147465",
+         "name": "Lillestrøm"
+        },
+        {
+         "count": 82,
+         "id": "3399415",
+         "name": "Fortaleza"
+        },
+        {
+         "count": 82,
+         "id": "6146143",
+         "name": "Sherbrooke"
+        },
+        {
+         "count": 81,
+         "id": "2653239",
+         "name": "Chertsey"
+        },
+        {
+         "count": 81,
+         "id": "2656955",
+         "name": "Ashford"
+        },
+        {
+         "count": 81,
+         "id": "2772810",
+         "name": "Laxenburg"
+        },
+        {
+         "count": 80,
+         "id": "10041014",
+         "name": "Crawley"
+        },
+        {
+         "count": 80,
+         "id": "5511077",
+         "name": "Reno"
+        },
+        {
+         "count": 80,
+         "id": "927967",
+         "name": "Lilongwe"
+        },
+        {
+         "count": 79,
+         "id": "1269515",
+         "name": "Jaipur"
+        },
+        {
+         "count": 79,
+         "id": "1271476",
+         "name": "Guwahati"
+        },
+        {
+         "count": 79,
+         "id": "1667905",
+         "name": "Taoyuan"
+        },
+        {
+         "count": 79,
+         "id": "2654410",
+         "name": "Buckingham"
+        },
+        {
+         "count": 79,
+         "id": "304531",
+         "name": "Mercin"
+        },
+        {
+         "count": 79,
+         "id": "3046526",
+         "name": "Pécs"
+        },
+        {
+         "count": 79,
+         "id": "3884373",
+         "name": "La Serena"
+        },
+        {
+         "count": 79,
+         "id": "4355585",
+         "name": "Frederick"
+        },
+        {
+         "count": 79,
+         "id": "4793846",
+         "name": "Williamsburg"
+        },
+        {
+         "count": 78,
+         "id": "1735158",
+         "name": "Petaling Jaya"
+        },
+        {
+         "count": 78,
+         "id": "1787227",
+         "name": "Yangzhou"
+        },
+        {
+         "count": 77,
+         "id": "2165087",
+         "name": "Gold Coast"
+        },
+        {
+         "count": 77,
+         "id": "2520600",
+         "name": "Cadiz"
+        },
+        {
+         "count": 77,
+         "id": "2635650",
+         "name": "Torquay"
+        },
+        {
+         "count": 77,
+         "id": "2648657",
+         "name": "Gillingham"
+        },
+        {
+         "count": 77,
+         "id": "2702261",
+         "name": "Kalmar"
+        },
+        {
+         "count": 77,
+         "id": "2875376",
+         "name": "Ludwigshafen am Rhein"
+        },
+        {
+         "count": 77,
+         "id": "308464",
+         "name": "Kayseri"
+        },
+        {
+         "count": 77,
+         "id": "3118514",
+         "name": "Lleida"
+        },
+        {
+         "count": 77,
+         "id": "4903862",
+         "name": "North Chicago"
+        },
+        {
+         "count": 77,
+         "id": "8299576",
+         "name": "Bridgewater"
+        },
+        {
+         "count": 76,
+         "id": "4830796",
+         "name": "Auburn"
+        },
+        {
+         "count": 76,
+         "id": "5506956",
+         "name": "Las Vegas"
+        },
+        {
+         "count": 75,
+         "id": "115019",
+         "name": "Shiraz"
+        },
+        {
+         "count": 75,
+         "id": "1166993",
+         "name": "Rawalpindi"
+        },
+        {
+         "count": 75,
+         "id": "1269743",
+         "name": "Indore"
+        },
+        {
+         "count": 75,
+         "id": "2525059",
+         "name": "Catanzaro"
+        },
+        {
+         "count": 75,
+         "id": "360761",
+         "name": "Al Manşūrah"
+        },
+        {
+         "count": 74,
+         "id": "256866",
+         "name": "Mytilene"
+        },
+        {
+         "count": 74,
+         "id": "2691459",
+         "name": "Mölndal"
+        },
+        {
+         "count": 74,
+         "id": "2791067",
+         "name": "Mol"
+        },
+        {
+         "count": 74,
+         "id": "379252",
+         "name": "Khartoum"
+        },
+        {
+         "count": 74,
+         "id": "5403022",
+         "name": "Torrance"
+        },
+        {
+         "count": 74,
+         "id": "6940394",
+         "name": "Saitama"
+        },
+        {
+         "count": 73,
+         "id": "2651123",
+         "name": "Doncaster"
+        },
+        {
+         "count": 73,
+         "id": "2654200",
+         "name": "Burton upon Trent"
+        },
+        {
+         "count": 73,
+         "id": "2656046",
+         "name": "Bedford"
+        },
+        {
+         "count": 73,
+         "id": "3109453",
+         "name": "Barakaldo"
+        },
+        {
+         "count": 73,
+         "id": "3194360",
+         "name": "Novi Sad"
+        },
+        {
+         "count": 73,
+         "id": "3687925",
+         "name": "Cali"
+        },
+        {
+         "count": 73,
+         "id": "4447161",
+         "name": "Starkville"
+        },
+        {
+         "count": 73,
+         "id": "4929055",
+         "name": "Andover"
+        },
+        {
+         "count": 73,
+         "id": "5393015",
+         "name": "Santa Clara"
+        },
+        {
+         "count": 73,
+         "id": "5641727",
+         "name": "Bozeman"
+        },
+        {
+         "count": 73,
+         "id": "8029783",
+         "name": "St Leonards"
+        },
+        {
+         "count": 72,
+         "id": "1809461",
+         "name": "Guiyang"
+        },
+        {
+         "count": 72,
+         "id": "2970797",
+         "name": "Vandœuvre-lès-Nancy"
+        },
+        {
+         "count": 72,
+         "id": "4834272",
+         "name": "Farmington"
+        },
+        {
+         "count": 72,
+         "id": "492396",
+         "name": "Skolkovo"
+        },
+        {
+         "count": 71,
+         "id": "3172629",
+         "name": "Monza"
+        },
+        {
+         "count": 70,
+         "id": "1264733",
+         "name": "Lucknow"
+        },
+        {
+         "count": 70,
+         "id": "1609776",
+         "name": "Khon Kaen"
+        },
+        {
+         "count": 70,
+         "id": "1795270",
+         "name": "Shijiazhuang"
+        },
+        {
+         "count": 70,
+         "id": "2754652",
+         "name": "Heerlen"
+        },
+        {
+         "count": 70,
+         "id": "2994144",
+         "name": "Meudon"
+        },
+        {
+         "count": 70,
+         "id": "3868707",
+         "name": "Valdivia"
+        },
+        {
+         "count": 70,
+         "id": "4431410",
+         "name": "Jackson"
+        },
+        {
+         "count": 70,
+         "id": "5344147",
+         "name": "Duarte"
+        },
+        {
+         "count": 69,
+         "id": "1246294",
+         "name": "Galle"
+        },
+        {
+         "count": 69,
+         "id": "2991214",
+         "name": "Mulhouse"
+        },
+        {
+         "count": 69,
+         "id": "3004630",
+         "name": "Le Chesnay"
+        },
+        {
+         "count": 69,
+         "id": "4351335",
+         "name": "Chevy Chase"
+        },
+        {
+         "count": 69,
+         "id": "604490",
+         "name": "Luleå"
+        },
+        {
+         "count": 69,
+         "id": "776069",
+         "name": "Białystok"
+        },
+        {
+         "count": 68,
+         "id": "1821306",
+         "name": "Phnom Penh"
+        },
+        {
+         "count": 68,
+         "id": "2357048",
+         "name": "Ouagadougou"
+        },
+        {
+         "count": 68,
+         "id": "2807363",
+         "name": "Witten"
+        },
+        {
+         "count": 68,
+         "id": "3553478",
+         "name": "Havana"
+        },
+        {
+         "count": 68,
+         "id": "6620308",
+         "name": "Westcliff-on-Sea"
+        },
+        {
+         "count": 67,
+         "id": "2146268",
+         "name": "Toowoomba"
+        },
+        {
+         "count": 67,
+         "id": "2352778",
+         "name": "Abuja"
+        },
+        {
+         "count": 67,
+         "id": "2655245",
+         "name": "Bollington"
+        },
+        {
+         "count": 67,
+         "id": "2790471",
+         "name": "Namur"
+        },
+        {
+         "count": 67,
+         "id": "2899449",
+         "name": "Homburg"
+        },
+        {
+         "count": 67,
+         "id": "2968275",
+         "name": "Villetaneuse"
+        },
+        {
+         "count": 67,
+         "id": "3017924",
+         "name": "Fontenay-aux-Roses"
+        },
+        {
+         "count": 67,
+         "id": "5830062",
+         "name": "Laramie"
+        },
+        {
+         "count": 66,
+         "id": "1526384",
+         "name": "Almaty"
+        },
+        {
+         "count": 66,
+         "id": "1787458",
+         "name": "Yangling"
+        },
+        {
+         "count": 66,
+         "id": "2519752",
+         "name": "Castelló de la Plana"
+        },
+        {
+         "count": 66,
+         "id": "2639928",
+         "name": "Prescot"
+        },
+        {
+         "count": 66,
+         "id": "3165035",
+         "name": "Urbino"
+        },
+        {
+         "count": 66,
+         "id": "4692883",
+         "name": "Galveston"
+        },
+        {
+         "count": 66,
+         "id": "5397765",
+         "name": "South San Francisco"
+        },
+        {
+         "count": 65,
+         "id": "111822",
+         "name": "Yazd"
+        },
+        {
+         "count": 65,
+         "id": "1266976",
+         "name": "Kharagpur"
+        },
+        {
+         "count": 65,
+         "id": "146384",
+         "name": "Limassol"
+        },
+        {
+         "count": 65,
+         "id": "2653144",
+         "name": "Chippenham"
+        },
+        {
+         "count": 65,
+         "id": "2675397",
+         "name": "Solna"
+        },
+        {
+         "count": 65,
+         "id": "2987805",
+         "name": "Pessac"
+        },
+        {
+         "count": 65,
+         "id": "3012165",
+         "name": "Jouy-en-Josas"
+        },
+        {
+         "count": 65,
+         "id": "3083271",
+         "name": "Toruń"
+        },
+        {
+         "count": 65,
+         "id": "4776222",
+         "name": "Norfolk"
+        },
+        {
+         "count": 65,
+         "id": "743952",
+         "name": "Kars"
+        },
+        {
+         "count": 64,
+         "id": "1275346",
+         "name": "Bolpur"
+        },
+        {
+         "count": 64,
+         "id": "2645298",
+         "name": "Kirkcaldy"
+        },
+        {
+         "count": 64,
+         "id": "4889668",
+         "name": "Deerfield"
+        },
+        {
+         "count": 63,
+         "id": "1018725",
+         "name": "Bloemfontein"
+        },
+        {
+         "count": 63,
+         "id": "1648473",
+         "name": "Bogor"
+        },
+        {
+         "count": 63,
+         "id": "2636876",
+         "name": "Stockton-on-Tees"
+        },
+        {
+         "count": 63,
+         "id": "2653305",
+         "name": "Chatham"
+        },
+        {
+         "count": 63,
+         "id": "2659496",
+         "name": "Neuchâtel"
+        },
+        {
+         "count": 63,
+         "id": "4561120",
+         "name": "Scotland"
+        },
+        {
+         "count": 63,
+         "id": "5779334",
+         "name": "Orem"
+        },
+        {
+         "count": 62,
+         "id": "1791388",
+         "name": "Wenzhou"
+        },
+        {
+         "count": 62,
+         "id": "2638282",
+         "name": "Seascale"
+        },
+        {
+         "count": 62,
+         "id": "3663517",
+         "name": "Manaus"
+        },
+        {
+         "count": 62,
+         "id": "520555",
+         "name": "Nizhniy Novgorod"
+        },
+        {
+         "count": 61,
+         "id": "2984114",
+         "name": "Reims"
+        },
+        {
+         "count": 61,
+         "id": "3456283",
+         "name": "Niterói"
+        },
+        {
+         "count": 60,
+         "id": "2637546",
+         "name": "Solihull"
+        },
+        {
+         "count": 60,
+         "id": "2659811",
+         "name": "Luzern"
+        },
+        {
+         "count": 59,
+         "id": "1650357",
+         "name": "Bandung"
+        },
+        {
+         "count": 59,
+         "id": "1732903",
+         "name": "Shah Alam"
+        },
+        {
+         "count": 59,
+         "id": "2619528",
+         "name": "Hvidovre"
+        },
+        {
+         "count": 59,
+         "id": "2638867",
+         "name": "St Albans"
+        },
+        {
+         "count": 59,
+         "id": "3083829",
+         "name": "Szczecin"
+        },
+        {
+         "count": 59,
+         "id": "3149318",
+         "name": "Kristiansand"
+        },
+        {
+         "count": 59,
+         "id": "3449319",
+         "name": "São Carlos"
+        },
+        {
+         "count": 59,
+         "id": "3462377",
+         "name": "Goiânia"
+        },
+        {
+         "count": 59,
+         "id": "4505542",
+         "name": "Athens"
+        },
+        {
+         "count": 58,
+         "id": "1040652",
+         "name": "Maputo"
+        },
+        {
+         "count": 58,
+         "id": "1179400",
+         "name": "Faisalābād"
+        },
+        {
+         "count": 58,
+         "id": "1267995",
+         "name": "Kanpur"
+        },
+        {
+         "count": 58,
+         "id": "1608529",
+         "name": "Nakhon Ratchasima"
+        },
+        {
+         "count": 58,
+         "id": "161325",
+         "name": "Arusha"
+        },
+        {
+         "count": 58,
+         "id": "2894003",
+         "name": "Kaiserslautern"
+        },
+        {
+         "count": 58,
+         "id": "5392323",
+         "name": "San Luis Obispo"
+        }
+       ]
+      },
+      "text/plain": [
+       "<dimcli.Result object #4585020608: [('research_org_cities', 1000), ('_stats', 1)]>"
+      ]
+     },
+     "execution_count": 3,
+     "metadata": {
+      "application/json": {
+       "expanded": false,
+       "root": "root"
+      }
+     },
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "%%dsl_query\n",
+    "search publications\n",
+    "where type=\"article\" and year=\"2018\" and research_org_countries in [\"GB\"]\n",
+    "return research_org_cities limit 1000"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "In order to take a peek at the data let's put it into a pandas frame"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>count</th>\n",
+       "      <th>id</th>\n",
+       "      <th>name</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>63893</td>\n",
+       "      <td>2643743</td>\n",
+       "      <td>London</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>16173</td>\n",
+       "      <td>2653941</td>\n",
+       "      <td>Cambridge</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>16073</td>\n",
+       "      <td>2640729</td>\n",
+       "      <td>Oxford</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>10695</td>\n",
+       "      <td>2643123</td>\n",
+       "      <td>Manchester</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>10403</td>\n",
+       "      <td>2650225</td>\n",
+       "      <td>Edinburgh</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   count       id        name\n",
+       "0  63893  2643743      London\n",
+       "1  16173  2653941   Cambridge\n",
+       "2  16073  2640729      Oxford\n",
+       "3  10695  2643123  Manchester\n",
+       "4  10403  2650225   Edinburgh"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "data = _['research_org_cities']\n",
+    "df1 = pd.DataFrame.from_dict(data)\n",
+    "df1.head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "In essence, we want to run the query above for all countries in the EU, then collate the data into a single table. \n",
+    "\n",
+    "First, let's define the list of countries we need (PS: country codes are based on geonames, see also https://www.geonames.org/countries/)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [],
+   "source": [
+    "europe_countries = [\"AD\",\"AL\",\"AT\",\"AX\",\"BA\",\"BE\",\"BG\",\"BY\",\"CH\",\"CZ\",\"DE\",\"DK\",\"EE\",\"ES\",\"FI\",\"FO\",\"FR\",\"GB\",\"GG\",\"GI\",\"GR\",\"HR\",\"HU\",\"IE\",\"IM\",\"IS\",\"IT\",\"JE\",\"LI\",\"LT\",\"LU\",\"LV\",\"MC\",\"MD\",\"ME\",\"MK\",\"MT\",\"NL\",\"NO\",\"PL\",\"PT\",\"RO\",\"RS\",\"RU\",\"SE\",\"SI\",\"SJ\",\"SK\",\"SM\",\"UA\",\"VA\"]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "Now we can set up a parametrized query loop as follows "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [],
+   "source": [
+    "q_template = \"\"\"search publications\n",
+    "where type=\"article\" and date=\"2018\" and research_org_countries in [\"%s\"]\n",
+    "return research_org_cities limit 1000\"\"\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Country: AD Master Dataset Rows: 0 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: AL Master Dataset Rows: 6 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: AT Master Dataset Rows: 177 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: AX Master Dataset Rows: 177 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: BA Master Dataset Rows: 182 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: BE Master Dataset Rows: 482 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: BG Master Dataset Rows: 510 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: BY Master Dataset Rows: 581 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: CH Master Dataset Rows: 956 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: CZ Master Dataset Rows: 1093 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: DE Master Dataset Rows: 1682 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: DK Master Dataset Rows: 1970 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: EE Master Dataset Rows: 1977 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: ES Master Dataset Rows: 2411 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: FI Master Dataset Rows: 2563 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: FO Master Dataset Rows: 2563 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: FR Master Dataset Rows: 3159 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: GB Master Dataset Rows: 3860 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: GG Master Dataset Rows: 3860 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: GI Master Dataset Rows: 3860 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: GR Master Dataset Rows: 4029 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: HR Master Dataset Rows: 4039 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: HU Master Dataset Rows: 4094 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: IE Master Dataset Rows: 4166 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: IM Master Dataset Rows: 4166 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: IS Master Dataset Rows: 4178 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: IT Master Dataset Rows: 4672 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: JE Master Dataset Rows: 4672 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: LI Master Dataset Rows: 4672 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: LT Master Dataset Rows: 4674 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: LU Master Dataset Rows: 4676 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: LV Master Dataset Rows: 4677 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: MC Master Dataset Rows: 4680 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: MD Master Dataset Rows: 4682 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: ME Master Dataset Rows: 4683 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: MK Master Dataset Rows: 4683 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: MT Master Dataset Rows: 4754 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: NL Master Dataset Rows: 5177 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: NO Master Dataset Rows: 5381 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: PL Master Dataset Rows: 5584 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: PT Master Dataset Rows: 5803 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: RO Master Dataset Rows: 5897 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: RS Master Dataset Rows: 5948 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: RU Master Dataset Rows: 6169 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: SE Master Dataset Rows: 6455 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: SI Master Dataset Rows: 6543 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: SJ Master Dataset Rows: 6543 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: SK Master Dataset Rows: 6619 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: SM Master Dataset Rows: 6619 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: UA Master Dataset Rows: 6663 <class 'pandas.core.frame.DataFrame'>\n",
+      "Country: VA Master Dataset Rows: 6663 <class 'pandas.core.frame.DataFrame'>\n",
+      "FINISHED!\n"
+     ]
+    }
+   ],
+   "source": [
+    "df_master = pd.DataFrame()\n",
+    "for c in europe_countries:\n",
+    "    query = q_template % (c)\n",
+    "    res = dsl.query(query, show_results=False)\n",
+    "    data = res['research_org_cities']\n",
+    "    if data:\n",
+    "        if df_master.empty:\n",
+    "            df_master = pd.DataFrame.from_dict(data)\n",
+    "        else:\n",
+    "            df_temp = pd.DataFrame.from_dict(data)\n",
+    "            df_master = df_master.append(df_temp, sort=True)\n",
+    "    print(\"Country:\", c, \" - Master Dataset Rows:\", len(df_master))\n",
+    "    time.sleep(1.5)\n",
+    "print(\"FINISHED!\")    "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "That's it! We extracted all the publications per city data from Dimensions. \n",
+    "\n",
+    "Let's save the raw data as a CSV file. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [],
+   "source": [
+    "df_master.to_csv('tmp/raw_cities_data_dimensions_2019-04-23.csv')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "## 2. Cleaning the data by removing duplicates \n",
+    "\n",
+    "Next up, we want to combine the raw data so that we have only one entry per city. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [],
+   "source": [
+    "df_master_merged = df_master.pivot_table(index=['id', 'name'], aggfunc=sum).sort_values(by=['count'], ascending=False)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [],
+   "source": [
+    "# fix column names (https://stackoverflow.com/questions/33290374/pandas-pivot-table-column-names)\n",
+    "df_master_merged.reset_index(inplace=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "Let's take a quick look at what we have now. Also, save this intermediary step as a different CSV. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "1466"
+      ]
+     },
+     "execution_count": 11,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "len(df_master_merged)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [],
+   "source": [
+    "df_master_merged.to_csv('tmp/merged_cities_data_2019-04-23.csv')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "image/png": "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\n",
+      "text/plain": [
+       "<Figure size 432x288 with 1 Axes>"
+      ]
+     },
+     "metadata": {
+      "needs_background": "light"
+     },
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "ax = df_master_merged.head(10).plot.bar(x='name', rot=0,)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "## 3. Enriching the cities data with geonames.org lat/long "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "In this section we want to take all cities information and enhance it by adding geocoordinates. These will become handy later on if we want to plot the data on a map.\n",
+    "\n",
+    "We will use the free service [geonames.org](http://www.geonames.org/export/web-services.html) for this. PS you must create a free account/username in order to use it (see also http://www.geonames.org/export/credits.html). \n",
+    "\n",
+    "Geonames information will also let us do more data clean up: due to co-author information, the cities list we currenlty have contains some non-EU places \n",
+    "    (e.g. New York, because authors from NY happened to be co-authoring papers with EU authors). \n",
+    "These values can be easily filtered out once we the cities information from Dimensions is enriched with country codes (from geonames.org). "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "First let's read the CSV created in the previous section and generate a pandas dataframe from it."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Unnamed: 0</th>\n",
+       "      <th>id</th>\n",
+       "      <th>name</th>\n",
+       "      <th>count</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>0</td>\n",
+       "      <td>2643743</td>\n",
+       "      <td>London</td>\n",
+       "      <td>468</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>1</td>\n",
+       "      <td>2988507</td>\n",
+       "      <td>Paris</td>\n",
+       "      <td>293</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>2</td>\n",
+       "      <td>3128760</td>\n",
+       "      <td>Barcelona</td>\n",
+       "      <td>176</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>3</td>\n",
+       "      <td>2759794</td>\n",
+       "      <td>Amsterdam</td>\n",
+       "      <td>172</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>4</td>\n",
+       "      <td>3117735</td>\n",
+       "      <td>Madrid</td>\n",
+       "      <td>171</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   Unnamed: 0       id       name  count\n",
+       "0           0  2643743     London    468\n",
+       "1           1  2988507      Paris    293\n",
+       "2           2  3128760  Barcelona    176\n",
+       "3           3  2759794  Amsterdam    172\n",
+       "4           4  3117735     Madrid    171"
+      ]
+     },
+     "execution_count": 15,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df1 = pd.read_csv(\"tmp/merged_cities_data_2019-04-23.csv\")\n",
+    "df1.head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "Drop the first column and rename the second one"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [],
+   "source": [
+    "df1.drop(['Unnamed: 0'], axis=1, inplace=True)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>geonamesId</th>\n",
+       "      <th>name</th>\n",
+       "      <th>count</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>2643743</td>\n",
+       "      <td>London</td>\n",
+       "      <td>468</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>2988507</td>\n",
+       "      <td>Paris</td>\n",
+       "      <td>293</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>3128760</td>\n",
+       "      <td>Barcelona</td>\n",
+       "      <td>176</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>2759794</td>\n",
+       "      <td>Amsterdam</td>\n",
+       "      <td>172</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>3117735</td>\n",
+       "      <td>Madrid</td>\n",
+       "      <td>171</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   geonamesId       name  count\n",
+       "0     2643743     London    468\n",
+       "1     2988507      Paris    293\n",
+       "2     3128760  Barcelona    176\n",
+       "3     2759794  Amsterdam    172\n",
+       "4     3117735     Madrid    171"
+      ]
+     },
+     "execution_count": 17,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df1.columns = ['geonamesId', 'name', 'count']\n",
+    "df1.head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "Now let's set up a function that queries geonames.org based on the locations IDs we have. \n",
+    "\n",
+    "PS geonames API has a hourly limit of 1000 credits/requests, hence we will slow down the execution using `time.sleep()` later on. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 28,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [],
+   "source": [
+    "#\n",
+    "geonameuser = \"YOUR_USERNAME_HERE\"  ############## REPLACE AS NEEDED #################\n",
+    "url = \"http://api.geonames.org/hierarchyJSON?geonameId=%s&username=%s\"\n",
+    "#\n",
+    "\n",
+    "# eg http://api.geonames.org/hierarchyJSON?geonameId=2643743&username=mpasin\n",
+    "def open_geonames(_id):\n",
+    "    r = requests.get(url % (str(_id), geonameuser))\n",
+    "    return r.json()\n",
+    "\n",
+    "def geonames_details(_id):\n",
+    "    _id = int(_id) # make sure it's a number\n",
+    "    data = open_geonames(_id)\n",
+    "    try:\n",
+    "        for x in data['geonames']:\n",
+    "            if x['geonameId'] == _id:\n",
+    "                lat = x['lat']\n",
+    "                lng = x['lng']\n",
+    "                countryCode = x['countryCode']\n",
+    "                countryName = x['countryName']\n",
+    "                return [lat, lng, countryCode, countryName]\n",
+    "    except Exception as e: \n",
+    "        print(e)\n",
+    "        print(\"Error parsing JSON: %s\" % str(data))\n",
+    "        return None\n",
+    "    "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 24,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['20.11697', '-98.73329', 'MX', 'Mexico']"
+      ]
+     },
+     "execution_count": 24,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# EG\n",
+    "geonames_details(3522210)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "In order to prevent losing data is the geonames API returns an error, we store the cities data a dict which we can save as JSON.  \n",
+    "This can be updated with geonames infos incrementally, using separate runs (if necessary). \n",
+    "\n",
+    "We use a list of dictionaries so to preserve the original order."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [],
+   "source": [
+    "temp = {}\n",
+    "temp['data'] = []\n",
+    "for x in df1['geonamesId']:\n",
+    "    temp['data'].append({x: None})\n",
+    "with open('tmp/geonames_temp.json', 'w') as outfile:  \n",
+    "    json.dump(temp  , outfile)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "Read the data back in for iteration"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 35,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [],
+   "source": [
+    "with open('tmp/geonames_temp.json') as infile:  \n",
+    "    tempfiledata = json.load(infile)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "Iterate and enrich the dict with the geonames details. \n",
+    "\n",
+    "If geonames API fails, the value for a place ID remains null. \n",
+    "\n",
+    "The iteration only takes null-place info elements, so we can rerun this cell as many times as needed to get data for all places. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 36,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "1435 ...\n",
+      "DONE: data saved\n"
+     ]
+    }
+   ],
+   "source": [
+    "counter = 0\n",
+    "for ddict in tempfiledata['data']:\n",
+    "    _id = next(iter(ddict)) # get first element\n",
+    "    if not ddict[_id]:\n",
+    "        print(counter, \"...\")\n",
+    "        res = geonames_details(_id)\n",
+    "        if res:\n",
+    "            tempfiledata['data'][counter][_id] = res\n",
+    "        time.sleep(1)\n",
+    "    else:\n",
+    "        pass \n",
+    "        # print(\"skipping\", counter)\n",
+    "    counter += 1\n",
+    "\n",
+    "# now save to file\n",
+    "with open('tmp/geonames_temp.json', 'w') as outfile:  \n",
+    "    json.dump(tempfiledata, outfile)\n",
+    "print(\"DONE: data saved\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "Finally, add the geonames data to the original data frame. \n",
+    "\n",
+    "We can do this by creating a list for each of the new columns, making sure they have the exact same number of elements of the original data frame."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 37,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "True"
+      ]
+     },
+     "execution_count": 37,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "lats, longs, countryCodes, countryNames = [], [], [], []\n",
+    "for x in tempfiledata['data']:\n",
+    "    _id = next(iter(x)) # get first element\n",
+    "    if not x[_id]:\n",
+    "        lats.append([\"\"])\n",
+    "        longs.append([\"\"])\n",
+    "        countryCodes.append([\"\"])\n",
+    "        countryNames.append([\"\"])\n",
+    "    else:\n",
+    "        lats.append(x[_id][0])\n",
+    "        longs.append(x[_id][1])\n",
+    "        countryCodes.append(x[_id][2])\n",
+    "        countryNames.append(x[_id][3])\n",
+    "\n",
+    "len(df1) == len(lats) == len(longs) == len(countryCodes) == len(countryNames)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 38,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [],
+   "source": [
+    "# when finished, update the dataframe and save \n",
+    "df1['lat'] = lats\n",
+    "df1['lng'] = longs\n",
+    "df1['countryCode'] = countryCodes\n",
+    "df1['countryName'] = countryNames\n",
+    "df1.to_csv('tmp/enriched_cities_data_2019-04-23.csv')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "Finally, we can remove non-EU cities from the data table"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 41,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Unnamed: 0</th>\n",
+       "      <th>geonamesId</th>\n",
+       "      <th>name</th>\n",
+       "      <th>count</th>\n",
+       "      <th>lat</th>\n",
+       "      <th>lng</th>\n",
+       "      <th>countryCode</th>\n",
+       "      <th>countryName</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>0</td>\n",
+       "      <td>2643743</td>\n",
+       "      <td>London</td>\n",
+       "      <td>468</td>\n",
+       "      <td>51.50853</td>\n",
+       "      <td>-0.12574</td>\n",
+       "      <td>GB</td>\n",
+       "      <td>United Kingdom</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>1</td>\n",
+       "      <td>2988507</td>\n",
+       "      <td>Paris</td>\n",
+       "      <td>293</td>\n",
+       "      <td>48.85341</td>\n",
+       "      <td>2.3488</td>\n",
+       "      <td>FR</td>\n",
+       "      <td>France</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>2</td>\n",
+       "      <td>3128760</td>\n",
+       "      <td>Barcelona</td>\n",
+       "      <td>176</td>\n",
+       "      <td>41.38879</td>\n",
+       "      <td>2.15899</td>\n",
+       "      <td>ES</td>\n",
+       "      <td>Spain</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>3</td>\n",
+       "      <td>2759794</td>\n",
+       "      <td>Amsterdam</td>\n",
+       "      <td>172</td>\n",
+       "      <td>52.37403</td>\n",
+       "      <td>4.88969</td>\n",
+       "      <td>NL</td>\n",
+       "      <td>Netherlands</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>4</td>\n",
+       "      <td>3117735</td>\n",
+       "      <td>Madrid</td>\n",
+       "      <td>171</td>\n",
+       "      <td>40.4165</td>\n",
+       "      <td>-3.70256</td>\n",
+       "      <td>ES</td>\n",
+       "      <td>Spain</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   Unnamed: 0  geonamesId       name  count       lat       lng countryCode  \\\n",
+       "0           0     2643743     London    468  51.50853  -0.12574          GB   \n",
+       "1           1     2988507      Paris    293  48.85341    2.3488          FR   \n",
+       "2           2     3128760  Barcelona    176  41.38879   2.15899          ES   \n",
+       "3           3     2759794  Amsterdam    172  52.37403   4.88969          NL   \n",
+       "4           4     3117735     Madrid    171   40.4165  -3.70256          ES   \n",
+       "\n",
+       "      countryName  \n",
+       "0  United Kingdom  \n",
+       "1          France  \n",
+       "2           Spain  \n",
+       "3     Netherlands  \n",
+       "4           Spain  "
+      ]
+     },
+     "execution_count": 41,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df1 = pd.read_csv(\"tmp/enriched_cities_data_2019-04-23.csv\")\n",
+    "europe_countries = [\"AD\",\"AL\",\"AT\",\"AX\",\"BA\",\"BE\",\"BG\",\"BY\",\"CH\",\"CZ\",\"DE\",\"DK\",\"EE\",\"ES\",\"FI\",\"FO\",\"FR\",\"GB\",\"GG\",\"GI\",\"GR\",\"HR\",\"HU\",\"IE\",\"IM\",\"IS\",\"IT\",\"JE\",\"LI\",\"LT\",\"LU\",\"LV\",\"MC\",\"MD\",\"ME\",\"MK\",\"MT\",\"NL\",\"NO\",\"PL\",\"PT\",\"RO\",\"RS\",\"RU\",\"SE\",\"SI\",\"SJ\",\"SK\",\"SM\",\"UA\",\"VA\"]\n",
+    "\n",
+    "to_drop = []\n",
+    "\n",
+    "for x,y in enumerate(df1['countryCode']):\n",
+    "    if y not in europe_countries:\n",
+    "        to_drop += [x]\n",
+    "    \n",
+    "df1.drop(df1.index[to_drop], inplace=True)\n",
+    "df1.head()\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 51,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>geonamesId</th>\n",
+       "      <th>count</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>count</th>\n",
+       "      <td>8.080000e+02</td>\n",
+       "      <td>808.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>mean</th>\n",
+       "      <td>2.627860e+06</td>\n",
+       "      <td>13.493812</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>std</th>\n",
+       "      <td>8.137934e+05</td>\n",
+       "      <td>30.379793</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>min</th>\n",
+       "      <td>2.518330e+05</td>\n",
+       "      <td>1.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>25%</th>\n",
+       "      <td>2.641306e+06</td>\n",
+       "      <td>1.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>50%</th>\n",
+       "      <td>2.825690e+06</td>\n",
+       "      <td>3.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>75%</th>\n",
+       "      <td>3.031248e+06</td>\n",
+       "      <td>13.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>max</th>\n",
+       "      <td>6.543862e+06</td>\n",
+       "      <td>468.000000</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "         geonamesId       count\n",
+       "count  8.080000e+02  808.000000\n",
+       "mean   2.627860e+06   13.493812\n",
+       "std    8.137934e+05   30.379793\n",
+       "min    2.518330e+05    1.000000\n",
+       "25%    2.641306e+06    1.000000\n",
+       "50%    2.825690e+06    3.000000\n",
+       "75%    3.031248e+06   13.000000\n",
+       "max    6.543862e+06  468.000000"
+      ]
+     },
+     "execution_count": 51,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df1.describe()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "There are **808** cities from the EU listed now. \n",
+    "\n",
+    "As a final step, let's remove the first column and save the data as CSV. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [],
+   "source": [
+    "df1.drop(['Unnamed: 0'], axis=1, inplace=True)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 52,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [],
+   "source": [
+    "df1.to_csv('cities_data_final_2019-04-23.csv')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "That's it. This is the final dataset, which includes only EU cities infos."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "## 4. Visualising the data\n",
+    "\n",
+    "This final step is optional, but a bit of eye-candy will undoubtedly make you feel good :-) \n",
+    "\n",
+    "We can create a nice interactive bar chart using the open source [plotly](https://plot.ly/python/) library. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 46,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [],
+   "source": [
+    "import plotly\n",
+    "import plotly.graph_objs as go\n",
+    "from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 47,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'3.8.1'"
+      ]
+     },
+     "execution_count": 47,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "plotly.__version__"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 48,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "        <script type=\"text/javascript\">\n",
+       "        window.PlotlyConfig = {MathJaxConfig: 'local'};\n",
+       "        if (window.MathJax) {MathJax.Hub.Config({SVG: {font: \"STIX-Web\"}});}\n",
+       "        if (typeof require !== 'undefined') {\n",
+       "        require.undef(\"plotly\");\n",
+       "        requirejs.config({\n",
+       "            paths: {\n",
+       "                'plotly': ['https://cdn.plot.ly/plotly-latest.min']\n",
+       "            }\n",
+       "        });\n",
+       "        require(['plotly'], function(Plotly) {\n",
+       "            window._Plotly = Plotly;\n",
+       "        });\n",
+       "        }\n",
+       "        </script>\n",
+       "        "
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "init_notebook_mode(connected=True)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 58,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Unnamed: 0</th>\n",
+       "      <th>geonamesId</th>\n",
+       "      <th>name</th>\n",
+       "      <th>count</th>\n",
+       "      <th>lat</th>\n",
+       "      <th>lng</th>\n",
+       "      <th>countryCode</th>\n",
+       "      <th>countryName</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>0</td>\n",
+       "      <td>2643743</td>\n",
+       "      <td>London</td>\n",
+       "      <td>468</td>\n",
+       "      <td>51.50853</td>\n",
+       "      <td>-0.12574</td>\n",
+       "      <td>GB</td>\n",
+       "      <td>United Kingdom</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>1</td>\n",
+       "      <td>2988507</td>\n",
+       "      <td>Paris</td>\n",
+       "      <td>293</td>\n",
+       "      <td>48.85341</td>\n",
+       "      <td>2.34880</td>\n",
+       "      <td>FR</td>\n",
+       "      <td>France</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>2</td>\n",
+       "      <td>3128760</td>\n",
+       "      <td>Barcelona</td>\n",
+       "      <td>176</td>\n",
+       "      <td>41.38879</td>\n",
+       "      <td>2.15899</td>\n",
+       "      <td>ES</td>\n",
+       "      <td>Spain</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>3</td>\n",
+       "      <td>2759794</td>\n",
+       "      <td>Amsterdam</td>\n",
+       "      <td>172</td>\n",
+       "      <td>52.37403</td>\n",
+       "      <td>4.88969</td>\n",
+       "      <td>NL</td>\n",
+       "      <td>Netherlands</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>4</td>\n",
+       "      <td>3117735</td>\n",
+       "      <td>Madrid</td>\n",
+       "      <td>171</td>\n",
+       "      <td>40.41650</td>\n",
+       "      <td>-3.70256</td>\n",
+       "      <td>ES</td>\n",
+       "      <td>Spain</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   Unnamed: 0  geonamesId       name  count       lat      lng countryCode  \\\n",
+       "0           0     2643743     London    468  51.50853 -0.12574          GB   \n",
+       "1           1     2988507      Paris    293  48.85341  2.34880          FR   \n",
+       "2           2     3128760  Barcelona    176  41.38879  2.15899          ES   \n",
+       "3           3     2759794  Amsterdam    172  52.37403  4.88969          NL   \n",
+       "4           4     3117735     Madrid    171  40.41650 -3.70256          ES   \n",
+       "\n",
+       "      countryName  \n",
+       "0  United Kingdom  \n",
+       "1          France  \n",
+       "2           Spain  \n",
+       "3     Netherlands  \n",
+       "4           Spain  "
+      ]
+     },
+     "execution_count": 58,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df = pd.read_csv(\"cities_data_final_2019-04-23.csv\")\n",
+    "df.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 54,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'cities_bar.html'"
+      ]
+     },
+     "execution_count": 54,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "data = [go.Bar(\n",
+    "            x=[x for x in df['name']],\n",
+    "            y=[x for x in df['count']]\n",
+    "    )]\n",
+    "plot(data, filename=\"cities_bar.html\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "The file `cities_bar.html` should open automatically in the browser and it'll let you dig into the data via a cool interactive bar chart! Have fun :-)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "source": [
+    "---\n",
+    "# Want to learn more?\n",
+    "\n",
+    "Check out the [Dimensions API Lab](https://digital-science.github.io/dimensions-api-lab/) website, which contains many tutorials and reusable Jupyter notebooks for scholarly data analytics. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "Collapsed": "false"
+   },
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.4"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

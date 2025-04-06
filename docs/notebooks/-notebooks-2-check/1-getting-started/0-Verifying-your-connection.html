@@ -1,0 +1,410 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Verifying Your API Connection &#8212; Dimensions API Lab 0.1 documentation</title>
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">Dimensions API Lab 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 5ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="Verifying-Your-API-Connection">
+<h1>Verifying Your API Connection<a class="headerlink" href="#Verifying-Your-API-Connection" title="Permalink to this headline">¶</a></h1>
+<p>The purpose of this notebook is to verify that you can access the <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> using Python.</p>
+<blockquote>
+<div><p><strong>Please note</strong> only Dimensions users with an Analytics API subscription can access this service.</p>
+</div></blockquote>
+<div class="section" id="Technical-prerequisites">
+<h2>Technical prerequisites<a class="headerlink" href="#Technical-prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>This guide assumes that you already have a Python 3 working environment and <a class="reference external" href="https://pypi.org/project/pip/">pip</a> (the python package manager) installed. For more background, see this <a class="reference external" href="https://realpython.com/installing-python/">link</a>.</p>
+<p>The only library needed for this exercise is <code class="docutils literal notranslate"><span class="pre">requests</span></code>, which can be installed as follows</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span>pip install requests
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Requirement already satisfied: requests in /usr/local/lib/python3.7/site-packages (2.18.3)
+Requirement already satisfied: urllib3&lt;1.23,&gt;=1.21.1 in /usr/local/lib/python3.7/site-packages (from requests) (1.22)
+Requirement already satisfied: chardet&lt;3.1.0,&gt;=3.0.2 in /usr/local/lib/python3.7/site-packages (from requests) (3.0.4)
+Requirement already satisfied: idna&lt;2.6,&gt;=2.5 in /usr/local/lib/python3.7/site-packages (from requests) (2.5)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/local/lib/python3.7/site-packages (from requests) (2018.11.29)
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">requests</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Connecting-to-the-API">
+<h2>Connecting to the API<a class="headerlink" href="#Connecting-to-the-API" title="Permalink to this headline">¶</a></h2>
+<p>If you have access to the analytics API, simply fill in the parameters below with your details:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">USERNAME</span> <span class="o">=</span> <span class="s1">&#39;your username&#39;</span>
+<span class="n">PASSWORD</span> <span class="o">=</span> <span class="s1">&#39;your password&#39;</span>
+<span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s1">&#39;app.dimensions.ai&#39;</span>  <span class="c1"># eg no need to include &#39;https://&#39;</span>
+</pre></div>
+</div>
+</div>
+<p>Try running the script below (Note: the script is also available on the <a class="reference external" href="https://docs.dimensions.ai/dsl/api.html#python-example">API official documentation</a>).</p>
+<p>If the details are correct, you should see some JSON results being returned, which looks like this</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;_stats&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;total_count&#39;</span><span class="p">:</span> <span class="mi">103121703</span><span class="p">},</span> <span class="s1">&#39;publications&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Sure 16,1 - 23,118&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;book&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;pub.1113244530&#39;</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">:</span> <span class="mi">2019</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Deutungsmacht von Zeitdiagnosen&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;book&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;pub.1113146259&#39;</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">:</span> <span class="mi">2019</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;“So You Want to Write about American Indians?” Ethical Reflections on Euro-Academia’s Research on Indigenous Cultural Narratives&#39;</span><span class="p">,</span> <span class="s1">&#39;author_affiliations&#39;</span><span class="p">:</span> <span class="o">....</span>
+</pre></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1">#   The credentials to be used</span>
+<span class="n">login</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;username&#39;</span><span class="p">:</span> <span class="n">USERNAME</span><span class="p">,</span>
+    <span class="s1">&#39;password&#39;</span><span class="p">:</span> <span class="n">PASSWORD</span>
+<span class="p">}</span>
+
+<span class="c1">#   Send credentials to login url to retrieve token. Raise</span>
+<span class="c1">#   an error, if the return code indicates a problem.</span>
+<span class="c1">#   Please use the URL of the system you&#39;d like to access the API</span>
+<span class="c1">#   in the example below.</span>
+<span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;https://</span><span class="si">{ENDPOINT}</span><span class="s1">/api/auth.json&#39;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">login</span><span class="p">)</span>
+<span class="n">resp</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+
+<span class="c1">#   Create http header using the generated token.</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s2">&quot;JWT &quot;</span> <span class="o">+</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;token&#39;</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="c1">#   Execute DSL query.</span>
+<span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+    <span class="n">f</span><span class="s1">&#39;https://</span><span class="si">{ENDPOINT}</span><span class="s1">/api/dsl.json&#39;</span><span class="p">,</span>
+    <span class="n">data</span><span class="o">=</span><span class="s1">&#39;search publications for &quot;乳がん&quot; return publications&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(),</span>
+    <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+<span class="c1">#   Display raw result</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;_stats&#39;: {&#39;total_count&#39;: 103121703}, &#39;publications&#39;: [{&#39;title&#39;: &#39;Sure 16,1 - 23,118&#39;, &#39;type&#39;: &#39;book&#39;, &#39;id&#39;: &#39;pub.1113244530&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;Deutungsmacht von Zeitdiagnosen&#39;, &#39;type&#39;: &#39;book&#39;, &#39;id&#39;: &#39;pub.1113146259&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;“So You Want to Write about American Indians?” Ethical Reflections on Euro-Academia’s Research on Indigenous Cultural Narratives&#39;, &#39;author_affiliations&#39;: [[{&#39;first_name&#39;: &#39;Amina&#39;, &#39;last_name&#39;: &#39;Grunewald&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;&#39;, &#39;affiliations&#39;: []}]], &#39;type&#39;: &#39;chapter&#39;, &#39;id&#39;: &#39;pub.1113271690&#39;, &#39;pages&#39;: &#39;239-260&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;The Moral Nexus&#39;, &#39;author_affiliations&#39;: [[{&#39;first_name&#39;: &#39;R. Jay&#39;, &#39;last_name&#39;: &#39;Wallace&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;&#39;, &#39;affiliations&#39;: []}]], &#39;type&#39;: &#39;monograph&#39;, &#39;id&#39;: &#39;pub.1117142285&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;VC&#39;, &#39;author_affiliations&#39;: [[{&#39;first_name&#39;: &#39;Tom&#39;, &#39;last_name&#39;: &#39;Nicholas&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;&#39;, &#39;affiliations&#39;: []}]], &#39;type&#39;: &#39;monograph&#39;, &#39;id&#39;: &#39;pub.1117152054&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;Altenheim Thema Hauswirtschaft&#39;, &#39;type&#39;: &#39;monograph&#39;, &#39;id&#39;: &#39;pub.1117170089&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;Expression of a novel gene encoding protease inhibitor from metagenome of sponge in Vietnam&#39;, &#39;author_affiliations&#39;: [[{&#39;first_name&#39;: &#39;Tran Thi&#39;, &#39;last_name&#39;: &#39;Hong&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;&#39;, &#39;affiliations&#39;: []}, {&#39;first_name&#39;: &#39;Ton That Huu&#39;, &#39;last_name&#39;: &#39;Dat&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;grid.4818.5&#39;, &#39;researcher_id&#39;: &#39;ur.011501570541.62&#39;, &#39;affiliations&#39;: []}, {&#39;first_name&#39;: &#39;Nguyen Phuong&#39;, &#39;last_name&#39;: &#39;Hoa&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;&#39;, &#39;affiliations&#39;: []}, {&#39;first_name&#39;: &#39;Pham Viet&#39;, &#39;last_name&#39;: &#39;Cuong&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;&#39;, &#39;affiliations&#39;: []}, {&#39;first_name&#39;: &#39;Nguyen Thi Kim&#39;, &#39;last_name&#39;: &#39;Cuc&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;&#39;, &#39;affiliations&#39;: []}]], &#39;type&#39;: &#39;article&#39;, &#39;volume&#39;: &#39;40&#39;, &#39;issue&#39;: &#39;4&#39;, &#39;id&#39;: &#39;pub.1112252248&#39;, &#39;year&#39;: 2019, &#39;journal&#39;: {&#39;id&#39;: &#39;jour.1355760&#39;, &#39;title&#39;: &#39;ACADEMIA JOURNAL OF BIOLOGY&#39;}}, {&#39;title&#39;: &#34;Macrophage&#39;s Arsenal in the Battle against Zaire EBOLA Virus&#34;, &#39;author_affiliations&#39;: [[{&#39;first_name&#39;: &#39;Rosa&#39;, &#39;last_name&#39;: &#39;Michelino Di&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;&#39;, &#39;affiliations&#39;: []}, {&#39;first_name&#39;: &#39;Malaguarnera&#39;, &#39;last_name&#39;: &#39;Lucia&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;&#39;, &#39;affiliations&#39;: []}]], &#39;type&#39;: &#39;article&#39;, &#39;volume&#39;: &#39;2&#39;, &#39;issue&#39;: &#39;1&#39;, &#39;id&#39;: &#39;pub.1112223838&#39;, &#39;year&#39;: 2019, &#39;journal&#39;: {&#39;id&#39;: &#39;jour.1336528&#39;, &#39;title&#39;: &#39;International Journal of Tropical Diseases&#39;}}, {&#39;title&#39;: &#39;»Dieses verfluchte Land«&#39;, &#39;author_affiliations&#39;: [[{&#39;first_name&#39;: &#39;Annika&#39;, &#39;last_name&#39;: &#39;Raapke&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;&#39;, &#39;affiliations&#39;: []}]], &#39;type&#39;: &#39;monograph&#39;, &#39;id&#39;: &#39;pub.1112049851&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;Medizinische Fachlichkeit und Emotionen&#39;, &#39;author_affiliations&#39;: [[{&#39;first_name&#39;: &#39;Kerstin&#39;, &#39;last_name&#39;: &#39;Rego&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;&#39;, &#39;affiliations&#39;: []}]], &#39;type&#39;: &#39;monograph&#39;, &#39;id&#39;: &#39;pub.1112050121&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;Zusammenarbeit&#39;, &#39;type&#39;: &#39;chapter&#39;, &#39;id&#39;: &#39;pub.1112050109&#39;, &#39;pages&#39;: &#39;127-154&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;Einleitung&#39;, &#39;author_affiliations&#39;: [[{&#39;first_name&#39;: &#39;Albert&#39;, &#39;last_name&#39;: &#39;Gouaffo&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;ur.016407172041.61&#39;, &#39;affiliations&#39;: []}, {&#39;first_name&#39;: &#39;Stefanie&#39;, &#39;last_name&#39;: &#39;Michels&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;&#39;, &#39;affiliations&#39;: []}]], &#39;type&#39;: &#39;chapter&#39;, &#39;id&#39;: &#39;pub.1112049938&#39;, &#39;pages&#39;: &#39;9-28&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;Kapitel 18. Besonderheiten beim grenzüberschreitenden Unternehmenskauf&#39;, &#39;author_affiliations&#39;: [[{&#39;first_name&#39;: &#39;Christoph F.&#39;, &#39;last_name&#39;: &#39;Wetzler&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;&#39;, &#39;affiliations&#39;: []}]], &#39;type&#39;: &#39;chapter&#39;, &#39;id&#39;: &#39;pub.1111892594&#39;, &#39;pages&#39;: &#39;1401-1466&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;Kapitel 71. Wiedereinsetzung in den vorigen Stand&#39;, &#39;type&#39;: &#39;chapter&#39;, &#39;id&#39;: &#39;pub.1111892348&#39;, &#39;pages&#39;: &#39;1159-1185&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;Sachregister&#39;, &#39;type&#39;: &#39;chapter&#39;, &#39;id&#39;: &#39;pub.1111901333&#39;, &#39;pages&#39;: &#39;2645-2662&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;6. Teil: Vertrags- und Rechtsverhältnisse&#39;, &#39;type&#39;: &#39;chapter&#39;, &#39;id&#39;: &#39;pub.1111892463&#39;, &#39;pages&#39;: &#39;967-1150&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;Deutsch aus finnischer Sicht - Überblick über die sprachliche Situation in Finnland mit einer kontrastiven Betrachtung von Wort- und Wortformenstrukturen&#39;, &#39;author_affiliations&#39;: [[{&#39;first_name&#39;: &#39;Irma&#39;, &#39;last_name&#39;: &#39;Hyvärinen&#39;, &#39;orcid&#39;: &#39;&#39;, &#39;current_organization_id&#39;: &#39;&#39;, &#39;researcher_id&#39;: &#39;&#39;, &#39;affiliations&#39;: []}]], &#39;type&#39;: &#39;chapter&#39;, &#39;id&#39;: &#39;pub.1111879211&#39;, &#39;pages&#39;: &#39;203-238&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;Kapitel 137. Grundzüge des Arbeitsgerichtsverfahrens&#39;, &#39;type&#39;: &#39;chapter&#39;, &#39;id&#39;: &#39;pub.1111892415&#39;, &#39;pages&#39;: &#39;3100-3104&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;Kapitel 10. Prozesskostenhilfe&#39;, &#39;type&#39;: &#39;chapter&#39;, &#39;id&#39;: &#39;pub.1111892288&#39;, &#39;pages&#39;: &#39;123-169&#39;, &#39;year&#39;: 2019}, {&#39;title&#39;: &#39;Kapitel 107. Einstweilige Anordnungen&#39;, &#39;type&#39;: &#39;chapter&#39;, &#39;id&#39;: &#39;pub.1111892385&#39;, &#39;pages&#39;: &#39;2442-2452&#39;, &#39;year&#39;: 2019}]}
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#Troubleshooting" title="Permalink to this headline">¶</a></h2>
+<p>If you get an error it may be for any of these reasons:</p>
+<ul class="simple">
+<li><p>your Dimensions credentials do not support API access</p></li>
+<li><p>you mispelled your username and/or password</p></li>
+<li><p>you mispelled the endpoint URL (if unknown, you can try ‘app.dimensions.ai’)</p></li>
+<li><p>you don’t have a working internet connection</p></li>
+</ul>
+<p>It’s also useful to take a look at the <a class="reference external" href="https://docs.dimensions.ai/dsl/api.html">API official documentation</a> as there various other way to test your API connection.</p>
+<hr class="docutils" />
+<div class="section" id="Want-to-learn-more?">
+<h3>Want to learn more?<a class="headerlink" href="#Want-to-learn-more?" title="Permalink to this headline">¶</a></h3>
+<p>Check out the <a class="reference external" href="https://digital-science.github.io/dimensions-api-lab/">Dimensions API Lab</a> website, which contains many tutorials and reusable Jupyter notebooks for scholarly data analytics.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Verifying Your API Connection</a><ul>
+<li><a class="reference internal" href="#Technical-prerequisites">Technical prerequisites</a></li>
+<li><a class="reference internal" href="#Connecting-to-the-API">Connecting to the API</a></li>
+<li><a class="reference internal" href="#Troubleshooting">Troubleshooting</a><ul>
+<li><a class="reference internal" href="#Want-to-learn-more?">Want to learn more?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/notebooks/-notebooks-2-check/1-getting-started/0-Verifying-your-connection.ipynb.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">Dimensions API Lab 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dimensions API Team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>
