@@ -47,7 +47,7 @@
     
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="The Organizations API: Features Overview" href="1-Organization-data-preview.html" />
+    <link rel="next" title="Identifying the Industry Collaborators of an Academic Institution" href="2-Industry-Collaboration.html" />
     <link rel="prev" title="Identification of reviewers for funders: Globally and among Panels" href="../7-researchers/funders-reviewers-identification-globally-and-among-panels.html" />
     
 
@@ -770,8 +770,8 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">The Organizations API: Features Overview</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#Prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#1.-Matching-affiliation-data-to-GRID-IDs-using-extract_affiliations">1. Matching affiliation data to GRID IDs using <code class="docutils literal notranslate"><span class="pre">extract_affiliations</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#2.-Searching-GRID-organizations">2. Searching GRID organizations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#1.-Matching-affiliation-data-to-Dimensions-Organization-IDs-using-extract_affiliations">1. Matching affiliation data to Dimensions Organization IDs using <code class="docutils literal notranslate"><span class="pre">extract_affiliations</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#2.-Searching-the-API-for-organizations">2. Searching the API for organizations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#Full-text-search">Full-text search</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#Fielded-search">Fielded search</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#Returning-facets">Returning facets</a></li>
@@ -783,23 +783,6 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#Where-to-find-out-more">Where to find out more</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="1-Organization-data-preview.html">The Organizations API: Features Overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="1-Organization-data-preview.html#Prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="1-Organization-data-preview.html#1.-Matching-affiliation-data-to-Dimensions-Organization-IDs-using-extract_affiliations">1. Matching affiliation data to Dimensions Organization IDs using <code class="docutils literal notranslate"><span class="pre">extract_affiliations</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="1-Organization-data-preview.html#2.-Searching-the-API-for-organizations">2. Searching the API for organizations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="1-Organization-data-preview.html#Full-text-search">Full-text search</a></li>
-<li class="toctree-l3"><a class="reference internal" href="1-Organization-data-preview.html#Fielded-search">Fielded search</a></li>
-<li class="toctree-l3"><a class="reference internal" href="1-Organization-data-preview.html#Returning-facets">Returning facets</a></li>
-<li class="toctree-l3"><a class="reference internal" href="1-Organization-data-preview.html#Returning-organizations-facets-from-publications">Returning organizations facets from publications</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="1-Organization-data-preview.html#3.-A-closer-look-at-the-organizations-data-statistics">3. A closer look at the organizations data statistics</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="1-Organization-data-preview.html#Let’s-visualize-the-data-with-plotly">Let’s visualize the data with plotly</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="1-Organization-data-preview.html#Where-to-find-out-more">Where to find out more</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="2-Industry-Collaboration.html">Identifying the Industry Collaborators of an Academic Institution</a><ul>
@@ -1274,10 +1257,9 @@ div.rendered_html tbody tr:hover {
 <div class="section" id="The-Organizations-API:-Features-Overview">
 <h1>The Organizations API: Features Overview<a class="headerlink" href="#The-Organizations-API:-Features-Overview" title="Permalink to this headline">¶</a></h1>
 <p>This tutorial provides an overview of the <a class="reference external" href="https://docs.dimensions.ai/dsl/datasource-organizations.html">Organizations data source</a> available via the <a class="reference external" href="https://docs.dimensions.ai/dsl/">Dimensions Analytics API</a>.</p>
-<p>Organizations data in Dimensions is based on <a class="reference external" href="https://grid.ac/">GRID</a> - the Global Research Identifiers Database.</p>
 <p>The topics covered in this notebook are:</p>
 <ul class="simple">
-<li><p>How to align your affiliation data with GRID/Dimensions using the API <a class="reference external" href="https://docs.dimensions.ai/dsl/functions.html#function-extract-affiliations">disambiguation service</a></p></li>
+<li><p>How to align your affiliation data with Dimensions using the API <a class="reference external" href="https://docs.dimensions.ai/dsl/functions.html#function-extract-affiliations">disambiguation service</a></p></li>
 <li><p>How to retrieve organizations metadata using the <a class="reference external" href="https://docs.dimensions.ai/dsl/datasource-organizations.html">search fields</a> available</p></li>
 <li><p>How to use the <a class="reference external" href="https://docs.dimensions.ai/dsl/data-sources.html#metadata-api">schema API</a> to obtain some statistics about the Organizations data available</p></li>
 </ul>
@@ -1297,7 +1279,7 @@ div.rendered_html tbody tr:hover {
 <div class="highlight"><pre>
 ==
 CHANGELOG
-This notebook was last run on Jan 25, 2022
+This notebook was last run on Sep 10, 2025
 ==
 </pre></div></div>
 </div>
@@ -1343,19 +1325,9 @@ This notebook was last run on Jan 25, 2022
 <div class="output_area rendered_html docutils container">
 <script type="text/javascript">
 window.PlotlyConfig = {MathJaxConfig: 'local'};
-if (window.MathJax) {MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
-if (typeof require !== 'undefined') {
-require.undef("plotly");
-requirejs.config({
-    paths: {
-        'plotly': ['https://cdn.plot.ly/plotly-2.8.3.min']
-    }
-});
-require(['plotly'], function(Plotly) {
-    window._Plotly = Plotly;
-});
-}
-</script></div>
+if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+</script>
+<script type="module">import "https://cdn.plot.ly/plotly-3.1.0.min"</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
@@ -1372,15 +1344,15 @@ Searching config file credentials for &#39;https://app.dimensions.ai&#39; endpoi
 <div class="highlight"><pre>
 ==
 Logging in..
-Dimcli - Dimensions API Client (v0.9.6)
-Connected to: &lt;https://app.dimensions.ai/api/dsl&gt; - DSL v2.0
+Dimcli - Dimensions API Client (v1.4)
+Connected to: &lt;https://app.dimensions.ai/api/dsl&gt; - DSL v2.12
 Method: dsl.ini file
 </pre></div></div>
 </div>
 <hr class="docutils" />
 </div>
-<div class="section" id="1.-Matching-affiliation-data-to-GRID-IDs-using-extract_affiliations">
-<h2>1. Matching affiliation data to GRID IDs using <code class="docutils literal notranslate"><span class="pre">extract_affiliations</span></code><a class="headerlink" href="#1.-Matching-affiliation-data-to-GRID-IDs-using-extract_affiliations" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="1.-Matching-affiliation-data-to-Dimensions-Organization-IDs-using-extract_affiliations">
+<h2>1. Matching affiliation data to Dimensions Organization IDs using <code class="docutils literal notranslate"><span class="pre">extract_affiliations</span></code><a class="headerlink" href="#1.-Matching-affiliation-data-to-Dimensions-Organization-IDs-using-extract_affiliations" title="Permalink to this headline">¶</a></h2>
 <p>The API function <code class="docutils literal notranslate"><span class="pre">extract_affiliations</span></code> (<a class="reference external" href="https://docs.dimensions.ai/dsl/functions.html#function-extract-affiliations">docs</a>) can be used to enrich private datasets including non-disambiguated organizations data with Dimensions IDs, so to then take advantage of the wealth of linked data available in Dimensions.</p>
 <p>For example, let’s assume our dataset has four columns (<em>affiliation name</em>, <em>city</em>, <em>state</em> and <em>country</em>) - any of which can be empty of course. Like this:</p>
 <div class="nbinput nblast docutils container">
@@ -1402,7 +1374,7 @@ Method: dsl.ini file
 </pre></div>
 </div>
 </div>
-<p>We want to look up GRID identifiers for those affiliations using the <strong>structured</strong> affiliation matching.</p>
+<p>We want to look up Dimensions Organization identifiers for those affiliations using the <strong>structured</strong> affiliation matching.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
@@ -1418,7 +1390,7 @@ Method: dsl.ini file
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "c54ddb7d16ce461ea6ac85ef57b69d7c", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "8549169e2ba046c29ab3adeb6a09c465", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
@@ -1434,7 +1406,7 @@ Method: dsl.ini file
 {&#39;results&#39;: [{&#39;geo&#39;: {&#39;cities&#39;: [], &#39;countries&#39;: [], &#39;states&#39;: []}, &#39;input&#39;: {&#39;city&#39;: &#39;&#39;, &#39;country&#39;: &#39;&#39;, &#39;name&#39;: &#39;P.G. Department of Zoology and Research Centre, Shri Shiv Chhatrapati College of Arts, Commerce and Science, Junnar 410502, Pune, India.&#39;, &#39;state&#39;: &#39;&#39;}, &#39;institutes&#39;: []}]}
 {&#39;results&#39;: [{&#39;geo&#39;: {&#39;cities&#39;: [{&#39;geonames_id&#39;: 1835848, &#39;name&#39;: &#39;Seoul&#39;}], &#39;countries&#39;: [{&#39;code&#39;: &#39;KR&#39;, &#39;geonames_id&#39;: 1835841, &#39;name&#39;: &#39;South Korea&#39;}], &#39;states&#39;: [{&#39;code&#39;: None, &#39;geonames_id&#39;: 1835847, &#39;name&#39;: &#39;Seoul&#39;}]}, &#39;input&#39;: {&#39;city&#39;: &#39;Seoul&#39;, &#39;country&#39;: &#39;South Korea&#39;, &#39;name&#39;: &#39;Sungkyunkwan University&#39;, &#39;state&#39;: &#39;&#39;}, &#39;institutes&#39;: [{&#39;institute&#39;: {&#39;city&#39;: &#39;Seoul&#39;, &#39;country&#39;: &#39;South Korea&#39;, &#39;id&#39;: &#39;grid.264381.a&#39;, &#39;name&#39;: &#39;Sungkyunkwan University&#39;, &#39;state&#39;: None}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: False}}]}]}
 {&#39;results&#39;: [{&#39;geo&#39;: {&#39;cities&#39;: [{&#39;geonames_id&#39;: 1259229, &#39;name&#39;: &#39;Pune&#39;}], &#39;countries&#39;: [{&#39;code&#39;: &#39;IN&#39;, &#39;geonames_id&#39;: 1269750, &#39;name&#39;: &#39;India&#39;}], &#39;states&#39;: [{&#39;code&#39;: None, &#39;geonames_id&#39;: 1264418, &#39;name&#39;: &#39;Maharashtra&#39;}]}, &#39;input&#39;: {&#39;city&#39;: &#39;Pune&#39;, &#39;country&#39;: &#39;India&#39;, &#39;name&#39;: &#39;Centre for Materials for Electronics Technology&#39;, &#39;state&#39;: &#39;&#39;}, &#39;institutes&#39;: [{&#39;institute&#39;: {&#39;city&#39;: &#39;Pune&#39;, &#39;country&#39;: &#39;India&#39;, &#39;id&#39;: &#39;grid.494569.3&#39;, &#39;name&#39;: &#39;Centre for Materials for Electronics Technology&#39;, &#39;state&#39;: None}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: False}}]}]}
-{&#39;results&#39;: [{&#39;geo&#39;: {&#39;cities&#39;: [{&#39;geonames_id&#39;: 2988507, &#39;name&#39;: &#39;Paris&#39;}], &#39;countries&#39;: [{&#39;code&#39;: &#39;FR&#39;, &#39;geonames_id&#39;: 3017382, &#39;name&#39;: &#39;France&#39;}], &#39;states&#39;: [{&#39;code&#39;: None, &#39;geonames_id&#39;: 3012874, &#39;name&#39;: &#39;Ile-de-France&#39;}]}, &#39;input&#39;: {&#39;city&#39;: &#39;&#39;, &#39;country&#39;: &#39;&#39;, &#39;name&#39;: &#39;Institut Necker-Enfants Malades (INEM), INSERM U1151-CNRS UMR8253, Université de Paris, Faculté de Médecine, 156 rue de Vaugirard, 75730 Paris Cedex 15, France&#39;, &#39;state&#39;: &#39;&#39;}, &#39;institutes&#39;: [{&#39;institute&#39;: {&#39;city&#39;: &#39;Paris&#39;, &#39;country&#39;: &#39;France&#39;, &#39;id&#39;: &#39;grid.508487.6&#39;, &#39;name&#39;: &#39;University of Paris&#39;, &#39;state&#39;: None}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: False}}]}]}
+{&#39;results&#39;: [{&#39;geo&#39;: {&#39;cities&#39;: [{&#39;geonames_id&#39;: 2988507, &#39;name&#39;: &#39;Paris&#39;}], &#39;countries&#39;: [{&#39;code&#39;: &#39;FR&#39;, &#39;geonames_id&#39;: 3017382, &#39;name&#39;: &#39;France&#39;}], &#39;states&#39;: [{&#39;code&#39;: None, &#39;geonames_id&#39;: 3012874, &#39;name&#39;: &#39;Ile-de-France&#39;}]}, &#39;input&#39;: {&#39;city&#39;: &#39;&#39;, &#39;country&#39;: &#39;&#39;, &#39;name&#39;: &#39;Institut Necker-Enfants Malades (INEM), INSERM U1151-CNRS UMR8253, Université de Paris, Faculté de Médecine, 156 rue de Vaugirard, 75730 Paris Cedex 15, France&#39;, &#39;state&#39;: &#39;&#39;}, &#39;institutes&#39;: [{&#39;institute&#39;: {&#39;city&#39;: &#39;Paris&#39;, &#39;country&#39;: &#39;France&#39;, &#39;id&#39;: &#39;grid.508487.6&#39;, &#39;name&#39;: &#39;Université Paris Cité&#39;, &#39;state&#39;: None}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: False}}]}]}
 </pre></div></div>
 </div>
 <p>If we combine the affiliation data into a single long string, we can also perform the same king of operation using the <strong>unstructured</strong> affiliation matching.</p>
@@ -1455,7 +1427,7 @@ Method: dsl.ini file
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "f58062b2b4a244ba9df163a9a325f17b", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "225073d7b7cb409b82a7cd252c729cc9", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
@@ -1471,15 +1443,15 @@ Method: dsl.ini file
 {&#39;results&#39;: [{&#39;input&#39;: {&#39;affiliation&#39;: &#39;P.G. Department of Zoology and Research Centre, Shri Shiv Chhatrapati College of Arts, Commerce and Science, Junnar 410502, Pune, India.   &#39;}, &#39;matches&#39;: [{&#39;affiliation_part&#39;: &#39;P.G. Department of Zoology and Research Centre, Shri Shiv Chhatrapati College of Arts, Commerce and Science, Junnar 410502, Pune, India&#39;, &#39;geo&#39;: {&#39;cities&#39;: [{&#39;geonames_id&#39;: 1259229, &#39;name&#39;: &#39;Pune&#39;}], &#39;countries&#39;: [{&#39;code&#39;: &#39;IN&#39;, &#39;geonames_id&#39;: 1269750, &#39;name&#39;: &#39;India&#39;}], &#39;states&#39;: [{&#39;code&#39;: None, &#39;geonames_id&#39;: 1264418, &#39;name&#39;: &#39;Maharashtra&#39;}]}, &#39;institutes&#39;: []}]}]}
 {&#39;results&#39;: [{&#39;input&#39;: {&#39;affiliation&#39;: &#39;Sungkyunkwan University Seoul  South Korea&#39;}, &#39;matches&#39;: [{&#39;affiliation_part&#39;: &#39;Sungkyunkwan University Seoul South Korea&#39;, &#39;geo&#39;: {&#39;cities&#39;: [{&#39;geonames_id&#39;: 1835848, &#39;name&#39;: &#39;Seoul&#39;}], &#39;countries&#39;: [{&#39;code&#39;: &#39;KR&#39;, &#39;geonames_id&#39;: 1835841, &#39;name&#39;: &#39;South Korea&#39;}], &#39;states&#39;: [{&#39;code&#39;: None, &#39;geonames_id&#39;: 1835847, &#39;name&#39;: &#39;Seoul&#39;}]}, &#39;institutes&#39;: [{&#39;institute&#39;: {&#39;city&#39;: &#39;Seoul&#39;, &#39;country&#39;: &#39;South Korea&#39;, &#39;id&#39;: &#39;grid.264381.a&#39;, &#39;name&#39;: &#39;Sungkyunkwan University&#39;, &#39;state&#39;: None}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: False}}]}]}]}
 {&#39;results&#39;: [{&#39;input&#39;: {&#39;affiliation&#39;: &#39;Centre for Materials for Electronics Technology Pune  India&#39;}, &#39;matches&#39;: [{&#39;affiliation_part&#39;: &#39;Centre for Materials for Electronics Technology Pune India&#39;, &#39;geo&#39;: {&#39;cities&#39;: [{&#39;geonames_id&#39;: 1259229, &#39;name&#39;: &#39;Pune&#39;}], &#39;countries&#39;: [{&#39;code&#39;: &#39;IN&#39;, &#39;geonames_id&#39;: 1269750, &#39;name&#39;: &#39;India&#39;}], &#39;states&#39;: [{&#39;code&#39;: None, &#39;geonames_id&#39;: 1264418, &#39;name&#39;: &#39;Maharashtra&#39;}]}, &#39;institutes&#39;: [{&#39;institute&#39;: {&#39;city&#39;: &#39;Pune&#39;, &#39;country&#39;: &#39;India&#39;, &#39;id&#39;: &#39;grid.494569.3&#39;, &#39;name&#39;: &#39;Centre for Materials for Electronics Technology&#39;, &#39;state&#39;: None}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: False}}]}]}]}
-{&#39;results&#39;: [{&#39;input&#39;: {&#39;affiliation&#39;: &#39;Institut Necker-Enfants Malades (INEM), INSERM U1151-CNRS UMR8253, Université de Paris, Faculté de Médecine, 156 rue de Vaugirard, 75730 Paris Cedex 15, France   &#39;}, &#39;matches&#39;: [{&#39;affiliation_part&#39;: &#39;Institut Necker-Enfants Malades (INEM), INSERM U1151-CNRS UMR8253, Université de Paris, Faculté de Médecine, 156 rue de Vaugirard, 75730 Paris Cedex 15, France&#39;, &#39;geo&#39;: {&#39;cities&#39;: [{&#39;geonames_id&#39;: 2988507, &#39;name&#39;: &#39;Paris&#39;}], &#39;countries&#39;: [{&#39;code&#39;: &#39;FR&#39;, &#39;geonames_id&#39;: 3017382, &#39;name&#39;: &#39;France&#39;}], &#39;states&#39;: [{&#39;code&#39;: None, &#39;geonames_id&#39;: 3012874, &#39;name&#39;: &#39;Ile-de-France&#39;}]}, &#39;institutes&#39;: [{&#39;institute&#39;: {&#39;city&#39;: &#39;Paris&#39;, &#39;country&#39;: &#39;France&#39;, &#39;id&#39;: &#39;grid.508487.6&#39;, &#39;name&#39;: &#39;University of Paris&#39;, &#39;state&#39;: None}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: False}}]}]}]}
+{&#39;results&#39;: [{&#39;input&#39;: {&#39;affiliation&#39;: &#39;Institut Necker-Enfants Malades (INEM), INSERM U1151-CNRS UMR8253, Université de Paris, Faculté de Médecine, 156 rue de Vaugirard, 75730 Paris Cedex 15, France   &#39;}, &#39;matches&#39;: [{&#39;affiliation_part&#39;: &#39;Institut Necker-Enfants Malades (INEM), INSERM U1151-CNRS UMR8253, Université de Paris, Faculté de Médecine, 156 rue de Vaugirard, 75730 Paris Cedex 15, France&#39;, &#39;geo&#39;: {&#39;cities&#39;: [{&#39;geonames_id&#39;: 2988507, &#39;name&#39;: &#39;Paris&#39;}], &#39;countries&#39;: [{&#39;code&#39;: &#39;FR&#39;, &#39;geonames_id&#39;: 3017382, &#39;name&#39;: &#39;France&#39;}], &#39;states&#39;: [{&#39;code&#39;: None, &#39;geonames_id&#39;: 3012874, &#39;name&#39;: &#39;Ile-de-France&#39;}]}, &#39;institutes&#39;: [{&#39;institute&#39;: {&#39;city&#39;: &#39;Paris&#39;, &#39;country&#39;: &#39;France&#39;, &#39;id&#39;: &#39;grid.508487.6&#39;, &#39;name&#39;: &#39;Université Paris Cité&#39;, &#39;state&#39;: None}, &#39;metadata&#39;: {&#39;requires_manual_review&#39;: False}}]}]}]}
 </pre></div></div>
 </div>
 <blockquote>
 <div><p>NOTE: the above commands also support <strong>bulk querying</strong> e.g. to save up API queries - check out the <a class="reference external" href="https://docs.dimensions.ai/dsl/functions.html#function-extract-affiliations">docs</a> for more info.</p>
 </div></blockquote>
 </div>
-<div class="section" id="2.-Searching-GRID-organizations">
-<h2>2. Searching GRID organizations<a class="headerlink" href="#2.-Searching-GRID-organizations" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="2.-Searching-the-API-for-organizations">
+<h2>2. Searching the API for organizations<a class="headerlink" href="#2.-Searching-the-API-for-organizations" title="Permalink to this headline">¶</a></h2>
 <p>This can be done using full text search and/or fielded search.</p>
 <div class="section" id="Full-text-search">
 <h3>Full-text search<a class="headerlink" href="#Full-text-search" title="Permalink to this headline">¶</a></h3>
@@ -1499,8 +1471,8 @@ return organizations limit 10
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Organizations: 10 (total = 247)
-Time: 0.56s
+Returned Organizations: 10 (total = 352)
+Time: 5.56s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1526,148 +1498,115 @@ Time: 0.56s
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>acronym</th>
-      <th>city_name</th>
-      <th>country_name</th>
       <th>id</th>
-      <th>latitude</th>
-      <th>linkout</th>
-      <th>longitude</th>
       <th>name</th>
-      <th>state_name</th>
+      <th>country_code</th>
+      <th>country_name</th>
       <th>types</th>
+      <th>city_name</th>
+      <th>state_name</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>MSK</td>
-      <td>New York</td>
+      <td>grid.798367.4</td>
+      <td>Bank of New York</td>
+      <td>US</td>
       <td>United States</td>
-      <td>grid.51462.34</td>
-      <td>40.764194</td>
-      <td>[https://www.mskcc.org/]</td>
-      <td>-73.956100</td>
-      <td>Memorial Sloan Kettering Cancer Center</td>
-      <td>New York</td>
-      <td>[Healthcare]</td>
+      <td>[Company]</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>NaN</td>
-      <td>Brooklyn</td>
+      <td>grid.798343.2</td>
+      <td>Research Foundation of University of New York</td>
+      <td>US</td>
       <td>United States</td>
-      <td>grid.511519.8</td>
-      <td>40.691113</td>
-      <td>[https://www.vascularnyc.com/]</td>
-      <td>-73.963890</td>
-      <td>Vascular Institute of New York</td>
-      <td>New York</td>
-      <td>[Healthcare]</td>
+      <td>[Education]</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>NYPC</td>
-      <td>New York</td>
+      <td>grid.797561.b</td>
+      <td>New York Hospital-Cornell Medical Center</td>
+      <td>US</td>
       <td>United States</td>
-      <td>grid.511327.3</td>
-      <td>40.804780</td>
-      <td>[https://www.nyproton.com/]</td>
-      <td>-73.934070</td>
-      <td>New York Proton Center</td>
+      <td>[Healthcare]</td>
       <td>New York</td>
-      <td>[Facility]</td>
+      <td>New York</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>NaN</td>
-      <td>New York</td>
+      <td>grid.796770.8</td>
+      <td>Research Foundation of City University of New ...</td>
+      <td>US</td>
       <td>United States</td>
-      <td>grid.511090.c</td>
-      <td>40.755230</td>
-      <td>[https://www.journalism.cuny.edu/]</td>
-      <td>-73.988830</td>
-      <td>Craig Newmark Graduate School of Journalism at...</td>
-      <td>New York</td>
-      <td>[Education]</td>
+      <td>[Other]</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>CMS</td>
-      <td>New York</td>
+      <td>grid.796173.d</td>
+      <td>Bank of New York Mellon Trust Co NA</td>
+      <td>US</td>
       <td>United States</td>
-      <td>grid.510787.c</td>
-      <td>40.761470</td>
-      <td>[https://cmsny.org/]</td>
-      <td>-73.965450</td>
-      <td>Center for Migration Studies of New York</td>
-      <td>New York</td>
-      <td>[Education]</td>
+      <td>[Company]</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>NYSCC</td>
-      <td>Alfred</td>
+      <td>grid.795276.8</td>
+      <td>New York University Medical Center</td>
+      <td>US</td>
       <td>United States</td>
-      <td>grid.507867.b</td>
-      <td>42.253372</td>
-      <td>[https://www.alfred.edu/academics/colleges-sch...</td>
-      <td>-77.787575</td>
-      <td>New York State College of Ceramics</td>
-      <td>New York</td>
       <td>[Education]</td>
+      <td>New York</td>
+      <td>New York</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>ILR</td>
-      <td>New York</td>
+      <td>grid.794869.d</td>
+      <td>International General Electric Company of New ...</td>
+      <td>US</td>
       <td>United States</td>
-      <td>grid.507863.f</td>
-      <td>42.448510</td>
-      <td>[https://www.ilr.cornell.edu/]</td>
-      <td>-76.478620</td>
-      <td>New York State School of Industrial and Labor ...</td>
-      <td>New York</td>
-      <td>[Education]</td>
+      <td>[Other]</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>MVCC</td>
-      <td>Utica</td>
+      <td>grid.782261.8</td>
+      <td>New York Digital Investment Group LLC</td>
+      <td>US</td>
       <td>United States</td>
-      <td>grid.507861.d</td>
-      <td>43.076850</td>
-      <td>[https://www.mvcc.edu/]</td>
-      <td>-75.220120</td>
-      <td>Mohawk Valley Community College</td>
-      <td>New York</td>
-      <td>[Education]</td>
+      <td>[Other]</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>CALS</td>
-      <td>New York</td>
+      <td>grid.778414.9</td>
+      <td>China CITIC Bank International Ltd New York Br...</td>
+      <td>US</td>
       <td>United States</td>
-      <td>grid.507860.c</td>
-      <td>42.448290</td>
-      <td>[https://cals.cornell.edu/#]</td>
-      <td>-76.479390</td>
-      <td>New York State College of Agriculture &amp; Life S...</td>
-      <td>New York</td>
-      <td>[Education]</td>
+      <td>[Government]</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>NaN</td>
-      <td>New York</td>
+      <td>grid.777726.4</td>
+      <td>Morgan Guaranty Trust Company of New York</td>
+      <td>US</td>
       <td>United States</td>
-      <td>grid.507859.6</td>
-      <td>42.447483</td>
-      <td>[https://www.vet.cornell.edu/]</td>
-      <td>-76.464905</td>
-      <td>New York State College of Veterinary Medicine</td>
-      <td>New York</td>
-      <td>[Education]</td>
+      <td>[Company]</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
   </tbody>
 </table>
@@ -1689,8 +1628,8 @@ return organizations limit 10
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Organizations: 8 (total = 8)
-Time: 0.56s
+Returned Organizations: 9 (total = 9)
+Time: 0.62s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1716,122 +1655,145 @@ Time: 0.56s
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>id</th>
+      <th>name</th>
+      <th>country_code</th>
+      <th>country_name</th>
+      <th>types</th>
       <th>acronym</th>
       <th>city_name</th>
-      <th>country_name</th>
-      <th>id</th>
       <th>latitude</th>
       <th>linkout</th>
       <th>longitude</th>
-      <th>name</th>
       <th>state_name</th>
-      <th>types</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>MVCC</td>
-      <td>Utica</td>
+      <td>grid.757191.c</td>
+      <td>New York Community Bank</td>
+      <td>US</td>
       <td>United States</td>
-      <td>grid.507861.d</td>
-      <td>43.076850</td>
-      <td>[https://www.mvcc.edu/]</td>
-      <td>-75.220120</td>
-      <td>Mohawk Valley Community College</td>
-      <td>New York</td>
-      <td>[Education]</td>
+      <td>[Company]</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>NaN</td>
-      <td>Buffalo</td>
+      <td>grid.507861.d</td>
+      <td>Mohawk Valley Community College</td>
+      <td>US</td>
       <td>United States</td>
-      <td>grid.490742.c</td>
-      <td>42.874810</td>
-      <td>[https://hfwcny.org/]</td>
-      <td>-78.849690</td>
-      <td>Health Foundation for Western &amp; Central New York</td>
+      <td>[Education]</td>
+      <td>MVCC</td>
+      <td>Utica</td>
+      <td>43.076850</td>
+      <td>[https://www.mvcc.edu/]</td>
+      <td>-75.220120</td>
       <td>New York</td>
-      <td>[Other]</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>NaN</td>
-      <td>New York</td>
+      <td>grid.490742.c</td>
+      <td>Health Foundation for Western &amp; Central New York</td>
+      <td>US</td>
       <td>United States</td>
-      <td>grid.480917.3</td>
-      <td>40.758870</td>
-      <td>[http://www.nycommunitytrust.org/]</td>
-      <td>-73.968185</td>
-      <td>New York Community Trust</td>
-      <td>New York</td>
       <td>[Nonprofit]</td>
+      <td>NaN</td>
+      <td>Buffalo</td>
+      <td>42.874810</td>
+      <td>[https://hfwcny.org/]</td>
+      <td>-78.849690</td>
+      <td>New York</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>CNYCF</td>
-      <td>Syracuse</td>
+      <td>grid.480917.3</td>
+      <td>New York Community Trust</td>
+      <td>US</td>
       <td>United States</td>
-      <td>grid.478715.8</td>
-      <td>43.056038</td>
-      <td>[https://www.cnycf.org/]</td>
-      <td>-76.148210</td>
-      <td>Central New York Community Foundation</td>
-      <td>New York</td>
       <td>[Nonprofit]</td>
+      <td>NaN</td>
+      <td>New York</td>
+      <td>40.758870</td>
+      <td>[http://www.nycommunitytrust.org/]</td>
+      <td>-73.968185</td>
+      <td>New York</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>CSS</td>
-      <td>New York</td>
+      <td>grid.478715.8</td>
+      <td>Central New York Community Foundation</td>
+      <td>US</td>
       <td>United States</td>
-      <td>grid.475804.a</td>
-      <td>40.749622</td>
-      <td>[http://www.cssny.org/]</td>
-      <td>-73.974620</td>
-      <td>Community Service Society of New York</td>
+      <td>[Nonprofit]</td>
+      <td>CNYCF</td>
+      <td>Syracuse</td>
+      <td>43.056038</td>
+      <td>[https://www.cnycf.org/]</td>
+      <td>-76.148210</td>
       <td>New York</td>
-      <td>[Other]</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>LTCCC</td>
-      <td>New York</td>
+      <td>grid.475804.a</td>
+      <td>Community Service Society of New York</td>
+      <td>US</td>
       <td>United States</td>
-      <td>grid.475783.a</td>
-      <td>40.751163</td>
-      <td>[http://www.ltccc.org/]</td>
-      <td>-73.992470</td>
-      <td>Long Term Care Community Coalition</td>
-      <td>New York</td>
       <td>[Other]</td>
+      <td>CSS</td>
+      <td>New York</td>
+      <td>40.749622</td>
+      <td>[http://www.cssny.org/]</td>
+      <td>-73.974620</td>
+      <td>New York</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>ECC</td>
-      <td>Williamsville</td>
+      <td>grid.475783.a</td>
+      <td>Long Term Care Community Coalition</td>
+      <td>US</td>
       <td>United States</td>
-      <td>grid.468887.d</td>
-      <td>42.960820</td>
-      <td>[https://www.ecc.edu/]</td>
-      <td>-78.721660</td>
-      <td>Erie Community College</td>
+      <td>[Other]</td>
+      <td>LTCCC</td>
       <td>New York</td>
-      <td>[Education]</td>
+      <td>40.751163</td>
+      <td>[http://www.ltccc.org/]</td>
+      <td>-73.992470</td>
+      <td>New York</td>
     </tr>
     <tr>
       <th>7</th>
+      <td>grid.429257.f</td>
+      <td>Korean Community Services of Metropolitan New ...</td>
+      <td>US</td>
+      <td>United States</td>
+      <td>[Nonprofit]</td>
       <td>KCS</td>
       <td>New York</td>
-      <td>United States</td>
-      <td>grid.429257.f</td>
       <td>40.770954</td>
       <td>[https://www.kcsny.org/]</td>
       <td>-73.786670</td>
-      <td>Korean Community Services of Metropolitan New ...</td>
       <td>New York</td>
-      <td>[Nonprofit]</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>funder.196228</td>
+      <td>Community Health Foundation of Western and Cen...</td>
+      <td>NaN</td>
+      <td>United States</td>
+      <td>NaN</td>
+      <td>Community Health Foundation of Western and Centra</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
   </tbody>
 </table>
@@ -1840,7 +1802,7 @@ Time: 0.56s
 </div>
 <div class="section" id="Fielded-search">
 <h3>Fielded search<a class="headerlink" href="#Fielded-search" title="Permalink to this headline">¶</a></h3>
-<p>We can easily look up an organization using its grid ID, eg <a class="reference external" href="https://grid.ac/institutes/grid.468887.d">grid.468887.d</a>.</p>
+<p>We can easily look up an organization using its ID, e.g.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
@@ -1858,10 +1820,10 @@ return organizations[all]
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Returned Errors: 1
-Time: 0.47s
-1 QueryError found
+Time: 5.84s
+Query Error
 Semantic errors found:
-        Field / Fieldset &#39;all&#39; is not present in Source &#39;organizations&#39;. Available fields: acronym,city_name,cnrs_ids,country_name,dimensions_url,established,external_ids_fundref,hesa_ids,id,isni_ids,latitude,linkout,longitude,name,nuts_level1_code,nuts_level1_name,nuts_level2_code,nuts_level2_name,nuts_level3_code,nuts_level3_name,organization_child_ids,organization_parent_ids,organization_related_ids,orgref_ids,redirect,ror_ids,state_name,status,types,ucas_ids,ukprn_ids,wikidata_ids,wikipedia_url and available fieldsets: basics,nuts
+        Field / Fieldset &#39;all&#39; is not present in Source &#39;organizations&#39;. Available fields: acronym,city_name,cnrs_ids,country_code,country_name,dimensions_url,established,external_ids_fundref,hesa_ids,id,isni_ids,latitude,linkout,longitude,name,nuts_level1_code,nuts_level1_name,nuts_level2_code,nuts_level2_name,nuts_level3_code,nuts_level3_name,organization_child_ids,organization_parent_ids,organization_related_ids,orgref_ids,redirect,ror_ids,score,state_name,status,types,ucas_ids,ukprn_ids,wikidata_ids,wikipedia_url and available fieldsets: basics,nuts
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -1881,8 +1843,8 @@ return organizations limit 10
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Organizations: 10 (total = 80)
-Time: 0.60s
+Returned Organizations: 10 (total = 93)
+Time: 0.64s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1908,148 +1870,159 @@ Time: 0.60s
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>city_name</th>
-      <th>country_name</th>
       <th>id</th>
+      <th>name</th>
+      <th>country_code</th>
+      <th>country_name</th>
+      <th>types</th>
+      <th>city_name</th>
+      <th>state_name</th>
       <th>latitude</th>
       <th>linkout</th>
       <th>longitude</th>
-      <th>name</th>
-      <th>state_name</th>
-      <th>types</th>
       <th>acronym</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>New York</td>
+      <td>grid.798343.2</td>
+      <td>Research Foundation of University of New York</td>
+      <td>US</td>
       <td>United States</td>
-      <td>grid.511090.c</td>
-      <td>40.755230</td>
-      <td>[https://www.journalism.cuny.edu/]</td>
-      <td>-73.988830</td>
-      <td>Craig Newmark Graduate School of Journalism at...</td>
-      <td>New York</td>
       <td>[Education]</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>New York</td>
+      <td>grid.795276.8</td>
+      <td>New York University Medical Center</td>
+      <td>US</td>
       <td>United States</td>
-      <td>grid.510787.c</td>
-      <td>40.761470</td>
-      <td>[https://cmsny.org/]</td>
-      <td>-73.965450</td>
-      <td>Center for Migration Studies of New York</td>
-      <td>New York</td>
       <td>[Education]</td>
-      <td>CMS</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Alfred</td>
-      <td>United States</td>
-      <td>grid.507867.b</td>
-      <td>42.253372</td>
-      <td>[https://www.alfred.edu/academics/colleges-sch...</td>
-      <td>-77.787575</td>
-      <td>New York State College of Ceramics</td>
       <td>New York</td>
-      <td>[Education]</td>
-      <td>NYSCC</td>
-    </tr>
-    <tr>
-      <th>3</th>
       <td>New York</td>
-      <td>United States</td>
-      <td>grid.507863.f</td>
-      <td>42.448510</td>
-      <td>[https://www.ilr.cornell.edu/]</td>
-      <td>-76.478620</td>
-      <td>New York State School of Industrial and Labor ...</td>
-      <td>New York</td>
-      <td>[Education]</td>
-      <td>ILR</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Utica</td>
-      <td>United States</td>
-      <td>grid.507861.d</td>
-      <td>43.076850</td>
-      <td>[https://www.mvcc.edu/]</td>
-      <td>-75.220120</td>
-      <td>Mohawk Valley Community College</td>
-      <td>New York</td>
-      <td>[Education]</td>
-      <td>MVCC</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>New York</td>
-      <td>United States</td>
-      <td>grid.507860.c</td>
-      <td>42.448290</td>
-      <td>[https://cals.cornell.edu/#]</td>
-      <td>-76.479390</td>
-      <td>New York State College of Agriculture &amp; Life S...</td>
-      <td>New York</td>
-      <td>[Education]</td>
-      <td>CALS</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>New York</td>
-      <td>United States</td>
-      <td>grid.507859.6</td>
-      <td>42.447483</td>
-      <td>[https://www.vet.cornell.edu/]</td>
-      <td>-76.464905</td>
-      <td>New York State College of Veterinary Medicine</td>
-      <td>New York</td>
-      <td>[Education]</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>NaN</td>
     </tr>
     <tr>
-      <th>7</th>
-      <td>Ithaca</td>
-      <td>United States</td>
-      <td>grid.507858.7</td>
-      <td>42.449740</td>
-      <td>[https://www.human.cornell.edu/]</td>
-      <td>-76.479065</td>
-      <td>New York State University College of Human Eco...</td>
-      <td>New York</td>
+      <th>2</th>
+      <td>grid.512545.2</td>
+      <td>State University of New York, Korea</td>
+      <td>KR</td>
+      <td>South Korea</td>
       <td>[Education]</td>
-      <td>HumEc</td>
+      <td>Incheon</td>
+      <td>NaN</td>
+      <td>37.376694</td>
+      <td>[http://www.sunykorea.ac.kr/]</td>
+      <td>126.667170</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>grid.511090.c</td>
+      <td>Craig Newmark Graduate School of Journalism at...</td>
+      <td>US</td>
+      <td>United States</td>
+      <td>[Education]</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>40.755230</td>
+      <td>[https://www.journalism.cuny.edu/]</td>
+      <td>-73.988830</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>grid.510787.c</td>
+      <td>Center for Migration Studies of New York</td>
+      <td>US</td>
+      <td>United States</td>
+      <td>[Education]</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>40.761470</td>
+      <td>[https://cmsny.org/]</td>
+      <td>-73.965450</td>
+      <td>CMS</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>grid.507867.b</td>
+      <td>New York State College of Ceramics</td>
+      <td>US</td>
+      <td>United States</td>
+      <td>[Education]</td>
+      <td>Alfred</td>
+      <td>New York</td>
+      <td>42.253372</td>
+      <td>[https://www.alfred.edu/academics/colleges-sch...</td>
+      <td>-77.787575</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>grid.507863.f</td>
+      <td>New York State School of Industrial and Labor ...</td>
+      <td>US</td>
+      <td>United States</td>
+      <td>[Education]</td>
+      <td>Ithaca</td>
+      <td>New York</td>
+      <td>42.439213</td>
+      <td>[https://www.ilr.cornell.edu/]</td>
+      <td>-76.493380</td>
+      <td>ILR</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>grid.507861.d</td>
+      <td>Mohawk Valley Community College</td>
+      <td>US</td>
+      <td>United States</td>
+      <td>[Education]</td>
+      <td>Utica</td>
+      <td>New York</td>
+      <td>43.076850</td>
+      <td>[https://www.mvcc.edu/]</td>
+      <td>-75.220120</td>
+      <td>MVCC</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>New York</td>
+      <td>grid.507860.c</td>
+      <td>New York State College of Agriculture and Life...</td>
+      <td>US</td>
       <td>United States</td>
-      <td>grid.493073.a</td>
-      <td>40.752880</td>
-      <td>[http://website.aub.edu.lb/nyo/Pages/index.aspx]</td>
-      <td>-73.969040</td>
-      <td>American University of Beirut New York Office</td>
-      <td>New York</td>
       <td>[Education]</td>
-      <td>AUB</td>
+      <td>Ithaca</td>
+      <td>New York</td>
+      <td>42.448290</td>
+      <td>[https://cals.cornell.edu/#]</td>
+      <td>-76.479390</td>
+      <td>CALS</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>New York</td>
+      <td>grid.507859.6</td>
+      <td>New York State College of Veterinary Medicine ...</td>
+      <td>US</td>
       <td>United States</td>
-      <td>grid.487836.6</td>
-      <td>40.740430</td>
-      <td>[https://www.csnyc.org/]</td>
-      <td>-73.995630</td>
-      <td>New York City Foundation for Computer Science ...</td>
-      <td>New York</td>
       <td>[Education]</td>
-      <td>CSNYC</td>
+      <td>Ithaca</td>
+      <td>New York</td>
+      <td>42.447483</td>
+      <td>[https://www.vet.cornell.edu/]</td>
+      <td>-76.464905</td>
+      <td>NaN</td>
     </tr>
   </tbody>
 </table>
@@ -2073,8 +2046,8 @@ return organizations limit 10
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Organizations: 8 (total = 8)
-Time: 0.58s
+Returned Organizations: 9 (total = 9)
+Time: 5.97s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -2100,13 +2073,14 @@ Time: 0.58s
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>city_name</th>
-      <th>country_name</th>
       <th>id</th>
+      <th>name</th>
+      <th>city_name</th>
+      <th>country_code</th>
+      <th>country_name</th>
       <th>latitude</th>
       <th>linkout</th>
       <th>longitude</th>
-      <th>name</th>
       <th>types</th>
       <th>acronym</th>
       <th>state_name</th>
@@ -2115,104 +2089,126 @@ Time: 0.58s
   <tbody>
     <tr>
       <th>0</th>
-      <td>Paris</td>
-      <td>France</td>
-      <td>grid.479986.d</td>
-      <td>48.869614</td>
-      <td>[http://www.nyu.edu/paris.html]</td>
-      <td>2.346863</td>
-      <td>New York University Paris</td>
+      <td>grid.512545.2</td>
+      <td>State University of New York, Korea</td>
+      <td>Incheon</td>
+      <td>KR</td>
+      <td>South Korea</td>
+      <td>37.376694</td>
+      <td>[http://www.sunykorea.ac.kr/]</td>
+      <td>126.667170</td>
       <td>[Education]</td>
       <td>NaN</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Florence</td>
-      <td>Italy</td>
+      <td>grid.479986.d</td>
+      <td>New York University Paris</td>
+      <td>Paris</td>
+      <td>FR</td>
+      <td>France</td>
+      <td>48.869614</td>
+      <td>[http://www.nyu.edu/paris.html]</td>
+      <td>2.346863</td>
+      <td>[Education]</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
       <td>grid.473731.5</td>
+      <td>New York University Florence</td>
+      <td>Florence</td>
+      <td>IT</td>
+      <td>Italy</td>
       <td>43.795910</td>
       <td>[http://www.nyu.edu/florence.html]</td>
       <td>11.265850</td>
-      <td>New York University Florence</td>
       <td>[Education]</td>
       <td>NYU</td>
       <td>NaN</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>Vancouver</td>
-      <td>Canada</td>
+      <th>3</th>
       <td>grid.473728.d</td>
+      <td>New York Institute of Technology</td>
+      <td>Vancouver</td>
+      <td>CA</td>
+      <td>Canada</td>
       <td>49.284374</td>
       <td>[http://nyit.edu/vancouver]</td>
       <td>-123.116480</td>
-      <td>New York Institute of Technology</td>
       <td>[Education]</td>
       <td>NYIT</td>
       <td>British Columbia</td>
     </tr>
     <tr>
-      <th>3</th>
-      <td>Prague</td>
-      <td>Czechia</td>
+      <th>4</th>
       <td>grid.449989.1</td>
+      <td>University of New York in Prague</td>
+      <td>Prague</td>
+      <td>CZ</td>
+      <td>Czechia</td>
       <td>50.074043</td>
       <td>[https://www.unyp.cz/]</td>
       <td>14.433994</td>
-      <td>University of New York in Prague</td>
       <td>[Education]</td>
       <td>UNYP</td>
       <td>NaN</td>
     </tr>
     <tr>
-      <th>4</th>
-      <td>Shanghai</td>
-      <td>China</td>
+      <th>5</th>
       <td>grid.449457.f</td>
+      <td>New York University Shanghai</td>
+      <td>Shanghai</td>
+      <td>CN</td>
+      <td>China</td>
       <td>31.225506</td>
       <td>[https://shanghai.nyu.edu/]</td>
       <td>121.533510</td>
-      <td>New York University Shanghai</td>
       <td>[Education]</td>
       <td>NaN</td>
       <td>NaN</td>
     </tr>
     <tr>
-      <th>5</th>
-      <td>Tirana</td>
-      <td>Albania</td>
+      <th>6</th>
       <td>grid.444973.9</td>
+      <td>University of New York Tirana</td>
+      <td>Tirana</td>
+      <td>AL</td>
+      <td>Albania</td>
       <td>41.311060</td>
       <td>[http://unyt.edu.al/]</td>
       <td>19.801466</td>
-      <td>University of New York Tirana</td>
       <td>[Education]</td>
       <td>UNYT</td>
       <td>NaN</td>
     </tr>
     <tr>
-      <th>6</th>
-      <td>Abu Dhabi</td>
-      <td>United Arab Emirates</td>
+      <th>7</th>
       <td>grid.440573.1</td>
+      <td>New York University Abu Dhabi</td>
+      <td>Abu Dhabi</td>
+      <td>AE</td>
+      <td>United Arab Emirates</td>
       <td>24.485000</td>
       <td>[https://nyuad.nyu.edu/]</td>
       <td>54.353000</td>
-      <td>New York University Abu Dhabi</td>
       <td>[Education]</td>
       <td>NaN</td>
       <td>NaN</td>
     </tr>
     <tr>
-      <th>7</th>
-      <td>Seoul</td>
-      <td>South Korea</td>
+      <th>8</th>
       <td>grid.410685.e</td>
+      <td>SUNY Korea</td>
+      <td>Seoul</td>
+      <td>KR</td>
+      <td>South Korea</td>
       <td>37.377018</td>
       <td>[http://www.sunykorea.ac.kr/]</td>
       <td>126.666770</td>
-      <td>SUNY Korea</td>
       <td>[Education]</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -2240,8 +2236,8 @@ return country_name
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Returned Country_name: 10
-Time: 0.52s
+Returned Country_name: 11
+Time: 0.50s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -2267,60 +2263,65 @@ Time: 0.52s
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>count</th>
       <th>id</th>
+      <th>count</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>238</td>
       <td>United States</td>
+      <td>341</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>1</td>
-      <td>Albania</td>
+      <td>South Korea</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>2</th>
+      <td>Albania</td>
       <td>1</td>
-      <td>Canada</td>
     </tr>
     <tr>
       <th>3</th>
+      <td>Canada</td>
       <td>1</td>
-      <td>China</td>
     </tr>
     <tr>
       <th>4</th>
+      <td>China</td>
       <td>1</td>
-      <td>Czechia</td>
     </tr>
     <tr>
       <th>5</th>
+      <td>Czechia</td>
       <td>1</td>
-      <td>France</td>
     </tr>
     <tr>
       <th>6</th>
+      <td>France</td>
       <td>1</td>
-      <td>Italy</td>
     </tr>
     <tr>
       <th>7</th>
+      <td>Italy</td>
       <td>1</td>
-      <td>South Korea</td>
     </tr>
     <tr>
       <th>8</th>
+      <td>Panama</td>
       <td>1</td>
-      <td>United Arab Emirates</td>
     </tr>
     <tr>
       <th>9</th>
+      <td>United Arab Emirates</td>
       <td>1</td>
+    </tr>
+    <tr>
+      <th>10</th>
       <td>United Kingdom</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
@@ -2344,7 +2345,7 @@ return types
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Returned Types: 8
-Time: 0.61s
+Time: 5.47s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -2370,50 +2371,50 @@ Time: 0.61s
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>count</th>
       <th>id</th>
+      <th>count</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>72</td>
       <td>Education</td>
+      <td>84</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>59</td>
       <td>Nonprofit</td>
+      <td>75</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>39</td>
-      <td>Government</td>
+      <td>Company</td>
+      <td>57</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>29</td>
-      <td>Other</td>
+      <td>Government</td>
+      <td>46</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>22</td>
-      <td>Healthcare</td>
+      <td>Other</td>
+      <td>34</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>9</td>
-      <td>Archive</td>
+      <td>Healthcare</td>
+      <td>28</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>5</td>
-      <td>Facility</td>
+      <td>Archive</td>
+      <td>9</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>3</td>
-      <td>Company</td>
+      <td>Facility</td>
+      <td>7</td>
     </tr>
   </tbody>
 </table>
@@ -2422,8 +2423,8 @@ Time: 0.61s
 </div>
 <div class="section" id="Returning-organizations-facets-from-publications">
 <h3>Returning organizations facets from publications<a class="headerlink" href="#Returning-organizations-facets-from-publications" title="Permalink to this headline">¶</a></h3>
-<p>The GRID organization data is used thoughout Dimensions.</p>
-<p>So, for example, one can do a publications search and return organizations as a facet. This allows to take advantage of GRID metadata - e.g. latiture and longitude - in order to quickly build a geograpical visualization.</p>
+<p>Organization data is used thoughout Dimensions.</p>
+<p>So, for example, one can do a publications search and return organizations as a facet. This allows to take advantage of organization metadata - e.g. latiture and longitude - in order to quickly build a geograpical visualization.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
@@ -2445,7 +2446,7 @@ Time: 0.61s
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Returned Research_orgs: 50
-Time: 1.26s
+Time: 1.16s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -2471,14 +2472,15 @@ Time: 1.26s
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>id</th>
+      <th>name</th>
       <th>city_name</th>
       <th>count</th>
+      <th>country_code</th>
       <th>country_name</th>
-      <th>id</th>
       <th>latitude</th>
       <th>linkout</th>
       <th>longitude</th>
-      <th>name</th>
       <th>state_name</th>
       <th>types</th>
       <th>acronym</th>
@@ -2487,70 +2489,75 @@ Time: 1.26s
   <tbody>
     <tr>
       <th>0</th>
-      <td>Cambridge</td>
-      <td>9846</td>
-      <td>United States</td>
       <td>grid.38142.3c</td>
+      <td>Harvard University</td>
+      <td>Cambridge</td>
+      <td>33545</td>
+      <td>US</td>
+      <td>United States</td>
       <td>42.377052</td>
       <td>[http://www.harvard.edu/]</td>
       <td>-71.116650</td>
-      <td>Harvard University</td>
       <td>Massachusetts</td>
       <td>[Education]</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Oxford</td>
-      <td>5900</td>
-      <td>United Kingdom</td>
-      <td>grid.4991.5</td>
-      <td>51.753437</td>
-      <td>[http://www.ox.ac.uk/]</td>
-      <td>-1.254010</td>
-      <td>University of Oxford</td>
-      <td>Oxfordshire</td>
-      <td>[Education]</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Toronto</td>
-      <td>5519</td>
-      <td>Canada</td>
       <td>grid.17063.33</td>
+      <td>University of Toronto</td>
+      <td>Toronto</td>
+      <td>21731</td>
+      <td>CA</td>
+      <td>Canada</td>
       <td>43.661667</td>
       <td>[http://www.utoronto.ca/]</td>
       <td>-79.395000</td>
-      <td>University of Toronto</td>
       <td>Ontario</td>
       <td>[Education]</td>
       <td>NaN</td>
     </tr>
     <tr>
-      <th>3</th>
-      <td>Baltimore</td>
-      <td>5289</td>
-      <td>United States</td>
+      <th>2</th>
       <td>grid.21107.35</td>
+      <td>Johns Hopkins University</td>
+      <td>Baltimore</td>
+      <td>19419</td>
+      <td>US</td>
+      <td>United States</td>
       <td>39.328888</td>
       <td>[https://www.jhu.edu/]</td>
       <td>-76.620280</td>
-      <td>Johns Hopkins University</td>
       <td>Maryland</td>
       <td>[Education]</td>
       <td>JHU</td>
     </tr>
     <tr>
-      <th>4</th>
-      <td>London</td>
-      <td>5232</td>
+      <th>3</th>
+      <td>grid.4991.5</td>
+      <td>University of Oxford</td>
+      <td>Oxford</td>
+      <td>19345</td>
+      <td>GB</td>
       <td>United Kingdom</td>
+      <td>51.753437</td>
+      <td>[http://www.ox.ac.uk/]</td>
+      <td>-1.254010</td>
+      <td>Oxfordshire</td>
+      <td>[Education]</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
       <td>grid.83440.3b</td>
+      <td>University College London</td>
+      <td>London</td>
+      <td>19047</td>
+      <td>GB</td>
+      <td>United Kingdom</td>
       <td>51.524470</td>
       <td>[http://www.ucl.ac.uk/]</td>
       <td>-0.133982</td>
-      <td>University College London</td>
       <td>NaN</td>
       <td>[Education]</td>
       <td>UCL</td>
@@ -2579,9 +2586,10 @@ Time: 1.26s
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div>                            <div id="bb12cb33-21f7-45ff-843d-754c7b5cb618" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("bb12cb33-21f7-45ff-843d-754c7b5cb618")) {                    Plotly.newPlot(                        "bb12cb33-21f7-45ff-843d-754c7b5cb618",                        [{"customdata":[["Cambridge","grid.38142.3c",["Education"]],["Baltimore","grid.21107.35",["Education"]],["Stanford","grid.168010.e",["Education"]],["Seattle","grid.34477.33",["Education"]],["Philadelphia","grid.25879.31",["Education"]],["Ann Arbor","grid.214458.e",["Education"]],["San Francisco","grid.266102.1",["Education"]],["New Haven","grid.47100.32",["Education"]],["Boston","grid.32224.35",["Healthcare"]],["New York","grid.21729.3f",["Education"]],["Los Angeles","grid.19006.3e",["Education"]],["Ithaca","grid.5386.8",["Education"]],["Atlanta","grid.189967.8",["Education"]],["Boston","grid.62560.37",["Healthcare"]],["New York","grid.59734.3c",["Education"]],["San Diego","grid.266100.3",["Education"]],["New York","grid.137628.9",["Education"]],["Rochester","grid.66875.3a",["Healthcare"]],["Durham","grid.26009.3d",["Education"]],["Chapel Hill","grid.10698.36",["Education"]],["Gainesville","grid.15276.37",["Education"]],["Evanston","grid.16753.36",["Education"]],["Pittsburgh","grid.21925.3d",["Education"]],["Minneapolis","grid.17635.36",["Education"]],["Boston","grid.189504.1",["Education"]]],"geo":"geo","hovertemplate":"<b>%{hovertext}</b><br><br>country_name=United States<br>count=%{marker.size}<br>latitude=%{lat}<br>longitude=%{lon}<br>city_name=%{customdata[0]}<br>id=%{customdata[1]}<br>types=%{customdata[2]}<extra></extra>","hovertext":["Harvard University","Johns Hopkins University","Stanford University","University of Washington","University of Pennsylvania","University of Michigan","University of California, San Francisco","Yale University","Massachusetts General Hospital","Columbia University","University of California, Los Angeles","Cornell University","Emory University","Brigham and Women's Hospital","Icahn School of Medicine at Mount Sinai","University of California, San Diego","New York University","Mayo Clinic","Duke University","University of North Carolina at Chapel Hill","University of Florida","Northwestern University","University of Pittsburgh","University of Minnesota","Boston University"],"lat":[42.377052,39.328888,37.43,47.655537,39.952457,42.278305,37.7628,41.302094,42.362804,40.8076,34.072224,42.44851,33.792786,42.3356,40.789085,32.881,40.73,44.02407,36.003147,35.905163,29.643902,42.05485,40.443504,44.974194,42.3496],"legendgroup":"United States","lon":[-71.11665,-76.62028,-122.17,-122.30353,-75.19322,-83.73822,-122.45767,-72.93066,-71.068634,-73.96239,-118.4441,-76.47862,-84.32401,-71.106415,-73.95311,-117.238,-73.995,-92.46631,-78.926895,-79.04694,-82.35495,-87.67394,-79.961525,-93.22776,-71.0997],"marker":{"color":"#636efa","size":[9846,5289,4157,4125,3923,3781,3644,3629,3554,3522,3038,2985,2966,2925,2736,2614,2422,2380,2360,2173,2141,2139,2120,2027,2019],"sizemode":"area","sizeref":24.615,"symbol":"circle"},"mode":"markers","name":"United States","showlegend":true,"type":"scattergeo"},{"customdata":[["Oxford","grid.4991.5",["Education"]],["London","grid.83440.3b",["Education"]],["London","grid.7445.2",["Education"]],["London","grid.13097.3c",["Education"]],["Cambridge","grid.5335.0",["Education"]],["London","grid.8991.9",["Education"]],["Edinburgh","grid.4305.2",["Education"]],["Manchester","grid.5379.8",["Education"]]],"geo":"geo","hovertemplate":"<b>%{hovertext}</b><br><br>country_name=United Kingdom<br>count=%{marker.size}<br>latitude=%{lat}<br>longitude=%{lon}<br>city_name=%{customdata[0]}<br>id=%{customdata[1]}<br>types=%{customdata[2]}<extra></extra>","hovertext":["University of Oxford","University College London","Imperial College London","King's College London","University of Cambridge","London School of Hygiene & Tropical Medicine","University of Edinburgh","University of Manchester"],"lat":[51.753437,51.52447,51.4986,51.511417,52.204453,51.5209,55.944897,53.46705],"legendgroup":"United Kingdom","lon":[-1.2540097,-0.1339817,-0.175478,-0.116727,0.114908,-0.1307,-3.189284,-2.233884],"marker":{"color":"#EF553B","size":[5900,5232,4402,3615,3056,2692,2371,2270],"sizemode":"area","sizeref":24.615,"symbol":"circle"},"mode":"markers","name":"United Kingdom","showlegend":true,"type":"scattergeo"},{"customdata":[["Toronto","grid.17063.33",["Education"]],["Vancouver","grid.17091.3e",["Education"]],["Montreal","grid.14709.3b",["Education"]]],"geo":"geo","hovertemplate":"<b>%{hovertext}</b><br><br>country_name=Canada<br>count=%{marker.size}<br>latitude=%{lat}<br>longitude=%{lon}<br>city_name=%{customdata[0]}<br>id=%{customdata[1]}<br>types=%{customdata[2]}<extra></extra>","hovertext":["University of Toronto","University of British Columbia","McGill University"],"lat":[43.661667,49.260674,45.504166],"legendgroup":"Canada","lon":[-79.395,-123.24608,-73.57472],"marker":{"color":"#00cc96","size":[5519,3069,2098],"sizemode":"area","sizeref":24.615,"symbol":"circle"},"mode":"markers","name":"Canada","showlegend":true,"type":"scattergeo"},{"customdata":[["S\u00e3o Paulo","grid.11899.38",["Education"]]],"geo":"geo","hovertemplate":"<b>%{hovertext}</b><br><br>country_name=Brazil<br>count=%{marker.size}<br>latitude=%{lat}<br>longitude=%{lon}<br>city_name=%{customdata[0]}<br>id=%{customdata[1]}<br>types=%{customdata[2]}<extra></extra>","hovertext":["University of S\u00e3o Paulo"],"lat":[-23.563051],"legendgroup":"Brazil","lon":[-46.730103],"marker":{"color":"#ab63fa","size":[3727],"sizemode":"area","sizeref":24.615,"symbol":"circle"},"mode":"markers","name":"Brazil","showlegend":true,"type":"scattergeo"},{"customdata":[["Melbourne","grid.1008.9",["Education"]],["Sydney","grid.1013.3",["Education"]],["Melbourne","grid.1002.3",["Education"]],["Sydney","grid.1005.4",["Education"]],["Brisbane","grid.1003.2",["Education"]]],"geo":"geo","hovertemplate":"<b>%{hovertext}</b><br><br>country_name=Australia<br>count=%{marker.size}<br>latitude=%{lat}<br>longitude=%{lon}<br>city_name=%{customdata[0]}<br>id=%{customdata[1]}<br>types=%{customdata[2]}<extra></extra>","hovertext":["University of Melbourne","University of Sydney","Monash University","UNSW Sydney","University of Queensland"],"lat":[-37.797115,-33.88858,-37.9083,-33.917732,-27.495964],"legendgroup":"Australia","lon":[144.95998,151.1873,145.138,151.23096,153.00963],"marker":{"color":"#FFA15A","size":[3275,2985,2889,2489,2172],"sizemode":"area","sizeref":24.615,"symbol":"circle"},"mode":"markers","name":"Australia","showlegend":true,"type":"scattergeo"},{"customdata":[["Wuhan","grid.33199.31",["Education"]],["Hong Kong","grid.194645.b",["Education"]],["Hangzhou","grid.13402.34",["Education"]]],"geo":"geo","hovertemplate":"<b>%{hovertext}</b><br><br>country_name=China<br>count=%{marker.size}<br>latitude=%{lat}<br>longitude=%{lon}<br>city_name=%{customdata[0]}<br>id=%{customdata[1]}<br>types=%{customdata[2]}<extra></extra>","hovertext":["Huazhong University of Science and Technology","University of Hong Kong","Zhejiang University"],"lat":[30.508183,22.283287,30.263878],"legendgroup":"China","lon":[114.41474,114.13708,120.12342],"marker":{"color":"#19d3f3","size":[3058,2227,2095],"sizemode":"area","sizeref":24.615,"symbol":"circle"},"mode":"markers","name":"China","showlegend":true,"type":"scattergeo"},{"customdata":[["Milan","grid.4708.b",["Education"]],["Rome","grid.7841.a",["Education"]]],"geo":"geo","hovertemplate":"<b>%{hovertext}</b><br><br>country_name=Italy<br>count=%{marker.size}<br>latitude=%{lat}<br>longitude=%{lon}<br>city_name=%{customdata[0]}<br>id=%{customdata[1]}<br>types=%{customdata[2]}<extra></extra>","hovertext":["University of Milan","Sapienza University of Rome"],"lat":[45.46099,41.90384],"legendgroup":"Italy","lon":[9.194592,12.514438],"marker":{"color":"#FF6692","size":[2749,2709],"sizemode":"area","sizeref":24.615,"symbol":"circle"},"mode":"markers","name":"Italy","showlegend":true,"type":"scattergeo"},{"customdata":[["New Delhi","grid.413618.9",["Education"]]],"geo":"geo","hovertemplate":"<b>%{hovertext}</b><br><br>country_name=India<br>count=%{marker.size}<br>latitude=%{lat}<br>longitude=%{lon}<br>city_name=%{customdata[0]}<br>id=%{customdata[1]}<br>types=%{customdata[2]}<extra></extra>","hovertext":["All India Institute of Medical Sciences"],"lat":[28.585018],"legendgroup":"India","lon":[77.20922],"marker":{"color":"#B6E880","size":[2463],"sizemode":"area","sizeref":24.615,"symbol":"circle"},"mode":"markers","name":"India","showlegend":true,"type":"scattergeo"},{"customdata":[["Singapore","grid.4280.e",["Education"]]],"geo":"geo","hovertemplate":"<b>%{hovertext}</b><br><br>country_name=Singapore<br>count=%{marker.size}<br>latitude=%{lat}<br>longitude=%{lon}<br>city_name=%{customdata[0]}<br>id=%{customdata[1]}<br>types=%{customdata[2]}<extra></extra>","hovertext":["National University of Singapore"],"lat":[1.295556],"legendgroup":"Singapore","lon":[103.776665],"marker":{"color":"#FF97FF","size":[2401],"sizemode":"area","sizeref":24.615,"symbol":"circle"},"mode":"markers","name":"Singapore","showlegend":true,"type":"scattergeo"},{"customdata":[["Tehran","grid.411705.6",["Education"]]],"geo":"geo","hovertemplate":"<b>%{hovertext}</b><br><br>country_name=Iran<br>count=%{marker.size}<br>latitude=%{lat}<br>longitude=%{lon}<br>city_name=%{customdata[0]}<br>id=%{customdata[1]}<br>types=%{customdata[2]}<extra></extra>","hovertext":["Tehran University of Medical Sciences"],"lat":[35.748272],"legendgroup":"Iran","lon":[51.38122],"marker":{"color":"#FECB52","size":[2063],"sizemode":"area","sizeref":24.615,"symbol":"circle"},"mode":"markers","name":"Iran","showlegend":true,"type":"scattergeo"}],                        {"template":{"data":{"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"heatmapgl":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmapgl"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermapbox"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"#E5ECF6","showlakes":true,"showland":true,"subunitcolor":"white"},"hoverlabel":{"align":"left"},"hovermode":"closest","mapbox":{"style":"light"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"title":{"x":0.05},"xaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","zerolinewidth":2}}},"geo":{"domain":{"x":[0.0,1.0],"y":[0.0,1.0]},"projection":{"type":"natural earth"},"center":{}},"legend":{"title":{"text":"country_name"},"tracegroupgap":0,"itemsizing":"constant"},"margin":{"t":60}},                        {"responsive": true}                    ).then(function(){
+<div>            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script type="text/javascript">if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-3.1.0.min.js" integrity="sha256-Ei4740bWZhaUTQuD6q9yQlgVCMPBz6CZWhevDYPv93A=" crossorigin="anonymous"></script>                <div id="792569b4-4148-47da-b82e-50edea6f8edc" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("792569b4-4148-47da-b82e-50edea6f8edc")) {                    Plotly.newPlot(                        "792569b4-4148-47da-b82e-50edea6f8edc",                        [{"customdata":[["Cambridge","grid.38142.3c",["Education"]],["Baltimore","grid.21107.35",["Education"]],["Seattle","grid.34477.33",["Education"]],["Stanford","grid.168010.e",["Education"]],["Ann Arbor","grid.214458.e",["Education"]],["Philadelphia","grid.25879.31",["Education"]],["New Haven","grid.47100.32",["Education"]],["San Francisco","grid.266102.1",["Education"]],["Los Angeles","grid.19006.3e",["Education"]],["Boston","grid.32224.35",["Healthcare"]],["Chapel Hill","grid.10698.36",["Education"]],["Atlanta","grid.189967.8",["Education"]],["New York","grid.137628.9",["Education"]],["New York","grid.21729.3f",["Education"]],["Boston","grid.62560.37",["Healthcare"]],["San Diego","grid.266100.3",["Education"]],["Durham","grid.26009.3d",["Education"]],["Rochester","grid.66875.3a",["Healthcare"]],["Minneapolis","grid.17635.36",["Education"]],["Pittsburgh","grid.21925.3d",["Education"]],["Gainesville","grid.15276.37",["Education"]],["Evanston","grid.16753.36",["Education"]],["New York","grid.59734.3c",["Education"]],["Ithaca","grid.5386.8",["Education"]],["St Louis","grid.4367.6",["Education"]],["Boston","grid.189504.1",["Education"]]],"geo":"geo","hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003ecountry_name=United States\u003cbr\u003ecount=%{marker.size}\u003cbr\u003elatitude=%{lat}\u003cbr\u003elongitude=%{lon}\u003cbr\u003ecity_name=%{customdata[0]}\u003cbr\u003eid=%{customdata[1]}\u003cbr\u003etypes=%{customdata[2]}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Harvard University","Johns Hopkins University","University of Washington","Stanford University","University of Michigan-Ann Arbor","University of Pennsylvania","Yale University","University of California, San Francisco","University of California, Los Angeles","Massachusetts General Hospital","University of North Carolina at Chapel Hill","Emory University","New York University","Columbia University","Brigham and Womens Hospital Inc","University of California, San Diego","Duke University","Mayo Clinic","University of Minnesota Twin Cities","University of Pittsburgh","University of Florida","Northwestern University","Icahn School of Medicine at Mount Sinai","Cornell University","Washington University in St. Louis","Boston University"],"lat":{"dtype":"f8","bdata":"GXJsPUMwRUD\u002fBYIAGapDQLMo7KLo00dA16NwPQq3QkAaqIx\u002fnyNFQFPsaBzq+UNAriglBKumREDEsS5uo+FCQCkF3V7SCEFAAAAAAAAA+H9ORpVh3PNBQANd+wJ65UBAPQrXo3BdREDzH9JvX2dEQAAAAAAAAPh\u002f+yMMA5ZwQEBOCvMeZwBCQEloy7kUA0ZAzvqUY7J8RkCV0jO9xDhEQDnU78LWpD1AwhcmUwUHRUAAAAAAAAD4f+j2ksZoOUVALINqgxNTQ0A\u002fV1uxvyxFQA=="},"legendgroup":"United States","lon":{"dtype":"f8","bdata":"BcWPMXfHUcA5l+KqsidTwLbWFwltk17AexSuR+GKXsAzUBn\u002fPu9UwLg7a7ddzFLAgez17o87UsAPlxx3Sp1ewIrNx7WhnF3AAAAAAAAA+H\u002f0N6EQAcNTwO1kcJS8FFXASOF6FK5\u002fUsDW\u002fznMl31SwAAAAAAAAPh\u002fpn1zf\u002fVOXcDc9Gc\u002fUrtTwA7z5QXYHVfAkdWtnpNOV8BUUiegif1TwMZtNIC3llTA19081SHrVcAAAAAAAAD4f4rNx7WhHlPAi\u002f1l9+STVsBR2ht8YcZRwA=="},"marker":{"color":"#636efa","size":{"dtype":"i4","bdata":"CYMAANtLAAC4PgAAXTsAAEA4AAAcNwAANTQAALAzAABzLQAAySwAAEYrAABmKgAA3ykAAM0oAAAmJgAAviMAAJgjAABrIwAARiMAACAjAADlIQAAdCEAAFghAAAxIQAARB8AAAcfAAA="},"sizemode":"area","sizeref":83.8625,"symbol":"circle"},"mode":"markers","name":"United States","showlegend":true,"type":"scattergeo"},{"customdata":[["Toronto","grid.17063.33",["Education"]],["Vancouver","grid.17091.3e",["Education"]],["Montreal","grid.14709.3b",["Education"]],["Hamilton","grid.25073.33",["Education"]]],"geo":"geo","hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003ecountry_name=Canada\u003cbr\u003ecount=%{marker.size}\u003cbr\u003elatitude=%{lat}\u003cbr\u003elongitude=%{lon}\u003cbr\u003ecity_name=%{customdata[0]}\u003cbr\u003eid=%{customdata[1]}\u003cbr\u003etypes=%{customdata[2]}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["University of Toronto","University of British Columbia","McGill University","McMaster University"],"lat":{"dtype":"f8","bdata":"1esWgbHURUBxdQDEXaFIQKjg8IKIwEZAwf7r3LShRUA="},"legendgroup":"Canada","lon":{"dtype":"f8","bdata":"4XoUrkfZU8DIDFTGv89ewNsWZTbIZFLAxqcAGM\u002f6U8A="},"marker":{"color":"#EF553B","size":{"dtype":"i2","bdata":"41TjMF4hzR8="},"sizemode":"area","sizeref":83.8625,"symbol":"circle"},"mode":"markers","name":"Canada","showlegend":true,"type":"scattergeo"},{"customdata":[["Oxford","grid.4991.5",["Education"]],["London","grid.83440.3b",["Education"]],["London","grid.13097.3c",["Education"]],["London","grid.7445.2",["Education"]],["Cambridge","grid.5335.0",["Education"]],["Manchester","grid.5379.8",["Education"]],["London","grid.8991.9",["Education"]],["Edinburgh","grid.4305.2",["Education"]]],"geo":"geo","hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003ecountry_name=United Kingdom\u003cbr\u003ecount=%{marker.size}\u003cbr\u003elatitude=%{lat}\u003cbr\u003elongitude=%{lon}\u003cbr\u003ecity_name=%{customdata[0]}\u003cbr\u003eid=%{customdata[1]}\u003cbr\u003etypes=%{customdata[2]}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["University of Oxford","University College London","King's College London","Imperial College London","University of Cambridge","University of Manchester","London School of Hygiene & Tropical Medicine","University of Edinburgh"],"lat":{"dtype":"f8","bdata":"VUyln3DgSUDX3TzVIcNJQCnPvBx2wUlAj+TyH9K\u002fSUDYSBKEKxpKQGTMXUvIu0pAQj7o2azCSUBUi4hi8vhLQA=="},"legendgroup":"United Kingdom","lon":{"dtype":"f8","bdata":"S96leWwQ9L8NmeH1TybBv75ojxfS4b2\u002fP3CVJxB2xr8PfAxWnGq9Pxl2GJP+3gHAXynLEMe6wL+eP21Up4MJwA=="},"marker":{"color":"#00cc96","size":{"dtype":"i2","bdata":"kUtnSlk0dDDoKDgj9iKZIQ=="},"sizemode":"area","sizeref":83.8625,"symbol":"circle"},"mode":"markers","name":"United Kingdom","showlegend":true,"type":"scattergeo"},{"customdata":[["S\u00e3o Paulo","grid.11899.38",["Education"]]],"geo":"geo","hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003ecountry_name=Brazil\u003cbr\u003ecount=%{marker.size}\u003cbr\u003elatitude=%{lat}\u003cbr\u003elongitude=%{lon}\u003cbr\u003ecity_name=%{customdata[0]}\u003cbr\u003eid=%{customdata[1]}\u003cbr\u003etypes=%{customdata[2]}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Universidade de S\u00e3o Paulo"],"lat":{"dtype":"f8","bdata":"6Po+HCSQN8A="},"legendgroup":"Brazil","lon":{"dtype":"f8","bdata":"EtvdA3RdR8A="},"marker":{"color":"#ab63fa","size":{"dtype":"i2","bdata":"Bzw="},"sizemode":"area","sizeref":83.8625,"symbol":"circle"},"mode":"markers","name":"Brazil","showlegend":true,"type":"scattergeo"},{"customdata":[["Melbourne","grid.1008.9",["Education"]],["Sydney","grid.1013.3",["Education"]],["Melbourne","grid.1002.3",["Education"]],["Sydney","grid.1005.4",["Education"]],["Brisbane","grid.1003.2",["Education"]]],"geo":"geo","hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003ecountry_name=Australia\u003cbr\u003ecount=%{marker.size}\u003cbr\u003elatitude=%{lat}\u003cbr\u003elongitude=%{lon}\u003cbr\u003ecity_name=%{customdata[0]}\u003cbr\u003eid=%{customdata[1]}\u003cbr\u003etypes=%{customdata[2]}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["University of Melbourne","The University of Sydney","Monash University","UNSW Sydney","University of Queensland"],"lat":{"dtype":"f8","bdata":"VRNE3QfmQsCZ8Ev9vPFAwHh6pSxD9ELAED\u002f\u002fPXj1QMBM\u002fid\u002f9347wA=="},"legendgroup":"Australia","lon":{"dtype":"f8","bdata":"DRr6J7geYkBO0ZFc\u002fuViQCPb+X5qJGJA5dU5BmTnYkDv4ZLjTiBjQA=="},"marker":{"color":"#FFA15A","size":{"dtype":"i2","bdata":"0TmBMmkytim\u002fJQ=="},"sizemode":"area","sizeref":83.8625,"symbol":"circle"},"mode":"markers","name":"Australia","showlegend":true,"type":"scattergeo"},{"customdata":[["Rome","grid.7841.a",["Education"]]],"geo":"geo","hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003ecountry_name=Italy\u003cbr\u003ecount=%{marker.size}\u003cbr\u003elatitude=%{lat}\u003cbr\u003elongitude=%{lon}\u003cbr\u003ecity_name=%{customdata[0]}\u003cbr\u003eid=%{customdata[1]}\u003cbr\u003etypes=%{customdata[2]}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Sapienza University of Rome"],"lat":{"dtype":"f8","bdata":"iGh0B7HzREA="},"legendgroup":"Italy","lon":{"dtype":"f8","bdata":"qaPjamQHKUA="},"marker":{"color":"#19d3f3","size":{"dtype":"i2","bdata":"hSQ="},"sizemode":"area","sizeref":83.8625,"symbol":"circle"},"mode":"markers","name":"Italy","showlegend":true,"type":"scattergeo"},{"customdata":[["Hangzhou","grid.13402.34",["Education"]],["Shanghai","grid.16821.3c",["Education"]],["Hong Kong","grid.194645.b",["Education"]]],"geo":"geo","hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003ecountry_name=China\u003cbr\u003ecount=%{marker.size}\u003cbr\u003elatitude=%{lat}\u003cbr\u003elongitude=%{lon}\u003cbr\u003ecity_name=%{customdata[0]}\u003cbr\u003eid=%{customdata[1]}\u003cbr\u003etypes=%{customdata[2]}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Zhejiang University","Shanghai Jiao Tong University","University of Hong Kong"],"lat":{"dtype":"f8","bdata":"RiI0go1DPkCYw+47hjM\u002fQMhhMH+FSDZA"},"legendgroup":"China","lon":{"dtype":"f8","bdata":"B+v\u002fHOYHXkA5l+KqslteQOI7MevFiFxA"},"marker":{"color":"#FF6692","size":{"dtype":"i2","bdata":"ZSQuIyYi"},"sizemode":"area","sizeref":83.8625,"symbol":"circle"},"mode":"markers","name":"China","showlegend":true,"type":"scattergeo"},{"customdata":[["Singapore","grid.4280.e",["Education"]]],"geo":"geo","hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003ecountry_name=Singapore\u003cbr\u003ecount=%{marker.size}\u003cbr\u003elatitude=%{lat}\u003cbr\u003elongitude=%{lon}\u003cbr\u003ecity_name=%{customdata[0]}\u003cbr\u003eid=%{customdata[1]}\u003cbr\u003etypes=%{customdata[2]}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["National University of Singapore"],"lat":{"dtype":"f8","bdata":"ai+i7Zi69D8="},"legendgroup":"Singapore","lon":{"dtype":"f8","bdata":"qbwd4bTxWUA="},"marker":{"color":"#B6E880","size":{"dtype":"i2","bdata":"5yM="},"sizemode":"area","sizeref":83.8625,"symbol":"circle"},"mode":"markers","name":"Singapore","showlegend":true,"type":"scattergeo"},{"customdata":[["Stockholm","grid.4714.6",["Education"]]],"geo":"geo","hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003ecountry_name=Sweden\u003cbr\u003ecount=%{marker.size}\u003cbr\u003elatitude=%{lat}\u003cbr\u003elongitude=%{lon}\u003cbr\u003ecity_name=%{customdata[0]}\u003cbr\u003eid=%{customdata[1]}\u003cbr\u003etypes=%{customdata[2]}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Karolinska Institutet"],"lat":{"dtype":"f8","bdata":"TS1b64usTUA="},"legendgroup":"Sweden","lon":{"dtype":"f8","bdata":"\u002fTBCeLQFMkA="},"marker":{"color":"#FF97FF","size":{"dtype":"i2","bdata":"ASA="},"sizemode":"area","sizeref":83.8625,"symbol":"circle"},"mode":"markers","name":"Sweden","showlegend":true,"type":"scattergeo"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"geo":{"domain":{"x":[0.0,1.0],"y":[0.0,1.0]},"projection":{"type":"natural earth"},"center":{}},"legend":{"title":{"text":"country_name"},"tracegroupgap":0,"itemsizing":"constant"},"margin":{"t":60}},                        {"responsive": true}                    ).then(function(){
 
-var gd = document.getElementById('bb12cb33-21f7-45ff-843d-754c7b5cb618');
+var gd = document.getElementById('792569b4-4148-47da-b82e-50edea6f8edc');
 var x = new MutationObserver(function (mutations, observer) {{
         var display = window.getComputedStyle(gd).display;
         if (!display || display === 'none') {{
@@ -2603,7 +2611,7 @@ if (outputEl) {{
     x.observe(outputEl, {childList: true});
 }}
 
-                        })                };                });            </script>        </div></div>
+                        })                };            </script>        </div></div>
 </div>
 </div>
 </div>
@@ -2684,6 +2692,16 @@ if (outputEl) {{
     <tr>
       <th>3</th>
       <td>organizations</td>
+      <td>country_code</td>
+      <td>string</td>
+      <td>Country of the organisation, identified using ...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>organizations</td>
       <td>country_name</td>
       <td>string</td>
       <td>GRID name of the organization country. E.g., "...</td>
@@ -2692,7 +2710,7 @@ if (outputEl) {{
       <td>True</td>
     </tr>
     <tr>
-      <th>4</th>
+      <th>5</th>
       <td>organizations</td>
       <td>dimensions_url</td>
       <td>string</td>
@@ -2702,7 +2720,7 @@ if (outputEl) {{
       <td>False</td>
     </tr>
     <tr>
-      <th>5</th>
+      <th>6</th>
       <td>organizations</td>
       <td>established</td>
       <td>integer</td>
@@ -2712,7 +2730,7 @@ if (outputEl) {{
       <td>False</td>
     </tr>
     <tr>
-      <th>6</th>
+      <th>7</th>
       <td>organizations</td>
       <td>external_ids_fundref</td>
       <td>string</td>
@@ -2722,7 +2740,7 @@ if (outputEl) {{
       <td>False</td>
     </tr>
     <tr>
-      <th>7</th>
+      <th>8</th>
       <td>organizations</td>
       <td>hesa_ids</td>
       <td>string</td>
@@ -2732,7 +2750,7 @@ if (outputEl) {{
       <td>False</td>
     </tr>
     <tr>
-      <th>8</th>
+      <th>9</th>
       <td>organizations</td>
       <td>id</td>
       <td>string</td>
@@ -2742,7 +2760,7 @@ if (outputEl) {{
       <td>False</td>
     </tr>
     <tr>
-      <th>9</th>
+      <th>10</th>
       <td>organizations</td>
       <td>isni_ids</td>
       <td>string</td>
@@ -2752,7 +2770,7 @@ if (outputEl) {{
       <td>False</td>
     </tr>
     <tr>
-      <th>10</th>
+      <th>11</th>
       <td>organizations</td>
       <td>latitude</td>
       <td>float</td>
@@ -2762,7 +2780,7 @@ if (outputEl) {{
       <td>False</td>
     </tr>
     <tr>
-      <th>11</th>
+      <th>12</th>
       <td>organizations</td>
       <td>linkout</td>
       <td>string</td>
@@ -2772,7 +2790,7 @@ if (outputEl) {{
       <td>False</td>
     </tr>
     <tr>
-      <th>12</th>
+      <th>13</th>
       <td>organizations</td>
       <td>longitude</td>
       <td>float</td>
@@ -2782,7 +2800,7 @@ if (outputEl) {{
       <td>False</td>
     </tr>
     <tr>
-      <th>13</th>
+      <th>14</th>
       <td>organizations</td>
       <td>name</td>
       <td>string</td>
@@ -2792,7 +2810,7 @@ if (outputEl) {{
       <td>False</td>
     </tr>
     <tr>
-      <th>14</th>
+      <th>15</th>
       <td>organizations</td>
       <td>nuts_level1_code</td>
       <td>string</td>
@@ -2802,7 +2820,7 @@ if (outputEl) {{
       <td>True</td>
     </tr>
     <tr>
-      <th>15</th>
+      <th>16</th>
       <td>organizations</td>
       <td>nuts_level1_name</td>
       <td>string</td>
@@ -2812,7 +2830,7 @@ if (outputEl) {{
       <td>True</td>
     </tr>
     <tr>
-      <th>16</th>
+      <th>17</th>
       <td>organizations</td>
       <td>nuts_level2_code</td>
       <td>string</td>
@@ -2822,7 +2840,7 @@ if (outputEl) {{
       <td>True</td>
     </tr>
     <tr>
-      <th>17</th>
+      <th>18</th>
       <td>organizations</td>
       <td>nuts_level2_name</td>
       <td>string</td>
@@ -2832,7 +2850,7 @@ if (outputEl) {{
       <td>True</td>
     </tr>
     <tr>
-      <th>18</th>
+      <th>19</th>
       <td>organizations</td>
       <td>nuts_level3_code</td>
       <td>string</td>
@@ -2842,7 +2860,7 @@ if (outputEl) {{
       <td>True</td>
     </tr>
     <tr>
-      <th>19</th>
+      <th>20</th>
       <td>organizations</td>
       <td>nuts_level3_name</td>
       <td>string</td>
@@ -2852,7 +2870,7 @@ if (outputEl) {{
       <td>True</td>
     </tr>
     <tr>
-      <th>20</th>
+      <th>21</th>
       <td>organizations</td>
       <td>organization_child_ids</td>
       <td>string</td>
@@ -2862,7 +2880,7 @@ if (outputEl) {{
       <td>False</td>
     </tr>
     <tr>
-      <th>21</th>
+      <th>22</th>
       <td>organizations</td>
       <td>organization_parent_ids</td>
       <td>string</td>
@@ -2872,7 +2890,7 @@ if (outputEl) {{
       <td>False</td>
     </tr>
     <tr>
-      <th>22</th>
+      <th>23</th>
       <td>organizations</td>
       <td>organization_related_ids</td>
       <td>string</td>
@@ -2882,7 +2900,7 @@ if (outputEl) {{
       <td>False</td>
     </tr>
     <tr>
-      <th>23</th>
+      <th>24</th>
       <td>organizations</td>
       <td>orgref_ids</td>
       <td>string</td>
@@ -2892,7 +2910,7 @@ if (outputEl) {{
       <td>False</td>
     </tr>
     <tr>
-      <th>24</th>
+      <th>25</th>
       <td>organizations</td>
       <td>redirect</td>
       <td>string</td>
@@ -2902,7 +2920,7 @@ if (outputEl) {{
       <td>False</td>
     </tr>
     <tr>
-      <th>25</th>
+      <th>26</th>
       <td>organizations</td>
       <td>ror_ids</td>
       <td>string</td>
@@ -2912,7 +2930,17 @@ if (outputEl) {{
       <td>False</td>
     </tr>
     <tr>
-      <th>26</th>
+      <th>27</th>
+      <td>organizations</td>
+      <td>score</td>
+      <td>float</td>
+      <td>For full-text queries, the relevance score is ...</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>28</th>
       <td>organizations</td>
       <td>state_name</td>
       <td>string</td>
@@ -2922,7 +2950,7 @@ if (outputEl) {{
       <td>True</td>
     </tr>
     <tr>
-      <th>27</th>
+      <th>29</th>
       <td>organizations</td>
       <td>status</td>
       <td>string</td>
@@ -2932,7 +2960,7 @@ if (outputEl) {{
       <td>True</td>
     </tr>
     <tr>
-      <th>28</th>
+      <th>30</th>
       <td>organizations</td>
       <td>types</td>
       <td>string</td>
@@ -2942,7 +2970,7 @@ if (outputEl) {{
       <td>True</td>
     </tr>
     <tr>
-      <th>29</th>
+      <th>31</th>
       <td>organizations</td>
       <td>ucas_ids</td>
       <td>string</td>
@@ -2952,7 +2980,7 @@ if (outputEl) {{
       <td>False</td>
     </tr>
     <tr>
-      <th>30</th>
+      <th>32</th>
       <td>organizations</td>
       <td>ukprn_ids</td>
       <td>string</td>
@@ -2962,7 +2990,7 @@ if (outputEl) {{
       <td>False</td>
     </tr>
     <tr>
-      <th>31</th>
+      <th>33</th>
       <td>organizations</td>
       <td>wikidata_ids</td>
       <td>string</td>
@@ -2972,7 +3000,7 @@ if (outputEl) {{
       <td>False</td>
     </tr>
     <tr>
-      <th>32</th>
+      <th>34</th>
       <td>organizations</td>
       <td>wikipedia_url</td>
       <td>string</td>
@@ -3021,7 +3049,20 @@ if (outputEl) {{
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "79f6b38840974891aa943514642fe463", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "a689d15c56d44fcbb5076b72f75f8ae6", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Query Error
+Semantic errors found:
+        Field id does not support emptiness filters.
+Query Error
+Semantic errors found:
+        Field score does not support emptiness filters.
+</pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
@@ -3054,172 +3095,182 @@ if (outputEl) {{
     <tr>
       <th>0</th>
       <td>All Organizations (no filter)</td>
-      <td>107202</td>
+      <td>406172.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>dimensions_url</td>
+      <td>406172.0</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>status</td>
+      <td>406172.0</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>name</td>
+      <td>406172.0</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>types</td>
+      <td>406087.0</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>dimensions_url</td>
-      <td>107202</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>name</td>
-      <td>107202</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>id</td>
-      <td>107202</td>
-    </tr>
-    <tr>
-      <th>28</th>
-      <td>status</td>
-      <td>107202</td>
+      <td>country_name</td>
+      <td>406058.0</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>country_name</td>
-      <td>104670</td>
+      <td>country_code</td>
+      <td>406012.0</td>
     </tr>
     <tr>
       <th>2</th>
       <td>city_name</td>
-      <td>104598</td>
+      <td>166300.0</td>
     </tr>
     <tr>
-      <th>29</th>
-      <td>types</td>
-      <td>104428</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>latitude</td>
-      <td>103357</td>
-    </tr>
-    <tr>
-      <th>13</th>
+      <th>14</th>
       <td>longitude</td>
-      <td>103357</td>
-    </tr>
-    <tr>
-      <th>26</th>
-      <td>ror_ids</td>
-      <td>103263</td>
+      <td>131622.0</td>
     </tr>
     <tr>
       <th>12</th>
+      <td>latitude</td>
+      <td>131622.0</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>organization_parent_ids</td>
+      <td>119442.0</td>
+    </tr>
+    <tr>
+      <th>13</th>
       <td>linkout</td>
-      <td>102383</td>
+      <td>119290.0</td>
     </tr>
     <tr>
-      <th>6</th>
+      <th>27</th>
+      <td>ror_ids</td>
+      <td>94038.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
       <td>established</td>
-      <td>90925</td>
+      <td>91959.0</td>
     </tr>
     <tr>
-      <th>10</th>
-      <td>isni_ids</td>
-      <td>50018</td>
+      <th>29</th>
+      <td>state_name</td>
+      <td>66188.0</td>
     </tr>
     <tr>
-      <th>32</th>
+      <th>16</th>
+      <td>nuts_level1_code</td>
+      <td>51585.0</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>nuts_level2_code</td>
+      <td>51585.0</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>nuts_level1_name</td>
+      <td>51585.0</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>nuts_level3_name</td>
+      <td>51585.0</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>nuts_level2_name</td>
+      <td>51585.0</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>nuts_level3_code</td>
+      <td>51585.0</td>
+    </tr>
+    <tr>
+      <th>34</th>
       <td>wikidata_ids</td>
-      <td>47950</td>
+      <td>51499.0</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>isni_ids</td>
+      <td>49885.0</td>
     </tr>
     <tr>
       <th>1</th>
       <td>acronym</td>
-      <td>41954</td>
+      <td>45701.0</td>
     </tr>
     <tr>
-      <th>27</th>
-      <td>state_name</td>
-      <td>38081</td>
-    </tr>
-    <tr>
-      <th>33</th>
+      <th>35</th>
       <td>wikipedia_url</td>
-      <td>36158</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>nuts_level2_name</td>
-      <td>34031</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>nuts_level3_code</td>
-      <td>34031</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>nuts_level3_name</td>
-      <td>34031</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>nuts_level1_name</td>
-      <td>34031</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>nuts_level1_code</td>
-      <td>34031</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>nuts_level2_code</td>
-      <td>34031</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>orgref_ids</td>
-      <td>14997</td>
+      <td>33440.0</td>
     </tr>
     <tr>
       <th>22</th>
-      <td>organization_parent_ids</td>
-      <td>14525</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>external_ids_fundref</td>
-      <td>10199</td>
+      <td>organization_child_ids</td>
+      <td>21945.0</td>
     </tr>
     <tr>
       <th>25</th>
+      <td>orgref_ids</td>
+      <td>14577.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>external_ids_fundref</td>
+      <td>9406.0</td>
+    </tr>
+    <tr>
+      <th>26</th>
       <td>redirect</td>
-      <td>4369</td>
+      <td>5669.0</td>
     </tr>
     <tr>
-      <th>21</th>
-      <td>organization_child_ids</td>
-      <td>4262</td>
-    </tr>
-    <tr>
-      <th>23</th>
+      <th>24</th>
       <td>organization_related_ids</td>
-      <td>4255</td>
+      <td>4751.0</td>
     </tr>
     <tr>
       <th>3</th>
       <td>cnrs_ids</td>
-      <td>839</td>
+      <td>920.0</td>
     </tr>
     <tr>
-      <th>31</th>
+      <th>33</th>
       <td>ukprn_ids</td>
-      <td>173</td>
+      <td>172.0</td>
     </tr>
     <tr>
-      <th>8</th>
+      <th>9</th>
       <td>hesa_ids</td>
-      <td>172</td>
+      <td>171.0</td>
     </tr>
     <tr>
-      <th>30</th>
+      <th>32</th>
       <td>ucas_ids</td>
-      <td>153</td>
+      <td>152.0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>id</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>score</td>
+      <td>NaN</td>
     </tr>
   </tbody>
 </table>
@@ -3240,9 +3291,10 @@ if (outputEl) {{
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div>                            <div id="b258395a-96e0-4b54-b850-ec54e4a01d2a" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("b258395a-96e0-4b54-b850-ec54e4a01d2a")) {                    Plotly.newPlot(                        "b258395a-96e0-4b54-b850-ec54e4a01d2a",                        [{"alignmentgroup":"True","hovertemplate":"filter_by=%{x}<br>results=%{y}<extra></extra>","legendgroup":"","marker":{"color":"#636efa","pattern":{"shape":""}},"name":"","offsetgroup":"","orientation":"v","showlegend":false,"textposition":"auto","x":["All Organizations (no filter)","dimensions_url","name","id","status","country_name","city_name","types","latitude","longitude","ror_ids","linkout","established","isni_ids","wikidata_ids","acronym","state_name","wikipedia_url","nuts_level2_name","nuts_level3_code","nuts_level3_name","nuts_level1_name","nuts_level1_code","nuts_level2_code","orgref_ids","organization_parent_ids","external_ids_fundref","redirect","organization_child_ids","organization_related_ids","cnrs_ids","ukprn_ids","hesa_ids","ucas_ids"],"xaxis":"x","y":[107202,107202,107202,107202,107202,104670,104598,104428,103357,103357,103263,102383,90925,50018,47950,41954,38081,36158,34031,34031,34031,34031,34031,34031,14997,14525,10199,4369,4262,4255,839,173,172,153],"yaxis":"y","type":"bar"}],                        {"template":{"data":{"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"heatmapgl":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmapgl"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermapbox"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"#E5ECF6","showlakes":true,"showland":true,"subunitcolor":"white"},"hoverlabel":{"align":"left"},"hovermode":"closest","mapbox":{"style":"light"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"title":{"x":0.05},"xaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","zerolinewidth":2}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"filter_by"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"results"}},"legend":{"tracegroupgap":0},"title":{"text":"Fields distribution for GRID data"},"barmode":"relative"},                        {"responsive": true}                    ).then(function(){
+<div>            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script type="text/javascript">if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-3.1.0.min.js" integrity="sha256-Ei4740bWZhaUTQuD6q9yQlgVCMPBz6CZWhevDYPv93A=" crossorigin="anonymous"></script>                <div id="684af6e7-d981-4a4e-bbca-a26d4c200c35" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("684af6e7-d981-4a4e-bbca-a26d4c200c35")) {                    Plotly.newPlot(                        "684af6e7-d981-4a4e-bbca-a26d4c200c35",                        [{"hovertemplate":"filter_by=%{x}\u003cbr\u003eresults=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","marker":{"color":"#636efa","pattern":{"shape":""}},"name":"","orientation":"v","showlegend":false,"textposition":"auto","x":["All Organizations (no filter)","dimensions_url","status","name","types","country_name","country_code","city_name","longitude","latitude","organization_parent_ids","linkout","ror_ids","established","state_name","nuts_level1_code","nuts_level2_code","nuts_level1_name","nuts_level3_name","nuts_level2_name","nuts_level3_code","wikidata_ids","isni_ids","acronym","wikipedia_url","organization_child_ids","orgref_ids","external_ids_fundref","redirect","organization_related_ids","cnrs_ids","ukprn_ids","hesa_ids","ucas_ids","id","score"],"xaxis":"x","y":{"dtype":"f8","bdata":"AAAAAHDKGEEAAAAAcMoYQQAAAABwyhhBAAAAAHDKGEEAAAAAHMkYQQAAAACoyBhBAAAAAPDHGEEAAAAA4EwEQQAAAAAwEQBBAAAAADARAEEAAAAAICn9QAAAAACgH\u002f1AAAAAAGD19kAAAAAAcHP2QAAAAADAKPBAAAAAACAw6UAAAAAAIDDpQAAAAAAgMOlAAAAAACAw6UAAAAAAIDDpQAAAAAAgMOlAAAAAAGAl6UAAAAAAoFvoQAAAAACgUOZAAAAAAABU4EAAAAAAQG7VQAAAAACAeMxAAAAAAABfwkAAAAAAACW2QAAAAAAAj7JAAAAAAADAjEAAAAAAAIBlQAAAAAAAYGVAAAAAAAAAY0AAAAAAAAD4fwAAAAAAAPh\u002f"},"yaxis":"y","type":"bar"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"filter_by"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"results"}},"legend":{"tracegroupgap":0},"title":{"text":"Fields distribution for GRID data"},"barmode":"relative"},                        {"responsive": true}                    ).then(function(){
 
-var gd = document.getElementById('b258395a-96e0-4b54-b850-ec54e4a01d2a');
+var gd = document.getElementById('684af6e7-d981-4a4e-bbca-a26d4c200c35');
 var x = new MutationObserver(function (mutations, observer) {{
         var display = window.getComputedStyle(gd).display;
         if (!display || display === 'none') {{
@@ -3264,13 +3316,13 @@ if (outputEl) {{
     x.observe(outputEl, {childList: true});
 }}
 
-                        })                };                });            </script>        </div></div>
+                        })                };            </script>        </div></div>
 </div>
 </div>
 </div>
 <div class="section" id="Where-to-find-out-more">
 <h2>Where to find out more<a class="headerlink" href="#Where-to-find-out-more" title="Permalink to this headline">¶</a></h2>
-<p>Please have a look at the <a class="reference external" href="https://docs.dimensions.ai/dsl/data-sources.html">official documentation</a> for more information on the GRID source.</p>
+<p>Please have a look at the <a class="reference external" href="https://docs.dimensions.ai/dsl/data-sources.html">official documentation</a> for more information on the organizations data source.</p>
 </div>
 </div>
 <hr class="docutils" />
