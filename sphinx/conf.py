@@ -5,7 +5,7 @@
 
 # -- Project information -----------------------------------------------------
 project = 'DSL'
-copyright = '2020-2023 Digital Science & Research Solutions, Inc. All Rights Reserved'
+copyright = '2020-2026 Digital Science & Research Solutions, Inc. All Rights Reserved'
 author = 'Digital Science Dimensions API Team (Michele Pasin)'
 
 # The full version, including alpha/beta/rc tags
