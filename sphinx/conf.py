@@ -93,6 +93,30 @@ def setup(app):
 # /Then put the file into the _static/css/ folder.
 
 
+# -- pinned CDN assets (security) ------------------------------------------
+# Pin exact versions + SRI integrity hashes so a compromised or hijacked CDN
+# release cannot inject code into the published site. Keep these in sync with
+# the script tags in the published /docs HTML. When bumping a version,
+# recompute the hash:  curl -sL <url> | openssl dgst -sha384 -binary | base64
+# NOTE: MathJax is still on the (EOL) v2 line because the plotly.js 4.x
+# bundles embedded in notebook outputs only support the MathJax v2 API.
+# Migrate to MathJax v3+ together with the sphinx/nbsphinx/plotly upgrade.
+
+nbsphinx_requirejs_path = "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.7/require.min.js"
+nbsphinx_requirejs_options = {
+    "integrity": "sha384-h+aUZRFA4igWfUQc/4swkXMaUbEGNjGfVnVDcfmHb62ZOq3vjMwLSDcGJcVlSLpY",
+    "crossorigin": "anonymous",
+}
+
+nbsphinx_widgets_path = "https://unpkg.com/@jupyter-widgets/html-manager@0.20.9/dist/embed-amd.js"
+nbsphinx_widgets_options = {
+    "integrity": "sha384-gpC61jTZJSrhKI1MNzGJkfhCMtImwPePhhwqr+/8prXCo6bfQANJovLOKeihv1zp",
+    "crossorigin": "anonymous",
+}
+
+mathjax_path = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+
+
 # -- prolog and epilog ---------------------------------------------------
 # https://nbsphinx.readthedocs.io/en/0.4.3/prolog-and-epilog.html
 
@@ -102,7 +126,7 @@ nbsphinx_prolog = r"""
 
 .. raw:: html
 
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js'></script>
+    <script crossorigin="anonymous" integrity="sha384-h+aUZRFA4igWfUQc/4swkXMaUbEGNjGfVnVDcfmHb62ZOq3vjMwLSDcGJcVlSLpY" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.7/require.min.js"></script>
     <script>require=requirejs;</script>
 
 .. image:: /_static/img/badge-colab.svg
