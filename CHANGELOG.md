@@ -1,6 +1,15 @@
 # Changelog - Dimensions API Lab 
 
 
+### 2026-08-17
+
+Updates:
+
+* [Working with concepts](https://api-lab.dimensions.ai/cookbooks/1-getting-started/7-Working-with-concepts.html) uses the current ANZSRC 2020 Field of Research code "44 Human Society" (previously "16 Studies in Human Society")
+* Links to the retired GRID website (grid.ac) now point to the corresponding [Dimensions organization pages](https://app.dimensions.ai/discover/organization), or were removed where no equivalent exists; GRID IDs themselves are unchanged
+* Security hardening: all third-party scripts (require.js, MathJax, Jupyter widgets) are now pinned to exact versions and protected with subresource integrity hashes
+
+
 ### 2023-08-10
 
 Internal refactoring of folders and build strategy.
