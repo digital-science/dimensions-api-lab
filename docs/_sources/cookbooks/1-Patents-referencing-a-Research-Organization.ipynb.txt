@@ -12,7 +12,7 @@
     "\n",
     "This notebook shows how to use the [Dimensions Analytics API](https://www.dimensions.ai/dimensions-apis/) to analyze the innovation impact of an organization. \n",
     "\n",
-    "There are **two ways** to achieve this. The **first approach counts direct links** between patents and the GRID organization we are interested in (i.e., it counts how many patents' inventors are affiliated to the GRID organization). This method is faster to implement and can be easily achieved via a single [patents API](https://docs.dimensions.ai/dsl/datasource-patents.html) query: \n",
+    "There are **two ways** to achieve this. The **first approach counts direct links** between patents and the organization we are interested in (i.e., it counts how many patents' inventors are affiliated to the organization). This method is faster to implement and can be easily achieved via a single [patents API](https://docs.dimensions.ai/dsl/datasource-patents.html) query: \n",
     "\n",
     "```\n",
     "> search patents where assignees in [\"grid.89170.37\"] return patents limit 500\n",
@@ -31,8 +31,8 @@
     "\n",
     "Since the various content-types included in the Dimensions database are [deeply interlinked](https://docs.dimensions.ai/dsl/data-sources.html), the Dimensions APIs allow to perform this analysis via a few simple steps: \n",
     "\n",
-    "* We start from a GRID identifier (representing a research organization in Dimensions) \n",
-    "* We use the [publications API](https://docs.dimensions.ai/dsl/datasource-publications.html) to extract all publications where at least one author is/as affiliated to the GRID organization, for a selected time-period\n",
+    "* We start from a Dimensions organization ID \n",
+    "* We use the [publications API](https://docs.dimensions.ai/dsl/datasource-publications.html) to extract all publications where at least one author is/as affiliated to the organization, for a selected time-period\n",
     "* We then use the [patents API](https://docs.dimensions.ai/dsl/datasource-patents.html) to discover patents that include citations to any of those publications \n",
     "* Finally, we analyse the patents data to highlight trends e.g. about countries, inventors etc.. \n"
    ]
@@ -160,7 +160,7 @@
     "id": "duzLFSrfFiuS"
    },
    "source": [
-    "## 1. Choosing a GRID Research Organization"
+    "## 1. Choosing a Research Organization"
    ]
   },
   {
@@ -171,7 +171,7 @@
     "id": "L6uIjSVnGRQV"
    },
    "source": [
-    "For the purpose of this exercise, we are going to use [grid.4305.2](https://app.dimensions.ai/details/organization/grid.4305.2) (The Open University, UK). Feel free  to change the parameters below as you want, eg by choosing another GRID organization."
+    "For the purpose of this exercise, we are going to use [grid.4305.2](https://app.dimensions.ai/details/organization/grid.4305.2) (The Open University, UK). Feel free  to change the parameters below as you want, eg by choosing another organization."
    ]
   },
   {
@@ -238,7 +238,7 @@
     "By looking at the [Dimensions API data model](https://docs.dimensions.ai/dsl/data-sources.html), we can see that Patents and Publications are connected by a property called `publication_ids`, which goes *from* Patents *to* Publications. This property represents the publications citations found in patents.\n",
     "\n",
     "Hence, we need to\n",
-    "1. query for all publications with authors affiliated to our GRID ID\n",
+    "1. query for all publications with authors affiliated to our Dimensions organization ID\n",
     "2. query for patents citing these publications "
    ]
   },
@@ -44601,11 +44601,11 @@
     "---\n",
     "## Where to go from here\n",
     "\n",
-    "In this [Dimensions Analytics API](https://www.dimensions.ai/dimensions-apis/) tutorial we have seen how, starting from a GRID organization, it is possible to extract a) publications from authors associated to this organization, b) patents citing those publications (from any organization). \n",
+    "In this [Dimensions Analytics API](https://www.dimensions.ai/dimensions-apis/) tutorial we have seen how, starting from a Dimensions organization ID, it is possible to extract a) publications from authors associated to this organization, b) patents citing those publications (from any organization). \n",
     "\n",
     "This only scratches the surface of the possible applications of publication-patents linkage data, but hopefully it'll give you a few basic tools to get started building your own application. Here are some ideas for customizing this notebook:\n",
     "\n",
-    "* Change the GRID ID to another one you are more familiar with\n",
+    "* Change the Dimensions organization ID to another one you are more familiar with\n",
     "* Use a different way to select publications: e.g. not using an organizations segment, but a category, a country, a funder or a combination of the many [Publication filters](https://docs.dimensions.ai/dsl/datasource-publications.html) available\n",
     "* Do a more in-depth analysis of the patents inventors: do they have other publications linking to the publications they cite in patents? Are there patterns of collaborations with the institutions they cite? "
    ]

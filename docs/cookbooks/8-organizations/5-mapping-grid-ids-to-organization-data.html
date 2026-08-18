@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Mapping GRID IDs to Organization Data &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
+  <title>Mapping Organization Data to Dimensions Organization IDs &mdash; API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API</title>
   
 
   
@@ -437,7 +437,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-4-Institutions.html#Basic-stats-about-affiliations">Basic stats about affiliations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-4-Institutions.html#Enriching-the-unique-affiliations-(GRIDs-list)-with-pubs-count-and-authors-count">Enriching the unique affiliations (GRIDs list) with pubs count and authors count</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-4-Institutions.html#Enriching-the-unique-affiliations-(GRIDs-list)-with-pubs-count-and-authors-count">Enriching the unique affiliations (list of Dimensions organization IDs) with pubs count and authors count</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2-publications/Journal-Profile-4-Institutions.html#Couple-of-Dataviz">Couple of Dataviz</a></li>
 </ul>
 </li>
@@ -627,7 +627,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html">Measuring the Innovation Impact of an Organization using Patents Citations</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#Prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#1.-Choosing-a-GRID-Research-Organization">1. Choosing a GRID Research Organization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#1.-Choosing-a-GRID-Research-Organization">1. Choosing a Research Organization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#2.-Extracting-Publications-Data">2. Extracting Publications Data</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#Quick-look-at-publications-statistics">Quick look at publications statistics</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../5-patents/1-Patents-referencing-a-Research-Organization.html#What-are-the-main-subject-areas?">What are the main subject areas?</a></li>
@@ -665,7 +665,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../6-policy-documents/Policy_Documents_referencing_a_Research_Organization.html">Measuring the policy impact of an organization using policy document citations</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../6-policy-documents/Policy_Documents_referencing_a_Research_Organization.html#Prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../6-policy-documents/Policy_Documents_referencing_a_Research_Organization.html#1.-Choosing-a-research-organization’s-GRID-identifier">1. Choosing a research organization’s GRID identifier</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6-policy-documents/Policy_Documents_referencing_a_Research_Organization.html#1.-Choosing-a-research-organization’s-GRID-identifier">1. Choosing a Dimensions organization ID</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../6-policy-documents/Policy_Documents_referencing_a_Research_Organization.html#2.-Extracting-publications-data">2. Extracting publications data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../6-policy-documents/Policy_Documents_referencing_a_Research_Organization.html#3.-Extracting-policy-documents-linked-to-publications">3. Extracting policy documents linked to publications</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../6-policy-documents/Policy_Documents_referencing_a_Research_Organization.html#Enriching-publications-with-policy-document-citation-metrics">Enriching publications with policy document citation metrics</a></li>
@@ -822,15 +822,15 @@
 <li class="toctree-l2"><a class="reference internal" href="4-International-collaboration-by-year.html#Want-to-learn-more?">Want to learn more?</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Mapping GRID IDs to Organization Data</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Mapping Organization Data to Dimensions Organization IDs</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#Prerequisites">Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#1.-Importing-Organization-Data">1. Importing Organization Data</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#1.1-Manually-Generate-Organization-Data">1.1 Manually Generate Organization Data</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#1.2-Load-Organization-Data-from-Local-Machine">1.2 Load Organization Data from Local Machine</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#2.-Utilizing-Dimensions-API-to-Extract-GRID-IDs">2. Utilizing Dimensions API to Extract GRID IDs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#3.-Save-the-GRID-ID-Dataset-we-created">3. Save the GRID ID Dataset we created</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#2.-Utilizing-Dimensions-API-to-Extract-GRID-IDs">2. Utilizing the API to Extract Dimensions Organization IDs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#3.-Save-the-GRID-ID-Dataset-we-created">3. Save the Organization ID Dataset we created</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Conclusions">Conclusions</a></li>
 </ul>
 </li>
@@ -1255,12 +1255,12 @@ div.rendered_html tbody tr:hover {
 <a class="reference external image-reference" href="https://github.com/digital-science/dimensions-api-lab/blob/master/cookbooks/8-organizations/5-mapping-grid-ids-to-organization-data.ipynb"><img alt="../../_images/badge-github-custom.svg" src="../../_images/badge-github-custom.svg" /></a>
 <hr class="docutils" />
 <div class="section" id="Mapping-GRID-IDs-to-Organization-Data">
-<h1>Mapping GRID IDs to Organization Data<a class="headerlink" href="#Mapping-GRID-IDs-to-Organization-Data" title="Permalink to this headline">¶</a></h1>
-<p>In this tutorial, we show how to use the <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> and organization data to extract GRID IDs.</p>
+<h1>Mapping Organization Data to Dimensions Organization IDs<a class="headerlink" href="#Mapping-GRID-IDs-to-Organization-Data" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial, we show how to use the <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> and organization data to extract Dimensions organization IDs.</p>
 <p><strong>Use case scenarios:</strong></p>
 <ul class="simple">
-<li><p>An analyst has a list of organizations of interest, and wants to get details of their publications from Dimensions. To do this, they they need to map them to GRID IDs so they can extract information from the Dimensions database. The organization data can be run through the Dimensions API <a class="reference external" href="https://docs.dimensions.ai/dsl/functions.html#function-extract-affiliations">extract_affiliations</a> function in order to extract GRID IDs, which can then be utilized to get publication data statistics.</p></li>
-<li><p>A second use case is to standardize messy organization data for analysis. For example, an analyst might have a set of affiliation data containing many variants of organization names (“University of Cambridge”, “Cambridge University”). By mapping to GRID IDs, the analyst can standardize the data so it’s easier to analyse.</p></li>
+<li><p>An analyst has a list of organizations of interest, and wants to get details of their publications from Dimensions. To do this, they they need to map them to Dimensions organization IDs so they can extract information from the Dimensions database. The organization data can be run through the Dimensions API <a class="reference external" href="https://docs.dimensions.ai/dsl/functions.html#function-extract-affiliations">extract_affiliations</a> function in order to extract Dimensions organization IDs, which can then be utilized to get publication data statistics.</p></li>
+<li><p>A second use case is to standardize messy organization data for analysis. For example, an analyst might have a set of affiliation data containing many variants of organization names (“University of Cambridge”, “Cambridge University”). By mapping to Dimensions organization IDs, the analyst can standardize the data so it’s easier to analyse.</p></li>
 </ul>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
@@ -1345,13 +1345,13 @@ Method: dsl.ini file
 </div>
 <div class="section" id="1.-Importing-Organization-Data">
 <h2>1. Importing Organization Data<a class="headerlink" href="#1.-Importing-Organization-Data" title="Permalink to this headline">¶</a></h2>
-<p>There are several ways to obtain organization data. Below we show examples for 2 different ways to obtain organization data that can be used to run through Dimensions API for GRID ID mapping. <em>For purposes of this demostration, we will be using method 1</em>. Please uncomment the other sections if you wish to use those methods instead.</p>
+<p>There are several ways to obtain organization data. Below we show examples for 2 different ways to obtain organization data that can be used to run through Dimensions API for Dimensions organization ID mapping. <em>For purposes of this demostration, we will be using method 1</em>. Please uncomment the other sections if you wish to use those methods instead.</p>
 <ol class="arabic simple">
 <li><p>Manually Generate Organization Data</p></li>
 <li><p>Load Organization Data from Local Machine</p></li>
 </ol>
-<p><em>Note</em> - To map organizational data to GRID IDs, the data must conform to mapping specifications and contain data (if available) for the following 4 columns (with column headers being lowercase): * name - name of the organization * city - city of the organization * state - state of the organization (use the full name of the state, not acronym) * country - country of the organization</p>
-<p>The user may use structured or unstructured organization data for mapping to GRID IDs like the following:</p>
+<p><em>Note</em> - To map organizational data to Dimensions organization IDs, the data must conform to mapping specifications and contain data (if available) for the following 4 columns (with column headers being lowercase): * name - name of the organization * city - city of the organization * state - state of the organization (use the full name of the state, not acronym) * country - country of the organization</p>
+<p>The user may use structured or unstructured organization data for mapping to Dimensions organization IDs like the following:</p>
 <ul class="simple">
 <li><p>Structured Data e.g., <code class="docutils literal notranslate"><span class="pre">[{&quot;name&quot;:&quot;Southwestern</span> <span class="pre">University&quot;,</span> <span class="pre">&quot;city&quot;:&quot;Georgetown&quot;,</span> <span class="pre">&quot;state&quot;:&quot;Texas&quot;,</span> <span class="pre">&quot;country&quot;:&quot;USA&quot;}]</span></code></p></li>
 <li><p>Unstructured Data e.g., <code class="docutils literal notranslate"><span class="pre">[{&quot;affiliation&quot;:</span> <span class="pre">&quot;university</span> <span class="pre">of</span> <span class="pre">oxford,</span> <span class="pre">uk&quot;}]</span></code></p></li>
@@ -1496,7 +1496,7 @@ Method: dsl.ini file
 <div class="section" id="1.2-Load-Organization-Data-from-Local-Machine">
 <h3>1.2 Load Organization Data from Local Machine<a class="headerlink" href="#1.2-Load-Organization-Data-from-Local-Machine" title="Permalink to this headline">¶</a></h3>
 <p>The following cells can be utilized to import an excel file of organization data from a local machine.</p>
-<p>This method is useful for when you need to map hundreds or thousands of organizations to GRID IDs, as the bulk process using the API will be much faster than any individual mapping.</p>
+<p>This method is useful for when you need to map hundreds or thousands of organizations to Dimensions organization IDs, as the bulk process using the API will be much faster than any individual mapping.</p>
 <p><em>Please uncomment the cells below if to be utilized</em></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
@@ -1527,9 +1527,9 @@ Method: dsl.ini file
 </div>
 </div>
 <div class="section" id="2.-Utilizing-Dimensions-API-to-Extract-GRID-IDs">
-<h2>2. Utilizing Dimensions API to Extract GRID IDs<a class="headerlink" href="#2.-Utilizing-Dimensions-API-to-Extract-GRID-IDs" title="Permalink to this headline">¶</a></h2>
-<p>The following cells will take our organization data and run it through the Dimensions API to pull back GRID IDs mapped to each organization.</p>
-<p>Here, we utilize the “<a class="reference external" href="https://docs.dimensions.ai/dsl/functions.html#function-extract-affiliations">extract_affiliations</a>” API function which can be used to enrich private datasets including non-disambiguated organizations data with Dimensions GRID IDs.</p>
+<h2>2. Utilizing the API to Extract Dimensions Organization IDs<a class="headerlink" href="#2.-Utilizing-Dimensions-API-to-Extract-GRID-IDs" title="Permalink to this headline">¶</a></h2>
+<p>The following cells will take our organization data and run it through the Dimensions API to pull back Dimensions organization IDs mapped to each organization.</p>
+<p>Here, we utilize the “<a class="reference external" href="https://docs.dimensions.ai/dsl/functions.html#function-extract-affiliations">extract_affiliations</a>” API function which can be used to enrich private datasets including non-disambiguated organizations data with Dimensions organization IDs.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
@@ -1544,7 +1544,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Second, we will convert organization data from a dataframe to a dictionary (json) for GRID mapping</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Second, we will convert organization data from a dataframe to a dictionary (json) for organization ID mapping</span>
 
 <span class="n">recs</span> <span class="o">=</span> <span class="n">orgs</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s1">&#39;records&#39;</span><span class="p">)</span>
 </pre></div>
@@ -1554,7 +1554,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Then we will take the organization data, run it through the API and return GRID IDs</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Then we will take the organization data, run it through the API and return Dimensions organization IDs</span>
 
 <span class="c1"># Chunk records to batches, API takes up to 200 records at a time.</span>
 <span class="k">def</span> <span class="nf">chunk_records</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
@@ -1586,7 +1586,7 @@ Method: dsl.ini file
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Preview the extracted GRID ID dataframe</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Preview the extracted organization ID dataframe</span>
 <span class="c1"># Note: data columns labeled with &quot;input&quot; are the original organization data supplied to the API</span>
 
 <span class="n">grid</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -1746,7 +1746,7 @@ Method: dsl.ini file
 </table>
 </div></div>
 </div>
-<p>Note: Some records returned in the GRID mapping may require manual review, as some results may give more than one organization of interest (see below). The user can utilize this information to update their original organization data that is inputted to this notebook.</p>
+<p>Note: Some records returned in the organization ID mapping may require manual review, as some results may give more than one organization of interest (see below). The user can utilize this information to update their original organization data that is inputted to this notebook.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
@@ -1975,8 +1975,8 @@ Method: dsl.ini file
 </div>
 </div>
 <div class="section" id="3.-Save-the-GRID-ID-Dataset-we-created">
-<h2>3. Save the GRID ID Dataset we created<a class="headerlink" href="#3.-Save-the-GRID-ID-Dataset-we-created" title="Permalink to this headline">¶</a></h2>
-<p>The following cell will export the GRID ID mapped organization data to a csv file that can be saved to your local machine.</p>
+<h2>3. Save the Organization ID Dataset we created<a class="headerlink" href="#3.-Save-the-GRID-ID-Dataset-we-created" title="Permalink to this headline">¶</a></h2>
+<p>The following cell will export the mapped organization data to a csv file that can be saved to your local machine.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
@@ -1996,7 +1996,7 @@ Method: dsl.ini file
 </div>
 <div class="section" id="Conclusions">
 <h2>Conclusions<a class="headerlink" href="#Conclusions" title="Permalink to this headline">¶</a></h2>
-<p>In this notebook we have shown how to use the <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> <em>extract_affiliations</em> function to assign GRID identifiers to organizations data.</p>
+<p>In this notebook we have shown how to use the <a class="reference external" href="https://www.dimensions.ai/dimensions-apis/">Dimensions Analytics API</a> <em>extract_affiliations</em> function to assign Dimensions organization IDs to organizations data.</p>
 <p>For more background, see the <a class="reference external" href="https://docs.dimensions.ai/dsl/functions.html#function-extract-affiliations">extract_affiliations function documentation</a>, as well as the other functions available via the Dimensions API.</p>
 </div>
 </div>

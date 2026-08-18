@@ -227,9 +227,9 @@
    "source": [
     "## 2. Extracting publications from industry collaborations\n",
     "\n",
-    "First of all we want to extract all GRID orgs with `type='Company'` using the API. Then we will use this list of organizations to identify industry collaborators for our chosen institution. \n",
+    "First of all we want to extract all organizations with `type='Company'` using the API. Then we will use this list of organizations to identify industry collaborators for our chosen institution. \n",
     "\n",
-    "* We can use the [dimcli.query_iterative](https://digital-science.github.io/dimensions-api-lab/cookbooks/1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Iterative-querying-(loops)) method to automatically retrieve 'company' GRID orgs in batches of 1000. \n",
+    "* We can use the [dimcli.query_iterative](https://digital-science.github.io/dimensions-api-lab/cookbooks/1-getting-started/1-Using-the-Dimcli-library-to-query-the-API.html#Iterative-querying-(loops)) method to automatically retrieve 'company' organizations in batches of 1000. \n",
     "* NOTE this step retrieves several thousands records from the API so it may take a few minutes to complete."
    ]
   },
@@ -319,7 +319,7 @@
     }
    ],
    "source": [
-    "# get GRID IDs \n",
+    "# get Dimensions organization IDs \n",
     "company_grids = dsl.query_iterative(\"\"\"search organizations where types=\"Company\" return organizations[id]\"\"\")"
    ]
   },
@@ -2813,7 +2813,7 @@
     "pubsnew = DslDataset.from_publications_list(pubs)\n",
     "# extract affiliations as a dataframe\n",
     "affiliations = pubsnew.as_dataframe_authors_affiliations()\n",
-    "# focus only on affiliations including a grid from the industry set created above\n",
+    "# focus only on affiliations including an organization ID from the industry set created above\n",
     "affiliations = affiliations[affiliations['aff_id' ].isin(orgids)]\n",
     "# preview the data\n",
     "affiliations.head(5)"
