@@ -1,6 +1,13 @@
 # Changelog - Dimensions API Lab 
 
 
+### 2026-08-18
+
+Updates:
+
+* Terminology: the term "GRID" (e.g. "GRID ID", "GRID identifier", "GRID organization") has been replaced with "Dimensions organization ID" across all tutorial notebooks, following the retirement of the GRID database. The ID values themselves (e.g. `grid.1005.4`) and notebook URLs are unchanged
+
+
 ### 2026-08-17
 
 Updates:
