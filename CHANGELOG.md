@@ -1,5 +1,15 @@
-# Changelog - Dimensions API Lab 
+# Changelog - Dimensions API Lab
 
+
+### 2026-08-24
+
+Updates:
+
+* Docs toolchain rebuilt on Python 3.14, Sphinx 9, nbsphinx 0.9, and sphinx-book-theme. Generated HTML is no longer committed; GitHub Actions deploys the site.
+* Security: dropped Sphinx-bundled underscore.js (CVE-2026-27601) and MathJax 2.7 (CVE-2023-39663). The site now uses MathJax 4. Remaining MathJax 2 script tags in stored notebook outputs are stripped at build time. Closes [WEBAPPDEV-13826](https://digital-science.atlassian.net/browse/WEBAPPDEV-13826).
+* Plotly charts: nbsphinx_prolog now sets `require.config` paths for plotly.js 2.8.3, and OneTrust AutoBlock is loaded at the end of the body so it does not block the Plotly CDN.
+* Mixed content: rewrite `http://api-sample-data.dimensions.ai` asset URLs at build time to the HTTPS S3 REST host so stored notebook images load on GitHub Pages.
+* Theme: set PyData Sphinx Theme `default_mode` to `auto` so the console no longer logs `Got invalid theme mode: .`
 
 ### 2026-08-18
 

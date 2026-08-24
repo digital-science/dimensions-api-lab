@@ -1,168 +1,85 @@
-div.body {
-    max-width: 100%;
+:root {
+  --pst-color-primary: #40BBEE;
+  --pst-color-secondary: #1a7fa8;
 }
 
-
-/* set page width adopting 100%*/ 
-.wy-nav-content{
-max-width:100% !important;
+html[data-theme="light"] {
+  --pst-color-primary: #40BBEE;
 }
 
-h1{
-margin-top: 30px !important;
+html[data-theme="dark"] {
+  --pst-color-primary: #40BBEE;
 }
 
-.logo{
-width: 160px !important;
+/* Full-width: PST caps .bd-page-width at 88rem and the article at 60em. */
+.bd-page-width,
+.bd-container,
+.bd-container .bd-container__inner,
+.bd-main .bd-content,
+.bd-main .bd-content .bd-article-container {
+  max-width: none;
+  width: 100%;
 }
 
-/* background logo area*/ 
-.wy-side-nav-search{
-	background-color: #40BBEE;
+/* Sidebar search only — hide any leftover header/navbar search widgets. */
+.bd-header .bd-search,
+.bd-header .search-button-field,
+.bd-header .navbar-persistent--container,
+.navbar-persistent--mobile {
+  display: none !important;
 }
 
-
-/* logo area remove hover bg change*/ 
-.wy-side-nav-search>a:hover{
-	background: rgba(255,255,255,0.0);
+/* Logo is 320×196. PST sets `.navbar-brand img { height: 100%; width: auto }`
+   against a 4rem header; pairing that (or max-height: 48px) with width: 160px
+   squashes the asset. Size by width only and keep the intrinsic ratio. */
+.navbar-brand img,
+.navbar-brand .logo__image {
+  width: 160px;
+  max-width: 100%;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
 }
 
-/* remove search field border */ 
-.wy-side-nav-search input{
-border-color: #40BBEE !important;
+h1 {
+  margin-top: 30px;
 }
 
-/* icon home */ 
-.icon-home{
-color: #40BBEE !important;
+/* Homepage cookbook cards */
+.toctree-wrapper ul {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  padding-left: 0;
 }
 
-
-
-
-
-/* CARDS section on home */ 
-div.toctree-wrapper ul{
-   list-style: none;
-   display: grid;
-
-   grid-template-columns: repeat(4, 1fr);
-   grid-column-gap: 20px;
-   align-content: middle;  
+.toctree-wrapper ul li {
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.45);
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin: 0 !important;
 }
 
-div.toctree-wrapper ul li{
-   box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.45);
-   display: block;
-   min-height: 120px;
-   flex: 1 1 auto;
-   display: flex;
-   flex-direction: column;
-   /*justify-content: center;*/
-   padding: 20px;
-   margin-bottom: 20px;
-
-   margin-left: 0px !important;
-}
-
-
-div.toctree-wrapper ul li a::after {
+.toctree-wrapper ul li a::after {
   content: "\2192";
   display: block;
 }
 
-div.toctree-wrapper p.caption span{
-font-size: 22px;
+.toctree-wrapper p.caption,
+.toctree-wrapper .caption {
+  font-size: 22px;
 }
 
-
-
-/* NAVIGATION  */ 
-
-/* lefthand 'cookbook top level description' */ 
-#cookbooks_title {
-margin-left: 20px;
-margin-bottom: -20px !important;
-font-size: 20px;
-color:#ffffff;
-letter-spacing: 0.1em;
+.bd-sidebar-primary .navbar-nav p.caption,
+.bd-sidebar-primary .caption {
+  font-size: 14.4px;
+  font-weight: 700;
+  text-transform: none;
 }
 
-
-/* lefthand first level */ 
-div.wy-menu-vertical p.caption {
-margin-top: 20px;
+hr.docutils:first-of-type {
+  margin-top: 10px;
 }
-
-div.wy-menu-vertical p.caption span{
-	font-size: 14.4px;
-	font-weight: 700;
-	text-transform: none;
-	color: #ffffff !important;
-}
-
-/* lefthand second level */ 
-div.wy-menu-vertical a{
-padding-left: 32px;
-
-  /* truncate part 
-  width: 300px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-*/ 
-}
-
-
-/* lefthand 'github source' */ 
-#sidebar_github {
-	border-top: 1px solid #757575;
-}
-
-#sidebar_github div{
-margin-left: 20px !important;
-}
-
-#sidebar_github h3{
-margin-left: 20px;
-margin-top: 20px;
-
-font-family: "Lato", Arial, sans-serif;
-font-size: 20px;
-font-weight: 400;
-color: #ffffff;
-}
-
-
-
-/* hide breadcrumbs on top */ 
-[aria-label="breadcrumbs navigation"] {
-display: none;
-}
-
-/* open & download button to right */ 
-.document {
-    text-align: right; 
-    }
-
-.section {
-text-align: left;
-}
-
-.note {
-text-align: left;
-}
-
-
-
-
-/* open & download button area less height */ 
-.wy-nav-content {
-padding-top: 10px !important;
-}
-
-hr.docutils:first-of-type{
-margin-top: 10px;
-}
-
-

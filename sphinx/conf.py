@@ -1,133 +1,113 @@
-# ----------------------------------------------------------------------------
 # Configuration file for the Sphinx documentation builder.
-# # http://www.sphinx-doc.org/en/master/config
+# https://www.sphinx-doc.org/en/master/usage/configuration.html
 
+from __future__ import annotations
 
-# -- Project information -----------------------------------------------------
-project = 'DSL'
-copyright = '2026 Digital Science & Research Solutions, Inc. All Rights Reserved'
-author = 'Digital Science Dimensions API Team (Michele Pasin)'
+import re
+from typing import Any
 
-# The full version, including alpha/beta/rc tags
-release = '0.3'
+project = "DSL"
+copyright = "2026 Digital Science & Research Solutions, Inc. All Rights Reserved"
+author = "Digital Science Dimensions API Team"
 
-html_title = """API Lab - reusable notebooks for research data analytics - powered by Dimensions Analytics API"""
+release = "0.3"
 
-# If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
+html_title = (
+    "API Lab - reusable notebooks for research data analytics - "
+    "powered by Dimensions Analytics API"
+)
 html_logo = "_static/img/dimensions-logo@2x.png"
-
-html_show_sphinx = False
-# If true, "(C) Copyright ..." is shown in the HTML footer. Default is True.
-html_show_copyright = False # footer.html used instead
-
 html_favicon = "_static/img/favicon.ico"
+html_show_sphinx = False
+html_show_copyright = False
 
-
-
-# -- General configuration ---------------------------------------------------
-
-# Add any Sphinx extension module names here, as strings. They can be
-# extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
-# ones.
 extensions = [
-    'nbsphinx',
-    'sphinx_rtd_theme'
+    "nbsphinx",
 ]
-
 
 nbsphinx_allow_errors = True
 
-# Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ["_templates"]
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "**.ipynb_checkpoints"]
 
-# List of patterns, relative to source directory, that match files and
-# directories to ignore when looking for source files.
-# This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '**.ipynb_checkpoints']
-
-
-# -- Options for HTML output -------------------------------------------------
-
-html_theme = 'sphinx_rtd_theme' 
-
-# MORE NICE THEMES
-# https://nbsphinx.readthedocs.io/en/typlog-theme/prolog-and-epilog.html
-# https://schettino72.github.io/sphinx_press_site/
-
-# used with 'nature' theme
-# html_sidebars = { '**': ['localtoc.html', 'relations.html', 'sidebar_github.html', 'searchbox.html'] }
-
-# opts for sphinx_rtd_theme 
+html_theme = "sphinx_book_theme"
+html_static_path = ["_static"]
+# PST 0.20 reads default_mode from html_context (not html_theme_options).
+# An empty value becomes data-default-mode="" and logs
+# "Got invalid theme mode: . Resetting to auto."
+html_context = {
+    "default_mode": "auto",
+}
 html_theme_options = {
-   #  'canonical_url': '',
-   #  'analytics_id': 'UA-XXXXXXX-1',  #  Provided by Google in your dashboard
-   #  'logo_only': False,
-   #  'display_version': True,
-    'prev_next_buttons_location': None,
-   #  'style_external_links': False,
-   #  'vcs_pageview_mode': '',
-   #  'style_nav_header_background': 'white',
-   #  # Toc options
-    'collapse_navigation': False,
-    'sticky_navigation': True,
-    'navigation_depth': -1,
-    'includehidden': True,
-   #  'titles_only': False
+    "repository_url": "https://github.com/digital-science/dimensions-api-lab",
+    "repository_branch": "master",
+    "path_to_docs": "sphinx",
+    "use_repository_button": True,
+    "use_issues_button": True,
+    "use_download_button": True,
+    "home_page_in_toc": True,
+    "show_toc_level": 2,
+    # Keep search in the primary sidebar (under the logo). PST 0.20 otherwise
+    # injects a second search-button-field into the top navbar.
+    "navbar_persistent": [],
+    "footer_content_items": [
+        "author.html",
+        "copyright.html",
+        "last-updated.html",
+        "footer.html",
+    ],
+    "logo": {
+        "image_light": "_static/img/dimensions-logo@2x.png",
+        "image_dark": "_static/img/dimensions-logo@2x.png",
+        "alt_text": "Dimensions API Lab",
+    },
 }
 
-
-# Add any paths that contain custom static files (such as style sheets) here,
-# relative to this directory. They are copied after the builtin static files,
-# so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
-
-def setup(app):
-    app.add_css_file('css/custom.css')  # may also be an URL
-    app.add_js_file('js/custom.js')  # may also be an URL
-
-
-# html_js_files = [
-#     'js/ga.js',
-# ]
-
-# /Then put the file into the _static/css/ folder.
-
-
-# -- pinned CDN assets (security) ------------------------------------------
-# Pin exact versions + SRI integrity hashes so a compromised or hijacked CDN
-# release cannot inject code into the published site. Keep these in sync with
-# the script tags in the published /docs HTML. When bumping a version,
-# recompute the hash:  curl -sL <url> | openssl dgst -sha384 -binary | base64
-# NOTE: MathJax is still on the (EOL) v2 line because the plotly.js 4.x
-# bundles embedded in notebook outputs only support the MathJax v2 API.
-# Migrate to MathJax v3+ together with the sphinx/nbsphinx/plotly upgrade.
-
-nbsphinx_requirejs_path = "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.7/require.min.js"
+# Pin require.js so stored Plotly 4 cell outputs keep loading.
+nbsphinx_requirejs_path = (
+    "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.7/require.min.js"
+)
 nbsphinx_requirejs_options = {
     "integrity": "sha384-h+aUZRFA4igWfUQc/4swkXMaUbEGNjGfVnVDcfmHb62ZOq3vjMwLSDcGJcVlSLpY",
     "crossorigin": "anonymous",
 }
 
-nbsphinx_widgets_path = "https://unpkg.com/@jupyter-widgets/html-manager@0.20.9/dist/embed-amd.js"
+nbsphinx_widgets_path = (
+    "https://unpkg.com/@jupyter-widgets/html-manager@0.20.9/dist/embed-amd.js"
+)
 nbsphinx_widgets_options = {
     "integrity": "sha384-gpC61jTZJSrhKI1MNzGJkfhCMtImwPePhhwqr+/8prXCo6bfQANJovLOKeihv1zp",
     "crossorigin": "anonymous",
 }
 
-mathjax_path = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+# Sphinx 9 defaults to MathJax 4. Do not pin MathJax 2 (CVE-2023-39663).
+# Plotly 4 stored outputs still call MathJax.Hub; nbsphinx_prolog no-op-shims it.
 
-
-# -- prolog and epilog ---------------------------------------------------
-# https://nbsphinx.readthedocs.io/en/0.4.3/prolog-and-epilog.html
-
-
+# Plotly 4/5 notebook outputs call require(['plotly']) and expect a paths map.
+# nbsphinx 0.9 / Sphinx 9 / sphinx-book-theme do not inject one. Pin plotly.js
+# 2.8.3 (plotly.py 4/5 API) — not plotly.js 3 / plotly.py 6.
 nbsphinx_prolog = r"""
 {% set docname = env.doc2path(env.docname, base=None) %}
 
 .. raw:: html
 
+    <script>
+    window.MathJax = window.MathJax || {};
+    window.MathJax.Hub = window.MathJax.Hub || {
+      Config: function () {},
+      Queue: function () {},
+      Register: { StartupHook: function () {} }
+    };
+    </script>
     <script crossorigin="anonymous" integrity="sha384-h+aUZRFA4igWfUQc/4swkXMaUbEGNjGfVnVDcfmHb62ZOq3vjMwLSDcGJcVlSLpY" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.7/require.min.js"></script>
     <script>require=requirejs;</script>
+    <script>
+    require.config({
+      paths: {
+        plotly: 'https://cdn.plot.ly/plotly-2.8.3.min'
+      }
+    });
+    </script>
 
 .. image:: /_static/img/badge-colab.svg
    :target: https://colab.research.google.com/github/digital-science/dimensions-api-lab/blob/master/{{ docname }}
@@ -137,20 +117,7 @@ nbsphinx_prolog = r"""
 
 ----
 
-
-
 """
-
-# .. image:: /_static/img/badge-dimensions-api.svg
-#    :target: https://www.dimensions.ai/dimensions-apis/
-
-# .. seealso:: 
-
-#     Learn how to access the `Dimensions Analytics API <https://www.dimensions.ai/dimensions-apis/>`_.   
-
-# ----
-
-
 
 nbsphinx_epilog = r"""
 {% set docname = env.doc2path(env.docname, base=None) %}
@@ -159,12 +126,43 @@ nbsphinx_epilog = r"""
 
 |
 
-.. note:: 
+.. note::
 
-   The `Dimensions Analytics API <https://www.dimensions.ai/dimensions-apis/>`_ allows to carry out sophisticated research data analytics tasks like the ones described on this website. Check out also the associated `Github repository <https://github.com/digital-science/dimensions-api-lab>`_ for examples, the source code of these tutorials and much more. 
+   The `Dimensions Analytics API <https://www.dimensions.ai/dimensions-apis/>`_ allows to carry out sophisticated research data analytics tasks like the ones described on this website. Check out also the associated `Github repository <https://github.com/digital-science/dimensions-api-lab>`_ for examples, the source code of these tutorials and much more.
 
 .. image:: /_static/img/badge-dimensions-api.svg
    :target: https://www.dimensions.ai/dimensions-apis/
 
 """
 
+_MATHJAX2_SCRIPT = re.compile(
+    r"""<script[^>]+src=["']https?://(?:cdnjs\.cloudflare\.com/ajax/libs/mathjax|cdn\.jsdelivr\.net/npm/mathjax@2)[^"']*["'][^>]*>\s*</script>""",
+    re.IGNORECASE,
+)
+# Custom domain is an S3 website endpoint (HTTP only; :443 times out).
+# Path-style S3 REST is the working HTTPS equivalent for this dotted bucket.
+_INSECURE_SAMPLE_DATA = "http://api-sample-data.dimensions.ai"
+_SECURE_SAMPLE_DATA = "https://s3.amazonaws.com/api-sample-data.dimensions.ai"
+
+
+def _sanitize_html_body(
+    app: Any,
+    pagename: str,
+    templatename: str,
+    context: dict[str, Any],
+    doctree: Any,
+) -> None:
+    body = context.get("body")
+    if not isinstance(body, str):
+        return
+    if "mathjax" in body.lower():
+        body = _MATHJAX2_SCRIPT.sub("", body)
+    if _INSECURE_SAMPLE_DATA in body:
+        body = body.replace(_INSECURE_SAMPLE_DATA, _SECURE_SAMPLE_DATA)
+    context["body"] = body
+
+
+def setup(app: Any) -> None:
+    app.add_css_file("css/custom.css")
+    app.add_js_file("js/custom.js")
+    app.connect("html-page-context", _sanitize_html_body)
