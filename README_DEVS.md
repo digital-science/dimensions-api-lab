@@ -1,150 +1,63 @@
-# DSL API Lab - DEVELOPERS information
+# DSL API Lab — developer notes
 
-Various useful tips for running the API LAB in development mode.
+Tips for building the API Lab site locally.
 
 ## Setup
 
-Before trying to do any development work, you will need to create a `set-envs.sh` file in the `tools` folder.
+Use **Python 3.14** (`.python-version` pins it). The package floor is Python 3.12 because Sphinx 9.1 requires it; 3.15 is not stable yet.
 
-The purpose of this file is to define the local directories you would like to use for building test and staging versions of site, to ensure the site renders as expected before pushing to production.
+Create a virtualenv, then install the project. Default dependencies are the notebook stack; the `docs` extra is needed to build the site:
 
-Example directories are given in `tools/set-envs-sample.sh`. Replace the values for the stated variables with those you desire.
+```
+python3.14 -m venv .venv
+source .venv/bin/activate
+pip install -e ".[docs]"
+```
 
-Note the `.gitignore` file is set to ignore `set-envs.sh`.
+`pip install -e ".[notebooks]"` is the same notebook stack as the default install (dimcli, pandas, matplotlib, plotly, jupyter, gspread, google-auth).
 
-You will also need to install the requirements in `requirements.txt`. The recommended way to do this is to create a conda (or other similar) python environment (Python 3.8 is known to work well), activate it, navigate to the top level folder in the repository, and then run
+Install [Pandoc](https://pandoc.org/installing.html) as a system dependency (`brew install pandoc`). nbsphinx needs it to convert notebooks.
 
-`pip install -r requirements.txt`
-
-Also install Pandoc by getting an installer from https://pandoc.org/installing.html. Officially you should choose version >1.12.1 and < 3.0.0, but everything seems to work fine with the current version as of January 2025.
+Binder uses `runtime.txt` (`python-3.14`) plus this `pyproject.toml`.
 
 ## Workflow
 
 ### 1. Adding new notebooks
 
-New notebooks are added to the `cookbooks` folder. The folder structure should not be changed, so ensure legacy URLs and internal links doesn't break. 
+Put new notebooks in `cookbooks/`. Do not rename folders — that would break published URLs.
 
-PS The `backlog` folder contains various tutorials that are being considered for publication.
+`backlog/` holds drafts that are not published yet.
 
-### 2. Development and Testing
+### 2. Building the site
 
-The build process uses [sphinx](http://www.sphinx-doc.org/en/master/config) + [nbsphinx](https://nbsphinx.readthedocs.io/en/0.8.7/) to turn Python notebooks into HTML files. 
-
-#### 2.1 Test selected notebooks
-
-If you want to test building just a few notebooks another command is available, which processes only notebooks in `backlog/ACTIVE`:  
+Sphinx + [nbsphinx](https://nbsphinx.readthedocs.io/) turn the notebooks into HTML.
 
 ```
-$ make html_test
+make html
 ```
 
-The build directory is the same `tmp` location used for staging. 
+Output is `_build/html/` (gitignored). Open `_build/html/index.html`.
 
-> IMPORTANT: when testing, ensure that `/sphinx/index.rst` references the correct files! See `index.rst.TEST` for an example.
-
-#### 2.2 Test full site in staging
+To try a subset of notebooks, copy them into `backlog/ACTIVE`, point `sphinx/index.rst` at those files (see `sphinx/index.rst.TEST`), and run:
 
 ```
-$ make html_staging 
+make html_test
 ```
 
-Both commands run in local and output everything to a `tmp` location. See the ([makefile](https://github.com/digital-science/dsl-api-lab-master/blob/master/Makefile)) for more details. 
+### 3. Publishing
 
+Do **not** commit generated HTML. GitHub Actions (`.github/workflows/pages.yml`) builds on `master` and deploys to GitHub Pages.
 
-### 3. Making a LIVE release
+**One-time repo setting:** Pages source = GitHub Actions (not `/docs`). After that is on, the committed `docs/` tree can be deleted.
 
-Running the `make html` command builds the site into the `docs` folder. This folder is publically available on the web, in the public clone of this project. So, first build and push for this project: 
+Update [CHANGELOG.md](CHANGELOG.md) when notebooks are added or changed.
 
-```
-$ make html 
-$ git add -A
-$ git commit
-$ git push
-```
+## vis.js / pyvis iframes
 
-#### 3.1 Update the CHANGELOG
+Network visualizations that live as sidecar `.html` files next to a notebook are copied into the build by `make extra-html` (run automatically from `make html`). Keep those HTML files in `cookbooks/` alongside the notebook.
 
-The [CHANGELOG.md](CHANGELOG.md) file is publically available to end users. 
+## Plotly in static HTML
 
-When notebooks are added or updated, changes are recorded in that file. 
+Stored notebook outputs still load Plotly via require.js. Keep the require.js pin and the `require.config({ paths: { plotly: ... } })` map in `sphinx/conf.py` (`nbsphinx_prolog`) or Plotly charts in existing cell output will fail to load. The map points at plotly.js 2.8.3 (`https://cdn.plot.ly/plotly-2.8.3.min.js`); do not switch stored cells to plotly.js 3 / plotly.py 6.
 
-
-## Tips and tricks
-
-A few gotchas and related solutions.
-
-### Dependencies
-
-The notebook export functionality will work correctly with these library versions:
-
-```
-docutils==0.16 
-nbconvert==6.0.0
-markupsafe==1.1.1 
-jinja2==2.11.3
-sphinx==3.0.0 
-sphinx_rtd_theme==0.5.0 
-nbsphinx==0.8.3 
-```
-
-> TODO: update to most recent versions, dealing with css error dues to mathjax rendering [issue](https://github.com/spatialaudio/nbsphinx/issues/572#issuecomment-853389268) 
-
-Pandoc is also needed: `brew install pandoc`
-
-
-### Visualizations built with vis.js break!
-
-For vis.js network visualizations, you need to **manually** put the HTML output in the right /docs folder. 
-
-This is because the viz is embedded via an iFrame, so it does not get exported automatically via the ipynb file.
-
-Relevant locations are:
-
-```
-docs/cookbooks/....
-```
-
-This needs to be done for both the STG export (in /tmp) and the PROD one (in the master repo itself), before the syncing step.
-
-
-### Plotly library does not load
-
-Discussed here  https://github.com/readthedocs/sphinx_rtd_theme/issues/788
-
-Fix:
-
-```
-nbsphinx_prolog = r"""
-{% set docname = env.doc2path(env.docname, base=None) %}
-
-.. raw:: html
-
-    <script src='http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js'></script>
-    <script>require=requirejs;</script>
-...
-```
-
-
-
-### Navigation menu doesn't appear
-
-Docs: https://sphinx-rtd-theme.readthedocs.io/en/stable/configuring.html
-
-Solution: you have to remove `titlesonly` in index.rst for that to work
-
-```
-.. toctree::
-   :caption: Clinical Trials 
-   :maxdepth: 5
-   :glob:
-   ####:titlesonly:####
-```
-
-Also, these settings:
-
-```
-    'collapse_navigation': False,
-    'sticky_navigation': True,
-    'navigation_depth': -1,
-```
-
+OneTrust AutoBlock lives at the end of `<body>` (`sphinx/_templates/layout.html`), not in `<head>`. Putting it in the head intercepts the Plotly CDN load and shows `Script error for "plotly"`.

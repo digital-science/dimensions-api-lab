@@ -1,0 +1,50 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "dimensions-api-lab"
+version = "0.3.0"
+description = "Reusable Jupyter notebooks for research data analytics with the Dimensions Analytics API"
+readme = "README.md"
+requires-python = ">=3.12,<3.15"
+license = { file = "LICENSE" }
+authors = [
+  { name = "Digital Science Dimensions API Team" },
+]
+dependencies = [
+  "dimcli>=1.8",
+  "pandas",
+  "matplotlib",
+  "plotly>=6.9",
+  "jupyter",
+  "gspread",
+  "gspread-dataframe",
+  "google-auth",
+]
+
+[project.optional-dependencies]
+docs = [
+  "sphinx>=9.1",
+  "nbsphinx>=0.9.8",
+  "sphinx-book-theme>=1.4",
+  "ipython",
+  "nbconvert",
+]
+notebooks = [
+  "dimcli>=1.8",
+  "pandas",
+  "matplotlib",
+  "plotly>=6.9",
+  "jupyter",
+  "gspread",
+  "gspread-dataframe",
+  "google-auth",
+]
+
+[project.urls]
+Homepage = "https://api-lab.dimensions.ai"
+Repository = "https://github.com/digital-science/dimensions-api-lab"
+
+[tool.hatch.build.targets.wheel]
+bypass-selection = true

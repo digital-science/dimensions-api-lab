@@ -4,7 +4,6 @@
 .. image:: _static/img/dimensions-header-image-jupyter.png
    :width: 100%
    :alt: Dimensions API Homepage https://www.dimensions.ai/dimensions-apis/
-   :target: #
 
 
 Welcome to the Dimensions API Lab!
