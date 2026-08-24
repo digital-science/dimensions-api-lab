@@ -144,6 +144,44 @@ _MATHJAX2_SCRIPT = re.compile(
 _INSECURE_SAMPLE_DATA = "http://api-sample-data.dimensions.ai"
 _SECURE_SAMPLE_DATA = "https://s3.amazonaws.com/api-sample-data.dimensions.ai"
 
+# Stored plotly.py 6 outputs request plotly.js 3.x. cdn.plot.ly/plotly-3.1.0.min
+# (no .js) is not a JS file — require.js and ES module imports omit the
+# extension and get application/xml (NS_ERROR_CORRUPTED_CONTENT). Pin 2.8.3
+# (Plotly 4/5 API). plotly.js 2.x is UMD, so type=module imports become <script src>.
+_PLOTLY_JS = "https://cdn.plot.ly/plotly-2.8.3.min.js"
+_PLOTLY_REQUIRE = "https://cdn.plot.ly/plotly-2.8.3.min"
+_PLOTLY_BAD_VERSION = r"(?:3[\w.-]*|latest)"
+_PLOTLY_MODULE_IMPORT = re.compile(
+    rf"""<script\s+type=["']module["']>\s*import\s+["']https://cdn\.plot\.ly/plotly-{_PLOTLY_BAD_VERSION}\.min(?:\.js)?["']\s*</script>""",
+    re.IGNORECASE,
+)
+_PLOTLY_SCRIPT_SRC = re.compile(
+    rf"""(<script\b)([^>]*\bsrc=["']https://cdn\.plot\.ly/plotly-{_PLOTLY_BAD_VERSION}\.min\.js["'][^>]*>)""",
+    re.IGNORECASE,
+)
+_PLOTLY_BAD_SRC = re.compile(
+    rf"https://cdn\.plot\.ly/plotly-{_PLOTLY_BAD_VERSION}\.min\.js",
+    re.IGNORECASE,
+)
+_PLOTLY_BAD_REQUIRE = re.compile(
+    rf"https://cdn\.plot\.ly/plotly-{_PLOTLY_BAD_VERSION}\.min(?!\.js)",
+    re.IGNORECASE,
+)
+_INTEGRITY_ATTR = re.compile(r"""\s+integrity=["'][^"']*["']""", re.IGNORECASE)
+
+
+def _rewrite_plotly_script_src(match: re.Match[str]) -> str:
+    prefix, rest = match.group(1), match.group(2)
+    rest = _INTEGRITY_ATTR.sub("", rest)
+    rest = _PLOTLY_BAD_SRC.sub(_PLOTLY_JS, rest)
+    return prefix + rest
+
+
+def _rewrite_plotly_cdn(html: str) -> str:
+    html = _PLOTLY_MODULE_IMPORT.sub(f'<script src="{_PLOTLY_JS}"></script>', html)
+    html = _PLOTLY_SCRIPT_SRC.sub(_rewrite_plotly_script_src, html)
+    return _PLOTLY_BAD_REQUIRE.sub(_PLOTLY_REQUIRE, html)
+
 
 def _sanitize_html_body(
     app: Any,
@@ -159,6 +197,8 @@ def _sanitize_html_body(
         body = _MATHJAX2_SCRIPT.sub("", body)
     if _INSECURE_SAMPLE_DATA in body:
         body = body.replace(_INSECURE_SAMPLE_DATA, _SECURE_SAMPLE_DATA)
+    if "cdn.plot.ly" in body:
+        body = _rewrite_plotly_cdn(body)
     context["body"] = body
 
 

@@ -34,13 +34,15 @@ html_test:
 	@if [ -z "$$CI" ]; then open "$(BUILDDIR_TEST)/index.html" || true; fi
 	@echo "==== Built $(BUILDDIR_TEST)/index.html ===="
 
-# vis.js / pyvis iframe pages are not emitted by nbsphinx
+# vis.js / pyvis iframe pages are not emitted by nbsphinx.
+# Prepend <!DOCTYPE html> when missing so copied pages are not in Quirks Mode.
+COPY_HTML = python -c 'from pathlib import Path; import sys; src, dest = Path(sys.argv[1]), Path(sys.argv[2]); text = src.read_text(encoding="utf-8"); dest.parent.mkdir(parents=True, exist_ok=True); dest.write_text(text if text.lstrip().lower().startswith("<!doctype") else "<!DOCTYPE html>\n" + text, encoding="utf-8")'
+
 extra-html:
 	@mkdir -p "$(BUILDDIR)"
 	@find "$(NOTEBOOKS_FOLDER)" -name '*.html' | while read -r f; do \
 		dest="$(BUILDDIR)/$$f"; \
-		mkdir -p "$$(dirname "$$dest")"; \
-		cp "$$f" "$$dest"; \
+		$(COPY_HTML) "$$f" "$$dest"; \
 	done
 	@echo "api-lab.dimensions.ai" > "$(BUILDDIR)/CNAME"
 
@@ -50,8 +52,7 @@ extra-html-test:
 		find "$(NOTEBOOKS_FOLDER_TEST)" -name '*.html' | while read -r f; do \
 			rel="$${f#$(NOTEBOOKS_FOLDER_TEST)/}"; \
 			dest="$(BUILDDIR_TEST)/$(NOTEBOOKS_FOLDER)/$$rel"; \
-			mkdir -p "$$(dirname "$$dest")"; \
-			cp "$$f" "$$dest"; \
+			$(COPY_HTML) "$$f" "$$dest"; \
 		done; \
 	fi
 
