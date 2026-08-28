@@ -58,7 +58,7 @@ html_theme_options = {
     ],
     "logo": {
         "image_light": "_static/img/dimensions-logo@2x.png",
-        "image_dark": "_static/img/dimensions-logo@2x.png",
+        "image_dark": "_static/img/dimensions-logo-dark@2x.png",
         "alt_text": "Dimensions API Lab",
     },
 }
