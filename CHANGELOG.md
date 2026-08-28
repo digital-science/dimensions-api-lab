@@ -1,6 +1,12 @@
 # Changelog - Dimensions API Lab
 
 
+### 2026-08-28
+
+Updates:
+
+* [Rejected Article Tracker](https://api-lab.dimensions.ai/cookbooks/2-publications/Rejected_Article_Tracker.html) rewritten based on an improved version developed by Digital Science analysts. The notebook now works from a customer file of rejected articles (Excel or .csv), searches with the API's full-text fuzzy search on title and keywords, matches on both first and corresponding author (including publications without a print date), enriches results with citation metrics (times cited, Altmetric, FCR, RCR) and journal attributes (SNIP, SJR, ISSN), scores matches on title and author similarity, and exports the results for analysis. Runs in both Google Colab (file upload) and Jupyter (bundled sample data). The bundled `rejected-articles-sample-data.csv` was replaced with a 17-row demo set matching the required input schema.
+
 ### 2026-08-24
 
 Updates:
